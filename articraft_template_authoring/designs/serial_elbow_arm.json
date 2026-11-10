@@ -1,0 +1,1293 @@
+{
+ "assembly_notes": "axis_family owns the joint topology: it decides whether the straddle gap opens along Y (pitch_clevis), along Z (yaw_clevis), or is replaced by a bearing-disc stack (yaw_stacked). Every other slot adapts to it. mount derives mount_top_z and a ground-envelope half-width; the shoulder lower limit is solved from that envelope so the upper link can never sweep into its own base. bearing_detail only adds coaxial hardware and never changes the axis. Link bodies expose root/tip hub depth and section height so the opposite bearing derives its straddle gap. end_effector exposes a mount footprint that the forearm tip derives its wrist block from.",
+ "bindings": [
+  {
+   "binding_id": "shoulder_axis_from_mount",
+   "consumer": "axis_family.shoulder_axis",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "mount_height_m"
+     ],
+     "expression": "per-mount stack height; ceiling_underslung returns a negative-going seat so the chain hangs below",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "mount_top_z",
+     "rationale": "the shoulder joint origin must come from the mount it is actually bolted to",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "choices": [],
+     "depends_on": [
+      "mount_top_z",
+      "mount_envelope_half_x",
+      "upper_len"
+     ],
+     "expression": "-acos(clamp((mount_envelope_half_x + clearance) / upper_len, -1, 1)) bounded to [-2.2, -0.15]",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "shoulder_lower_rad",
+     "rationale": "solves the swing angle at which the upper link would first reach the mount envelope, replacing the hardcoded limit tuples that made the deleted template fail every seed",
+     "unit": "rad",
+     "value_type": "float"
+    }
+   ],
+   "provider": "mount.shoulder_axis"
+  },
+  {
+   "binding_id": "elbow_straddle_from_upper_tip",
+   "consumer": "forearm_body.root_hub",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "forearm_hub_len"
+     ],
+     "expression": "forearm_hub_len + 2*bearing_clearance",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "elbow_gap",
+     "rationale": "the cheek offset is derived from the mating hub so the straddle always has a real gap",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "provider": "upper_link_body.tip_hub"
+  },
+  {
+   "binding_id": "wrist_from_end_effector_footprint",
+   "consumer": "forearm_body.tip_face",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "ee_footprint_y",
+      "ee_footprint_z"
+     ],
+     "expression": "max(section_y, ee_footprint_y*0.62) x max(section_z, ee_footprint_z*0.62)",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "wrist_block_size",
+     "rationale": "the forearm tip grows a wrist block that actually carries the selected output face",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "provider": "end_effector.mount_footprint"
+  }
+ ],
+ "category_anchors": [
+  {
+   "anchor_id": "serial_elbow_arm_identity",
+   "applies_to": {
+    "candidates": [
+     "pitch_clevis",
+     "yaw_clevis",
+     "yaw_stacked"
+    ],
+    "slot": "axis_family"
+   },
+   "required_author_checks": [
+    "category_anchor: shoulder and elbow are parallel revolute axes",
+    "category_anchor: the upper link is carried by a real bearing interface",
+    "category_anchor: the forearm clears the mount envelope over the whole shoulder range",
+    "category_anchor: the output face is carried at the forearm tip"
+   ],
+   "required_relations": [
+    {
+     "child_role": "upper_link",
+     "joint_type": "revolute",
+     "parent_role": "root_mount"
+    },
+    {
+     "child_role": "forearm",
+     "joint_type": "revolute",
+     "parent_role": "upper_link"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "root_mount"
+    },
+    {
+     "exact_count": 1,
+     "role": "upper_link"
+    },
+    {
+     "exact_count": 1,
+     "role": "forearm"
+    },
+    {
+     "exact_count": 1,
+     "role": "output_face"
+    }
+   ]
+  }
+ ],
+ "multiplicities": [],
+ "schema_version": 1,
+ "slots": [
+  {
+   "candidates": [
+    {
+     "evidence": "Cheeks straddle along Y and both revolutes use the horizontal Y axis.",
+     "implementation_function": "_axis_family_pitch_clevis_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "hub_half",
+        "hub_radius": "hub_r"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoulder_axis",
+       "part": "upper_link",
+       "role": "consumer"
+      }
+     ],
+     "name": "pitch_clevis",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_0004",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L112-L123"
+     ]
+    },
+    {
+     "evidence": "Ears separate along Z with connector bridges while the axis stays vertical.",
+     "implementation_function": "_axis_family_yaw_clevis_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "hub_half",
+        "hub_radius": "hub_r"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoulder_axis",
+       "part": "upper_link",
+       "role": "consumer"
+      }
+     ],
+     "name": "yaw_clevis",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_ad0237214e4840f5a6b333d6c849dc2f",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L98-L155"
+     ]
+    },
+    {
+     "evidence": "A bearing disc carries a stacked Z hub and a riser lifts the next link.",
+     "implementation_function": "_axis_family_yaw_stacked_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "hub_half",
+        "hub_radius": "hub_r"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoulder_axis",
+       "part": "upper_link",
+       "role": "consumer"
+      }
+     ],
+     "name": "yaw_stacked",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_1d524caa798a4061a933a963cae6ce57",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L80-L104"
+     ]
+    }
+   ],
+   "component_type": "joint topology family",
+   "name": "axis_family",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Base plate, square column, yoke bridge and cheeks.",
+     "implementation_function": "_mount_floor_pedestal_box_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "deck_z": "mount_deck_z",
+        "envelope_half_x": "mount_envelope_half_x",
+        "seat_z": "mount_top_z"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoulder_axis",
+       "part": "root_mount",
+       "role": "provider"
+      }
+     ],
+     "name": "floor_pedestal_box",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_6b166b55fd0c438fb80b1422f9f92539",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L255-L285"
+     ]
+    },
+    {
+     "evidence": "Cylindrical base plate and column with a rear bridge.",
+     "implementation_function": "_mount_floor_pedestal_round_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "deck_z": "mount_deck_z",
+        "envelope_half_x": "mount_envelope_half_x",
+        "seat_z": "mount_top_z"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoulder_axis",
+       "part": "root_mount",
+       "role": "provider"
+      }
+     ],
+     "name": "floor_pedestal_round",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_4ae0d61630354d279fa240118d7617cd",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L535-L565"
+     ]
+    },
+    {
+     "evidence": "Bench slab, bolted mounting plate, column and collar.",
+     "implementation_function": "_mount_bench_clamp_plate_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "deck_z": "mount_deck_z",
+        "envelope_half_x": "mount_envelope_half_x",
+        "seat_z": "mount_top_z"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoulder_axis",
+       "part": "root_mount",
+       "role": "provider"
+      }
+     ],
+     "name": "bench_clamp_plate",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_b9a02abdf09c4c4d9a651901856de2ee",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L508-L540"
+     ]
+    },
+    {
+     "evidence": "Vertical wall plate, projecting casting, side ribs and wall bolts.",
+     "implementation_function": "_mount_wall_side_plate_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "deck_z": "mount_deck_z",
+        "envelope_half_x": "mount_envelope_half_x",
+        "seat_z": "mount_top_z"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoulder_axis",
+       "part": "root_mount",
+       "role": "provider"
+      }
+     ],
+     "name": "wall_side_plate",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_5f57c67a42694cdeab5de1c23a5665bc",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L950-L983"
+     ]
+    },
+    {
+     "evidence": "Ceiling plate, motor can and lower bearing with the chain hanging below.",
+     "implementation_function": "_mount_ceiling_underslung_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "deck_z": "mount_deck_z",
+        "envelope_half_x": "mount_envelope_half_x",
+        "seat_z": "mount_top_z"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoulder_axis",
+       "part": "root_mount",
+       "role": "provider"
+      }
+     ],
+     "name": "ceiling_underslung",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_ebd81963b3f84cc3812696f5988ce8b3",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L27-L54"
+     ]
+    },
+    {
+     "evidence": "Base foot, tall backbone, top bridge, saddle cheeks and diagonal tubes.",
+     "implementation_function": "_mount_gantry_backbone_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "deck_z": "mount_deck_z",
+        "envelope_half_x": "mount_envelope_half_x",
+        "seat_z": "mount_top_z"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoulder_axis",
+       "part": "root_mount",
+       "role": "provider"
+      }
+     ],
+     "name": "gantry_backbone",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_45b77726eb2d4079a80e51e975c4189a",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L31-L79"
+     ]
+    },
+    {
+     "evidence": "Base plate, rear mast, upper crossbrace and top tie.",
+     "implementation_function": "_mount_open_frame_mast_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "deck_z": "mount_deck_z",
+        "envelope_half_x": "mount_envelope_half_x",
+        "seat_z": "mount_top_z"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoulder_axis",
+       "part": "root_mount",
+       "role": "provider"
+      }
+     ],
+     "name": "open_frame_mast",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_1612d391262940aeb5c0f8dda9b34671",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L57-L80"
+     ]
+    },
+    {
+     "evidence": "Wide bolted base and a heavy cast pedestal with integral cheeks.",
+     "implementation_function": "_mount_cast_housing_block_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "deck_z": "mount_deck_z",
+        "envelope_half_x": "mount_envelope_half_x",
+        "seat_z": "mount_top_z"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoulder_axis",
+       "part": "root_mount",
+       "role": "provider"
+      }
+     ],
+     "name": "cast_housing_block",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_1a535fdff36e42e18f0fa70bd3fbe662",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1451-L1493"
+     ]
+    }
+   ],
+   "component_type": "grounded root body",
+   "name": "mount",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Bare hub in a straddle gap derived from the hub length.",
+     "implementation_function": "_bearing_detail_plain_hub_build",
+     "interfaces": [],
+     "name": "plain_hub",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_ad1184dcaf024c55bf7ceb4b5de968b1",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L5972-L5992"
+     ]
+    },
+    {
+     "evidence": "Annular bearing rings outboard of the hub closed by bolted covers.",
+     "implementation_function": "_bearing_detail_ring_and_cover_build",
+     "interfaces": [],
+     "name": "ring_and_cover",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_0003",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L29-L44",
+      "model.py:L78-L103"
+     ]
+    },
+    {
+     "evidence": "Boss discs outside each cheek on the axis.",
+     "implementation_function": "_bearing_detail_outboard_boss_cap_build",
+     "interfaces": [],
+     "name": "outboard_boss_cap",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_1612d391262940aeb5c0f8dda9b34671",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L64-L75"
+     ]
+    },
+    {
+     "evidence": "A single long pin plus outboard caps passes through the hub.",
+     "implementation_function": "_bearing_detail_through_pin_span_build",
+     "interfaces": [],
+     "name": "through_pin_span",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_64e2a3789d314da5b31c753a30dcc067",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L4096-L4114"
+     ]
+    },
+    {
+     "evidence": "Cheek, machined cap and thin seal form a three-layer bearing face.",
+     "implementation_function": "_bearing_detail_capped_seal_stack_build",
+     "interfaces": [],
+     "name": "capped_seal_stack",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_69f7832e7c394f7baf3915cecd1d68bf",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L4407-L4412"
+     ]
+    }
+   ],
+   "component_type": "coaxial bearing hardware",
+   "name": "bearing_detail",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Solid beam plus a lower rib.",
+     "implementation_function": "_upper_link_body_box_beam_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "fore_hub_half",
+        "hub_radius": "fore_hub_r",
+        "span": "upper_body_x1"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "tip_hub",
+       "part": "upper_link",
+       "role": "provider"
+      }
+     ],
+     "name": "box_beam",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_6b166b55fd0c438fb80b1422f9f92539",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L294-L305"
+     ]
+    },
+    {
+     "evidence": "Twin plates cut by window profiles and tied by top and bottom webs.",
+     "implementation_function": "_upper_link_body_windowed_twin_plate_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "fore_hub_half",
+        "hub_radius": "fore_hub_r",
+        "span": "upper_body_x1"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "tip_hub",
+       "part": "upper_link",
+       "role": "provider"
+      }
+     ],
+     "name": "windowed_twin_plate",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_0003",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L165-L224"
+     ]
+    },
+    {
+     "evidence": "Four overlapping walls with a parameterised wall thickness.",
+     "implementation_function": "_upper_link_body_box_section_tube_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "fore_hub_half",
+        "hub_radius": "fore_hub_r",
+        "span": "upper_body_x1"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "tip_hub",
+       "part": "upper_link",
+       "role": "provider"
+      }
+     ],
+     "name": "box_section_tube",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_1d524caa798a4061a933a963cae6ce57",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L23-L56"
+     ]
+    },
+    {
+     "evidence": "Two spaced bars and a wide tie bar leave an open centre channel.",
+     "implementation_function": "_upper_link_body_dual_parallel_bars_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "fore_hub_half",
+        "hub_radius": "fore_hub_r",
+        "span": "upper_body_x1"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "tip_hub",
+       "part": "upper_link",
+       "role": "provider"
+      }
+     ],
+     "name": "dual_parallel_bars",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_958fc14d6dc5464d82adfcbf2530c2b8",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L65-L82"
+     ]
+    },
+    {
+     "evidence": "Rails and duplicated hubs on both sides of the pin.",
+     "implementation_function": "_upper_link_body_twin_rail_span_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "fore_hub_half",
+        "hub_radius": "fore_hub_r",
+        "span": "upper_body_x1"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "tip_hub",
+       "part": "upper_link",
+       "role": "provider"
+      }
+     ],
+     "name": "twin_rail_span",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_64e2a3789d314da5b31c753a30dcc067",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L4129-L4147"
+     ]
+    },
+    {
+     "evidence": "Central beam with top/bottom ribs and outboard side ribs.",
+     "implementation_function": "_upper_link_body_i_beam_ribbed_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "fore_hub_half",
+        "hub_radius": "fore_hub_r",
+        "span": "upper_body_x1"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "tip_hub",
+       "part": "upper_link",
+       "role": "provider"
+      }
+     ],
+     "name": "i_beam_ribbed",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_1a535fdff36e42e18f0fa70bd3fbe662",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1511-L1530"
+     ]
+    }
+   ],
+   "component_type": "upper link section",
+   "name": "upper_link_body",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Beam plus rib and a wrist block.",
+     "implementation_function": "_forearm_body_box_beam_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "fore_hub_half",
+        "section_a": "fsec_a",
+        "section_p": "fsec_p"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "root_hub",
+       "part": "forearm",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "wrist_y": "wrist_y",
+        "wrist_z": "wrist_z"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "tip_face",
+       "part": "forearm",
+       "role": "consumer"
+      }
+     ],
+     "name": "box_beam",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_6b166b55fd0c438fb80b1422f9f92539",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L326-L337"
+     ]
+    },
+    {
+     "evidence": "Capsule outer profile with pivot bores and a central lightening slot.",
+     "implementation_function": "_forearm_body_capsule_slotted_plate_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "fore_hub_half",
+        "section_a": "fsec_a",
+        "section_p": "fsec_p"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "root_hub",
+       "part": "forearm",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "wrist_y": "wrist_y",
+        "wrist_z": "wrist_z"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "tip_face",
+       "part": "forearm",
+       "role": "consumer"
+      }
+     ],
+     "name": "capsule_slotted_plate",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_5f57c67a42694cdeab5de1c23a5665bc",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L19-L90"
+     ]
+    },
+    {
+     "evidence": "Outer box minus inner box leaves a real wall thickness.",
+     "implementation_function": "_forearm_body_hollow_rect_tube_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "fore_hub_half",
+        "section_a": "fsec_a",
+        "section_p": "fsec_p"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "root_hub",
+       "part": "forearm",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "wrist_y": "wrist_y",
+        "wrist_z": "wrist_z"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "tip_face",
+       "part": "forearm",
+       "role": "consumer"
+      }
+     ],
+     "name": "hollow_rect_tube",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_30c38f7f9a3b4153bd5aa3cd9b11e7e1",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L70-L84"
+     ]
+    },
+    {
+     "evidence": "Paired rails with a wrist block across their tips.",
+     "implementation_function": "_forearm_body_twin_rail_span_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "fore_hub_half",
+        "section_a": "fsec_a",
+        "section_p": "fsec_p"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "root_hub",
+       "part": "forearm",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "wrist_y": "wrist_y",
+        "wrist_z": "wrist_z"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "tip_face",
+       "part": "forearm",
+       "role": "consumer"
+      }
+     ],
+     "name": "twin_rail_span",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_b6f8d1f7bbc449cbaa3e50bc173c3be9",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L6433-L6445"
+     ]
+    },
+    {
+     "evidence": "Twin plates and centre web rotated by a derived dogleg angle.",
+     "implementation_function": "_forearm_body_dogleg_plate_pair_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_half": "fore_hub_half",
+        "section_a": "fsec_a",
+        "section_p": "fsec_p"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "root_hub",
+       "part": "forearm",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "wrist_y": "wrist_y",
+        "wrist_z": "wrist_z"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "tip_face",
+       "part": "forearm",
+       "role": "consumer"
+      }
+     ],
+     "name": "dogleg_plate_pair",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_69f7832e7c394f7baf3915cecd1d68bf",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L4439-L4449"
+     ]
+    }
+   ],
+   "component_type": "forearm section",
+   "name": "forearm_body",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Annular flange with a cut bolt circle.",
+     "implementation_function": "_end_effector_bolted_round_flange_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "face_y": "ee_face_y",
+        "face_z": "ee_face_z",
+        "length": "ee_len"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "mount_footprint",
+       "part": "output_face",
+       "role": "provider"
+      }
+     ],
+     "name": "bolted_round_flange",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_0003",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L274-L279"
+     ]
+    },
+    {
+     "evidence": "Thick square plate with four bolt bosses.",
+     "implementation_function": "_end_effector_square_tool_plate_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "face_y": "ee_face_y",
+        "face_z": "ee_face_z",
+        "length": "ee_len"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "mount_footprint",
+       "part": "output_face",
+       "role": "provider"
+      }
+     ],
+     "name": "square_tool_plate",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_b6f8d1f7bbc449cbaa3e50bc173c3be9",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L6447-L6460"
+     ]
+    },
+    {
+     "evidence": "Rigid pad body carrying a thin oversized rubber face.",
+     "implementation_function": "_end_effector_rubber_pad_face_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "face_y": "ee_face_y",
+        "face_z": "ee_face_z",
+        "length": "ee_len"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "mount_footprint",
+       "part": "output_face",
+       "role": "provider"
+      }
+     ],
+     "name": "rubber_pad_face",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_bb09e6755ede414885d3f35cd6f32074",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L6760-L6771"
+     ]
+    },
+    {
+     "evidence": "Tool flange, vertical vacuum tube and a rubber cup below the forearm.",
+     "implementation_function": "_end_effector_suction_cup_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "face_y": "ee_face_y",
+        "face_z": "ee_face_z",
+        "length": "ee_len"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "mount_footprint",
+       "part": "output_face",
+       "role": "provider"
+      }
+     ],
+     "name": "suction_cup",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_958fc14d6dc5464d82adfcbf2530c2b8",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L113-L130"
+     ]
+    },
+    {
+     "evidence": "Axial socket with clamp screws and a visible bore.",
+     "implementation_function": "_end_effector_clamped_tool_socket_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "face_y": "ee_face_y",
+        "face_z": "ee_face_z",
+        "length": "ee_len"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "mount_footprint",
+       "part": "output_face",
+       "role": "provider"
+      }
+     ],
+     "name": "clamped_tool_socket",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_91495d296db24c1ab14fa1e5c5fd158e",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L5344-L5362"
+     ]
+    },
+    {
+     "evidence": "Adapter block sets the face standoff ahead of a tall face plate.",
+     "implementation_function": "_end_effector_adapter_and_face_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "face_y": "ee_face_y",
+        "face_z": "ee_face_z",
+        "length": "ee_len"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "mount_footprint",
+       "part": "output_face",
+       "role": "provider"
+      }
+     ],
+     "name": "adapter_and_face",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_ad1184dcaf024c55bf7ceb4b5de968b1",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L6046-L6061"
+     ]
+    },
+    {
+     "evidence": "Small square nose tip with no mounting face.",
+     "implementation_function": "_end_effector_bare_nose_tip_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "face_y": "ee_face_y",
+        "face_z": "ee_face_z",
+        "length": "ee_len"
+       },
+       "frame": {
+        "normal": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "plane",
+       "name": "mount_footprint",
+       "part": "output_face",
+       "role": "provider"
+      }
+     ],
+     "name": "bare_nose_tip",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_ad0237214e4840f5a6b333d6c849dc2f",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L253-L258"
+     ]
+    }
+   ],
+   "component_type": "terminal output face",
+   "name": "end_effector",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "The output face is a visual of the forearm part: three parts, two joints.",
+     "implementation_function": "_terminal_body_merged_into_forearm_build",
+     "interfaces": [],
+     "name": "merged_into_forearm",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_0003",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L452-L472"
+     ]
+    },
+    {
+     "evidence": "A fourth part is attached by a FIXED articulation at the forearm tip.",
+     "implementation_function": "_terminal_body_separate_fixed_part_build",
+     "interfaces": [],
+     "name": "separate_fixed_part",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_serial_elbow_arm_0004",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L198-L215",
+      "model.py:L245-L251"
+     ]
+    }
+   ],
+   "component_type": "terminal part topology",
+   "name": "terminal_body",
+   "required": true
+  }
+ ],
+ "slug": "serial_elbow_arm",
+ "source_map_path": "articraft_template_authoring/source_maps/serial_elbow_arm.md",
+ "source_map_sha256": "bf9bd92427138a96bd262fbdf75493e33695eace2b5b47f79ac1dc581caabdcd"
+}

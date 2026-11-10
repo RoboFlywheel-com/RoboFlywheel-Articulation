@@ -1,0 +1,1103 @@
+{
+ "assembly_notes": "The root is always the folded C-frame of the source screw clamp: a guided jaw on two rails, a threaded spindle on a registered vertical axis mate and a self-aligning pressure shoe. The frame adapts its head locally to the selected support family: arm families get a side clevis with bored bosses, the ratchet family additionally gets the toothed sector on the outer cheek, the gas-spring family a lower strut boss, the parallel linkage a second lower boss, and the column family a shelf plus a coaxial socket instead of the clevis. Every support candidate publishes one head seat (point plus accumulated world pitch) and every pad_head candidate consumes it through a vertical axis mate, so the wrist collar always stands upright regardless of the link pitch. All revolute joints are solved with mate_axes and registered with register_interface_mate. Pin joints use bored fork cheeks or sub-millimetre axial clearance instead of overlap allowances; no ctx.allow_overlap is used anywhere. The clamp actuation is its own slot: the screw candidate drives the shoe through a thread nut and spindle, while the over-centre cam candidate carries the shoe on a follower link driven by a cam lever that hangs below the guided jaw. The reach interface is also its own slot: the fixed mount pins the support base to the frame head, while the edge track interposes a carriage on frame-mounted rails and moves the whole head mount out in front of the jaw (host_x_off_m/host_z_off_m rebase every head-mount coordinate into the carriage frame).",
+ "bindings": [
+  {
+   "binding_id": "head_seat",
+   "consumer": "pad_head.wrist_collar",
+   "derived": [
+    {
+     "expression": "atan2 of the support link's accumulated world pitch, applied in reverse so the wrist swivel axis stays vertical",
+     "mode": "derived",
+     "name": "wrist_axis_local",
+     "rationale": "The head seat sits on a pitched link; the swivel must still turn about world Z.",
+     "unit": "rad",
+     "value_type": "float"
+    },
+    {
+     "expression": "0.030 + 0.24 * pad_length_m",
+     "mode": "derived",
+     "name": "post_height_m",
+     "rationale": "The upright post must lift the trough far enough above the support link that a tilted rest still clears it.",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "revolute",
+   "provider": "support_linkage.head_seat"
+  }
+ ],
+ "category_anchors": [
+  {
+   "anchor_id": "clamp_screw_core",
+   "applies_to": {
+    "candidates": [
+     "ratchet_elbow",
+     "gas_spring_arm",
+     "linear_rail",
+     "parallel_linkage",
+     "rotary_column",
+     "plain_arm"
+    ],
+    "slot": "support_linkage"
+   },
+   "required_author_checks": [
+    "clamp keeps the source screw clamp inventory",
+    "clamp throat opens and closes on the source screw axis",
+    "one source-backed support structure carries the head",
+    "reach interface matches the selected base"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "clamp_jaw",
+     "joint_type": "prismatic",
+     "parent_role": "clamp_frame"
+    },
+    {
+     "child_role": "support_arm",
+     "joint_type": "revolute",
+     "parent_role": "clamp_frame"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "clamp_frame"
+    },
+    {
+     "exact_count": 1,
+     "role": "clamp_jaw"
+    },
+    {
+     "exact_count": 1,
+     "role": "clamp_shoe"
+    },
+    {
+     "exact_count": 1,
+     "role": "support_arm"
+    }
+   ]
+  },
+  {
+   "anchor_id": "forearm_rest_head",
+   "applies_to": {
+    "candidates": [
+     "tilt_saddle",
+     "ball_socket",
+     "split_pad",
+     "deep_cradle",
+     "quick_release"
+    ],
+    "slot": "pad_head"
+   },
+   "required_author_checks": [
+    "forearm rest is a concave saddle above the support",
+    "forearm rest keeps the source trough footprint",
+    "wrist swivel turns the rest about a vertical axis"
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "support_wrist"
+    },
+    {
+     "exact_count": 1,
+     "role": "forearm_rest"
+    }
+   ]
+  },
+  {
+   "anchor_id": "ball_socket_two_axis_head",
+   "applies_to": {
+    "candidates": [
+     "ball_socket"
+    ],
+    "slot": "pad_head"
+   },
+   "required_author_checks": [
+    "forearm rest is a concave saddle above the support"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "pad_gimbal",
+     "joint_type": "revolute",
+     "parent_role": "support_wrist"
+    },
+    {
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "child_role": "forearm_rest",
+     "joint_type": "revolute",
+     "parent_role": "pad_gimbal"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "pad_gimbal"
+    }
+   ]
+  },
+  {
+   "anchor_id": "split_pad_two_body_head",
+   "applies_to": {
+    "candidates": [
+     "split_pad"
+    ],
+    "slot": "pad_head"
+   },
+   "required_author_checks": [
+    "forearm rest is a concave saddle above the support"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "pad_yoke",
+     "joint_type": "revolute",
+     "parent_role": "support_wrist"
+    },
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "forearm_rest",
+     "joint_type": "revolute",
+     "parent_role": "pad_yoke"
+    },
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "wrist_rest",
+     "joint_type": "revolute",
+     "parent_role": "pad_yoke"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "pad_yoke"
+    },
+    {
+     "exact_count": 1,
+     "role": "wrist_rest"
+    },
+    {
+     "exact_count": 1,
+     "role": "forearm_rest"
+    }
+   ]
+  },
+  {
+   "anchor_id": "ratchet_indexed_elbow",
+   "applies_to": {
+    "candidates": [
+     "ratchet_elbow"
+    ],
+    "slot": "support_linkage"
+   },
+   "required_author_checks": [
+    "one source-backed support structure carries the head"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "index_pawl",
+     "joint_type": "revolute",
+     "parent_role": "support_arm"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "index_pawl"
+    }
+   ]
+  },
+  {
+   "anchor_id": "screw_spindle_actuation",
+   "applies_to": {
+    "candidates": [
+     "screw_spindle"
+    ],
+    "slot": "clamp_actuation"
+   },
+   "required_author_checks": [
+    "clamp keeps the source screw clamp inventory"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "clamp_screw",
+     "joint_type": "continuous",
+     "parent_role": "clamp_jaw"
+    },
+    {
+     "child_role": "clamp_shoe",
+     "joint_type": "revolute",
+     "parent_role": "clamp_screw"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "clamp_screw"
+    }
+   ]
+  },
+  {
+   "anchor_id": "overcenter_cam_actuation",
+   "applies_to": {
+    "candidates": [
+     "overcenter_cam"
+    ],
+    "slot": "clamp_actuation"
+   },
+   "required_author_checks": [
+    "clamp keeps the source screw clamp inventory"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "clamp_cam_lever",
+     "joint_type": "revolute",
+     "parent_role": "clamp_jaw"
+    },
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "clamp_follower",
+     "joint_type": "revolute",
+     "parent_role": "clamp_jaw"
+    },
+    {
+     "child_role": "clamp_shoe",
+     "joint_type": "revolute",
+     "parent_role": "clamp_follower"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "clamp_cam_lever"
+    },
+    {
+     "exact_count": 1,
+     "role": "clamp_follower"
+    }
+   ]
+  },
+  {
+   "anchor_id": "edge_track_reach_carriage",
+   "applies_to": {
+    "candidates": [
+     "edge_track"
+    ],
+    "slot": "base_reach"
+   },
+   "required_author_checks": [
+    "reach interface matches the selected base",
+    "edge-track carriage really moves the support base along the desk edge"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "reach_carriage",
+     "joint_type": "prismatic",
+     "parent_role": "clamp_frame"
+    },
+    {
+     "child_role": "support_arm",
+     "joint_type": "revolute",
+     "parent_role": "reach_carriage"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "reach_carriage"
+    }
+   ]
+  },
+  {
+   "anchor_id": "quick_release_pad_carriage",
+   "applies_to": {
+    "candidates": [
+     "quick_release"
+    ],
+    "slot": "pad_head"
+   },
+   "required_author_checks": [
+    "forearm rest is a concave saddle above the support"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "pad_carriage",
+     "joint_type": "prismatic",
+     "parent_role": "support_wrist"
+    },
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "pad_cam_lock",
+     "joint_type": "revolute",
+     "parent_role": "pad_carriage"
+    },
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "forearm_rest",
+     "joint_type": "revolute",
+     "parent_role": "pad_carriage"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "pad_carriage"
+    },
+    {
+     "exact_count": 1,
+     "role": "pad_cam_lock"
+    }
+   ]
+  }
+ ],
+ "multiplicities": [],
+ "schema_version": 1,
+ "slots": [
+  {
+   "candidates": [
+    {
+     "evidence": "_arm_housing_shape extrudes the tapered side profile of 001.png; one arm_pitch revolute at the clamp clevis carries the whole head.",
+     "implementation_function": "_support_linkage_plain_arm_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "arm_reach_m",
+        "seat_radius": 0.0152
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ],
+        "note": "published in the link frame, rotated back by the link's accumulated world pitch"
+       },
+       "kind": "axis",
+       "name": "head_seat",
+       "part": "support_linkage__plain_arm__arm",
+       "role": "provider"
+      }
+     ],
+     "name": "plain_arm",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.245,
+       "minimum": 0.155,
+       "mode": "independent",
+       "name": "arm_reach_m",
+       "rationale": "Horizontal reach of the adjustable structure; link lengths, rail travel, carriage stroke and the head seat all derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__ergonomic_clamp_with_adjustable__001__png__airflex_batch_20260710_0eb880af658b4bd19b563ba6e0817a3d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L61-L74",
+      "model.py:L377-L438"
+     ]
+    },
+    {
+     "evidence": "_sector_teeth_shape builds seven real asymmetric teeth on the frame clevis and _pawl_shape a bored pawl on its own pawl_engage revolute, so elevation is indexed rather than free.",
+     "implementation_function": "_support_linkage_ratchet_elbow_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "arm_reach_m",
+        "seat_radius": 0.0152
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ],
+        "note": "published in the link frame, rotated back by the link's accumulated world pitch"
+       },
+       "kind": "axis",
+       "name": "head_seat",
+       "part": "support_linkage__ratchet_elbow__arm",
+       "role": "provider"
+      }
+     ],
+     "name": "ratchet_elbow",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.245,
+       "minimum": 0.155,
+       "mode": "independent",
+       "name": "arm_reach_m",
+       "rationale": "Horizontal reach of the adjustable structure; link lengths, rail travel, carriage stroke and the head seat all derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_forearm_support_var_ratchet_elbow",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L124-L186",
+      "model.py:L451-L543"
+     ]
+    },
+    {
+     "evidence": "A separate gas_spring_cylinder on a gas_spring_base_pivot revolute at the frame plus a gas_spring_piston on a gas_spring_extension prismatic; two extra parts and a closed force path the plain arm does not have.",
+     "implementation_function": "_support_linkage_gas_spring_arm_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "arm_reach_m",
+        "seat_radius": 0.0152
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ],
+        "note": "published in the link frame, rotated back by the link's accumulated world pitch"
+       },
+       "kind": "axis",
+       "name": "head_seat",
+       "part": "support_linkage__gas_spring_arm__arm",
+       "role": "provider"
+      }
+     ],
+     "name": "gas_spring_arm",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.245,
+       "minimum": 0.155,
+       "mode": "independent",
+       "name": "arm_reach_m",
+       "rationale": "Horizontal reach of the adjustable structure; link lengths, rail travel, carriage stroke and the head seat all derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_forearm_support_var_gas_spring_arm",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L380-L552"
+     ]
+    },
+    {
+     "evidence": "rail_carriage rides a carriage_slide prismatic along the top spine of the arm, so the head translates instead of only pitching.",
+     "implementation_function": "_support_linkage_linear_rail_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "arm_reach_m",
+        "seat_radius": 0.0152
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ],
+        "note": "published in the link frame, rotated back by the link's accumulated world pitch"
+       },
+       "kind": "axis",
+       "name": "head_seat",
+       "part": "support_linkage__linear_rail__carriage",
+       "role": "provider"
+      }
+     ],
+     "name": "linear_rail",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.245,
+       "minimum": 0.155,
+       "mode": "independent",
+       "name": "arm_reach_m",
+       "rationale": "Horizontal reach of the adjustable structure; link lengths, rail travel, carriage stroke and the head seat all derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_forearm_support_var_linear_rail",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L377-L571"
+     ]
+    },
+    {
+     "evidence": "_upper_link_shape/_lower_link_shape give two distinct bars on upper_link_pitch and lower_link_pitch, closed by a carriage on carriage_level; the part tree is a linkage, not a single arm.",
+     "implementation_function": "_support_linkage_parallel_linkage_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "arm_reach_m",
+        "seat_radius": 0.0152
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ],
+        "note": "published in the link frame, rotated back by the link's accumulated world pitch"
+       },
+       "kind": "axis",
+       "name": "head_seat",
+       "part": "support_linkage__parallel_linkage__carriage",
+       "role": "provider"
+      }
+     ],
+     "name": "parallel_linkage",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.245,
+       "minimum": 0.155,
+       "mode": "independent",
+       "name": "arm_reach_m",
+       "rationale": "Horizontal reach of the adjustable structure; link lengths, rail travel, carriage stroke and the head seat all derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_forearm_support_var_parallel_linkage",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L59-L89",
+      "model.py:L444-L618"
+     ]
+    },
+    {
+     "evidence": "_column_post_shape/_sliding_collar_shape/_radial_arm_shape replace the elbow with a column_rotate yaw axis, a collar_slide prismatic up the post and an arm_swing revolute.",
+     "implementation_function": "_support_linkage_rotary_column_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "arm_reach_m",
+        "seat_radius": 0.0152
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ],
+        "note": "published in the link frame, rotated back by the link's accumulated world pitch"
+       },
+       "kind": "axis",
+       "name": "head_seat",
+       "part": "support_linkage__rotary_column__radial_arm",
+       "role": "provider"
+      }
+     ],
+     "name": "rotary_column",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.245,
+       "minimum": 0.155,
+       "mode": "independent",
+       "name": "arm_reach_m",
+       "rationale": "Horizontal reach of the adjustable structure; link lengths, rail travel, carriage stroke and the head seat all derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_forearm_support_var_rotary_column",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L62-L111",
+      "model.py:L422-L590"
+     ]
+    }
+   ],
+   "component_type": "single tapered rising arm on an elbow pivot",
+   "name": "support_linkage",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "_saddle_shell intersects a clipped annulus into the genuinely concave trough of 001.png; head is wrist swivel plus one forearm_pad_tilt.",
+     "implementation_function": "_pad_head_tilt_saddle_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "collar_radius": 0.015,
+        "post_height": "post_height_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "wrist_collar",
+       "part": "pad_head__tilt_saddle__wrist",
+       "role": "consumer"
+      }
+     ],
+     "name": "tilt_saddle",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.212,
+       "minimum": 0.162,
+       "mode": "independent",
+       "name": "pad_length_m",
+       "rationale": "Length of the concave trough; the shell, liner, end bolsters and the upright post height derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.082,
+       "minimum": 0.058,
+       "mode": "independent",
+       "name": "pad_radius_m",
+       "rationale": "Outer radius of the trough annulus; trough width, liner radius and bolster width derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__ergonomic_clamp_with_adjustable__001__png__airflex_batch_20260710_0eb880af658b4bd19b563ba6e0817a3d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L103-L120",
+      "model.py:L510-L607"
+     ]
+    },
+    {
+     "evidence": "An extra pad_gimbal part splits the head into pad_ball_pitch and pad_ball_roll, so the saddle has two independent orientation axes.",
+     "implementation_function": "_pad_head_ball_socket_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "collar_radius": 0.015,
+        "post_height": "post_height_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "wrist_collar",
+       "part": "pad_head__ball_socket__wrist",
+       "role": "consumer"
+      }
+     ],
+     "name": "ball_socket",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.212,
+       "minimum": 0.162,
+       "mode": "independent",
+       "name": "pad_length_m",
+       "rationale": "Length of the concave trough; the shell, liner, end bolsters and the upright post height derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.082,
+       "minimum": 0.058,
+       "mode": "independent",
+       "name": "pad_radius_m",
+       "rationale": "Outer radius of the trough annulus; trough width, liner radius and bolster width derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_forearm_support_var_ball_socket_wrist",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L515-L681"
+     ]
+    },
+    {
+     "evidence": "pad_yoke on yoke_tilt carries two distinct contact bodies, forearm_pad and a smaller wrist_pad, each on its own tilt revolute.",
+     "implementation_function": "_pad_head_split_pad_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "collar_radius": 0.015,
+        "post_height": "post_height_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "wrist_collar",
+       "part": "pad_head__split_pad__wrist",
+       "role": "consumer"
+      }
+     ],
+     "name": "split_pad",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.212,
+       "minimum": 0.162,
+       "mode": "independent",
+       "name": "pad_length_m",
+       "rationale": "Length of the concave trough; the shell, liner, end bolsters and the upright post height derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.082,
+       "minimum": 0.058,
+       "mode": "independent",
+       "name": "pad_radius_m",
+       "rationale": "Outer radius of the trough annulus; trough width, liner radius and bolster width derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_forearm_support_var_split_pad",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L563-L712"
+     ]
+    },
+    {
+     "evidence": "The rest body becomes a closed U channel with raised side bolsters and two end walls instead of the open saddle trough.",
+     "implementation_function": "_pad_head_deep_cradle_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "collar_radius": 0.015,
+        "post_height": "post_height_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "wrist_collar",
+       "part": "pad_head__deep_cradle__wrist",
+       "role": "consumer"
+      }
+     ],
+     "name": "deep_cradle",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.212,
+       "minimum": 0.162,
+       "mode": "independent",
+       "name": "pad_length_m",
+       "rationale": "Length of the concave trough; the shell, liner, end bolsters and the upright post height derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.082,
+       "minimum": 0.058,
+       "mode": "independent",
+       "name": "pad_radius_m",
+       "rationale": "Outer radius of the trough annulus; trough width, liner radius and bolster width derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_forearm_support_var_deep_cradle_pad_20260714",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L103-L172",
+      "model.py:L605-L662"
+     ]
+    },
+    {
+     "evidence": "A dovetail_carriage on a bounded insertion prismatic and a cam_lock lever sit between wrist and pad, so the rest is removable.",
+     "implementation_function": "_pad_head_quick_release_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "collar_radius": 0.015,
+        "post_height": "post_height_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "wrist_collar",
+       "part": "pad_head__quick_release__wrist",
+       "role": "consumer"
+      }
+     ],
+     "name": "quick_release",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.212,
+       "minimum": 0.162,
+       "mode": "independent",
+       "name": "pad_length_m",
+       "rationale": "Length of the concave trough; the shell, liner, end bolsters and the upright post height derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.082,
+       "minimum": 0.058,
+       "mode": "independent",
+       "name": "pad_radius_m",
+       "rationale": "Outer radius of the trough annulus; trough width, liner radius and bolster width derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_forearm_support_var_quick_release_pad_20260714",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L619-L716"
+     ]
+    }
+   ],
+   "component_type": "wrist collar plus one concave saddle on a single tilt",
+   "name": "pad_head",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "The clamp head carries the arm clevis directly; the elbow pin is the only interface between frame and support structure.",
+     "implementation_function": "_base_reach_fixed_mount_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "seat_radius": 0.015
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         -1.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "elbow_axis",
+       "part": "clamp__frame",
+       "role": "provider"
+      }
+     ],
+     "name": "fixed_mount",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_picturex_0611__ergonomic_clamp_with_adjustable__001__png__airflex_batch_20260710_0eb880af658b4bd19b563ba6e0817a3d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L189-L376"
+     ]
+    },
+    {
+     "evidence": "A separate carriage part rides frame-mounted rails on a bounded prismatic and carries the arm clevis, so the whole support base travels along the desk edge.",
+     "implementation_function": "_base_reach_edge_track_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "seat_radius": 0.015,
+        "stroke": "track_stroke_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         -1.0,
+         0.0
+        ],
+        "note": "published in the carriage frame; host_x_off_m/host_z_off_m rebase the head mount"
+       },
+       "kind": "axis",
+       "name": "elbow_axis",
+       "part": "base_reach__edge_track__carriage",
+       "role": "provider"
+      }
+     ],
+     "name": "edge_track",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.104,
+       "minimum": 0.072,
+       "mode": "independent",
+       "name": "clamp_span_m",
+       "rationale": "Clamp span sets the frame width and, on the edge track, the carriage stroke and rail length derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_forearm_support_var_desk_edge_track_20260714",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L103-L115",
+      "model.py:L402-L446"
+     ]
+    }
+   ],
+   "component_type": "reach interface between the clamp frame and the support base",
+   "name": "base_reach",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "A thread nut on the jaw and a spindle on a CONTINUOUS spindle_turn drive the shoe; the shoe pivots on the spindle head.",
+     "implementation_function": "_clamp_actuation_screw_spindle_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "seat_radius": 0.006
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoe_seat",
+       "part": "clamp__spindle",
+       "role": "provider"
+      }
+     ],
+     "name": "screw_spindle",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.058,
+       "minimum": 0.038,
+       "mode": "independent",
+       "name": "throat_gap_m",
+       "rationale": "Open throat of the clamp; jaw travel, spindle reach and the cam/follower stroke all derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__ergonomic_clamp_with_adjustable__001__png__airflex_batch_20260710_0eb880af658b4bd19b563ba6e0817a3d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L189-L376"
+     ]
+    },
+    {
+     "evidence": "cam_lever on cam_lever_swing plus cam_follower on follower_pivot replace the spindle; the follower carries the pressure shoe.",
+     "implementation_function": "_clamp_actuation_overcenter_cam_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "seat_radius": 0.006
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shoe_seat",
+       "part": "clamp__cam_follower",
+       "role": "provider"
+      }
+     ],
+     "name": "overcenter_cam",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_forearm_support_var_overcenter_cam_clamp_20260714",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L100-L149",
+      "model.py:L334-L458"
+     ]
+    }
+   ],
+   "component_type": "desk-clamp actuation driving the guided jaw",
+   "name": "clamp_actuation",
+   "required": true
+  }
+ ],
+ "slug": "pictureX_0611_ergonomic_clamp_with_adjustable",
+ "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_ergonomic_clamp_with_adjustable.md",
+ "source_map_sha256": "194c59682e954aaee3a88dd07b0fc533d5615eba492812219b6484f1bbdc40d5"
+}

@@ -1,0 +1,21 @@
+RFW-A includes code adapted from the Articraft-based arti-template and
+articraft_data research workspaces. Original module names are retained for
+source-program compatibility. See docs/migration.md and its inventory for the
+import boundary and RFW-A additions. The upstream Articraft project is
+https://github.com/mattzh72/articraft.
+
+This product includes source code adapted from `cq_gears`
+([github.com/meadiode/cq_gears](https://github.com/meadiode/cq_gears)),
+copyright 2021 meadiode@github.
+
+The vendored implementation lives under `sdk/gears.py` and `sdk/v0/gears.py` and is
+distributed under the Apache License, Version 2.0, consistent with the
+upstream license.
+
+Third-party Python dependencies are installed from PyPI under their own
+licenses, which Apache-2.0 does not cover; see THIRD_PARTY.md for the list.
+Notably, the `cadquery` dependency chain includes copyleft-licensed
+components: Open CASCADE Technology (LGPL-2.1-only WITH OCCT exception, via
+the `cadquery-ocp` wheels), CasADi (LGPL-3.0-or-later) and the compiled NLopt
+library (LGPL-2.1-or-later). They are consumed as unmodified, dynamically
+linked packages.

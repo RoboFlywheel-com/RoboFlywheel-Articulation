@@ -1,0 +1,3664 @@
+{
+  "assembly_notes": "Demonstration gyroscope. The object is authored in a chain of ring-local frames so that the category's one hard invariant is structural rather than incidental: a gimbal member's own trunnion (hold) axis is its local +Z with its pole pins at ±Z, the axis it hands to its child is its local +X, and its band lies in whichever plane contains both of those axes. A pure gimbal ring and an opposed_bearings carrier therefore lie in their local XZ plane; a bearing_spider carrier lies in its local YZ plane, because there the spin axis is the member's own normal. The rotor's spin axis is its local +Z with the flywheel in local XY.\n\nEvery joint is solved with mate_axes between an AxisInterface on the parent and one on the child, both anchored at their own frame origin, and registered with register_interface_mate. Because both interface points are the gimbal centre, every joint after the base has origin exactly (0,0,0), and consecutive joint axes come out mutually orthogonal by construction — the authored check 'every gimbal axis passes through the common centre and is orthogonal to its parent' composes the origin rotations and asserts both facts on every seed.\n\nSlots. support_base builds the fixed root and owns the first rotation axis: a weighted cast pedestal, a slender tapered column, a splayed tripod, or a wall bracket whose axis is horizontal (0,-1,0) instead of vertical. ring_stack is two nested members and three joints, or three nested members and four joints with a fourth independent axis; it is a structural slot rather than a multiplicity because the extra member is not a repeat — it adds a distinct axis and re-orients every plane in the stack. ring_section is the member cross-section: flat machined band with an edge bead, round tube hoop with bearing seat rings, or a rectangular window carrier frame for the innermost member. spindle_support is how the carrier captures the rotor: two opposed in-plane pole bearings on a through axle, or one central race on a spider. rotor_form is the flywheel: crowned drum, shaped disc with a proud perimeter band, spoked inertia rim, or plain bevelled solid disc. index_hardware is the outer ring's free pole: plain trunnion stub or slender pointer mast. gimbal_motion is free swing or a mechanically limited swing with real end stops.\n\nHost adaptation. rotor_bore_m is re-derived from whichever carrier the section slot built — the annulus and tube hoops present ring_inner[carrier], while the rectangular cage presents its bar line — and flywheel_radius_m follows it, so a rotor form and a carrier form combine without excluding any pair. The parent's trunnion sleeve starts 4 mm beyond pole_reach_m[k+1], which is the child's furthest material along the shared axis for an annulus, a tube and a cage alike. The spider steps its race back past rotor_back_reach_m, which is per rotor form. The base pushes its azimuth bearing back to mount_station_m so it always clears the outer ring's own bottom pole.\n\nClearances. Every shaft/bearing fit in the model is a real bore on a 0.6 mm radial running clearance — under the 1 mm assembly-support band, over the tessellation error, and therefore supported by baseline QC without a single ctx.allow_overlap, which the whole source pool relies on. Nested members keep ring_gap_m = max(0.014, 0.10 R) of running clearance, checked against each member's true swept envelope (its furthest material from the gimbal centre, which is rotation-invariant) rather than at neutral only. The rotor axle is capped inside the carrier's envelope instead of the source's 205 mm protruding shaft, which crosses the outer band whenever the tilt joint passes through zero.\n\nouter_ring_radius_m, ring_width_ratio, rotor_radius_ratio and gimbal_rise_m are the honest continuous parameters. There is no multiplicity: the third gimbal member is a structural candidate, and no homogeneous repeat exists across every rotor candidate (the spoked rim's radial members have no counterpart in a plain solid disc, which the source explicitly builds without spokes or cutouts). core_domain = 4 x 2 x 3 x 2 x 4 x 2 x 2 = 768; raw_domain = 768.",
+  "bindings": [
+    {
+      "binding_id": "base_carries_outer_ring",
+      "consumer": "ring_section.ring_pole_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "outer_ring_radius_m"
+          ],
+          "expression": "outer_ring_radius_m + 0.005",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "mount_station_m",
+          "rationale": "the base pushes its bearing back until it clears whatever ring the section slot built",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "outer_ring_radius_m"
+          ],
+          "expression": "housing_len_m - 0.004",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "pole_engagement_m",
+          "rationale": "how deep the outer ring's pole pin runs inside the azimuth bore",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "support_base.gimbal_pole_axis"
+    },
+    {
+      "binding_id": "member_carries_next_member",
+      "consumer": "ring_stack.nested_pole_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "ring_outer_m",
+            "carrier_half_pole_m"
+          ],
+          "expression": "pole_reach_m[k+1] + 0.004",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "sleeve_start_m",
+          "rationale": "the parent's trunnion sleeve starts beyond the child's furthest material on the shared axis, whether the child is an annulus, a tube or a cage",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "ring_outer_m"
+          ],
+          "expression": "(0,0,1) coplanar | (0,1,0) orthogonal, chosen from ring_stack and spindle_support",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "child_plane_radial",
+          "rationale": "the parent hands the child the radial that puts the child's plane where its own two axes actually live",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "ring_section.ring_child_axis"
+    },
+    {
+      "binding_id": "carrier_spins_rotor",
+      "consumer": "rotor_form.rotor_spin_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "rotor_radius_ratio",
+            "rotor_bore_m"
+          ],
+          "expression": "rotor_radius_ratio * (rotor_bore_m - rotor_clear_m) / 1.12",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "flywheel_radius_m",
+          "rationale": "the rotor is sized from the bore the carrier the section slot built actually presents",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "flywheel_radius_m"
+          ],
+          "expression": "-(rotor_back_reach_m + 0.008 + race_len_m / 2)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "race_offset_m",
+          "rationale": "the spider steps its race back past whichever rotor form was built",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "continuous",
+      "provider": "spindle_support.spindle_axis"
+    },
+    {
+      "binding_id": "outer_ring_carries_index_hardware",
+      "consumer": "index_hardware.pole_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "ring_outer_m"
+          ],
+          "expression": "pole_reach_m[0]",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "pole_face_station_m",
+          "rationale": "the free pole face moves with whichever cross-section the ring slot built",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "ring_section.free_pole_face"
+    },
+    {
+      "binding_id": "base_stops_outer_ring",
+      "consumer": "gimbal_motion.stop_pin_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "outer_ring_radius_m"
+          ],
+          "expression": "housing_outer_m + 0.013",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "stop_radius_m",
+          "rationale": "the stop arc clears the azimuth bearing of whatever base is in play",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "stop_radius_m"
+          ],
+          "expression": "azimuth_limit_rad + atan2(0.0035, stop_radius_m) + atan2(0.0060, stop_radius_m) + 0.14",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "stop_block_angle_rad",
+          "rationale": "block placement solved from the limit and both half widths",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "support_base.azimuth_stop_track"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "support_base_identity",
+      "applies_to": {
+        "candidates": [
+          "weighted_pedestal",
+          "slender_column",
+          "tripod_legs",
+          "wall_bracket"
+        ],
+        "slot": "support_base"
+      },
+      "required_author_checks": [
+        "category_anchor: a flywheel rotor spins in a nested gimbal stack on one grounded support",
+        "category_anchor: every gimbal axis passes through the common centre and is orthogonal to its parent",
+        "category_anchor: every nested member keeps a real running clearance inside its parent",
+        "category_anchor: support_base identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "outer_gimbal_ring",
+          "joint_type": "revolute",
+          "parent_role": "support_base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "spindle_carrier"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "support_base"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "outer_gimbal_ring"
+        },
+        {
+          "count_from": "resolved.mid_ring_count",
+          "exact_count": null,
+          "role": "mid_gimbal_ring"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "spindle_carrier"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "rotor"
+        }
+      ]
+    },
+    {
+      "anchor_id": "ring_stack_two_ring",
+      "applies_to": {
+        "candidates": [
+          "two_ring_gimbal"
+        ],
+        "slot": "ring_stack"
+      },
+      "required_author_checks": [
+        "category_anchor: a flywheel rotor spins in a nested gimbal stack on one grounded support",
+        "category_anchor: every gimbal axis passes through the common centre and is orthogonal to its parent",
+        "category_anchor: every nested member keeps a real running clearance inside its parent",
+        "category_anchor: ring_stack identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "outer_gimbal_ring",
+          "joint_type": "revolute",
+          "parent_role": "support_base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "spindle_carrier"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "spindle_carrier",
+          "joint_type": "revolute",
+          "parent_role": "outer_gimbal_ring"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "support_base"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "outer_gimbal_ring"
+        },
+        {
+          "count_from": "resolved.mid_ring_count",
+          "exact_count": null,
+          "role": "mid_gimbal_ring"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "spindle_carrier"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "rotor"
+        }
+      ]
+    },
+    {
+      "anchor_id": "ring_stack_three_ring",
+      "applies_to": {
+        "candidates": [
+          "three_ring_gimbal"
+        ],
+        "slot": "ring_stack"
+      },
+      "required_author_checks": [
+        "category_anchor: a flywheel rotor spins in a nested gimbal stack on one grounded support",
+        "category_anchor: every gimbal axis passes through the common centre and is orthogonal to its parent",
+        "category_anchor: every nested member keeps a real running clearance inside its parent",
+        "category_anchor: ring_stack identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "outer_gimbal_ring",
+          "joint_type": "revolute",
+          "parent_role": "support_base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "spindle_carrier"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "mid_gimbal_ring",
+          "joint_type": "revolute",
+          "parent_role": "outer_gimbal_ring"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "spindle_carrier",
+          "joint_type": "revolute",
+          "parent_role": "mid_gimbal_ring"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "support_base"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "outer_gimbal_ring"
+        },
+        {
+          "count_from": "resolved.mid_ring_count",
+          "exact_count": null,
+          "role": "mid_gimbal_ring"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "spindle_carrier"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "rotor"
+        }
+      ]
+    },
+    {
+      "anchor_id": "ring_section_identity",
+      "applies_to": {
+        "candidates": [
+          "flat_band",
+          "tubular_hoop",
+          "carrier_frame"
+        ],
+        "slot": "ring_section"
+      },
+      "required_author_checks": [
+        "category_anchor: a flywheel rotor spins in a nested gimbal stack on one grounded support",
+        "category_anchor: every gimbal axis passes through the common centre and is orthogonal to its parent",
+        "category_anchor: every nested member keeps a real running clearance inside its parent",
+        "category_anchor: ring_section identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "outer_gimbal_ring",
+          "joint_type": "revolute",
+          "parent_role": "support_base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "spindle_carrier"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "support_base"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "outer_gimbal_ring"
+        },
+        {
+          "count_from": "resolved.mid_ring_count",
+          "exact_count": null,
+          "role": "mid_gimbal_ring"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "spindle_carrier"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "rotor"
+        }
+      ]
+    },
+    {
+      "anchor_id": "spindle_support_identity",
+      "applies_to": {
+        "candidates": [
+          "opposed_bearings",
+          "bearing_spider"
+        ],
+        "slot": "spindle_support"
+      },
+      "required_author_checks": [
+        "category_anchor: a flywheel rotor spins in a nested gimbal stack on one grounded support",
+        "category_anchor: every gimbal axis passes through the common centre and is orthogonal to its parent",
+        "category_anchor: every nested member keeps a real running clearance inside its parent",
+        "category_anchor: spindle_support identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "outer_gimbal_ring",
+          "joint_type": "revolute",
+          "parent_role": "support_base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "spindle_carrier"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "support_base"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "outer_gimbal_ring"
+        },
+        {
+          "count_from": "resolved.mid_ring_count",
+          "exact_count": null,
+          "role": "mid_gimbal_ring"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "spindle_carrier"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "rotor"
+        }
+      ]
+    },
+    {
+      "anchor_id": "rotor_form_identity",
+      "applies_to": {
+        "candidates": [
+          "crowned_drum",
+          "shaped_disc",
+          "spoked_rim",
+          "solid_disc"
+        ],
+        "slot": "rotor_form"
+      },
+      "required_author_checks": [
+        "category_anchor: a flywheel rotor spins in a nested gimbal stack on one grounded support",
+        "category_anchor: every gimbal axis passes through the common centre and is orthogonal to its parent",
+        "category_anchor: every nested member keeps a real running clearance inside its parent",
+        "category_anchor: rotor_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "outer_gimbal_ring",
+          "joint_type": "revolute",
+          "parent_role": "support_base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "spindle_carrier"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "support_base"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "outer_gimbal_ring"
+        },
+        {
+          "count_from": "resolved.mid_ring_count",
+          "exact_count": null,
+          "role": "mid_gimbal_ring"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "spindle_carrier"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "rotor"
+        }
+      ]
+    },
+    {
+      "anchor_id": "index_hardware_identity",
+      "applies_to": {
+        "candidates": [
+          "plain_trunnion",
+          "pointer_mast"
+        ],
+        "slot": "index_hardware"
+      },
+      "required_author_checks": [
+        "category_anchor: a flywheel rotor spins in a nested gimbal stack on one grounded support",
+        "category_anchor: every gimbal axis passes through the common centre and is orthogonal to its parent",
+        "category_anchor: every nested member keeps a real running clearance inside its parent",
+        "category_anchor: index_hardware identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "outer_gimbal_ring",
+          "joint_type": "revolute",
+          "parent_role": "support_base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "spindle_carrier"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "support_base"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "outer_gimbal_ring"
+        },
+        {
+          "count_from": "resolved.mid_ring_count",
+          "exact_count": null,
+          "role": "mid_gimbal_ring"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "spindle_carrier"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "rotor"
+        }
+      ]
+    },
+    {
+      "anchor_id": "gimbal_motion_identity",
+      "applies_to": {
+        "candidates": [
+          "free_swing",
+          "limited_stops"
+        ],
+        "slot": "gimbal_motion"
+      },
+      "required_author_checks": [
+        "category_anchor: a flywheel rotor spins in a nested gimbal stack on one grounded support",
+        "category_anchor: every gimbal axis passes through the common centre and is orthogonal to its parent",
+        "category_anchor: every nested member keeps a real running clearance inside its parent",
+        "category_anchor: gimbal_motion identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "outer_gimbal_ring",
+          "joint_type": "revolute",
+          "parent_role": "support_base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "spindle_carrier"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "support_base"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "outer_gimbal_ring"
+        },
+        {
+          "count_from": "resolved.mid_ring_count",
+          "exact_count": null,
+          "role": "mid_gimbal_ring"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "spindle_carrier"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "rotor"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "A broad crowned lathe body 198 mm across and 52 mm tall carries a stepped pedestal collar, upright, satin bearing housing and chrome cap on the vertical axis; the wide low mass and the four-step bearing stack are the recognisable desktop demonstrator support.",
+          "implementation_function": "_support_base_weighted_pedestal_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "pole_pin_radius_m[0] + bearing_fit_m",
+                "engagement": "housing_len_m - 0.004",
+                "standoff": "mount_station_m"
+              },
+              "frame": {
+                "axis": "support_axis",
+                "point": [
+                  0.0,
+                  0.0,
+                  "gimbal_center_z_m"
+                ],
+                "radial": "(1,0,0) grounded | (0,0,1) wall bracket"
+              },
+              "kind": "axis",
+              "name": "gimbal_pole_axis",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "block_angle": "±stop_block_angle_rad",
+                "radius": "stop_radius_m",
+                "station": "mount_station_m + housing_len_m + 0.006"
+              },
+              "frame": {
+                "axis": "support_axis",
+                "point": [
+                  0.0,
+                  0.0,
+                  "gimbal_center_z_m"
+                ],
+                "radial": "support radial"
+              },
+              "kind": "axis",
+              "name": "azimuth_stop_track",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "weighted_pedestal",
+          "notes": "Broad crowned cast body on a ten-station revolved profile with a pedestal collar, an upright and a bored azimuth bearing on the vertical axis. The bore is drilled through the upright so the ring's pole pin runs in it rather than into it.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.075,
+              "mode": "independent",
+              "name": "gimbal_rise_m",
+              "rationale": "clear height from the ground to the bottom pole of the outer ring; source pedestal 0.081 and slender column 0.149 measured from their bearing faces",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "outer_ring_radius_m",
+              "rationale": "outer gimbal ring outer radius; source hoops are 0.112 (001 family) and 0.135 (002 family). Every nested radius, the bearing sizes, the base footprint and the flywheel are derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m",
+                "gimbal_rise_m"
+              ],
+              "expression": "outer_ring_radius_m + gimbal_rise_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gimbal_center_z_m",
+              "rationale": "height of the one point every rotation axis passes through",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "outer_ring_radius_m + 0.005",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_station_m",
+              "rationale": "distance from the gimbal centre, back along the support axis, at which the azimuth bearing may start; 5 mm clear of the ring's own bottom pole",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "max(0.016, 0.13 * outer_ring_radius_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "housing_len_m",
+              "rationale": "bored azimuth bearing length; sets the outer ring's pole-pin engagement",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "pole_pin_radius_m + 0.0006 + 0.0065",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "housing_outer_m",
+              "rationale": "azimuth bearing outer radius over its running bore",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "(0,0,1) for the three grounded bases | (0,-1,0) for wall_bracket",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "support_axis",
+              "rationale": "the first rotation axis; the wall bracket is the only candidate that turns it horizontal, and mate_axes re-derives the whole ring stack from it",
+              "unit": null,
+              "value_type": "vector"
+            }
+          ],
+          "record_id": "rec_picturex_0611__gyroscope_with_spinning_wheel_and_gimbal_rings__001__png_39ea603dbb874ec48b73d3109e55d345",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L63-L81",
+            "model.py:L158-L190"
+          ]
+        },
+        {
+          "evidence": "A twelve-station lathe profile flares from a 120 mm foot to a 24 mm neck over 140 mm and is topped by a chrome azimuth bearing and a dark flange; a slender vertical column, not a low mass.",
+          "implementation_function": "_support_base_slender_column_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "pole_pin_radius_m[0] + bearing_fit_m",
+                "engagement": "housing_len_m - 0.004",
+                "standoff": "mount_station_m"
+              },
+              "frame": {
+                "axis": "support_axis",
+                "point": [
+                  0.0,
+                  0.0,
+                  "gimbal_center_z_m"
+                ],
+                "radial": "(1,0,0) grounded | (0,0,1) wall bracket"
+              },
+              "kind": "axis",
+              "name": "gimbal_pole_axis",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "block_angle": "±stop_block_angle_rad",
+                "radius": "stop_radius_m",
+                "station": "mount_station_m + housing_len_m + 0.006"
+              },
+              "frame": {
+                "axis": "support_axis",
+                "point": [
+                  0.0,
+                  0.0,
+                  "gimbal_center_z_m"
+                ],
+                "radial": "support radial"
+              },
+              "kind": "axis",
+              "name": "azimuth_stop_track",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "slender_column",
+          "notes": "Twelve-station tapered column flaring from a wide foot to a narrow neck, topped by a bearing flange and the same bored azimuth bearing.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.075,
+              "mode": "independent",
+              "name": "gimbal_rise_m",
+              "rationale": "clear height from the ground to the bottom pole of the outer ring; source pedestal 0.081 and slender column 0.149 measured from their bearing faces",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "outer_ring_radius_m",
+              "rationale": "outer gimbal ring outer radius; source hoops are 0.112 (001 family) and 0.135 (002 family). Every nested radius, the bearing sizes, the base footprint and the flywheel are derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m",
+                "gimbal_rise_m"
+              ],
+              "expression": "outer_ring_radius_m + gimbal_rise_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gimbal_center_z_m",
+              "rationale": "height of the one point every rotation axis passes through",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "outer_ring_radius_m + 0.005",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_station_m",
+              "rationale": "distance from the gimbal centre, back along the support axis, at which the azimuth bearing may start; 5 mm clear of the ring's own bottom pole",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "max(0.016, 0.13 * outer_ring_radius_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "housing_len_m",
+              "rationale": "bored azimuth bearing length; sets the outer ring's pole-pin engagement",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "pole_pin_radius_m + 0.0006 + 0.0065",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "housing_outer_m",
+              "rationale": "azimuth bearing outer radius over its running bore",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "(0,0,1) for the three grounded bases | (0,-1,0) for wall_bracket",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "support_axis",
+              "rationale": "the first rotation axis; the wall bracket is the only candidate that turns it horizontal, and mate_axes re-derives the whole ring stack from it",
+              "unit": null,
+              "value_type": "vector"
+            }
+          ],
+          "record_id": "rec_picturex_0611__gyroscope_with_spinning_wheel_and_gimbal_rings__002__png_c54e1117482141cab534f56815c6fcf0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L50-L69",
+            "model.py:L141-L164"
+          ]
+        },
+        {
+          "evidence": "A circular hub plate is joined by three CadQuery legs at 120 degrees, each tilted from the vertical and unioned with its own foot pad at 65 mm radius, so the support is an open three-point stance instead of a solid body.",
+          "implementation_function": "_support_base_tripod_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "pole_pin_radius_m[0] + bearing_fit_m",
+                "engagement": "housing_len_m - 0.004",
+                "standoff": "mount_station_m"
+              },
+              "frame": {
+                "axis": "support_axis",
+                "point": [
+                  0.0,
+                  0.0,
+                  "gimbal_center_z_m"
+                ],
+                "radial": "(1,0,0) grounded | (0,0,1) wall bracket"
+              },
+              "kind": "axis",
+              "name": "gimbal_pole_axis",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "block_angle": "±stop_block_angle_rad",
+                "radius": "stop_radius_m",
+                "station": "mount_station_m + housing_len_m + 0.006"
+              },
+              "frame": {
+                "axis": "support_axis",
+                "point": [
+                  0.0,
+                  0.0,
+                  "gimbal_center_z_m"
+                ],
+                "radial": "support radial"
+              },
+              "kind": "axis",
+              "name": "azimuth_stop_track",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "tripod_legs",
+          "notes": "Hub plate with three splayed legs at 120 degrees, each with its own foot pad, plus the collar/upright/bearing stack above the hub.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.075,
+              "mode": "independent",
+              "name": "gimbal_rise_m",
+              "rationale": "clear height from the ground to the bottom pole of the outer ring; source pedestal 0.081 and slender column 0.149 measured from their bearing faces",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "outer_ring_radius_m",
+              "rationale": "outer gimbal ring outer radius; source hoops are 0.112 (001 family) and 0.135 (002 family). Every nested radius, the bearing sizes, the base footprint and the flywheel are derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m",
+                "gimbal_rise_m"
+              ],
+              "expression": "outer_ring_radius_m + gimbal_rise_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gimbal_center_z_m",
+              "rationale": "height of the one point every rotation axis passes through",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "outer_ring_radius_m + 0.005",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_station_m",
+              "rationale": "distance from the gimbal centre, back along the support axis, at which the azimuth bearing may start; 5 mm clear of the ring's own bottom pole",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "max(0.016, 0.13 * outer_ring_radius_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "housing_len_m",
+              "rationale": "bored azimuth bearing length; sets the outer ring's pole-pin engagement",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "pole_pin_radius_m + 0.0006 + 0.0065",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "housing_outer_m",
+              "rationale": "azimuth bearing outer radius over its running bore",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "(0,0,1) for the three grounded bases | (0,-1,0) for wall_bracket",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "support_axis",
+              "rationale": "the first rotation axis; the wall bracket is the only candidate that turns it horizontal, and mate_axes re-derives the whole ring stack from it",
+              "unit": null,
+              "value_type": "vector"
+            }
+          ],
+          "record_id": "rec_picturex0611_gyroscope_var_tripod_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L74-L147",
+            "model.py:L226-L267"
+          ]
+        },
+        {
+          "evidence": "A filleted plate, two mounting rails, forward arms with gussets, a bearing post and two housings hold the gimbal off a wall, and the outermost joint axis becomes horizontal instead of vertical; both the fixed part tree and the first rotation axis change.",
+          "implementation_function": "_support_base_wall_bracket_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "pole_pin_radius_m[0] + bearing_fit_m",
+                "engagement": "housing_len_m - 0.004",
+                "standoff": "mount_station_m"
+              },
+              "frame": {
+                "axis": "support_axis",
+                "point": [
+                  0.0,
+                  0.0,
+                  "gimbal_center_z_m"
+                ],
+                "radial": "(1,0,0) grounded | (0,0,1) wall bracket"
+              },
+              "kind": "axis",
+              "name": "gimbal_pole_axis",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "block_angle": "±stop_block_angle_rad",
+                "radius": "stop_radius_m",
+                "station": "mount_station_m + housing_len_m + 0.006"
+              },
+              "frame": {
+                "axis": "support_axis",
+                "point": [
+                  0.0,
+                  0.0,
+                  "gimbal_center_z_m"
+                ],
+                "radial": "support radial"
+              },
+              "kind": "axis",
+              "name": "azimuth_stop_track",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "wall_bracket",
+          "notes": "Wall panel with two mounting rails, two forward arms with gussets, four screws and a bearing yoke. It is the only candidate whose azimuth axis is horizontal, so mate_axes lays the whole ring stack out on (0,-1,0) and the rings face the +X/-Y preview camera edge on.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.075,
+              "mode": "independent",
+              "name": "gimbal_rise_m",
+              "rationale": "clear height from the ground to the bottom pole of the outer ring; source pedestal 0.081 and slender column 0.149 measured from their bearing faces",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "outer_ring_radius_m",
+              "rationale": "outer gimbal ring outer radius; source hoops are 0.112 (001 family) and 0.135 (002 family). Every nested radius, the bearing sizes, the base footprint and the flywheel are derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m",
+                "gimbal_rise_m"
+              ],
+              "expression": "outer_ring_radius_m + gimbal_rise_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gimbal_center_z_m",
+              "rationale": "height of the one point every rotation axis passes through",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "outer_ring_radius_m + 0.005",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_station_m",
+              "rationale": "distance from the gimbal centre, back along the support axis, at which the azimuth bearing may start; 5 mm clear of the ring's own bottom pole",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "max(0.016, 0.13 * outer_ring_radius_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "housing_len_m",
+              "rationale": "bored azimuth bearing length; sets the outer ring's pole-pin engagement",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "pole_pin_radius_m + 0.0006 + 0.0065",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "housing_outer_m",
+              "rationale": "azimuth bearing outer radius over its running bore",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "(0,0,1) for the three grounded bases | (0,-1,0) for wall_bracket",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "support_axis",
+              "rationale": "the first rotation axis; the wall bracket is the only candidate that turns it horizontal, and mate_axes re-derives the whole ring stack from it",
+              "unit": null,
+              "value_type": "vector"
+            }
+          ],
+          "record_id": "rec_picturex0611_gyroscope_var_wall_bracket",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L64-L77",
+            "model.py:L156-L237",
+            "model.py:L389-L407"
+          ]
+        }
+      ],
+      "component_type": "grounded_or_wall_support_with_azimuth_bearing",
+      "name": "support_base",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Two nested rings on orthogonal trunnions plus the spin joint give a four-part, three-joint chain with axes Z, X, Z; the classic two-gimbal demonstrator.",
+          "implementation_function": "_build_ring",
+          "interfaces": [
+            {
+              "dimensions": {
+                "pin_radius": "pole_pin_radius_m[k]",
+                "pin_reach": "pole_reach_m[k] - 0.004",
+                "plane_rule": "the member's plane always contains its own hold axis; the parent's radial decides whether it is coplanar with or orthogonal to its parent"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "nested_pole_axis",
+              "part": "spindle_carrier",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "two_ring_gimbal",
+          "notes": "Outer ring plus spindle carrier: four parts, three joints, axes azimuth / tilt / spin. The carrier's plane is handed the parent's own plane, which reproduces the coplanar hoop pair of both source anchors.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "outer_ring_radius_m",
+              "rationale": "outer gimbal ring outer radius; source hoops are 0.112 (001 family) and 0.135 (002 family). Every nested radius, the bearing sizes, the base footprint and the flywheel are derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "max(0.014, 0.10 * outer_ring_radius_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_gap_m",
+              "rationale": "running clearance between a member's outer envelope and its parent's bore; it also sets how far a trunnion pin travels before entering its sleeve",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m",
+                "ring_gap_m"
+              ],
+              "expression": "ring_outer[0] = outer_ring_radius_m; ring_outer[k] = ring_inner[k-1] - ring_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_outer_m",
+              "rationale": "nested outer radii, one per gimbal member",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_width_ratio",
+                "outer_ring_radius_m"
+              ],
+              "expression": "ring_inner[k] = ring_outer[k] - ring_width_ratio * outer_ring_radius_m * (1.0, 0.72, 0.55)[k]",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_inner_m",
+              "rationale": "inner radii; inner members are proportionally lighter, as in the source stack",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_width_ratio"
+              ],
+              "expression": "max(0.006, 0.58 * (ring_outer[k] - ring_inner[k]))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_thick_m",
+              "rationale": "band thickness along each member's own normal",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "pin[0] = max(0.0035, 0.055 * outer_ring_radius_m); pin[k] = max(0.0030, 0.050 * ring_outer[k])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pole_pin_radius_m",
+              "rationale": "trunnion pin radius per member; every bore is this plus the running fit",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "ring_outer[k] for an annulus or a tube hoop; carrier_half_pole_m for a carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pole_reach_m",
+              "rationale": "the member's furthest material along its own hold axis; the parent's trunnion sleeve starts 4 mm beyond it so the child can never sweep into it",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "0.82 * ring_outer[carrier] for opposed_bearings | 0.70 * ring_outer[carrier] for bearing_spider",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_half_pole_m",
+              "rationale": "carrier frame half extent along the hold axis; with the span half extent it keeps the frame's corner diagonal under the carrier's own envelope radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "0.55 * ring_outer[carrier] for opposed_bearings | 0.70 * ring_outer[carrier] for bearing_spider",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_half_spin_m",
+              "rationale": "carrier frame half extent along the spin axis / spider post line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "max(0.0060, 0.13 * ring_outer[carrier])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_bar_m",
+              "rationale": "carrier frame bar width; source cage uses 8 mm bars on a 70 mm half extent",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carrier_half_pole_m",
+                "carrier_bar_m"
+              ],
+              "expression": "ring_inner[carrier] for an annulus or tube hoop | carrier_half_pole_m - carrier_bar_m for an opposed carrier frame | min(half_pole, half_spin) - carrier_bar_m for a spider carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_bore_m",
+              "rationale": "clear radius the flywheel has to live inside; this is the host adaptation that lets a rectangular cage take the same rotor slot as a round hoop",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__gyroscope_with_spinning_wheel_and_gimbal_rings__001__png_39ea603dbb874ec48b73d3109e55d345",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L192-L277",
+            "model.py:L319-L361"
+          ]
+        },
+        {
+          "evidence": "A third ring is inserted with its own trunnion pair and its own bearing pair, giving a five-part, four-joint yaw / pitch / roll / spin chain with a fourth independent axis; the part tree, joint count and axis set all change.",
+          "implementation_function": "_build_ring",
+          "interfaces": [
+            {
+              "dimensions": {
+                "pin_radius": "pole_pin_radius_m[k]",
+                "pin_reach": "pole_reach_m[k] - 0.004",
+                "plane_rule": "the member's plane always contains its own hold axis; the parent's radial decides whether it is coplanar with or orthogonal to its parent"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "nested_pole_axis",
+              "part": "mid_gimbal_ring",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "three_ring_gimbal",
+          "notes": "Outer, middle and carrier: five parts, four joints, and a fourth independent axis. Each successive member's plane is swung onto its parent's normal, so the three planes come out mutually orthogonal instead of the source fork's coplanar middle ring whose roll trunnions sat 90 degrees away from its roll axis.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "outer_ring_radius_m",
+              "rationale": "outer gimbal ring outer radius; source hoops are 0.112 (001 family) and 0.135 (002 family). Every nested radius, the bearing sizes, the base footprint and the flywheel are derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "max(0.014, 0.10 * outer_ring_radius_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_gap_m",
+              "rationale": "running clearance between a member's outer envelope and its parent's bore; it also sets how far a trunnion pin travels before entering its sleeve",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m",
+                "ring_gap_m"
+              ],
+              "expression": "ring_outer[0] = outer_ring_radius_m; ring_outer[k] = ring_inner[k-1] - ring_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_outer_m",
+              "rationale": "nested outer radii, one per gimbal member",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_width_ratio",
+                "outer_ring_radius_m"
+              ],
+              "expression": "ring_inner[k] = ring_outer[k] - ring_width_ratio * outer_ring_radius_m * (1.0, 0.72, 0.55)[k]",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_inner_m",
+              "rationale": "inner radii; inner members are proportionally lighter, as in the source stack",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_width_ratio"
+              ],
+              "expression": "max(0.006, 0.58 * (ring_outer[k] - ring_inner[k]))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_thick_m",
+              "rationale": "band thickness along each member's own normal",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "pin[0] = max(0.0035, 0.055 * outer_ring_radius_m); pin[k] = max(0.0030, 0.050 * ring_outer[k])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pole_pin_radius_m",
+              "rationale": "trunnion pin radius per member; every bore is this plus the running fit",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "ring_outer[k] for an annulus or a tube hoop; carrier_half_pole_m for a carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pole_reach_m",
+              "rationale": "the member's furthest material along its own hold axis; the parent's trunnion sleeve starts 4 mm beyond it so the child can never sweep into it",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "0.82 * ring_outer[carrier] for opposed_bearings | 0.70 * ring_outer[carrier] for bearing_spider",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_half_pole_m",
+              "rationale": "carrier frame half extent along the hold axis; with the span half extent it keeps the frame's corner diagonal under the carrier's own envelope radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "0.55 * ring_outer[carrier] for opposed_bearings | 0.70 * ring_outer[carrier] for bearing_spider",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_half_spin_m",
+              "rationale": "carrier frame half extent along the spin axis / spider post line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "max(0.0060, 0.13 * ring_outer[carrier])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_bar_m",
+              "rationale": "carrier frame bar width; source cage uses 8 mm bars on a 70 mm half extent",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carrier_half_pole_m",
+                "carrier_bar_m"
+              ],
+              "expression": "ring_inner[carrier] for an annulus or tube hoop | carrier_half_pole_m - carrier_bar_m for an opposed carrier frame | min(half_pole, half_spin) - carrier_bar_m for a spider carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_bore_m",
+              "rationale": "clear radius the flywheel has to live inside; this is the host adaptation that lets a rectangular cage take the same rotor slot as a round hoop",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_gyroscope_var_three_axis_gimbal",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L266-L350",
+            "model.py:L400-L464"
+          ]
+        }
+      ],
+      "component_type": "nested_gimbal_member_chain",
+      "name": "ring_stack",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Each ring is a CadQuery circle-minus-circle extrusion, 16 mm and 12 mm wide by 10 mm and 9 mm thick, with a thin proud worn edge bead on the rim; a flat machined band profile.",
+          "implementation_function": "_ring_band",
+          "interfaces": [
+            {
+              "dimensions": {
+                "envelope_radius": "ring_outer_m[0]",
+                "pin_radius": "pole_pin_radius_m[0]",
+                "pin_reach": "pole_reach_m[0] - 0.004"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ring_pole_axis",
+              "part": "outer_gimbal_ring",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "bore_radius": "pole_pin_radius_m[k+1] + bearing_fit_m",
+                "child_envelope": "ring_outer_m[k+1] = ring_inner_m[k] - ring_gap_m",
+                "sleeve_span": "[pole_reach_m[k+1] + 0.004, ring_inner_m[k] - 0.0015]"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ring_child_axis",
+              "part": "outer_gimbal_ring",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "pole_pin_radius_m[0] * 3.5",
+                "station": "pole_reach_m[0]"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  "pole_reach_m[0]"
+                ]
+              },
+              "kind": "plane",
+              "name": "free_pole_face",
+              "part": "outer_gimbal_ring",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "flat_band",
+          "notes": "Rectangular-section revolved band with a proud worn edge bead on the rim, as in the 001 family's CadQuery circle-minus-circle extrusion.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "outer_ring_radius_m",
+              "rationale": "outer gimbal ring outer radius; source hoops are 0.112 (001 family) and 0.135 (002 family). Every nested radius, the bearing sizes, the base footprint and the flywheel are derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "ring_width_ratio",
+              "rationale": "outer band radial width over the outer radius; source bands are 16/112 = 0.143 (flat) and 10.4/135 = 0.077 (tube). It sets the whole nested radius ladder",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "max(0.014, 0.10 * outer_ring_radius_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_gap_m",
+              "rationale": "running clearance between a member's outer envelope and its parent's bore; it also sets how far a trunnion pin travels before entering its sleeve",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m",
+                "ring_gap_m"
+              ],
+              "expression": "ring_outer[0] = outer_ring_radius_m; ring_outer[k] = ring_inner[k-1] - ring_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_outer_m",
+              "rationale": "nested outer radii, one per gimbal member",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_width_ratio",
+                "outer_ring_radius_m"
+              ],
+              "expression": "ring_inner[k] = ring_outer[k] - ring_width_ratio * outer_ring_radius_m * (1.0, 0.72, 0.55)[k]",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_inner_m",
+              "rationale": "inner radii; inner members are proportionally lighter, as in the source stack",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_width_ratio"
+              ],
+              "expression": "max(0.006, 0.58 * (ring_outer[k] - ring_inner[k]))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_thick_m",
+              "rationale": "band thickness along each member's own normal",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "pin[0] = max(0.0035, 0.055 * outer_ring_radius_m); pin[k] = max(0.0030, 0.050 * ring_outer[k])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pole_pin_radius_m",
+              "rationale": "trunnion pin radius per member; every bore is this plus the running fit",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "ring_outer[k] for an annulus or a tube hoop; carrier_half_pole_m for a carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pole_reach_m",
+              "rationale": "the member's furthest material along its own hold axis; the parent's trunnion sleeve starts 4 mm beyond it so the child can never sweep into it",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "0.82 * ring_outer[carrier] for opposed_bearings | 0.70 * ring_outer[carrier] for bearing_spider",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_half_pole_m",
+              "rationale": "carrier frame half extent along the hold axis; with the span half extent it keeps the frame's corner diagonal under the carrier's own envelope radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "0.55 * ring_outer[carrier] for opposed_bearings | 0.70 * ring_outer[carrier] for bearing_spider",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_half_spin_m",
+              "rationale": "carrier frame half extent along the spin axis / spider post line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "max(0.0060, 0.13 * ring_outer[carrier])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_bar_m",
+              "rationale": "carrier frame bar width; source cage uses 8 mm bars on a 70 mm half extent",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carrier_half_pole_m",
+                "carrier_bar_m"
+              ],
+              "expression": "ring_inner[carrier] for an annulus or tube hoop | carrier_half_pole_m - carrier_bar_m for an opposed carrier frame | min(half_pole, half_spin) - carrier_bar_m for a spider carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_bore_m",
+              "rationale": "clear radius the flywheel has to live inside; this is the host adaptation that lets a rectangular cage take the same rotor slot as a round hoop",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__gyroscope_with_spinning_wheel_and_gimbal_rings__001__png_39ea603dbb874ec48b73d3109e55d345",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L41-L60",
+            "model.py:L127-L156"
+          ]
+        },
+        {
+          "evidence": "Each ring becomes a revolved round tube (8 mm and 7 mm tube radius), and the tube section forces its own hardware: a clamped cap-style trunnion housing, a bearing seat ring at the housing mouth and a shaft seat ring where the trunnion leaves the tube.",
+          "implementation_function": "_ring_band",
+          "interfaces": [
+            {
+              "dimensions": {
+                "envelope_radius": "ring_outer_m[0]",
+                "pin_radius": "pole_pin_radius_m[0]",
+                "pin_reach": "pole_reach_m[0] - 0.004"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ring_pole_axis",
+              "part": "outer_gimbal_ring",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "bore_radius": "pole_pin_radius_m[k+1] + bearing_fit_m",
+                "child_envelope": "ring_outer_m[k+1] = ring_inner_m[k] - ring_gap_m",
+                "sleeve_span": "[pole_reach_m[k+1] + 0.004, ring_inner_m[k] - 0.0015]"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ring_child_axis",
+              "part": "outer_gimbal_ring",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "pole_pin_radius_m[0] * 3.5",
+                "station": "pole_reach_m[0]"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  "pole_reach_m[0]"
+                ]
+              },
+              "kind": "plane",
+              "name": "free_pole_face",
+              "part": "outer_gimbal_ring",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "tubular_hoop",
+          "notes": "Round tube hoop of the same outer radius, plus the hardware a tube section needs: a bearing seat ring at every trunnion housing mouth.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "outer_ring_radius_m",
+              "rationale": "outer gimbal ring outer radius; source hoops are 0.112 (001 family) and 0.135 (002 family). Every nested radius, the bearing sizes, the base footprint and the flywheel are derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "ring_width_ratio",
+              "rationale": "outer band radial width over the outer radius; source bands are 16/112 = 0.143 (flat) and 10.4/135 = 0.077 (tube). It sets the whole nested radius ladder",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "max(0.014, 0.10 * outer_ring_radius_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_gap_m",
+              "rationale": "running clearance between a member's outer envelope and its parent's bore; it also sets how far a trunnion pin travels before entering its sleeve",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m",
+                "ring_gap_m"
+              ],
+              "expression": "ring_outer[0] = outer_ring_radius_m; ring_outer[k] = ring_inner[k-1] - ring_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_outer_m",
+              "rationale": "nested outer radii, one per gimbal member",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_width_ratio",
+                "outer_ring_radius_m"
+              ],
+              "expression": "ring_inner[k] = ring_outer[k] - ring_width_ratio * outer_ring_radius_m * (1.0, 0.72, 0.55)[k]",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_inner_m",
+              "rationale": "inner radii; inner members are proportionally lighter, as in the source stack",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_width_ratio"
+              ],
+              "expression": "max(0.006, 0.58 * (ring_outer[k] - ring_inner[k]))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_thick_m",
+              "rationale": "band thickness along each member's own normal",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "pin[0] = max(0.0035, 0.055 * outer_ring_radius_m); pin[k] = max(0.0030, 0.050 * ring_outer[k])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pole_pin_radius_m",
+              "rationale": "trunnion pin radius per member; every bore is this plus the running fit",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "ring_outer[k] for an annulus or a tube hoop; carrier_half_pole_m for a carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pole_reach_m",
+              "rationale": "the member's furthest material along its own hold axis; the parent's trunnion sleeve starts 4 mm beyond it so the child can never sweep into it",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "0.82 * ring_outer[carrier] for opposed_bearings | 0.70 * ring_outer[carrier] for bearing_spider",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_half_pole_m",
+              "rationale": "carrier frame half extent along the hold axis; with the span half extent it keeps the frame's corner diagonal under the carrier's own envelope radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "0.55 * ring_outer[carrier] for opposed_bearings | 0.70 * ring_outer[carrier] for bearing_spider",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_half_spin_m",
+              "rationale": "carrier frame half extent along the spin axis / spider post line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "max(0.0060, 0.13 * ring_outer[carrier])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_bar_m",
+              "rationale": "carrier frame bar width; source cage uses 8 mm bars on a 70 mm half extent",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carrier_half_pole_m",
+                "carrier_bar_m"
+              ],
+              "expression": "ring_inner[carrier] for an annulus or tube hoop | carrier_half_pole_m - carrier_bar_m for an opposed carrier frame | min(half_pole, half_spin) - carrier_bar_m for a spider carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_bore_m",
+              "rationale": "clear radius the flywheel has to live inside; this is the host adaptation that lets a rectangular cage take the same rotor slot as a round hoop",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_gyroscope_var_tubular_ring",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L70-L105",
+            "model.py:L184-L313"
+          ]
+        },
+        {
+          "evidence": "The innermost member becomes a rectangular CadQuery frame with a real cut window, 8 mm bars and 8 mm depth; the rotor bearings move onto its top and bottom bars and the trunnions gain boss plates on its side bars, so the innermost part is a cage rather than a ring.",
+          "implementation_function": "_ring_band",
+          "interfaces": [
+            {
+              "dimensions": {
+                "envelope_radius": "ring_outer_m[0]",
+                "pin_radius": "pole_pin_radius_m[0]",
+                "pin_reach": "pole_reach_m[0] - 0.004"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ring_pole_axis",
+              "part": "outer_gimbal_ring",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "bore_radius": "pole_pin_radius_m[k+1] + bearing_fit_m",
+                "child_envelope": "ring_outer_m[k+1] = ring_inner_m[k] - ring_gap_m",
+                "sleeve_span": "[pole_reach_m[k+1] + 0.004, ring_inner_m[k] - 0.0015]"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ring_child_axis",
+              "part": "outer_gimbal_ring",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "pole_pin_radius_m[0] * 3.5",
+                "station": "pole_reach_m[0]"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  "pole_reach_m[0]"
+                ]
+              },
+              "kind": "plane",
+              "name": "free_pole_face",
+              "part": "outer_gimbal_ring",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "carrier_frame",
+          "notes": "The innermost member becomes four welded bars around a real rectangular window; outer members stay annular, exactly as the source cage does. The half extents are chosen so the frame's corner diagonal stays under the member's own envelope radius, and rotor_bore_m is re-derived from the bar line rather than from a circle.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "outer_ring_radius_m",
+              "rationale": "outer gimbal ring outer radius; source hoops are 0.112 (001 family) and 0.135 (002 family). Every nested radius, the bearing sizes, the base footprint and the flywheel are derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "ring_width_ratio",
+              "rationale": "outer band radial width over the outer radius; source bands are 16/112 = 0.143 (flat) and 10.4/135 = 0.077 (tube). It sets the whole nested radius ladder",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "max(0.014, 0.10 * outer_ring_radius_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_gap_m",
+              "rationale": "running clearance between a member's outer envelope and its parent's bore; it also sets how far a trunnion pin travels before entering its sleeve",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m",
+                "ring_gap_m"
+              ],
+              "expression": "ring_outer[0] = outer_ring_radius_m; ring_outer[k] = ring_inner[k-1] - ring_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_outer_m",
+              "rationale": "nested outer radii, one per gimbal member",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_width_ratio",
+                "outer_ring_radius_m"
+              ],
+              "expression": "ring_inner[k] = ring_outer[k] - ring_width_ratio * outer_ring_radius_m * (1.0, 0.72, 0.55)[k]",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_inner_m",
+              "rationale": "inner radii; inner members are proportionally lighter, as in the source stack",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_width_ratio"
+              ],
+              "expression": "max(0.006, 0.58 * (ring_outer[k] - ring_inner[k]))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_thick_m",
+              "rationale": "band thickness along each member's own normal",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "pin[0] = max(0.0035, 0.055 * outer_ring_radius_m); pin[k] = max(0.0030, 0.050 * ring_outer[k])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pole_pin_radius_m",
+              "rationale": "trunnion pin radius per member; every bore is this plus the running fit",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "ring_outer[k] for an annulus or a tube hoop; carrier_half_pole_m for a carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pole_reach_m",
+              "rationale": "the member's furthest material along its own hold axis; the parent's trunnion sleeve starts 4 mm beyond it so the child can never sweep into it",
+              "unit": "m",
+              "value_type": "vector"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "0.82 * ring_outer[carrier] for opposed_bearings | 0.70 * ring_outer[carrier] for bearing_spider",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_half_pole_m",
+              "rationale": "carrier frame half extent along the hold axis; with the span half extent it keeps the frame's corner diagonal under the carrier's own envelope radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "0.55 * ring_outer[carrier] for opposed_bearings | 0.70 * ring_outer[carrier] for bearing_spider",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_half_spin_m",
+              "rationale": "carrier frame half extent along the spin axis / spider post line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "max(0.0060, 0.13 * ring_outer[carrier])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "carrier_bar_m",
+              "rationale": "carrier frame bar width; source cage uses 8 mm bars on a 70 mm half extent",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carrier_half_pole_m",
+                "carrier_bar_m"
+              ],
+              "expression": "ring_inner[carrier] for an annulus or tube hoop | carrier_half_pole_m - carrier_bar_m for an opposed carrier frame | min(half_pole, half_spin) - carrier_bar_m for a spider carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_bore_m",
+              "rationale": "clear radius the flywheel has to live inside; this is the host adaptation that lets a rectangular cage take the same rotor slot as a round hoop",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_gyroscope_var_two_axis_cage",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L101-L135",
+            "model.py:L244-L300"
+          ]
+        }
+      ],
+      "component_type": "gimbal_member_cross_section",
+      "name": "ring_section",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The innermost ring's plane contains the spin axis: two 8 mm bearing bodies with annular retaining caps stand at the ring's +-Z poles and hold the axle from both ends, opposite the side trunnions on the tilt axis.",
+          "implementation_function": "_spindle_support_opposed_bearings_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "axle_radius_m + bearing_fit_m",
+                "engagement": "max(0.014, 0.17 * spin_seat_m) - 0.002",
+                "seat": "±spin_seat_m"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "spindle_axis",
+              "part": "spindle_carrier",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "opposed_bearings",
+          "notes": "The carrier's plane contains the spin axis: two bored sleeves with solid bearing bodies and retaining caps stand at its ±spin poles and hold a through axle from both ends.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.88,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "rotor_radius_ratio",
+              "rationale": "flywheel radius as a fraction of the innermost member's clear bore less its running clearance; source ratios are 0.055/0.075 = 0.73 and 0.097/0.1065 = 0.91",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_bore_m"
+              ],
+              "expression": "ring_inner[carrier] for an annulus or tube hoop | carrier_half_spin_m - carrier_bar_m for a carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "spin_seat_m",
+              "rationale": "where the spin bearing sleeve or the spider post meets the carrier body",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_ratio"
+              ],
+              "expression": "clamp(0.052 * flywheel_radius_m, 0.0026, 0.0065)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axle_radius_m",
+              "rationale": "spindle radius; every spin bore is this plus the running fit",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "spin_seat_m"
+              ],
+              "expression": "spin_seat_m - 0.0040 (opposed_bearings only; 0 for the spider)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axle_half_m",
+              "rationale": "half length of the through axle. Deliberately capped inside the carrier's own envelope instead of the source's 205 mm protruding shaft, which crosses the outer band whenever the tilt joint passes through zero",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_ratio"
+              ],
+              "expression": "-(rotor_back_reach_m + 0.008 + race_len_m / 2) (bearing_spider only)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "race_offset_m",
+              "rationale": "axial station of the central race, clear of whichever rotor form the rotor slot built behind the disc",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "max(0.010, 0.16 * ring_outer[carrier])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "race_len_m",
+              "rationale": "length of the spider's central bearing race",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0006",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bearing_fit_m",
+              "rationale": "radial running clearance in every bore in the model. It is under the 1 mm assembly-support band and over the tessellation error, so every pin, trunnion and axle is supported without a single overlap allowance",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__gyroscope_with_spinning_wheel_and_gimbal_rings__001__png_39ea603dbb874ec48b73d3109e55d345",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L151-L156",
+            "model.py:L256-L277"
+          ]
+        },
+        {
+          "evidence": "The innermost ring's plane is perpendicular to the spin axis: a small toroidal race is carried at the bore centre by two straight arms spanning the full 102 mm bore and two end posts, and the rotor journal runs in that single central race. A different part tree and a different relationship between ring plane and spin axis.",
+          "implementation_function": "_spindle_support_bearing_spider_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "axle_radius_m + bearing_fit_m",
+                "race_length": "race_len_m",
+                "race_station": "race_offset_m"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "spindle_axis",
+              "part": "spindle_carrier",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "bearing_spider",
+          "notes": "The carrier's plane is perpendicular to the spin axis: two rim posts and two inclined struts carry one central bored race, and the rotor journal runs in it. The struts step back from short rim posts instead of lying flat across the bore, so the spider never reaches outside the carrier's own envelope whatever the rotor size.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.88,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "rotor_radius_ratio",
+              "rationale": "flywheel radius as a fraction of the innermost member's clear bore less its running clearance; source ratios are 0.055/0.075 = 0.73 and 0.097/0.1065 = 0.91",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_bore_m"
+              ],
+              "expression": "ring_inner[carrier] for an annulus or tube hoop | carrier_half_spin_m - carrier_bar_m for a carrier frame",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "spin_seat_m",
+              "rationale": "where the spin bearing sleeve or the spider post meets the carrier body",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_ratio"
+              ],
+              "expression": "clamp(0.052 * flywheel_radius_m, 0.0026, 0.0065)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axle_radius_m",
+              "rationale": "spindle radius; every spin bore is this plus the running fit",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "spin_seat_m"
+              ],
+              "expression": "spin_seat_m - 0.0040 (opposed_bearings only; 0 for the spider)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axle_half_m",
+              "rationale": "half length of the through axle. Deliberately capped inside the carrier's own envelope instead of the source's 205 mm protruding shaft, which crosses the outer band whenever the tilt joint passes through zero",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_ratio"
+              ],
+              "expression": "-(rotor_back_reach_m + 0.008 + race_len_m / 2) (bearing_spider only)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "race_offset_m",
+              "rationale": "axial station of the central race, clear of whichever rotor form the rotor slot built behind the disc",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_outer_m"
+              ],
+              "expression": "max(0.010, 0.16 * ring_outer[carrier])",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "race_len_m",
+              "rationale": "length of the spider's central bearing race",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0006",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bearing_fit_m",
+              "rationale": "radial running clearance in every bore in the model. It is under the 1 mm assembly-support band and over the tessellation error, so every pin, trunnion and axle is supported without a single overlap allowance",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__gyroscope_with_spinning_wheel_and_gimbal_rings__002__png_c54e1117482141cab534f56815c6fcf0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L88-L96",
+            "model.py:L255-L273"
+          ]
+        }
+      ],
+      "component_type": "rotor_spindle_capture",
+      "name": "spindle_support",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A ten-station lathe profile makes a 110 mm crowned chrome drum 36 mm deep on a 26 mm satin hub, with a flat pointer bar and a spherical balance weight on a radial arm.",
+          "implementation_function": "_rotor_form_crowned_drum_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "envelope": "rotor_envelope_m",
+                "journal_radius": "axle_radius_m",
+                "swept_radius": "1.12 * flywheel_radius_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "rotor_spin_axis",
+              "part": "rotor",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "crowned_drum",
+          "notes": "Ten-station crowned drum profile on a wide hub, with a flat balance pointer and a spherical balance weight on its front face.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.88,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "rotor_radius_ratio",
+              "rationale": "flywheel radius as a fraction of the innermost member's clear bore less its running clearance; source ratios are 0.055/0.075 = 0.73 and 0.097/0.1065 = 0.91",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_ratio",
+                "rotor_bore_m"
+              ],
+              "expression": "rotor_radius_ratio * (rotor_bore_m - rotor_clear_m) / 1.12",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "flywheel_radius_m",
+              "rationale": "the 1.12 factor is the rotor's own reach allowance: the balance arm reaches 1.04 R and the deepest drum profile 0.33 R, so the whole rotor stays inside the carrier bore at every spin angle",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_bore_m"
+              ],
+              "expression": "max(0.0040, 0.06 * rotor_bore_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_clear_m",
+              "rationale": "running clearance between the rotor envelope and the carrier bore",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flywheel_radius_m"
+              ],
+              "expression": "max(1.12 * flywheel_radius_m, axial reach of this rotor form, |race_offset_m| + race_len_m / 2 + 0.004)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_envelope_m",
+              "rationale": "furthest rotor material from the gimbal centre; the author test holds it under the carrier's own outer radius so the rotor can never leave the cage",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flywheel_radius_m"
+              ],
+              "expression": "(0.36 drum | 0.34 solid disc | 0.11 shaped disc | 0.10 spoked rim) * flywheel_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_back_reach_m",
+              "rationale": "how far each rotor form reaches behind its own mid plane; the spider race and its rim posts are placed from it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__gyroscope_with_spinning_wheel_and_gimbal_rings__001__png_39ea603dbb874ec48b73d3109e55d345",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L84-L102",
+            "model.py:L279-L317"
+          ]
+        },
+        {
+          "evidence": "A twelve-station asymmetric lathe profile makes a 194 mm dished disc with a stepped underside relief, wrapped by a separate aged-brass perimeter torus and topped by a burgundy hub and a lathed spindle cap.",
+          "implementation_function": "_rotor_form_shaped_disc_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "envelope": "rotor_envelope_m",
+                "journal_radius": "axle_radius_m",
+                "swept_radius": "1.12 * flywheel_radius_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "rotor_spin_axis",
+              "part": "rotor",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "shaped_disc",
+          "notes": "Twelve-station dished disc with a stepped underside relief, a proud perimeter torus band, a tall hub, a lathed spindle cap and a balance arm.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.88,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "rotor_radius_ratio",
+              "rationale": "flywheel radius as a fraction of the innermost member's clear bore less its running clearance; source ratios are 0.055/0.075 = 0.73 and 0.097/0.1065 = 0.91",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_ratio",
+                "rotor_bore_m"
+              ],
+              "expression": "rotor_radius_ratio * (rotor_bore_m - rotor_clear_m) / 1.12",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "flywheel_radius_m",
+              "rationale": "the 1.12 factor is the rotor's own reach allowance: the balance arm reaches 1.04 R and the deepest drum profile 0.33 R, so the whole rotor stays inside the carrier bore at every spin angle",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_bore_m"
+              ],
+              "expression": "max(0.0040, 0.06 * rotor_bore_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_clear_m",
+              "rationale": "running clearance between the rotor envelope and the carrier bore",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flywheel_radius_m"
+              ],
+              "expression": "max(1.12 * flywheel_radius_m, axial reach of this rotor form, |race_offset_m| + race_len_m / 2 + 0.004)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_envelope_m",
+              "rationale": "furthest rotor material from the gimbal centre; the author test holds it under the carrier's own outer radius so the rotor can never leave the cage",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flywheel_radius_m"
+              ],
+              "expression": "(0.36 drum | 0.34 solid disc | 0.11 shaped disc | 0.10 spoked rim) * flywheel_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_back_reach_m",
+              "rationale": "how far each rotor form reaches behind its own mid plane; the spider race and its rim posts are placed from it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__gyroscope_with_spinning_wheel_and_gimbal_rings__002__png_c54e1117482141cab534f56815c6fcf0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L97-L125",
+            "model.py:L275-L329"
+          ]
+        },
+        {
+          "evidence": "The web is removed entirely: a thin torus rim is carried on six evenly spaced 5 mm radial spokes from a compact hub, so the rotor becomes an open wheel with visible openings between the spokes.",
+          "implementation_function": "_rotor_form_spoked_rim_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "envelope": "rotor_envelope_m",
+                "journal_radius": "axle_radius_m",
+                "swept_radius": "1.12 * flywheel_radius_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "rotor_spin_axis",
+              "part": "rotor",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "spoked_rim",
+          "notes": "Thin inertia rim torus carried on six radial spokes from a compact hub, still wrapped by the perimeter band; the web is open between the spokes.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.88,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "rotor_radius_ratio",
+              "rationale": "flywheel radius as a fraction of the innermost member's clear bore less its running clearance; source ratios are 0.055/0.075 = 0.73 and 0.097/0.1065 = 0.91",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_ratio",
+                "rotor_bore_m"
+              ],
+              "expression": "rotor_radius_ratio * (rotor_bore_m - rotor_clear_m) / 1.12",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "flywheel_radius_m",
+              "rationale": "the 1.12 factor is the rotor's own reach allowance: the balance arm reaches 1.04 R and the deepest drum profile 0.33 R, so the whole rotor stays inside the carrier bore at every spin angle",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_bore_m"
+              ],
+              "expression": "max(0.0040, 0.06 * rotor_bore_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_clear_m",
+              "rationale": "running clearance between the rotor envelope and the carrier bore",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flywheel_radius_m"
+              ],
+              "expression": "max(1.12 * flywheel_radius_m, axial reach of this rotor form, |race_offset_m| + race_len_m / 2 + 0.004)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_envelope_m",
+              "rationale": "furthest rotor material from the gimbal centre; the author test holds it under the carrier's own outer radius so the rotor can never leave the cage",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flywheel_radius_m"
+              ],
+              "expression": "(0.36 drum | 0.34 solid disc | 0.11 shaped disc | 0.10 spoked rim) * flywheel_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_back_reach_m",
+              "rationale": "how far each rotor form reaches behind its own mid plane; the spider race and its rim posts are placed from it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_gyroscope_var_rim_weighted_spokes",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L98-L119",
+            "model.py:L269-L347"
+          ]
+        },
+        {
+          "evidence": "An eight-station profile makes a plain 110 mm disc 34 mm thick with symmetric chamfer bands, a wide satin hub and a small off-axis phase mark instead of a balance arm; no crown, no rim band, no spokes.",
+          "implementation_function": "_rotor_form_solid_disc_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "envelope": "rotor_envelope_m",
+                "journal_radius": "axle_radius_m",
+                "swept_radius": "1.12 * flywheel_radius_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "rotor_spin_axis",
+              "part": "rotor",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "solid_disc",
+          "notes": "Plain thick bevelled disc with a wide hub and a single off-axis phase mark, deliberately without a rim band, spokes or a balance arm.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.88,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "rotor_radius_ratio",
+              "rationale": "flywheel radius as a fraction of the innermost member's clear bore less its running clearance; source ratios are 0.055/0.075 = 0.73 and 0.097/0.1065 = 0.91",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_ratio",
+                "rotor_bore_m"
+              ],
+              "expression": "rotor_radius_ratio * (rotor_bore_m - rotor_clear_m) / 1.12",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "flywheel_radius_m",
+              "rationale": "the 1.12 factor is the rotor's own reach allowance: the balance arm reaches 1.04 R and the deepest drum profile 0.33 R, so the whole rotor stays inside the carrier bore at every spin angle",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_bore_m"
+              ],
+              "expression": "max(0.0040, 0.06 * rotor_bore_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_clear_m",
+              "rationale": "running clearance between the rotor envelope and the carrier bore",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flywheel_radius_m"
+              ],
+              "expression": "max(1.12 * flywheel_radius_m, axial reach of this rotor form, |race_offset_m| + race_len_m / 2 + 0.004)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_envelope_m",
+              "rationale": "furthest rotor material from the gimbal centre; the author test holds it under the carrier's own outer radius so the rotor can never leave the cage",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flywheel_radius_m"
+              ],
+              "expression": "(0.36 drum | 0.34 solid disc | 0.11 shaped disc | 0.10 spoked rim) * flywheel_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotor_back_reach_m",
+              "rationale": "how far each rotor form reaches behind its own mid plane; the spider race and its rim posts are placed from it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_gyroscope_var_solid_disc_rotor",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L83-L99",
+            "model.py:L276-L310"
+          ]
+        }
+      ],
+      "component_type": "flywheel_rotor",
+      "name": "rotor_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The outer ring's two poles carry identical short 6 mm satin trunnion bodies; the free pole ends flush with a stub and nothing rises above the hoop.",
+          "implementation_function": "_ring_index_hardware",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "pole_pin_radius_m[0] * 3.5",
+                "rise": "mast_len_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  "pole_reach_m[0]"
+                ]
+              },
+              "kind": "plane",
+              "name": "pole_mount",
+              "part": "outer_gimbal_ring",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "plain_trunnion",
+          "notes": "The free pole ends in a short satin trunnion stub and a bright cap; nothing rises above the hoop.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "outer_ring_radius_m",
+              "rationale": "outer gimbal ring outer radius; source hoops are 0.112 (001 family) and 0.135 (002 family). Every nested radius, the bearing sizes, the base footprint and the flywheel are derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "0.52 * outer_ring_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mast_len_m",
+              "rationale": "pointer mast length above the outer ring's free pole; source 002 uses 56/135 = 0.41 of its hoop radius plus the collar",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__gyroscope_with_spinning_wheel_and_gimbal_rings__001__png_39ea603dbb874ec48b73d3109e55d345",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L208-L219"
+          ]
+        },
+        {
+          "evidence": "The free pole carries a dark collar and a 56 mm slender polished pointer rod standing well clear of the hoop, changing the silhouette above the gimbal from a flat stub to a mast.",
+          "implementation_function": "_ring_index_hardware",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "pole_pin_radius_m[0] * 3.5",
+                "rise": "mast_len_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  "pole_reach_m[0]"
+                ]
+              },
+              "kind": "plane",
+              "name": "pole_mount",
+              "part": "outer_gimbal_ring",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "pointer_mast",
+          "notes": "A dark collar and a slender index pointer rod with a tip stand clear above the hoop, changing the silhouette over the gimbal.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "outer_ring_radius_m",
+              "rationale": "outer gimbal ring outer radius; source hoops are 0.112 (001 family) and 0.135 (002 family). Every nested radius, the bearing sizes, the base footprint and the flywheel are derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "outer_ring_radius_m"
+              ],
+              "expression": "0.52 * outer_ring_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mast_len_m",
+              "rationale": "pointer mast length above the outer ring's free pole; source 002 uses 56/135 = 0.41 of its hoop radius plus the collar",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__gyroscope_with_spinning_wheel_and_gimbal_rings__002__png_c54e1117482141cab534f56815c6fcf0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L179-L202"
+          ]
+        }
+      ],
+      "component_type": "outer_ring_free_pole_hardware",
+      "name": "index_hardware",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The azimuth joint turns a full +-pi, the tilt joint +-1.35 rad and the spin joint is continuous, with no interference hardware anywhere on the base or the rings.",
+          "implementation_function": "_build_ring",
+          "interfaces": [
+            {
+              "dimensions": {
+                "pin_radius": 0.0035,
+                "radius": "stop_radius_m",
+                "travel": "±azimuth_limit_rad"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "stop_pin_axis",
+              "part": "outer_gimbal_ring",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "free_swing",
+          "notes": "Full ±pi azimuth and ±1.35 rad gimbal travel with a continuous spin joint and no interference hardware anywhere.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "pi for free_swing | 1.00 for limited_stops",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "azimuth_limit_rad",
+              "rationale": "first-axis travel; the limited candidate matches source ±1.0 rad",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "1.35 for free_swing | 0.75 for limited_stops",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tilt_limit_rad",
+              "rationale": "every gimbal joint after the first; the limited candidate matches source ±0.75",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "housing_outer_m"
+              ],
+              "expression": "housing_outer_m + 0.013",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "stop_radius_m",
+              "rationale": "arc radius the azimuth stop pin and both stop blocks share",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "azimuth_limit_rad",
+                "stop_radius_m"
+              ],
+              "expression": "azimuth_limit_rad + atan2(0.0035, stop_radius_m) + atan2(0.0060, stop_radius_m) + 0.14",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "stop_block_angle_rad",
+              "rationale": "the block sits past the limit by both half widths plus a 0.14 rad margin, so the travelling pin stops short of it instead of striking it",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "2 shoulder stops plus 1 travelling lug on the primary tilt trunnion",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tilt_stop_count",
+              "rationale": "source limited_locking carries the same stop/lug pair on the tilt axis",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_picturex_0611__gyroscope_with_spinning_wheel_and_gimbal_rings__001__png_39ea603dbb874ec48b73d3109e55d345",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L319-L361"
+          ]
+        },
+        {
+          "evidence": "A stop collar with two azimuth stop blocks on the base, a matching stop pin on the outer ring and tilt stops and lugs on the rings cut the azimuth travel to +-1.0 rad and the tilt to +-0.75 rad; both the part geometry and the joint limits change together.",
+          "implementation_function": "_base_stop_track",
+          "interfaces": [
+            {
+              "dimensions": {
+                "pin_radius": 0.0035,
+                "radius": "stop_radius_m",
+                "travel": "±azimuth_limit_rad"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "stop_pin_axis",
+              "part": "outer_gimbal_ring",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "limited_stops",
+          "notes": "A stop collar with two blocks on the base, a stop arm and pin on the outer ring, and a shoulder collar with two stops plus a travelling lug on the primary tilt trunnion, with the travel cut to ±1.0 and ±0.75 rad. Every block angle is solved from the limit plus both half widths plus a 0.14 rad margin, so the stops are real hardware that the joint never reaches rather than decoration.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "pi for free_swing | 1.00 for limited_stops",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "azimuth_limit_rad",
+              "rationale": "first-axis travel; the limited candidate matches source ±1.0 rad",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "1.35 for free_swing | 0.75 for limited_stops",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tilt_limit_rad",
+              "rationale": "every gimbal joint after the first; the limited candidate matches source ±0.75",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "housing_outer_m"
+              ],
+              "expression": "housing_outer_m + 0.013",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "stop_radius_m",
+              "rationale": "arc radius the azimuth stop pin and both stop blocks share",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "azimuth_limit_rad",
+                "stop_radius_m"
+              ],
+              "expression": "azimuth_limit_rad + atan2(0.0035, stop_radius_m) + atan2(0.0060, stop_radius_m) + 0.14",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "stop_block_angle_rad",
+              "rationale": "the block sits past the limit by both half widths plus a 0.14 rad margin, so the travelling pin stops short of it instead of striking it",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "2 shoulder stops plus 1 travelling lug on the primary tilt trunnion",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tilt_stop_count",
+              "rationale": "source limited_locking carries the same stop/lug pair on the tilt axis",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_picturex0611_gyroscope_var_limited_locking_gimbals",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L165-L186",
+            "model.py:L244-L259",
+            "model.py:L312-L318",
+            "model.py:L376-L410"
+          ]
+        }
+      ],
+      "component_type": "gimbal_travel_and_end_stops",
+      "name": "gimbal_motion",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_gyroscope_with_spinning_wheel_and_gimbal_rings",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_gyroscope_with_spinning_wheel_and_gimbal_rings.md",
+  "source_map_sha256": "ae975dd19a97b95a3716362e56f6398b5a7f0c57e5c9d4e6628c37f977f26bf0"
+}

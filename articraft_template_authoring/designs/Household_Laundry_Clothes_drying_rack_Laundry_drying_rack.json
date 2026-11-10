@@ -1,0 +1,1755 @@
+{
+  "assembly_notes": "The root is `main_frame`, the rigid spine: one merged tube cage of a top rail, a lower towel rail, a wing hinge rail and a lower bar on each side, one leg hinge rail per declared leg station, and end cross members, struts and centre posts at both ends, with black end caps. The selected `spine_extra` is built into that same part, so a spine accessory is never a floating solid. Every rotating child is a captured knuckle rather than a coaxial tube: the moving member carries four open C-rings that run on the fixed rail with a 0.8 mm radial fit, and its own structural tube stands off the axis by the ring radius plus stock. That is what replaces the pool's four `ctx.allow_overlap` families - the wing coaxial with its hinge rail, the leg tube inside its plastic hinge block, the mid-span leg through the centre plate, and the caster against its leg - none of which a Design-backed template may declare. `ctx.allow_isolated_part` is used for the hangers and casters, which really are carried by their own pivots on a running clearance. Leg frames, wings and hangers are all authored in a child frame whose origin sits ON the rotation axis with +X along the rail, so `mate_axes` solves every joint origin and `register_interface_mate` records it. The two wings of a tier share one builder and take the side sign through the joint axis. Wing fold stops are bisected per tier against the spine centreline and, for a lower tier, against the upper tier's underside; the leg fold stop is bisected against the hinge height. Nothing in this file copies a source joint limit.",
+  "bindings": [
+    {
+      "binding_id": "spine_carries_legs",
+      "consumer": "leg_family.leg_knuckle_bore",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "spine_height_m",
+            "contact_size_m",
+            "leg_frame_count"
+          ],
+          "expression": "leg hinge station z minus contact_size_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leg_drop_m",
+          "rationale": "Whatever the floor interface is, the leg reaches only as far as the top of it, so every ground_contact candidate lands the rack at the same height.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "spine_height_m",
+            "tube_radius_m",
+            "leg_frame_count",
+            "spine_extra"
+          ],
+          "expression": "lower bar height minus a leg rail gap of (leg knuckle outer + wing knuckle outer + 6 mm); a centreline station drops further, by the leg clearance plus the shoe cradle depth when that accessory is selected",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leg_station_z_m",
+          "rationale": "The leg hinge rail hangs below the lower bar so a captured leg knuckle clears the wing knuckle riding that bar. var_leg_support_count L298-L306 drops its mid-span hinge for the same reason at the centreline; here the drop also clears the shoe cradle, which hangs on that same centreline.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "leg_spread_ratio"
+          ],
+          "expression": "largest q with leg_spread * sin q - leg_drop * cos q <= -0.15 * leg_drop",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leg_fold_rad",
+          "rationale": "The frame folds until its feet have climbed to within 15% of the hinge height; beyond that it would be level with its own hinge rail.",
+          "unit": "rad",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "leg_family.spine_leg_hinge"
+    },
+    {
+      "binding_id": "spine_carries_wings",
+      "consumer": "wing_form.wing_knuckle_bore",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "spine_height_m",
+            "wing_tier_count"
+          ],
+          "expression": "spine_height_m * 0.963 for tier 0, spine_height_m * 0.744 for tier 1",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "tier_rail_z_m",
+          "rationale": "var_wing_count L235-L252 maps each tier onto its own spine rail.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "wing_reach_m",
+            "wing_tier_count"
+          ],
+          "expression": "wing_reach_m for tier 0, wing_reach_m * 0.60 for tier 1",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "tier_reach_m",
+          "rationale": "var_wing_count L235-L252 builds the lower tier at 0.60 of the upper one's reach.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "wing_reach_m",
+            "wing_rise_ratio",
+            "spine_height_m",
+            "wing_tier_count"
+          ],
+          "expression": "wing_reach_m * wing_rise_ratio for tier 0; for tier 1 the lesser of that at 0.60 scale and half the headroom between the two spine rails",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "tier_rise_m",
+          "rationale": "A lower wing fits under a steep upper wing by lying FLATTER, not only by being smaller: var_wing_count's single 0.60 scale is correct for its own proportions, and at this template's steepest declared incline a uniform 0.60 copy already stands inside the upper wing at rest.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "wing_reach_m",
+            "wing_rise_ratio",
+            "spine_depth_m",
+            "fold_upper_ratio",
+            "wing_tier_count"
+          ],
+          "expression": "tier 0: 0.22 + (solved maximum - 0.22) * fold_upper_ratio, bisected against the spine centreline stop; tier 1: the solved maximum itself, bisected against the upper wing sampled across its whole range",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "fold_upper_rad",
+          "rationale": "Opposing wings may never meet over the spine, and a raised lower wing may never reach the upper wing's underside at any pose the upper wing can hold. A lower tier hemmed in under a steep upper wing legitimately resolves to no raise at all; its travel then comes from its own down stop.",
+          "unit": "rad",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "wing_reach_m",
+            "wing_rise_ratio",
+            "leg_spread_ratio",
+            "spine_depth_m",
+            "leg_frame_count",
+            "wing_tier_count"
+          ],
+          "expression": "per tier: swept down until the wing member (carrier to tip) comes within (2 * tube_radius_m + 8 mm) of any leg frame's rest shape, or - for tier 0 with a lower tier present - within the tier clearance of the lower wing at rest",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "fold_lower_rad",
+          "rationale": "Each tier gets its own down stop: the lower tier's useful swing is downward, since it hangs under the upper wing. The leg shape is its real hinge-to-foot diagonal plus the top cross tube standing off the hinge axis.",
+          "unit": "rad",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "spine_length_m",
+            "telescope_stroke_ratio"
+          ],
+          "expression": "spine_length_m * telescope_stroke_ratio",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "telescope_stroke_m",
+          "rationale": "var_prismatic_extension requires the wing rail to stay engaged at full extension, which is a fraction of the spine's own length.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "wing_motion.spine_wing_rail"
+    },
+    {
+      "binding_id": "legs_carry_ground_contact",
+      "consumer": "ground_contact.contact_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "leg_spread_ratio",
+            "spine_height_m",
+            "contact_size_m"
+          ],
+          "expression": "leg_drop_m * leg_spread_ratio for a splayed frame, the post offset for a post base, taken from whichever leg family is selected",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "tip_station_y_m",
+          "rationale": "Every leg family publishes exactly two tip stations, so one ground contact builder serves all three.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "contact_size_m"
+          ],
+          "expression": "contact_size_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "caster_radius_m",
+          "rationale": "var_caster_wheels L164 mounts the wheel centre at the tip station, so the wheel radius is exactly the height the leg gives up.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "contact_size_m",
+            "ground_contact",
+            "tube_radius_m"
+          ],
+          "expression": "contact_size_m for a pad or a skid bar; 2 * contact_size_m + tube_radius_m * 1.6 for a caster, which hangs below the leg on its own fork",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "contact_headroom_m",
+          "rationale": "The leg gives up exactly the height its floor interface occupies, so all three candidates land the rack on z = 0 without changing the spine.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "continuous",
+      "provider": "ground_contact.leg_tip_station"
+    },
+    {
+      "binding_id": "top_rail_carries_hangers",
+      "consumer": "hanger_type.hanger_hook_bore",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "spine_length_m",
+            "hanger_count"
+          ],
+          "expression": "spine_length_m * 0.985 * 0.86 / hanger_count",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "hanger_pitch_m",
+          "rationale": "Hangers walk the clear run of the top rail inside the end cross members.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "spine_height_m",
+            "hanger_drop_ratio",
+            "hanger_width_ratio",
+            "tube_radius_m"
+          ],
+          "expression": "(spine_height_m * 0.270 - 0.030 - clip height * 1.8) * hanger_drop_ratio",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "hanger_drop_m",
+          "rationale": "The headroom between the top rail and the lower towel rail is the real stop, measured to the bottom of the CLIP carriers rather than to the body: the source's absolute 0.285 would bury the hanger on a short spine, and a drop measured to the body alone puts the clips through the lower rail.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "spine_depth_m",
+            "tube_radius_m",
+            "hanger_width_ratio",
+            "hanger_drop_ratio"
+          ],
+          "expression": "(spine_depth_m - 2 * tube_radius_m - 0.014) * hanger_width_ratio, then shrunk until body half width + clip, swept through the minimum sway, fits the clear span to a wing hinge rail",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "hanger_width_m",
+          "rationale": "The hanger body AND its clips have to pass between the two wing hinge rails at every sway angle. Clip size follows body width, so the band is solved.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "spine_depth_m",
+            "tube_radius_m",
+            "hanger_width_ratio",
+            "hanger_drop_ratio"
+          ],
+          "expression": "asin((lateral clearance - 3 mm) / hypot(reach, depth)) - atan2(reach, depth), clamped to [0.030, 0.260], where reach = half width + clip and depth = drop + 1.8 * clip",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "hanger_sway_rad",
+          "rationale": "A hanger's outermost point is not on the centreline, so the swing that reaches a rail is the ARC from that point's rest angle. Over every body point (L, h) the swept offset is L*cos(s) + h*sin(s), worst at the widest L and deepest h. The sock ring is the binding form: its clip arms fan out horizontally from a hub that already hangs most of the drop.",
+          "unit": "rad",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "hanger_type.spine_top_rail"
+    },
+    {
+      "binding_id": "spine_carries_accessory",
+      "consumer": "spine_extra.accessory_root",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "spine_length_m",
+            "accessory_span_ratio"
+          ],
+          "expression": "spine_length_m / 2 * accessory_span_ratio",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "accessory_span_m",
+          "rationale": "Brace rivet station, shoe cradle drop and towel hoop projection all scale with the spine's own half length.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "spine_length_m",
+            "accessory_span_ratio"
+          ],
+          "expression": "spine half length * (0.40 + 0.40 * normalised accessory_span_ratio), with both ends on the lower bars",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "brace_end_station_m",
+          "rationale": "The origin (L286-L287) runs each diagonal from the lower bar up to the centreline at the TOP rail - which is exactly where the hangers hang, and it also lands on the wing hinge rails on the way. hanger_type and wing_form are independent slots, so the brace is re-routed as a crossing pair between the two lower bars, the one rail pair nothing rides. This is the local host adaptation the full-combination rule requires instead of a compatibility gate.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "spine_length_m",
+            "accessory_span_ratio",
+            "spine_height_m",
+            "contact_size_m"
+          ],
+          "expression": "the lesser of spine half length * accessory_span_ratio * 0.42 and 35% of the clear height under the lower rail",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "cradle_drop_m",
+          "rationale": "The shoe cradle hangs on the centreline under the spine and may not reach the floor; a centreline leg station drops below it in turn.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "spine_extra.spine_accessory_face"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "freestanding_folding_support",
+      "applies_to": {
+        "candidates": [
+          "scissor_x_legs",
+          "a_frame_legs",
+          "post_base_legs"
+        ],
+        "slot": "leg_family"
+      },
+      "required_author_checks": [
+        "category_anchor: one rigid spine carries every folding support",
+        "category_anchor: every leg frame folds on its own transverse hinge",
+        "category_anchor: the legs reach the floor under the spine"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "leg_frame",
+          "joint_type": "revolute",
+          "parent_role": "spine"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "spine"
+        },
+        {
+          "count_from": "leg_frame_count",
+          "role": "leg_frame"
+        }
+      ]
+    },
+    {
+      "anchor_id": "drying_wings_on_the_spine",
+      "applies_to": {
+        "candidates": [
+          "parallel_bar_wing",
+          "mesh_grid_wing",
+          "comb_clip_wing",
+          "single_rail_arm"
+        ],
+        "slot": "wing_form"
+      },
+      "required_author_checks": [
+        "category_anchor: every drying wing hangs on a spine rail",
+        "category_anchor: the wings open to a wider span than the folded rack"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "drying_wing",
+          "joint_type": "revolute",
+          "parent_role": "spine"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": "wing_tier_count",
+          "role": "drying_wing"
+        }
+      ]
+    },
+    {
+      "anchor_id": "hangers_on_the_top_rail",
+      "applies_to": {
+        "candidates": [
+          "wire_triangle",
+          "clip_trouser_bar",
+          "sock_clip_ring"
+        ],
+        "slot": "hanger_type"
+      },
+      "required_author_checks": [
+        "category_anchor: every hanger hangs on the spine top rail and can sway",
+        "category_anchor: neighbouring hangers stay clear at full sway"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "hanger",
+          "joint_type": "revolute",
+          "parent_role": "spine"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": "hanger_count",
+          "role": "hanger"
+        }
+      ]
+    },
+    {
+      "anchor_id": "floor_contact_at_every_leg_tip",
+      "applies_to": {
+        "candidates": [
+          "rubber_foot_pads",
+          "swivel_caster_wheels",
+          "skid_bar_feet"
+        ],
+        "slot": "ground_contact"
+      },
+      "required_author_checks": [
+        "category_anchor: every leg tip meets the floor at the same height"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "caster_wheel",
+          "joint_type": "continuous",
+          "parent_role": "leg_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": "leg_frame_count",
+          "role": "leg_frame"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "Station spacing derives from wing_reach_m and wing_rise_ratio, so a shallow wing packs the same count over a shorter incline.",
+      "item_slot": "wing_form",
+      "name": "bar_count",
+      "spacing_expression": "Bars, cross wires, comb fingers or drop hooks walk the wing's own incline (or its length, for a comb) at evenly normalised stations, exactly the index-general loop var_bar_count L182-L207 states. The first and last bar keep the source's thicker edge stock.",
+      "values": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "host_capacity_expression": "The spine already carries both rail pairs; tier 1's fold stop is solved against tier 0's underside so a raised lower wing cannot reach it.",
+      "item_slot": "wing_form",
+      "name": "wing_tier_count",
+      "spacing_expression": "Tier 0 hangs on the wing hinge rails; tier 1 hangs on the lower bars at 0.60 scale, per var_wing_count L235-L252. Each tier is a mirrored pair.",
+      "values": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_capacity_expression": "The spine emits one hinge rail and one end strut per station, and a centreline station's hinge drops clear of the lower towel rail.",
+      "item_slot": "leg_family",
+      "name": "leg_frame_count",
+      "spacing_expression": "Stations walk the spine depth evenly between -leg_hinge_y and +leg_hinge_y; N = 2 reproduces the origin's front/rear pair and the middle station of N = 3 is var_leg_support_count's mid-span leg.",
+      "values": [
+        2,
+        3
+      ]
+    },
+    {
+      "host_capacity_expression": "Pitch derives from spine_length_m and N, and the hanger body width derives from the clear span between the wing hinge rails, so the sway envelope stays inside its own pitch at every declared count.",
+      "item_slot": "hanger_type",
+      "name": "hanger_count",
+      "spacing_expression": "Hangers are evenly pitched along the clear run of the top rail inside the end cross members. No record in the pool instantiates a hanger, so the station rule is the template's; see the SourceMap deviation note.",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "The pool's own support: each frame is a pair of tubes that leave the hinge line straight down and splay outward to a foot station 0.315 m to its own side and 0.745 m below, tied by a top cross tube on the hinge axis, a floor-level cross tube and a mid brace. Because the two frames splay to opposite sides from hinge lines 0.57 m apart, they cross in side view and the rack reads as an X. The feet stand outboard of the spine, so the standing footprint is wider than the spine.",
+          "implementation_function": "_leg_family_scissor_x_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "spine_length_m * 0.985",
+                "radius": "tube_radius_m * 0.92 + knuckle clearance"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "one leg hinge rail per declared station: (0, leg_station_y, leg_station_z)"
+              },
+              "kind": "axis",
+              "name": "spine_leg_hinge",
+              "part": "main_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "knuckles": "4 per frame, evenly spread",
+                "radius": "tube_radius_m * 0.92"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "child-frame origin, on the leg's own knuckle centres"
+              },
+              "kind": "axis",
+              "name": "leg_knuckle_bore",
+              "part": "leg_frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "scissor_x_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.2,
+              "mode": "independent",
+              "name": "spine_length_m",
+              "rationale": "Overall rail run. Origin record L228-L247 builds 1.76 m end to end; household racks run from a compact 1.2 m up to a 2.1 m double-width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.28,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "spine_height_m",
+              "rationale": "Top rail height off the floor. Origin L231-L239 top_center_rail sits at 1.075; every other rail station is a fixed ratio of it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "spine_depth_m",
+              "rationale": "Separation of the two wing hinge rails. Origin L232-L234 puts them at y = +/-0.18, i.e. 0.36 apart, with the lower bars and leg rails at fixed multiples.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.016,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "tube_radius_m",
+              "rationale": "Main tube stock. Origin L231-L247 uses 0.010-0.013 for rails and cross members; every knuckle bore and hinge clearance is derived from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "leg_spread_ratio",
+              "rationale": "Foot offset over leg drop. Origin L148-L154 splays 0.315 over a 0.745 drop = 0.423; narrower feet suit a post base, wider feet a scissor frame.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L137-L172",
+            "model.py:L297-L300"
+          ]
+        },
+        {
+          "evidence": "The gullwing rack in reference 002.png stands on a different support: the two tubes of each frame CONVERGE from a wide hinge span toward a narrow foot pair and are closed at floor level by a full-width bottom cross bar, so each frame reads as an A rather than as half an X, and the crossing happens between frames at mid height instead of at the feet. Same hinge line, same tube stock and the same top cross tube as the origin's frame, so the spine interface is unchanged; what changes is the sign of the span taper and the addition of a floor-level tie bar, which puts the closed triangle below the crossing point and narrows the standing footprint to inside the spine.",
+          "implementation_function": "_leg_family_a_frame_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "spine_length_m * 0.985",
+                "radius": "tube_radius_m * 0.92 + knuckle clearance"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "one leg hinge rail per declared station: (0, leg_station_y, leg_station_z)"
+              },
+              "kind": "axis",
+              "name": "spine_leg_hinge",
+              "part": "main_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "knuckles": "4 per frame, evenly spread",
+                "radius": "tube_radius_m * 0.92"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "child-frame origin, on the leg's own knuckle centres"
+              },
+              "kind": "axis",
+              "name": "leg_knuckle_bore",
+              "part": "leg_frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "a_frame_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.2,
+              "mode": "independent",
+              "name": "spine_length_m",
+              "rationale": "Overall rail run. Origin record L228-L247 builds 1.76 m end to end; household racks run from a compact 1.2 m up to a 2.1 m double-width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.28,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "spine_height_m",
+              "rationale": "Top rail height off the floor. Origin L231-L239 top_center_rail sits at 1.075; every other rail station is a fixed ratio of it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "spine_depth_m",
+              "rationale": "Separation of the two wing hinge rails. Origin L232-L234 puts them at y = +/-0.18, i.e. 0.36 apart, with the lower bars and leg rails at fixed multiples.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.016,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "tube_radius_m",
+              "rationale": "Main tube stock. Origin L231-L247 uses 0.010-0.013 for rails and cross members; every knuckle bore and hinge clearance is derived from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "leg_spread_ratio",
+              "rationale": "Foot offset over leg drop. Origin L148-L154 splays 0.315 over a 0.745 drop = 0.423; narrower feet suit a post base, wider feet a scissor frame.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L137-L172"
+          ]
+        },
+        {
+          "evidence": "The right-hand support in reference 001.png is not a splayed pair at all: a single heavy square post drops vertically from the spine to the floor and lands on a short cross foot laid across it, so the frame's silhouette is a T on a vertical line rather than a splayed V. Modelled here as one vertical post per end station carrying a transverse floor foot bar with an end cap at each tip, still on the spine's hinge axis so it folds like the other two. Distinct part tree (post plus foot bar instead of two raked tubes plus three cross tubes), distinct silhouette, and the only support whose feet sit directly under the hinge line.",
+          "implementation_function": "_leg_family_post_base_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "spine_length_m * 0.985",
+                "radius": "tube_radius_m * 0.92 + knuckle clearance"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "one leg hinge rail per declared station: (0, leg_station_y, leg_station_z)"
+              },
+              "kind": "axis",
+              "name": "spine_leg_hinge",
+              "part": "main_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "knuckles": "4 per frame, evenly spread",
+                "radius": "tube_radius_m * 0.92"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "child-frame origin, on the leg's own knuckle centres"
+              },
+              "kind": "axis",
+              "name": "leg_knuckle_bore",
+              "part": "leg_frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "post_base_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.2,
+              "mode": "independent",
+              "name": "spine_length_m",
+              "rationale": "Overall rail run. Origin record L228-L247 builds 1.76 m end to end; household racks run from a compact 1.2 m up to a 2.1 m double-width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.28,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "spine_height_m",
+              "rationale": "Top rail height off the floor. Origin L231-L239 top_center_rail sits at 1.075; every other rail station is a fixed ratio of it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "spine_depth_m",
+              "rationale": "Separation of the two wing hinge rails. Origin L232-L234 puts them at y = +/-0.18, i.e. 0.36 apart, with the lower bars and leg rails at fixed multiples.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.016,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "tube_radius_m",
+              "rationale": "Main tube stock. Origin L231-L247 uses 0.010-0.013 for rails and cross members; every knuckle bore and hinge clearance is derived from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "leg_spread_ratio",
+              "rationale": "Foot offset over leg drop. Origin L148-L154 splays 0.315 over a 0.745 drop = 0.423; narrower feet suit a post base, wider feet a scissor frame.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L137-L172"
+          ]
+        }
+      ],
+      "component_type": "folding floor support hinged to the spine",
+      "name": "leg_family",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The pool's default wing, in its parameterised form: an inner hinge tube on the spine rail, two short connector struts, two raked side rails climbing outward and upward to (0.48, 0.205), and a ladder of individually named parallel clothes bars spanning the full 1.72 m between the side rails at stations t = 0.12 + 0.88  i / (n - 1) up the incline, with the first and last bar thickened to 0.011 and the rest at 0.008, plus plastic caps on the outer corners. Open between the bars \u2014 the drying surface is a set of discrete lines.",
+          "implementation_function": "_wing_form_parallel_bar_wing_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "knuckles": "4 per wing, evenly spread",
+                "radius": "tube_radius_m"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "child-frame origin, on the wing's own knuckle centres"
+              },
+              "kind": "axis",
+              "name": "wing_knuckle_bore",
+              "part": "drying_wing",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "parallel_bar_wing",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "wing_reach_m",
+              "rationale": "Outward reach of a full-size wing from its hinge rail. Origin L186-L199 reaches 0.48; var_wing_count L235-L245 scales the lower tier to 0.60 of it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "wing_rise_ratio",
+              "rationale": "Wing rise over reach, i.e. the incline of the drying surface. Origin L186-L187 rises 0.205 over 0.48 = 0.427.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_drying_rack_var_bar_count",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L175-L220",
+            "model.py:L182-L207"
+          ]
+        },
+        {
+          "evidence": "A closed shelf instead of a ladder: the boundary frame is completed by cross-links from each strut top to its side rail and by a full-width outer edge bar, and the interior is filled with a woven lattice of thin wires crossing in two directions \u2014 cross wires along X at incline stations and longitudinal wires up the incline at X stations \u2014 forming a continuous perforated panel that small items cannot fall through. Two visuals per wing (boundary frame plus one merged grid mesh) against the bar wing's single merged frame, a closed outer edge the bar wing does not have, and a visibly solid surface.",
+          "implementation_function": "_wing_form_mesh_grid_wing_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "knuckles": "4 per wing, evenly spread",
+                "radius": "tube_radius_m"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "child-frame origin, on the wing's own knuckle centres"
+              },
+              "kind": "axis",
+              "name": "wing_knuckle_bore",
+              "part": "drying_wing",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "mesh_grid_wing",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "wing_reach_m",
+              "rationale": "Outward reach of a full-size wing from its hinge rail. Origin L186-L199 reaches 0.48; var_wing_count L235-L245 scales the lower tier to 0.60 of it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "wing_rise_ratio",
+              "rationale": "Wing rise over reach, i.e. the incline of the drying surface. Origin L186-L187 rises 0.205 over 0.48 = 0.427.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_drying_rack_var_mesh_shelf",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L175-L256",
+            "model.py:L194-L205",
+            "model.py:L211-L238"
+          ]
+        },
+        {
+          "evidence": "The left end of reference 002.png carries socks on a comb rather than on through-bars: a single outer rail runs the wing's length and short cantilever fingers hang off it at close spacing, each finger free at its far end and tipped with a small clip block, so the wing is open on three sides and its bars stop halfway instead of spanning rail to rail. Built on the mesh record's boundary-frame construction (the same strut/cross-link/edge-bar closure, since a comb needs a stiff spine rail to cantilever from) with the lattice replaced by one-ended fingers. Distinct part tree \u2014 no far-side rail carrying the bar ends \u2014 and the shortest outward reach of the four wings.",
+          "implementation_function": "_wing_form_comb_clip_wing_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "knuckles": "4 per wing, evenly spread",
+                "radius": "tube_radius_m"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "child-frame origin, on the wing's own knuckle centres"
+              },
+              "kind": "axis",
+              "name": "wing_knuckle_bore",
+              "part": "drying_wing",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "comb_clip_wing",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "wing_reach_m",
+              "rationale": "Outward reach of a full-size wing from its hinge rail. Origin L186-L199 reaches 0.48; var_wing_count L235-L245 scales the lower tier to 0.60 of it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "wing_rise_ratio",
+              "rationale": "Wing rise over reach, i.e. the incline of the drying surface. Origin L186-L187 rises 0.205 over 0.48 = 0.427.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_drying_rack_var_mesh_shelf",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L194-L205",
+            "model.py:L211-L238"
+          ]
+        },
+        {
+          "evidence": "Both wings in reference 001.png are plain extension arms, not bar fields: one long round rail with a black end cap at each tip, carried on two short raked struts off the spine and nothing between them, which is what lets full-length garments on hangers clear the frame. Modelled as the origin's wing with the bar ladder removed and the two side rails collapsed to a single outer rail on a pair of end struts. Fewest solids of the four wings and the only one with an unobstructed hanging span.",
+          "implementation_function": "_wing_form_single_rail_arm_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "knuckles": "4 per wing, evenly spread",
+                "radius": "tube_radius_m"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "child-frame origin, on the wing's own knuckle centres"
+              },
+              "kind": "axis",
+              "name": "wing_knuckle_bore",
+              "part": "drying_wing",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "single_rail_arm",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "wing_reach_m",
+              "rationale": "Outward reach of a full-size wing from its hinge rail. Origin L186-L199 reaches 0.48; var_wing_count L235-L245 scales the lower tier to 0.60 of it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "wing_rise_ratio",
+              "rationale": "Wing rise over reach, i.e. the incline of the drying surface. Origin L186-L187 rises 0.205 over 0.48 = 0.427.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L175-L217",
+            "model.py:L201-L207"
+          ]
+        }
+      ],
+      "component_type": "drying surface carried on a spine side rail",
+      "name": "wing_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The wing hangs on a transverse REVOLUTE at its spine hinge rail, axis (1y_sign, 0, 0), swinging from below horizontal up past the spine top (source limits -0.55..0.85 rad) so the rack opens out sideways and folds flat against the spine. The joint origin is the hinge rail station and the wing's inner tube is coaxial with it.",
+          "implementation_function": "_wing_motion_fold_hinge_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "spine_length_m * 0.985",
+                "radius": "tube_radius_m + knuckle clearance"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "(0, +/-tier_rail_y, tier_rail_z), one pair per declared wing tier"
+              },
+              "kind": "axis",
+              "name": "spine_wing_rail",
+              "part": "main_frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "fold_hinge",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.0,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "fold_upper_ratio",
+              "rationale": "How much of the geometrically available raise angle the hinge stop uses. The available angle is solved per tier against the centreline and tier-to-tier stops; the source's fixed 0.85 rad (origin L216) is one point on that band.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L209-L217"
+          ]
+        },
+        {
+          "evidence": "The same wing on the same rail becomes a telescoping carrier: a PRISMATIC joint along the spine's own length axis (x_sign, 0, 0) with a 0.45 m stroke at effort 20 / velocity 0.25, front and rear wings taking opposite signs so the rack extends in both directions. The inner tube is re-read as a slide rail captured in the fixed hinge rail, and the mechanism invariant becomes rail engagement at full extension rather than swing clearance.",
+          "implementation_function": "_wing_motion_telescope_slide_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "spine_length_m * 0.985",
+                "radius": "tube_radius_m + knuckle clearance"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "(0, +/-tier_rail_y, tier_rail_z), one pair per declared wing tier"
+              },
+              "kind": "axis",
+              "name": "spine_wing_rail",
+              "part": "main_frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "telescope_slide",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.35,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "telescope_stroke_ratio",
+              "rationale": "Slide stroke over spine length. var_prismatic_extension L217 travels 0.45 on a 1.76 m spine = 0.256, and its own tests require rail engagement to survive the full stroke.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_drying_rack_var_prismatic_extension",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L210-L218",
+            "model.py:L297-L301"
+          ]
+        }
+      ],
+      "component_type": "wing-to-spine kinematic pair",
+      "name": "wing_motion",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A moulded rubber cap over each leg tip: one small box per tip, seated just below and outboard of the tube end, adding no part and no joint. The rack stands still and its lowest point is the pad face.",
+          "implementation_function": "_ground_contact_rubber_foot_pads_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height_above_floor": "contact_size_m",
+                "stations": "2 per leg frame"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "the two tip stations the selected leg family publishes, at z = -leg_drop"
+              },
+              "kind": "axis",
+              "name": "leg_tip_station",
+              "part": "leg_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "footprint": "contact_size_m * 2.6 by contact_size_m * 1.8"
+              },
+              "frame": {
+                "normal": "-Z",
+                "point": "the pad's own top face at each tip station"
+              },
+              "kind": "plane",
+              "name": "contact_mount",
+              "part": "leg_frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "rubber_foot_pads",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.038,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "contact_size_m",
+              "rationale": "Height of the floor interface: pad thickness, skid bar diameter, or caster radius. var_caster_wheels L164-L165 uses a 0.025 wheel; the origin's rubber foot (L156-L162) is a 0.035-deep box. The leg drop is reduced by exactly this, so every candidate lands the rack at the same height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L156-L162"
+          ]
+        },
+        {
+          "evidence": "Each leg tip carries a real wheel part instead of a pad: a WheelGeometry with rim flanges, a flat-capped hub and a round bore, mounted on a CONTINUOUS joint about the rolling axis at the tip station, so the rack becomes mobile. Adds one part and one continuous joint per leg tip and lifts the frame by the wheel radius, which the leg length must absorb.",
+          "implementation_function": "_ground_contact_swivel_caster_wheels_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height_above_floor": "contact_size_m",
+                "stations": "2 per leg frame"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "the two tip stations the selected leg family publishes, at z = -leg_drop"
+              },
+              "kind": "axis",
+              "name": "leg_tip_station",
+              "part": "leg_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "bore": "contact_size_m * 0.34 diameter",
+                "radius": "contact_size_m * 0.17"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "child-frame origin, the wheel bore centre"
+              },
+              "kind": "axis",
+              "name": "contact_mount",
+              "part": "caster_wheel",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "swivel_caster_wheels",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.038,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "contact_size_m",
+              "rationale": "Height of the floor interface: pad thickness, skid bar diameter, or caster radius. var_caster_wheels L164-L165 uses a 0.025 wheel; the origin's rubber foot (L156-L162) is a 0.035-deep box. The leg drop is reduced by exactly this, so every candidate lands the rack at the same height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_drying_rack_var_caster_wheels",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L161-L195"
+          ]
+        },
+        {
+          "evidence": "The gullwing rack in reference 002.png does not land on point pads: each frame ends in a single continuous floor bar running the full length of the rack with a moulded cap at each end, so the contact is two long lines rather than four points. Built from the leg frame's own lower cross tube construction, dropped to the tip station and given end caps in place of the pads. No added part, but the largest ground footprint of the three and the only one that ties the two tips of a frame together at floor level.",
+          "implementation_function": "_ground_contact_skid_bar_feet_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height_above_floor": "contact_size_m",
+                "stations": "2 per leg frame"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "the two tip stations the selected leg family publishes, at z = -leg_drop"
+              },
+              "kind": "axis",
+              "name": "leg_tip_station",
+              "part": "leg_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "footprint": "tip-to-tip run by contact_size_m"
+              },
+              "frame": {
+                "normal": "-Z",
+                "point": "the skid bar's own upper surface, running tip to tip"
+              },
+              "kind": "plane",
+              "name": "contact_mount",
+              "part": "leg_frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "skid_bar_feet",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.038,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "contact_size_m",
+              "rationale": "Height of the floor interface: pad thickness, skid bar diameter, or caster radius. var_caster_wheels L164-L165 uses a 0.025 wheel; the origin's rubber foot (L156-L162) is a 0.035-deep box. The leg drop is reduced by exactly this, so every candidate lands the rack at the same height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L148-L154",
+            "model.py:L156-L162"
+          ]
+        }
+      ],
+      "component_type": "leg-tip floor interface",
+      "name": "ground_contact",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The classic shirt hanger, exactly as _hanger_geometry builds it: a swept spline hook curling over the rail from (0, 0, 0.040) down to the shoulder at (0, -0.006, -0.055), two shoulder bars falling from that point out to (0, +/-0.135, -0.285), a bottom rail closing the triangle between them, and a short centre stiffener. Promoted here from a dead helper to a real part hanging on the top rail with its own sway joint.",
+          "implementation_function": "_hanger_type_wire_triangle_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "pitch": "hanger_pitch_m",
+                "radius": "tube_radius_m * 1.08 + knuckle clearance"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "(hanger_station_x, 0, spine_height_m), one per declared hanger"
+              },
+              "kind": "axis",
+              "name": "spine_top_rail",
+              "part": "main_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "tube_radius_m * 1.08",
+                "wrap": "1.16 pi of arc around the rail"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "child-frame origin, at the centre of the hook's wrap arc"
+              },
+              "kind": "axis",
+              "name": "hanger_hook_bore",
+              "part": "hanger",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "wire_triangle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "hanger_drop_ratio",
+              "rationale": "Hanger body drop as a fraction of the headroom between the top rail and the lower towel rail. Expressed as a ratio, not the source's absolute 0.285 (origin L126-L128), so no spine height can bury the hanger in the rail below it.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.95,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "hanger_width_ratio",
+              "rationale": "Hanger body width as a fraction of the clear span between the two wing hinge rails. Origin L126-L128 spans 0.27 between rails 0.36 apart; a ratio keeps every hanger inside the rails for every declared spine depth.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L106-L134"
+          ]
+        },
+        {
+          "evidence": "The skirt/trouser hangers visible at the left of reference 001.png are not triangles: the same hook drops on a short narrow stem to a single straight horizontal clamp bar, and a pair of sprung clip blocks ride that bar near its ends. No shoulder slopes at all, a much shorter drop, and two extra solids for the clips \u2014 a rectangular silhouette instead of a triangular one. Shares the origin hook sweep and rail pivot construction.",
+          "implementation_function": "_hanger_type_clip_trouser_bar_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "pitch": "hanger_pitch_m",
+                "radius": "tube_radius_m * 1.08 + knuckle clearance"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "(hanger_station_x, 0, spine_height_m), one per declared hanger"
+              },
+              "kind": "axis",
+              "name": "spine_top_rail",
+              "part": "main_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "tube_radius_m * 1.08",
+                "wrap": "1.16 pi of arc around the rail"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "child-frame origin, at the centre of the hook's wrap arc"
+              },
+              "kind": "axis",
+              "name": "hanger_hook_bore",
+              "part": "hanger",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "clip_trouser_bar",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "hanger_drop_ratio",
+              "rationale": "Hanger body drop as a fraction of the headroom between the top rail and the lower towel rail. Expressed as a ratio, not the source's absolute 0.285 (origin L126-L128), so no spine height can bury the hanger in the rail below it.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.95,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "hanger_width_ratio",
+              "rationale": "Hanger body width as a fraction of the clear span between the two wing hinge rails. Origin L126-L128 spans 0.27 between rails 0.36 apart; a ratio keeps every hanger inside the rails for every declared spine depth.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L106-L134"
+          ]
+        },
+        {
+          "evidence": "The cluster at the far left of reference 002.png is a multi-clip sock airer: the hook drops to a small closed ring or disc hub from which short radial arms fan out in the vertical plane, each ending in a clip block, so one carrier holds many small items. Radial rather than triangular, the widest silhouette per unit drop of the three, and the only hanger whose clip count is itself a repeated station. Shares the origin hook sweep and rail pivot construction.",
+          "implementation_function": "_hanger_type_sock_clip_ring_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "pitch": "hanger_pitch_m",
+                "radius": "tube_radius_m * 1.08 + knuckle clearance"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "(hanger_station_x, 0, spine_height_m), one per declared hanger"
+              },
+              "kind": "axis",
+              "name": "spine_top_rail",
+              "part": "main_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "tube_radius_m * 1.08",
+                "wrap": "1.16 pi of arc around the rail"
+              },
+              "frame": {
+                "axis": "+X",
+                "point": "child-frame origin, at the centre of the hook's wrap arc"
+              },
+              "kind": "axis",
+              "name": "hanger_hook_bore",
+              "part": "hanger",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "sock_clip_ring",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "hanger_drop_ratio",
+              "rationale": "Hanger body drop as a fraction of the headroom between the top rail and the lower towel rail. Expressed as a ratio, not the source's absolute 0.285 (origin L126-L128), so no spine height can bury the hanger in the rail below it.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.95,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "hanger_width_ratio",
+              "rationale": "Hanger body width as a fraction of the clear span between the two wing hinge rails. Origin L126-L128 spans 0.27 between rails 0.36 apart; a ratio keeps every hanger inside the rails for every declared spine depth.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L106-L134"
+          ]
+        }
+      ],
+      "component_type": "small hanger carried on the spine top rail",
+      "name": "hanger_type",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The origin's own stiffener: on each side of the spine two dark diagonals cross between the lower bar and the top rail, running inboard and upward from (+/-0.70, 0.270y_sign, 0.800) to (-/+0.30, 0, 1.075), with a rivet block at each of the four ends. Four diagonal tubes and eight rivets that visibly triangulate the otherwise parallel-rail spine.",
+          "implementation_function": "_spine_extra_scissor_brace_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "spine_depth_m",
+                "length": "spine_length_m * 0.985"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "the fixed spine's own rail cage between the lower bar and the top rail"
+              },
+              "kind": "plane",
+              "name": "spine_accessory_face",
+              "part": "main_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "reach": "accessory_span_ratio * spine_length_m / 2"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "the accessory's own root stations on that cage"
+              },
+              "kind": "plane",
+              "name": "accessory_root",
+              "part": "main_frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "scissor_brace",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.55,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "accessory_span_ratio",
+              "rationale": "Reach of the spine accessory as a fraction of the spine half length: the brace's inboard rivet station, the shoe cradle's drop, or the towel hoop's outboard projection. Origin L286-L287 sets the brace's inboard end at 0.30 of its 0.88 half length = 0.341.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L281-L295"
+          ]
+        },
+        {
+          "evidence": "Reference 002.png hangs slippers on a dedicated fitting below the spine: a pair of short angled cradle arms drop off the lower rail and turn up at their ends, forming an open shoe pocket clear of the drying bars. Built as a second rung parallel to and below the lower towel rail with the raked cradle arms bridging the two, using the spine's own rail construction and end stations. Adds structure under the spine that no other accessory does.",
+          "implementation_function": "_spine_extra_shoe_cradle_rung_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "spine_depth_m",
+                "length": "spine_length_m * 0.985"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "the fixed spine's own rail cage between the lower bar and the top rail"
+              },
+              "kind": "plane",
+              "name": "spine_accessory_face",
+              "part": "main_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "reach": "accessory_span_ratio * spine_length_m / 2"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "the accessory's own root stations on that cage"
+              },
+              "kind": "plane",
+              "name": "accessory_root",
+              "part": "main_frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "shoe_cradle_rung",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.55,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "accessory_span_ratio",
+              "rationale": "Reach of the spine accessory as a fraction of the spine half length: the brace's inboard rivet station, the shoe cradle's drop, or the towel hoop's outboard projection. Origin L286-L287 sets the brace's inboard end at 0.30 of its 0.88 half length = 0.341.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L228-L247"
+          ]
+        },
+        {
+          "evidence": "Reference 001.png drapes a towel over a bar that projects past the frame end rather than over a wing: a U-shaped hoop leaves the spine's end cross member, runs out beyond the end station and returns, giving a short free-standing towel loop outside the rack's main span. Built from the spine's end cross-member construction, extended outboard on both ends. The only accessory that extends the spine's own footprint along its length.",
+          "implementation_function": "_spine_extra_towel_hoop_rail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "spine_depth_m",
+                "length": "spine_length_m * 0.985"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "the fixed spine's own rail cage between the lower bar and the top rail"
+              },
+              "kind": "plane",
+              "name": "spine_accessory_face",
+              "part": "main_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "reach": "accessory_span_ratio * spine_length_m / 2"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "the accessory's own root stations on that cage"
+              },
+              "kind": "plane",
+              "name": "accessory_root",
+              "part": "main_frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "towel_hoop_rail",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.55,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "accessory_span_ratio",
+              "rationale": "Reach of the spine accessory as a fraction of the spine half length: the brace's inboard rivet station, the shoe cradle's drop, or the towel hoop's outboard projection. Origin L286-L287 sets the brace's inboard end at 0.30 of its 0.88 half length = 0.341.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_household_laundry__clothes_drying_rack_laundry_drying_rack__001_png_f2ccdd08f2c443439b7d1b190cc6a269",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L228-L247",
+            "model.py:L242-L247"
+          ]
+        }
+      ],
+      "component_type": "accessory carried on the fixed spine",
+      "name": "spine_extra",
+      "required": true
+    }
+  ],
+  "slug": "Household_Laundry_Clothes_drying_rack_Laundry_drying_rack",
+  "source_map_path": "articraft_template_authoring/source_maps/Household_Laundry_Clothes_drying_rack_Laundry_drying_rack.md",
+  "source_map_sha256": "4c9b4c2d7542bff5b61b0756b9650ef37b91cb8149d99948e7d81395fbb366b0"
+}

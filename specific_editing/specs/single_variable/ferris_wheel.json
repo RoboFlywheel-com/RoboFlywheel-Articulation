@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "name": "ferris_wheel",
+  "generator": "ferris_wheel",
+  "base_config": {
+    "num_gondolas": 12,
+    "spoke_count": 24,
+    "gondola_style": "box_cabin",
+    "support_style": "a_frame",
+    "rim_style": "double_torus",
+    "scale_mode": "normal",
+    "base_style": "platform",
+    "hanger_style": "pivot_bar",
+    "gondola_motion_mode": "free_swing",
+    "railing_enabled": true,
+    "rim_radius": 0.98,
+    "wheel_half_width": 0.115,
+    "frame_palette": "painted_white",
+    "cabin_palette": "red_and_cream",
+    "glass_tint": "clear",
+    "gondola_palette": "none"
+  },
+  "edits": [
+    {
+      "kind": "component",
+      "target": "gondola_style",
+      "label": "Gondola module",
+      "values": ["open_basket", "glass_capsule", "bucket_seat", "rounded_pod"]
+    },
+    {
+      "kind": "count",
+      "target": "num_gondolas",
+      "label": "Gondola count",
+      "values": [8, 16, 20]
+    },
+    {
+      "kind": "material",
+      "target": "gondola_body",
+      "label": "Gondola body material",
+      "values": [
+        {
+          "name": "walnut gondola body",
+          "material_id": "blenderkit:c3f5ca2f-ba80-4b72-8f44-48d57e732fa3:df9aa2a3-5f5a-43cc-b5d4-1930beefcc2e",
+          "rgba": [0.29, 0.12, 0.055, 1.0],
+          "metallic": 0.0,
+          "roughness": 0.42
+        },
+        {
+          "name": "brushed silver gondola body",
+          "material_id": "blenderkit:c3ab2079-1dc6-4b6b-94d9-c56eb2339e91:3f4ded88-44d7-484c-8376-8a29ef92d331",
+          "rgba": [0.63, 0.67, 0.71, 1.0],
+          "metallic": 0.86,
+          "roughness": 0.24
+        },
+        {
+          "name": "warm white polymer gondola body",
+          "material_id": "blenderkit:df65d4a6-6d67-4cda-818d-0698b42042b3:4da03638-efb2-4b35-94c5-1d693adf288d",
+          "rgba": [0.88, 0.86, 0.79, 1.0],
+          "metallic": 0.0,
+          "roughness": 0.34
+        }
+      ]
+    },
+    {
+      "kind": "size",
+      "target": "rim_radius",
+      "label": "Wheel radius (m)",
+      "values": [0.70, 1.28]
+    }
+  ],
+  "render": {
+    "backend": "blender",
+    "views": ["front_iso"],
+    "poses": ["closed"],
+    "image_size": [800, 560]
+  }
+}

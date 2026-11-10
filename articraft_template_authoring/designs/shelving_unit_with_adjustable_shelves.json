@@ -1,0 +1,272 @@
+{
+  "assembly_notes": "Frame topology, shelf support, and storage are merged into coherent assembly families. bay_count and level_count are structural multiplicities derived together with posts, rails, supports, cubbies, and storage modules; shelf_count adds source-placed adjustable shelves and supports.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "stepped_grid_open_bins_identity",
+      "applies_to": {
+        "slot": "assembly_family",
+        "candidates": ["stepped_grid_open_bins"]
+      },
+      "required_roles": [
+        {"role": "load_bearing_frame", "exact_count": 1},
+        {"role": "adjustable_shelf", "count_from": "shelf_count"},
+        {"role": "open_cubby", "count_from": "resolved.cubby_count"},
+        {"role": "storage_module", "count_from": "bay_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "load_bearing_frame", "child_role": "adjustable_shelf", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]},
+        {"parent_role": "load_bearing_frame", "child_role": "open_cubby", "joint_type": "fixed"},
+        {"parent_role": "load_bearing_frame", "child_role": "storage_module", "joint_type": "prismatic", "axis": [0.0, -1.0, 0.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: source-like multi-bay shelving",
+        "category_anchor: supported adjustable shelves",
+        "category_anchor: stepped_grid_open_bins identity"
+      ]
+    },
+    {
+      "anchor_id": "stepped_grid_lidded_drawers_identity",
+      "applies_to": {
+        "slot": "assembly_family",
+        "candidates": ["stepped_grid_lidded_drawers"]
+      },
+      "required_roles": [
+        {"role": "load_bearing_frame", "exact_count": 1},
+        {"role": "adjustable_shelf", "count_from": "shelf_count"},
+        {"role": "open_cubby", "count_from": "resolved.cubby_count"},
+        {"role": "storage_module", "count_from": "bay_count"},
+        {"role": "storage_lid", "count_from": "bay_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "load_bearing_frame", "child_role": "adjustable_shelf", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]},
+        {"parent_role": "load_bearing_frame", "child_role": "open_cubby", "joint_type": "fixed"},
+        {"parent_role": "load_bearing_frame", "child_role": "storage_module", "joint_type": "prismatic", "axis": [0.0, -1.0, 0.0]},
+        {"parent_role": "storage_module", "child_role": "storage_lid", "joint_type": "revolute", "axis": [1.0, 0.0, 0.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: source-like multi-bay shelving",
+        "category_anchor: supported adjustable shelves",
+        "category_anchor: stepped_grid_lidded_drawers identity"
+      ]
+    },
+    {
+      "anchor_id": "stepped_grid_wire_baskets_identity",
+      "applies_to": {
+        "slot": "assembly_family",
+        "candidates": ["stepped_grid_wire_baskets"]
+      },
+      "required_roles": [
+        {"role": "load_bearing_frame", "exact_count": 1},
+        {"role": "adjustable_shelf", "count_from": "shelf_count"},
+        {"role": "open_cubby", "count_from": "resolved.cubby_count"},
+        {"role": "storage_module", "count_from": "bay_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "load_bearing_frame", "child_role": "adjustable_shelf", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]},
+        {"parent_role": "load_bearing_frame", "child_role": "open_cubby", "joint_type": "fixed"},
+        {"parent_role": "load_bearing_frame", "child_role": "storage_module", "joint_type": "prismatic", "axis": [0.0, -1.0, 0.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: source-like multi-bay shelving",
+        "category_anchor: supported adjustable shelves",
+        "category_anchor: stepped_grid_wire_baskets identity"
+      ]
+    },
+    {
+      "anchor_id": "open_ladder_solid_shelves_identity",
+      "applies_to": {
+        "slot": "assembly_family",
+        "candidates": ["open_ladder_solid_shelves"]
+      },
+      "required_roles": [
+        {"role": "load_bearing_frame", "exact_count": 1},
+        {"role": "adjustable_shelf", "count_from": "shelf_count"},
+        {"role": "open_cubby", "count_from": "resolved.cubby_count"},
+        {"role": "storage_module", "count_from": "bay_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "load_bearing_frame", "child_role": "adjustable_shelf", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]},
+        {"parent_role": "load_bearing_frame", "child_role": "open_cubby", "joint_type": "fixed"},
+        {"parent_role": "load_bearing_frame", "child_role": "storage_module", "joint_type": "prismatic", "axis": [0.0, -1.0, 0.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: source-like multi-bay shelving",
+        "category_anchor: supported adjustable shelves",
+        "category_anchor: open_ladder_solid_shelves identity"
+      ]
+    },
+    {
+      "anchor_id": "uniform_grid_slotted_shelves_identity",
+      "applies_to": {
+        "slot": "assembly_family",
+        "candidates": ["uniform_grid_slotted_shelves"]
+      },
+      "required_roles": [
+        {"role": "load_bearing_frame", "exact_count": 1},
+        {"role": "adjustable_shelf", "count_from": "shelf_count"},
+        {"role": "open_cubby", "count_from": "resolved.cubby_count"},
+        {"role": "storage_module", "count_from": "bay_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "load_bearing_frame", "child_role": "adjustable_shelf", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]},
+        {"parent_role": "load_bearing_frame", "child_role": "open_cubby", "joint_type": "fixed"},
+        {"parent_role": "load_bearing_frame", "child_role": "storage_module", "joint_type": "prismatic", "axis": [0.0, -1.0, 0.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: source-like multi-bay shelving",
+        "category_anchor: supported adjustable shelves",
+        "category_anchor: uniform_grid_slotted_shelves identity"
+      ]
+    },
+    {
+      "anchor_id": "wall_rail_wire_shelves_identity",
+      "applies_to": {
+        "slot": "assembly_family",
+        "candidates": ["wall_rail_wire_shelves"]
+      },
+      "required_roles": [
+        {"role": "load_bearing_frame", "exact_count": 1},
+        {"role": "adjustable_shelf", "count_from": "shelf_count"},
+        {"role": "open_cubby", "count_from": "resolved.cubby_count"},
+        {"role": "storage_module", "count_from": "bay_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "load_bearing_frame", "child_role": "adjustable_shelf", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]},
+        {"parent_role": "load_bearing_frame", "child_role": "open_cubby", "joint_type": "fixed"},
+        {"parent_role": "load_bearing_frame", "child_role": "storage_module", "joint_type": "prismatic", "axis": [0.0, -1.0, 0.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: source-like multi-bay shelving",
+        "category_anchor: supported adjustable shelves",
+        "category_anchor: wall_rail_wire_shelves identity"
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "4 <= bay_count <= 9; each bay owns one storage runner/module",
+      "item_slot": "assembly_family",
+      "name": "bay_count",
+      "spacing_expression": "bay centers and support spans derive from bay_count",
+      "values": [4, 5, 6, 7, 8, 9]
+    },
+    {
+      "host_capacity_expression": "4 <= level_count <= 8; stepped low side derives ceil(level_count/2)",
+      "item_slot": "assembly_family",
+      "name": "level_count",
+      "spacing_expression": "source-like level pitch table with level_count+1 support rails",
+      "values": [4, 5, 6, 7, 8]
+    },
+    {
+      "host_capacity_expression": "grid-derived free bay-level table after source-style cubby placement",
+      "item_slot": "assembly_family",
+      "name": "shelf_count",
+      "spacing_expression": "source placement table at 6x6/3 and deterministic grid-cell placement elsewhere",
+      "values": [3, 5, 7]
+    }
+  ],
+  "schema_version": 1,
+  "slug": "shelving_unit_with_adjustable_shelves",
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Original stepped welded grid with seven staggered cubbies and six open bins.",
+          "implementation_function": "_assembly_family_stepped_grid_open_bins_build",
+          "name": "stepped_grid_open_bins",
+          "parameters": [
+            {"name": "bay_width_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.42, "choices": [], "expression": "", "depends_on": [], "rationale": "source tall/low bay widths"},
+            {"name": "level_pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.40, "choices": [], "expression": "", "depends_on": [], "rationale": "source vertical grid pitch"},
+            {"name": "shelf_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.33, "maximum": 0.43, "choices": [], "expression": "", "depends_on": [], "rationale": "source shelf and frame depth"}
+          ],
+          "interfaces": [],
+          "notes": "Original high-left/low-right family with hollow open bins.",
+          "record_id": "rec_picturex_0611__shelving_unit_with_adjustable_shelves__001__png_533ba1a88611432880d7a18eb92b3cf3",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L36-L434"]
+        },
+        {
+          "evidence": "Stepped source grid with six guided lidded drawers.",
+          "implementation_function": "_assembly_family_stepped_grid_lidded_drawers_build",
+          "name": "stepped_grid_lidded_drawers",
+          "parameters": [
+            {"name": "bay_width_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.42, "choices": [], "expression": "", "depends_on": [], "rationale": "source tall/low bay widths"},
+            {"name": "level_pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.40, "choices": [], "expression": "", "depends_on": [], "rationale": "source vertical grid pitch"},
+            {"name": "shelf_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.33, "maximum": 0.43, "choices": [], "expression": "", "depends_on": [], "rationale": "source shelf and frame depth"}
+          ],
+          "interfaces": [],
+          "notes": "Drawer lids use real X-axis hinges.",
+          "record_id": "rec_0611_shelving_unit_with_adjustable_var_tray_module_lidded_drawer",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L36-L432"]
+        },
+        {
+          "evidence": "Stepped source grid with rod-network shelves and baskets.",
+          "implementation_function": "_assembly_family_stepped_grid_wire_baskets_build",
+          "name": "stepped_grid_wire_baskets",
+          "parameters": [
+            {"name": "bay_width_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.42, "choices": [], "expression": "", "depends_on": [], "rationale": "source tall/low bay widths"},
+            {"name": "level_pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.40, "choices": [], "expression": "", "depends_on": [], "rationale": "source vertical grid pitch"},
+            {"name": "shelf_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.33, "maximum": 0.43, "choices": [], "expression": "", "depends_on": [], "rationale": "source shelf and frame depth"}
+          ],
+          "interfaces": [],
+          "notes": "Wire structures are generated as rods rather than slabs.",
+          "record_id": "rec_0611_shelving_unit_with_adjustable_var_tray_module_pull_out_basket",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L36-L508"]
+        },
+        {
+          "evidence": "Open ladder source frame with sparse crossmembers and solid shelves.",
+          "implementation_function": "_assembly_family_open_ladder_solid_shelves_build",
+          "name": "open_ladder_solid_shelves",
+          "parameters": [
+            {"name": "bay_width_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.42, "choices": [], "expression": "", "depends_on": [], "rationale": "source tall/low bay widths"},
+            {"name": "level_pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.40, "choices": [], "expression": "", "depends_on": [], "rationale": "source vertical grid pitch"},
+            {"name": "shelf_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.33, "maximum": 0.43, "choices": [], "expression": "", "depends_on": [], "rationale": "source shelf and frame depth"}
+          ],
+          "interfaces": [],
+          "notes": "Keeps open side ladders and real front/rear support rungs.",
+          "record_id": "rec_0611_shelving_unit_with_adjustable_var_frame_open_ladder",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L36-L441"]
+        },
+        {
+          "evidence": "Uniform full-height grid source with slotted standards.",
+          "implementation_function": "_assembly_family_uniform_grid_slotted_shelves_build",
+          "name": "uniform_grid_slotted_shelves",
+          "parameters": [
+            {"name": "bay_width_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.42, "choices": [], "expression": "", "depends_on": [], "rationale": "source tall/low bay widths"},
+            {"name": "level_pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.40, "choices": [], "expression": "", "depends_on": [], "rationale": "source vertical grid pitch"},
+            {"name": "shelf_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.33, "maximum": 0.43, "choices": [], "expression": "", "depends_on": [], "rationale": "source shelf and frame depth"}
+          ],
+          "interfaces": [],
+          "notes": "Full-height lattice and visible slot tabs distinguish this family.",
+          "record_id": "rec_0611_shelving_unit_with_adjustable_var_frame_uniform_grid",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L36-L401"]
+        },
+        {
+          "evidence": "Wall-mounted rear standards, backplates, cantilever supports, and wire shelves.",
+          "implementation_function": "_assembly_family_wall_rail_wire_shelves_build",
+          "name": "wall_rail_wire_shelves",
+          "parameters": [
+            {"name": "bay_width_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.42, "choices": [], "expression": "", "depends_on": [], "rationale": "source tall/low bay widths"},
+            {"name": "level_pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.34, "maximum": 0.40, "choices": [], "expression": "", "depends_on": [], "rationale": "source vertical grid pitch"},
+            {"name": "shelf_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.33, "maximum": 0.43, "choices": [], "expression": "", "depends_on": [], "rationale": "source shelf and frame depth"}
+          ],
+          "interfaces": [],
+          "notes": "Backplates and wall standards remain visible behind open wire decks.",
+          "record_id": "rec_0611_shelving_unit_with_adjustable_var_frame_wall_rail",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L36-L460"]
+        }
+      ],
+      "component_type": "coherent_adjustable_shelving_assembly",
+      "name": "assembly_family",
+      "required": true
+    }
+  ],
+  "source_map_path": "articraft_template_authoring/source_maps/shelving_unit_with_adjustable_shelves.md",
+  "source_map_sha256": "795dac04dda146c6c53a812e3275ce00784e894c08982a499cc3c2c078ac10ec"
+}

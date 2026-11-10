@@ -1,0 +1,1319 @@
+{
+  "assembly_notes": "Round gateleg drop-leaf table. One rigid table_frame root carries the fixed centre spine of the top, the steel carcass under it and every support pivot. Two drop_leaf parts are REVOLUTE children of the frame, hinged on both long edges of the spine; q=0 is raised and coplanar with the spine, q=upper is folded straight down beside the frame. Because the leaves hang on the hinge line and every support swings out well outboard of it, no support and no folded leaf ever share space. support_build is one structural family of swing-out leaf supports pivoting on a vertical axis in the frame: swing_gate, arc_gate, cross_trestle, telescoping_brace (which adds a real prismatic lock), wall_bracket and latch_gate (which adds a pivoting latch). frame_build changes what fills and carries the carcass: open_spine, shelf_spine, double_shelf, caster_glide (swivel plus roll axes per caster) and brake_caster (which adds a pivoting brake pedal per caster). support_per_leaf multiplies the support stations on each side, always symmetric, so the model carries 2 * support_per_leaf support parts. top_diameter_m, spine_width_ratio and table_height_m are the independent parameters; palette, grain grooves and fastener counts are non-core. foot_build is what the frame stands on, independent of what fills it: fixed_glide keeps the frame on small rubber glides, pad_foot spreads the load on broad pads with a steel plate, and swivel_caster / braked_caster lift the whole frame by one caster radius onto four casters, each with a vertical swivel over a rolling wheel and, for braked_caster, a brake pedal that swings onto the tyre. The frame derives its floor lift from the foot candidate, so every frame_build combines with every foot_build.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "support_build_identity",
+      "applies_to": {
+        "candidates": [
+          "swing_gate",
+          "arc_gate",
+          "cross_trestle",
+          "telescoping_brace",
+          "wall_bracket",
+          "latch_gate"
+        ],
+        "slot": "support_build"
+      },
+      "required_author_checks": [
+        "category_anchor: both leaves drop beside the fixed spine",
+        "category_anchor: the swing-out supports reach under a raised leaf",
+        "category_anchor: support_build identity"
+      ],
+      "required_relations": [
+        {
+          "child_role": "drop_leaf",
+          "joint_type": "revolute",
+          "parent_role": "table_frame"
+        },
+        {
+          "child_role": "leaf_support",
+          "joint_type": "revolute",
+          "parent_role": "table_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "table_frame"
+        },
+        {
+          "exact_count": 2,
+          "role": "drop_leaf"
+        },
+        {
+          "count_from": "resolved.support_total",
+          "role": "leaf_support"
+        }
+      ]
+    },
+    {
+      "anchor_id": "frame_build_identity",
+      "applies_to": {
+        "candidates": [
+          "open_spine",
+          "shelf_spine",
+          "double_shelf"
+        ],
+        "slot": "frame_build"
+      },
+      "required_author_checks": [
+        "category_anchor: both leaves drop beside the fixed spine",
+        "category_anchor: the swing-out supports reach under a raised leaf",
+        "category_anchor: frame_build identity"
+      ],
+      "required_relations": [
+        {
+          "child_role": "drop_leaf",
+          "joint_type": "revolute",
+          "parent_role": "table_frame"
+        },
+        {
+          "child_role": "leaf_support",
+          "joint_type": "revolute",
+          "parent_role": "table_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "table_frame"
+        },
+        {
+          "exact_count": 2,
+          "role": "drop_leaf"
+        },
+        {
+          "count_from": "resolved.support_total",
+          "role": "leaf_support"
+        }
+      ]
+    },
+    {
+      "anchor_id": "foot_build_identity",
+      "applies_to": {
+        "candidates": [
+          "fixed_glide",
+          "pad_foot",
+          "swivel_caster",
+          "braked_caster"
+        ],
+        "slot": "foot_build"
+      },
+      "required_author_checks": [
+        "category_anchor: both leaves drop beside the fixed spine",
+        "category_anchor: the swing-out supports reach under a raised leaf",
+        "category_anchor: foot_build identity"
+      ],
+      "required_relations": [
+        {
+          "child_role": "drop_leaf",
+          "joint_type": "revolute",
+          "parent_role": "table_frame"
+        },
+        {
+          "child_role": "leaf_support",
+          "joint_type": "revolute",
+          "parent_role": "table_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "table_frame"
+        },
+        {
+          "exact_count": 2,
+          "role": "drop_leaf"
+        },
+        {
+          "count_from": "resolved.support_total",
+          "role": "leaf_support"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= support_per_leaf <= 2; stations stay at least 120 mm apart along the spine",
+      "item_slot": "support_build",
+      "name": "support_per_leaf",
+      "spacing_expression": "supports are pitched evenly along the spine on each side, mirrored on both leaves",
+      "values": [
+        1,
+        2
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Rod-built rectangular gate swinging on a vertical pivot out from the frame under the raised leaf.",
+          "implementation_function": "_support_build_swing_gate_build",
+          "interfaces": [],
+          "name": "swing_gate",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table5__001__png_1ac9d775a5de4deaa6918c2b8db999a4",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L90-L111"
+          ]
+        },
+        {
+          "evidence": "Arched gate whose top rail sweeps up in a curve to meet the leaf underside.",
+          "implementation_function": "_support_build_arc_gate_build",
+          "interfaces": [],
+          "name": "arc_gate",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table5_var_arc_gate_support",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L90-L140"
+          ]
+        },
+        {
+          "evidence": "Folding cross trestle scissoring out of the spine instead of a single-plane gate.",
+          "implementation_function": "_support_build_cross_trestle_build",
+          "interfaces": [],
+          "name": "cross_trestle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table5_var_folding_cross_trestle_support",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L60-L140"
+          ]
+        },
+        {
+          "evidence": "Gate carrying a prismatic brace that telescopes out to lock it at full swing.",
+          "implementation_function": "_support_build_telescoping_brace_build",
+          "interfaces": [],
+          "name": "telescoping_brace",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table5_var_telescoping_gate_braces",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L90-L160"
+          ]
+        },
+        {
+          "evidence": "Folding bracket arms pivoting straight off the spine, as on a wall-hung drop leaf.",
+          "implementation_function": "_support_build_wall_bracket_build",
+          "interfaces": [],
+          "name": "wall_bracket",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table5_var_wall_bracket_arms",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L70-L150"
+          ]
+        },
+        {
+          "evidence": "Gate paired with a pivoting latch that locks the raised leaf down onto it.",
+          "implementation_function": "_support_build_latch_gate_build",
+          "interfaces": [],
+          "name": "latch_gate",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table5_var_leaf_locking_latches",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L90-L170"
+          ]
+        }
+      ],
+      "component_type": "leaf support",
+      "name": "support_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Open black steel frame: spine rails, end uprights and floor glides with nothing between them.",
+          "implementation_function": "_frame_build_open_spine_build",
+          "interfaces": [],
+          "name": "open_spine",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table5__001__png_1ac9d775a5de4deaa6918c2b8db999a4",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L125-L214"
+          ]
+        },
+        {
+          "evidence": "One fixed shelf with an edge rail filling the frame under the spine.",
+          "implementation_function": "_frame_build_shelf_spine_build",
+          "interfaces": [],
+          "name": "shelf_spine",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table5_var_shelf_spine",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L60-L160"
+          ]
+        },
+        {
+          "evidence": "Two stacked fixed shelves in the frame instead of one.",
+          "implementation_function": "_frame_build_double_shelf_build",
+          "interfaces": [],
+          "name": "double_shelf",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table5_var_double_shelf_spine",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L60-L160"
+          ]
+        }
+      ],
+      "component_type": "frame carcass",
+      "name": "frame_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Small rubber glides under each corner of the foot bars, so the frame stands straight on the floor with no rolling hardware.",
+          "implementation_function": "_foot_build_fixed_glide_build",
+          "interfaces": [],
+          "name": "fixed_glide",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table5__001__png_1ac9d775a5de4deaa6918c2b8db999a4",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L125-L214"
+          ]
+        },
+        {
+          "evidence": "Broad flat pads with a steel bearing plate spreading the load along the foot bar instead of a small point glide.",
+          "implementation_function": "_foot_build_pad_foot_build",
+          "interfaces": [],
+          "name": "pad_foot",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table5__002__png_2402f0a0895c48cfa6267157874c2050",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L240-L268"
+          ]
+        },
+        {
+          "evidence": "Caster plate, swivel stem and fork carrying a wheel: a vertical swivel axis over a horizontal roll axis at each corner, lifting the whole frame onto its wheels.",
+          "implementation_function": "_foot_build_swivel_caster_build",
+          "interfaces": [],
+          "name": "swivel_caster",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table5__003__png_ef8fdc887f014728a345a684122913c2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L90-L135"
+          ]
+        },
+        {
+          "evidence": "The same caster with a pivoting brake lever whose pad swings down onto the tyre, adding a third joint per corner.",
+          "implementation_function": "_foot_build_braked_caster_build",
+          "interfaces": [],
+          "name": "braked_caster",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "top_diameter_m",
+              "rationale": "deployed round top diameter; derives leaf reach, gate length and frame span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "spine_width_ratio",
+              "rationale": "fixed centre spine width as a fraction of the diameter; derives hinge offset and frame width",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives upright length, gate height, shelf heights and caster drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * spine_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_offset_m",
+              "rationale": "leaf hinge offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "top_diameter_m * (1 - spine_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one semicircular leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_diameter_m",
+                "spine_width_ratio"
+              ],
+              "expression": "0.62 * leaf_reach_m",
+              "mode": "derived",
+              "name": "support_reach_m",
+              "rationale": "how far a deployed support swings out under its leaf",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table5_var_brake_caster_locks",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L140-L170"
+          ]
+        }
+      ],
+      "component_type": "frame foot",
+      "name": "foot_build",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Folding_table5",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Folding_table5.md",
+  "source_map_sha256": "e313dcccff09fadf8595f37e513c85989b94beb5053e4783a0a2827a21a2eea0"
+}

@@ -1,0 +1,278 @@
+{
+  "assembly_notes": "The mechanism family owns its topology and matched compensation hardware. Every base provides one vertical swivel axis; every mechanism consumes it and provides one terminal pitch axis; every terminal consumes that pitch axis. Fork width, hub depth, cheek spacing, pivot-pin length and wrist clearance are derived before geometry emission. All 90 structural combinations are legal and require no compatibility gate. Segment-count records describe alternate joint graphs, not homogeneous N repetition.",
+  "bindings": [
+    {
+      "binding_id": "base_to_mechanism",
+      "consumer": "mechanism_family.root_axis",
+      "derived": [
+        {
+          "depends_on": ["base_mount.root_height", "mechanism_family.link_width"],
+          "expression": "base_mount.root_height + 0.5 * mechanism_family.link_width",
+          "mode": "derived",
+          "name": "shoulder_axis_height",
+          "rationale": "Places the first pitch axis above every source-backed socket and leaves fork rotation clearance."
+        },
+        {
+          "depends_on": ["mechanism_family.link_depth", "mechanism_family.section_scale"],
+          "expression": "0.48 * mechanism_family.link_depth + 0.0024 * mechanism_family.section_scale + 0.014 * mechanism_family.section_scale",
+          "mode": "derived",
+          "name": "shoulder_pin_length",
+          "rationale": "Spans the child hub, two running gaps and two fork cheeks."
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "base_mount.swivel_axis"
+    },
+    {
+      "binding_id": "mechanism_to_terminal",
+      "consumer": "terminal_mount.wrist_axis",
+      "derived": [
+        {
+          "depends_on": ["mechanism_family.link_depth", "terminal_mount.mount_depth", "mechanism_family.section_scale"],
+          "expression": "0.5 * mechanism_family.link_depth + 0.5 * terminal_mount.mount_depth + 0.0024 * mechanism_family.section_scale",
+          "mode": "derived",
+          "name": "wrist_fork_spacing",
+          "rationale": "Keeps the terminal hub between the boom cheeks with a real running gap."
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "mechanism_family.terminal_axis"
+    }
+  ],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Rounded two-link box boom with paired extension springs, cable guides, fork cheeks, pins and friction knobs.",
+          "implementation_function": "_mechanism_family_folded_extension_build",
+          "interfaces": [
+            {"name": "root_axis", "kind": "axis", "role": "consumer", "part": "mechanism_family__folded_extension__swivel", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"hub_depth": "link_depth * 0.48"}},
+            {"name": "terminal_axis", "kind": "axis", "role": "provider", "part": "mechanism_family__folded_extension__terminal_link", "frame": {"axis": [0.0, 1.0, 0.0]}, "dimensions": {"reach": "sum(link_lengths)", "hub_depth": "link_depth * 0.48"}}
+          ],
+          "name": "folded_extension",
+          "notes": "Extension springs remain local to this topology; they are not an independently sampled component.",
+          "parameters": [
+            {"name": "reach_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded source-proportion reach variation."},
+            {"name": "section_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded section and hardware scale."},
+            {"name": "link_lengths", "mode": "derived", "value_type": "tuple[float, float]", "expression": "(0.285 * overall_scale * reach_scale, 0.365 * overall_scale * reach_scale)", "depends_on": ["overall_scale", "reach_scale"], "rationale": "Source-backed folded lower and upper reach."},
+            {"name": "link_width", "mode": "derived", "expression": "0.034 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Controls link shell, fork and hub clearances."},
+            {"name": "link_depth", "mode": "derived", "expression": "0.027 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Controls fork spacing and face detail."}
+          ],
+          "record_id": "rec_picturex_0611__microphone_boom_arm__001__png_40f72213fda046498d8240b2f25fc372",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L26-L131", "model.py:L134-L544", "model.py:L547-L770"]
+        },
+        {
+          "evidence": "Slim horizontal box members with compact forks, extension spring and cable routing.",
+          "implementation_function": "_mechanism_family_low_profile_extension_build",
+          "interfaces": [
+            {"name": "root_axis", "kind": "axis", "role": "consumer", "part": "mechanism_family__low_profile_extension__swivel", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"hub_depth": "link_depth * 0.48"}},
+            {"name": "terminal_axis", "kind": "axis", "role": "provider", "part": "mechanism_family__low_profile_extension__terminal_link", "frame": {"axis": [0.0, 1.0, 0.0]}, "dimensions": {"reach": "sum(link_lengths)", "hub_depth": "link_depth * 0.48"}}
+          ],
+          "name": "low_profile_extension",
+          "notes": "Low-profile member proportions and compensation are one structural family.",
+          "parameters": [
+            {"name": "reach_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded source-proportion reach variation."},
+            {"name": "section_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded section and hardware scale."},
+            {"name": "link_lengths", "mode": "derived", "value_type": "tuple[float, float]", "expression": "(0.340 * overall_scale * reach_scale, 0.400 * overall_scale * reach_scale)", "depends_on": ["overall_scale", "reach_scale"], "rationale": "Source-backed low horizontal reach."},
+            {"name": "link_width", "mode": "derived", "expression": "0.027 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Slim source-backed link width."},
+            {"name": "link_depth", "mode": "derived", "expression": "0.029 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Keeps the compact fork and cable path."}
+          ],
+          "record_id": "rec_0611_microphone_boom_arm_var_arm_topology_low_profile_horizontal_bo",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L28-L133", "model.py:L136-L389", "model.py:L439-L545"]
+        },
+        {
+          "evidence": "Rising wall-swing geometry with a compact hinge-side torsion package.",
+          "implementation_function": "_mechanism_family_wall_swing_torsion_build",
+          "interfaces": [
+            {"name": "root_axis", "kind": "axis", "role": "consumer", "part": "mechanism_family__wall_swing_torsion__swivel", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"hub_depth": "link_depth * 0.48"}},
+            {"name": "terminal_axis", "kind": "axis", "role": "provider", "part": "mechanism_family__wall_swing_torsion__terminal_link", "frame": {"axis": [0.0, 1.0, 0.0]}, "dimensions": {"reach": "sum(link_lengths)", "hub_depth": "link_depth * 0.48"}}
+          ],
+          "name": "wall_swing_torsion",
+          "notes": "The torsion coil remains anchored to this hinge topology.",
+          "parameters": [
+            {"name": "reach_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded source-proportion reach variation."},
+            {"name": "section_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded section and hardware scale."},
+            {"name": "link_lengths", "mode": "derived", "value_type": "tuple[float, float]", "expression": "(0.320 * overall_scale * reach_scale, 0.455 * overall_scale * reach_scale)", "depends_on": ["overall_scale", "reach_scale"], "rationale": "Short rising inboard and long outboard source links."},
+            {"name": "link_width", "mode": "derived", "expression": "0.030 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Controls hinge and shell width."},
+            {"name": "link_depth", "mode": "derived", "expression": "0.029 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Controls fork and torsion-package clearance."}
+          ],
+          "record_id": "rec_0611_microphone_boom_arm_var_arm_topology_wall_swing_boom",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L29-L134", "model.py:L137-L390", "model.py:L440-L546"]
+        },
+        {
+          "evidence": "Twin tubular cantilever members with a captured gas-strut body and rod.",
+          "implementation_function": "_mechanism_family_tubular_gas_build",
+          "interfaces": [
+            {"name": "root_axis", "kind": "axis", "role": "consumer", "part": "mechanism_family__tubular_gas__swivel", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"hub_depth": "link_depth * 0.48"}},
+            {"name": "terminal_axis", "kind": "axis", "role": "provider", "part": "mechanism_family__tubular_gas__terminal_link", "frame": {"axis": [0.0, 1.0, 0.0]}, "dimensions": {"reach": "sum(link_lengths)", "hub_depth": "link_depth * 0.48"}}
+          ],
+          "name": "tubular_gas",
+          "notes": "The gas strut is locally derived from tube spacing and cannot float as a separate sampled component.",
+          "parameters": [
+            {"name": "reach_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded source-proportion reach variation."},
+            {"name": "section_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded tube and gas-strut section scale."},
+            {"name": "link_lengths", "mode": "derived", "value_type": "tuple[float, float]", "expression": "(0.355 * overall_scale * reach_scale, 0.430 * overall_scale * reach_scale)", "depends_on": ["overall_scale", "reach_scale"], "rationale": "Source-backed tubular cantilever reach."},
+            {"name": "link_width", "mode": "derived", "expression": "0.042 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Sets twin-tube separation."},
+            {"name": "link_depth", "mode": "derived", "expression": "0.050 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Provides gas-strut and fork depth."}
+          ],
+          "record_id": "rec_0611_microphone_boom_arm_var_arm_topology_tubular_cantilever_arm",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L28-L155", "model.py:L158-L355", "model.py:L427-L528"]
+        },
+        {
+          "evidence": "Three articulated box links with a routed cable and visible suspended counterweight.",
+          "implementation_function": "_mechanism_family_three_link_counterweight_build",
+          "interfaces": [
+            {"name": "root_axis", "kind": "axis", "role": "consumer", "part": "mechanism_family__three_link_counterweight__swivel", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"hub_depth": "link_depth * 0.48"}},
+            {"name": "terminal_axis", "kind": "axis", "role": "provider", "part": "mechanism_family__three_link_counterweight__terminal_link", "frame": {"axis": [0.0, 1.0, 0.0]}, "dimensions": {"reach": "sum(link_lengths)", "hub_depth": "link_depth * 0.48"}}
+          ],
+          "name": "three_link_counterweight",
+          "notes": "Three links are a fixed topology, not a segment-count multiplicity.",
+          "parameters": [
+            {"name": "reach_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded source-proportion reach variation."},
+            {"name": "section_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded section and counterweight scale."},
+            {"name": "link_lengths", "mode": "derived", "value_type": "tuple[float, float, float]", "expression": "(0.260 * overall_scale * reach_scale, 0.250 * overall_scale * reach_scale, 0.285 * overall_scale * reach_scale)", "depends_on": ["overall_scale", "reach_scale"], "rationale": "Source-backed fixed three-link graph."},
+            {"name": "link_width", "mode": "derived", "expression": "0.035 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Controls link and counterweight anchor width."},
+            {"name": "link_depth", "mode": "derived", "expression": "0.030 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Controls fork spacing and cable clearance."}
+          ],
+          "record_id": "rec_0611_microphone_boom_arm_var_arm_topology_three_link_articulated_ar",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L26-L116", "model.py:L119-L385", "model.py:L429-L538"]
+        },
+        {
+          "evidence": "Paired parallelogram rails with fork ends and twin constant-force spring paths.",
+          "implementation_function": "_mechanism_family_parallelogram_constant_force_build",
+          "interfaces": [
+            {"name": "root_axis", "kind": "axis", "role": "consumer", "part": "mechanism_family__parallelogram_constant_force__swivel", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"hub_depth": "link_depth * 0.48"}},
+            {"name": "terminal_axis", "kind": "axis", "role": "provider", "part": "mechanism_family__parallelogram_constant_force__terminal_link", "frame": {"axis": [0.0, 1.0, 0.0]}, "dimensions": {"reach": "sum(link_lengths)", "hub_depth": "link_depth * 0.48"}}
+          ],
+          "name": "parallelogram_constant_force",
+          "notes": "Paired rails and constant-force spring paths remain one mechanism family.",
+          "parameters": [
+            {"name": "reach_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded source-proportion reach variation."},
+            {"name": "section_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Bounded rail and spring separation."},
+            {"name": "link_lengths", "mode": "derived", "value_type": "tuple[float, float]", "expression": "(0.340 * overall_scale * reach_scale, 0.490 * overall_scale * reach_scale)", "depends_on": ["overall_scale", "reach_scale"], "rationale": "Source-backed scissor-arm reach."},
+            {"name": "link_width", "mode": "derived", "expression": "0.052 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Sets the paired-rail spacing."},
+            {"name": "link_depth", "mode": "derived", "expression": "0.052 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Provides spring and fork clearance."}
+          ],
+          "record_id": "rec_0611_microphone_boom_arm_var_arm_topology_parallelogram_scissor_arm",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L32-L145", "model.py:L148-L397", "model.py:L417-L559"]
+        }
+      ],
+      "component_type": "topology-coupled compensated boom mechanism",
+      "name": "mechanism_family",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "C-spine, upper and lower jaws, rubber pad, captured screw, cross handle and swivel socket.",
+          "implementation_function": "_base_mount_desk_clamp_build",
+          "interfaces": [{"name": "swivel_axis", "kind": "axis", "role": "provider", "part": "base_mount__desk_clamp__base", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"height": "root_height", "socket_radius": "0.028 * overall_scale"}}],
+          "name": "desk_clamp",
+          "notes": "The screw and pad are captured details, not separate articulated parts.",
+          "parameters": [{"name": "root_height", "mode": "derived", "expression": "0.155 * overall_scale", "depends_on": ["overall_scale"], "rationale": "Places the swivel above the source clamp jaws."}],
+          "record_id": "rec_picturex_0611__microphone_boom_arm__004__png_727d36bd44994666804b8c0ed0c101a8",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L139-L264"]
+        },
+        {
+          "evidence": "Broad rounded weighted foot, stepped shell, rubber underside and top socket.",
+          "implementation_function": "_base_mount_weighted_desktop_build",
+          "interfaces": [{"name": "swivel_axis", "kind": "axis", "role": "provider", "part": "base_mount__weighted_desktop__base", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"height": "root_height", "socket_radius": "0.028 * overall_scale"}}],
+          "name": "weighted_desktop",
+          "notes": "Footprint remains wider than the arm socket for static support credibility.",
+          "parameters": [{"name": "root_height", "mode": "derived", "expression": "0.082 * overall_scale", "depends_on": ["overall_scale"], "rationale": "Top of the stepped desktop base."}],
+          "record_id": "rec_0611_microphone_boom_arm_var_base_mount_weighted_desktop_base",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L28-L46", "model.py:L159-L212"]
+        },
+        {
+          "evidence": "Top flange, through-desk post, lower nut, tower and swivel socket.",
+          "implementation_function": "_base_mount_grommet_build",
+          "interfaces": [{"name": "swivel_axis", "kind": "axis", "role": "provider", "part": "base_mount__grommet__base", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"height": "root_height", "socket_radius": "0.028 * overall_scale"}}],
+          "name": "grommet",
+          "notes": "The lower nut remains below the reference desktop plane.",
+          "parameters": [{"name": "root_height", "mode": "derived", "expression": "0.070 * overall_scale", "depends_on": ["overall_scale"], "rationale": "Tower top above the grommet flange."}],
+          "record_id": "rec_0611_microphone_boom_arm_var_base_mount_grommet_mount",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L28-L49", "model.py:L159-L220"]
+        },
+        {
+          "evidence": "Reinforced wall plate with four fasteners, projected cantilever and top socket.",
+          "implementation_function": "_base_mount_wall_plate_build",
+          "interfaces": [{"name": "swivel_axis", "kind": "axis", "role": "provider", "part": "base_mount__wall_plate__base", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"height": "root_height", "socket_radius": "0.028 * overall_scale"}}],
+          "name": "wall_plate",
+          "notes": "Cantilever projection adapts the vertical swivel to a wall support.",
+          "parameters": [{"name": "root_height", "mode": "derived", "expression": "0.145 * overall_scale", "depends_on": ["overall_scale"], "rationale": "Clears the wall plate and cantilever."}],
+          "record_id": "rec_0611_microphone_boom_arm_var_base_mount_wall_plate",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L31-L81", "model.py:L194-L265"]
+        },
+        {
+          "evidence": "Wide weighted floor foot, tall cylindrical riser, lower collar and top socket.",
+          "implementation_function": "_base_mount_floor_stand_build",
+          "interfaces": [{"name": "swivel_axis", "kind": "axis", "role": "provider", "part": "base_mount__floor_stand__base", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"height": "root_height", "socket_radius": "0.028 * overall_scale"}}],
+          "name": "floor_stand",
+          "notes": "The support foot and tall riser are one base component.",
+          "parameters": [{"name": "root_height", "mode": "derived", "expression": "0.620 * overall_scale", "depends_on": ["overall_scale"], "rationale": "Top of the source-backed floor riser."}],
+          "record_id": "rec_0611_microphone_boom_arm_var_base_mount_floor_stand_base",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L28-L47", "model.py:L157-L216"]
+        }
+      ],
+      "component_type": "load-bearing base and swivel support",
+      "name": "base_mount",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Wrist hub, friction knob, stepped collar and threaded microphone stud.",
+          "implementation_function": "_terminal_mount_threaded_adapter_build",
+          "interfaces": [{"name": "wrist_axis", "kind": "axis", "role": "consumer", "part": "terminal_mount__threaded_adapter__mount", "frame": {"axis": [0.0, 1.0, 0.0]}, "dimensions": {"depth": "mount_depth"}}],
+          "name": "threaded_adapter",
+          "notes": "Threaded stud and collar preserve the recognizable microphone interface.",
+          "parameters": [{"name": "mount_depth", "mode": "derived", "expression": "0.020 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Compact wrist hub depth."}],
+          "record_id": "rec_picturex_0611__microphone_boom_arm__002__png_57c6553d3c90426287d7d05649c6d222",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L155-L426"]
+        },
+        {
+          "evidence": "Drop bracket, side yoke, pivot hardware and cylindrical studio microphone.",
+          "implementation_function": "_terminal_mount_studio_cradle_build",
+          "interfaces": [{"name": "wrist_axis", "kind": "axis", "role": "consumer", "part": "terminal_mount__studio_cradle__mount", "frame": {"axis": [0.0, 1.0, 0.0]}, "dimensions": {"depth": "mount_depth"}}],
+          "name": "studio_cradle",
+          "notes": "The microphone is supported by a physical yoke, not a floating cylinder.",
+          "parameters": [{"name": "mount_depth", "mode": "derived", "expression": "0.034 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Yoke hub and microphone side clearance."}],
+          "record_id": "rec_picturex_0611__microphone_boom_arm__003__png_0696f40f5c9b438ca77c7ab59b5bf289",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L120-L479"]
+        },
+        {
+          "evidence": "Shock ring, elastomer struts, suspended microphone, gooseneck and pop filter.",
+          "implementation_function": "_terminal_mount_shock_mount_build",
+          "interfaces": [{"name": "wrist_axis", "kind": "axis", "role": "consumer", "part": "terminal_mount__shock_mount__mount", "frame": {"axis": [0.0, 1.0, 0.0]}, "dimensions": {"depth": "mount_depth"}}],
+          "name": "shock_mount",
+          "notes": "Shock ring, elastic supports and pop-filter path remain mechanically connected.",
+          "parameters": [{"name": "mount_depth", "mode": "derived", "expression": "0.040 * overall_scale * section_scale", "depends_on": ["overall_scale", "section_scale"], "rationale": "Shock-ring and pop-filter wrist clearance."}],
+          "record_id": "rec_picturex_0611__microphone_boom_arm__004__png_727d36bd44994666804b8c0ed0c101a8",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L387-L549"]
+        }
+      ],
+      "component_type": "wrist-mounted microphone interface",
+      "name": "terminal_mount",
+      "required": true
+    }
+  ],
+  "slug": "microphone_boom_arm",
+  "source_map_path": "articraft_template_authoring/source_maps/microphone_boom_arm.md",
+  "source_map_sha256": "41be2e087ae53cb325aa2e8cfcfa392fff23d4dff6861a6679acd62def65fc92"
+}

@@ -1,0 +1,2253 @@
+{
+  "assembly_notes": "The root is `press_frame`, one welded CadQuery solid built as: hand arm behind the chamber, cast nose bridge ahead of it, two cast side cheeks spanning the chamber station, a transition tie block joining cheeks to arm, twin clevis lugs with rounded pin noses and a tie web, then a boolean cut of the chamber mouth (or, when the chamber flips, of its whole envelope) and a true clearance bore for the pin. The perforated chamber is its own visual on that part so a repair finding names the chamber candidate directly. `pivot_pin` is a FIXED child whose cap heads seat 0.3 mm into the lug outer faces; `lever_arm` is the single REVOLUTE child about (0, 0, pivot_z) on axis (0, -1, 0), positive q opening the arms. Every bore is shaft + 0.35 mm, so each member is carried by its joint on a running clearance and `ctx.allow_overlap` is never called. All seven chambers publish a `_Screen` (outer-face origin, outward normal, two tangents, half extents and the hole field in screen coordinates); the three screen-registered accessories are built once in that frame, which is why the same comb, ejector and liner compose with the floor screens, 001's vertical end plate and 002's front wall alike.",
+  "bindings": [
+    {
+      "binding_id": "chamber_envelope_places_the_pivot_and_the_arm",
+      "consumer": "arm_profile.hinge_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "chamber_span_m",
+            "trough_aspect",
+            "oval_aspect"
+          ],
+          "expression": "chamber_span_m * (trough_aspect | oval_aspect | 1.35 | 1.0) per chamber candidate",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "span_x",
+          "rationale": "The chamber's own reach along the tool axis differs by candidate, so the host cannot size itself from one radius.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "chamber_offset_m",
+            "span_x"
+          ],
+          "expression": "max(chamber_offset_m, 0.0155 + span_x + 0.0075)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "cx",
+          "rationale": "The chamber has to clear the clevis lugs whatever its plan shape, which is 004's layout rule generalised.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "cx",
+            "chamber_span_m",
+            "cradle_plate_t_m"
+          ],
+          "expression": "cx + chamber_hx - 0.004, or cx + chamber_hx + 0.0007 + cradle_plate_t_m when the chamber flips",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "arm_start_x",
+          "rationale": "The hand arm starts behind the chamber; the two cast cheeks carry the load forward past the mouth.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "chamber_span_m",
+            "chamber_wall_m"
+          ],
+          "expression": "clamp(0.5 * (mouth_hy + 0.0021 + chamber_hy - 0.0012), mouth_hy + 0.0021, chamber_hy + 0.0035)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "rail_y",
+          "rationale": "Cheek station: outside the mouth cut so the welded frame stays one solid, inside the chamber wall so it welds to it.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "cx",
+            "span_x",
+            "handle_len_m"
+          ],
+          "expression": "cx + span_x + handle_len_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "tail_x",
+          "rationale": "Total tool length follows the chamber, not a fixed constant.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "chamber.chamber_mouth"
+    },
+    {
+      "binding_id": "chamber_mouth_sizes_the_pressing_face",
+      "consumer": "plunger_drive.pressing_face",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "plunger_fill_ratio",
+            "chamber_span_m",
+            "chamber_wall_m"
+          ],
+          "expression": "max(min(mouth_hx * plunger_fill_ratio, mouth_hx - 0.0016), 0.0035)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "plunger_hx",
+          "rationale": "The face is inscribed in whichever mouth shape the chamber publishes, with a running clearance.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "plunger_fill_ratio",
+            "chamber_span_m",
+            "chamber_wall_m"
+          ],
+          "expression": "max(min(mouth_hy * plunger_fill_ratio, mouth_hy - 0.0016), 0.0035)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "plunger_hy",
+          "rationale": "Same rule on the second axis; it is what makes one drive fit a circle, an ellipse and a rectangle.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "engage_depth_m",
+            "chamber_depth_m",
+            "screen_thickness_m"
+          ],
+          "expression": "min(engage_depth_m, 0.30 * (chamber_depth_m - screen_thickness_m))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "engage_depth",
+          "rationale": "Rest engagement is capped by the cavity's own clear height so the face never reaches the screen.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "open_rad",
+            "chamber_span_m",
+            "engage_depth",
+            "pivot_rise_m"
+          ],
+          "expression": "max(open_rad, asin((chamber_top_z + 0.0065 - pivot_z) / R) - atan2(face_bottom_z - pivot_z, cx) + 0.05)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "open_travel",
+          "rationale": "The hinge has to turn far enough to lift the face clear of the rim, which depends on the chamber, not on the handle.",
+          "unit": "rad",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "chamber.chamber_mouth"
+    },
+    {
+      "binding_id": "plunger_stack_raises_the_lever_bar",
+      "consumer": "arm_profile.lever_bar",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "engage_depth",
+            "plunger_thickness_m",
+            "hub_radius_m"
+          ],
+          "expression": "-engage_depth + plunger_thickness_m + hub_radius_m + 0.0016",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "plunger_pivot_z",
+          "rationale": "Every chamber puts its rim on z=0, so the pressing face's own pivot station is resolvable before the chamber is built.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "lever_lift_m",
+            "plunger_pivot_z",
+            "pin_radius_m",
+            "pivot_rise_m"
+          ],
+          "expression": "max(lever_lift_m, pin_cap_r + 0.0038, plunger_pivot_z + hub_radius_m + 0.0034 - pivot_z for hinged drives, plunger_pivot_z + 0.0100 - pivot_z for toggle_link)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "lever_lift",
+          "rationale": "A drive that hangs the face on its own pivot needs the lever bar raised clear of that pivot's hardware; without this the yoke cheeks cut straight through the bar.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "plunger_drive.plunger_axis"
+    },
+    {
+      "binding_id": "screen_frame_registers_the_accessory",
+      "consumer": "accessory.cleaner_axle",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "hole_radius_m",
+            "screen_rows"
+          ],
+          "expression": "clamp(min(hole_radius_m, 0.40 * min_hole_pitch - margin), 0.0005, hole_radius_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "screen_hole_r",
+          "rationale": "Two overlapping hole cylinders in the cut compound make OCC delete the whole shell, so a denser screen gets finer holes.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "screen_hole_r"
+          ],
+          "expression": "max(0.62 * screen_hole_r, 0.00055)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "cleaner_pin_r",
+          "rationale": "Each cleaning pin has to enter its matching perforation, so its radius follows the screen's, not a constant.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "ejector_pin_ratio",
+            "screen_hole_r"
+          ],
+          "expression": "max(ejector_pin_ratio * screen_hole_r, 0.0005)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "ejector_pin_r",
+          "rationale": "Same registration rule for the prismatic module.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "insert_lift_rad",
+            "chamber_depth_m",
+            "engage_depth",
+            "insert_fill_ratio"
+          ],
+          "expression": "min(insert_lift_rad, asin(clamp(cavity_depth_along_n / (2 * liner_hv), 0.24, 0.94)))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "liner_lift",
+          "rationale": "The liner's swing is bounded by the clear height between its own plane and the pressing face.",
+          "unit": "rad",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "chamber_span_m",
+            "chamber_wall_m",
+            "insert_fill_ratio"
+          ],
+          "expression": "sqrt(screen_hu^2 - hinge_v^2) for a circular cavity, screen_hu * sqrt(1 - (hinge_v/screen_hv)^2) for an elliptical one, screen_hu otherwise",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "liner_wall_hu",
+          "rationale": "A rectangular liner in a round cup has to be inscribed, or its hinge bosses land outside the wall.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "chamber.chamber_screen"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "garlic_press_chamber_identity",
+      "applies_to": {
+        "candidates": [
+          "round_cup",
+          "ribbed_cup",
+          "rect_trough",
+          "oval_hopper",
+          "taper_cup",
+          "drum_face",
+          "loft_hopper"
+        ],
+        "slot": "chamber"
+      },
+      "required_author_checks": [
+        "garlic press core hinge assembly",
+        "perforated pressing screen is a real hole field",
+        "plunger enters the pressing chamber",
+        "handheld two-arm press silhouette",
+        "opening the hinge raises the upper arm"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "press_lever",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_lever"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hinge_pin"
+        }
+      ]
+    },
+    {
+      "anchor_id": "garlic_press_arm_identity",
+      "applies_to": {
+        "candidates": [
+          "flat_bar",
+          "round_tube",
+          "lofted_ellipse"
+        ],
+        "slot": "arm_profile"
+      },
+      "required_author_checks": [
+        "garlic press core hinge assembly",
+        "perforated pressing screen is a real hole field",
+        "plunger enters the pressing chamber",
+        "handheld two-arm press silhouette",
+        "opening the hinge raises the upper arm"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "press_lever",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_lever"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hinge_pin"
+        }
+      ]
+    },
+    {
+      "anchor_id": "garlic_press_rigid_plunger",
+      "applies_to": {
+        "candidates": [
+          "rigid_pad",
+          "stud_plate"
+        ],
+        "slot": "plunger_drive"
+      },
+      "required_author_checks": [
+        "garlic press core hinge assembly",
+        "perforated pressing screen is a real hole field",
+        "plunger enters the pressing chamber",
+        "handheld two-arm press silhouette",
+        "opening the hinge raises the upper arm"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "press_lever",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_lever"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hinge_pin"
+        }
+      ]
+    },
+    {
+      "anchor_id": "garlic_press_hinged_plunger",
+      "applies_to": {
+        "candidates": [
+          "self_leveling",
+          "cam_follower"
+        ],
+        "slot": "plunger_drive"
+      },
+      "required_author_checks": [
+        "garlic press core hinge assembly",
+        "perforated pressing screen is a real hole field",
+        "plunger enters the pressing chamber",
+        "handheld two-arm press silhouette",
+        "opening the hinge raises the upper arm",
+        "plunger is carried on its own pivot"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "press_lever",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "pressing_plunger",
+          "joint_type": "revolute",
+          "parent_role": "press_lever"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_lever"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hinge_pin"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "pressing_plunger"
+        }
+      ]
+    },
+    {
+      "anchor_id": "garlic_press_toggle_plunger",
+      "applies_to": {
+        "candidates": [
+          "toggle_link"
+        ],
+        "slot": "plunger_drive"
+      },
+      "required_author_checks": [
+        "garlic press core hinge assembly",
+        "perforated pressing screen is a real hole field",
+        "plunger enters the pressing chamber",
+        "handheld two-arm press silhouette",
+        "opening the hinge raises the upper arm",
+        "toggle linkage drives the pressing face"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "press_lever",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "toggle_rocker",
+          "joint_type": "revolute",
+          "parent_role": "press_lever"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "pressing_plunger",
+          "joint_type": "revolute",
+          "parent_role": "toggle_rocker"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_lever"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hinge_pin"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "toggle_rocker"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "toggle_link"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "pressing_plunger"
+        }
+      ]
+    },
+    {
+      "anchor_id": "garlic_press_loop_accessory",
+      "applies_to": {
+        "candidates": [
+          "hang_loop"
+        ],
+        "slot": "accessory"
+      },
+      "required_author_checks": [
+        "garlic press core hinge assembly",
+        "perforated pressing screen is a real hole field",
+        "plunger enters the pressing chamber",
+        "handheld two-arm press silhouette",
+        "opening the hinge raises the upper arm",
+        "hanging loop rides the lever tip"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "press_lever",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_lever"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hinge_pin"
+        }
+      ]
+    },
+    {
+      "anchor_id": "garlic_press_cleaning_module",
+      "applies_to": {
+        "candidates": [
+          "swing_cleaner",
+          "sliding_ejector"
+        ],
+        "slot": "accessory"
+      },
+      "required_author_checks": [
+        "garlic press core hinge assembly",
+        "perforated pressing screen is a real hole field",
+        "plunger enters the pressing chamber",
+        "handheld two-arm press silhouette",
+        "opening the hinge raises the upper arm",
+        "cleaning module registers with the screen"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "press_lever",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_lever"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hinge_pin"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "cleaning_module"
+        }
+      ]
+    },
+    {
+      "anchor_id": "garlic_press_chamber_liner",
+      "applies_to": {
+        "candidates": [
+          "lift_out_insert"
+        ],
+        "slot": "accessory"
+      },
+      "required_author_checks": [
+        "garlic press core hinge assembly",
+        "perforated pressing screen is a real hole field",
+        "plunger enters the pressing chamber",
+        "handheld two-arm press silhouette",
+        "opening the hinge raises the upper arm",
+        "lift-out liner sits inside the chamber"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "press_lever",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": null,
+          "child_role": "chamber_liner",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_lever"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hinge_pin"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "chamber_liner"
+        }
+      ]
+    },
+    {
+      "anchor_id": "garlic_press_storage_latch",
+      "applies_to": {
+        "candidates": [
+          "storage_latch"
+        ],
+        "slot": "accessory"
+      },
+      "required_author_checks": [
+        "garlic press core hinge assembly",
+        "perforated pressing screen is a real hole field",
+        "plunger enters the pressing chamber",
+        "handheld two-arm press silhouette",
+        "opening the hinge raises the upper arm",
+        "storage latch captures the lever"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "press_lever",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "storage_latch",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_lever"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hinge_pin"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "storage_latch"
+        }
+      ]
+    },
+    {
+      "anchor_id": "garlic_press_flip_basket",
+      "applies_to": {
+        "candidates": [
+          "flip_basket"
+        ],
+        "slot": "accessory"
+      },
+      "required_author_checks": [
+        "garlic press core hinge assembly",
+        "perforated pressing screen is a real hole field",
+        "plunger enters the pressing chamber",
+        "handheld two-arm press silhouette",
+        "opening the hinge raises the upper arm",
+        "chamber flips clear of the frame"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "press_lever",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "pressing_chamber",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_lever"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hinge_pin"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "pressing_chamber"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "Both the radial and the angular pitch are floored at 2.2 mm and the hole radius is then reduced to 0.40 * min_pitch - margin (floor 0.5 mm), because two overlapping hole cylinders in the cut compound make OCC delete the entire shell. The total field is capped at 56 holes so tessellation stays inside the per-build budget; the pool's own range is 25 (004 L68-L74) to 49 (002 L98-L105), with 43 called out on 005 and 30 on both N-variants. N is capped at 7 because a 7-row field already reaches that cap on the widest trough.",
+      "item_slot": "chamber",
+      "name": "screen_rows",
+      "spacing_expression": "Row i sits at v = -hv_eff + i * (2*hv_eff/(rows-1)) with a half-pitch stagger on odd rows and a column count that follows the screen's own aspect, which is 005's 9/8/9/8/9 field (L62-L74) and perforation_grid_n30's parameterised rows x cols (L98-L119) generalised. Round footprints densify the lattice by two steps per axis because a circle throws away its corners; ribbed_cup instead lays concentric rings whose count follows each ring's circumference (round_cup_grid L70-L88).",
+      "values": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Hollow cylindrical cup extruded from the chamber bottom to the rim, base edge filleted, hollowed by a cavity solid that runs past the rim so the top is genuinely open, then pierced by a square lattice of extrusion holes through a 3 mm floor plate. The nose is twin clevis lugs with filleted Y edges tied by a cast web ahead of the cup. Origin 003 L147-L182 adds the two features folded into this candidate: the polished collar wrapping the cup rim and a ring of radial holes low on the side wall, so the screen is not only the floor.",
+          "implementation_function": "_chamber_round_cup_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "2 * mouth_hx",
+                "extent_v": "2 * mouth_hy",
+                "shape": "circle | ellipse | rect per candidate"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "point": "(cx, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "chamber_mouth",
+              "part": "press_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent_u": "2 * screen_hu",
+                "extent_v": "2 * screen_hv",
+                "hole_field": "screen_rows-driven lattice, radius reduced to the field's own pitch",
+                "thickness": "screen_thickness_m"
+              },
+              "frame": {
+                "normal": "(0, 0, -1)",
+                "point": "(cx, 0, -chamber_depth_m)"
+              },
+              "kind": "plane",
+              "name": "chamber_screen",
+              "part": "press_frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "round_cup",
+          "notes": "Also carries the frame's shared stations: the chamber's outer half extent decides how far back the pivot lugs sit and where the two cast side cheeks meet the hand arm.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.052,
+              "minimum": 0.032,
+              "mode": "independent",
+              "name": "chamber_offset_m",
+              "rationale": "Chamber axis measured back from the hinge pin. Pool: 004 L41 CHAMBER_X 0.030; 003 L35 CUP_X 0.020; 005 chamber spans 0.004-0.054 ahead of a pin at 0.061.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.018,
+              "minimum": 0.0122,
+              "mode": "independent",
+              "name": "chamber_span_m",
+              "rationale": "Outer half extent of the chamber. Pool: 004 L42 0.015; 003 L36 0.0135; 005 L41 half width 0.015; 006 L74 frustum 0.0305-0.0340.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0315,
+              "minimum": 0.0185,
+              "mode": "independent",
+              "name": "chamber_depth_m",
+              "rationale": "Rim-to-bottom depth. Pool: 004 L44-L45 0.025; 005 L42 0.016; 006 L74 0.060 on a much heavier press.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0037,
+              "minimum": 0.0021,
+              "mode": "independent",
+              "name": "chamber_wall_m",
+              "rationale": "Wall thickness. Pool: 004 outer 0.015 vs inner 0.0125; 005 L43 0.0022; 003 L36-L37 0.0010 on a drawn cup.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0041,
+              "minimum": 0.0023,
+              "mode": "independent",
+              "name": "screen_thickness_m",
+              "rationale": "Thickness of the perforated plate the holes are driven through. Pool: 004 L46 3 mm floor; 005 L44 0.0025; 003 L38-L39 2 mm floor.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.00135,
+              "minimum": 0.00088,
+              "mode": "independent",
+              "name": "hole_radius_m",
+              "rationale": "Requested perforation radius; the field's own pitch may reduce it. Pool: 004 L48 0.0011; 005 L59 0.0011; 003 L41 0.0015; 006 L42 0.00145.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                6,
+                8,
+                10
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "side_hole_count",
+              "rationale": "Radial holes in the ring low on the side wall. Pool: 003 L43 SIDE_HOLE_COUNT 8 with an author check demanding >= 6.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0088,
+              "minimum": 0.0042,
+              "mode": "independent",
+              "name": "collar_height_m",
+              "rationale": "Height of the polished collar wrapping the cup rim. Pool: 003 L148-L156 collar 0.010 tall; 006 L120-L124 cast collar 0.015.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__004__png_b0766f37d84548ec90c8ef55abf0bac0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L68-L74",
+            "model.py:L77-L84",
+            "model.py:L107-L122",
+            "model.py:L125-L137"
+          ]
+        },
+        {
+          "evidence": "Same round cup shell, but the hole field is concentric rings (centre hole, then rings of 6, 10, 14 at growing radii with a half-pitch angular offset) and every hole gets a wider countersink bevel cut from the floor top. A proud radial rim flange sits at the top edge with a filleted upper corner, and four radial fins embedded 2 mm into the wall stand off the outside of the barrel. Structurally distinct from round_cup in hole topology, rim profile and the added rib set.",
+          "implementation_function": "_chamber_ribbed_cup_build",
+          "interfaces": [],
+          "name": "ribbed_cup",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [
+                3,
+                4,
+                6
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "rib_count",
+              "rationale": "Radial support fins on the outside of the barrel. Pool: round_cup_grid L179 builds four at 90 degrees; the rule is index-general so 3 and 6 are the same construction.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.007,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "rib_reach_m",
+              "rationale": "How far each fin stands off the wall. Pool: round_cup_grid L176 rib_radial 0.005 with a 0.002 embed.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0016,
+              "mode": "independent",
+              "name": "flange_proud_m",
+              "rationale": "Radial overhang of the rim flange. Pool: round_cup_grid L153 rim_outer = CHAMBER_OUTER_R + 0.002.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garlic_press_var_round_cup_grid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L70-L88",
+            "model.py:L121-L144",
+            "model.py:L147-L161",
+            "model.py:L164-L199"
+          ]
+        },
+        {
+          "evidence": "Rectangular trough: an outer box whose lower X and Y edges are filleted, hollowed by an inset box cavity, with the floor pierced by staggered rows alternating 9 and 8 holes at a constant 4.6 mm pitch. Its nose is a pair of box lugs with cylindrical rounded pin noses and one clearance bore driven through both, rather than 004's filleted plate lugs.",
+          "implementation_function": "_chamber_rect_trough_build",
+          "interfaces": [],
+          "name": "rect_trough",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.35,
+              "minimum": 1.4,
+              "mode": "independent",
+              "name": "trough_aspect",
+              "rationale": "Trough length over its half width. Pool: 005 L40-L41 chamber runs 0.050 long by 0.030 wide.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.004,
+              "minimum": 0.002,
+              "mode": "independent",
+              "name": "trough_fillet_m",
+              "rationale": "Radius on the trough's lower edges. Pool: 005 L105 fillet 0.003.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__005__png_4adee0e4c7d2464784e7e05bd7894aa0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L62-L74",
+            "model.py:L98-L117",
+            "model.py:L120-L147"
+          ]
+        },
+        {
+          "evidence": "Deep elliptical hopper: an outer ellipse extruded vertically, an inset ellipse cavity, and a staggered hole field generated conformally to the ellipse (row count from the semi-minor axis, per-row column count from the ellipse equation, 95 percent fill test). Because the rim is far higher than the flat-bar families, the upper arm grows a tall riser, a bridge and a dedicated plate bracket reaching back down into the cavity, which is the host adaptation this candidate forces.",
+          "implementation_function": "_chamber_oval_hopper_build",
+          "interfaces": [],
+          "name": "oval_hopper",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.35,
+              "mode": "independent",
+              "name": "oval_aspect",
+              "rationale": "Hopper semi-major over semi-minor axis. Pool: deep_oval_hopper L43-L44 RX 0.026 against RY 0.015.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0085,
+              "minimum": 0.003,
+              "mode": "independent",
+              "name": "hopper_extra_depth_m",
+              "rationale": "Extra depth the oval hopper carries over the other chambers. Pool: deep_oval_hopper L45 CHAMBER_H 0.026 against the parent's 0.016, with an author check demanding > 0.020.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garlic_press_var_deep_oval_hopper",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L69-L93",
+            "model.py:L130-L153",
+            "model.py:L208-L236"
+          ]
+        },
+        {
+          "evidence": "Lofted frustum shell: outer and inner frustums with different taper so the wall thickens downward, cut by a half-pitch staggered circular hole field, then finished with a rolled upper lip ring standing proud of the shell. The perforated bottom web is emitted as its own visual with a darker material, which is what makes the screen read as a screen instead of a cup bottom. Its nose is a cast collar plus two circular fork cheeks with polyline bridges and one bore.",
+          "implementation_function": "_chamber_taper_cup_build",
+          "interfaces": [],
+          "name": "taper_cup",
+          "notes": "Emits two visuals: the tapered shell and a separately materialled perforated bottom face, which is what makes the screen read as a screen.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.26,
+              "minimum": 1.06,
+              "mode": "independent",
+              "name": "taper_ratio",
+              "rationale": "Rim radius over bottom radius of the frustum shell. Pool: 006 L74 outer frustum 0.0305 -> 0.0340.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0035,
+              "minimum": 0.0015,
+              "mode": "independent",
+              "name": "lip_proud_m",
+              "rationale": "Radial overhang of the rolled upper lip. Pool: 006 L71-L78 rim ring 0.0352 outside a 0.0340 shell.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__006__png_3062a3533457437a8611707aaf3e09f6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L25-L36",
+            "model.py:L39-L60",
+            "model.py:L63-L79",
+            "model.py:L82-L89"
+          ]
+        },
+        {
+          "evidence": "The only chamber in the pool whose screen is not the floor: a cylinder lying across the tool with its bore cut from the rear so a full-thickness circular end plate survives at the far face, that plate pierced by a radius-clipped square hole lattice, and the whole upper rear removed by a rounded box cut to form the loading mouth. Its nose casting is two bored knuckles plus diagonal side cheeks that leave a central lane for the plunger link.",
+          "implementation_function": "_chamber_drum_face_build",
+          "interfaces": [],
+          "name": "drum_face",
+          "notes": "The one chamber whose screen normal is not -Z. Its screen frame is the -Y end plate with u=+X and v=+Z, and the loading mouth is the box cut above z=0, so mouth_hx follows from the drum's sink depth rather than from a wall offset.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.48,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "drum_sink_ratio",
+              "rationale": "How far the drum axis sits below the rim, which is what sets the loading mouth's width. Pool: 001 L128-L142 cuts the drum open from z=-37 on a bore of radius 24.5.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.004,
+              "minimum": 0.0022,
+              "mode": "independent",
+              "name": "face_thickness_m",
+              "rationale": "Thickness of the circular perforated end plate. Pool: 001 L133 leaves the front 5 mm of a 54 mm drum; 006 L84 perforated face 1.2 mm.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__001__png_3421a0ddb8c34efba208bce9cae4e306",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L128-L176"
+          ]
+        },
+        {
+          "evidence": "Tapered rectangular hopper built as a ruled-off loft between two rectangles, hollowed by a second loft whose top edge deliberately exceeds the outer top so the mouth is open, and pierced by a staggered hole field driven straight through the front wall along the tool axis. Distinct from rect_trough in that the walls taper along the tool axis and the screen is the front wall, not the floor.",
+          "implementation_function": "_chamber_loft_hopper_build",
+          "interfaces": [],
+          "name": "loft_hopper",
+          "notes": "Screen normal is -X: the perforations go through the front wall along the tool axis, exactly as 002 drives them, and the mouth is the open top of the taper.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.96,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "hopper_taper_ratio",
+              "rationale": "Rear half width over front half width of the lofted hopper. Pool: 002 L79-L84 lofts rect(42,46) at the front to rect(34,40) at the rear.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0046,
+              "minimum": 0.0025,
+              "mode": "independent",
+              "name": "hopper_front_wall_m",
+              "rationale": "Thickness of the perforated front wall. Pool: 002 L79-L95 leaves 6 mm between the outer and cavity lofts at the front.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__002__png_c325dc0d44734cf991faad455b7ceee5",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L114"
+          ]
+        }
+      ],
+      "component_type": "perforated pressing chamber and its nose casting",
+      "name": "chamber",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Simplest drive in the pool: the pressing pad is a solid block cast rigidly onto the upper lever through a bridge, a stem, a riser and two side bridges, so the pad carries no joint of its own and the whole press has exactly one degree of freedom per arm. The pad footprint is sized to sit inside the basket mouth.",
+          "implementation_function": "_plunger_drive_rigid_pad_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "2 * plunger_hx",
+                "extent_v": "2 * plunger_hy"
+              },
+              "frame": {
+                "normal": "(0, 0, -1)",
+                "point": "(cx, 0, -engage_depth_m - pivot_z)"
+              },
+              "kind": "plane",
+              "name": "pressing_face",
+              "part": "lever_arm",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "rigid_pad",
+          "notes": "Also carries the shared pressing-face stations used by every drive: fill ratio, thickness, rest engagement and stem width.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "plunger_fill_ratio",
+              "rationale": "Pressing face extent over the chamber mouth extent. Pool: 004 L52 PLUNGER_R 0.0105 in a 0.0125 bore; 003 L56 DISC_R 0.0105 in 0.0125; 002 L182 pad 24x27 in a 28x34 mouth.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.005,
+              "mode": "independent",
+              "name": "plunger_thickness_m",
+              "rationale": "Thickness of the pressing face. Pool: 004 L53-L54 disc 0.008; 003 L57 DISC_T 0.008; 002 L182 pad 6 mm.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0062,
+              "minimum": 0.0016,
+              "mode": "independent",
+              "name": "engage_depth_m",
+              "rationale": "How far the face sits below the rim at rest. Pool: 004 L344-L346 demands >= 6 mm z overlap with the cup; 005 L342-L351 hovers 0.5-4 mm above the rim; 006 L588-L597 is poised at the mouth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.016,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "plunger_stem_w_m",
+              "rationale": "Across-flats of the stem tying the face to the lever. Pool: 004 L195 stem 0.014 square; 002 L150-L153 stem 10x16.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__002__png_c325dc0d44734cf991faad455b7ceee5",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L135-L186"
+          ]
+        },
+        {
+          "evidence": "Also rigid on the lever, but the pressing face is a thin filleted plate carrying a full grid of 32 cylindrical pressing studs extruded downward from its underside, so the face that meets the garlic is a stud field rather than a flat block. Rest pose hovers the studs just above the chamber rim instead of burying the pad in the cavity.",
+          "implementation_function": "_plunger_drive_stud_plate_build",
+          "interfaces": [],
+          "name": "stud_plate",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [
+                3,
+                4,
+                5
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "stud_rows",
+              "rationale": "Rows of pressing studs on the plate underside. Pool: 005 L79-L83 an 8x4 grid; the rule is index-general in both directions.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0016,
+              "minimum": 0.0009,
+              "mode": "independent",
+              "name": "stud_radius_m",
+              "rationale": "Stud radius. Pool: 005 L77 STUD_R 0.0012.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0022,
+              "minimum": 0.001,
+              "mode": "independent",
+              "name": "stud_len_m",
+              "rationale": "How far each stud stands off the plate. Pool: 005 L78 STUD_H 0.0015.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__005__png_4adee0e4c7d2464784e7e05bd7894aa0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L83",
+            "model.py:L188-L202"
+          ]
+        },
+        {
+          "evidence": "The plunger becomes its own part: a bored hub, a neck and a tapered frustum puck, hung on a second rivet between twin bored ears cast on the upper lever, with its own bounded revolute about the same lateral axis as the main hinge. This is the pool's self-levelling pressing face and it adds one part and one joint over the rigid families.",
+          "implementation_function": "_plunger_drive_self_leveling_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "hub": "hub_radius_m",
+                "radius": "pin_radius_m * 0.72 + 0.00035"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(cx, 0, plunger_pivot_z - pivot_z)"
+              },
+              "kind": "axis",
+              "name": "plunger_axis",
+              "part": "lever_arm",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "self_leveling",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "tilt_rad",
+              "rationale": "Self-levelling travel either side of neutral. Pool: 006 L436-L441 limits +/-22 degrees.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0066,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "hub_radius_m",
+              "rationale": "Radius of the plunger's bored hub. Pool: 006 L229-L233 hub 0.0055 bored 0.00265.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.0,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "puck_taper_ratio",
+              "rationale": "Puck extent over the rigid face extent, i.e. how much the tilting face is undersized for its own swing. Pool: 006 L248-L251 puck frustum 0.0235 -> 0.0250 inside a 0.0258 bore.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__006__png_3062a3533457437a8611707aaf3e09f6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L194-L210",
+            "model.py:L220-L244",
+            "model.py:L429-L443"
+          ]
+        },
+        {
+          "evidence": "Same separate plunger part and second revolute, but the joint is positively driven: a shaped cam disc with an eccentric lobe and a secondary lobe is unioned onto the upper lever outboard of its body on a bridge, and a hardened roller with retention end caps on an axle rides that profile from an L-bracket arm rising off the plunger hub. Distinct from self_leveling by the added cam and follower bodies and by the drive relation between them.",
+          "implementation_function": "_plunger_drive_cam_follower_build",
+          "interfaces": [],
+          "name": "cam_follower",
+          "notes": "The cam's working face is an arc concentric with the plunger pivot, so the joint's own travel opens the roller contact instead of driving the roller into the lobe.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.011,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "cam_radius_m",
+              "rationale": "Radius of the cam disc on the lever. Pool: cam_follower_plunger L355-L360 disc 0.009 with a 0.006 lobe.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0046,
+              "minimum": 0.0028,
+              "mode": "independent",
+              "name": "roller_radius_m",
+              "rationale": "Hardened follower roller radius. Pool: cam_follower_plunger L418-L423 roller 0.0035 with 0.0040 end caps.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0195,
+              "minimum": 0.013,
+              "mode": "independent",
+              "name": "cam_offset_y_m",
+              "rationale": "Lateral station of the cam/roller plane, outboard of the lever body. Pool: cam_follower_plunger L28-L30 puts both at y = 0.016.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garlic_press_var_cam_follower_plunger",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L336-L400",
+            "model.py:L403-L450",
+            "model.py:L615-L632"
+          ]
+        },
+        {
+          "evidence": "Four extra bodies and four extra revolutes: a yoke rocker bracket (bore boss, crossbar, diagonals, side arm plates, toggle bosses with rivet caps) pivots on the upper lever, two mirrored flat toggle links with pivot bosses and rivet caps at both ends hang from its side arms on opposed axes, and the ribbed pressing pad hangs from the rocker on a fourth pivot. Every one of them is mimic-coupled to the main squeeze pivot so the linkage is kinematically driven, not floppy.",
+          "implementation_function": "_plunger_drive_toggle_link_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "pin_radius_m * 0.72 + 0.00035"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(cx, 0, rock_z - pivot_z)"
+              },
+              "kind": "axis",
+              "name": "rocker_axis",
+              "part": "lever_arm",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "pin_radius_m * 0.62 + 0.00035"
+              },
+              "frame": {
+                "axis": "(0, -/+1, 0)",
+                "point": "(0, +/-rocker_span, link_z - rock_z)"
+              },
+              "kind": "axis",
+              "name": "link_axis",
+              "part": "toggle_rocker",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "toggle_link",
+          "notes": "The rocker keeps 002's above-the-bar station and reaches the pressing face through two yoke side plates that straddle the lever, instead of passing through it as the source does under allow_overlap.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0265,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "rocker_span_m",
+              "rationale": "Half span from the rocker hub out to each yoke side plate. Pool: compound_toggle_link L225-L232 side arm plates at y = +/-23 mm.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0205,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "link_len_m",
+              "rationale": "Length of each toggle link bar between its two pivots. Pool: compound_toggle_link L256-L263 bar 16 mm between bosses.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "rocker_mult",
+              "rationale": "Mimic multiplier from the squeeze hinge to the rocker; the links and the face are derived fractions of it. Pool: compound_toggle_link L479 uses 1.5 on a much shorter hinge range, L501/L541 use -0.7 and -1.0.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0185,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "rocker_lift_m",
+              "rationale": "How far the rocker hub sits above the lever bar. Pool: compound_toggle_link L470 pivots the rocker at z = 26 mm over a handle centred on 9.5 mm.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garlic_press_var_compound_toggle_link",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L202-L249",
+            "model.py:L252-L267",
+            "model.py:L270-L287",
+            "model.py:L465-L543"
+          ]
+        }
+      ],
+      "component_type": "plunger and its drive from the lever arm",
+      "name": "plunger_drive",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A torus eyelet ring built in the handle plane and placed one loop-radius past the domed tip of the upper handle, along the handle's own axis direction. Adds no joint; it is the zero-mechanism member of the accessory family and the only one that changes the tool's silhouette at the tail rather than at the chamber.",
+          "implementation_function": "_accessory_hang_loop_build",
+          "interfaces": [],
+          "name": "hang_loop",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0102,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "loop_radius_m",
+              "rationale": "Mean radius of the hanging eyelet. Pool: 003 L245-L247 torus 0.0075 mean radius.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0029,
+              "minimum": 0.0016,
+              "mode": "independent",
+              "name": "loop_tube_m",
+              "rationale": "Tube radius of the eyelet ring. Pool: 003 L245-L247 tube 0.0022.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__003__png_49e1ec7b931140fbbd37cda9296bcafe",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L241-L248"
+          ]
+        },
+        {
+          "evidence": "A cleaning insert on its own bounded revolute about a lateral axle captured in two bored bosses on a strap cast to the chamber: an axle, two short mounting arms, a rounded backing plate and a pin field whose pitch equals the chamber hole pitch and which is clipped to a circular footprint, so every pin registers with a perforation. Positive travel swings the grid clear of the screen.",
+          "implementation_function": "_accessory_swing_cleaner_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0022",
+                "registration": "one pin per screen hole"
+              },
+              "frame": {
+                "axis": "screen tangent u (sign from the basis handedness)",
+                "point": "screen_point(0, screen_hv + 0.0062, pin_len + plate_t/2 + 0.0006)"
+              },
+              "kind": "axis",
+              "name": "cleaner_axle",
+              "part": "press_frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "swing_cleaner",
+          "notes": "Mounted on the outside of the screen so the same comb registers with all seven chambers; the source's inside-the-drum strap only exists because 001's chamber is open at the rear.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0062,
+              "minimum": 0.003,
+              "mode": "independent",
+              "name": "cleaner_pin_len_m",
+              "rationale": "How far each cleaning pin stands off the backing plate toward the screen. Pool: swing_cleaner_grid L270 pin_length 4.5 mm.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0036,
+              "minimum": 0.002,
+              "mode": "independent",
+              "name": "cleaner_plate_t_m",
+              "rationale": "Backing plate thickness. Pool: swing_cleaner_grid L262 plate 2.5 mm thick.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "cleaner_open_rad",
+              "rationale": "Swing travel that lifts the grid clear of the screen. Pool: 001 L387-L389 / swing_cleaner_grid L425-L427 limit 0..1.35.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garlic_press_var_swing_cleaner_grid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L223-L228",
+            "model.py:L231-L246",
+            "model.py:L249-L281"
+          ]
+        },
+        {
+          "evidence": "The pool's only prismatic mechanism: a disc with guide-pin clearance holes and a thumb tab rides two guide pins that carry a wider retention shoulder for it to rest on and a stop head at the far end, and a cleaning-pin field matched to a subset of the screen holes protrudes through the screen at full travel. Distinct from swing_cleaner in joint type and in that the module is captured by rails rather than hinged.",
+          "implementation_function": "_accessory_sliding_ejector_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "rail_radius": "0.0013",
+                "stroke": "ejector_travel_m"
+              },
+              "frame": {
+                "axis": "-screen normal",
+                "point": "screen_point(0, 0, travel + 0.0009 + plate_t/2)"
+              },
+              "kind": "axis",
+              "name": "ejector_slide",
+              "part": "press_frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "sliding_ejector",
+          "notes": "The plate stays wholly outside the screen and gets its stroke from long cleaning pins that sit flush in the holes at rest; the source lets the disc travel into the floor plate.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0082,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "ejector_travel_m",
+              "rationale": "Prismatic stroke that pushes the cleaning pins through the screen. Pool: sliding_ejector_plate L84 EJECTOR_TRAVEL 0.006, author check demands 0.003-0.012.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.85,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "ejector_pin_ratio",
+              "rationale": "Cleaning pin radius over the screen hole radius, i.e. the running clearance in each hole. Pool: sliding_ejector_plate L85 pin 0.0009 in a 0.0011 hole.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.48,
+              "mode": "independent",
+              "name": "rail_span_ratio",
+              "rationale": "Guide rail station over the screen half extent. Pool: sliding_ejector_plate L83 GUIDE_SPAN 0.008 on a 0.0125 bore.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garlic_press_var_sliding_ejector_plate",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L74-L87",
+            "model.py:L98-L104",
+            "model.py:L183-L214",
+            "model.py:L281-L319"
+          ]
+        },
+        {
+          "evidence": "A retention mechanism at the far end of the tool instead of at the chamber: two bracket ears with a through pivot bore on the lower handle tail cradle a latch barrel; the latch carries a bridge to a side arm offset clear of the upper grip and a hook lip that curls back inward over a capture pin protruding from the upper arm, plus a coloured release tab extending the other way from the barrel. Bounded revolute from locked to released.",
+          "implementation_function": "_accessory_storage_latch_build",
+          "interfaces": [],
+          "name": "storage_latch",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0225,
+              "minimum": 0.012,
+              "mode": "independent",
+              "name": "latch_arm_len_m",
+              "rationale": "Height from the latch pivot up to the hook, which is what places the pivot on the handle. Pool: handle_storage_latch L300-L304 arm_h 0.015 from a pivot at z=0.012 to a pin at 0.011+.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.35,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "latch_release_rad",
+              "rationale": "Travel from locked to released. Pool: handle_storage_latch L427 limits 0..1.3.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0022,
+              "minimum": 0.0012,
+              "mode": "independent",
+              "name": "capture_pin_r_m",
+              "rationale": "Radius of the capture pin on the lever. Pool: handle_storage_latch L97 CPIN_R 0.0015.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garlic_press_var_handle_storage_latch",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L85-L98",
+            "model.py:L235-L260",
+            "model.py:L263-L273",
+            "model.py:L276-L314",
+            "model.py:L317-L328"
+          ]
+        },
+        {
+          "evidence": "A second perforated body inside the chamber: a thin plate with its own staggered hole field, hinge ears at the pivot end and latch tabs at the free end that snap over the rim, carried on a lift-out revolute whose pivot bosses and reinforcing ribs are cast on the cavity walls. It is the only accessory that puts a second screen in series with the chamber screen.",
+          "implementation_function": "_accessory_lift_out_insert_build",
+          "interfaces": [],
+          "name": "lift_out_insert",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0029,
+              "minimum": 0.0016,
+              "mode": "independent",
+              "name": "insert_thickness_m",
+              "rationale": "Thickness of the perforated liner plate. Pool: removable_basket L212-L216 plate 2 mm.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.94,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "insert_fill_ratio",
+              "rationale": "Liner length over the usable cavity length. Pool: removable_basket L212-L216 a 23x26 plate in a 28x34 cavity.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.25,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "insert_lift_rad",
+              "rationale": "Requested lift-out travel; the cavity's own clear height may reduce it. Pool: removable_basket L444 limits 0..1.35.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garlic_press_var_removable_basket",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L206-L260",
+            "model.py:L263-L281",
+            "model.py:L433-L451"
+          ]
+        },
+        {
+          "evidence": "The chamber itself becomes a moving body. Two side plates on short connecting arms are cast onto the lower frame outside the basket width, a cross pin spans between them, and the basket carries a barrel on its rear lip that wraps that pin; a bounded revolute then flips the whole perforated chamber out of the frame for loading and cleaning. It is the one accessory that changes the part tree of the chamber rather than adding a body beside it.",
+          "implementation_function": "_accessory_flip_basket_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "cradle": "two plates at |y| = chamber_hy + 0.0006 + t/2",
+                "radius": "0.0022 + 0.00035"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(cx + chamber_hx + 0.0024, 0, bottom_z + max(0.003, 0.6 * screen_thickness_m))"
+              },
+              "kind": "axis",
+              "name": "basket_axis",
+              "part": "press_frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "flip_basket",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.28,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "flip_rad",
+              "rationale": "Travel that flips the whole perforated chamber out of the frame. Pool: flip_out_basket L426-L428 limits 0..1.30.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0046,
+              "minimum": 0.0025,
+              "mode": "independent",
+              "name": "cradle_plate_t_m",
+              "rationale": "Thickness of the two cradle side plates that carry the cross pin. Pool: flip_out_basket L136-L144 side plates 3 mm thick outboard of the basket.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garlic_press_var_flip_out_basket",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L132-L165",
+            "model.py:L244-L259",
+            "model.py:L262-L268",
+            "model.py:L411-L434"
+          ]
+        }
+      ],
+      "component_type": "cleaning, ejection or retention module",
+      "name": "accessory",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Both arms are flat tapered bars: a six or ten point polyline swept in plan, extruded to a constant thickness, with the tail edges filleted and the front of the lower bar trimmed by the chamber cavity so the cup stays hollow. The upper bar starts as a narrow neck that passes between the hinge lugs before widening. Grips are filleted soft pads let into the underside of the lower bar and the top of the upper bar.",
+          "implementation_function": "_arm_profile_flat_bar_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "pin_radius_m + 0.00035",
+                "stations": "lug bores at |y| in [lug_inner_y_m, lug_inner_y_m + 0.0038]"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(0, 0, pivot_z)"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "press_frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent_u": "lever_tail_x",
+                "extent_v": "2 * arm_half_width_m * 0.94"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "point": "(0, 0, lever_bar_z0 - pivot_z)"
+              },
+              "kind": "plane",
+              "name": "lever_bar",
+              "part": "lever_arm",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "flat_bar",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.156,
+              "minimum": 0.108,
+              "mode": "independent",
+              "name": "handle_len_m",
+              "rationale": "Free hand-grip run measured back from the chamber. Pool: 004 L57 lower handle ends at 0.194 with the chamber at 0.030; 005 L127 bar is 0.136 long; 003 L186-L189 tube runs 0.042->0.185.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.011,
+              "minimum": 0.0062,
+              "mode": "independent",
+              "name": "arm_thickness_m",
+              "rationale": "Section height of the lower arm. Pool: 004 L101 extrudes 0.009; 005 L124 bar is 0.006 thick; 003 uses a 0.012 tube diameter.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0125,
+              "minimum": 0.0082,
+              "mode": "independent",
+              "name": "arm_half_width_m",
+              "rationale": "Plan half width at the palm. Pool: 004 L88-L93 tapers 0.0125->0.0095; 005 L124 bar is 0.018 wide.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.0,
+              "minimum": 0.66,
+              "mode": "independent",
+              "name": "arm_taper_ratio",
+              "rationale": "Tip width over palm width. 004 tapers to 0.76 of its root; 002's loft collapses much harder.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0155,
+              "minimum": 0.0075,
+              "mode": "independent",
+              "name": "pivot_rise_m",
+              "rationale": "Hinge axis height above the lower arm's top face; sets how far the lever's knuckle stands clear of the handle. Pool: 004 L38 PIVOT_Z 0.016 over a handle top at 0.010; 005 L50 PIN_Z 0.014 over 0.010.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0125,
+              "minimum": 0.0045,
+              "mode": "independent",
+              "name": "lever_lift_m",
+              "rationale": "Requested gap from the hinge axis up to the lever bar. Pool: 005 L191 bar sits 0.011 above the pin; 002 L145-L152 lifts its bridge 0.024 over the pivot.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0092,
+              "minimum": 0.0058,
+              "mode": "independent",
+              "name": "lug_inner_y_m",
+              "rationale": "Half gap between the two clevis lugs, i.e. the lane the lever knuckle runs in. Pool: 004 L127 lugs at +/-0.008; 005 L56 LUG_Y_IN 0.0095; 002 L177-L179 ears at +/-0.0135.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0037,
+              "minimum": 0.0023,
+              "mode": "independent",
+              "name": "pin_radius_m",
+              "rationale": "Hinge pin shaft radius. Pool: 004 L61 PIN_R 0.003; 005 L53 0.0024; 003 L46 0.0026; 002 L201 0.00435.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.42,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "open_rad",
+              "rationale": "Requested handle opening travel. Pool: 004 L66 1.05; 003 L30 0.70 past a 0.22 rest pose; 005 L269 2.4 for a fold-over.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "grip_len_ratio",
+              "rationale": "Grip pad length over the free handle run. Pool: 004 L202 0.092 pad on a 0.154 run; 005 L154 0.082 on 0.136.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0078,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "grip_pad_t_m",
+              "rationale": "Soft-grip pad thickness. Pool: 004 L203 0.0055; 005 L153 0.011 overmould; 002 L192 6.2 mm slot grip.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__004__png_b0766f37d84548ec90c8ef55abf0bac0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L86-L104",
+            "model.py:L153-L184",
+            "model.py:L199-L214"
+          ]
+        },
+        {
+          "evidence": "Both arms are round tubes of constant radius closed by a hemispherical end cap, entered through a cone that tapers out of the cast head, and the upper arm's cone starts narrower than the tube so the transition is visible. No polymer grip pad at all: the whole arm is bare metal, which is a different part list as well as a different section.",
+          "implementation_function": "_arm_profile_round_tube_build",
+          "interfaces": [],
+          "name": "round_tube",
+          "notes": "No polymer grip visual at all: 003's arms are bare metal end to end, which is a part-list difference and not a material one.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0076,
+              "minimum": 0.005,
+              "mode": "independent",
+              "name": "tube_radius_m",
+              "rationale": "Tube radius of both arms. Pool: 003 L60 HANDLE_R 0.006 with an author check demanding 10-16 mm across.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0225,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "neck_len_m",
+              "rationale": "Length of the cone that tapers out of the cast head into the tube. Pool: 003 L177-L182 neck cone runs 0.0345->0.0455; L232-L235 upper taper 0.028->0.044.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__003__png_49e1ec7b931140fbbd37cda9296bcafe",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L177-L182",
+            "model.py:L185-L189",
+            "model.py:L229-L238"
+          ]
+        },
+        {
+          "evidence": "Both arms are four-section elliptical lofts that swell in the palm and then collapse to a 1.2 mm tip, each rotated about the lateral axis so the two arms splay apart, and the upper arm carries a slot-profile polymer grip extruded flat and rotated with the arm. Origin 006 L92-L102 and L161-L176 build the same elliptical loft and finish it with a spherical end cap instead of a point, which is the tip treatment this candidate uses so the loft never degenerates.",
+          "implementation_function": "_arm_profile_lofted_ellipse_build",
+          "interfaces": [],
+          "name": "lofted_ellipse",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.42,
+              "minimum": 1.06,
+              "mode": "independent",
+              "name": "palm_swell_ratio",
+              "rationale": "How much the middle loft section swells over the root. Pool: 002 L120-L124 widths 18->25->24; 006 L163-L169 ellipses 8.5->14->9.8.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0215,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "slot_grip_w_m",
+              "rationale": "Width of the slot-profile polymer grip. Pool: 002 L189-L193 slot2D(151, 19).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garlic_press__002__png_c325dc0d44734cf991faad455b7ceee5",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L53-L74",
+            "model.py:L189-L197"
+          ]
+        }
+      ],
+      "component_type": "hand arm cross-section, tip and grip treatment",
+      "name": "arm_profile",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_garlic_press",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_garlic_press.md",
+  "source_map_sha256": "eaaac0c480a012769249e6e9b5d541918f480f3c378984b9e7462c20709970c8"
+}

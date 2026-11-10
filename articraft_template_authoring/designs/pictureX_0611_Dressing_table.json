@@ -1,0 +1,889 @@
+{
+  "assembly_notes": "The root is always one vanity_body carcass. Each body_form candidate publishes a drawer zone (a list of slot rectangles cut as real cavities in the carcass) and a worktop plane. The drawer_front candidates fill that zone: N hollow trays on prismatic slides along -Y, with the front hardware being the only difference. The pedestal body adapts the zone from one horizontal row into two vertical stacks, so N stays fully combinable with every body plan. Each mirror_form candidate consumes the worktop plane and adds its own cleat, posts, rail or cabinet to the carcass. Every revolute joint is solved with mate_axes and registered with register_interface_mate; no ctx.allow_overlap is used anywhere.",
+  "bindings": [
+    {
+      "binding_id": "drawer_zone",
+      "consumer": "drawer_front.drawer_zone",
+      "derived": [
+        {
+          "expression": "(usable_width - 0.012*(drawer_count-1))/drawer_count - 0.014 for row bodies",
+          "mode": "derived",
+          "name": "front_width_m",
+          "rationale": "Front width must follow the host zone and N, not a fixed source constant.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "expression": "0.62 * body_depth_m",
+          "mode": "derived",
+          "name": "drawer_travel_m",
+          "rationale": "Travel derives from the host box depth so a fully open drawer still keeps its runners engaged.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "body_form.drawer_zone"
+    },
+    {
+      "binding_id": "worktop",
+      "consumer": "mirror_form.worktop",
+      "derived": [
+        {
+          "expression": "leg_height_m + carcass_height_m + 0.024",
+          "mode": "derived",
+          "name": "top_z_m",
+          "rationale": "Every mirror candidate mounts its cleat, posts, rail or cabinet on this height.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "expression": "min(mirror_width_m, body_width_m - clearance) per candidate",
+          "mode": "derived",
+          "name": "mirror_span_m",
+          "rationale": "A large mirror on a narrow worktop must be clipped to the host plan, not left overhanging.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "body_form.worktop"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "vanity_core",
+      "applies_to": {
+        "candidates": [
+          "rect_carcass_tapered_legs",
+          "kidney_plan_cabriole",
+          "d_panel_carcass",
+          "pedestal_knee_hole"
+        ],
+        "slot": "body_form"
+      },
+      "required_author_checks": [
+        "dressing table keeps one carcass, N drawers and one mirror",
+        "worktop sits at a seated dressing-table height"
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "vanity_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "drawer_bank",
+      "applies_to": {
+        "candidates": [
+          "knob_front",
+          "bar_handle_front"
+        ],
+        "slot": "drawer_front"
+      },
+      "required_author_checks": [
+        "every drawer belongs to the selected front family",
+        "drawer 0 pulls forward out of the carcass",
+        "drawer fronts stay inside the carcass footprint"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "vanity_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "vanity_body"
+        },
+        {
+          "count_from": "drawer_count",
+          "role": "drawer"
+        }
+      ]
+    },
+    {
+      "anchor_id": "mirror_assembly",
+      "applies_to": {
+        "candidates": [
+          "swing_ring_mirror",
+          "trunnion_oval_mirror",
+          "sliding_mirror_storage",
+          "jewellery_door_mirror"
+        ],
+        "slot": "mirror_form"
+      },
+      "required_author_checks": [
+        "mirror assembly stands above the worktop",
+        "the mirror assembly really moves on its source joint"
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "mirror"
+        }
+      ]
+    },
+    {
+      "anchor_id": "lift_top_mirror_lid",
+      "applies_to": {
+        "candidates": [
+          "lift_top_mirror"
+        ],
+        "slot": "mirror_form"
+      },
+      "required_author_checks": [
+        "mirror assembly stands above the worktop"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "mirror_lid",
+          "joint_type": "revolute",
+          "parent_role": "vanity_body"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "mirror",
+          "joint_type": "revolute",
+          "parent_role": "mirror_lid"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "mirror_lid"
+        },
+        {
+          "exact_count": 1,
+          "role": "mirror"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "row bodies cap N at 6 so each front keeps at least 0.09 m of width at body_width_m=0.80; the pedestal body splits N over two stacks so each front keeps at least 0.04 m of height at carcass_height_m=0.16",
+      "item_slot": "drawer_front",
+      "name": "drawer_count",
+      "spacing_expression": "row bodies: (usable_width - 0.012*(N-1))/N per drawer; pedestal body: (pedestal_height - 0.04)/ceil(N/2) per stack",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "_carcass_shape builds a rounded rectangular carcass and _tapered_leg four square tapered legs under it.",
+          "implementation_function": "_body_form_rect_carcass_tapered_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "box_depth": "body_depth_m",
+                "zone_height": "carcass_height_m",
+                "zone_width": "body_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "drawer_zone",
+              "part": "vanity__body",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "depth": "body_depth_m",
+                "width": "body_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "worktop",
+              "part": "vanity__body",
+              "role": "provider"
+            }
+          ],
+          "name": "rect_carcass_tapered_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 1.3,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "body_width_m",
+              "rationale": "Carcass plan width; the worktop, leg or pedestal spacing and the drawer zone width derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.52,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "body_depth_m",
+              "rationale": "Carcass plan depth; drawer box depth, travel and the mirror standoff derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.46,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "leg_height_m",
+              "rationale": "Height of the support family under the carcass; the worktop height derives from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.3,
+              "minimum": 0.16,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "Height of the drawer band; drawer front height and cavity height derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__dressing_table__002__png__airflex_batch_20260710_8b07b10648bb4d5aa2826cb22b419f51",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L34-L78",
+            "model.py:L223-L314"
+          ]
+        },
+        {
+          "evidence": "_kidney_slab/_kidney_apron_solid produce a real waisted plan and _cabriole_leg a curved leg; neither the plan nor the leg is a scaled rectangle.",
+          "implementation_function": "_body_form_kidney_plan_cabriole_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "box_depth": "body_depth_m",
+                "zone_height": "carcass_height_m",
+                "zone_width": "body_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "drawer_zone",
+              "part": "vanity__body",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "depth": "body_depth_m",
+                "width": "body_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "worktop",
+              "part": "vanity__body",
+              "role": "provider"
+            }
+          ],
+          "name": "kidney_plan_cabriole",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 1.3,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "body_width_m",
+              "rationale": "Carcass plan width; the worktop, leg or pedestal spacing and the drawer zone width derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.52,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "body_depth_m",
+              "rationale": "Carcass plan depth; drawer box depth, travel and the mirror standoff derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.46,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "leg_height_m",
+              "rationale": "Height of the support family under the carcass; the worktop height derives from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.3,
+              "minimum": 0.16,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "Height of the drawer band; drawer front height and cavity height derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_dressing_table_var_kidney_plan_body_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L65-L131",
+            "model.py:L470-L524"
+          ]
+        },
+        {
+          "evidence": "_d_panel extrudes a curved end panel that carries the carcass to the floor, so there is no leg at all.",
+          "implementation_function": "_body_form_d_panel_carcass_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "box_depth": "body_depth_m",
+                "zone_height": "carcass_height_m",
+                "zone_width": "body_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "drawer_zone",
+              "part": "vanity__body",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "depth": "body_depth_m",
+                "width": "body_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "worktop",
+              "part": "vanity__body",
+              "role": "provider"
+            }
+          ],
+          "name": "d_panel_carcass",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 1.3,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "body_width_m",
+              "rationale": "Carcass plan width; the worktop, leg or pedestal spacing and the drawer zone width derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.52,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "body_depth_m",
+              "rationale": "Carcass plan depth; drawer box depth, travel and the mirror standoff derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.46,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "leg_height_m",
+              "rationale": "Height of the support family under the carcass; the worktop height derives from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.3,
+              "minimum": 0.16,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "Height of the drawer band; drawer front height and cavity height derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__dressing_table__003__png__airflex_batch_20260710_54143b3f1719456999f47774a46e2142",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L28-L50",
+            "model.py:L131-L211"
+          ]
+        },
+        {
+          "evidence": "The body splits into two pedestals with an open knee hole between them, so the drawer zone is two vertical stacks instead of one row.",
+          "implementation_function": "_body_form_pedestal_knee_hole_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "box_depth": "body_depth_m",
+                "zone_height": "carcass_height_m",
+                "zone_width": "body_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "drawer_zone",
+              "part": "vanity__body",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "depth": "body_depth_m",
+                "width": "body_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "worktop",
+              "part": "vanity__body",
+              "role": "provider"
+            }
+          ],
+          "name": "pedestal_knee_hole",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 1.3,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "body_width_m",
+              "rationale": "Carcass plan width; the worktop, leg or pedestal spacing and the drawer zone width derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.52,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "body_depth_m",
+              "rationale": "Carcass plan depth; drawer box depth, travel and the mirror standoff derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.46,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "leg_height_m",
+              "rationale": "Height of the support family under the carcass; the worktop height derives from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.3,
+              "minimum": 0.16,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "Height of the drawer band; drawer front height and cavity height derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__dressing_table__005__png__airflex_batch_20260710_29297dbcc1314ef697098b2bfffa492b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L31",
+            "model.py:L176-L324"
+          ]
+        }
+      ],
+      "component_type": "rounded rectangular carcass on tapered legs",
+      "name": "body_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_drawer_front gives a lipped front and _add_drawer centres a turned knob on it.",
+          "implementation_function": "_drawer_front_knob_front_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_height": "carcass_height_m",
+                "front_width": "derived from body_width_m and drawer_count"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "drawer_zone",
+              "part": "drawer_front__knob_front__drawer_0",
+              "role": "consumer"
+            }
+          ],
+          "name": "knob_front",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__dressing_table__002__png__airflex_batch_20260710_8b07b10648bb4d5aa2826cb22b419f51",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L79-L101",
+            "model.py:L116-L177"
+          ]
+        },
+        {
+          "evidence": "_add_bar_handle builds a two-post bar pull spanning most of the front, a different visible hardware topology from a central knob.",
+          "implementation_function": "_drawer_front_bar_handle_front_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_height": "carcass_height_m",
+                "front_width": "derived from body_width_m and drawer_count"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "drawer_zone",
+              "part": "drawer_front__bar_handle_front__drawer_0",
+              "role": "consumer"
+            }
+          ],
+          "name": "bar_handle_front",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__dressing_table__004__png__airflex_batch_20260710_73bfe825072f4eb68ea75bf81f4b955d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L30-L55",
+            "model.py:L56-L308"
+          ]
+        }
+      ],
+      "component_type": "moulded front with a turned knob",
+      "name": "drawer_front",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_mirror_ring/_mirror_panel build a framed glass panel on one frame_to_mirror revolute rising from the worktop.",
+          "implementation_function": "_mirror_form_swing_ring_mirror_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "mirror_height": "mirror_height_m",
+                "mirror_width": "mirror_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "worktop",
+              "part": "vanity__body",
+              "role": "consumer"
+            }
+          ],
+          "name": "swing_ring_mirror",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.78,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "mirror_width_m",
+              "rationale": "Mirror aperture width; frame, posts, lid and rail spans derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.78,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "mirror_height_m",
+              "rationale": "Mirror aperture height; post height, cabinet height and hinge positions derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__dressing_table__002__png__airflex_batch_20260710_8b07b10648bb4d5aa2826cb22b419f51",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L89-L101",
+            "model.py:L315-L353"
+          ]
+        },
+        {
+          "evidence": "_turned_post/_pivot_boss carry an oval _mirror_frame_mesh on trunnions, so the mirror hangs between posts rather than off the worktop.",
+          "implementation_function": "_mirror_form_trunnion_oval_mirror_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "mirror_height": "mirror_height_m",
+                "mirror_width": "mirror_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "worktop",
+              "part": "vanity__body",
+              "role": "consumer"
+            }
+          ],
+          "name": "trunnion_oval_mirror",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.78,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "mirror_width_m",
+              "rationale": "Mirror aperture width; frame, posts, lid and rail spans derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.78,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "mirror_height_m",
+              "rationale": "Mirror aperture height; post height, cabinet height and hinge positions derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_dressing_table_var_trunnion_oval_mirror_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L94-L119",
+            "model.py:L329-L384",
+            "model.py:L440-L480"
+          ]
+        },
+        {
+          "evidence": "A lid part on frame_to_lid carries the mirror on a second lid_to_mirror revolute; two chained hinges instead of one.",
+          "implementation_function": "_mirror_form_lift_top_mirror_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "mirror_height": "mirror_height_m",
+                "mirror_width": "mirror_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "worktop",
+              "part": "vanity__body",
+              "role": "consumer"
+            }
+          ],
+          "name": "lift_top_mirror",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.78,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "mirror_width_m",
+              "rationale": "Mirror aperture width; frame, posts, lid and rail spans derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.78,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "mirror_height_m",
+              "rationale": "Mirror aperture height; post height, cabinet height and hinge positions derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_dressing_table_var_lift_top_mirror",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L232-L285",
+            "model.py:L286-L320"
+          ]
+        },
+        {
+          "evidence": "slide_mirror runs on a body_to_slide_mirror prismatic joint, revealing storage beneath instead of tilting.",
+          "implementation_function": "_mirror_form_sliding_mirror_storage_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "mirror_height": "mirror_height_m",
+                "mirror_width": "mirror_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "worktop",
+              "part": "vanity__body",
+              "role": "consumer"
+            }
+          ],
+          "name": "sliding_mirror_storage",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.78,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "mirror_width_m",
+              "rationale": "Mirror aperture width; frame, posts, lid and rail spans derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.78,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "mirror_height_m",
+              "rationale": "Mirror aperture height; post height, cabinet height and hinge positions derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_dressing_table_var_sliding_mirror_storage_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L448-L495"
+          ]
+        },
+        {
+          "evidence": "_add_jewellery_cabinet_box stands a real cabinet on the worktop and mirror_door swings on a vertical hinge as its mirrored face.",
+          "implementation_function": "_mirror_form_jewellery_door_mirror_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "mirror_height": "mirror_height_m",
+                "mirror_width": "mirror_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "worktop",
+              "part": "vanity__body",
+              "role": "consumer"
+            }
+          ],
+          "name": "jewellery_door_mirror",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.78,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "mirror_width_m",
+              "rationale": "Mirror aperture width; frame, posts, lid and rail spans derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.78,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "mirror_height_m",
+              "rationale": "Mirror aperture height; post height, cabinet height and hinge positions derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_dressing_table_var_mirror_jewellery_door_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L157-L268",
+            "model.py:L497-L556"
+          ]
+        }
+      ],
+      "component_type": "framed mirror hinged on the worktop",
+      "name": "mirror_form",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Dressing_table",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Dressing_table.md",
+  "source_map_sha256": "f7a493d7717ca2f854713f68e1b7a161aae3c841d117ca0a87556c859a439270"
+}

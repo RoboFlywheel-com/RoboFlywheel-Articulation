@@ -1,0 +1,267 @@
+{
+  "assembly_notes": "The frame owns the wheel chamber, bearing cheeks, captured axle, retainers and optional gate. N is assembly-owned: it derives sheave pitch, stack width, cheek centers, shell cavity width, axle length, thrust-washer positions and gate offset. The mount interface attaches at the rear bridge and the optional becket attaches at the opposite bridge. Every frame, mount, sheave profile, secondary module and N combination is buildable without a gate. All rotating joints use solved and registered axis interfaces.",
+  "bindings": [
+    {
+      "binding_id": "frame_to_sheaves",
+      "consumer": "sheave_profile.rotation_axis",
+      "derived": [
+        {
+          "depends_on": ["sheave_width"],
+          "expression": "sheave_width + 0.0012",
+          "mode": "derived",
+          "name": "sheave_pitch",
+          "rationale": "Provides visible thrust clearance between independently rotating wheels."
+        },
+        {
+          "depends_on": ["sheave_count", "sheave_width", "sheave_pitch"],
+          "expression": "sheave_width + (sheave_count - 1) * sheave_pitch",
+          "mode": "derived",
+          "name": "stack_width",
+          "rationale": "Exact indexed wheel-stack capacity."
+        },
+        {
+          "depends_on": ["stack_width", "cheek_thickness"],
+          "expression": "0.5 * stack_width + cheek_thickness + 0.0010",
+          "mode": "derived",
+          "name": "cheek_center_x",
+          "rationale": "Places both bearing cheeks outside the rotating stack."
+        },
+        {
+          "depends_on": ["cheek_center_x", "cheek_thickness"],
+          "expression": "2 * (cheek_center_x + cheek_thickness)",
+          "mode": "derived",
+          "name": "axle_length",
+          "rationale": "Keeps the transverse pin captured through both cheeks."
+        }
+      ],
+      "joint_type": "continuous_indexed",
+      "provider": "frame_construction.sheave_axis"
+    },
+    {
+      "binding_id": "frame_to_mount",
+      "consumer": "mount_interface.frame_mount",
+      "derived": [
+        {
+          "depends_on": ["stack_width", "cheek_thickness"],
+          "expression": "max(0.034 * pulley_scale, stack_width + 2 * cheek_thickness + 0.004)",
+          "mode": "derived",
+          "name": "bridge_width",
+          "rationale": "Adapts every mount bridge to the selected wheel stack."
+        }
+      ],
+      "joint_type": "candidate_specific",
+      "provider": "frame_construction.mount_bridge"
+    },
+    {
+      "binding_id": "frame_to_secondary",
+      "consumer": "secondary_module.frame_mount",
+      "derived": [],
+      "joint_type": "fixed",
+      "provider": "frame_construction.secondary_bridge"
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "stack_width + 2 * (cheek_thickness + 0.0010)",
+      "item_slot": "sheave_profile",
+      "name": "sheave_count",
+      "spacing_expression": "sheave_width + 0.0012",
+      "values": [1, 2, 3]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "One connected countersunk plate, twin rounded bearing cheeks, captured transverse axle and outside retainers.",
+          "implementation_function": "_frame_construction_open_cheeks_build",
+          "interfaces": [
+            {"name": "sheave_axis", "kind": "axis", "role": "provider", "part": "frame_construction__open_cheeks__frame", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"stack_width": "stack_width", "axle_radius": "axle_radius"}},
+            {"name": "mount_bridge", "kind": "plane", "role": "provider", "part": "frame_construction__open_cheeks__frame", "frame": {"normal": [0.0, -1.0, 0.0]}, "dimensions": {"width": "bridge_width"}},
+            {"name": "secondary_bridge", "kind": "plane", "role": "provider", "part": "frame_construction__open_cheeks__frame", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "bridge_width"}}
+          ],
+          "name": "open_cheeks",
+          "notes": "Cheek spacing and axle length are derived from N.",
+          "parameters": [
+            {"name": "pulley_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Conservative source-proportion scaling."},
+            {"name": "cheek_thickness", "mode": "derived", "expression": "0.0030 * pulley_scale", "depends_on": ["pulley_scale"], "rationale": "Source stamped cheek thickness."}
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_064522_904114_797df9d4",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L36-L85"]
+        },
+        {
+          "evidence": "Rounded hollow shell with a true wheel chamber, integral bearing walls and opposed rope-entry windows.",
+          "implementation_function": "_frame_construction_enclosed_shell_build",
+          "interfaces": [
+            {"name": "sheave_axis", "kind": "axis", "role": "provider", "part": "frame_construction__enclosed_shell__frame", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"cavity_width": "stack_width + 0.0012", "axle_radius": "axle_radius"}},
+            {"name": "mount_bridge", "kind": "plane", "role": "provider", "part": "frame_construction__enclosed_shell__frame", "frame": {"normal": [0.0, -1.0, 0.0]}, "dimensions": {"width": "bridge_width"}},
+            {"name": "secondary_bridge", "kind": "plane", "role": "provider", "part": "frame_construction__enclosed_shell__frame", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "bridge_width"}}
+          ],
+          "name": "enclosed_shell",
+          "notes": "Shell outer width and internal chamber expand with N; rope windows remain open at tangency regions.",
+          "parameters": [
+            {"name": "pulley_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Conservative source-proportion scaling."},
+            {"name": "cheek_thickness", "mode": "derived", "expression": "0.0032 * pulley_scale", "depends_on": ["pulley_scale"], "rationale": "Integral shell bearing-wall thickness."}
+          ],
+          "record_id": "rec_0611_pulley_var_frame_enclosed_shell",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L42-L112"]
+        },
+        {
+          "evidence": "One rigid cheek plus a full slotted side cheek, captured rear hinge, front latch and approximately 95-degree opening travel.",
+          "implementation_function": "_frame_construction_hinged_gate_build",
+          "interfaces": [
+            {"name": "sheave_axis", "kind": "axis", "role": "provider", "part": "frame_construction__hinged_gate__frame", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"stack_width": "stack_width", "gate_offset": "cheek_center_x"}},
+            {"name": "gate_axis", "kind": "axis", "role": "provider", "part": "frame_construction__hinged_gate__frame", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"travel": "gate_travel"}},
+            {"name": "mount_bridge", "kind": "plane", "role": "provider", "part": "frame_construction__hinged_gate__frame", "frame": {"normal": [0.0, -1.0, 0.0]}, "dimensions": {"width": "bridge_width"}},
+            {"name": "secondary_bridge", "kind": "plane", "role": "provider", "part": "frame_construction__hinged_gate__frame", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "bridge_width"}}
+          ],
+          "name": "hinged_gate",
+          "notes": "The moving cheek is offset outside the N-wide stack and its U-slot releases the captured axle when opened.",
+          "parameters": [
+            {"name": "pulley_scale", "mode": "independent", "minimum": 0.88, "maximum": 1.12, "rationale": "Conservative source-proportion scaling."},
+            {"name": "cheek_thickness", "mode": "derived", "expression": "0.0032 * pulley_scale", "depends_on": ["pulley_scale"], "rationale": "Robust source gate plate."},
+            {"name": "gate_travel", "mode": "derived", "expression": "radians(95)", "depends_on": [], "rationale": "Source-backed lateral opening range."}
+          ],
+          "record_id": "rec_0611_pulley_var_frame_hinged_side_gate_v3",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L39-L173", "model.py:L205-L284"]
+        }
+      ],
+      "component_type": "wheel-support frame",
+      "name": "frame_construction",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Elongated filleted plate with two real countersunk fastener holes.",
+          "implementation_function": "_mount_interface_fixed_plate_build",
+          "interfaces": [{"name": "frame_mount", "kind": "plane", "role": "consumer", "part": "mount_interface__fixed_plate__mount", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "bridge_width"}}],
+          "name": "fixed_plate",
+          "notes": "Plate width adapts to the N-wide bridge while retaining the two countersunk holes.",
+          "parameters": [],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_064522_904114_797df9d4",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L39-L49"]
+        },
+        {
+          "evidence": "Reinforced bridge, paired clevis ears, true rigging gap and visible transverse attachment pin.",
+          "implementation_function": "_mount_interface_clevis_build",
+          "interfaces": [{"name": "frame_mount", "kind": "plane", "role": "consumer", "part": "mount_interface__clevis__mount", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "bridge_width"}}],
+          "name": "clevis",
+          "notes": "Ear separation derives from bridge width and retains a true pin gap.",
+          "parameters": [],
+          "record_id": "rec_0611_pulley_var_mount_clevis",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L37-L126"]
+        },
+        {
+          "evidence": "Thick closed eye with a true through-opening and broad neck joining both load cheeks.",
+          "implementation_function": "_mount_interface_closed_eye_build",
+          "interfaces": [{"name": "frame_mount", "kind": "plane", "role": "consumer", "part": "mount_interface__closed_eye__mount", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "bridge_width"}}],
+          "name": "closed_eye",
+          "notes": "The reinforced neck widens with the selected frame bridge.",
+          "parameters": [],
+          "record_id": "rec_0611_pulley_var_mount_closed_eye",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L37-L113"]
+        },
+        {
+          "evidence": "Captured vertical swivel stem, bearing bridge and curved load hook with a real open throat.",
+          "implementation_function": "_mount_interface_swivel_hook_build",
+          "interfaces": [
+            {"name": "frame_mount", "kind": "plane", "role": "consumer", "part": "mount_interface__swivel_hook__bearing", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "bridge_width"}},
+            {"name": "swivel_axis", "kind": "axis", "role": "consumer", "part": "mount_interface__swivel_hook__hook", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"clearance_radius": "hook_sweep_radius"}}
+          ],
+          "name": "swivel_hook",
+          "notes": "The captured hook is a separate child part rotating about its stem center.",
+          "parameters": [
+            {"name": "hook_sweep_radius", "mode": "derived", "expression": "0.017 * pulley_scale", "depends_on": ["pulley_scale"], "rationale": "Reserves the source hook's complete swivel envelope."}
+          ],
+          "record_id": "rec_0611_pulley_var_mount_swivel_hook",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L35-L137", "model.py:L168-L229"]
+        }
+      ],
+      "component_type": "load/mount interface",
+      "name": "mount_interface",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Seven-point lathed outer profile forms raised rims, a broad deep-U groove, solid web and true axle bore.",
+          "implementation_function": "_sheave_profile_deep_u_build",
+          "interfaces": [{"name": "rotation_axis", "kind": "axis", "role": "consumer", "part": "sheave_profile__deep_u__sheave", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"bore_radius": "bore_radius", "width": "sheave_width"}}],
+          "name": "deep_u",
+          "notes": "Used for rope; wheel count is assembly multiplicity.",
+          "parameters": [
+            {"name": "sheave_radius_ratio", "mode": "independent", "minimum": 0.92, "maximum": 1.08, "rationale": "Small source-faithful wheel diameter variation."},
+            {"name": "sheave_radius", "mode": "derived", "expression": "0.0125 * pulley_scale * sheave_radius_ratio", "depends_on": ["pulley_scale", "sheave_radius_ratio"], "rationale": "Source nominal radius."},
+            {"name": "sheave_width", "mode": "derived", "expression": "0.0140 * pulley_scale", "depends_on": ["pulley_scale"], "rationale": "Source nominal width."},
+            {"name": "bore_radius", "mode": "derived", "expression": "0.0034 * pulley_scale", "depends_on": ["pulley_scale"], "rationale": "True running bore."},
+            {"name": "axle_radius", "mode": "derived", "expression": "bore_radius - 0.00035 * pulley_scale", "depends_on": ["bore_radius", "pulley_scale"], "rationale": "Visible annular running clearance."}
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_064522_904114_797df9d4",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L88-L115"]
+        },
+        {
+          "evidence": "Symmetric narrow V trough with raised retaining flanges and the same true axle bore.",
+          "implementation_function": "_sheave_profile_narrow_v_build",
+          "interfaces": [{"name": "rotation_axis", "kind": "axis", "role": "consumer", "part": "sheave_profile__narrow_v__sheave", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"bore_radius": "bore_radius", "width": "sheave_width"}}],
+          "name": "narrow_v",
+          "notes": "Used for cable; wheel count is assembly multiplicity.",
+          "parameters": [
+            {"name": "sheave_radius_ratio", "mode": "independent", "minimum": 0.92, "maximum": 1.08, "rationale": "Small source-faithful wheel diameter variation."},
+            {"name": "sheave_radius", "mode": "derived", "expression": "0.0125 * pulley_scale * sheave_radius_ratio", "depends_on": ["pulley_scale", "sheave_radius_ratio"], "rationale": "Source nominal radius."},
+            {"name": "sheave_width", "mode": "derived", "expression": "0.0140 * pulley_scale", "depends_on": ["pulley_scale"], "rationale": "Source nominal width."},
+            {"name": "bore_radius", "mode": "derived", "expression": "0.0034 * pulley_scale", "depends_on": ["pulley_scale"], "rationale": "True running bore."},
+            {"name": "axle_radius", "mode": "derived", "expression": "bore_radius - 0.00035 * pulley_scale", "depends_on": ["bore_radius", "pulley_scale"], "rationale": "Visible annular running clearance."}
+          ],
+          "record_id": "rec_0611_pulley_var_sheave_profile_narrow_v",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L90-L117"]
+        }
+      ],
+      "component_type": "indexed rotating sheave",
+      "name": "sheave_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Baseline pulley has no secondary rope anchor.",
+          "implementation_function": "_secondary_module_none_build",
+          "interfaces": [],
+          "name": "none",
+          "notes": "No secondary structure is emitted.",
+          "parameters": [],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_064522_904114_797df9d4",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L118-L159"]
+        },
+        {
+          "evidence": "Reinforced neck and closed becket with a true opening, placed outside the wheel and rope-path envelope.",
+          "implementation_function": "_secondary_module_becket_eye_build",
+          "interfaces": [{"name": "frame_mount", "kind": "plane", "role": "consumer", "part": "secondary_module__becket_eye__anchor", "frame": {"normal": [0.0, -1.0, 0.0]}, "dimensions": {"width": "bridge_width"}}],
+          "name": "becket_eye",
+          "notes": "The becket sits beyond the sheave radial envelope and scales with the host bridge.",
+          "parameters": [],
+          "record_id": "rec_0611_pulley_var_secondary_becket",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L122-L175"]
+        }
+      ],
+      "component_type": "optional fixed rope anchor",
+      "name": "secondary_module",
+      "required": true
+    }
+  ],
+  "slug": "pulley",
+  "source_map_path": "articraft_template_authoring/source_maps/pulley.md",
+  "source_map_sha256": "5015928abd5a84d136751361f77ece1a36824ed6d590b762d517c0bb2d639959"
+}

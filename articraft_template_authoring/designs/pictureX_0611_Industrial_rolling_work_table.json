@@ -1,0 +1,1174 @@
+{
+  "assembly_notes": "Mobile industrial work table. The grounded `frame` part is the welded post-and-rail structure: four posts, perimeter rails and the storage bay's own rails. Four braked swivel casters hang from the post feet and are identity-fixed: a `caster_swivel` turns CONTINUOUS about +z in a bored king-pin boss, a `caster_wheel` spins CONTINUOUS about the yoke's local +y between two yoke cheeks, and a `caster_brake` pedal swings REVOLUTE about the same local axis onto the tread. All four share one motion_qc_repeat_group. The `worktop` is a separate part so the leg_form slot can make it either FIXED at the working height or PRISMATIC over the telescopic posts' travel; top_surface only changes what that part is made of and how its edge is formed. storage_module fills the bay with storage_level_count items - fixed shelf panels, sliding drawer trays with real bilateral runners, or sliding pegboard trays under a perforated back panel - and every candidate derives its level pitch from the same bay height. table_length_m, table_depth_m and table_height_m are honest continuous parameters that derive rail spans, caster track, bay height, level pitch, drawer travel and post travel; palette, perforations and glue lines are non-core. bench_accessory adds one source-backed bench fitting on the frame's rear brackets or front rail - a display arm with its own REVOLUTE tilt, a keyboard tray on PRISMATIC side runners, or a fixed equipment box - none of which touch the caster or storage chains. side_bracing leaves the side bays open on their rails or fills each one with two crossed flat bars on the bay's own diagonal.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "top_surface_identity",
+      "applies_to": {
+        "candidates": [
+          "stainless_deck",
+          "butcher_block"
+        ],
+        "slot": "top_surface"
+      },
+      "required_author_checks": [
+        "category_anchor: rolling work table frame, top and caster chain",
+        "category_anchor: every caster swivels, spins and brakes on its own axes",
+        "category_anchor: top_surface identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "caster_swivel",
+          "joint_type": "continuous",
+          "parent_role": "frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_wheel",
+          "joint_type": "continuous",
+          "parent_role": "caster_swivel"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_brake",
+          "joint_type": "revolute",
+          "parent_role": "caster_swivel"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "worktop"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_swivel"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_wheel"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_brake"
+        },
+        {
+          "count_from": "storage_level_count",
+          "role": "storage_item"
+        }
+      ]
+    },
+    {
+      "anchor_id": "storage_module_identity",
+      "applies_to": {
+        "candidates": [
+          "open_shelf",
+          "drawer_bank",
+          "pegboard_rack"
+        ],
+        "slot": "storage_module"
+      },
+      "required_author_checks": [
+        "category_anchor: rolling work table frame, top and caster chain",
+        "category_anchor: every caster swivels, spins and brakes on its own axes",
+        "category_anchor: storage_module identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "caster_swivel",
+          "joint_type": "continuous",
+          "parent_role": "frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_wheel",
+          "joint_type": "continuous",
+          "parent_role": "caster_swivel"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_brake",
+          "joint_type": "revolute",
+          "parent_role": "caster_swivel"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "worktop"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_swivel"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_wheel"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_brake"
+        },
+        {
+          "count_from": "storage_level_count",
+          "role": "storage_item"
+        }
+      ]
+    },
+    {
+      "anchor_id": "leg_form_identity",
+      "applies_to": {
+        "candidates": [
+          "fixed_post",
+          "telescopic_post"
+        ],
+        "slot": "leg_form"
+      },
+      "required_author_checks": [
+        "category_anchor: rolling work table frame, top and caster chain",
+        "category_anchor: every caster swivels, spins and brakes on its own axes",
+        "category_anchor: leg_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "caster_swivel",
+          "joint_type": "continuous",
+          "parent_role": "frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_wheel",
+          "joint_type": "continuous",
+          "parent_role": "caster_swivel"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_brake",
+          "joint_type": "revolute",
+          "parent_role": "caster_swivel"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "worktop"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_swivel"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_wheel"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_brake"
+        },
+        {
+          "count_from": "storage_level_count",
+          "role": "storage_item"
+        }
+      ]
+    },
+    {
+      "anchor_id": "bench_accessory_identity",
+      "applies_to": {
+        "candidates": [
+          "monitor_arm",
+          "keyboard_tray",
+          "equipment_shelf"
+        ],
+        "slot": "bench_accessory"
+      },
+      "required_author_checks": [
+        "category_anchor: rolling work table frame, top and caster chain",
+        "category_anchor: every caster swivels, spins and brakes on its own axes",
+        "category_anchor: bench_accessory identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "caster_swivel",
+          "joint_type": "continuous",
+          "parent_role": "frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_wheel",
+          "joint_type": "continuous",
+          "parent_role": "caster_swivel"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_brake",
+          "joint_type": "revolute",
+          "parent_role": "caster_swivel"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "worktop"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_swivel"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_wheel"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_brake"
+        },
+        {
+          "count_from": "storage_level_count",
+          "role": "storage_item"
+        }
+      ]
+    },
+    {
+      "anchor_id": "side_bracing_identity",
+      "applies_to": {
+        "candidates": [
+          "plain_rails",
+          "x_braces"
+        ],
+        "slot": "side_bracing"
+      },
+      "required_author_checks": [
+        "category_anchor: rolling work table frame, top and caster chain",
+        "category_anchor: every caster swivels, spins and brakes on its own axes",
+        "category_anchor: side_bracing identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "caster_swivel",
+          "joint_type": "continuous",
+          "parent_role": "frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_wheel",
+          "joint_type": "continuous",
+          "parent_role": "caster_swivel"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_brake",
+          "joint_type": "revolute",
+          "parent_role": "caster_swivel"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "worktop"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_swivel"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_wheel"
+        },
+        {
+          "exact_count": 4,
+          "role": "caster_brake"
+        },
+        {
+          "count_from": "storage_level_count",
+          "role": "storage_item"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= storage_level_count <= 3; level_pitch_m stays above 0.090 m of clear height",
+      "item_slot": "storage_module",
+      "name": "storage_level_count",
+      "spacing_expression": "level i sits at bay_floor + (i + 0.5) * level_pitch_m",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "The deck is a thin stainless panel with a turned-down edge skirt over the perimeter rails.",
+          "implementation_function": "_top_surface_stainless_deck_build",
+          "interfaces": [],
+          "name": "stainless_deck",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m (the deck's upper face is the working height)",
+              "mode": "derived",
+              "name": "deck_top_z_m",
+              "rationale": "every top candidate presents its face at the same working height",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__industrial_rolling_work_table__001__png_f858cd8fba4c466aa560b397ff1bf275",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L38-L143"
+          ]
+        },
+        {
+          "evidence": "A thick laminated slab with visible glue lines and a rounded edge replaces the steel deck.",
+          "implementation_function": "_top_surface_butcher_block_build",
+          "interfaces": [],
+          "name": "butcher_block",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m (the deck's upper face is the working height)",
+              "mode": "derived",
+              "name": "deck_top_z_m",
+              "rationale": "every top candidate presents its face at the same working height",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__industrial_rolling_work_table__003__png_8d72ded99b91405e97f6507d3115c6b9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L59-L73"
+          ]
+        }
+      ],
+      "component_type": "folded steel deck",
+      "name": "top_surface",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Full-footprint shelf panels sit on the lower rails between the four posts.",
+          "implementation_function": "_storage_open_shelf_build",
+          "interfaces": [],
+          "name": "open_shelf",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m",
+                "storage_level_count"
+              ],
+              "expression": "(bay_height - 0.020) / storage_level_count",
+              "mode": "derived",
+              "name": "level_pitch_m",
+              "rationale": "the storage bay is divided evenly, so levels never crowd each other",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__industrial_rolling_work_table__003__png_8d72ded99b91405e97f6507d3115c6b9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L96-L202"
+          ]
+        },
+        {
+          "evidence": "Each drawer is a real open tray with side runners, a front face and a pull, sliding out of the cabinet.",
+          "implementation_function": "_storage_drawer_bank_build",
+          "interfaces": [],
+          "name": "drawer_bank",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m",
+                "storage_level_count"
+              ],
+              "expression": "(bay_height - 0.020) / storage_level_count",
+              "mode": "derived",
+              "name": "level_pitch_m",
+              "rationale": "the storage bay is divided evenly, so levels never crowd each other",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_industrial_rolling_work_table_var_drawer_cabinet",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L156-L217"
+          ]
+        },
+        {
+          "evidence": "A perforated back panel with hooks stands over the frame and carries sliding trays instead of a closed cabinet.",
+          "implementation_function": "_storage_pegboard_rack_build",
+          "interfaces": [],
+          "name": "pegboard_rack",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m",
+                "storage_level_count"
+              ],
+              "expression": "(bay_height - 0.020) / storage_level_count",
+              "mode": "derived",
+              "name": "level_pitch_m",
+              "rationale": "the storage bay is divided evenly, so levels never crowd each other",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_industrial_rolling_work_table_var_pegboard_rack_refill",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L65-L180"
+          ]
+        }
+      ],
+      "component_type": "open undershelf levels",
+      "name": "storage_module",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Four square posts are welded to the perimeter rails at a fixed working height.",
+          "implementation_function": "_build_frame",
+          "interfaces": [],
+          "name": "fixed_post",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "0.12 * table_height_m for the telescopic post, 0 for the fixed post",
+              "mode": "derived",
+              "name": "post_travel_m",
+              "rationale": "the sleeve keeps at least half its length engaged at full extension",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__industrial_rolling_work_table__001__png_f858cd8fba4c466aa560b397ff1bf275",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L38-L143"
+          ]
+        },
+        {
+          "evidence": "An inner post slides in an outer post captured by a locking collar, giving a real height travel.",
+          "implementation_function": "_build_worktop",
+          "interfaces": [],
+          "name": "telescopic_post",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "0.12 * table_height_m for the telescopic post, 0 for the fixed post",
+              "mode": "derived",
+              "name": "post_travel_m",
+              "rationale": "the sleeve keeps at least half its length engaged at full extension",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_industrial_rolling_work_table_var_adjustable_height",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L80-L119"
+          ]
+        }
+      ],
+      "component_type": "welded fixed posts",
+      "name": "leg_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A yoke on a tilt barrel carries a display shell that swings on its own horizontal axis above the bench.",
+          "implementation_function": "_accessory_monitor_arm_build",
+          "interfaces": [],
+          "name": "monitor_arm",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m (the deck's upper face is the working height)",
+              "mode": "derived",
+              "name": "deck_top_z_m",
+              "rationale": "every top candidate presents its face at the same working height",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__industrial_rolling_work_table__002__png_734e7a01404e4b83b5986c0a30093445",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L206-L245"
+          ]
+        },
+        {
+          "evidence": "A lipped pan hangs under the bench on two side runners and pulls out toward the operator.",
+          "implementation_function": "_accessory_keyboard_tray_build",
+          "interfaces": [],
+          "name": "keyboard_tray",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m (the deck's upper face is the working height)",
+              "mode": "derived",
+              "name": "deck_top_z_m",
+              "rationale": "every top candidate presents its face at the same working height",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__industrial_rolling_work_table__002__png_734e7a01404e4b83b5986c0a30093445",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L246-L293"
+          ]
+        },
+        {
+          "evidence": "A closed equipment box is fixed on the bench instead of a moving accessory.",
+          "implementation_function": "_accessory_equipment_shelf_build",
+          "interfaces": [],
+          "name": "equipment_shelf",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m (the deck's upper face is the working height)",
+              "mode": "derived",
+              "name": "deck_top_z_m",
+              "rationale": "every top candidate presents its face at the same working height",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__industrial_rolling_work_table__002__png_734e7a01404e4b83b5986c0a30093445",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L326-L348"
+          ]
+        }
+      ],
+      "component_type": "bench accessory",
+      "name": "bench_accessory",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The side bays are left open between the perimeter rails, with no diagonal member.",
+          "implementation_function": "_side_bracing_plain_rails_build",
+          "interfaces": [],
+          "name": "plain_rails",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m (the deck's upper face is the working height)",
+              "mode": "derived",
+              "name": "deck_top_z_m",
+              "rationale": "every top candidate presents its face at the same working height",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__industrial_rolling_work_table__001__png_f858cd8fba4c466aa560b397ff1bf275",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L38-L143"
+          ]
+        },
+        {
+          "evidence": "Two crossed flat bars fill each side bay, set at the bay's own diagonal angle.",
+          "implementation_function": "_side_bracing_x_braces_build",
+          "interfaces": [],
+          "name": "x_braces",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_length_m",
+              "rationale": "worktop length; derives rail spans, shelf and drawer width and caster track",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "table_depth_m",
+              "rationale": "worktop depth; derives rail depth, drawer travel and caster wheelbase",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "working height; derives post length, storage bay height and level pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m (the deck's upper face is the working height)",
+              "mode": "derived",
+              "name": "deck_top_z_m",
+              "rationale": "every top candidate presents its face at the same working height",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__industrial_rolling_work_table__004__png_d11cca56695549bb9bda9bfd813476e2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L102-L124"
+          ]
+        }
+      ],
+      "component_type": "side bay bracing",
+      "name": "side_bracing",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Industrial_rolling_work_table",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Industrial_rolling_work_table.md",
+  "source_map_sha256": "3ba21d5a43fea38ac8a98c7687d3f26b7c73b5c0c7fcb37978c6a0560b936311"
+}

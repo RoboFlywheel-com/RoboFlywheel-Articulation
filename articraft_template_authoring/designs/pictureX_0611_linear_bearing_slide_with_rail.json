@@ -1,0 +1,454 @@
+{
+  "assembly_notes": "One guide_rail part owns the rail cross-section, the rail_mount structure and the end_treatment hardware; carriage_count bearing_carriage parts each get one +X prismatic joint whose origin is solved by mate_planes between the rail race plane and the carriage race footprint. rail_mount sets mount_top_z, rail_profile sets seat_z and the capture cavity, end_treatment sets end_margin, and carriage_block sets carriage_footprint_x -- all four feed the same travel/zone DAG, so every one of the 24 core combinations builds. Captured contact is made only by bearing-ball spheres biting 0.6 mm into the race; no allow_overlap is emitted anywhere and no joint is clamped.",
+  "bindings": [
+    {
+      "binding_id": "carriage_rides_rail_race",
+      "consumer": "carriage_block.race_footprint",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "mount_top_z"
+          ],
+          "expression": "mount_top_z + neck_height + 0.4*shaft_radius + shaft_radius  (round_shaft) | mount_top_z + base_thickness + crown_height  (profile_rail)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "seat_z",
+          "rationale": "the joint origin z comes from mate_planes on the active race plane, so the block height follows both the rail_mount height and the rail cross-section",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carriage_length_m"
+          ],
+          "expression": "carriage_length + 2*0.003 + (2*0.003 if carriage_block == top_flanged_block else 0)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "carriage_footprint_x",
+          "rationale": "the consumer footprint the seat must host, including end seals and any flange overhang",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "rail_length_m"
+          ],
+          "expression": "rail_length_m/2 - end_margin",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "usable_half",
+          "rationale": "provider extent along the rail; end_margin comes from the end_treatment candidate",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "usable_half",
+            "carriage_footprint_x"
+          ],
+          "expression": "(2*usable_half/carriage_count - carriage_footprint_x - 0.004)/2",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "travel",
+          "rationale": "prismatic lower/upper = -travel/+travel; both limits are exercised by motion QC",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "rail_profile.race_seat"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "round_shaft_slide_identity",
+      "applies_to": {
+        "candidates": [
+          "round_shaft"
+        ],
+        "slot": "rail_profile"
+      },
+      "required_author_checks": [
+        "category_anchor: one guide rail hosts every carriage",
+        "category_anchor: every carriage rides a bounded +X prismatic slide",
+        "category_anchor: the active rail cross-section is modelled, not a placeholder",
+        "category_anchor: discrete bearing balls make the captured contact"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "bearing_carriage",
+          "joint_type": "prismatic",
+          "parent_role": "guide_rail"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "guide_rail"
+        },
+        {
+          "count_from": "carriage_count",
+          "role": "bearing_carriage"
+        }
+      ]
+    },
+    {
+      "anchor_id": "profile_rail_slide_identity",
+      "applies_to": {
+        "candidates": [
+          "profile_rail"
+        ],
+        "slot": "rail_profile"
+      },
+      "required_author_checks": [
+        "category_anchor: one guide rail hosts every carriage",
+        "category_anchor: every carriage rides a bounded +X prismatic slide",
+        "category_anchor: the active rail cross-section is modelled, not a placeholder",
+        "category_anchor: discrete bearing balls make the captured contact"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "bearing_carriage",
+          "joint_type": "prismatic",
+          "parent_role": "guide_rail"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "guide_rail"
+        },
+        {
+          "count_from": "carriage_count",
+          "role": "bearing_carriage"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "carriage_length is clamped to zone_len - 0.004 - 2*0.010 - 2*seal_proud - flange_extra so every declared count keeps travel >= 0.010 m and a 4 mm gap between neighbours at facing extremes",
+      "item_slot": "carriage_block",
+      "name": "carriage_count",
+      "spacing_expression": "usable span 2*usable_half is split into carriage_count equal zones; carriage i homes at zone centre home_x[i] = -usable_half + zone_len*(i+0.5) and its symmetric bound is travel = (zone_len - carriage_footprint_x - 0.004)/2",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Supported round rail: continuous neck rib plus shoulder strips carrying a hardened cylindrical shaft; the carriage captures it with a round bore and an underside slot.",
+          "implementation_function": "_rail_profile_round_shaft_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "seat_z_expression": "shaft_z + shaft_radius | rail_base_top_z + crown_height",
+                "u_extent_expression": "2 * usable_half",
+                "v_extent_expression": "2 * shaft_radius | crown_width"
+              },
+              "frame": {
+                "description": "load-carrying race plane: shaft crest for round_shaft, crown top for profile_rail",
+                "normal": "(0, 0, 1)",
+                "point": "(0, 0, seat_z)",
+                "tangent_u": "(1, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "race_seat",
+              "part": "rail_profile__round_shaft__guide_rail",
+              "role": "provider"
+            }
+          ],
+          "name": "round_shaft",
+          "notes": "Bore radius derives as shaft_radius + 1.2 mm so the housing never touches the shaft; capture comes from two bearing balls at the crest of the bore.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.5,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "rail_length_m",
+              "rationale": "source rails 0.300/0.460/0.500 m; drives usable span, zone length and travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.064,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "carriage_length_m",
+              "rationale": "source blocks 0.030/0.036/0.060/0.064 m; drives zone occupancy, travel and ball spacing",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__linear_bearing_slide_with_rail__002__png_190bfa58cf1f4780a07ddd430375802b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L39-L106",
+            "model.py:L109-L156",
+            "model.py:L159-L174",
+            "model.py:L260-L283"
+          ]
+        },
+        {
+          "evidence": "Profiled crown rail: rectangular base plus a narrower grooved crown; the carriage is a stepped open channel that wraps the crown with 1.2 mm running clearance.",
+          "implementation_function": "_rail_profile_profile_rail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "seat_z_expression": "shaft_z + shaft_radius | rail_base_top_z + crown_height",
+                "u_extent_expression": "2 * usable_half",
+                "v_extent_expression": "2 * shaft_radius | crown_width"
+              },
+              "frame": {
+                "description": "load-carrying race plane: shaft crest for round_shaft, crown top for profile_rail",
+                "normal": "(0, 0, 1)",
+                "point": "(0, 0, seat_z)",
+                "tangent_u": "(1, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "race_seat",
+              "part": "rail_profile__profile_rail__guide_rail",
+              "role": "provider"
+            }
+          ],
+          "name": "profile_rail",
+          "notes": "Four bearing balls run on the two crown flanks above the race reliefs.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.5,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "rail_length_m",
+              "rationale": "source rails 0.300/0.460/0.500 m; drives usable span, zone length and travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.064,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "carriage_length_m",
+              "rationale": "source blocks 0.030/0.036/0.060/0.064 m; drives zone occupancy, travel and ball spacing",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_101211_883498_83d08292",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L19-L45",
+            "model.py:L48-L83",
+            "model.py:L153-L167"
+          ]
+        }
+      ],
+      "component_type": "guide rail cross-section and the matching carriage capture cavity (one structural family)",
+      "name": "rail_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Compact block whose top face is flush with the capture shell, four blind mounting bores.",
+          "implementation_function": "_carriage_block_plain_block_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "u_extent_expression": "carriage_footprint_x",
+                "v_extent_expression": "0.9 * contact_width"
+              },
+              "frame": {
+                "description": "carriage local origin sits on the seat plane; every block element is expressed relative to it",
+                "normal": "(0, 0, -1)",
+                "point": "(0, 0, 0)",
+                "tangent_u": "(1, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "race_footprint",
+              "part": "carriage_block__plain_block__carriage_0",
+              "role": "consumer"
+            }
+          ],
+          "name": "plain_block",
+          "notes": "No overhang: carriage_footprint_x equals carriage_length plus the end seals.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__linear_bearing_slide_with_rail__002__png_190bfa58cf1f4780a07ddd430375802b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L109-L156"
+          ]
+        },
+        {
+          "evidence": "Integral top flange overhanging the shell on all four sides with cap screws on the flange.",
+          "implementation_function": "_carriage_block_top_flanged_block_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "u_extent_expression": "carriage_footprint_x",
+                "v_extent_expression": "0.9 * contact_width"
+              },
+              "frame": {
+                "description": "carriage local origin sits on the seat plane; every block element is expressed relative to it",
+                "normal": "(0, 0, -1)",
+                "point": "(0, 0, 0)",
+                "tangent_u": "(1, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "race_footprint",
+              "part": "carriage_block__top_flanged_block__carriage_0",
+              "role": "consumer"
+            }
+          ],
+          "name": "top_flanged_block",
+          "notes": "Adds 3 mm of X overhang per side, which is carried into carriage_footprint_x and therefore into the travel and inter-carriage gap derivation.",
+          "parameters": [],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_093549_584407_4387eb47",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L67-L83",
+            "model.py:L113-L121"
+          ]
+        },
+        {
+          "evidence": "Raised machine plate standing off the shell on a short pedestal riser.",
+          "implementation_function": "_carriage_block_pedestal_plate_block_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "u_extent_expression": "carriage_footprint_x",
+                "v_extent_expression": "0.9 * contact_width"
+              },
+              "frame": {
+                "description": "carriage local origin sits on the seat plane; every block element is expressed relative to it",
+                "normal": "(0, 0, -1)",
+                "point": "(0, 0, 0)",
+                "tangent_u": "(1, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "race_footprint",
+              "part": "carriage_block__pedestal_plate_block__carriage_0",
+              "role": "consumer"
+            }
+          ],
+          "name": "pedestal_plate_block",
+          "notes": "Changes the part tree above the capture cavity without changing the X footprint.",
+          "parameters": [],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_101508_609061_4387eb47",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L68-L73",
+            "model.py:L115-L123"
+          ]
+        }
+      ],
+      "component_type": "bearing block silhouette above the capture cavity",
+      "name": "carriage_block",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "One full-length counterbored plate running under the whole rail.",
+          "implementation_function": "_rail_mount_continuous_base_plate_build",
+          "interfaces": [],
+          "name": "continuous_base_plate",
+          "notes": "mount_top_z = 0.010 m; every rail, seat, block and stop height re-derives from it.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__linear_bearing_slide_with_rail__002__png_190bfa58cf1f4780a07ddd430375802b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L45-L49"
+          ]
+        },
+        {
+          "evidence": "Two discrete transverse feet at the rail ends; the rail bridges open air between them.",
+          "implementation_function": "_rail_mount_end_pillow_feet_build",
+          "interfaces": [],
+          "name": "end_pillow_feet",
+          "notes": "mount_top_z = 0.018 m; the elevated seat plane re-derives the whole stack.",
+          "parameters": [],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_101508_609061_4387eb47",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L173-L180"
+          ]
+        }
+      ],
+      "component_type": "structure that carries the rail to ground",
+      "name": "rail_mount",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Bare rail ends; travel is bounded only by the rail itself.",
+          "implementation_function": "_end_treatment_open_ends_build",
+          "interfaces": [],
+          "name": "open_ends",
+          "notes": "end_margin = 0.008 m so the block plus seals stay on the rail at both limits.",
+          "parameters": [],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_101211_883498_83d08292",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L19-L45"
+          ]
+        },
+        {
+          "evidence": "Physical end-stop blocks standing proud of the rail at both ends, plus the source end-of-travel sensor cantilevered outboard of the negative-x stop.",
+          "implementation_function": "_end_treatment_capped_end_stops_build",
+          "interfaces": [],
+          "name": "capped_end_stops",
+          "notes": "end_margin = stop inset + half stop thickness + running clearance = 0.0135 m, which genuinely shortens the usable travel envelope.",
+          "parameters": [],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_101508_609061_4387eb47",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L165-L171"
+          ]
+        }
+      ],
+      "component_type": "end-of-travel hardware on the rail",
+      "name": "end_treatment",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_linear_bearing_slide_with_rail",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_linear_bearing_slide_with_rail.md",
+  "source_map_sha256": "7ec4cb62251484681093bbb16e2fdbdb244717c5642d1d072cb6707942539566"
+}

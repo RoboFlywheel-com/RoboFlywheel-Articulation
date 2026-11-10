@@ -1,0 +1,971 @@
+{
+  "assembly_notes": "Quarter-turn butterfly valve. The grounded `valve_body` part is a real ring: a CadQuery annulus on the pipe axis with a seat liner inside it, a stem tower bored for the stem, and a notched locking quadrant under the operator. The `rotor` carries the disc and the stem and turns REVOLUTE about +z from shut to open across a quarter turn; the disc radius is the bore minus a 0.8 mm running clearance, so the swept envelope stays inside the liner at every angle. Four slots vary without touching that chain. body_end makes the ends off - drilled bolt-ear lugs, raised drilled flanges, or machined coupling grooves with clamp segments - and all three put flange_bolt_count features on the same derived bolt circle. disc_form varies the disc between a flat concentric plate, an offset high-performance disc with a profiled sealing edge, an eccentric double-offset plate on its own hub boss, and a revolved conical triple-offset disc that tapers from hub to rim. operator varies the input between a trigger lever riding the quadrant, a transverse tee bar with two grips, and a worm gearbox whose handwheel turns CONTINUOUS on its own horizontal input axis; the first two are FIXED to the rotor and turn with the disc. bonnet_form sets how far the operator boss stands above the body - straight off the short cast tower, or on a tall extended neck column with its own gussets - and every operator, quadrant and stem length derives from that one height. bore_radius_m, face_to_face_m and operator_reach_m are honest continuous parameters; palette and notch counts are non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "body_end_identity",
+      "applies_to": {
+        "candidates": [
+          "lug_body",
+          "flanged_body",
+          "grooved_end"
+        ],
+        "slot": "body_end"
+      },
+      "required_author_checks": [
+        "category_anchor: lined bore with a quarter-turn disc on a vertical stem",
+        "category_anchor: the disc sweeps the bore without touching the liner",
+        "category_anchor: body_end identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "revolute",
+          "parent_role": "valve_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "valve_body"
+        },
+        {
+          "exact_count": 1,
+          "role": "rotor"
+        },
+        {
+          "exact_count": 1,
+          "role": "operator"
+        }
+      ]
+    },
+    {
+      "anchor_id": "disc_form_identity",
+      "applies_to": {
+        "candidates": [
+          "concentric_disc",
+          "offset_disc",
+          "triple_offset_disc",
+          "double_offset_disc"
+        ],
+        "slot": "disc_form"
+      },
+      "required_author_checks": [
+        "category_anchor: lined bore with a quarter-turn disc on a vertical stem",
+        "category_anchor: the disc sweeps the bore without touching the liner",
+        "category_anchor: disc_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "revolute",
+          "parent_role": "valve_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "valve_body"
+        },
+        {
+          "exact_count": 1,
+          "role": "rotor"
+        },
+        {
+          "exact_count": 1,
+          "role": "operator"
+        }
+      ]
+    },
+    {
+      "anchor_id": "operator_identity",
+      "applies_to": {
+        "candidates": [
+          "lever_trigger",
+          "tee_bar",
+          "gear_handwheel"
+        ],
+        "slot": "operator"
+      },
+      "required_author_checks": [
+        "category_anchor: lined bore with a quarter-turn disc on a vertical stem",
+        "category_anchor: the disc sweeps the bore without touching the liner",
+        "category_anchor: operator identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "revolute",
+          "parent_role": "valve_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "valve_body"
+        },
+        {
+          "exact_count": 1,
+          "role": "rotor"
+        },
+        {
+          "exact_count": 1,
+          "role": "operator"
+        }
+      ]
+    },
+    {
+      "anchor_id": "bonnet_form_identity",
+      "applies_to": {
+        "candidates": [
+          "short_bonnet",
+          "extended_bonnet"
+        ],
+        "slot": "bonnet_form"
+      },
+      "required_author_checks": [
+        "category_anchor: lined bore with a quarter-turn disc on a vertical stem",
+        "category_anchor: the disc sweeps the bore without touching the liner",
+        "category_anchor: bonnet_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "revolute",
+          "parent_role": "valve_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "valve_body"
+        },
+        {
+          "exact_count": 1,
+          "role": "rotor"
+        },
+        {
+          "exact_count": 1,
+          "role": "operator"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "4 <= flange_bolt_count <= 12; adjacent features keep 6 mm of clear arc on the bolt circle",
+      "item_slot": "body_end",
+      "name": "flange_bolt_count",
+      "spacing_expression": "feature i sits at angle 360*i/N + half a step off the stem centreline, on bolt_circle_radius_m",
+      "values": [
+        4,
+        8,
+        12
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "A ring of lug bosses on a bolt circle is fused to the casting and then drilled through.",
+          "implementation_function": "_body_end_lug_body_build",
+          "interfaces": [],
+          "name": "lug_body",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "bore_radius_m",
+                "flange_bolt_count"
+              ],
+              "expression": "bore_radius_m + LINER_T + WALL + 0.016",
+              "mode": "derived",
+              "name": "bolt_circle_radius_m",
+              "rationale": "every end treatment puts its bolts, lugs or clamp segments on the same circle",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butterfly_valve_var_lug_body",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L67-L132"
+          ]
+        },
+        {
+          "evidence": "Raised flanges at both ends are drilled on a bolt circle instead of tapped lugs.",
+          "implementation_function": "_body_end_flanged_body_build",
+          "interfaces": [],
+          "name": "flanged_body",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "bore_radius_m",
+                "flange_bolt_count"
+              ],
+              "expression": "bore_radius_m + LINER_T + WALL + 0.016",
+              "mode": "derived",
+              "name": "bolt_circle_radius_m",
+              "rationale": "every end treatment puts its bolts, lugs or clamp segments on the same circle",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butterfly_valve_with_lever_operator_var_flanged_body",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L67-L142"
+          ]
+        },
+        {
+          "evidence": "Both ends carry a machined shoulder and a coupling groove for a clamp coupling.",
+          "implementation_function": "_body_end_grooved_end_build",
+          "interfaces": [],
+          "name": "grooved_end",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "bore_radius_m",
+                "flange_bolt_count"
+              ],
+              "expression": "bore_radius_m + LINER_T + WALL + 0.016",
+              "mode": "derived",
+              "name": "bolt_circle_radius_m",
+              "rationale": "every end treatment puts its bolts, lugs or clamp segments on the same circle",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butterfly_valve_with_lever_operator_var_grooved_end",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L67-L142"
+          ]
+        }
+      ],
+      "component_type": "drilled bolt-ear lugs",
+      "name": "body_end",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A flat plate on the stem centreline seals against the liner all round.",
+          "implementation_function": "_disc_concentric_disc_build",
+          "interfaces": [],
+          "name": "concentric_disc",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "bore_radius_m"
+              ],
+              "expression": "bore_radius_m - 0.0008",
+              "mode": "derived",
+              "name": "disc_radius_m",
+              "rationale": "the disc sweeps the bore with a running clearance under the assembly tolerance",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__butterfly_valve_with_lever_operator__001__png__airflex_batch_20260710_e399fe268f844b668b428b4fea1cb5c9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L149-L156"
+          ]
+        },
+        {
+          "evidence": "The hub is offset from the seat plane and the rim carries a profiled sealing edge.",
+          "implementation_function": "_disc_offset_disc_build",
+          "interfaces": [],
+          "name": "offset_disc",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "bore_radius_m"
+              ],
+              "expression": "bore_radius_m - 0.0008",
+              "mode": "derived",
+              "name": "disc_radius_m",
+              "rationale": "the disc sweeps the bore with a running clearance under the assembly tolerance",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butterfly_valve_var_offset_high_perf_disc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L135-L191"
+          ]
+        },
+        {
+          "evidence": "A revolved conical frustum thick at the hub and tapering to the rim, with an axial cone offset on the seating face.",
+          "implementation_function": "_disc_triple_offset_disc_build",
+          "interfaces": [],
+          "name": "triple_offset_disc",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "bore_radius_m"
+              ],
+              "expression": "bore_radius_m - 0.0008",
+              "mode": "derived",
+              "name": "disc_radius_m",
+              "rationale": "the disc sweeps the bore with a running clearance under the assembly tolerance",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butterfly_valve_var_triple_offset_disc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L123-L170"
+          ]
+        },
+        {
+          "evidence": "A thin plate whose centre is shifted off the shaft axis in two directions, carried on an eccentric hub boss.",
+          "implementation_function": "_disc_double_offset_disc_build",
+          "interfaces": [],
+          "name": "double_offset_disc",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "bore_radius_m"
+              ],
+              "expression": "bore_radius_m - 0.0008",
+              "mode": "derived",
+              "name": "disc_radius_m",
+              "rationale": "the disc sweeps the bore with a running clearance under the assembly tolerance",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butterfly_valve_with_lever_operator_var_double_offset_disc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L123-L167"
+          ]
+        }
+      ],
+      "component_type": "flat concentric disc",
+      "name": "disc_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A lever plate with a grip sleeve and a sprung trigger plate rides the notched locking quadrant.",
+          "implementation_function": "_build_operator",
+          "interfaces": [],
+          "name": "lever_trigger",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "operator_reach_m",
+                "bore_radius_m"
+              ],
+              "expression": "tower_top_z + 0.040",
+              "mode": "derived",
+              "name": "stem_top_z_m",
+              "rationale": "every operator mounts on the same stem top and quadrant plane",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__butterfly_valve_with_lever_operator__001__png__airflex_batch_20260710_e399fe268f844b668b428b4fea1cb5c9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L157-L212"
+          ]
+        },
+        {
+          "evidence": "A short transverse crossbar on the operator hub carries two rounded grip sleeves instead of one long lever arm.",
+          "implementation_function": "_build_operator",
+          "interfaces": [],
+          "name": "tee_bar",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "operator_reach_m",
+                "bore_radius_m"
+              ],
+              "expression": "tower_top_z + 0.040",
+              "mode": "derived",
+              "name": "stem_top_z_m",
+              "rationale": "every operator mounts on the same stem top and quadrant plane",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butterfly_valve_var_tee_bar_handle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L143-L162"
+          ]
+        },
+        {
+          "evidence": "A gearbox housing on the tower carries a spoked handwheel turning on its own input axis.",
+          "implementation_function": "_build_operator",
+          "interfaces": [],
+          "name": "gear_handwheel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "operator_reach_m",
+                "bore_radius_m"
+              ],
+              "expression": "tower_top_z + 0.040",
+              "mode": "derived",
+              "name": "stem_top_z_m",
+              "rationale": "every operator mounts on the same stem top and quadrant plane",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butterfly_valve_var_gear_operator_handwheel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L131-L279"
+          ]
+        }
+      ],
+      "component_type": "trigger lever on the quadrant",
+      "name": "operator",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The operator boss sits directly on the short cast tower above the body.",
+          "implementation_function": "_build_body",
+          "interfaces": [],
+          "name": "short_bonnet",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "bore_radius_m"
+              ],
+              "expression": "ring_outer + 0.9*bore_radius_m + 0.070 + bonnet_extension",
+              "mode": "derived",
+              "name": "tower_top_z_m",
+              "rationale": "the bonnet sets how far the operator boss stands above the body",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__butterfly_valve_with_lever_operator__001__png__airflex_batch_20260710_e399fe268f844b668b428b4fea1cb5c9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L67-L100"
+          ]
+        },
+        {
+          "evidence": "A tall neck column lifts the operator boss clear of the body, with the gussets and the shaft bore stretched to span it.",
+          "implementation_function": "_build_body",
+          "interfaces": [],
+          "name": "extended_bonnet",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "clear bore radius; derives disc radius, body ring, bolt circle and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "face_to_face_m",
+              "rationale": "body length along the pipe axis; derives liner depth, flange and groove positions",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "operator_reach_m",
+              "rationale": "lever length, tee-bar span or handwheel radius; derives grip position and quadrant radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "bore_radius_m"
+              ],
+              "expression": "ring_outer + 0.9*bore_radius_m + 0.070 + bonnet_extension",
+              "mode": "derived",
+              "name": "tower_top_z_m",
+              "rationale": "the bonnet sets how far the operator boss stands above the body",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butterfly_valve_with_lever_operator_var_long_neck_bonnet",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L81-L100"
+          ]
+        }
+      ],
+      "component_type": "wafer-height stem tower",
+      "name": "bonnet_form",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_butterfly_valve_with_lever_operator",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_butterfly_valve_with_lever_operator.md",
+  "source_map_sha256": "9b1fecafe93f1f66c9153679a3635786f8e8b3bb1edb1c095c757a67dac050b7"
+}

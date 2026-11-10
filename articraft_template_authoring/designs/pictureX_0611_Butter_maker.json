@@ -1,0 +1,847 @@
+{
+  "assembly_notes": "The root is always the vessel. Each vessel_form candidate publishes its rim plane (bore and rim height); the lid plus the drive frame is fixed on that rim, and the mount_form candidate adds either a countertop foot ring or a floor cradle to the same vessel. Mounts contain no separate parts or joints: every seed is articulated by the category-defining dasher drive. The dasher shaft runs in a bored lid bearing: rotary drives make it continuous, the plunger family makes it prismatic. Each drive_form candidate adds exactly one drive head (side crank on a bevel pair, a free-spinning handle on a direct crank arm, a plunger top grip, or a motor housing). N dasher blades are fixed on the shaft at an even angular pitch, with the blade radius derived from the bore so every N keeps wall clearance. All continuous joints are solved with mate_axes and registered with register_interface_mate; the bevel pair meshes with a 1 mm running gap. No ctx.allow_overlap is used anywhere.",
+  "bindings": [
+    {
+      "binding_id": "vessel_rim",
+      "consumer": "mount_form.vessel_rim",
+      "derived": [
+        {
+          "expression": "vessel_bore_m/2 + 0.005 wall, times 1.04 skirt; the box vessel switches the lid to a square plan",
+          "mode": "derived",
+          "name": "lid_radius_m",
+          "rationale": "The lid and frame footprint must follow the vessel plan, not stay circular over a square body.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "expression": "0.070 for floor_stand, 0 otherwise",
+          "mode": "derived",
+          "name": "stand_lift_m",
+          "rationale": "The floor cradle raises the whole vessel, so every downstream height derives from the same lift.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "vessel_form.vessel_rim"
+    },
+    {
+      "binding_id": "blade_hub",
+      "consumer": "dasher_form.blade_hub",
+      "derived": [
+        {
+          "expression": "vessel_bore_m/2 - 0.006",
+          "mode": "derived",
+          "name": "blade_radius_m",
+          "rationale": "Blades must sweep the bore with a real wall clearance at every vessel and every N.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "expression": "0.34 * vessel_height_m, referred back through the lid and shaft origins",
+          "mode": "derived",
+          "name": "blade_station_m",
+          "rationale": "The plunger stroke must keep the blades below the lid and above the vessel floor.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "drive_form.shaft_bearing"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "churn_core",
+      "applies_to": {
+        "candidates": [
+          "glass_mason_jar",
+          "ceramic_crock",
+          "wood_barrel",
+          "box_churn"
+        ],
+        "slot": "vessel_form"
+      },
+      "required_author_checks": [
+        "churn keeps one vessel, lid, shaft and N blades",
+        "the dasher shaft reaches down into the vessel",
+        "the vessel is a closed churn of a plausible size"
+      ],
+      "required_relations": [
+        {
+          "child_role": "lid",
+          "joint_type": "fixed",
+          "parent_role": "vessel"
+        },
+        {
+          "child_role": "dasher_blade",
+          "joint_type": "fixed",
+          "parent_role": "dasher_shaft"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "vessel"
+        },
+        {
+          "exact_count": 1,
+          "role": "lid"
+        },
+        {
+          "exact_count": 1,
+          "role": "dasher_shaft"
+        },
+        {
+          "count_from": "paddle_count",
+          "role": "dasher_blade"
+        }
+      ]
+    },
+    {
+      "anchor_id": "rotary_drive",
+      "applies_to": {
+        "candidates": [
+          "bevel_gear_crank",
+          "direct_vertical_crank",
+          "electric_motor"
+        ],
+        "slot": "drive_form"
+      },
+      "required_author_checks": [
+        "one source-backed drive head is present",
+        "every seed is articulated by its dasher, not by mount hardware",
+        "the drive really moves the dasher"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "dasher_shaft",
+          "joint_type": "continuous",
+          "parent_role": "lid"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "drive_input"
+        },
+        {
+          "exact_count": 1,
+          "role": "dasher_shaft"
+        }
+      ]
+    },
+    {
+      "anchor_id": "plunger_drive",
+      "applies_to": {
+        "candidates": [
+          "plunger_dasher"
+        ],
+        "slot": "drive_form"
+      },
+      "required_author_checks": [
+        "one source-backed drive head is present",
+        "every seed is articulated by its dasher, not by mount hardware",
+        "the drive really moves the dasher"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "dasher_shaft",
+          "joint_type": "prismatic",
+          "parent_role": "lid"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "drive_input"
+        },
+        {
+          "exact_count": 1,
+          "role": "dasher_shaft"
+        }
+      ]
+    },
+    {
+      "anchor_id": "blades_sweep_bore",
+      "applies_to": {
+        "candidates": [
+          "perforated_blade",
+          "cross_dasher",
+          "helical_dasher",
+          "whisk_cage"
+        ],
+        "slot": "dasher_form"
+      },
+      "required_author_checks": [
+        "every dasher blade stays inside the vessel bore"
+      ],
+      "required_roles": [
+        {
+          "count_from": "paddle_count",
+          "role": "dasher_blade"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "blade radius = vessel_bore_m/2 - 0.006 keeps a 6 mm wall clearance at every N; N caps at 4 so four blades at the smallest bore (0.070 m) still leave a clear swept annulus",
+      "item_slot": "dasher_form",
+      "name": "paddle_count",
+      "spacing_expression": "blades sit at an even angular pitch 2*pi*k/N around the shaft at one common blade station",
+      "values": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "_jar_shell builds a genuinely hollow straight glass body with a rolled thread neck.",
+          "implementation_function": "_vessel_form_glass_mason_jar_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore": "vessel_bore_m",
+                "rim_height": "vessel_height_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "vessel_rim",
+              "part": "churn__vessel",
+              "role": "provider"
+            }
+          ],
+          "name": "glass_mason_jar",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.28,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "vessel_height_m",
+              "rationale": "Body height; lid height, shaft length, blade height and blade station all derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.13,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_bore_m",
+              "rationale": "Inner bore; wall, lid radius, frame post spacing, blade radius and gear radius derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__butter_maker__001__png__airflex_batch_20260710_1e7bf8c7df754c2ea25bac719b39e274",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L26-L46",
+            "model.py:L273-L279"
+          ]
+        },
+        {
+          "evidence": "The revolved profile is waisted and bellied instead of straight, and the rim is rolled over.",
+          "implementation_function": "_vessel_form_ceramic_crock_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore": "vessel_bore_m",
+                "rim_height": "vessel_height_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "vessel_rim",
+              "part": "churn__vessel",
+              "role": "provider"
+            }
+          ],
+          "name": "ceramic_crock",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.28,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "vessel_height_m",
+              "rationale": "Body height; lid height, shaft length, blade height and blade station all derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.13,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_bore_m",
+              "rationale": "Inner bore; wall, lid radius, frame post spacing, blade radius and gear radius derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butter_maker_var_ceramic_crock",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L26-L53",
+            "model.py:L283-L311"
+          ]
+        },
+        {
+          "evidence": "_barrel_shell/_hoop_band emit individual staves and real steel hoops, not a smooth revolve.",
+          "implementation_function": "_vessel_form_wood_barrel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore": "vessel_bore_m",
+                "rim_height": "vessel_height_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "vessel_rim",
+              "part": "churn__vessel",
+              "role": "provider"
+            }
+          ],
+          "name": "wood_barrel",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.28,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "vessel_height_m",
+              "rationale": "Body height; lid height, shaft length, blade height and blade station all derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.13,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_bore_m",
+              "rationale": "Inner bore; wall, lid radius, frame post spacing, blade radius and gear radius derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butter_maker_var_wood_barrel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L36-L73",
+            "model.py:L301-L313"
+          ]
+        },
+        {
+          "evidence": "_box_churn_body/_square_lid_shell give a square plan whose lid, frame footprint and dasher clearance all change with it.",
+          "implementation_function": "_vessel_form_box_churn_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore": "vessel_bore_m",
+                "rim_height": "vessel_height_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "vessel_rim",
+              "part": "churn__vessel",
+              "role": "provider"
+            }
+          ],
+          "name": "box_churn",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.28,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "vessel_height_m",
+              "rationale": "Body height; lid height, shaft length, blade height and blade station all derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.13,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_bore_m",
+              "rationale": "Inner bore; wall, lid radius, frame post spacing, blade radius and gear radius derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butter_maker_var_box_churn",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L33-L189",
+            "model.py:L390-L397"
+          ]
+        }
+      ],
+      "component_type": "straight-walled glass jar with a threaded neck",
+      "name": "vessel_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_bevel_gear builds two real toothed wheels on perpendicular axes with drive_shaft, drive_gear and vertical_gear between crank and dasher.",
+          "implementation_function": "_drive_form_bevel_gear_crank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "gear_station": "frame_height_m",
+                "shaft_radius": 0.006
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "shaft_bearing",
+              "part": "churn__shaft",
+              "role": "provider"
+            }
+          ],
+          "name": "bevel_gear_crank",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "frame_height_m",
+              "rationale": "Drive frame height; the gear/crank station, crank arm radius and motor housing height derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__butter_maker__001__png__airflex_batch_20260710_1e7bf8c7df754c2ea25bac719b39e274",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L138-L179",
+            "model.py:L342-L417"
+          ]
+        },
+        {
+          "evidence": "The bevel pair and drive shaft are gone; the crank turns the dasher axis directly, so three parts disappear from the tree.",
+          "implementation_function": "_drive_form_direct_vertical_crank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "gear_station": "frame_height_m",
+                "shaft_radius": 0.006
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "shaft_bearing",
+              "part": "churn__shaft",
+              "role": "provider"
+            }
+          ],
+          "name": "direct_vertical_crank",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "frame_height_m",
+              "rationale": "Drive frame height; the gear/crank station, crank arm radius and motor housing height derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butter_maker_var_direct_vertical_crank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L138-L160",
+            "model.py:L276-L303"
+          ]
+        },
+        {
+          "evidence": "The shaft joint is prismatic instead of continuous and there is no crank anywhere in the tree.",
+          "implementation_function": "_drive_form_plunger_dasher_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "gear_station": "frame_height_m",
+                "shaft_radius": 0.006
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "shaft_bearing",
+              "part": "churn__shaft",
+              "role": "provider"
+            }
+          ],
+          "name": "plunger_dasher",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "frame_height_m",
+              "rationale": "Drive frame height; the gear/crank station, crank arm radius and motor housing height derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butter_maker_var_plunger_dasher",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L126-L160",
+            "model.py:L238-L290"
+          ]
+        },
+        {
+          "evidence": "_motor_housing stands a real motor with a vent and switch on the lid and drives the shaft with no hand crank.",
+          "implementation_function": "_drive_form_electric_motor_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "gear_station": "frame_height_m",
+                "shaft_radius": 0.006
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "shaft_bearing",
+              "part": "churn__shaft",
+              "role": "provider"
+            }
+          ],
+          "name": "electric_motor",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "frame_height_m",
+              "rationale": "Drive frame height; the gear/crank station, crank arm radius and motor housing height derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butter_maker_var_electric",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L130-L237",
+            "model.py:L328-L352"
+          ]
+        }
+      ],
+      "component_type": "side crank driving the shaft through a bevel pair",
+      "name": "drive_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_paddle cuts a real hole grid through a flat board, matching the blade in 001.png.",
+          "implementation_function": "_dasher_form_perforated_blade_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "blade_height": "blade_height_ratio",
+                "blade_radius": "derived from vessel_bore_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "blade_hub",
+              "part": "dasher_form__perforated_blade__blade_0",
+              "role": "consumer"
+            }
+          ],
+          "name": "perforated_blade",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.55,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "blade_height_ratio",
+              "rationale": "Blade height as a fraction of the vessel height; blade perforation grid and plunger clearance derive from it.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__butter_maker__001__png__airflex_batch_20260710_1e7bf8c7df754c2ea25bac719b39e274",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L151-L164",
+            "model.py:L432-L455"
+          ]
+        },
+        {
+          "evidence": "_perforated_board/_paddle union two boards on perpendicular planes, doubling the swept blade area.",
+          "implementation_function": "_dasher_form_cross_dasher_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "blade_height": "blade_height_ratio",
+                "blade_radius": "derived from vessel_bore_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "blade_hub",
+              "part": "dasher_form__cross_dasher__blade_0",
+              "role": "consumer"
+            }
+          ],
+          "name": "cross_dasher",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.55,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "blade_height_ratio",
+              "rationale": "Blade height as a fraction of the vessel height; blade perforation grid and plunger clearance derive from it.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butter_maker_var_cross_dasher",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L151-L178",
+            "model.py:L446-L470"
+          ]
+        },
+        {
+          "evidence": "The blade is swept along a helix so its section rotates with height instead of staying planar.",
+          "implementation_function": "_dasher_form_helical_dasher_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "blade_height": "blade_height_ratio",
+                "blade_radius": "derived from vessel_bore_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "blade_hub",
+              "part": "dasher_form__helical_dasher__blade_0",
+              "role": "consumer"
+            }
+          ],
+          "name": "helical_dasher",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.55,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "blade_height_ratio",
+              "rationale": "Blade height as a fraction of the vessel height; blade perforation grid and plunger clearance derive from it.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butter_maker_var_helical_dasher",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L151-L187",
+            "model.py:L455-L480"
+          ]
+        },
+        {
+          "evidence": "_whisk_loop_points sweeps real wire loops into an open cage, a wire structure rather than a solid blade.",
+          "implementation_function": "_dasher_form_whisk_cage_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "blade_height": "blade_height_ratio",
+                "blade_radius": "derived from vessel_bore_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "blade_hub",
+              "part": "dasher_form__whisk_cage__blade_0",
+              "role": "consumer"
+            }
+          ],
+          "name": "whisk_cage",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.55,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "blade_height_ratio",
+              "rationale": "Blade height as a fraction of the vessel height; blade perforation grid and plunger clearance derive from it.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_butter_maker_var_whisk_cage",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L156-L175",
+            "model.py:L444-L470"
+          ]
+        }
+      ],
+      "component_type": "one flat perforated board",
+      "name": "dasher_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The vessel is the grounded root and the frame is carried by the lid; no extra mount part exists.",
+          "implementation_function": "_mount_form_countertop_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "footprint": "vessel_bore_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "vessel_rim",
+              "part": "churn__vessel",
+              "role": "consumer"
+            }
+          ],
+          "name": "countertop",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__butter_maker__001__png__airflex_batch_20260710_1e7bf8c7df754c2ea25bac719b39e274",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L133",
+            "model.py:L316-L341"
+          ]
+        },
+        {
+          "evidence": "The frame becomes the grounded root and the vessel hangs from it, inverting the parent chain.",
+          "implementation_function": "_mount_form_floor_stand_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "footprint": "vessel_bore_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "vessel_rim",
+              "part": "churn__vessel",
+              "role": "consumer"
+            }
+          ],
+          "name": "floor_stand",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_butter_maker_var_floor_stand",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L90-L245",
+            "model.py:L398-L413"
+          ]
+        }
+      ],
+      "component_type": "the vessel stands on its own base",
+      "name": "mount_form",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Butter_maker",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Butter_maker.md",
+  "source_map_sha256": "1c4d21f4c30adac7ac65adc9b3ff2116311c5e03d3008f317cf850a520c80989"
+}

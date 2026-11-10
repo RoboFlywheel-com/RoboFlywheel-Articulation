@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "name": "drawer_count",
+  "generator": "drawers",
+  "base_config": {
+    "body_form": "rect_case",
+    "drawer_layout": "full_width_stack",
+    "drawer_front": "flat_panel",
+    "support_base": "plinth_block_feet",
+    "drawer_count": 3,
+    "carcass_width_m": 0.94,
+    "carcass_depth_m": 0.45,
+    "carcass_height_m": 1.08,
+    "palette": 1
+  },
+  "edits": [
+    {
+      "kind": "count",
+      "target": "drawer_count",
+      "label": "Drawer count",
+      "values": [2, 3, 4, 6]
+    }
+  ],
+  "render": {
+    "backend": "blender",
+    "views": ["front_iso"],
+    "poses": ["closed", "open"],
+    "image_size": [720, 560]
+  }
+}

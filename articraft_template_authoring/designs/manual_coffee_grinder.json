@@ -1,0 +1,338 @@
+{
+  "assembly_notes": "The root is always one source-backed housing. structural_family owns the housing topology together with its compatible grounds receiver, so a drawer can only exist behind a genuinely cut cavity with four rails and a cup can only exist below a matching open socket. The adjustment collar, crank, free-spinning grip, optional receiver and optional lid are moving children assembled with registered axis interfaces. Folding-top-crank source detail is delivered in its deployed working pose as one rigid clevis-and-arm crank plus a free grip. No overlap allowance is used; isolated-part allowances are restricted to joint-retained members separated by intentional running clearance. Hinged top drives derive extra height from the hopper envelope, and cup-family table clamps consume a body-side seat above the removable cup.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "manual_grinder_core_identity",
+      "applies_to": {
+        "slot": "structural_family",
+        "candidates": [
+          "turned_wood_integrated",
+          "ribbed_travel_cup",
+          "ribbed_threaded_cup",
+          "wood_cabinet_drawer",
+          "square_wood_cup",
+          "slim_drawer_cylinder"
+        ]
+      },
+      "required_roles": [
+        {"role": "housing", "exact_count": 1},
+        {"role": "manual_drive", "exact_count": 1},
+        {"role": "grind_adjustment", "exact_count": 1}
+      ],
+      "required_relations": [
+        {"parent_role": "housing", "child_role": "manual_drive", "joint_type": "continuous"},
+        {"parent_role": "housing", "child_role": "grind_adjustment", "joint_type": "revolute"}
+      ],
+      "required_author_checks": [
+        "manual coffee grinder source identity",
+        "all selected slots are recorded",
+        "drive and adjustment use source axes"
+      ]
+    },
+    {
+      "anchor_id": "manual_grinder_real_drawer",
+      "applies_to": {
+        "slot": "structural_family",
+        "candidates": ["wood_cabinet_drawer", "slim_drawer_cylinder"]
+      },
+      "required_roles": [
+        {"role": "housing", "exact_count": 1},
+        {"role": "grounds_receiver", "exact_count": 1}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "housing",
+          "child_role": "grounds_receiver",
+          "joint_type": "prismatic",
+          "axis": [0.0, -1.0, 0.0]
+        }
+      ],
+      "required_author_checks": [
+        "drawer family has real cut cavity rails and hollow tray"
+      ]
+    },
+    {
+      "anchor_id": "manual_grinder_open_cup",
+      "applies_to": {
+        "slot": "structural_family",
+        "candidates": ["ribbed_travel_cup", "square_wood_cup"]
+      },
+      "required_roles": [
+        {"role": "housing", "exact_count": 1},
+        {"role": "grounds_receiver", "exact_count": 1}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "housing",
+          "child_role": "grounds_receiver",
+          "joint_type": "prismatic",
+          "axis": [0.0, 0.0, -1.0]
+        }
+      ],
+      "required_author_checks": [
+        "cup family has matching open receiver and source motion"
+      ]
+    },
+    {
+      "anchor_id": "manual_grinder_threaded_cup",
+      "applies_to": {
+        "slot": "structural_family",
+        "candidates": ["ribbed_threaded_cup"]
+      },
+      "required_roles": [
+        {"role": "housing", "exact_count": 1},
+        {"role": "grounds_receiver", "exact_count": 1}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "housing",
+          "child_role": "grounds_receiver",
+          "joint_type": "revolute",
+          "axis": [0.0, 0.0, 1.0]
+        }
+      ],
+      "required_author_checks": [
+        "cup family has matching open receiver and source motion"
+      ]
+    },
+    {
+      "anchor_id": "manual_grinder_hinged_cover",
+      "applies_to": {
+        "slot": "closure",
+        "candidates": ["hinged_cover"]
+      },
+      "required_roles": [
+        {"role": "housing", "exact_count": 1},
+        {"role": "hopper_closure", "exact_count": 1}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "housing",
+          "child_role": "hopper_closure",
+          "joint_type": "revolute",
+          "axis": [0.0, -1.0, 0.0]
+        }
+      ],
+      "required_author_checks": [
+        "hinged cover has slot captured knuckles and bounded opening"
+      ]
+    }
+  ],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Source 001: tall turned wooden body, layered dark bands, cast top bearing and genuinely open wide bowl.",
+          "implementation_function": "_structural_family_turned_wood_integrated_build",
+          "interfaces": [],
+          "name": "turned_wood_integrated",
+          "notes": "Integrated grounds body; no detachable receiver is emitted.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__manual_coffee_grinder__001__png_c35ee4d5322147f7b86183d272e2207d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L64",
+            "model.py:L65-L404"
+          ]
+        },
+        {
+          "evidence": "Source 002: fine-ribbed black travel cylinder above a removable open tapered grounds cup.",
+          "implementation_function": "_structural_family_ribbed_travel_cup_build",
+          "interfaces": [],
+          "name": "ribbed_travel_cup",
+          "notes": "Housing owns the lower guide/socket and the cup's downward release joint.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__manual_coffee_grinder__002__png_a48c5a9133da44bb9ecf4fac20b35002",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L20-L147",
+            "model.py:L148-L397"
+          ]
+        },
+        {
+          "evidence": "Threaded-cup fork: stepped lower socket, engagement lip and readable knurled cup perimeter.",
+          "implementation_function": "_structural_family_ribbed_threaded_cup_build",
+          "interfaces": [],
+          "name": "ribbed_threaded_cup",
+          "notes": "Receiver uses a bounded multi-turn revolute unscrewing motion.",
+          "parameters": [],
+          "record_id": "rec_0611_manual_coffee_grinder_var_catch_threaded_cup",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L192",
+            "model.py:L193-L458"
+          ]
+        },
+        {
+          "evidence": "Source 003: rounded wooden cabinet, dark bowl and a square front grounds drawer with central knob.",
+          "implementation_function": "_structural_family_wood_cabinet_drawer_build",
+          "interfaces": [],
+          "name": "wood_cabinet_drawer",
+          "notes": "The cabinet is cut through its front wall before the hollow drawer and four guide rails are added.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__manual_coffee_grinder__003__png_3e1dc714e9524c71a7bac3f672f2b4cf",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L33-L142",
+            "model.py:L143-L422"
+          ]
+        },
+        {
+          "evidence": "Square-wood-box fork combined with the source-002 coaxial open removable cup interface.",
+          "implementation_function": "_structural_family_square_wood_cup_build",
+          "interfaces": [],
+          "name": "square_wood_cup",
+          "notes": "Square upper shell and cup socket are one compatible structural family.",
+          "parameters": [],
+          "record_id": "rec_0611_manual_coffee_grinder_var_body_form_square_wood_box",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L20-L181",
+            "model.py:L182-L435"
+          ]
+        },
+        {
+          "evidence": "Slim-travel-cylinder fork combined with the pull-out-drawer fork's complete recess frame and hollow tray.",
+          "implementation_function": "_structural_family_slim_drawer_cylinder_build",
+          "interfaces": [],
+          "name": "slim_drawer_cylinder",
+          "notes": "A rectangular landing is fused to the cylinder before the real drawer cavity is subtracted.",
+          "parameters": [],
+          "record_id": "rec_0611_manual_coffee_grinder_var_body_form_slim_travel_cylinder",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L33-L149",
+            "model.py:L150-L430"
+          ]
+        }
+      ],
+      "component_type": "structural_family",
+      "name": "structural_family",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Source 001: vertical shaft, thin horizontal crank, end pin and turned free-spinning grip.",
+          "implementation_function": "_drive_rigid_top_crank_build",
+          "interfaces": [],
+          "name": "rigid_top_crank",
+          "notes": "Crank rotates continuously about the published top axis.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__manual_coffee_grinder__001__png_c35ee4d5322147f7b86183d272e2207d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L48-L64",
+            "model.py:L306-L404"
+          ]
+        },
+        {
+          "evidence": "Folding-crank fork: two-ear clevis, bored tongue and raised deployed arm with a free end grip.",
+          "implementation_function": "_drive_folding_top_crank_build",
+          "interfaces": [],
+          "name": "folding_top_crank",
+          "notes": "Delivered as one rigid deployed crank for robust sweep clearance; the grip remains independently articulated.",
+          "parameters": [],
+          "record_id": "rec_0611_manual_coffee_grinder_var_drive_folding_top_crank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L102",
+            "model.py:L103-L503"
+          ]
+        },
+        {
+          "evidence": "Side-crank fork: side shaft passage, offset vertical arm and coaxial free-spinning grip.",
+          "implementation_function": "_drive_side_crank_build",
+          "interfaces": [],
+          "name": "side_crank",
+          "notes": "Structural families derive a local side bearing above receiver travel.",
+          "parameters": [],
+          "record_id": "rec_0611_manual_coffee_grinder_var_drive_side_crank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L38-L147",
+            "model.py:L148-L461"
+          ]
+        }
+      ],
+      "component_type": "drive",
+      "name": "drive",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Open-bowl fork and source images preserve a visibly open bean cavity with inner and outer wall profiles.",
+          "implementation_function": "_closure_open_build",
+          "interfaces": [],
+          "name": "open",
+          "notes": "No additional moving closure part is emitted.",
+          "parameters": [],
+          "record_id": "rec_0611_manual_coffee_grinder_var_hopper_open_bowl",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L64",
+            "model.py:L65-L407"
+          ]
+        },
+        {
+          "evidence": "Hinged-hopper fork: rim-sized cover, shaft clearance, bored outer knuckles and rear saddle.",
+          "implementation_function": "_closure_hinged_cover_build",
+          "interfaces": [],
+          "name": "hinged_cover",
+          "notes": "Registered transverse hinge opens 0–100 degrees; top-drive height derives from its swept envelope.",
+          "parameters": [],
+          "record_id": "rec_0611_manual_coffee_grinder_var_hopper_hinged_covered_hopper",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L20-L217",
+            "model.py:L218-L470"
+          ]
+        }
+      ],
+      "component_type": "closure",
+      "name": "closure",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Source countertop grinders sit on a complete stable housing footprint.",
+          "implementation_function": "_mount_countertop_build",
+          "interfaces": [],
+          "name": "countertop",
+          "notes": "No extra mount part is required.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__manual_coffee_grinder__003__png_3e1dc714e9524c71a7bac3f672f2b4cf",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L143-L422"
+          ]
+        },
+        {
+          "evidence": "Table-clamp fork: radial attachment arm, vertical spine, return jaw, screw, pad and T-handle.",
+          "implementation_function": "_mount_table_clamp_build",
+          "interfaces": [],
+          "name": "table_clamp",
+          "notes": "Cup families publish a higher body-side seat so the clamp clears the removable receiver.",
+          "parameters": [],
+          "record_id": "rec_0611_manual_coffee_grinder_var_mount_table_clamp",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L138",
+            "model.py:L139-L485"
+          ]
+        }
+      ],
+      "component_type": "mount",
+      "name": "mount",
+      "required": true
+    }
+  ],
+  "slug": "manual_coffee_grinder",
+  "source_map_path": "articraft_template_authoring/source_maps/manual_coffee_grinder.md",
+  "source_map_sha256": "a755fcff1867fa1f805928182adb28b0432282b91120146cdf245c048fb2e3f4"
+}

@@ -1,0 +1,2226 @@
+{
+  "assembly_notes": "Identity: a graduated plate carrying N swing arms on one shared +Z pivot, plus exactly one locking fastener on that same axis. EVERY joint in this category is revolute about (0,0,1) — there is no prismatic, continuous or non-vertical joint anywhere in the 9-record pool, which is what makes the category machine-checkable.\n\ncore_domain = 5 body_form x 4 arm_form x 4 lock_module = 80, all of which must build. raw_domain = 80 x 5 N values = 400. Graduation tick counts, palette and blade proportions count toward neither.\n\nTwo cross-slot risks, both resolved by derivation rather than by gating:\n(a) The pool contains TWO different arm bearings. 001 and 002 build an annular thrust boss and seat the arm's flat underside on it (gap asserted 0..0.00005); 003 builds no boss and gives the arm a real 0.15 mm running clearance (asserted 0.00002..0.00025). `arm_seat_z_m` branches on `body_bearing_kind` so a 003-family plate combined with any arm still produces the source's clearance instead of a fabricated contact.\n(b) `quadrant_sector` re-derives the arm's joint limits from the plate's angular span, and the graduation count with it. A 90 deg plate under a 180 deg sweep would swing the blade off the scale. This is the only true cross-slot binding in the category and it gets a named corner.\n\nConstruction rule taken from the source pool: graduations are CUT into (001 L66-L86) or welded into (002 L72-L134) a single CAD solid. Record 003 instead emits 108 separate Box visuals for its ticks, and because sdk/_core/v0/exact_collisions.py derives one collision per visual 1:1, that route turns a decorative scale into ~116 collision bodies. The rebuild uses the 001/002 route for every candidate including the two forked from 003. Same visible detail, one visual per part.\n\nPart tree: plate (root) -> N arms in parallel -> lock. The lock's parent is the plate for knurled_clamp_screw and the topmost arm for the other three; that is source-attested per candidate (001 L259-L260 vs 002 L307 and 003 L275), not a free choice. Seeds carry N+2 parts and N+1 joints.\n\nNo allowances are needed anywhere: not one of the 9 records calls allow_overlap or allow_isolated_part. Every moving member has a real seated or clearance-fitted contact, and the bores are genuinely cut, so the fastener shaft passes through the plate without intersecting it.\n\nMultiplicity arm_count rationale (moved here when the malformed multiplicity keys were repaired):\nN arms share one pivot axis and stack in Z. The rule is taken verbatim from var_arm_count_dual_arms L211-L246 and is ALREADY INDEX-GENERAL THERE: arm_z[i] = arm_seat_z_m + i * arm_thickness_m, every arm parented to the PLATE (never chained arm-to-arm), and the lock lifted to clamp_z = arm_z[N-1] + arm_thickness_m (L284). Rest angles are spread evenly across the plate's angular span rather than the source's hard-coded [48 deg, 120 deg], which is the same intent generalised.\n\nThe range is bounded by HOST CAPACITY and BUDGET, not by which integers the source pool happens to contain. The pool builds N=1 and N=2; those are evidence that the stacking rule holds, not an upper bound. Upper bound 5 comes from two real constraints: (a) host capacity - the stack must stay under the fastener's grip, expressed as arm_stack_height_m <= body_radius_m * 0.6, which at the thinnest plate/thickest arm corner is what actually binds; and (b) budget - at N=5 a seed carries 7 parts and 6 revolute joints, against a measured fleet maximum of 33 parts / 32 joints and a 120 s preflight soft budget, so 5 is comfortably inside the envelope. Lower bound 1 is the single-arm object, which is what 8 of the 9 records build.\n\nAnchor repair (authoring stage, before the first preflight pass): the single protractor_pivot_lock_identity anchor demanded parent_role 'top_swing_arm' for all four lock candidates. That is unsatisfiable twice over: (a) knurled_clamp_screw is source-attested as PLATE-parented (001 L259-L260), which is exactly what the lock_joint_parent_role derivation encodes, and (b) no part can carry role 'top_swing_arm' while protractor_swing_arm_identity also requires role 'swing_arm' to count arm_count. The anchor is therefore split by joint parent: protractor_pivot_lock_identity keeps the three arm-parented candidates with parent_role 'swing_arm', and protractor_plate_parented_lock_identity covers knurled_clamp_screw with parent_role 'graduated_plate'. Required roles and required_author_checks are unchanged.",
+  "bindings": [
+    {
+      "binding_id": "plate_bearing_to_arm_seat",
+      "consumer": "arm_form.arm_underside",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "body_thickness_m",
+            "rim_height_m",
+            "body_form"
+          ],
+          "expression": "body_thickness_m + (rim_height_m if body_form in ('full_circle_solid_plate','quadrant_sector') else 0.0)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "body_top_z_m",
+          "rationale": "Top of the plate's own material, including the raised scale rim where the 003 family builds one.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "body_top_z_m",
+            "pivot_boss_h_m",
+            "arm_running_gap_m",
+            "arm_thickness_m",
+            "body_bearing_kind"
+          ],
+          "expression": "body_top_z_m + (pivot_boss_h_m if body_bearing_kind == 'thrust_boss' else arm_running_gap_m + arm_thickness_m * 0.5)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "arm_seat_z_m",
+          "rationale": "THE central derivation of the category, and it has two branches because the pool has two bearings (SourceMap mating rule 1). Thrust-boss bodies (001, 002) put the arm's flat underside exactly on the boss top, so the seat offset IS the boss height and the author gap check is 0..0.00005. The 003 family builds no boss at all and the arm rides a real 0.15 mm air gap, so the seat is the gap plus the arm's own half thickness because that arm is extruded symmetrically about its origin. Closing the 003 gap to satisfy a support check would be a source-fidelity regression.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "body_form"
+          ],
+          "expression": "'running_clearance' if body_form in ('full_circle_solid_plate', 'quadrant_sector') else 'thrust_boss'",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "body_bearing_kind",
+          "rationale": "Which bearing the plate candidate builds. Carried as a derived value so the arm and the lock both read one source of truth.",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "arm_thickness_m",
+            "arm_boss_h_m",
+            "arm_form"
+          ],
+          "expression": "arm_thickness_m + (arm_boss_h_m if arm_form == 'double_ended_blade' else 0.0)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "arm_hub_top_z_m",
+          "rationale": "Top of the topmost arm's material in its own frame. double_ended_blade carries its own boss (003 L70-L76) because its body side has none.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "provider": "body_form.plate_pivot_axis"
+    },
+    {
+      "binding_id": "body_span_to_arm_range",
+      "consumer": "arm_form.arm_bore_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "body_form",
+            "sector_span_rad"
+          ],
+          "expression": "sector_span_rad if body_form == 'quadrant_sector' else (2.0 * pi if body_form in ('full_circle_annulus', 'full_circle_solid_plate') else pi)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "body_angular_span_rad",
+          "rationale": "Angular span of graduated plate material.",
+          "unit": "rad",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "body_angular_span_rad"
+          ],
+          "expression": "0.0",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "arm_swing_lower_rad",
+          "rationale": "Lower joint limit of every arm pivot.",
+          "unit": "rad",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "body_angular_span_rad"
+          ],
+          "expression": "min(body_angular_span_rad, 2.0 * pi)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "arm_swing_upper_rad",
+          "rationale": "THE cross-slot binding of this category. var_body_form_quadrant L245-L253 changes the arm joint from (-pi, +pi) to (0, pi/2) purely because the plate became a 90 deg sector, and its author test L370-L384 asserts it. An arm that sweeps past the end of the graduations is not measuring anything. Same record also re-derives the tick counts from the same span (L158, L180).",
+          "unit": "rad",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "body_angular_span_rad"
+          ],
+          "expression": "int(round(degrees(body_angular_span_rad) / 5.0)) + 1",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "outer_tick_count",
+          "rationale": "5-degree graduations across the real span. 37 at 180 deg (001 L66, 002 L83), 19 at 90 deg (quadrant L158), 72 at 360 deg (003 L129).",
+          "unit": "count",
+          "value_type": "int"
+        }
+      ],
+      "provider": "body_form.plate_marked_face"
+    },
+    {
+      "binding_id": "arm_stack_to_lock_seat",
+      "consumer": "lock_module.lock_underside",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "arm_count",
+            "arm_thickness_m"
+          ],
+          "expression": "arm_count * arm_thickness_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "arm_stack_height_m",
+          "rationale": "Total Z occupied by the arm stack, from var_arm_count_dual_arms L211-L215.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "arm_seat_z_m",
+            "arm_count",
+            "arm_thickness_m"
+          ],
+          "expression": "arm_seat_z_m + (arm_count - 1) * arm_thickness_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "top_arm_z_m",
+          "rationale": "Frame origin of the topmost arm; arms below it are face-stacked at one thickness pitch.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "top_arm_z_m",
+            "arm_hub_top_z_m"
+          ],
+          "expression": "top_arm_z_m + arm_hub_top_z_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "lock_seat_z_m",
+          "rationale": "Seating plane of the fastener. Source 001 L261 authors 0.0041 = 0.0024 seat + 0.0017 arm thickness, and var_arm_count_dual_arms L284 generalises it to arm_z[-1] + arm_thickness. 002 and 003 use Origin() so the lock frame IS the arm frame and the head is extruded off the arm's top face.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "body_bore_r_m",
+            "arm_bore_r_m"
+          ],
+          "expression": "min(body_bore_r_m, arm_bore_r_m) - 0.0009",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "lock_shaft_r_m",
+          "rationale": "SourceMap mating rule 2: shaft_r = min(bore_r) - 0.7..1.2 mm, measured across all three origins (001 1.2 mm, 002 0.7 mm, 003 0.9 mm), and asserted as an author check in 003 L430-L437. This is why the shaft can pass through two real bores without a solid intersection — the clearance is geometric, not an allowance.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "arm_hub_r_m",
+            "lock_shaft_r_m"
+          ],
+          "expression": "min(arm_hub_r_m, lock_shaft_r_m + 0.0060)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "lock_seat_r_m",
+          "rationale": "Radius of the fastener's seating face, bounded by the hub it lands on. 002 and the cam lever both assert expect_within(lock, arm, axes='xy', margin=0.0002).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "lock_seat_z_m"
+          ],
+          "expression": "-lock_seat_z_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "retainer_top_z_m",
+          "rationale": "capstan_screw_retainer only. The retainer's top face must land on the plate underside at world z=0, which in the lock's own frame is -lock_seat_z_m. Source 003: retainer centre -0.00365, length 0.0009 -> top -0.0032 = -ARM_FRAME_Z exactly.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "lock_module"
+          ],
+          "expression": "'yes' if lock_module == 'cam_lever' else 'no'",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "hub_relief_required",
+          "rationale": "Host adaptation gate. The cam lever needs a flat relief cut into the arm hub top for its handle (var_lock_cam_lever L158-L164). Without it the handle would rest on air.",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "lock_module"
+          ],
+          "expression": "'graduated_plate' if lock_module == 'knurled_clamp_screw' else 'top_swing_arm'",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "lock_joint_parent_role",
+          "rationale": "Which part carries the lock joint. Source-attested per candidate, not free choice.",
+          "unit": "ratio",
+          "value_type": "str"
+        }
+      ],
+      "provider": "arm_form.arm_lock_axis"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "protractor_pivot_lock_identity",
+      "applies_to": {
+        "candidates": [
+          "slotted_screw",
+          "capstan_screw_retainer",
+          "cam_lever"
+        ],
+        "slot": "lock_module"
+      },
+      "required_author_checks": [
+        "category_anchor: the pivot lock is concentric with the arm pivot within 0.1 mm",
+        "category_anchor: plate and every arm carry a real through-bore larger than the lock shaft",
+        "category_anchor: the lock seats on the topmost arm or captures the plate"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "pivot_lock",
+          "joint_type": "revolute",
+          "parent_role": "swing_arm"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "pivot_lock"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "graduated_plate"
+        }
+      ]
+    },
+    {
+      "anchor_id": "protractor_plate_parented_lock_identity",
+      "applies_to": {
+        "candidates": [
+          "knurled_clamp_screw"
+        ],
+        "slot": "lock_module"
+      },
+      "required_author_checks": [
+        "category_anchor: the pivot lock is concentric with the arm pivot within 0.1 mm",
+        "category_anchor: plate and every arm carry a real through-bore larger than the lock shaft",
+        "category_anchor: the lock seats on the topmost arm or captures the plate"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "pivot_lock",
+          "joint_type": "revolute",
+          "parent_role": "graduated_plate"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "pivot_lock"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "graduated_plate"
+        }
+      ]
+    },
+    {
+      "anchor_id": "protractor_swing_arm_identity",
+      "applies_to": {
+        "candidates": [
+          "tapered_rule_pointer_tail",
+          "pointed_strip",
+          "double_ended_blade",
+          "vernier_plate_arm"
+        ],
+        "slot": "arm_form"
+      },
+      "required_author_checks": [
+        "category_anchor: every arm pivot is revolute about +Z through the plate centre",
+        "category_anchor: every arm crosses the graduated plate in plan",
+        "category_anchor: arm swing range does not exceed the plate angular span",
+        "category_anchor: arms are parented to the plate, never chained arm to arm"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "swing_arm",
+          "joint_type": "revolute",
+          "parent_role": "graduated_plate"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "graduated_plate"
+        },
+        {
+          "count_from": "arm_count",
+          "exact_count": null,
+          "role": "swing_arm"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "arm_stack_height_m <= body_radius_m * 0.6",
+      "item_slot": "arm_form",
+      "name": "arm_count",
+      "spacing_expression": "stack_z",
+      "values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "protractor, protractor_body, _build_protractor_body, _box, half_disc, fixed_rule, pivot_boss, pivot_bore",
+          "implementation_function": "_body_form_semicircular_solid_plate_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "arm_seat_z_m",
+                "radius": "body_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "plate_pivot_axis",
+              "part": "graduated_plate",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "body_top_z_m",
+                "radius": "body_radius_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "plate_marked_face",
+              "part": "graduated_plate",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "lock_seat_z_m",
+                "radius": "body_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "plate_lock_axis",
+              "part": "graduated_plate",
+              "role": "provider"
+            }
+          ],
+          "name": "semicircular_solid_plate",
+          "notes": "Bearing kind: thrust_boss. Angular span expression: pi. Graduations are CUT into (or welded into) a single CAD solid rather than emitted as per-tick primitives — see the SourceMap 'Deliberate deviation' section.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "body_radius_m",
+              "rationale": "Outer radius of the graduated plate. Pool: 0.060 (001 L38), 0.075 (003 L21), 0.078 (002 L20).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0013,
+              "mode": "independent",
+              "name": "body_thickness_m",
+              "rationale": "Plate thickness. Pool: 0.0015 (003 L22), 0.0022 (001 L36), 0.0030 (002 L22).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0052,
+              "minimum": 0.0026,
+              "mode": "independent",
+              "name": "body_bore_r_m",
+              "rationale": "Through-bore cut on the pivot axis. Pool: 0.0031 (002 L63), 0.0046 (003 L24), 0.0047 (001 L61). Every origin cuts this bore for real, which is why the fastener shaft can pass through the plate without a solid intersection.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.33,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "rule_length_m",
+              "rationale": "Integral straight rule fused into the same solid. Source 001 L47-L52: 0.304 m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.024,
+              "minimum": 0.012,
+              "mode": "independent",
+              "name": "rule_width_m",
+              "rationale": "Rule width. Source 001 L47-L52: 0.018 m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0008,
+              "minimum": 0.00015,
+              "mode": "independent",
+              "name": "pivot_boss_h_m",
+              "rationale": "Annular thrust boss the arm seats on. Source 001 L57: 0.0002 m. This candidate is a thrust-boss bearing, so the boss height IS the arm seat offset (mating rule 1).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__protractor_with_swing_arm__001__png_093c22d36b654f4084f5398231a08e55",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L34-L88"
+          ]
+        },
+        {
+          "evidence": "protractor_body, transparent_body, degree_markings, _semidisk, _protractor_body_shape, _protractor_markings_shape, rail, pivot_boss",
+          "implementation_function": "_body_form_semicircular_arch_rail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "arm_seat_z_m",
+                "radius": "body_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "plate_pivot_axis",
+              "part": "graduated_plate",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "body_top_z_m",
+                "radius": "body_radius_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "plate_marked_face",
+              "part": "graduated_plate",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "lock_seat_z_m",
+                "radius": "body_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "plate_lock_axis",
+              "part": "graduated_plate",
+              "role": "provider"
+            }
+          ],
+          "name": "semicircular_arch_rail",
+          "notes": "Bearing kind: thrust_boss. Angular span expression: pi. Graduations are CUT into (or welded into) a single CAD solid rather than emitted as per-tick primitives — see the SourceMap 'Deliberate deviation' section.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "body_radius_m",
+              "rationale": "Outer radius of the graduated plate. Pool: 0.060 (001 L38), 0.075 (003 L21), 0.078 (002 L20).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0013,
+              "mode": "independent",
+              "name": "body_thickness_m",
+              "rationale": "Plate thickness. Pool: 0.0015 (003 L22), 0.0022 (001 L36), 0.0030 (002 L22).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0052,
+              "minimum": 0.0026,
+              "mode": "independent",
+              "name": "body_bore_r_m",
+              "rationale": "Through-bore cut on the pivot axis. Pool: 0.0031 (002 L63), 0.0046 (003 L24), 0.0047 (001 L61). Every origin cuts this bore for real, which is why the fastener shaft can pass through the plate without a solid intersection.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.58,
+              "mode": "independent",
+              "name": "arch_inner_ratio",
+              "rationale": "Inner radius as a fraction of the outer, cut out to leave an open arch. Source 002 L20-L21: 0.054/0.078 = 0.692.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.15,
+              "minimum": 0.95,
+              "mode": "independent",
+              "name": "rail_length_ratio",
+              "rationale": "Straight rail length as a fraction of the plate diameter; the rail spans both arch feet. Source 002 L46-L50: 0.166/0.156 = 1.064.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0009,
+              "minimum": 0.00025,
+              "mode": "independent",
+              "name": "pivot_boss_h_m",
+              "rationale": "Annular thrust boss. Source 002 L53-L60 and L26: 0.0005 m, and PIVOT_CLEARANCE_Z is literally the same constant — the seat plane is derived from the boss, never authored twice.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__protractor_with_swing_arm__002__png_0a68ef8fd5f242f3a7abe1db6a9833ac",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L69",
+            "model.py:L72-L134"
+          ]
+        },
+        {
+          "evidence": "protractor_body, transparent_body, _protractor_body_shape, outer, inner_cutter, pivot_boss, bore",
+          "implementation_function": "_body_form_full_circle_annulus_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "arm_seat_z_m",
+                "radius": "body_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "plate_pivot_axis",
+              "part": "graduated_plate",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "body_top_z_m",
+                "radius": "body_radius_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "plate_marked_face",
+              "part": "graduated_plate",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "lock_seat_z_m",
+                "radius": "body_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "plate_lock_axis",
+              "part": "graduated_plate",
+              "role": "provider"
+            }
+          ],
+          "name": "full_circle_annulus",
+          "notes": "Bearing kind: thrust_boss. Angular span expression: 2.0 * pi. Graduations are CUT into (or welded into) a single CAD solid rather than emitted as per-tick primitives — see the SourceMap 'Deliberate deviation' section.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "body_radius_m",
+              "rationale": "Outer radius of the graduated plate. Pool: 0.060 (001 L38), 0.075 (003 L21), 0.078 (002 L20).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0013,
+              "mode": "independent",
+              "name": "body_thickness_m",
+              "rationale": "Plate thickness. Pool: 0.0015 (003 L22), 0.0022 (001 L36), 0.0030 (002 L22).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0052,
+              "minimum": 0.0026,
+              "mode": "independent",
+              "name": "body_bore_r_m",
+              "rationale": "Through-bore cut on the pivot axis. Pool: 0.0031 (002 L63), 0.0046 (003 L24), 0.0047 (001 L61). Every origin cuts this bore for real, which is why the fastener shaft can pass through the plate without a solid intersection.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "annulus_inner_ratio",
+              "rationale": "Closed 360 deg ring: inner radius as a fraction of the outer. Source var_body_form_full_circle L41-L48: 0.054/0.078 = 0.692. This candidate carries NO straight rail — a closed ring has no feet to span (SourceMap slot A).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0009,
+              "minimum": 0.00025,
+              "mode": "independent",
+              "name": "pivot_boss_h_m",
+              "rationale": "Annular thrust boss, inherited from the 002 family. Source L51-L57: 0.0005 m.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_protractor_with_swing_arm_var_body_form_full_circle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L38-L66"
+          ]
+        },
+        {
+          "evidence": "protractor_body, body_shell, _make_protractor_body, plate, rim, PIVOT_HOLE_RADIUS",
+          "implementation_function": "_body_form_full_circle_solid_plate_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "arm_seat_z_m",
+                "radius": "body_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "plate_pivot_axis",
+              "part": "graduated_plate",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "body_top_z_m",
+                "radius": "body_radius_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "plate_marked_face",
+              "part": "graduated_plate",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "lock_seat_z_m",
+                "radius": "body_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "plate_lock_axis",
+              "part": "graduated_plate",
+              "role": "provider"
+            }
+          ],
+          "name": "full_circle_solid_plate",
+          "notes": "Bearing kind: running_clearance. Angular span expression: 2.0 * pi. Graduations are CUT into (or welded into) a single CAD solid rather than emitted as per-tick primitives — see the SourceMap 'Deliberate deviation' section.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "body_radius_m",
+              "rationale": "Outer radius of the graduated plate. Pool: 0.060 (001 L38), 0.075 (003 L21), 0.078 (002 L20).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0013,
+              "mode": "independent",
+              "name": "body_thickness_m",
+              "rationale": "Plate thickness. Pool: 0.0015 (003 L22), 0.0022 (001 L36), 0.0030 (002 L22).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0052,
+              "minimum": 0.0026,
+              "mode": "independent",
+              "name": "body_bore_r_m",
+              "rationale": "Through-bore cut on the pivot axis. Pool: 0.0031 (002 L63), 0.0046 (003 L24), 0.0047 (001 L61). Every origin cuts this bore for real, which is why the fastener shaft can pass through the plate without a solid intersection.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.88,
+              "minimum": 0.66,
+              "mode": "independent",
+              "name": "rim_width_ratio",
+              "rationale": "Raised annular scale rim: inner radius as a fraction of the outer. Source 003 L38-L43: 0.057/0.075 = 0.760.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0009,
+              "minimum": 0.0002,
+              "mode": "independent",
+              "name": "rim_height_m",
+              "rationale": "Height of the raised scale rim above the plate face. Source 003 L23: 0.0004 m. The rim is unioned at offset = thickness - 0.00005 so it welds instead of leaving a coincident face.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.00024,
+              "minimum": 4e-05,
+              "mode": "independent",
+              "name": "arm_running_gap_m",
+              "rationale": "This candidate has NO body boss (SourceMap mating rule 1): the arm clears the marked face on a real air gap. Source 003 L406-L413 asserts 0.00002..0.00025; the built value is 0.00015.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__protractor_with_swing_arm__003__png_0437faf5b68e4d3ba4f882021039b154",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L44"
+          ]
+        },
+        {
+          "evidence": "protractor_body, body_shell, _make_protractor_body, full_plate, full_rim, cut_neg_x, cut_neg_y, body_to_arm",
+          "implementation_function": "_body_form_quadrant_sector_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "arm_seat_z_m",
+                "radius": "body_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "plate_pivot_axis",
+              "part": "graduated_plate",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "body_top_z_m",
+                "radius": "body_radius_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "plate_marked_face",
+              "part": "graduated_plate",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "lock_seat_z_m",
+                "radius": "body_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "plate_lock_axis",
+              "part": "graduated_plate",
+              "role": "provider"
+            }
+          ],
+          "name": "quadrant_sector",
+          "notes": "Bearing kind: running_clearance. Angular span expression: sector_span_rad. Graduations are CUT into (or welded into) a single CAD solid rather than emitted as per-tick primitives — see the SourceMap 'Deliberate deviation' section.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "body_radius_m",
+              "rationale": "Outer radius of the graduated plate. Pool: 0.060 (001 L38), 0.075 (003 L21), 0.078 (002 L20).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0013,
+              "mode": "independent",
+              "name": "body_thickness_m",
+              "rationale": "Plate thickness. Pool: 0.0015 (003 L22), 0.0022 (001 L36), 0.0030 (002 L22).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0052,
+              "minimum": 0.0026,
+              "mode": "independent",
+              "name": "body_bore_r_m",
+              "rationale": "Through-bore cut on the pivot axis. Pool: 0.0031 (002 L63), 0.0046 (003 L24), 0.0047 (001 L61). Every origin cuts this bore for real, which is why the fastener shaft can pass through the plate without a solid intersection.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.5708,
+              "minimum": 1.0472,
+              "mode": "independent",
+              "name": "sector_span_rad",
+              "rationale": "Angular span of the sector plate. Source var_body_form_quadrant L60-L71 cuts two half-space boxes out of a complete plate, leaving pi/2. This is the ONE parameter in the category that reaches across slots: it re-derives the arm joint limits (binding body_span_to_arm_range).",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.88,
+              "minimum": 0.66,
+              "mode": "independent",
+              "name": "rim_width_ratio",
+              "rationale": "Raised scale rim, inherited from the 003 family. Source: 0.057/0.075 = 0.760.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0009,
+              "minimum": 0.0002,
+              "mode": "independent",
+              "name": "rim_height_m",
+              "rationale": "Scale rim height. Source 003 L23: 0.0004 m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.00024,
+              "minimum": 4e-05,
+              "mode": "independent",
+              "name": "arm_running_gap_m",
+              "rationale": "Running clearance, inherited from the 003 family (no body boss).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_protractor_with_swing_arm_var_body_form_quadrant",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L71",
+            "model.py:L245-L253"
+          ]
+        }
+      ],
+      "component_type": "graduated host plate",
+      "name": "body_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "swing_arm, swing_arm_body, _build_swing_arm, long_rule, pivot_boss, pointer_tail, pivot_bore, sight",
+          "implementation_function": "_arm_form_tapered_rule_pointer_tail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "arm_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "arm_bore_axis",
+              "part": "swing_arm",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "arm_hub_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "arm_underside",
+              "part": "swing_arm",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "arm_hub_top_z_m",
+                "radius": "arm_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "arm_lock_axis",
+              "part": "swing_arm",
+              "role": "provider"
+            }
+          ],
+          "name": "tapered_rule_pointer_tail",
+          "notes": "The arm's local origin is the pivot centre and its bore is cut on that axis. The blade must cross the plate: every origin asserts expect_overlap(arm, body, axes='xy') >= 0.010 m.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0033,
+              "minimum": 0.0015,
+              "mode": "independent",
+              "name": "arm_thickness_m",
+              "rationale": "Blade thickness. Pool: 0.0017 (001 L94), 0.0023 (003 L25), 0.0030 (002 L23).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0054,
+              "minimum": 0.0026,
+              "mode": "independent",
+              "name": "arm_bore_r_m",
+              "rationale": "Through-bore on the pivot axis, cut in every arm. Pool: 0.0030 (002 L149), 0.0049 (001 L112, 003 L68).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0155,
+              "minimum": 0.0095,
+              "mode": "independent",
+              "name": "arm_hub_r_m",
+              "rationale": "Pivot hub radius, unioned into the blade so the bore has material around it. Pool: 0.0110 (002 L147), 0.0125 (003 L74), 0.0140 (001 L103).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "blade_length_m",
+              "rationale": "Single-ended tapered blade reach. Source 001 L95-L101: 0.260 m over a 5-point profile narrowing 0.009 -> 0.008 then to a point.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.012,
+              "mode": "independent",
+              "name": "pointer_tail_length_m",
+              "rationale": "Short indexing tail on the far side of the pivot. Source 001 L104-L109: 0.025 m.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__protractor_with_swing_arm__001__png_093c22d36b654f4084f5398231a08e55",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L91-L126"
+          ]
+        },
+        {
+          "evidence": "swing_arm, arm_plate, _swing_arm_shape, strip, hub, bore, tip_stop",
+          "implementation_function": "_arm_form_pointed_strip_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "arm_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "arm_bore_axis",
+              "part": "swing_arm",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "arm_hub_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "arm_underside",
+              "part": "swing_arm",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "arm_hub_top_z_m",
+                "radius": "arm_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "arm_lock_axis",
+              "part": "swing_arm",
+              "role": "provider"
+            }
+          ],
+          "name": "pointed_strip",
+          "notes": "The arm's local origin is the pivot centre and its bore is cut on that axis. The blade must cross the plate: every origin asserts expect_overlap(arm, body, axes='xy') >= 0.010 m.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0033,
+              "minimum": 0.0015,
+              "mode": "independent",
+              "name": "arm_thickness_m",
+              "rationale": "Blade thickness. Pool: 0.0017 (001 L94), 0.0023 (003 L25), 0.0030 (002 L23).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0054,
+              "minimum": 0.0026,
+              "mode": "independent",
+              "name": "arm_bore_r_m",
+              "rationale": "Through-bore on the pivot axis, cut in every arm. Pool: 0.0030 (002 L149), 0.0049 (001 L112, 003 L68).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0155,
+              "minimum": 0.0095,
+              "mode": "independent",
+              "name": "arm_hub_r_m",
+              "rationale": "Pivot hub radius, unioned into the blade so the bore has material around it. Pool: 0.0110 (002 L147), 0.0125 (003 L74), 0.0140 (001 L103).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.075,
+              "mode": "independent",
+              "name": "blade_length_m",
+              "rationale": "Constant-width strip reach. Source 002 L24: 0.108 m — deliberately shorter than the plate is wide, which is what distinguishes this silhouette.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.008,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "strip_half_width_m",
+              "rationale": "Half width of the constant section before the point. Source 002 L139-L145: 0.0052 m.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__protractor_with_swing_arm__002__png_0a68ef8fd5f242f3a7abe1db6a9833ac",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L137-L155",
+            "model.py:L259-L264"
+          ]
+        },
+        {
+          "evidence": "swing_arm, arm_shell, _make_swing_arm, blade, pivot_boss, ARM_THICKNESS",
+          "implementation_function": "_arm_form_double_ended_blade_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "arm_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "arm_bore_axis",
+              "part": "swing_arm",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "arm_hub_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "arm_underside",
+              "part": "swing_arm",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "arm_hub_top_z_m",
+                "radius": "arm_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "arm_lock_axis",
+              "part": "swing_arm",
+              "role": "provider"
+            }
+          ],
+          "name": "double_ended_blade",
+          "notes": "The arm's local origin is the pivot centre and its bore is cut on that axis. The blade must cross the plate: every origin asserts expect_overlap(arm, body, axes='xy') >= 0.010 m.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0033,
+              "minimum": 0.0015,
+              "mode": "independent",
+              "name": "arm_thickness_m",
+              "rationale": "Blade thickness. Pool: 0.0017 (001 L94), 0.0023 (003 L25), 0.0030 (002 L23).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0054,
+              "minimum": 0.0026,
+              "mode": "independent",
+              "name": "arm_bore_r_m",
+              "rationale": "Through-bore on the pivot axis, cut in every arm. Pool: 0.0030 (002 L149), 0.0049 (001 L112, 003 L68).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0155,
+              "minimum": 0.0095,
+              "mode": "independent",
+              "name": "arm_hub_r_m",
+              "rationale": "Pivot hub radius, unioned into the blade so the bore has material around it. Pool: 0.0110 (002 L147), 0.0125 (003 L74), 0.0140 (001 L103).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.14,
+              "minimum": 0.068,
+              "mode": "independent",
+              "name": "upper_ruler_length_m",
+              "rationale": "Upper straight ruler measured from the pivot. THIS IS THE FOLDED PARAMETER: source 003 L48-L49 builds 0.068 m and var_arm_form_long_ruler L53-L56 builds 0.140 m. Per VISUAL_DIVERSITY_MODEL that is proportion, not a candidate, so both source extremes are reachable here instead of as a fifth arm_form row.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.105,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "pointer_length_m",
+              "rationale": "Tapered lower pointer on the opposite side of the pivot. Source 003 L57-L58: 0.080 m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0015,
+              "minimum": 0.00045,
+              "mode": "independent",
+              "name": "arm_boss_h_m",
+              "rationale": "This candidate carries its OWN boss on top (source 003 L70-L76, r 0.0125/0.0049 x 0.0009) because the body side has none — the fastener seats on the arm instead.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__protractor_with_swing_arm__003__png_0437faf5b68e4d3ba4f882021039b154",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L47-L77"
+          ]
+        },
+        {
+          "evidence": "swing_arm, vernier_plate, vernier_scale, _vernier_plate_shape, _vernier_markings_shape, arm_strip, plate, hub",
+          "implementation_function": "_arm_form_vernier_plate_arm_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "arm_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "arm_bore_axis",
+              "part": "swing_arm",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "arm_hub_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "arm_underside",
+              "part": "swing_arm",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "arm_hub_top_z_m",
+                "radius": "arm_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "arm_lock_axis",
+              "part": "swing_arm",
+              "role": "provider"
+            }
+          ],
+          "name": "vernier_plate_arm",
+          "notes": "The arm's local origin is the pivot centre and its bore is cut on that axis. The blade must cross the plate: every origin asserts expect_overlap(arm, body, axes='xy') >= 0.010 m.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0033,
+              "minimum": 0.0015,
+              "mode": "independent",
+              "name": "arm_thickness_m",
+              "rationale": "Blade thickness. Pool: 0.0017 (001 L94), 0.0023 (003 L25), 0.0030 (002 L23).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0054,
+              "minimum": 0.0026,
+              "mode": "independent",
+              "name": "arm_bore_r_m",
+              "rationale": "Through-bore on the pivot axis, cut in every arm. Pool: 0.0030 (002 L149), 0.0049 (001 L112, 003 L68).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0155,
+              "minimum": 0.0095,
+              "mode": "independent",
+              "name": "arm_hub_r_m",
+              "rationale": "Pivot hub radius, unioned into the blade so the bore has material around it. Pool: 0.0110 (002 L147), 0.0125 (003 L74), 0.0140 (001 L103).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.075,
+              "mode": "independent",
+              "name": "blade_length_m",
+              "rationale": "Narrow strip reach beyond the reading head. Source var_reading_module_vernier_plate L160-L172: strip runs 0.026 -> 0.108 m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.018,
+              "minimum": 0.0095,
+              "mode": "independent",
+              "name": "vernier_plate_half_width_m",
+              "rationale": "Half width of the widened rectangular reading head. Source L174-L181: 0.0130 m, and the record's own author test asserts the plate Y extent >= 0.025 m, i.e. the widening is structural rather than decorative.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                9,
+                11,
+                13
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "vernier_division_count",
+              "rationale": "Vernier divisions welded into the ink solid. Source L213-L226: 11 marks at 3 mm pitch.",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_0611_protractor_with_swing_arm_var_reading_module_vernier_plate",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L158-L196",
+            "model.py:L199-L229"
+          ]
+        }
+      ],
+      "component_type": "swing measuring arm",
+      "name": "arm_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "clamp_screw, clamp_fastener, clamp_washer, _build_clamp_fastener, clamp_rotation, shaft, grip, cap, rib",
+          "implementation_function": "_lock_module_knurled_clamp_screw_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "lock_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "lock_bore_axis",
+              "part": "pivot_lock",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "lock_seat_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "lock_underside",
+              "part": "pivot_lock",
+              "role": "consumer"
+            }
+          ],
+          "name": "knurled_clamp_screw",
+          "notes": "Joint parent role: graduated_plate. That difference is part of the candidate, not a free choice — source 001 parents the clamp to the plate (L259-L260) while 002/003 and the cam lever parent it to the arm. ",
+          "parameters": [
+            {
+              "choices": [
+                24,
+                32,
+                40
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "knurl_rib_count",
+              "rationale": "Axial ribs unioned around the grip. Source 001 L138-L142: 32.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.0068,
+              "mode": "independent",
+              "name": "grip_r_m",
+              "rationale": "Knurled grip radius. Source 001 L133: 0.0094.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0125,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "grip_h_m",
+              "rationale": "Grip height. Source 001 L133: 0.0085.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 14.1372,
+              "minimum": 6.2832,
+              "mode": "independent",
+              "name": "turn_range_rad",
+              "rationale": "Multi-turn screw. Source 001 L266-L267: +-4*pi.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__protractor_with_swing_arm__001__png_093c22d36b654f4084f5398231a08e55",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L129-L144",
+            "model.py:L256-L269"
+          ]
+        },
+        {
+          "evidence": "lock_screw, locking_fastener, screw_slot, _locking_screw_shape, screw_turn, shaft, head, slot_cutter",
+          "implementation_function": "_lock_module_slotted_screw_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "lock_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "lock_bore_axis",
+              "part": "pivot_lock",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "lock_seat_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "lock_underside",
+              "part": "pivot_lock",
+              "role": "consumer"
+            }
+          ],
+          "name": "slotted_screw",
+          "notes": "Joint parent role: top_swing_arm. That difference is part of the candidate, not a free choice — source 001 parents the clamp to the plate (L259-L260) while 002/003 and the cam lever parent it to the arm. ",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.009,
+              "minimum": 0.0045,
+              "mode": "independent",
+              "name": "head_r_m",
+              "rationale": "Low round head. Source 002 L186-L190: 0.0062.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0042,
+              "minimum": 0.0016,
+              "mode": "independent",
+              "name": "head_h_m",
+              "rationale": "Head height. Source 002 L186-L190: 0.0024.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.002,
+              "minimum": 0.0008,
+              "mode": "independent",
+              "name": "slot_width_m",
+              "rationale": "Driver slot CUT into the head (source 002 L192-L196: 8.2 x 1.2 x 0.7 mm), with a dark insert dropped into the machined slot so the turn is legible.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 6.2832,
+              "minimum": 1.5708,
+              "mode": "independent",
+              "name": "turn_range_rad",
+              "rationale": "Source 002 L314-L315: +-pi.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__protractor_with_swing_arm__002__png_0a68ef8fd5f242f3a7abe1db6a9833ac",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L177-L197",
+            "model.py:L304-L317"
+          ]
+        },
+        {
+          "evidence": "pivot_screw, screw_shaft, screw_cap, underside_retainer, slot_bar_x, slot_bar_y, arm_to_screw",
+          "implementation_function": "_lock_module_capstan_screw_retainer_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "lock_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "lock_bore_axis",
+              "part": "pivot_lock",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "lock_seat_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "lock_underside",
+              "part": "pivot_lock",
+              "role": "consumer"
+            }
+          ],
+          "name": "capstan_screw_retainer",
+          "notes": "Joint parent role: top_swing_arm. That difference is part of the candidate, not a free choice — source 001 parents the clamp to the plate (L259-L260) while 002/003 and the cam lever parent it to the arm. ",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0135,
+              "minimum": 0.0072,
+              "mode": "independent",
+              "name": "cap_r_m",
+              "rationale": "Visible cap above the arm boss. Source 003 L246-L250: 0.0100.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.009,
+              "minimum": 0.0048,
+              "mode": "independent",
+              "name": "retainer_r_m",
+              "rationale": "Underside retainer BELOW the plate — this is what makes the candidate structurally distinct: the fastener captures the plate rather than resting on it. Source 003 L251-L256: r 0.0063, length 0.0009, and its top face lands exactly on the plate underside.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0018,
+              "minimum": 0.0006,
+              "mode": "independent",
+              "name": "retainer_h_m",
+              "rationale": "Retainer thickness. Source 003 L252: 0.0009.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 6.2832,
+              "minimum": 1.5708,
+              "mode": "independent",
+              "name": "turn_range_rad",
+              "rationale": "Source 003 L281-L282: +-pi.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__protractor_with_swing_arm__003__png_0437faf5b68e4d3ba4f882021039b154",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L230-L270",
+            "model.py:L272-L290"
+          ]
+        },
+        {
+          "evidence": "cam_lever, cam_lever_body, lever_indicator, _cam_lever_shape, cam_lobe, handle, handle_tip, collar, lever_rest_flat",
+          "implementation_function": "_lock_module_cam_lever_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "lock_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "lock_bore_axis",
+              "part": "pivot_lock",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "lock_seat_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "lock_underside",
+              "part": "pivot_lock",
+              "role": "consumer"
+            }
+          ],
+          "name": "cam_lever",
+          "notes": "Joint parent role: top_swing_arm. That difference is part of the candidate, not a free choice — source 001 parents the clamp to the plate (L259-L260) while 002/003 and the cam lever parent it to the arm. This candidate REQUIRES host adaptation: the arm hub grows a cut flat relief for the handle to lie in when clamped (var_lock_cam_lever L158-L164, 36 x 6.8 x 0.4 mm).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0032,
+              "minimum": 0.001,
+              "mode": "independent",
+              "name": "cam_eccentricity_m",
+              "rationale": "Offset of the cam lobe centre from the pivot axis — the eccentricity IS the clamping action. Source var_lock_cam_lever L219-L224: 0.0018.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0098,
+              "minimum": 0.0052,
+              "mode": "independent",
+              "name": "cam_lobe_r_m",
+              "rationale": "Eccentric lobe radius. Source L221: 0.0070.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "lever_handle_length_m",
+              "rationale": "Handle from the lobe to the rounded tip. Source L228-L242: 0.026 body + r 0.0029 tip.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 6.2832,
+              "minimum": 1.5708,
+              "mode": "independent",
+              "name": "turn_range_rad",
+              "rationale": "Source: +-pi, same as the other arm-parented locks.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_protractor_with_swing_arm_var_lock_cam_lever",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L210-L252",
+            "model.py:L158-L165"
+          ]
+        }
+      ],
+      "component_type": "pivot-axis locking fastener",
+      "name": "lock_module",
+      "required": true
+    }
+  ],
+  "slug": "protractor_with_swing_arm",
+  "source_map_path": "articraft_template_authoring/source_maps/protractor_with_swing_arm.md",
+  "source_map_sha256": "2c6fda403acb726c73e4a362d3adb3f55e73dac32aa3a6bb0a1fc05ecd9bedf2"
+}

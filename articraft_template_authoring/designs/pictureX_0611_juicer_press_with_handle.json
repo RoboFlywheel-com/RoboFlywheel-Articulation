@@ -1,0 +1,1698 @@
+{
+  "assembly_notes": "z = 0 is the bench top; the frame's base block stands on it and the mount candidates own everything below it. The press faces +X (the shared preview camera sits at +X/-Y). Cup, strainer and ram share one vertical axis at (0, cup_y_m), and the whole machine is derived bottom-up: base_height_m -> deck_lift_m -> cup_seat_z_m -> stack_top_z_m -> head_gap_m -> ram_origin_z_m -> beam_top_z_m -> post_len_m. head_gap_m is the category invariant: it is sized from ram_travel_m so the bell press head stands clear of the strainer at rest and still clears the perforated plate by 4 mm at the bottom of the stroke, i.e. the head really does descend into the cup mouth. No combination is excluded: the C-arch grows its base rearward for a deep column and its throat arm sideways for the gear head, the clamp bracket hangs from whichever base the frame built, and every hand grip is oriented from its actuator's own tip frame. ctx.allow_overlap is never called; every moving member runs in a bore or window cut into the frame after it is welded.",
+  "bindings": [
+    {
+      "binding_id": "deck_lifts_the_whole_stack",
+      "consumer": "frame_style.beam_bore_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "deck_disc_h_m",
+            "pedestal_h_m"
+          ],
+          "expression": "deck_disc_h_m if catch_deck is flat_drip_disc else pedestal_h_m + deck_disc_h_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "deck_lift_m",
+          "rationale": "How far the active deck raises the cup seat above the base top. This is the only thing catch_deck publishes upward, and the whole frame follows it.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "base_height_m",
+            "deck_lift_m"
+          ],
+          "expression": "base_height_m + deck_lift_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "cup_seat_z_m",
+          "rationale": "World height of the cup's prismatic joint origin.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "cup_seat_z_m",
+            "cup_height_m",
+            "strainer_seat_local_m",
+            "strainer_h_m"
+          ],
+          "expression": "max(cup_seat_z_m + cup_height_m, cup_seat_z_m + strainer_seat_local_m + strainer_h_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "stack_top_z_m",
+          "rationale": "Top of the vessel stack: the cup rim or the strainer rim, whichever is higher, because the two scale on different axes.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "strainer_drop_m",
+            "strainer_plate_t_m"
+          ],
+          "expression": "min(0.008, 0.45 * (strainer_drop_m - strainer_plate_t_m))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "head_dip_m",
+          "rationale": "How far the bell head drops BELOW the strainer/cup rim plane at full stroke. This is the category's recognisability invariant — the head really does descend into the mouth — and it is spent out of the strainer's own depth, so a shallow strainer dips less rather than punching through.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "strainer_drop_m",
+            "strainer_plate_t_m",
+            "head_dip_m"
+          ],
+          "expression": "strainer_drop_m - strainer_plate_t_m - head_dip_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "press_clear_m",
+          "rationale": "What is left between the press-head tip and the perforated plate at full stroke. It is also the budget the vessel-removal travel is taken from.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "ram_travel_m",
+            "head_dip_m"
+          ],
+          "expression": "ram_travel_m - head_dip_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "head_gap_m",
+          "rationale": "Clearance from the raised press head to the stack top at rest. Deriving it from the stroke and the dip is what keeps a longer stroke from driving the head through the plate. Source rest gap: 0.020 (expect_gap 0.015..0.030).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "stack_top_z_m",
+            "head_gap_m",
+            "ram_reach_m"
+          ],
+          "expression": "stack_top_z_m + head_gap_m + ram_reach_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "ram_origin_z_m",
+          "rationale": "Ram prismatic joint origin; the beam is hung 10 mm below it.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "ram_origin_z_m"
+          ],
+          "expression": "ram_origin_z_m - 0.010",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "beam_top_z_m",
+          "rationale": "Top face of the upper beam, source origin anchor: ram joint 0.440 over a crosshead top of 0.430.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "beam_top_z_m",
+            "beam_height_m",
+            "base_height_m"
+          ],
+          "expression": "(beam_top_z_m - beam_height_m + 0.008) - (base_height_m - 0.006)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "post_len_m",
+          "rationale": "Guide post / column length, so a taller deck or cup lengthens the columns instead of shortening the throat. Source: 0.350 posts from 0.042 to 0.392 under a crosshead bottom of 0.384.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "press_clear_m"
+          ],
+          "expression": "max(0.006, 0.5 * (press_clear_m + 0.0030))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "lift_limit_m",
+          "rationale": "Cup and strainer removal travel. The two joints are serial, so a coupled pose raises the perforated plate by 2 * lift while the ram is at full stroke; the travel is therefore spent out of press_clear_m and leaves at most 3 mm of tip contact in that pose, inside the 5 mm penetration gate. The source's fixed 0.080 / 0.055 drive the rising plate and cup rim straight through the lowered press head; fully withdrawing the cup needs the ram raised first, which is the machine's real operating sequence.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "catch_deck.cup_seat_plane"
+    },
+    {
+      "binding_id": "actuator_sizes_the_beam",
+      "consumer": "frame_style.beam_bore_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "ram_shaft_r_m",
+            "screw_thread_r_m"
+          ],
+          "expression": "(screw_thread_r_m if actuator_style is screw_handwheel else ram_shaft_r_m) + 0.0008",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "ram_bore_r_m",
+          "rationale": "The screw fork runs a thread band through the beam and widens its own bore (source 0.0115 -> 0.0130); the fit stays under 1 mm so the ram is carried by its guide.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "beam_front_y_m",
+            "arm_r_m",
+            "link_r_m",
+            "cup_y_m"
+          ],
+          "expression": "min(beam_front_y_m - arm_r_m - 0.004, (beam_front_y_m - link_r_m - 0.004 - t_beam * cup_y_m) / (1 - t_beam))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "mech_y_m",
+          "rationale": "lever_linkage only: how far ahead of the beam's front face the mechanism plane must sit so the dog-link is still clear of the beam where it crosses beam_bottom_z_m. t_beam is the link's own fractional height at that station.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "rack_x0_m",
+            "pinion_r0_m",
+            "gear_backlash_m"
+          ],
+          "expression": "rack_x0_m + pinion_r0_m + gear_backlash_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "pinion_x_m",
+          "rationale": "rack_pinion_crank only: the pinion axis offset from the rack pitch line, which also fixes the width of the window cut through the beam.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "pinion_x_m",
+            "pinion_ra_m"
+          ],
+          "expression": "max(frame half-span, pinion_x_m + pinion_ra_m + 0.012) when the C-arch carries the gear head",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "beam_hx_m",
+          "rationale": "Host adaptation: the C-arch's narrow throat arm grows a gear head wide enough to carry the pinion window and leave material outboard of it.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "wheel_origin_z_m",
+            "ram_origin_z_m",
+            "wheel_hub_h_m"
+          ],
+          "expression": "(wheel_origin_z_m - ram_origin_z_m) + 0.80 * wheel_hub_h_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "screw_len_m",
+          "rationale": "screw_handwheel only: how far the thread band must stand above the ram origin to stay engaged in the wheel hub.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "ram_travel_m",
+            "pinion_r0_m"
+          ],
+          "expression": "ram_travel_m / pinion_r0_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "crank_upper_rad",
+          "rationale": "The pinion sweep IS the ram stroke divided by the pitch radius (source rack fork L424). pinion_r0_m is floored at ram_travel_m / 2 so the sweep never exceeds 2 rad and the crank grip never re-enters the beam envelope.",
+          "unit": "rad",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "actuator_style.drive_axis"
+    },
+    {
+      "binding_id": "mount_carries_the_base",
+      "consumer": "frame_style.base_underside",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "base_depth_m",
+            "column_back_y_m"
+          ],
+          "expression": "max(base_depth_m / 2, column_back_y_m + 0.006) for the C-arch, base_depth_m / 2 otherwise",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "base_hy_back_m",
+          "rationale": "The base grows rearward to carry a deep C-arch column, and the clamp bracket then references that same rear face for its throat wall.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "base_hx_m",
+            "base_hy_back_m",
+            "foot_radius_m"
+          ],
+          "expression": "inset perimeter stations at inset = foot_radius_m + 0.013",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "foot_stations",
+          "rationale": "corner_foot_pads only. Source identity: 0.115 - 0.012 - 0.013 = 0.090 and 0.090 - 0.025 = 0.065 against the source's (0.090, 0.064).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "base_width_m"
+          ],
+          "expression": "0.74 * base_width_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "clamp_w_m",
+          "rationale": "bench_clamp_bracket only, source 0.170 on a 0.230 plate. Also fixes the rib pitch, so the base width reaches the gusset spacing.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "base_hy_back_m",
+            "clamp_jaw_depth_m"
+          ],
+          "expression": "base_hy_back_m - clamp_jaw_depth_m + 0.32 * clamp_jaw_depth_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "clamp_screw_y_m",
+          "rationale": "Screw station along the jaw, source (0.020 - (-0.005)) / 0.080 = 0.3125.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "mount_style.bench_interface"
+    },
+    {
+      "binding_id": "grip_rides_the_actuator_tip",
+      "consumer": "grip_style.grip_root",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "knob_r_m"
+          ],
+          "expression": "0.92 * knob_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "grip_sleeve_r_m",
+          "rationale": "sleeve_and_ball only: the sleeve is slightly slimmer than its ball cap, source 0.0095 sleeve under a 0.010 ball.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "grip_len_m"
+          ],
+          "expression": "0.5 * (0.048 + 0.34 * grip_len_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "tee_half_m",
+          "rationale": "tee_bar_knobs only: half-span of the tommy bar, source 0.072 crossbar.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "grip_len_m",
+            "knob_r_m"
+          ],
+          "expression": "unit(along) from the actuator's grip_station; the tommy bar uses the candidate's cross direction",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "grip_axis",
+          "rationale": "Every head is oriented from the actuator's own tip direction, so the same three heads read correctly on a sloping lever, a radial crank and a vertical wheel stem.",
+          "unit": "ratio",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "actuator_style.grip_station"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "juicer_press_lever_identity",
+      "applies_to": {
+        "candidates": [
+          "lever_linkage"
+        ],
+        "slot": "actuator_style"
+      },
+      "required_author_checks": [
+        "bench juicer press core part set",
+        "cup strainer and ram ride the same vertical stack",
+        "perforated strainer screen is present and nested in the cup mouth",
+        "press head clears the strainer at both stroke limits",
+        "guided ram travels downward into the cup",
+        "hand actuator drives the ram axis",
+        "lever positive motion lowers the operator grip"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "child_role": "press_ram",
+          "joint_type": "prismatic",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "collector_cup",
+          "joint_type": "prismatic",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "strainer",
+          "joint_type": "prismatic",
+          "parent_role": "collector_cup"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "press_lever",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "drive_link",
+          "joint_type": "revolute",
+          "parent_role": "press_lever"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "collector_cup"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "strainer"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_ram"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_lever"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "drive_link"
+        }
+      ]
+    },
+    {
+      "anchor_id": "juicer_press_rack_pinion_identity",
+      "applies_to": {
+        "candidates": [
+          "rack_pinion_crank"
+        ],
+        "slot": "actuator_style"
+      },
+      "required_author_checks": [
+        "bench juicer press core part set",
+        "cup strainer and ram ride the same vertical stack",
+        "perforated strainer screen is present and nested in the cup mouth",
+        "press head clears the strainer at both stroke limits",
+        "guided ram travels downward into the cup",
+        "hand actuator drives the ram axis",
+        "pinion sweep matches the ram stroke",
+        "crank rotation sweeps the crank arm"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "child_role": "press_ram",
+          "joint_type": "prismatic",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "collector_cup",
+          "joint_type": "prismatic",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "strainer",
+          "joint_type": "prismatic",
+          "parent_role": "collector_cup"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "pinion_drive",
+          "joint_type": "revolute",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "collector_cup"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "strainer"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_ram"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "pinion_drive"
+        }
+      ]
+    },
+    {
+      "anchor_id": "juicer_press_screw_identity",
+      "applies_to": {
+        "candidates": [
+          "screw_handwheel"
+        ],
+        "slot": "actuator_style"
+      },
+      "required_author_checks": [
+        "bench juicer press core part set",
+        "cup strainer and ram ride the same vertical stack",
+        "perforated strainer screen is present and nested in the cup mouth",
+        "press head clears the strainer at both stroke limits",
+        "guided ram travels downward into the cup",
+        "hand actuator drives the ram axis",
+        "the screw stays engaged in the wheel hub at full stroke",
+        "handwheel turns about the vertical screw axis"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "child_role": "press_ram",
+          "joint_type": "prismatic",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "collector_cup",
+          "joint_type": "prismatic",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "strainer",
+          "joint_type": "prismatic",
+          "parent_role": "collector_cup"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "screw_handwheel",
+          "joint_type": "continuous",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "collector_cup"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "strainer"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_ram"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "screw_handwheel"
+        }
+      ]
+    },
+    {
+      "anchor_id": "juicer_press_footed_mount",
+      "applies_to": {
+        "candidates": [
+          "corner_foot_pads"
+        ],
+        "slot": "mount_style"
+      },
+      "required_author_checks": [
+        "bench juicer press core part set",
+        "cup strainer and ram ride the same vertical stack",
+        "perforated strainer screen is present and nested in the cup mouth",
+        "press head clears the strainer at both stroke limits",
+        "guided ram travels downward into the cup",
+        "every stand foot has its own fixed joint under the base"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "child_role": "press_ram",
+          "joint_type": "prismatic",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "collector_cup",
+          "joint_type": "prismatic",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "strainer",
+          "joint_type": "prismatic",
+          "parent_role": "collector_cup"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "stand_foot",
+          "joint_type": "fixed",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "collector_cup"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "strainer"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_ram"
+        },
+        {
+          "count_from": "base_support_count",
+          "exact_count": null,
+          "role": "stand_foot"
+        }
+      ]
+    },
+    {
+      "anchor_id": "juicer_press_clamp_mount",
+      "applies_to": {
+        "candidates": [
+          "bench_clamp_bracket"
+        ],
+        "slot": "mount_style"
+      },
+      "required_author_checks": [
+        "bench juicer press core part set",
+        "cup strainer and ram ride the same vertical stack",
+        "perforated strainer screen is present and nested in the cup mouth",
+        "press head clears the strainer at both stroke limits",
+        "guided ram travels downward into the cup",
+        "clamp screw closes the bench throat on a vertical continuous axis"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "child_role": "press_ram",
+          "joint_type": "prismatic",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "collector_cup",
+          "joint_type": "prismatic",
+          "parent_role": "press_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "strainer",
+          "joint_type": "prismatic",
+          "parent_role": "collector_cup"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "clamp_screw",
+          "joint_type": "continuous",
+          "parent_role": "press_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "collector_cup"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "strainer"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "press_ram"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "clamp_screw"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "Both candidates carry N on their own host. The foot pad stations are inset by foot_radius_m + 0.013 so every pad stays inside the base outline at N=6 and at the largest pad radius, and the rib pitch is 0.82 * clamp_w_m / (N-1) so ribs stay inside the clamp width. The upper bound is 6 because a 12-part / 11-joint assembly at N=6 already sits inside the fleet's 19-part p90 and leaves headroom in the 120 s preflight semantic budget; the source pool's own values are 4 feet (origin anchor L249-L260) and 2 ribs (bench-clamp fork L64-L82), so N is generalised upward here rather than truncated.",
+      "item_slot": "mount_style",
+      "name": "base_support_count",
+      "spacing_expression": "corner_foot_pads: stations walk the inset base perimeter (hx = base_hx_m - foot_radius_m - 0.013, hy likewise). N=4 is the source rectangle ((-hx,-hy), (-hx,hy), (hx,-hy), (hx,hy)); N=3 is a rear-apex tripod, N=5 adds a front pad, N=6 adds both side mid-points. bench_clamp_bracket: rib i sits at (i - (N-1)/2) * (0.82 * clamp_w_m / (N-1)) across the throat wall, i.e. the source's mirrored pair re-spaced evenly.",
+      "values": [
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Open gantry: a two-tier filleted cast base carries two slender chrome guide posts standing at +/-x, and the bored crosshead beam bridges their tops, so the ram bore is centred between two columns and the cup sits in open air between them. The crosshead is a filleted bar unioned with a 70 mm ram boss and then bored, and the actuator pivot bearing hangs off its front face at (-0.032,-0.032,0.425).",
+          "implementation_function": "_frame_style_twin_post_column_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "2.0 * base_hx_m",
+                "extent_v": "base_hy_front_m + base_hy_back_m"
+              },
+              "frame": {
+                "normal": "(0.0, 0.0, -1.0)",
+                "point": "(0.0, 0.0, 0.0) — bottom face of the two-tier cast base"
+              },
+              "kind": "plane",
+              "name": "base_underside",
+              "part": "frame",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "beam_band": "beam_bottom_z_m .. beam_top_z_m",
+                "note": "bored crosshead bridging two posts; the ram guide boss is unioned into the bar and then bored",
+                "point": "(0.0, cup_y_m, ram_origin_z_m)",
+                "radius": "ram_bore_r_m = guided section radius + 0.0008 running fit"
+              },
+              "frame": {
+                "axis": "(0.0, 0.0, 1.0)",
+                "point": "(0.0, cup_y_m, ram_origin_z_m)"
+              },
+              "kind": "axis",
+              "name": "beam_bore_axis",
+              "part": "frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "twin_post_column",
+          "notes": "One welded solid: two-tier filleted base, two guide posts, crosshead bar and ram boss. Every bore is cut after the union so the guide is a real hole.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.275,
+              "minimum": 0.205,
+              "mode": "independent",
+              "name": "base_width_m",
+              "rationale": "X extent of the cast base. Pool: 0.230 (origin anchor L26, and every twin-post fork), 0.200 (bench-clamp plate L34). Drives the beam span, the post spacing, the column width of the C-arch and the clamp plate width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.062,
+              "minimum": 0.034,
+              "mode": "independent",
+              "name": "base_height_m",
+              "rationale": "Top face of the base block, i.e. the plane the drip deck sits on. Pool: 0.048 (origin anchor two-tier base 0.018 + 0.032), 0.050 (C-frame solid base L36), 0.016 (clamp plate L34). Everything above it is derived from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.86,
+              "minimum": 0.58,
+              "mode": "independent",
+              "name": "cup_rim_ratio",
+              "rationale": "Collector cup rim radius as a fraction of the free half-span min(base_hx_m, base_hy_m) - 0.012. A ratio rather than a length because the cup and its drip deck must stay inside the base footprint in BOTH axes at every base size. Source identity: 0.066 rim on a 0.230x0.180 base is ratio 0.846.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.046,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "ram_travel_m",
+              "rationale": "Guided pressing stroke. Pool: 0.040 (origin anchor / C-frame / rack forks L387), 0.055 (screw fork L372). Sizes head_gap_m, the rack length, the pinion sweep and the screw engagement.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.245,
+              "mode": "independent",
+              "name": "ram_reach_m",
+              "rationale": "Distance from the ram joint origin down to the press-head tip. Pool: 0.232 (origin anchor profile L140-L160), 0.247 (screw fork L148-L184). The lower bound is 0.245 so the turned linkage collar always clears the beam by at least 25 mm.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0115,
+              "minimum": 0.0068,
+              "mode": "independent",
+              "name": "post_radius_m",
+              "rationale": "Guide post radius. Pool: 0.0085 (origin anchor L229, all twin-post forks).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "post_span_ratio",
+              "rationale": "Post station as a fraction of base_hx_m. Pool: 0.072 / 0.115 = 0.626 (origin anchor L227). Floored by the cup-clearance derivation so a wide cup pushes the posts outboard instead of into the cup rim.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                2,
+                3,
+                4
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "strainer_ring_count",
+              "rationale": "Concentric perforation rings in the strainer plate. Pool: 3 rings ((0.011, 8), (0.022, 12), (0.033, 18)) in all five records. Two and four keep the same radial spread and the same per-ring counts.",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_picturex_0611__juicer_press_with_handle__001__png_4f95d74d2d3847cd8bdb9c4751cc97b7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L39",
+            "model.py:L42-L63",
+            "model.py:L209-L247"
+          ]
+        },
+        {
+          "evidence": "One welded/cast C-arch instead of a gantry: a solid base, a single tall column at the REAR of the base whose front face is set to clear the cup rim, a throat arm cantilevered forward over the cup, a guide boss under the arm front, and one bore driven through arm and boss. The cup is reachable from the front and both sides because there is no post beside it, and the actuator pivot moves onto the column front face above the arm, which re-routes the drive member down through the throat opening.",
+          "implementation_function": "_frame_style_c_arch_throat_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "2.0 * base_hx_m",
+                "extent_v": "base_hy_front_m + base_hy_back_m"
+              },
+              "frame": {
+                "normal": "(0.0, 0.0, -1.0)",
+                "point": "(0.0, 0.0, 0.0) — bottom face of the solid C-arch base"
+              },
+              "kind": "plane",
+              "name": "base_underside",
+              "part": "frame",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "beam_band": "beam_bottom_z_m .. beam_top_z_m",
+                "note": "one bore driven down through the throat arm and its guide boss, C-frame fork L82-L90",
+                "point": "(0.0, cup_y_m, ram_origin_z_m)",
+                "radius": "ram_bore_r_m = guided section radius + 0.0008 running fit"
+              },
+              "frame": {
+                "axis": "(0.0, 0.0, 1.0)",
+                "point": "(0.0, cup_y_m, ram_origin_z_m)"
+              },
+              "kind": "axis",
+              "name": "beam_bore_axis",
+              "part": "frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "c_arch_throat",
+          "notes": "One welded solid: base, rear column, forward throat arm, guide boss. The column stands proud of the arm as in the source. Base depth is derived to carry the column.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.21,
+              "minimum": 0.145,
+              "mode": "independent",
+              "name": "base_depth_m",
+              "rationale": "Y extent of the base in front of the frame origin. Pool: 0.180 (origin anchor, C-frame), 0.150 (clamp plate). Also drives beam_depth_m = 0.42 * base_depth_m (source 0.074 on a 0.180 base).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.06,
+              "minimum": 0.038,
+              "mode": "independent",
+              "name": "beam_height_m",
+              "rationale": "Thickness of the upper beam. Pool: 0.046 (origin anchor crosshead L43), 0.050 (C-frame throat arm L57). Sets how far the drive link must clear the beam face.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.166,
+              "minimum": 0.108,
+              "mode": "independent",
+              "name": "cup_height_m",
+              "rationale": "Collector cup height. Pool: 0.133 in all five records (`_cup_geometry` outer profile top). Scales the cup's axial profile independently of its radius.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "press_head_ratio",
+              "rationale": "Bell press-head radius as a fraction of the cup rim radius. Pool: 0.050 / 0.066 = 0.757 (origin anchor ram profile). Capped at 0.78 so the head still fits the strainer mouth (inner 0.818 of the rim) when cup and strainer are lifted.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.064,
+              "minimum": 0.034,
+              "mode": "independent",
+              "name": "column_depth_m",
+              "rationale": "Y thickness of the C-arch's rear column. Pool: 0.046 (C-frame fork L48). The column front face is derived to clear the cup rim, so the base grows rearward to carry a deeper column instead of the column moving into the cup.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_juicer_press_with_handle_var_c_frame_lever_refill",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L92",
+            "model.py:L250-L272",
+            "model.py:L423-L438"
+          ]
+        }
+      ],
+      "component_type": "standing frame and ram guide beam",
+      "name": "frame_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The press free-stands on the bench: an indexed loop emits one foot_{index} PART per base station, each a rubber pad disc, plus a matching frame_to_foot_{index} FIXED articulation at that station. Adds N parts and N joints and nothing below the base but the pads. This is the pool's one explicitly index-general repeated-part rule and carries the base_support_count multiplicity.",
+          "implementation_function": "_build_mount",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "2.0 * base_hx_m",
+                "extent_v": "base_hy_front_m + base_hy_back_m"
+              },
+              "frame": {
+                "normal": "(0.0, 0.0, -1.0)",
+                "point": "(0.0, 0.0, 0.0) — pad bottom faces, one per station"
+              },
+              "kind": "plane",
+              "name": "bench_interface",
+              "part": "foot_i",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "corner_foot_pads",
+          "notes": "One rubber-pad PART and one FIXED joint per station; the pad is embedded 0.5 mm into the base so the support contact is a real overlap rather than a tangency.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.018,
+              "minimum": 0.009,
+              "mode": "independent",
+              "name": "foot_radius_m",
+              "rationale": "Rubber pad radius. Pool: 0.012 (origin anchor L255). Sets the pad height (0.006 + 0.16 * r, source 0.008) and the station inset from the base edge.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__juicer_press_with_handle__001__png_4f95d74d2d3847cd8bdb9c4751cc97b7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L249-L260",
+            "model.py:L351-L358"
+          ]
+        },
+        {
+          "evidence": "The press grips a bench edge instead of standing on it: the base becomes a C-clamp: a thin mounting plate on top of the bench, a rear throat wall, a lower jaw reaching back underneath, an indexed set of triangular gusset ribs across the throat-to-plate junction, and a bore through the jaw carrying a separate clamp-screw part on a CONTINUOUS joint about the vertical, with a T-handle crossbar and a rubber pressure pad that closes against the bench underside. Adds one moving part and one continuous joint, moves structure below z=0, and lengthens the guide columns to hold the beam height.",
+          "implementation_function": "_clamp_bracket_solids",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "2.0 * base_hx_m",
+                "extent_v": "base_hy_front_m + base_hy_back_m"
+              },
+              "frame": {
+                "normal": "(0.0, 0.0, -1.0)",
+                "point": "(0.0, 0.0, 0.0) — base underside and jaw top face the bench slab from opposite sides"
+              },
+              "kind": "plane",
+              "name": "bench_interface",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "note": "bored through the lower jaw, bench-clamp fork L90-L97",
+                "point": "(0.0, clamp_screw_y_m, clamp_jaw_z1_m)",
+                "radius": "clamp_screw_r_m + 0.0008"
+              },
+              "frame": {
+                "axis": "(0.0, 0.0, 1.0)",
+                "point": "(0.0, clamp_screw_y_m, clamp_jaw_z1_m)"
+              },
+              "kind": "axis",
+              "name": "clamp_screw_bore",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "bench_clamp_bracket",
+          "notes": "Mounting plate on the bench, rear throat wall, lower jaw reaching back under it, N outboard gusset ribs tying wall to jaw, and a bored clamp screw on a CONTINUOUS vertical joint with a T-handle and a rubber pad.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.038,
+              "mode": "independent",
+              "name": "clamp_throat_h_m",
+              "rationale": "Clear throat between the base underside and the jaw top, i.e. the bench slab thickness the clamp accepts. Pool: 0.050 (bench-clamp fork, plate bottom z=0 to jaw top z=-0.050).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.007,
+              "mode": "independent",
+              "name": "clamp_screw_r_m",
+              "rationale": "Clamping screw rod radius. Pool: 0.009 (bench-clamp fork L253). The jaw bore is this + 0.0008 so the screw is carried by its own bore.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_juicer_press_with_handle_var_bench_clamp_press_refill",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L97",
+            "model.py:L249-L276",
+            "model.py:L305-L364",
+            "model.py:L463-L472"
+          ]
+        }
+      ],
+      "component_type": "base support / bench interface",
+      "name": "mount_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Two-member linkage: a long lever swings on a transverse REVOLUTE about (0,1,0) in a bearing bushing on the beam, its arm a spline-swept tube falling 0.120 over 0.245 toward the operator, and a shorter dog-link hangs from a second REVOLUTE pinned on that arm and reaches the turned collar on the ram. Two parts, two revolute joints on parallel transverse axes, and the only actuator whose drive member is a serial chain.",
+          "implementation_function": "_build_lever_linkage",
+          "interfaces": [
+            {
+              "dimensions": {
+                "note": "bored bushing lug standing proud of the beam's front face",
+                "point": "(pivot_x_m, mech_y_m, pivot_z_m)",
+                "radius": "lever_pin_r_m + 0.0007"
+              },
+              "frame": {
+                "axis": "(0.0, 1.0, 0.0)",
+                "point": "(pivot_x_m, mech_y_m, pivot_z_m)"
+              },
+              "kind": "axis",
+              "name": "drive_axis",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "note": "arm tip, tommy bar crosses on (0, 1, 0)",
+                "point": "(lever_reach_m, 0.0, -lever_reach_m * lever_drop_ratio) in the lever frame",
+                "radius": "arm radius at the tip"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, -lever_drop_ratio) normalised",
+                "point": "(lever_reach_m, 0.0, -lever_reach_m * lever_drop_ratio) in the lever frame"
+              },
+              "kind": "axis",
+              "name": "grip_station",
+              "part": "actuator",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "lever_linkage",
+          "notes": "Two parts, two REVOLUTE joints on parallel transverse axes. The whole mechanism runs in a plane ahead of the beam's front face (mech_y_m), which is derived so the dog-link stays clear of the beam all the way down to the ram collar.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "Pivot-to-arm-tip length. Pool: 0.245 (origin anchor `_lever_arm_geometry` last control point). Sets the arm radius (0.029 * reach, source 0.0072) and the link pin station (0.196 * reach, source 0.048).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "lever_drop_ratio",
+              "rationale": "Fall of the arm per unit of reach. Pool: 0.120 / 0.245 = 0.490 (origin anchor spline). Together with the reach it fixes the operator grip's height, and the lever's down limit is derived from it so the grip never reaches the bench.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__juicer_press_with_handle__001__png_4f95d74d2d3847cd8bdb9c4751cc97b7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L164-L190",
+            "model.py:L239-L247",
+            "model.py:L297-L349",
+            "model.py:L390-L419"
+          ]
+        },
+        {
+          "evidence": "Gear drive: a toothed rack runs the length of the ram's guided flank, the beam is re-cut with a rectangular pass-through slot for it plus a guide block, and a spur pinion in a cylindrical bearing housing meshes that rack on ONE REVOLUTE about (0,1,0), carrying a shaft out through the beam to a hub, a radial crank arm and a knob. One part and one revolute joint, a real gear mesh instead of a pinned chain, and the joint range is the kinematic image of the ram stroke (travel / pitch_radius).",
+          "implementation_function": "_build_rack_pinion_crank",
+          "interfaces": [
+            {
+              "dimensions": {
+                "note": "window cut through the beam for the gear plus a bored bearing boss on the beam's rear face",
+                "point": "(pinion_x_m, cup_y_m, pinion_z_m)",
+                "radius": "pinion_shaft_r_m + 0.0008"
+              },
+              "frame": {
+                "axis": "(0.0, 1.0, 0.0)",
+                "point": "(pinion_x_m, cup_y_m, pinion_z_m)"
+              },
+              "kind": "axis",
+              "name": "drive_axis",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "note": "crank arm tip; the crank plane sits behind the beam so the sweep is clear",
+                "point": "(crank_reach_m, crank_hub_y_m - cup_y_m, 0.0) in the pinion frame",
+                "radius": "arm radius at the tip"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(crank_reach_m, crank_hub_y_m - cup_y_m, 0.0) in the pinion frame"
+              },
+              "kind": "axis",
+              "name": "grip_station",
+              "part": "actuator",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "rack_pinion_crank",
+          "notes": "One part, one REVOLUTE joint. The rack rides the ram's +X flank and the pinion meshes it through a real window in the beam, with gear_backlash_m = 0.5 * module keeping the tip circles well inside the penetration gate.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "gear_module_mm",
+              "rationale": "Gear module, in MILLIMETRES because the pair is built at mm scale. Pool: 2.0 (rack fork L187/L199). The tooth count is derived from it and the stroke, so the module changes the tooth geometry and the count together.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.132,
+              "minimum": 0.072,
+              "mode": "independent",
+              "name": "crank_reach_m",
+              "rationale": "Crank arm length from the pinion axis. Pool: 0.110 (rack fork L367).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_juicer_press_with_handle_var_rack_pinion_refill",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L48-L79",
+            "model.py:L185-L203",
+            "model.py:L260-L277",
+            "model.py:L330-L378",
+            "model.py:L425-L439"
+          ]
+        },
+        {
+          "evidence": "Screw drive on the VERTICAL axis: the ram's upper length becomes a coarse thread band of alternating turned steps, the beam carries a nut housing annulus over a widened bore, and a broad spoked handwheel — rim ring, hub, crossing spoke bars, and a knob on a stem near the rim — turns on a CONTINUOUS joint about (0,0,1) coaxial with the ram. The only actuator whose axis is vertical rather than transverse, the only unbounded-rotation actuator, and the only one that changes the ram body itself.",
+          "implementation_function": "_build_screw_handwheel",
+          "interfaces": [
+            {
+              "dimensions": {
+                "note": "bored nut housing annulus above the beam, screw fork L64-L72",
+                "point": "(0.0, cup_y_m, wheel_origin_z_m)",
+                "radius": "nut_bore_r_m = screw_thread_r_m + 0.0012"
+              },
+              "frame": {
+                "axis": "(0.0, 0.0, 1.0)",
+                "point": "(0.0, cup_y_m, wheel_origin_z_m)"
+              },
+              "kind": "axis",
+              "name": "drive_axis",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "note": "knob stem at the rim; tommy bar crosses tangentially",
+                "point": "(0.88 * handwheel_r_m, 0.0, wheel_hub_h_m - wheel_rim_h_m + wheel_stem_h_m)",
+                "radius": "arm radius at the tip"
+              },
+              "frame": {
+                "axis": "(0.0, 0.0, 1.0)",
+                "point": "(0.88 * handwheel_r_m, 0.0, wheel_hub_h_m - wheel_rim_h_m + wheel_stem_h_m)"
+              },
+              "kind": "axis",
+              "name": "grip_station",
+              "part": "actuator",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "screw_handwheel",
+          "notes": "One part, one CONTINUOUS joint about the VERTICAL screw axis — the pool's only vertical actuator. The ram's upper length becomes a coarse thread band and the wheel hub is bored so the screw runs through it.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.094,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "handwheel_r_m",
+              "rationale": "Handwheel rim outer radius. Pool: 0.078 (screw fork L191). Sets the rim band thickness (0.017 at the source radius) and the knob station at 0.88 of it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                2,
+                3,
+                4
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "wheel_spoke_pairs",
+              "rationale": "Number of crossing spoke bars. Pool: 4 crossing bars at 0/45/90/135 deg (screw fork L198), i.e. 2 pairs at the source's own spacing generalised.",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_juicer_press_with_handle_var_screw_press",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L40-L72",
+            "model.py:L145-L213",
+            "model.py:L256-L266",
+            "model.py:L306-L334",
+            "model.py:L365-L384"
+          ]
+        }
+      ],
+      "component_type": "operator actuator driving the ram",
+      "name": "actuator_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A single thin polished disc slightly wider than the cup rim, laid straight on the base top, so the cup seats a few millimetres above the casting and the whole juice stack sits low in the frame. One deck solid, no step.",
+          "implementation_function": "_catch_deck_flat_drip_disc_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "2.0 * deck_r_m",
+                "extent_v": "2.0 * deck_r_m — one disc, cup seats deck_disc_h_m above the base top"
+              },
+              "frame": {
+                "normal": "(0.0, 0.0, 1.0)",
+                "point": "(0.0, cup_y_m, cup_seat_z_m)"
+              },
+              "kind": "plane",
+              "name": "cup_seat_plane",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "flat_drip_disc",
+          "notes": "A single polished disc laid straight on the base; deck_lift_m = deck_disc_h_m.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0075,
+              "minimum": 0.0015,
+              "mode": "independent",
+              "name": "deck_margin_m",
+              "rationale": "How far the drip deck overhangs the cup rim. Pool: 0.068 - 0.066 = 0.002 (origin anchor L222 against the cup rim). Also sets the disc thickness (0.0055 + 0.45 * margin, source 0.007).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__juicer_press_with_handle__001__png_4f95d74d2d3847cd8bdb9c4751cc97b7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L221-L226",
+            "model.py:L360-L369"
+          ]
+        },
+        {
+          "evidence": "A stepped pedestal instead: a tall circular boss rises out of the base and the drip disc caps it, so the deck is a two-tier column that lifts the cup station well clear of the base plate and re-derives the whole stack above it — cup seat, strainer height, ram rest height, beam height and column length all move with the pedestal. Two deck solids with a visible step.",
+          "implementation_function": "_catch_deck_raised_pedestal_boss_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "2.0 * deck_r_m",
+                "extent_v": "2.0 * deck_r_m — stepped pedestal plus disc, deck_lift_m = pedestal_h_m + deck_disc_h_m"
+              },
+              "frame": {
+                "normal": "(0.0, 0.0, 1.0)",
+                "point": "(0.0, cup_y_m, cup_seat_z_m)"
+              },
+              "kind": "plane",
+              "name": "cup_seat_plane",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "raised_pedestal_boss",
+          "notes": "Two deck solids with a visible step; the boss radius is 1.08 of the disc, matching the source's 0.074 boss under a 0.068 disc.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.048,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "pedestal_h_m",
+              "rationale": "Height of the raised boss under the drip disc. Pool: 0.032 (bench-clamp fork L41-L46). It lifts the cup station and therefore re-derives the strainer height, the ram rest height, the beam height and the column length together.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_juicer_press_with_handle_var_bench_clamp_press_refill",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L41-L46",
+            "model.py:L318-L323"
+          ]
+        }
+      ],
+      "component_type": "cup seating deck on the base",
+      "name": "catch_deck",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A bare spherical knob on the end of the actuator's arm, with no sleeve between arm and hand: the arm runs out to its full reach as a plain rod and terminates in one ball. The most compact of the three hand interfaces and the only one that adds a single solid.",
+          "implementation_function": "_grip_visuals",
+          "interfaces": [
+            {
+              "dimensions": {
+                "note": "one sphere seated on the arm tip",
+                "point": "grip_station point",
+                "radius": "grip_sleeve_r_m / knob_r_m / tee bar half-thickness"
+              },
+              "frame": {
+                "axis": "grip_station axis",
+                "point": "grip_station point"
+              },
+              "kind": "axis",
+              "name": "grip_root",
+              "part": "actuator",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "ball_knob",
+          "notes": "One solid: a bare ball on a plain arm end.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.016,
+              "minimum": 0.0085,
+              "mode": "independent",
+              "name": "knob_r_m",
+              "rationale": "Ball knob radius, shared by all three heads. Pool: 0.010 (origin anchor grip_end L329), 0.013 (rack fork crank_knob L374), 0.007 (clamp T-handle end knobs L269).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_juicer_press_with_handle_var_rack_pinion_refill",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L365-L378"
+          ]
+        },
+        {
+          "evidence": "A coaxial cylindrical grip sleeve of larger radius than the arm, seated over the outer part of the arm and aligned with the arm's own direction, plus a ball end cap beyond it — the classic turned handle. Two solids, and the sleeve widens the arm's silhouette over its outer third.",
+          "implementation_function": "_grip_visuals",
+          "interfaces": [
+            {
+              "dimensions": {
+                "note": "coaxial sleeve over the arm plus a ball end cap",
+                "point": "grip_station point",
+                "radius": "grip_sleeve_r_m / knob_r_m / tee bar half-thickness"
+              },
+              "frame": {
+                "axis": "grip_station axis",
+                "point": "grip_station point"
+              },
+              "kind": "axis",
+              "name": "grip_root",
+              "part": "actuator",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "sleeve_and_ball",
+          "notes": "Two solids: a coaxial cylindrical sleeve and a ball cap beyond it.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.092,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "grip_len_m",
+              "rationale": "Length of the turned grip sleeve / the tommy bar's half-span driver. Pool: 0.075 (origin anchor handle_grip L316), 0.072 (clamp T-handle crossbar L260).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__juicer_press_with_handle__001__png_4f95d74d2d3847cd8bdb9c4751cc97b7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L313-L339"
+          ]
+        },
+        {
+          "evidence": "A tommy-bar head: a filleted crossbar laid TRANSVERSE to the arm at its tip with a spherical knob at each of its two ends, so the hand interface is a two-handed bar across the arm axis rather than an in-line grip. Three solids on a different axis from the arm, and the widest of the three heads.",
+          "implementation_function": "_grip_visuals",
+          "interfaces": [
+            {
+              "dimensions": {
+                "note": "crossbar transverse to the arm with a ball at each end",
+                "point": "grip_station point",
+                "radius": "grip_sleeve_r_m / knob_r_m / tee bar half-thickness"
+              },
+              "frame": {
+                "axis": "grip_station axis",
+                "point": "grip_station point"
+              },
+              "kind": "axis",
+              "name": "grip_root",
+              "part": "actuator",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "tee_bar_knobs",
+          "notes": "Three solids on an axis perpendicular to the arm: the widest of the three heads, and the only one that is not in line with the arm.",
+          "parameters": [],
+          "record_id": "rec_juicer_press_with_handle_var_bench_clamp_press_refill",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L249-L276"
+          ]
+        }
+      ],
+      "component_type": "operator hand interface at the actuator tip",
+      "name": "grip_style",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_juicer_press_with_handle",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_juicer_press_with_handle.md",
+  "source_map_sha256": "69cbabbd337f16e8525f77df3443e5cc7424a135dbdb10d694c2f6de5875108c"
+}

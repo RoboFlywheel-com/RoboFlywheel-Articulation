@@ -1,0 +1,2534 @@
+{
+ "assembly_notes": "Root is `chassis` (the hidden steel underframe). `cargo_shell` is its FIXED child through `body_mount`, welded at the deck datum where the deck crossmember top face meets the moulded floor underside; the shell link is authored in that datum frame so the weld origin sits on real hardware on both sides. There is NO hopper tilt/dump joint anywhere - a tipping body is the sibling subcategory Tilt Truck2 and stays excluded. Every reachable configuration therefore carries at least three movable joints from the rolling gear alone: two CONTINUOUS rear road wheel rolls on one lateral axle line plus one CONTINUOUS front wheel roll; the swivel caster adds a CONTINUOUS vertical swivel, the brake candidate a bounded REVOLUTE step pedal, the folding handle a bounded REVOLUTE fold and the hinged lid a bounded REVOLUTE rim hinge. There are no compatibility gates: `shell_form` publishes one plan descriptor (station outline at any height) that the deck seat, wheel track, rib footprints, perimeter bumper ring, rear flange handle datum and lid outline all resolve against, so a V-nose or stadium hopper on any underframe builds a matching bumper ring, rib seat and lid rather than being excluded. The lid hinge sits forward of the handle datum on the same rear flange and opens up-and-back, so the folding handle (which folds rearward) and the lid never share swept space.",
+ "bindings": [
+  {
+   "binding_id": "deck_seat_welds_cargo_shell",
+   "consumer": "shell_form.shell_floor_seat",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "rear_wheel_radius_m",
+      "tub_length_m",
+      "nose_run_ratio"
+     ],
+     "expression": "(0.5 * (plan_x_lo(0) + plan_x_hi(0)), 0, deck_z)",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "mount_datum",
+     "rationale": "body_mount weld datum: the deck crossmember top face and the moulded floor underside meet here, so the FIXED origin sits on real hardware on both sides (002 model.py:L444-L451, 004 model.py:L708-L715)",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "choices": [],
+     "depends_on": [
+      "rear_wheel_radius_m"
+     ],
+     "expression": "deck_z - SHELL_BITE",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "floor_z",
+     "rationale": "moulded floor seats 0.5 mm into the deck rails so the rigid shell is physically carried, never floating",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "fixed",
+   "provider": "underframe.deck_seat"
+  },
+  {
+   "binding_id": "rear_axle_carries_road_wheels",
+   "consumer": "rear_wheel.rear_axle_line",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "tub_width_m",
+      "wall_draft_ratio",
+      "rear_wheel_radius_m"
+     ],
+     "expression": "rear_clear_y + 0.006",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "bearing_face_y",
+     "rationale": "axle beam / bearing block outer face; the wheel hub boss overlaps it by 0.5 mm so the wheel is journalled, not floating",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "choices": [],
+     "depends_on": [
+      "tub_width_m",
+      "wall_draft_ratio",
+      "shell_form"
+     ],
+     "expression": "max plan half-width sampled over the wheel footprint at min(2*rear_wheel_radius_m + 0.02, rim_wall_z)",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "rear_clear_y",
+     "rationale": "host adaptation: the wheel track follows the widest moulded section the wheel can reach for every plan family",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "continuous",
+   "provider": "underframe.rear_axle_line"
+  },
+  {
+   "binding_id": "front_mount_carries_front_support",
+   "consumer": "front_support.front_mount_axis",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "rear_wheel_radius_m"
+     ],
+     "expression": "deck_z - SWIVEL_DROP",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "swivel_z",
+     "rationale": "one front mount plane for every front support: the rigid fork spans it to the axle, the caster yoke swivels on it",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "choices": [],
+     "depends_on": [
+      "tub_length_m"
+     ],
+     "expression": "half_len - 0.10",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "x_front",
+     "rationale": "front support station under the discharge nose",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "continuous",
+   "provider": "underframe.front_mount_axis"
+  },
+  {
+   "binding_id": "shell_wall_carries_ribs",
+   "consumer": "rib.side_wall",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "rib_relief_m"
+     ],
+     "expression": "rib_relief_m",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "rib_relief",
+     "rationale": "rib relief proud of the resolved wall surface",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "fixed",
+   "provider": "shell_form.side_wall"
+  },
+  {
+   "binding_id": "rear_flange_carries_handle",
+   "consumer": "handle.rear_flange_seat",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "tub_length_m"
+     ],
+     "expression": "x_rear_flange + 0.014",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "handle_post_x",
+     "rationale": "handle datum on the rear flange, behind the lid hinge line",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "choices": [],
+     "depends_on": [
+      "tub_height_m"
+     ],
+     "expression": "rim_z - 0.090",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "handle_hinge_z",
+     "rationale": "folding handle hinge line on the rear wall below the flange",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "fixed",
+   "provider": "shell_form.rear_flange_seat"
+  },
+  {
+   "binding_id": "rim_flange_carries_lid",
+   "consumer": "lid.rim_flange",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "tub_length_m"
+     ],
+     "expression": "x_rear_flange + 0.040",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "lid_hinge_x",
+     "rationale": "lid hinge station on the rear flange, forward of the handle datum",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "choices": [],
+     "depends_on": [
+      "tub_length_m",
+      "nose_run_ratio"
+     ],
+     "expression": "(plan_x_hi(1) + FLANGE_OUT + LID_OVERHANG) - lid_rear_cut_x",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "lid_length",
+     "rationale": "lid panel follows the shared rim outline for every plan family (metric offset, trimmed at the hinge line)",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "choices": [],
+     "depends_on": [
+      "tub_length_m",
+      "tub_width_m",
+      "nose_run_ratio",
+      "wall_draft_ratio"
+     ],
+     "expression": "offset_outline(outline(1, FLANGE_OUT), LID_OVERHANG)",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "lid_plan",
+     "rationale": "the shell_form rim outline is the provider of the lid plan; the lid consumes it directly so the panel and skirt lip match every plan family",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "revolute",
+   "provider": "shell_form.rim_flange"
+  }
+ ],
+ "category_anchors": [
+  {
+   "anchor_id": "tilt_truck1_rigid_rolling_body",
+   "applies_to": {
+    "candidates": [
+     "tapered_rect",
+     "chamfered_octagon",
+     "obround",
+     "v_nose"
+    ],
+    "slot": "shell_form"
+   },
+   "required_author_checks": [
+    "category_anchor: cargo shell is rigidly fixed to the rolling chassis",
+    "category_anchor: two rear road wheels roll on one lateral axle line",
+    "category_anchor: moulded side ribs follow the shell wall"
+   ],
+   "required_relations": [
+    {
+     "axis": null,
+     "child_role": "cargo_shell",
+     "joint_type": "fixed",
+     "parent_role": "chassis"
+    },
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "rear_wheel",
+     "joint_type": "continuous",
+     "parent_role": "chassis"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "chassis"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "cargo_shell"
+    },
+    {
+     "count_from": null,
+     "exact_count": 2,
+     "role": "rear_wheel"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "front_wheel"
+    }
+   ]
+  },
+  {
+   "anchor_id": "tilt_truck1_rigid_front_fork",
+   "applies_to": {
+    "candidates": [
+     "rigid_fork"
+    ],
+    "slot": "front_support"
+   },
+   "required_author_checks": [
+    "category_anchor: the front support carries a rolling front wheel"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "front_wheel",
+     "joint_type": "continuous",
+     "parent_role": "chassis"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "front_wheel"
+    },
+    {
+     "count_from": null,
+     "exact_count": 0,
+     "role": "caster_yoke"
+    },
+    {
+     "count_from": null,
+     "exact_count": 0,
+     "role": "brake_pedal"
+    }
+   ]
+  },
+  {
+   "anchor_id": "tilt_truck1_swivel_caster",
+   "applies_to": {
+    "candidates": [
+     "swivel_caster",
+     "swivel_caster_brake"
+    ],
+    "slot": "front_support"
+   },
+   "required_author_checks": [
+    "category_anchor: front caster swivels about a vertical axis",
+    "category_anchor: the front support carries a rolling front wheel"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "caster_yoke",
+     "joint_type": "continuous",
+     "parent_role": "chassis"
+    },
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "front_wheel",
+     "joint_type": "continuous",
+     "parent_role": "caster_yoke"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "caster_yoke"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "front_wheel"
+    }
+   ]
+  },
+  {
+   "anchor_id": "tilt_truck1_caster_step_brake",
+   "applies_to": {
+    "candidates": [
+     "swivel_caster_brake"
+    ],
+    "slot": "front_support"
+   },
+   "required_author_checks": [
+    "category_anchor: caster step brake pivots on the yoke"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "child_role": "brake_pedal",
+     "joint_type": "revolute",
+     "parent_role": "caster_yoke"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "brake_pedal"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "caster_yoke"
+    }
+   ]
+  },
+  {
+   "anchor_id": "tilt_truck1_hinged_lid",
+   "applies_to": {
+    "candidates": [
+     "hinged_lid"
+    ],
+    "slot": "lid"
+   },
+   "required_author_checks": [
+    "category_anchor: hinged lid turns on the rear rim hinge",
+    "hinged lid panel follows the moulded rim outline",
+    "hinged lid knuckle, webs, panel and skirt are one fused island"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "child_role": "lid",
+     "joint_type": "revolute",
+     "parent_role": "cargo_shell"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "lid"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "cargo_shell"
+    }
+   ]
+  },
+  {
+   "anchor_id": "tilt_truck1_open_hopper",
+   "applies_to": {
+    "candidates": [
+     "open_top"
+    ],
+    "slot": "lid"
+   },
+   "required_author_checks": [
+    "category_anchor: cargo shell is rigidly fixed to the rolling chassis"
+   ],
+   "required_relations": [],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 0,
+     "role": "lid"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "cargo_shell"
+    }
+   ]
+  },
+  {
+   "anchor_id": "tilt_truck1_folding_handle",
+   "applies_to": {
+    "candidates": [
+     "folding_u_frame"
+    ],
+    "slot": "handle"
+   },
+   "required_author_checks": [
+    "category_anchor: push handle folds on the rear flange hinge"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "child_role": "push_handle",
+     "joint_type": "revolute",
+     "parent_role": "cargo_shell"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "push_handle"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "cargo_shell"
+    }
+   ]
+  },
+  {
+   "anchor_id": "tilt_truck1_rigid_handle",
+   "applies_to": {
+    "candidates": [
+     "twin_grab_bars",
+     "u_frame_fixed",
+     "molded_grips"
+    ],
+    "slot": "handle"
+   },
+   "required_author_checks": [
+    "category_anchor: cargo shell is rigidly fixed to the rolling chassis"
+   ],
+   "required_relations": [],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 0,
+     "role": "push_handle"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "cargo_shell"
+    }
+   ]
+  }
+ ],
+ "multiplicities": [
+  {
+   "host_capacity_expression": "2 <= rib_count <= 5; the usable span stops before the discharge nose so obround and v_nose plans still present a real flat run, and every rib footprint is resolved from the actual plan outline at the rib band heights",
+   "item_slot": "rib",
+   "name": "rib_count",
+   "spacing_expression": "ribs are evenly pitched inside one usable side-wall span: start = plan_x_lo(0.6) + 0.16 * span, end = plan_x_lo(0.6) + 0.68 * span, pitch = (end - start) / (rib_count - 1); each rib is emitted on both walls as rib__<candidate>__wall{0,1}_{i}",
+   "values": [
+    2,
+    3,
+    4,
+    5
+   ]
+  }
+ ],
+ "schema_version": 1,
+ "slots": [
+  {
+   "candidates": [
+    {
+     "evidence": "rounded-rectangle station loft with per-station x_lo/x_hi shift (near-vertical rear wall, long forward nose), fused top flange slab, single cavity cut, cargo_body/body_shell",
+     "implementation_function": "_shell_form_tapered_rect_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_x": "plan_x_hi(0) - plan_x_lo(0)",
+        "extent_y": "2 * plan_y_half(0)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(mount_datum)"
+       },
+       "kind": "plane",
+       "name": "shell_floor_seat",
+       "part": "cargo_shell",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "band_z": "0.22 * wall_h .. rim_wall_z - 0.045",
+        "span_x": "0.52 * (plan_x_hi(0.6) - plan_x_lo(0.6))"
+       },
+       "frame": {
+        "normal": "(0, +-1, 0)",
+        "point": "(x, plan_y_half(t), floor_z + t * wall_h)"
+       },
+       "kind": "plane",
+       "name": "side_wall",
+       "part": "cargo_shell",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "extent_x": "FLANGE_OUT + WALL_T",
+        "extent_y": "2 * plan_y_half(1)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(x_rear_flange + 0.014, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rear_flange_seat",
+       "part": "cargo_shell",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "extent_x": "plan_x_hi(1) - plan_x_lo(1) + 2 * FLANGE_OUT",
+        "extent_y": "2 * (plan_y_half(1) + FLANGE_OUT)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(0, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rim_flange",
+       "part": "cargo_shell",
+       "role": "provider"
+      }
+     ],
+     "name": "tapered_rect",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.6,
+       "minimum": 1.05,
+       "mode": "independent",
+       "name": "tub_length_m",
+       "rationale": "moulded hopper rim length; drives the plan stations, deck rails and rib span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.95,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "tub_width_m",
+       "rationale": "moulded hopper rim width; drives the plan half-width, wheel track and handle span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.78,
+       "minimum": 0.44,
+       "mode": "independent",
+       "name": "tub_height_m",
+       "rationale": "rim height above the deck seat; drives the wall height and rib band",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.86,
+       "minimum": 0.55,
+       "mode": "independent",
+       "name": "wall_draft_ratio",
+       "rationale": "floor plan / rim plan taper of the drafted moulded wall",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.58,
+       "minimum": 0.28,
+       "mode": "independent",
+       "name": "nose_run_ratio",
+       "rationale": "how far the discharge nose runs forward-and-down from the rim to the floor",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_height_m"
+       ],
+       "expression": "floor_z + tub_height_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "rim_z",
+       "rationale": "rim plane above the weld datum",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_height_m"
+       ],
+       "expression": "tub_height_m - FLANGE_T",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "wall_h",
+       "rationale": "drafted wall height under the flange",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_125113_884197_61a3684e",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L63-L89",
+      "model.py:L112-L182",
+      "model.py:L351-L376"
+     ]
+    },
+    {
+     "evidence": "_section_dimensions shared station descriptor, _section_outline constant-45\u00b0 chamfered octagon consumed by shell, rim flange, ribs, keel and wheel cheeks",
+     "implementation_function": "_shell_form_chamfered_octagon_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_x": "plan_x_hi(0) - plan_x_lo(0)",
+        "extent_y": "2 * plan_y_half(0)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(mount_datum)"
+       },
+       "kind": "plane",
+       "name": "shell_floor_seat",
+       "part": "cargo_shell",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "band_z": "0.22 * wall_h .. rim_wall_z - 0.045",
+        "span_x": "0.52 * (plan_x_hi(0.6) - plan_x_lo(0.6))"
+       },
+       "frame": {
+        "normal": "(0, +-1, 0)",
+        "point": "(x, plan_y_half(t), floor_z + t * wall_h)"
+       },
+       "kind": "plane",
+       "name": "side_wall",
+       "part": "cargo_shell",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "extent_x": "FLANGE_OUT + WALL_T",
+        "extent_y": "2 * plan_y_half(1)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(x_rear_flange + 0.014, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rear_flange_seat",
+       "part": "cargo_shell",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "extent_x": "plan_x_hi(1) - plan_x_lo(1) + 2 * FLANGE_OUT",
+        "extent_y": "2 * (plan_y_half(1) + FLANGE_OUT)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(0, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rim_flange",
+       "part": "cargo_shell",
+       "role": "provider"
+      }
+     ],
+     "name": "chamfered_octagon",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.6,
+       "minimum": 1.05,
+       "mode": "independent",
+       "name": "tub_length_m",
+       "rationale": "moulded hopper rim length; drives the plan stations, deck rails and rib span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.95,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "tub_width_m",
+       "rationale": "moulded hopper rim width; drives the plan half-width, wheel track and handle span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.78,
+       "minimum": 0.44,
+       "mode": "independent",
+       "name": "tub_height_m",
+       "rationale": "rim height above the deck seat; drives the wall height and rib band",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.86,
+       "minimum": 0.55,
+       "mode": "independent",
+       "name": "wall_draft_ratio",
+       "rationale": "floor plan / rim plan taper of the drafted moulded wall",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.58,
+       "minimum": 0.28,
+       "mode": "independent",
+       "name": "nose_run_ratio",
+       "rationale": "how far the discharge nose runs forward-and-down from the rim to the floor",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_height_m"
+       ],
+       "expression": "floor_z + tub_height_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "rim_z",
+       "rationale": "rim plane above the weld datum",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_height_m"
+       ],
+       "expression": "tub_height_m - FLANGE_T",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "wall_h",
+       "rationale": "drafted wall height under the flange",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_tilt_truck1_var_form_chamfered_octagonal",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L52-L68",
+      "model.py:L71-L91",
+      "model.py:L94-L107",
+      "model.py:L162-L194"
+     ]
+    },
+    {
+     "evidence": "_obround_profile true stadium outline (straight sides + semicircular ends), TUB_SECTION_SPECS, _outer_section_size drives ribs/frame onto the straight runs only",
+     "implementation_function": "_shell_form_obround_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_x": "plan_x_hi(0) - plan_x_lo(0)",
+        "extent_y": "2 * plan_y_half(0)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(mount_datum)"
+       },
+       "kind": "plane",
+       "name": "shell_floor_seat",
+       "part": "cargo_shell",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "band_z": "0.22 * wall_h .. rim_wall_z - 0.045",
+        "span_x": "0.52 * (plan_x_hi(0.6) - plan_x_lo(0.6))"
+       },
+       "frame": {
+        "normal": "(0, +-1, 0)",
+        "point": "(x, plan_y_half(t), floor_z + t * wall_h)"
+       },
+       "kind": "plane",
+       "name": "side_wall",
+       "part": "cargo_shell",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "extent_x": "FLANGE_OUT + WALL_T",
+        "extent_y": "2 * plan_y_half(1)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(x_rear_flange + 0.014, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rear_flange_seat",
+       "part": "cargo_shell",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "extent_x": "plan_x_hi(1) - plan_x_lo(1) + 2 * FLANGE_OUT",
+        "extent_y": "2 * (plan_y_half(1) + FLANGE_OUT)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(0, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rim_flange",
+       "part": "cargo_shell",
+       "role": "provider"
+      }
+     ],
+     "name": "obround",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.6,
+       "minimum": 1.05,
+       "mode": "independent",
+       "name": "tub_length_m",
+       "rationale": "moulded hopper rim length; drives the plan stations, deck rails and rib span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.95,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "tub_width_m",
+       "rationale": "moulded hopper rim width; drives the plan half-width, wheel track and handle span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.78,
+       "minimum": 0.44,
+       "mode": "independent",
+       "name": "tub_height_m",
+       "rationale": "rim height above the deck seat; drives the wall height and rib band",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.86,
+       "minimum": 0.55,
+       "mode": "independent",
+       "name": "wall_draft_ratio",
+       "rationale": "floor plan / rim plan taper of the drafted moulded wall",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.58,
+       "minimum": 0.28,
+       "mode": "independent",
+       "name": "nose_run_ratio",
+       "rationale": "how far the discharge nose runs forward-and-down from the rim to the floor",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_height_m"
+       ],
+       "expression": "floor_z + tub_height_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "rim_z",
+       "rationale": "rim plane above the weld datum",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_height_m"
+       ],
+       "expression": "tub_height_m - FLANGE_T",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "wall_h",
+       "rationale": "drafted wall height under the flange",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_tilt_truck1_var_form_obround",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L28-L37",
+      "model.py:L68-L95",
+      "model.py:L98-L112",
+      "model.py:L168-L204"
+     ]
+    },
+    {
+     "evidence": "_form_descriptor plan half-width tapering to a rounded V discharge spout, _outline_points dense nose stations, _offset_wire real wall-thickness offset, _rim_half_width/_frame_half_width host consumers",
+     "implementation_function": "_shell_form_v_nose_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_x": "plan_x_hi(0) - plan_x_lo(0)",
+        "extent_y": "2 * plan_y_half(0)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(mount_datum)"
+       },
+       "kind": "plane",
+       "name": "shell_floor_seat",
+       "part": "cargo_shell",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "band_z": "0.22 * wall_h .. rim_wall_z - 0.045",
+        "span_x": "0.52 * (plan_x_hi(0.6) - plan_x_lo(0.6))"
+       },
+       "frame": {
+        "normal": "(0, +-1, 0)",
+        "point": "(x, plan_y_half(t), floor_z + t * wall_h)"
+       },
+       "kind": "plane",
+       "name": "side_wall",
+       "part": "cargo_shell",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "extent_x": "FLANGE_OUT + WALL_T",
+        "extent_y": "2 * plan_y_half(1)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(x_rear_flange + 0.014, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rear_flange_seat",
+       "part": "cargo_shell",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "extent_x": "plan_x_hi(1) - plan_x_lo(1) + 2 * FLANGE_OUT",
+        "extent_y": "2 * (plan_y_half(1) + FLANGE_OUT)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(0, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rim_flange",
+       "part": "cargo_shell",
+       "role": "provider"
+      }
+     ],
+     "name": "v_nose",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.6,
+       "minimum": 1.05,
+       "mode": "independent",
+       "name": "tub_length_m",
+       "rationale": "moulded hopper rim length; drives the plan stations, deck rails and rib span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.95,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "tub_width_m",
+       "rationale": "moulded hopper rim width; drives the plan half-width, wheel track and handle span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.78,
+       "minimum": 0.44,
+       "mode": "independent",
+       "name": "tub_height_m",
+       "rationale": "rim height above the deck seat; drives the wall height and rib band",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.86,
+       "minimum": 0.55,
+       "mode": "independent",
+       "name": "wall_draft_ratio",
+       "rationale": "floor plan / rim plan taper of the drafted moulded wall",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.58,
+       "minimum": 0.28,
+       "mode": "independent",
+       "name": "nose_run_ratio",
+       "rationale": "how far the discharge nose runs forward-and-down from the rim to the floor",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_height_m"
+       ],
+       "expression": "floor_z + tub_height_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "rim_z",
+       "rationale": "rim plane above the weld datum",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_height_m"
+       ],
+       "expression": "tub_height_m - FLANGE_T",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "wall_h",
+       "rationale": "drafted wall height under the flange",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_tilt_truck1_var_form_vnose",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L53-L86",
+      "model.py:L93-L137",
+      "model.py:L140-L182"
+     ]
+    }
+   ],
+   "component_type": "origin_anchor",
+   "name": "shell_form",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "_frame_shape twin longitudinal rails + front crossmember + transverse axle beam + bored caster boss; frame root part, live axle stubs and axle nuts",
+     "implementation_function": "_underframe_rail_cradle_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_x": "plan_x_hi(0) - plan_x_lo(0) - 0.04",
+        "extent_y": "2 * cross_half_y"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(mount_datum)"
+       },
+       "kind": "plane",
+       "name": "deck_seat",
+       "part": "chassis",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "face_y": "bearing_face_y",
+        "radius": "0.014"
+       },
+       "frame": {
+        "axis": "(0, 1, 0)",
+        "point": "(x_axle, 0, axle_z)"
+       },
+       "kind": "axis",
+       "name": "rear_axle_line",
+       "part": "chassis",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "plate_extent": "0.140",
+        "radius": "0.034"
+       },
+       "frame": {
+        "axis": "(0, 0, 1)",
+        "point": "(x_front, 0, swivel_z)"
+       },
+       "kind": "axis",
+       "name": "front_mount_axis",
+       "part": "chassis",
+       "role": "provider"
+      }
+     ],
+     "name": "rail_cradle",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.6,
+       "minimum": 1.05,
+       "mode": "independent",
+       "name": "tub_length_m",
+       "rationale": "moulded hopper rim length; drives the plan stations, deck rails and rib span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.95,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "tub_width_m",
+       "rationale": "moulded hopper rim width; drives the plan half-width, wheel track and handle span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rear_wheel_radius_m"
+       ],
+       "expression": "rear_wheel_radius_m + DECK_RISE",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "deck_z",
+       "rationale": "deck seat plane above the axle line",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_width_m"
+       ],
+       "expression": "0.52 * plan_y_half(0)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "deck_rail_y",
+       "rationale": "deck rail track under the moulded floor",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_125113_884197_61a3684e",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L185-L210",
+      "model.py:L316-L349"
+     ]
+    },
+    {
+     "evidence": "_underbody_plate_shape(index) open-ended rectangular fork tunnel (outer envelope minus a through cut), shared pitch/wall/height layout rule, end crossmembers welding the pocket mouths",
+     "implementation_function": "_underframe_fork_pockets_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_x": "plan_x_hi(0) - plan_x_lo(0) - 0.04",
+        "extent_y": "2 * cross_half_y"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(mount_datum)"
+       },
+       "kind": "plane",
+       "name": "deck_seat",
+       "part": "chassis",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "face_y": "bearing_face_y",
+        "radius": "0.014"
+       },
+       "frame": {
+        "axis": "(0, 1, 0)",
+        "point": "(x_axle, 0, axle_z)"
+       },
+       "kind": "axis",
+       "name": "rear_axle_line",
+       "part": "chassis",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "plate_extent": "0.140",
+        "radius": "0.034"
+       },
+       "frame": {
+        "axis": "(0, 0, 1)",
+        "point": "(x_front, 0, swivel_z)"
+       },
+       "kind": "axis",
+       "name": "front_mount_axis",
+       "part": "chassis",
+       "role": "provider"
+      }
+     ],
+     "name": "fork_pockets",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.6,
+       "minimum": 1.05,
+       "mode": "independent",
+       "name": "tub_length_m",
+       "rationale": "moulded hopper rim length; drives the plan stations, deck rails and rib span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.115,
+       "mode": "independent",
+       "name": "rear_wheel_radius_m",
+       "rationale": "road wheel radius; drives the axle line, deck height and swivel plane",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rear_wheel_radius_m"
+       ],
+       "expression": "rear_wheel_radius_m + DECK_RISE",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "deck_z",
+       "rationale": "deck seat plane above the axle line",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_width_m"
+       ],
+       "expression": "rear_clear_y + 0.006",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "bearing_face_y",
+       "rationale": "outer face shared by the axle beam and the pocket envelope",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_tilt_truck1_var_frame_fork_pockets",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L63-L79",
+      "model.py:L203-L238",
+      "model.py:L241-L267",
+      "model.py:L382-L393"
+     ]
+    },
+    {
+     "evidence": "_underbody_plate_shape rounded chassis plate + cast caster boss, closed perimeter_bumper spline tube ring, welded diagonal braces, rear axle beams and bearing housings",
+     "implementation_function": "_underframe_tube_perimeter_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_x": "plan_x_hi(0) - plan_x_lo(0) - 0.04",
+        "extent_y": "2 * cross_half_y"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(mount_datum)"
+       },
+       "kind": "plane",
+       "name": "deck_seat",
+       "part": "chassis",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "face_y": "bearing_face_y",
+        "radius": "0.014"
+       },
+       "frame": {
+        "axis": "(0, 1, 0)",
+        "point": "(x_axle, 0, axle_z)"
+       },
+       "kind": "axis",
+       "name": "rear_axle_line",
+       "part": "chassis",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "plate_extent": "0.140",
+        "radius": "0.034"
+       },
+       "frame": {
+        "axis": "(0, 0, 1)",
+        "point": "(x_front, 0, swivel_z)"
+       },
+       "kind": "axis",
+       "name": "front_mount_axis",
+       "part": "chassis",
+       "role": "provider"
+      }
+     ],
+     "name": "tube_perimeter",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.115,
+       "mode": "independent",
+       "name": "rear_wheel_radius_m",
+       "rationale": "road wheel radius; drives the axle line, deck height and swivel plane",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.95,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "tub_width_m",
+       "rationale": "moulded hopper rim width; drives the plan half-width, wheel track and handle span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rear_wheel_radius_m",
+        "tub_height_m"
+       ],
+       "expression": "min(2 * rear_wheel_radius_m + 0.035, rim_wall_z - 0.060)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "bumper_z",
+       "rationale": "bumper ring height: above the wheel tops, below the rim",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rear_wheel_radius_m"
+       ],
+       "expression": "rear_wheel_radius_m + DECK_RISE",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "deck_z",
+       "rationale": "deck seat plane above the axle line",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_061921_094099_91a29a9f",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L214-L235",
+      "model.py:L374-L389",
+      "model.py:L391-L438",
+      "model.py:L458-L491"
+     ]
+    }
+   ],
+   "component_type": "origin_anchor",
+   "name": "underframe",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "non-swivelling centre fork (two cheeks + top bridge + vertical stem + through axle) welded to the underframe; only front_wheel_roll CONTINUOUS is articulated",
+     "implementation_function": "_front_support_rigid_fork_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "radius": "0.030"
+       },
+       "frame": {
+        "axis": "(0, 0, 1)",
+        "point": "(0, 0, 0)"
+       },
+       "kind": "axis",
+       "name": "front_mount_axis",
+       "part": "chassis",
+       "role": "consumer"
+      }
+     ],
+     "name": "rigid_fork",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.44,
+       "minimum": 0.28,
+       "mode": "independent",
+       "name": "front_wheel_ratio",
+       "rationale": "front wheel radius as a fraction of the road wheel radius",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.115,
+       "mode": "independent",
+       "name": "rear_wheel_radius_m",
+       "rationale": "road wheel radius; drives the axle line, deck height and swivel plane",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "front_wheel_ratio",
+        "rear_wheel_radius_m"
+       ],
+       "expression": "front_wheel_ratio * rear_wheel_radius_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "front_wheel_radius",
+       "rationale": "front roller radius",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rear_wheel_radius_m"
+       ],
+       "expression": "deck_z - SWIVEL_DROP",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "swivel_z",
+       "rationale": "front mount plane; the fork cheeks span it down to the axle",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_061921_064520_3055ac5d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L279-L354",
+      "model.py:L356-L390",
+      "model.py:L441-L482"
+     ]
+    },
+    {
+     "evidence": "caster_fork part with thrust collar + swivel stem captured in the frame swivel_housing; caster_swivel CONTINUOUS about Z plus caster_wheel_roll CONTINUOUS, offset by CASTER_TRAIL",
+     "implementation_function": "_front_support_swivel_caster_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "radius": "0.030"
+       },
+       "frame": {
+        "axis": "(0, 0, 1)",
+        "point": "(0, 0, 0)"
+       },
+       "kind": "axis",
+       "name": "front_mount_axis",
+       "part": "caster_yoke",
+       "role": "consumer"
+      }
+     ],
+     "name": "swivel_caster",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.44,
+       "minimum": 0.28,
+       "mode": "independent",
+       "name": "front_wheel_ratio",
+       "rationale": "front wheel radius as a fraction of the road wheel radius",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.115,
+       "mode": "independent",
+       "name": "rear_wheel_radius_m",
+       "rationale": "road wheel radius; drives the axle line, deck height and swivel plane",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "front_wheel_ratio",
+        "rear_wheel_radius_m"
+       ],
+       "expression": "max(0.022, 0.30 * front_wheel_radius)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "caster_trail",
+       "rationale": "offset of the wheel axle behind the swivel axis",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rear_wheel_radius_m"
+       ],
+       "expression": "deck_z - SWIVEL_DROP",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "swivel_z",
+       "rationale": "swivel bearing plane under the deck",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_125113_884197_61a3684e",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L213-L225",
+      "model.py:L403-L433",
+      "model.py:L444-L478"
+     ]
+    },
+    {
+     "evidence": "welded brake_boss on the outboard fork cheek, one-piece step pedal (arm + foot pad + wrap-around neck + tread shoe + pivot pin), caster_brake_pivot REVOLUTE bounded 0..BRAKE_APPLIED_ANGLE",
+     "implementation_function": "_front_support_swivel_caster_brake_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "radius": "0.030"
+       },
+       "frame": {
+        "axis": "(0, 0, 1)",
+        "point": "(0, 0, 0)"
+       },
+       "kind": "axis",
+       "name": "front_mount_axis",
+       "part": "caster_yoke",
+       "role": "consumer"
+      }
+     ],
+     "name": "swivel_caster_brake",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.44,
+       "minimum": 0.28,
+       "mode": "independent",
+       "name": "front_wheel_ratio",
+       "rationale": "front wheel radius as a fraction of the road wheel radius",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.4,
+       "minimum": 0.22,
+       "mode": "independent",
+       "name": "brake_travel_rad",
+       "rationale": "brake pedal applied angle; also sets the released shoe geometry",
+       "unit": "rad",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "front_wheel_ratio"
+       ],
+       "expression": "max(0.022, 0.30 * front_wheel_radius)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "caster_trail",
+       "rationale": "offset of the wheel axle behind the swivel axis",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "brake_travel_rad",
+        "front_wheel_ratio"
+       ],
+       "expression": "back-rotate the applied tyre contact point by brake_travel_rad about the pivot",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "brake_shoe_local",
+       "rationale": "released shoe position derived from the applied contact radius",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_tilt_truck1_var_caster_brake_pedal",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L59-L63",
+      "model.py:L254-L260",
+      "model.py:L263-L299",
+      "model.py:L302-L311",
+      "model.py:L521-L565",
+      "model.py:L597-L611"
+     ]
+    }
+   ],
+   "component_type": "origin_anchor",
+   "name": "front_support",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "two separate horizontal tube handles seated into the moulded end wall, each with a rubber grip sleeve; no crossbar, no added joint",
+     "implementation_function": "_handle_twin_grab_bars_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_y": "2 * handle_half_y"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(handle_post_x, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rear_flange_seat",
+       "part": "cargo_shell",
+       "role": "consumer"
+      }
+     ],
+     "name": "twin_grab_bars",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.42,
+       "minimum": 0.17,
+       "mode": "independent",
+       "name": "handle_rise_m",
+       "rationale": "handle rise above the rear flange",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.95,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "tub_width_m",
+       "rationale": "moulded hopper rim width; drives the plan half-width, wheel track and handle span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_width_m"
+       ],
+       "expression": "min(0.30 * tub_width_m, 0.58 * plan_y_half(1))",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "handle_half_y",
+       "rationale": "grab bar track on the rear flange",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_061921_064520_3055ac5d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L392-L411"
+     ]
+    },
+    {
+     "evidence": "square-cornered U push handle swept as one spline tube from the rear frame rail: two uprights + straight crossbar, rigid",
+     "implementation_function": "_handle_u_frame_fixed_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_y": "2 * handle_half_y"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(handle_post_x, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rear_flange_seat",
+       "part": "cargo_shell",
+       "role": "consumer"
+      }
+     ],
+     "name": "u_frame_fixed",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.42,
+       "minimum": 0.17,
+       "mode": "independent",
+       "name": "handle_rise_m",
+       "rationale": "handle rise above the rear flange",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.95,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "tub_width_m",
+       "rationale": "moulded hopper rim width; drives the plan half-width, wheel track and handle span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_width_m"
+       ],
+       "expression": "min(0.30 * tub_width_m, 0.58 * plan_y_half(1))",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "handle_half_y",
+       "rationale": "U-frame upright track on the rear flange",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_061921_094099_91a29a9f",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L440-L456"
+     ]
+    },
+    {
+     "evidence": "moulded lateral hinge barrels with bushing bore on the rear flange, separate push_handle part with hinge stubs + pins, push_handle_fold REVOLUTE bounded 0..HANDLE_FOLD_MAX",
+     "implementation_function": "_handle_folding_u_frame_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_y": "2 * (handle_half_y + 0.055)"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(handle_post_x, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rear_flange_seat",
+       "part": "cargo_shell",
+       "role": "consumer"
+      }
+     ],
+     "name": "folding_u_frame",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.42,
+       "minimum": 0.17,
+       "mode": "independent",
+       "name": "handle_rise_m",
+       "rationale": "handle rise above the rear flange",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.55,
+       "minimum": 1.05,
+       "mode": "independent",
+       "name": "handle_fold_rad",
+       "rationale": "handle fold hinge upper travel",
+       "unit": "rad",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_height_m"
+       ],
+       "expression": "rim_z - 0.090",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "handle_hinge_z",
+       "rationale": "lateral fold hinge line on the moulded rear wall, below the rim, so the folding handle never shares swept space with the rim-mounted lid hinge",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_tilt_truck1_var_handle_folding",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L62-L65",
+      "model.py:L153-L172",
+      "model.py:L398-L412",
+      "model.py:L414-L460",
+      "model.py:L512-L530"
+     ]
+    },
+    {
+     "evidence": "no steel handle hardware at all; conformal capsule grip recesses cut from the drafted rear wall by _rear_wall_surface_x, plus a thickened continuous rear_rim_ledge handhold",
+     "implementation_function": "_handle_molded_grips_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_y": "2 * plan_y_half(1) * 0.86"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(x_rear_flange + 0.018, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rear_flange_seat",
+       "part": "cargo_shell",
+       "role": "consumer"
+      }
+     ],
+     "name": "molded_grips",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.78,
+       "minimum": 0.44,
+       "mode": "independent",
+       "name": "tub_height_m",
+       "rationale": "rim height above the deck seat; drives the wall height and rib band",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.95,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "tub_width_m",
+       "rationale": "moulded hopper rim width; drives the plan half-width, wheel track and handle span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_width_m"
+       ],
+       "expression": "min(0.30 * tub_width_m, 0.58 * plan_y_half(1))",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "handle_half_y",
+       "rationale": "moulded grab-handle track on the rear wall",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_tilt_truck1_var_handle_molded_grips",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L131-L134",
+      "model.py:L167-L197",
+      "model.py:L249-L304",
+      "model.py:L329-L345",
+      "model.py:L348-L359",
+      "model.py:L721-L741"
+     ]
+    }
+   ],
+   "component_type": "origin_anchor",
+   "name": "handle",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "open hopper with a heavy rolled lip and moulded rear handle apron; no lid part and no lid joint",
+     "implementation_function": "_lid_open_top_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "bead_extent_x": "0.70 * (plan_x_hi(1) - plan_x_lo(1))"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(0, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rim_flange",
+       "part": "cargo_shell",
+       "role": "consumer"
+      }
+     ],
+     "name": "open_top",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.6,
+       "minimum": 1.05,
+       "mode": "independent",
+       "name": "tub_length_m",
+       "rationale": "moulded hopper rim length; drives the plan stations, deck rails and rib span",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_061921_074005_c8b82ae4",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L53-L116",
+      "model.py:L253-L268"
+     ]
+    },
+    {
+     "evidence": "_rim_outline shared rim descriptor consumed by the lid plan, bored hinge barrels with integral pedestals fused into the rear rim, one-piece _lid_shell (panel + skirt + knuckle tube + real webs), lid_hinge REVOLUTE",
+     "implementation_function": "_lid_hinged_lid_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "extent_x": "lid_length",
+        "extent_y": "2 * lid_half_wid",
+        "plan_outline": "lid_plan (metric offset of outline(1, FLANGE_OUT) by LID_OVERHANG)",
+        "seat_clearance": "LID_RIM_CLEAR"
+       },
+       "frame": {
+        "normal": "(0, 0, 1)",
+        "point": "(0, 0, rim_z)"
+       },
+       "kind": "plane",
+       "name": "rim_flange",
+       "part": "cargo_shell",
+       "role": "consumer"
+      }
+     ],
+     "name": "hinged_lid",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.52,
+       "minimum": 1.2,
+       "mode": "independent",
+       "name": "lid_open_rad",
+       "rationale": "lid hinge upper travel",
+       "unit": "rad",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.6,
+       "minimum": 1.05,
+       "mode": "independent",
+       "name": "tub_length_m",
+       "rationale": "moulded hopper rim length; drives the plan stations, deck rails and rib span",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_length_m",
+        "nose_run_ratio"
+       ],
+       "expression": "(plan_x_hi(1) + FLANGE_OUT + LID_OVERHANG) - lid_rear_cut_x",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "lid_length",
+       "rationale": "lid panel length: the rim outline metrically outset by LID_OVERHANG, trimmed at the hinge line",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_width_m"
+       ],
+       "expression": "plan_y_half(1) + FLANGE_OUT + LID_OVERHANG",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "lid_half_wid",
+       "rationale": "lid panel half width: the rim outline metrically outset by LID_OVERHANG",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_height_m"
+       ],
+       "expression": "rim_z + 0.030",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "lid_hinge_z",
+       "rationale": "hinge line on the moulded barrels above the rear flange",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_length_m"
+       ],
+       "expression": "lid_hinge_x + LID_PANEL_SETBACK",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "lid_rear_cut_x",
+       "rationale": "rear trim plane of the moulded lid plan; the lid covers the rim forward of it and the skirt lip stays open behind it for the hinge barrels",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_length_m",
+        "tub_width_m",
+        "nose_run_ratio",
+        "wall_draft_ratio"
+       ],
+       "expression": "clip_front(offset_outline(outline(1, FLANGE_OUT), LID_OVERHANG), lid_rear_cut_x)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "lid_plan",
+       "rationale": "the lid panel plan IS the active shell_form rim outline, metrically offset; this is what makes the lid follow the tapered_rect / chamfered_octagon / obround / v_nose rims instead of being a rectangular slab",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_length_m",
+        "tub_width_m",
+        "nose_run_ratio",
+        "wall_draft_ratio"
+       ],
+       "expression": "clip_front(offset_outline(outline(1, FLANGE_OUT), LID_RIM_CLEAR + LID_SKIRT_T/2), lid_rear_cut_x + LID_SKIRT_SETBACK)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "lid_skirt_plan",
+       "rationale": "downturned perimeter skirt-lip centreline on the same rim outline, offset outboard by the named LID_RIM_CLEAR running clearance so the lid seats on the rim",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_tilt_truck1_var_hinged_lid_v2",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L42-L59",
+      "model.py:L62-L77",
+      "model.py:L80-L181",
+      "model.py:L427-L449",
+      "model.py:L613-L641",
+      "model.py:L685-L699"
+     ]
+    }
+   ],
+   "component_type": "origin_anchor",
+   "name": "lid",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "WheelGeometry rim barrel + flanges + domed bolt-pattern hub + straight spokes with real windows, TireGeometry circumferential tread with grooves and rounded sidewalls",
+     "implementation_function": "_rear_wheel_spoked_rim_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_radius": "0.21 * rear_wheel_radius_m"
+       },
+       "frame": {
+        "axis": "(0, 1, 0)",
+        "point": "(0, 0, 0)"
+       },
+       "kind": "axis",
+       "name": "rear_axle_line",
+       "part": "rear_wheel_0",
+       "role": "consumer"
+      }
+     ],
+     "name": "spoked_rim",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.115,
+       "mode": "independent",
+       "name": "rear_wheel_radius_m",
+       "rationale": "road wheel radius; drives the axle line, deck height and swivel plane",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rear_wheel_radius_m"
+       ],
+       "expression": "0.30 * rear_wheel_radius_m + 0.020",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "rear_wheel_width",
+       "rationale": "tyre section width",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_width_m",
+        "rear_wheel_radius_m"
+       ],
+       "expression": "rear_clear_y + 0.012 + 0.5 * rear_wheel_width",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "rear_wheel_y",
+       "rationale": "wheel track derived from the widest moulded section over the footprint",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_061921_064520_3055ac5d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L113-L181",
+      "model.py:L184-L238"
+     ]
+    },
+    {
+     "evidence": "single-component LatheGeometry utility tyre profile plus a plain full-web pressed wheel centre and a small hub cap: no spokes and no windows",
+     "implementation_function": "_rear_wheel_disc_rim_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hub_radius": "0.21 * rear_wheel_radius_m"
+       },
+       "frame": {
+        "axis": "(0, 1, 0)",
+        "point": "(0, 0, 0)"
+       },
+       "kind": "axis",
+       "name": "rear_axle_line",
+       "part": "rear_wheel_0",
+       "role": "consumer"
+      }
+     ],
+     "name": "disc_rim",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.115,
+       "mode": "independent",
+       "name": "rear_wheel_radius_m",
+       "rationale": "road wheel radius; drives the axle line, deck height and swivel plane",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rear_wheel_radius_m"
+       ],
+       "expression": "0.30 * rear_wheel_radius_m + 0.020",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "rear_wheel_width",
+       "rationale": "tyre section width",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "tub_width_m",
+        "rear_wheel_radius_m"
+       ],
+       "expression": "rear_clear_y + 0.012 + 0.5 * rear_wheel_width",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "rear_wheel_y",
+       "rationale": "wheel track derived from the widest moulded section over the footprint",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_061921_094099_91a29a9f",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L276-L319",
+      "model.py:L640-L706"
+     ]
+    }
+   ],
+   "component_type": "origin_anchor",
+   "name": "rear_wheel",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "_add_molded_rib broad shallow draft-matched panel rib stitched onto the tub wall with a 4 mm embed; _stitch_loops/_add_cap mesh machinery",
+     "implementation_function": "_rib_draft_panel_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "half_x": "0.046",
+        "relief": "rib_relief_m"
+       },
+       "frame": {
+        "normal": "(0, +-1, 0)",
+        "point": "(rib x, wall_y, rib band)"
+       },
+       "kind": "plane",
+       "name": "side_wall",
+       "part": "cargo_shell",
+       "role": "consumer"
+      }
+     ],
+     "name": "draft_panel",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.024,
+       "minimum": 0.01,
+       "mode": "independent",
+       "name": "rib_relief_m",
+       "rationale": "moulded rib relief proud of the drafted wall",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_061921_094099_91a29a9f",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L30-L39",
+      "model.py:L42-L56",
+      "model.py:L59-L122",
+      "model.py:L125-L172"
+     ]
+    },
+    {
+     "evidence": "_moulded_rib_points fine raised rail seated on the tapered side wall, swept with tube_from_spline_points and emitted as indexed moulded_rib_{side}_{i} visuals",
+     "implementation_function": "_rib_raised_rail_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "half_x": "0.015",
+        "relief": "rib_relief_m * 1.35"
+       },
+       "frame": {
+        "normal": "(0, +-1, 0)",
+        "point": "(rib x, wall_y, rib band)"
+       },
+       "kind": "plane",
+       "name": "side_wall",
+       "part": "cargo_shell",
+       "role": "consumer"
+      }
+     ],
+     "name": "raised_rail",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.024,
+       "minimum": 0.01,
+       "mode": "independent",
+       "name": "rib_relief_m",
+       "rationale": "moulded rib relief proud of the drafted wall",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260726_125113_884197_61a3684e",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L153-L161",
+      "model.py:L360-L376"
+     ]
+    }
+   ],
+   "component_type": "origin_anchor",
+   "name": "rib",
+   "required": true
+  }
+ ],
+ "slug": "Urban_Environment_Tilt_Truck1",
+ "source_map_path": "<ARTI_SKILL_ROOT>/articraft_data/picture_expansion/template_source_maps/Urban_Environment__Tilt_Truck1.md",
+ "source_map_sha256": "65827f843ca87ef5d0018ca78cdc9dd453d18e7b9126af67567d2596795a72b5"
+}

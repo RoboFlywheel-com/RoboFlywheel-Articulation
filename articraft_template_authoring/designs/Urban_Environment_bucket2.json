@@ -1,0 +1,1335 @@
+{
+  "assembly_notes": "The staved body is the single grounded root; the hoop bands, the permanent head, the hinge lugs and pin, the bail eyelets and struts and the ear prongs and pins are all welded visuals of that part, so the only part-to-part pairs in the model are the moving members against their host. Every moving member is captured by a coaxial running fit (skirt in collar bore, knuckle on rim pin, shank in bunghole bore, stub in ear eyelet, eye on ear pin) whose clearance is invariant under that joint's own motion, so strokes are bounded by engagement length rather than by free constants. The swing bail additionally derives its arch radius from the sampled swept envelope of whichever closure is fitted, which is the one genuinely cross-slot dimension in the assembly.",
+  "bindings": [
+    {
+      "binding_id": "body_mouth_to_closure",
+      "consumer": "closure.body_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "lid_seat_depth_m"
+          ],
+          "expression": "lid_seat_depth_m when closure is slide_off_lid else 0.018",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "seat_depth_m",
+          "rationale": "The host only cuts a deep guiding collar for the closure that needs it.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "end_radius_m"
+          ],
+          "expression": "clamp(0.100 * end_radius_m, 0.012, 0.018)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "head_thickness_m",
+          "rationale": "Permanent head slab emitted on the host for the hinged and bung closures.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic_or_revolute",
+      "provider": "body_profile.mouth_seat"
+    },
+    {
+      "binding_id": "body_wall_to_hoop_array",
+      "consumer": "hoop_band.band_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "body_height_m",
+            "end_radius_m",
+            "bulge_ratio",
+            "taper_ratio"
+          ],
+          "expression": "r_out(z_band) sampled over the band height for each profile family",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "band_radius",
+          "rationale": "Every band follows the active profile so it seats on the wall it wraps.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "body_profile.hoop_seat"
+    },
+    {
+      "binding_id": "closure_top_to_grip",
+      "consumer": "handle.grip_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "seat_depth_m"
+          ],
+          "expression": "the closure part when the closure owns a moving top plate, otherwise the keg body carrying the permanent head",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "grip_host",
+          "rationale": "The grip rides whatever the closure put on top instead of floating.",
+          "unit": null,
+          "value_type": "str"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "closure.top_mount"
+    },
+    {
+      "binding_id": "body_wall_to_handle_pivot",
+      "consumer": "handle.pivot_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "body_height_m",
+            "hoop_proud_m",
+            "end_radius_m"
+          ],
+          "expression": "max(r_out(z) + hoop_proud_m over the fitting span) + bracket reach",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "pivot_stand_off_m",
+          "rationale": "Both pivoting fittings stand their brackets off the widest proud radius the active profile and band array reach over the fitting's own height.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "body_profile.handle_mount"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "staved_keg_body",
+      "applies_to": {
+        "candidates": [
+          "bulged_stave",
+          "straight_stave",
+          "tapered_pail"
+        ],
+        "slot": "body_profile"
+      },
+      "required_author_checks": [
+        "keg base sits on the ground plane",
+        "hollow staved shell with a solid floor"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "keg_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "coopered_hoop_array",
+      "applies_to": {
+        "candidates": [
+          "flat_iron_band"
+        ],
+        "slot": "hoop_band"
+      },
+      "required_author_checks": [
+        "hoop bands wrap the body at the declared count"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "keg_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "closure_plug_lid",
+      "applies_to": {
+        "candidates": [
+          "slide_off_lid"
+        ],
+        "slot": "closure"
+      },
+      "required_author_checks": [
+        "slide-off lid seats on a running fit and lifts clear of its collar"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "closure_lid",
+          "joint_type": "prismatic",
+          "parent_role": "keg_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "keg_body"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "closure_lid"
+        }
+      ]
+    },
+    {
+      "anchor_id": "closure_hinged_hatch",
+      "applies_to": {
+        "candidates": [
+          "hinged_lid"
+        ],
+        "slot": "closure"
+      },
+      "required_author_checks": [
+        "hinged hatch swings on its rim pin"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "closure_lid",
+          "joint_type": "revolute",
+          "parent_role": "keg_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "keg_body"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "closure_lid"
+        }
+      ]
+    },
+    {
+      "anchor_id": "closure_side_bung",
+      "applies_to": {
+        "candidates": [
+          "bung_plug"
+        ],
+        "slot": "closure"
+      },
+      "required_author_checks": [
+        "bung plug seats on a running fit and pulls clear of the bore"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "bung_plug",
+          "joint_type": "prismatic",
+          "parent_role": "keg_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "keg_body"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "bung_plug"
+        }
+      ]
+    },
+    {
+      "anchor_id": "carry_swing_bail",
+      "applies_to": {
+        "candidates": [
+          "swing_bail"
+        ],
+        "slot": "handle"
+      },
+      "required_author_checks": [
+        "swing bail clears the keg and its closure"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "carry_bail",
+          "joint_type": "revolute",
+          "parent_role": "keg_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "carry_bail"
+        }
+      ]
+    },
+    {
+      "anchor_id": "carry_ear_rings",
+      "applies_to": {
+        "candidates": [
+          "side_ear_rings"
+        ],
+        "slot": "handle"
+      },
+      "required_author_checks": [
+        "each ear ring pivots outward on its own axis"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "carry_ring",
+          "joint_type": "revolute",
+          "parent_role": "keg_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "carry_ring"
+        }
+      ]
+    },
+    {
+      "anchor_id": "carry_lid_grip",
+      "applies_to": {
+        "candidates": [
+          "arched_grip"
+        ],
+        "slot": "handle"
+      },
+      "required_author_checks": [
+        "arched grip is fastened to the closure top"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "lid_grip"
+        }
+      ]
+    },
+    {
+      "anchor_id": "bare_keg",
+      "applies_to": {
+        "candidates": [
+          "no_handle"
+        ],
+        "slot": "handle"
+      },
+      "required_author_checks": [
+        "bare keg carries no handle part"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "keg_body"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "(body_height_m - 2 * hoop_margin_m) / (N - 1) >= 2.05 * hoop_half_m, enforced by clamping hoop_half_m to 0.42 * pitch",
+      "item_slot": "hoop_band",
+      "name": "hoop_count",
+      "spacing_expression": "centres = hoop_margin_m + i * (body_height_m - 2 * hoop_margin_m) / (N - 1), i = 0..N-1",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "_outer_radius is a symmetric parabolic mid-bulge; _build_body_mesh revolves that profile into a hollow shell with a solid floor and carves N vertical stave seam grooves; _build_rim_mesh adds the recessed inner seating ledge.",
+          "implementation_function": "_body_profile_bulged_stave_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "r_bore",
+                "collar_bore_radius": "r_seat_in",
+                "collar_depth": "seat_depth_m",
+                "outer_radius": "r_top"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "origin": "(0, 0, body_height_m)"
+              },
+              "kind": "plane",
+              "name": "mouth_seat",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "seat_radius": "r_out(z_band)",
+                "usable_span": "body_height_m - 2 * hoop_margin_m"
+              },
+              "frame": {
+                "normal": "radial(z_band)",
+                "origin": "(0, 0, z_band)"
+              },
+              "kind": "plane",
+              "name": "hoop_seat",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "bail_height": "0.86 * body_height_m",
+                "ring_height": "0.60 * body_height_m",
+                "stand_off_radius": "max(r_out(z)) + hoop_proud_m"
+              },
+              "frame": {
+                "axis": "tangential",
+                "point": "(0, 0, mount_height)"
+              },
+              "kind": "axis",
+              "name": "handle_mount",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "bulged_stave",
+          "notes": "One staved surface of revolution: outer wall with per-stave seam relief, inner cavity wall, solid floor and the recessed inner seat collar.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "Barrel height; drives the band pitch, the seat collar height and every mount height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 1.1,
+              "mode": "independent",
+              "name": "bulge_ratio",
+              "rationale": "Mid-bulge radius over the end radius; only the parabolic profile reads it.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_height_m",
+                "end_radius_m",
+                "bulge_ratio"
+              ],
+              "expression": "radius_at(body_height_m) = end_radius_m for the parabolic profile",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "r_top",
+              "rationale": "Mouth radius every closure and hoop seat is measured from.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "end_radius_m"
+              ],
+              "expression": "clamp(0.105 * end_radius_m, 0.012, 0.020)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "wall_m",
+              "rationale": "Stave wall thickness; sets the bore, the collar width and the bunghole depth.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_small-wooden-keg-barrel-with-staved-bulged-body-_20260608_164508_499567_ad0a147f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L72-L75",
+            "model.py:L78-L113",
+            "model.py:L116-L133"
+          ]
+        },
+        {
+          "evidence": "_outer_radius returns the constant R_BODY, so _build_body_mesh revolves a straight two-point outer wall; the author test proves the radius spread over the height is zero (no mid-bulge).",
+          "implementation_function": "_body_profile_straight_stave_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "r_bore",
+                "collar_bore_radius": "r_seat_in",
+                "collar_depth": "seat_depth_m",
+                "outer_radius": "r_top"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "origin": "(0, 0, body_height_m)"
+              },
+              "kind": "plane",
+              "name": "mouth_seat",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "seat_radius": "r_out(z_band)",
+                "usable_span": "body_height_m - 2 * hoop_margin_m"
+              },
+              "frame": {
+                "normal": "radial(z_band)",
+                "origin": "(0, 0, z_band)"
+              },
+              "kind": "plane",
+              "name": "hoop_seat",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "bail_height": "0.86 * body_height_m",
+                "ring_height": "0.60 * body_height_m",
+                "stand_off_radius": "max(r_out(z)) + hoop_proud_m"
+              },
+              "frame": {
+                "axis": "tangential",
+                "point": "(0, 0, mount_height)"
+              },
+              "kind": "axis",
+              "name": "handle_mount",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "straight_stave",
+          "notes": "One staved surface of revolution: outer wall with per-stave seam relief, inner cavity wall, solid floor and the recessed inner seat collar.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.175,
+              "minimum": 0.125,
+              "mode": "independent",
+              "name": "end_radius_m",
+              "rationale": "Outer radius at the rims; the whole wall for the straight profile.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 22,
+              "minimum": 12,
+              "mode": "independent",
+              "name": "stave_count",
+              "rationale": "Number of vertical staves; sets the angular resolution and the seam pattern.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "stave_count"
+              ],
+              "expression": "stave_count * 6",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "segments",
+              "rationale": "Angular samples of every surface of revolution, shared by all running fits.",
+              "unit": "count",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "r_top",
+                "wall_m"
+              ],
+              "expression": "r_top - wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "r_bore",
+              "rationale": "Inner cavity radius at the mouth; the closure port and collar derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bucket2_var_straight_keg",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L71-L73",
+            "model.py:L76-L113",
+            "model.py:L341-L361"
+          ]
+        },
+        {
+          "evidence": "_outer_radius interpolates linearly from R_BASE to a wider R_MOUTH; the shell, the per-height hoop radii and the lid diameter all follow the taper, and the author test asserts monotone widening toward the mouth.",
+          "implementation_function": "_body_profile_tapered_pail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "r_bore",
+                "collar_bore_radius": "r_seat_in",
+                "collar_depth": "seat_depth_m",
+                "outer_radius": "r_top"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "origin": "(0, 0, body_height_m)"
+              },
+              "kind": "plane",
+              "name": "mouth_seat",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "seat_radius": "r_out(z_band)",
+                "usable_span": "body_height_m - 2 * hoop_margin_m"
+              },
+              "frame": {
+                "normal": "radial(z_band)",
+                "origin": "(0, 0, z_band)"
+              },
+              "kind": "plane",
+              "name": "hoop_seat",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "bail_height": "0.86 * body_height_m",
+                "ring_height": "0.60 * body_height_m",
+                "stand_off_radius": "max(r_out(z)) + hoop_proud_m"
+              },
+              "frame": {
+                "axis": "tangential",
+                "point": "(0, 0, mount_height)"
+              },
+              "kind": "axis",
+              "name": "handle_mount",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "tapered_pail",
+          "notes": "One staved surface of revolution: outer wall with per-stave seam relief, inner cavity wall, solid floor and the recessed inner seat collar.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.15,
+              "mode": "independent",
+              "name": "taper_ratio",
+              "rationale": "Mouth radius over base radius; only the linear taper profile reads it.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "r_top",
+                "wall_m",
+                "seat_depth_m"
+              ],
+              "expression": "min(r_out(z) - wall_m over the collar span) - (0.006 + 0.35 * wall_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "r_seat_in",
+              "rationale": "Seat collar bore that guides the plug lid skirt; the retention surface.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bucket2_var_tapered_pail",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L73-L76",
+            "model.py:L79-L115",
+            "model.py:L332-L344"
+          ]
+        }
+      ],
+      "component_type": "staved barrel body",
+      "name": "body_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_hoop_z_positions spaces N band centres evenly between margins and _build_hoop_mesh revolves a rectangular band section that bites into the wood and stands proud; build_object_model emits the whole array from one index-general loop.",
+          "implementation_function": "_hoop_band_flat_iron_band_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "band_height": "2 * hoop_half_m",
+                "inner_radius": "r_out(z_band) - 0.0015",
+                "outer_radius": "r_out(z_band) + hoop_proud_m"
+              },
+              "frame": {
+                "normal": "radial(z_band)",
+                "origin": "(0, 0, z_band)"
+              },
+              "kind": "plane",
+              "name": "band_seat",
+              "part": "keg_body",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "flat_iron_band",
+          "notes": "A revolved rectangular band section that follows the wall profile over its own height, biting into the stave crests so the array welds into the body part.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.011,
+              "minimum": 0.005,
+              "mode": "independent",
+              "name": "hoop_proud_m",
+              "rationale": "How far a band stands proud of the staves; also the stand-off every bracket clears.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.026,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "hoop_half_height_m",
+              "rationale": "Half height of a band before the pitch clamp.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_height_m"
+              ],
+              "expression": "0.14 * body_height_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hoop_margin_m",
+              "rationale": "Inset of the first and last band centre from the body ends.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hoop_half_height_m",
+                "body_height_m",
+                "hoop_margin_m"
+              ],
+              "expression": "clamp(min(hoop_half_height_m, 0.42 * band_pitch), 0.006, 0.026)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hoop_half_m",
+              "rationale": "Band half height after the multiplicity pitch clamp, so bands never merge.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bucket2_var_hoop_count",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L79-L87",
+            "model.py:L148-L164",
+            "model.py:L234-L246"
+          ]
+        }
+      ],
+      "component_type": "metal hoop band",
+      "name": "hoop_band",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_build_lid_mesh unions a flange disk with a downward plug that nests into the recessed mouth; body_to_lid is PRISMATIC about +Z with the joint frame on the mouth plane so q=0 seats the lid.",
+          "implementation_function": "_closure_slide_off_lid_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "flange_radius": "r_top - 0.003",
+                "skirt_radius": "r_skirt"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "origin": "(0, 0, body_height_m)"
+              },
+              "kind": "plane",
+              "name": "body_seat",
+              "part": "keg_body",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent_radius": "r_top - 0.003"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "origin": "(0, 0, lid_top)"
+              },
+              "kind": "plane",
+              "name": "top_mount",
+              "part": "closure__slide_off_lid__lid",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "slide_off_lid",
+          "notes": "Exactly one closure mechanism per keg; each one adapts the mouth of the shared staved host (collar depth, permanent head, head port, bored bunghole).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.06,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "lid_seat_depth_m",
+              "rationale": "Depth of the seat collar; the only thing that sets how far the lid may lift.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "lid_seat_depth_m"
+              ],
+              "expression": "max(0.008, lid_seat_depth_m - 0.012)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "lid_travel_m",
+              "rationale": "Lift stroke derived from the collar so 12 mm of skirt always stays engaged.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "r_seat_in",
+                "segments"
+              ],
+              "expression": "r_seat_in * cos(pi / segments) - 0.0005",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "r_skirt",
+              "rationale": "Skirt radius facet-matched to the collar bore, giving a 0.5 mm running fit.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_small-wooden-keg-barrel-with-staved-bulged-body-_20260608_164508_499567_ad0a147f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L155-L178",
+            "model.py:L239-L249",
+            "model.py:L276-L286"
+          ]
+        },
+        {
+          "evidence": "The lid mesh is authored in a hinge frame whose origin is the rear (-X) rim edge; body_to_lid becomes REVOLUTE about a horizontal Y axis anchored on the rim contact line and swings the lid up instead of lifting it.",
+          "implementation_function": "_closure_hinged_lid_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "head_outer_radius": "r_top - 0.0015",
+                "port_radius": "hatch_port_ratio * r_bore"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "origin": "(0, 0, body_height_m)"
+              },
+              "kind": "plane",
+              "name": "body_seat",
+              "part": "keg_body",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent_radius": "hatch_port_ratio * r_bore + 0.014"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "origin": "(hatch_centre, 0, hatch_top)"
+              },
+              "kind": "plane",
+              "name": "top_mount",
+              "part": "closure__hinged_lid__hatch",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "knuckle_bore": "pin_bore",
+                "pin_radius": "0.004"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(-(r_lid + 0.010), 0, hatch_hinge_z)"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "hinged_lid",
+          "notes": "Exactly one closure mechanism per keg; each one adapts the mouth of the shared staved host (collar depth, permanent head, head port, bored bunghole).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "hatch_port_ratio",
+              "rationale": "Hatch port radius over the mouth bore; the head adapts the mouth to the hatch.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.5,
+              "minimum": 1.1,
+              "mode": "independent",
+              "name": "lid_open_rad",
+              "rationale": "Hatch opening angle; also drives the swept envelope the bail has to clear.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_height_m",
+                "wall_m",
+                "hatch_port_ratio"
+              ],
+              "expression": "head_top + knuckle_outer_radius + 0.0008",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hatch_hinge_z",
+              "rationale": "Hinge axis height so the knuckle annulus never dips into the head.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bucket2_var_hinged_lid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L74-L77",
+            "model.py:L163-L192",
+            "model.py:L295-L307"
+          ]
+        },
+        {
+          "evidence": "_build_body_mesh bores a radial bunghole through the stave wall, _build_head_mesh closes the mouth with a permanent head, _build_bung_mesh is a tapered plug and body_to_bung is PRISMATIC along the outward radial direction.",
+          "implementation_function": "_closure_bung_plug_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "head_outer_radius": "r_top - 0.0015"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "origin": "(0, 0, body_height_m)"
+              },
+              "kind": "plane",
+              "name": "body_seat",
+              "part": "keg_body",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent_radius": "r_top - 0.0015"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "origin": "(0, 0, head_top)"
+              },
+              "kind": "plane",
+              "name": "top_mount",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "bore_radius": "bung_bore_m",
+                "shank_radius": "r_shank"
+              },
+              "frame": {
+                "axis": "(1, 0, 0)",
+                "point": "(r_out(z_b), 0, z_b)"
+              },
+              "kind": "axis",
+              "name": "bung_axis",
+              "part": "keg_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "bung_plug",
+          "notes": "Exactly one closure mechanism per keg; each one adapts the mouth of the shared staved host (collar depth, permanent head, head port, bored bunghole).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.019,
+              "minimum": 0.011,
+              "mode": "independent",
+              "name": "bung_bore_m",
+              "rationale": "Bunghole bore radius; also sets the shank radius and the band gap it needs.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bung_height_ratio",
+              "rationale": "Requested bunghole height, snapped to a band gap when one is wide enough.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wall_m"
+              ],
+              "expression": "max(0.008, (wall_m + 0.014) - 0.010)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bung_travel_m",
+              "rationale": "Pull stroke derived from the shank so 10 mm always stays inside the bore.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bucket2_var_bunghole_plug",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L81-L121",
+            "model.py:L124-L135",
+            "model.py:L157-L174",
+            "model.py:L230-L244"
+          ]
+        }
+      ],
+      "component_type": "top closure",
+      "name": "closure",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_build_ear_mesh gives each pivot ear a plate and a protruding pin, _build_bail_mesh sweeps the arched wire between the two pins, and body_to_bail is a single REVOLUTE about the horizontal pivot line from resting-at-the-side to overhead.",
+          "implementation_function": "_handle_swing_bail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "eyelet_bore": "eyelet_bore",
+                "stub_radius": "bail_wire_r_m"
+              },
+              "frame": {
+                "axis": "(1, 0, 0)",
+                "point": "(0, 0, 0.86 * body_height_m)"
+              },
+              "kind": "axis",
+              "name": "pivot_axis",
+              "part": "keg_body",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "swing_bail",
+          "notes": "At most one carry fitting; the bail and the rings are body-mounted while the arched grip is welded to whatever the closure slot put on top.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 3.1,
+              "minimum": 2.4,
+              "mode": "independent",
+              "name": "bail_open_rad",
+              "rationale": "Bail swing from resting at one side, over the top, toward the other side.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0065,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "bail_wire_r_m",
+              "rationale": "Bail wire radius; sets the eyelet bore and the swept-envelope margin.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_height_m",
+                "hoop_proud_m",
+                "lid_open_rad",
+                "lid_travel_m",
+                "bail_wire_r_m"
+              ],
+              "expression": "max over sampled body and closure envelope points of the elliptical arch radius that keeps the swept hemisphere outside every obstacle, plus wire_r + 0.006",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bail_arch_radius_m",
+              "rationale": "Cross-slot derivation: the bail arch grows so it encloses whichever closure is fitted.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bucket2_var_swing_bail",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L163-L180",
+            "model.py:L183-L216",
+            "model.py:L267-L291",
+            "model.py:L327-L343"
+          ]
+        },
+        {
+          "evidence": "_build_ear_mesh is a forked bracket with two prongs and a pivot gap, _build_ring_mesh is a torus hanging from that pivot, and the for i in range(2) loop emits two independent REVOLUTE ring joints on opposite stave faces.",
+          "implementation_function": "_handle_side_ear_rings_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "eye_bore": "eye_bore",
+                "pin_radius": "0.0035"
+              },
+              "frame": {
+                "axis": "(+-1, 0, 0)",
+                "point": "(0, +-ring_stand_off_m, 0.60 * body_height_m)"
+              },
+              "kind": "axis",
+              "name": "pivot_axis",
+              "part": "keg_body",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "side_ear_rings",
+          "notes": "At most one carry fitting; the bail and the rings are body-mounted while the arched grip is welded to whatever the closure slot put on top.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "ring_major_r_m",
+              "rationale": "Drop ring major radius; sets the hang depth and the ear prong spread.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.9,
+              "minimum": 1.2,
+              "mode": "independent",
+              "name": "ring_open_rad",
+              "rationale": "How far each ring swings outward from the stave face.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ring_major_r_m",
+                "hoop_proud_m",
+                "body_height_m"
+              ],
+              "expression": "max(r_out(z) + hoop_proud_m over the ring hang span) + 0.020",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "ring_stand_off_m",
+              "rationale": "Ear pivot stand-off so the hanging ring clears the bulge and the proud bands.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bucket2_var_side_ear_rings",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L166-L194",
+            "model.py:L197-L218",
+            "model.py:L265-L308"
+          ]
+        },
+        {
+          "evidence": "_build_handle_mesh builds a squared arch of two feet and a crossbar seated into the closure top, emitted as its own part and welded on with the FIXED lid_to_handle joint, so it rides the closure instead of articulating.",
+          "implementation_function": "_handle_arched_grip_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "half_span": "grip_half_span_m",
+                "leg_radius": "grip_r"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "origin": "(0, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "grip_seat",
+              "part": "handle__arched_grip__grip",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "arched_grip",
+          "notes": "At most one carry fitting; the bail and the rings are body-mounted while the arched grip is welded to whatever the closure slot put on top.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.065,
+              "minimum": 0.035,
+              "mode": "independent",
+              "name": "grip_rise_m",
+              "rationale": "Arch height of the fixed grip above the closure top.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "grip_rise_m",
+                "end_radius_m"
+              ],
+              "expression": "max(0.018, min(0.62 * seat_radius, seat_radius - grip_r - 0.006))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "grip_half_span_m",
+              "rationale": "Grip footprint clamped to whichever closure top it is welded to.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_small-wooden-keg-barrel-with-staved-bulged-body-_20260608_164508_499567_ad0a147f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L181-L201",
+            "model.py:L251-L258",
+            "model.py:L288-L296"
+          ]
+        },
+        {
+          "evidence": "build_object_model emits only body, head, hoops and bung: the bare keg with no ear, bail, ring or grip part and no carry joint at all.",
+          "implementation_function": "_handle_no_handle_build",
+          "interfaces": [],
+          "name": "no_handle",
+          "notes": "At most one carry fitting; the bail and the rings are body-mounted while the arched grip is welded to whatever the closure slot put on top.",
+          "parameters": [],
+          "record_id": "rec_bucket2_var_bunghole_plug",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L177-L246"
+          ]
+        }
+      ],
+      "component_type": "carry fitting",
+      "name": "handle",
+      "required": true
+    }
+  ],
+  "slug": "Urban_Environment_bucket2",
+  "source_map_path": "articraft_template_authoring/source_maps/Urban_Environment_bucket2.md",
+  "source_map_sha256": "15a8bb5c51a7b44b64d71d4536bed29e02933ce808f7d7c2c0c8d0f5c0552301"
+}

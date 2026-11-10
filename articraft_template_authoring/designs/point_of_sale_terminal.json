@@ -1,0 +1,2813 @@
+{
+  "assembly_notes": "Frame: +X is the front (card slot / command key end), +Z is up, +Y is the user's right (the magstripe side), adopted from the silver hero. The terminal housing is always one part; it is the root under flat_feet and the child of a support root otherwise.\n\nEvery top-face component is placed by querying the housing's real top surface at its station -- _face_z(x) and _face_pitch(x) -- never by a constant carried over from one source. That is what lets the two housing builds and the two entry faces combine without a gate: extruded_wedge derives a flat entry deck exactly as long as the active entry face needs (long under numeric_keypad, a narrow front lip under touchscreen_glass) while intersected_wedge presents one continuous plane, and the same key/display/strip placement code lands correctly on either.\n\nThe two remaining cross-slot conflicts are resolved by derivation, not exclusion: touchscreen_glass retreats its front edge behind the soft-key strip when that aux row is active, and side_hard_buttons are stationed below the magstripe groove floor the card interface cut into the right side.\n\nJoint mating: every revolute and continuous joint is solved with mate_axes from a real provider/consumer AxisInterface pair and registered with register_interface_mate -- the cover hinge line at the rear rim, the roll spindle in the bay side-wall bearings, the display hinge at the top-rear slope edge, the cradle recline pivot on the tray surface, and the pedestal yaw axis through the collar. Prismatic key presses and the card slide run along real face normals with their apertures declared as surface_relations.\n\nThe magstripe groove is a boolean cut in the housing whose length derives from housing_length_m, and its dark liner derives from that cut length, so no liner can extend past the case.",
+  "bindings": [
+    {
+      "binding_id": "top_face_to_entry_face",
+      "consumer": "input_face.entry_face_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "body_length_m"
+          ],
+          "expression": "0.0 if housing_build == 'intersected_wedge' else housing_length_m * (0.50 if input_face == 'numeric_keypad' else 0.14)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "deck_len_m",
+          "rationale": "the extruded shell derives a flat entry deck exactly as long as the active entry face needs, so the keypad block lands on a flat plane and the glass slab gets one dominant sloped plane; the intersected shell needs no deck",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "body_length_m",
+            "deck_height_m",
+            "wedge_rise_m"
+          ],
+          "expression": "the display station is re-solved on whichever face plane the housing actually presents at that station",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "display_center_x_m",
+          "rationale": "every face-mounted visual is placed by querying the real top surface, never by a constant carried over from one housing",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "housing_build.top_face"
+    },
+    {
+      "binding_id": "entry_face_to_aux_row",
+      "consumer": "aux_key_row.aux_row_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "body_length_m"
+          ],
+          "expression": "min(rear_limit_x_m + 0.58 * (face_front_x_m - rear_limit_x_m), aux_row_x_m - aux_strip_len_m / 2 - 0.006)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "glass_front_x_m",
+          "rationale": "the screen and the physical soft keys each take their own share of the face: the glass keeps the upper part, the strip sits low in the apron below it, and the guard term keeps them from overlapping. This is how the screen-dominant face and a physical key row combine without a gate",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "deck_height_m"
+          ],
+          "expression": "clamp(0.42 * groove_floor_z_m, 0.004, 0.012)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "aux_row_z_m",
+          "rationale": "the side button row is placed below the magstripe groove floor the card interface cut, so the two right-side features never intersect",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "input_face.aux_row_station"
+    },
+    {
+      "binding_id": "cover_hinge_to_printer",
+      "consumer": "receipt_printer.cover_knuckle_bore",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "body_length_m"
+          ],
+          "expression": "cover_hinge_x_m - bay_x_max_m + 0.010",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "cover_len_m",
+          "rationale": "the cover is sized from the bay opening the housing cut, so it spans the bay and lands on the front rim at every case length",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "deck_height_m",
+            "wedge_rise_m"
+          ],
+          "expression": "rear_height_m - bay_depth_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "bay_floor_z_m",
+          "rationale": "the bay floor follows the rear deck height so the roll and the cover keep their clearance when the wedge moves",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "housing_build.cover_hinge_axis"
+    },
+    {
+      "binding_id": "chip_slot_to_card",
+      "consumer": "card_interface.card_underside",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "body_length_m",
+            "card_travel_m"
+          ],
+          "expression": "chip_slot_depth_m + card_travel_m + 0.030",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "card_len_m",
+          "rationale": "the card derives from the pocket the housing cut plus its own travel, so it is retained by at least 8 mm at full withdrawal",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "body_width_m"
+          ],
+          "expression": "chip_slot_width_m - 0.002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "card_width_m",
+          "rationale": "the card derives from the pocket width with a running clearance",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "housing_build.chip_slot_floor"
+    },
+    {
+      "binding_id": "display_hinge_to_head",
+      "consumer": "display_mount.head_boss_bore",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "body_length_m",
+            "deck_height_m",
+            "wedge_rise_m"
+          ],
+          "expression": "display_center_x_m - display_hinge_x_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "head_local_seat_m",
+          "rationale": "the head's local bezel and screen offsets are the face station minus the hinge origin, so the closed head lies exactly in the face plane for both housings and both entry faces",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "body_width_m"
+          ],
+          "expression": "2 * head_boss_radius_m + 0.004",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "bracket_len_m",
+          "rationale": "the housing bracket is derived from the boss it cradles",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "housing_build.display_hinge_axis"
+    },
+    {
+      "binding_id": "support_to_housing",
+      "consumer": "housing_build.underside_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "body_length_m"
+          ],
+          "expression": "cradle_height_m if support_base == 'tilt_dock' else stand_top_z_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "mount_height_m",
+          "rationale": "the housing is lifted to whichever seat the active support root presents, and the feet move onto that root",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "body_length_m"
+          ],
+          "expression": "0.0 (the housing origin, on the mate axis)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "mount_pivot_x_m",
+          "rationale": "a revolute rotates about its child-frame origin, so the mount axis passes through the terminal's own origin for both roots: the cradle derives a recline well for the tail that then swings below the tray, and the pedestal collar sits directly under it",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "support_base.mount_axis"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "keypad_entry_identity",
+      "applies_to": {
+        "candidates": [
+          "numeric_keypad"
+        ],
+        "slot": "input_face"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the entry face presents the primary payment display",
+        "category_anchor: numeric keypad presents 12 digits and the command triad",
+        "category_anchor: every entry key stays inside its deck aperture and keeps its exposed band",
+        "category_anchor: the auxiliary key row matches aux_key_count",
+        "category_anchor: the card interface presents a chip slot and a magstripe groove"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "entry_key",
+          "joint_type": "prismatic",
+          "parent_role": "terminal_housing"
+        },
+        {
+          "axis": null,
+          "child_role": "aux_key",
+          "joint_type": "prismatic",
+          "parent_role": "terminal_housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": null,
+          "exact_count": 15,
+          "role": "entry_key"
+        },
+        {
+          "count_from": "aux_key_count",
+          "exact_count": null,
+          "role": "aux_key"
+        }
+      ]
+    },
+    {
+      "anchor_id": "touchscreen_entry_identity",
+      "applies_to": {
+        "candidates": [
+          "touchscreen_glass"
+        ],
+        "slot": "input_face"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the entry face presents the primary payment display",
+        "category_anchor: the auxiliary key row matches aux_key_count",
+        "category_anchor: the card interface presents a chip slot and a magstripe groove"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "aux_key",
+          "joint_type": "prismatic",
+          "parent_role": "terminal_housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": null,
+          "exact_count": 0,
+          "role": "entry_key"
+        },
+        {
+          "count_from": "aux_key_count",
+          "exact_count": null,
+          "role": "aux_key"
+        }
+      ]
+    },
+    {
+      "anchor_id": "soft_key_strip_identity",
+      "applies_to": {
+        "candidates": [
+          "soft_key_strip"
+        ],
+        "slot": "aux_key_row"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the auxiliary key row matches aux_key_count",
+        "category_anchor: every auxiliary key stays inside its host opening and keeps its exposed band"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "aux_key",
+          "joint_type": "prismatic",
+          "parent_role": "terminal_housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": "aux_key_count",
+          "exact_count": null,
+          "role": "aux_key"
+        }
+      ]
+    },
+    {
+      "anchor_id": "side_button_row_identity",
+      "applies_to": {
+        "candidates": [
+          "side_hard_buttons"
+        ],
+        "slot": "aux_key_row"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the auxiliary key row matches aux_key_count",
+        "category_anchor: every auxiliary key stays inside its host opening and keeps its exposed band"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "aux_key",
+          "joint_type": "prismatic",
+          "parent_role": "terminal_housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": "aux_key_count",
+          "exact_count": null,
+          "role": "aux_key"
+        }
+      ]
+    },
+    {
+      "anchor_id": "printer_spindle_identity",
+      "applies_to": {
+        "candidates": [
+          "flip_cover_spindle"
+        ],
+        "slot": "receipt_printer"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the receipt printer cover opens off the paper bay",
+        "category_anchor: the paper roll spins on its spindle"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "printer_cover",
+          "joint_type": "revolute",
+          "parent_role": "terminal_housing"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "paper_roll",
+          "joint_type": "continuous",
+          "parent_role": "terminal_housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "printer_cover"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "paper_roll"
+        }
+      ]
+    },
+    {
+      "anchor_id": "printer_static_roll_identity",
+      "applies_to": {
+        "candidates": [
+          "knuckle_cover_static_roll"
+        ],
+        "slot": "receipt_printer"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the receipt printer cover opens off the paper bay",
+        "category_anchor: the paper roll lies static in the bay"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "printer_cover",
+          "joint_type": "revolute",
+          "parent_role": "terminal_housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "printer_cover"
+        },
+        {
+          "count_from": null,
+          "exact_count": 0,
+          "role": "paper_roll"
+        }
+      ]
+    },
+    {
+      "anchor_id": "static_card_identity",
+      "applies_to": {
+        "candidates": [
+          "static_chip_slot"
+        ],
+        "slot": "card_interface"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the card interface presents a chip slot and a magstripe groove"
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": null,
+          "exact_count": 0,
+          "role": "payment_card"
+        }
+      ]
+    },
+    {
+      "anchor_id": "sliding_card_identity",
+      "applies_to": {
+        "candidates": [
+          "sliding_bank_card"
+        ],
+        "slot": "card_interface"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the card interface presents a chip slot and a magstripe groove",
+        "category_anchor: the inserted card slides out of the chip slot and stays retained"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "payment_card",
+          "joint_type": "prismatic",
+          "parent_role": "terminal_housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "payment_card"
+        }
+      ]
+    },
+    {
+      "anchor_id": "grounded_support_identity",
+      "applies_to": {
+        "candidates": [
+          "flat_feet"
+        ],
+        "slot": "support_base"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the terminal is grounded on its own feet"
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": null,
+          "exact_count": 0,
+          "role": "support_root"
+        }
+      ]
+    },
+    {
+      "anchor_id": "carried_support_identity",
+      "applies_to": {
+        "candidates": [
+          "tilt_dock",
+          "swivel_pedestal"
+        ],
+        "slot": "support_base"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the terminal is carried by its support root"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "terminal_housing",
+          "joint_type": "revolute",
+          "parent_role": "support_root"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "support_root"
+        }
+      ]
+    },
+    {
+      "anchor_id": "fixed_display_identity",
+      "applies_to": {
+        "candidates": [
+          "fixed_display"
+        ],
+        "slot": "display_mount"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the entry face presents the primary payment display",
+        "category_anchor: the display is fixed in the top face"
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": null,
+          "exact_count": 0,
+          "role": "display_head"
+        }
+      ]
+    },
+    {
+      "anchor_id": "tilt_display_identity",
+      "applies_to": {
+        "candidates": [
+          "tilt_display"
+        ],
+        "slot": "display_mount"
+      },
+      "required_author_checks": [
+        "category_anchor: one terminal housing carries the display, the entry face and the card interface",
+        "category_anchor: the entry face presents the primary payment display",
+        "category_anchor: the display head tilts out of the top face"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "display_head",
+          "joint_type": "revolute",
+          "parent_role": "terminal_housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "terminal_housing"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "display_head"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2 <= aux_key_count <= 6. The soft key strip is the host and widens with N (aux_strip_width_m = N * aux_key_size_m + (N + 1) * 0.0035), exactly as the N=6 source widened the strip from 0.064 m to 0.076 m; the narrowest 0.070 m case still fits six 0.0045 m caps. The side row's usable run is 0.34 * housing_length_m below the magstripe groove, which holds six caps on the shortest 0.150 m case.",
+      "item_slot": "aux_key_row",
+      "name": "aux_key_count",
+      "spacing_expression": "the N caps are evenly spaced and symmetric about their host centre: on the soft key strip they span Y with pitch aux_span_m / (N - 1) where aux_span_m = aux_strip_len_m - aux_key_size_m; on the side row they span X with the same rule over the usable side run. Cap size derives from the pitch so neighbours keep a gap at N=6.",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Six-point side profile extruded across the full width and filleted on the vertical edges, giving a two-stage silhouette: a vertical front-face band, a flat keypad deck, a short display slope, then a flat rear deck. The printer cavity, chip pocket and side magstripe groove are boolean cuts out of that solid, and the slope's unit normal and pitch are computed from the same profile points that built it.",
+          "implementation_function": "_housing_build_extruded_wedge_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "housing_length_m - deck_edge_inset by body_width_m - 2 * face_margin_m"
+              },
+              "frame": {
+                "normal": "outward normal of the local top face: +Z on the flat deck, (sin slope_pitch_rad, 0, cos slope_pitch_rad) on the slope",
+                "point": "(x, 0, face_z(x)) for x from +housing_length_m/2 back to slope_rear_x_m"
+              },
+              "kind": "plane",
+              "name": "top_face",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "chip_slot_depth_m by 0.66 * body_width_m"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "(chip_slot_back_x_m, 0, deck_height_m * 0.30)"
+              },
+              "kind": "plane",
+              "name": "chip_slot_floor",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "hinge line at the rear rim, radius 0.0034 m knuckle seat"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(-0.489 * housing_length_m, 0, rear_height_m)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "cover_hinge_axis",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "hinge line at the top-rear edge of the slope, radius 0.004 m boss seat"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(slope_rear_x_m, 0, rear_height_m)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "display_hinge_axis",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "mount seat on the case underside; the support root defines the axis direction"
+              },
+              "frame": {
+                "axis": "support-defined",
+                "point": "(support_pivot_x_m, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "underside_mount",
+              "part": "terminal_housing",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "extruded_wedge",
+          "notes": "Six-point polyline in the XZ plane extruded across the full width and filleted on the vertical edges, then detailed with boolean cuts. Keeps the vertical front-face band, the flat entry deck and the flat rear deck, so the silhouette stays two-stage even when the entry face shrinks the deck.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.208,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_length_m",
+              "rationale": "nominal terminal length along +X (front card end to rear printer end); drives every station on the top face, the printer bay, the groove and both support roots",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.1,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "body_width_m",
+              "rationale": "nominal terminal width across Y; drives key column pitch, cover width, roll length and the magstripe groove station on the right side",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.036,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "deck_height_m",
+              "rationale": "height of the top face at the front edge; the low end of the wedge and the datum for the chip slot and the side groove",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "wedge_rise_m",
+              "rationale": "how much the top face climbs from the front edge to the rear deck; sets the slope pitch every face-mounted part is rotated by",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "body_length_m * (1.00 if housing_build == 'extruded_wedge' else 0.97)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "housing_length_m",
+              "rationale": "the moulded intersected case reads slightly shorter than the extruded shell, as in the two heroes (0.185 m vs 0.180 m)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "deck_height_m + wedge_rise_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rear_height_m",
+              "rationale": "rear deck height; the printer bay floor, the cover hinge and the display hinge are all measured from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "deck_height_m"
+              ],
+              "expression": "0.0 if housing_build == 'intersected_wedge' else housing_length_m * (0.50 if input_face == 'numeric_keypad' else 0.14)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "deck_len_m",
+              "rationale": "the extruded shell keeps a flat entry deck whose length follows what the entry face actually needs; the intersected shell is one continuous plane by construction",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "deck_height_m",
+                "wedge_rise_m",
+                "body_length_m"
+              ],
+              "expression": "atan2(wedge_rise_m, housing_length_m - deck_len_m - rear_deck_len_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "slope_pitch_rad",
+              "rationale": "pitch of the sloped part of the top face; every face-mounted visual, key origin and the display hinge are rotated by it",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "housing_length_m - 0.017 if housing_build == 'extruded_wedge' else housing_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "groove_len_m",
+              "rationale": "magstripe groove length: a pocket inset from both ends on the extruded shell, and a through groove open at both ends on the intersected shell. It is always bounded by the housing length so no liner can escape the body",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.145 * body_width_m, 0.007, 0.014)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "corner_radius_m",
+              "rationale": "vertical corner fillet of the footprint, scaled with the case width",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-silver-handheld-wireless-point-of-sale-payment_20260708_092652_294276_074f8840",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L34-L44",
+            "model.py:L74-L93",
+            "model.py:L99-L144"
+          ]
+        },
+        {
+          "evidence": "The same duty built the other way: a four-point wedge whose top is one continuous plane from the front edge to the rear deck, intersected with a separately filleted rounded-rectangle footprint so the shell reads as a moulded case rather than an extrusion. It also cuts a paper exit slit across the top deck and a magstripe groove that runs out of both ends, and exposes the top plane as an exact z(y) function so every mounted part is placed on it by construction.",
+          "implementation_function": "_housing_build_intersected_wedge_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "housing_length_m - deck_edge_inset by body_width_m - 2 * face_margin_m"
+              },
+              "frame": {
+                "normal": "outward normal of the local top face: +Z on the flat deck, (sin slope_pitch_rad, 0, cos slope_pitch_rad) on the slope",
+                "point": "(x, 0, face_z(x)) for x from +housing_length_m/2 back to slope_rear_x_m"
+              },
+              "kind": "plane",
+              "name": "top_face",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "chip_slot_depth_m by 0.66 * body_width_m"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "(chip_slot_back_x_m, 0, deck_height_m * 0.30)"
+              },
+              "kind": "plane",
+              "name": "chip_slot_floor",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "hinge line at the rear rim, radius 0.0034 m knuckle seat"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(-0.489 * housing_length_m, 0, rear_height_m)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "cover_hinge_axis",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "hinge line at the top-rear edge of the slope, radius 0.004 m boss seat"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(slope_rear_x_m, 0, rear_height_m)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "display_hinge_axis",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "mount seat on the case underside; the support root defines the axis direction"
+              },
+              "frame": {
+                "axis": "support-defined",
+                "point": "(support_pivot_x_m, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "underside_mount",
+              "part": "terminal_housing",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "intersected_wedge",
+          "notes": "Four-point wedge extruded across the width and intersected with a separately filleted rounded-rectangle footprint, so the top is one continuous plane from the front edge to the rear. Adds the paper exit slit across the top deck and a magstripe groove that runs out of both ends.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.208,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_length_m",
+              "rationale": "nominal terminal length along +X (front card end to rear printer end); drives every station on the top face, the printer bay, the groove and both support roots",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.1,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "body_width_m",
+              "rationale": "nominal terminal width across Y; drives key column pitch, cover width, roll length and the magstripe groove station on the right side",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.036,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "deck_height_m",
+              "rationale": "height of the top face at the front edge; the low end of the wedge and the datum for the chip slot and the side groove",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "wedge_rise_m",
+              "rationale": "how much the top face climbs from the front edge to the rear deck; sets the slope pitch every face-mounted part is rotated by",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "body_length_m * (1.00 if housing_build == 'extruded_wedge' else 0.97)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "housing_length_m",
+              "rationale": "the moulded intersected case reads slightly shorter than the extruded shell, as in the two heroes (0.185 m vs 0.180 m)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "deck_height_m + wedge_rise_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rear_height_m",
+              "rationale": "rear deck height; the printer bay floor, the cover hinge and the display hinge are all measured from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "deck_height_m"
+              ],
+              "expression": "0.0 if housing_build == 'intersected_wedge' else housing_length_m * (0.50 if input_face == 'numeric_keypad' else 0.14)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "deck_len_m",
+              "rationale": "the extruded shell keeps a flat entry deck whose length follows what the entry face actually needs; the intersected shell is one continuous plane by construction",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "deck_height_m",
+                "wedge_rise_m",
+                "body_length_m"
+              ],
+              "expression": "atan2(wedge_rise_m, housing_length_m - deck_len_m - rear_deck_len_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "slope_pitch_rad",
+              "rationale": "pitch of the sloped part of the top face; every face-mounted visual, key origin and the display hinge are rotated by it",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "housing_length_m - 0.017 if housing_build == 'extruded_wedge' else housing_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "groove_len_m",
+              "rationale": "magstripe groove length: a pocket inset from both ends on the extruded shell, and a through groove open at both ends on the intersected shell. It is always bounded by the housing length so no liner can escape the body",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.145 * body_width_m, 0.007, 0.014)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "corner_radius_m",
+              "rationale": "vertical corner fillet of the footprint, scaled with the case width",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-gray-handheld-point-of-sale-payment-terminal-w_20260708_091455_488779_4430a86e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L31-L75",
+            "model.py:L78-L95",
+            "model.py:L99-L156"
+          ]
+        }
+      ],
+      "component_type": "housing shell",
+      "name": "housing_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A charcoal keypad plate proud of the sloped face with a framed LCD above it, and a field of lofted keycaps in three sizes seated into the plate: four function keys, a 3x4 numeric block, and a wide red/yellow/green command row, each an independent prismatic press along the face normal. Corroborated by the silver hero's equivalent 12-key grid plus command triad at model.py:L299-L338.",
+          "implementation_function": "_input_face_numeric_keypad_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "keypad_plate_len_m by keypad_plate_width_m"
+              },
+              "frame": {
+                "normal": "local top-face normal",
+                "point": "(deck_center_x_m, 0, face_z(deck_center_x_m))"
+              },
+              "kind": "plane",
+              "name": "entry_face_mount",
+              "part": "terminal_housing",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "keypad_plate_len_m by keypad_plate_width_m"
+              },
+              "frame": {
+                "normal": "local top-face normal",
+                "point": "(deck_center_x_m, 0, face_z + plate_thickness_m)"
+              },
+              "kind": "plane",
+              "name": "keypad_deck_face",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": {
+                "motion_expression": "pressing q in [0, key_travel_m] moves the cap -q along the face normal; at q = key_travel_m the cap still protrudes keycap_height_m - key_travel_m >= 0.0022 m",
+                "normal_band_expression": "cap base sits at -0.0002 m (seated into the plate) and the crown reaches +keycap_height_m along the local face normal",
+                "opening_expression": "each key owns a keycap_x_m by keycap_y_m aperture in the keypad plate centred on its row/column station; the whole 4-row block plus the command row stays inside keypad_plate_len_m by keypad_plate_width_m",
+                "required_author_check": "category_anchor: every entry key stays inside its deck aperture and keeps its exposed band",
+                "subject_role": "entry_key"
+              }
+            },
+            {
+              "dimensions": {
+                "extent": "aux_row_len_m by aux_strip_width_m"
+              },
+              "frame": {
+                "normal": "local top-face normal",
+                "point": "(aux_row_x_m, 0, face_z(aux_row_x_m))"
+              },
+              "kind": "plane",
+              "name": "aux_row_station",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "numeric_keypad",
+          "notes": "Charcoal keypad plate proud of the top face carrying a 3x4 numeric block and a wide red/amber/green command row, plus a framed LCD above it. Fifteen independent prismatic presses along the local face normal.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0026,
+              "minimum": 0.0012,
+              "mode": "independent",
+              "name": "key_travel_m",
+              "rationale": "prismatic press travel shared by the entry keys and the auxiliary key row; also sets the minimum keycap height so a pressed cap still stands proud",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "slope_rear_x_m + 0.42 * (slope_front_x_m - slope_rear_x_m) if input_face == 'numeric_keypad' else (glass_front_x_m + glass_rear_x_m) / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "display_center_x_m",
+              "rationale": "station of the display on the top face; the small framed LCD sits on the slope, the glass slab is centred on whatever face length the aux row leaves free",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "0.216 * housing_length_m if input_face == 'numeric_keypad' else (glass_rear_x_m - glass_front_x_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "display_len_m",
+              "rationale": "display length along the face; a framed window on the keypad face, the whole free face length on the touchscreen face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.73 * body_width_m, 0.030, 0.072) if input_face == 'numeric_keypad' else clamp(0.83 * body_width_m, 0.040, 0.082)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "display_width_m",
+              "rationale": "display width across Y, always inside the face margin",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "body_width_m"
+              ],
+              "expression": "(cmd_row_x_m - entry_row0_x_m) / 4.75, with cmd_row_x_m anchored at the front edge and entry_row0_x_m pushed back behind the auxiliary strip",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "key_pitch_x_m",
+              "rationale": "the key block is anchored at the front edge and its row pitch is derived from whatever run the auxiliary strip leaves. When a tilting display head needs more room than a short case has, the strip moves forward and the keypad compresses (key_size_x_m follows the pitch) instead of the display collapsing to a window too small to visibly tilt",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.262 * body_width_m, 0.016, 0.026)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "key_pitch_y_m",
+              "rationale": "column pitch of the numeric block and the command triad across the case width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "key_travel_m"
+              ],
+              "expression": "key_travel_m + 0.0024",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "keycap_height_m",
+              "rationale": "keycap height is derived from travel so a fully pressed cap still stands 2.4 mm proud. The keypad plate is a perforated solid: each key runs in a real aperture cut through the plate and into the deck, so no cap ever penetrates its host",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-gray-handheld-point-of-sale-payment-terminal-w_20260708_091455_488779_4430a86e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L159-L178",
+            "model.py:L207-L228",
+            "model.py:L310-L373"
+          ]
+        },
+        {
+          "evidence": "The same sloped face populated as a screen-dominant slab instead: one full-face dark bezel, a dark glass panel framed inside it, a thin status-bar strip, a camera lens standing on the face normal, and an NFC mark embedded in the front face. The keypad plate and the entire key field are gone, so the part tree loses the whole keypad sub-tree.",
+          "implementation_function": "_input_face_touchscreen_glass_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "display_len_m by display_width_m"
+              },
+              "frame": {
+                "normal": "local top-face normal",
+                "point": "(display_center_x_m, 0, face_z(display_center_x_m))"
+              },
+              "kind": "plane",
+              "name": "entry_face_mount",
+              "part": "terminal_housing",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "aux_row_len_m by aux_strip_width_m"
+              },
+              "frame": {
+                "normal": "local top-face normal",
+                "point": "(aux_row_x_m, 0, face_z(aux_row_x_m))"
+              },
+              "kind": "plane",
+              "name": "aux_row_station",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "touchscreen_glass",
+          "notes": "The same top face populated as a screen-dominant slab: a full-face bezel, a dark glass panel framed inside it, a status strip and a camera lens, plus an NFC mark on the front face. No numeric block and no keypad plate.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "slope_rear_x_m + 0.42 * (slope_front_x_m - slope_rear_x_m) if input_face == 'numeric_keypad' else (glass_front_x_m + glass_rear_x_m) / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "display_center_x_m",
+              "rationale": "station of the display on the top face; the small framed LCD sits on the slope, the glass slab is centred on whatever face length the aux row leaves free",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "0.216 * housing_length_m if input_face == 'numeric_keypad' else (glass_rear_x_m - glass_front_x_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "display_len_m",
+              "rationale": "display length along the face; a framed window on the keypad face, the whole free face length on the touchscreen face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.73 * body_width_m, 0.030, 0.072) if input_face == 'numeric_keypad' else clamp(0.83 * body_width_m, 0.040, 0.082)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "display_width_m",
+              "rationale": "display width across Y, always inside the face margin",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "min(rear_limit_x_m + 0.58 * (face_front_x_m - rear_limit_x_m), aux_row_x_m - aux_strip_len_m / 2 - 0.006)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "glass_front_x_m",
+              "rationale": "the glass keeps the upper 58% of the usable face and is independent of the auxiliary row, so moving the soft keys down the face opens a real gap under the screen instead of dragging the screen down with them. The second term is the guard that keeps screen and keys from ever overlapping",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "bay_x_max_m - 0.008",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "glass_rear_x_m",
+              "rationale": "rear end of the glass, held clear of the paper exit slit and the bay rim, and of the tilting head's hinge station when that display mount is active",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_point_of_sale_terminal_var_body_touchscreen",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L169-L225"
+          ]
+        }
+      ],
+      "component_type": "entry face",
+      "name": "input_face",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A dark strip on the deck just below the display carrying N identical keycaps, evenly spaced across its width, each an independent prismatic press downward into the strip top. The strip is the host: its width and the key spacing come from the same key-count list.",
+          "implementation_function": "_aux_key_row_soft_key_strip_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "strip_len_m by aux_strip_width_m"
+              },
+              "frame": {
+                "normal": "local top-face normal",
+                "point": "(aux_row_x_m, 0, face_z(aux_row_x_m))"
+              },
+              "kind": "plane",
+              "name": "aux_row_mount",
+              "part": "aux_key_strip_host",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "strip_len_m by aux_strip_width_m"
+              },
+              "frame": {
+                "normal": "local top-face normal",
+                "point": "(aux_row_x_m, 0, strip_top_z_m)"
+              },
+              "kind": "plane",
+              "name": "soft_key_strip_face",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": {
+                "motion_expression": "pressing q in [0, key_travel_m] moves the cap -q along the face normal; at full travel it still protrudes aux_cap_height_m - key_travel_m >= 0.0018 m",
+                "normal_band_expression": "cap base rests on the strip top and the crown reaches +aux_cap_height_m along the local face normal",
+                "opening_expression": "each cap owns an aux_key_size_m square opening in the strip centred on its even station; all N openings stay inside aux_strip_width_m",
+                "required_author_check": "category_anchor: every auxiliary key stays inside its host opening and keeps its exposed band",
+                "subject_role": "aux_key"
+              }
+            }
+          ],
+          "name": "soft_key_strip",
+          "notes": "A dark strip on the top face just below the display hosting N evenly spaced caps, each pressing down the local face normal. The strip width is derived from N.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0026,
+              "minimum": 0.0012,
+              "mode": "independent",
+              "name": "key_travel_m",
+              "rationale": "prismatic press travel shared by the entry keys and the auxiliary key row; also sets the minimum keycap height so a pressed cap still stands proud",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m",
+                "body_length_m"
+              ],
+              "expression": "aux_span_m / max(aux_key_count - 1, 1) if aux_key_count > 1 else 0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "aux_pitch_m",
+              "rationale": "even spacing of the N auxiliary keys across their host span; the strip spans Y, the side row spans X",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m",
+                "body_length_m"
+              ],
+              "expression": "clamp(0.72 * aux_pitch_m, 0.0045, 0.013)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "aux_key_size_m",
+              "rationale": "key size shrinks with the pitch so six keys still leave a gap between neighbours",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "key_travel_m"
+              ],
+              "expression": "key_travel_m + 0.0018",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "aux_cap_height_m",
+              "rationale": "auxiliary cap height derived from travel so a pressed cap still stands 1.8 mm proud",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "min(aux_key_count * nominal_cap_m + (aux_key_count + 1) * 0.0032, body_width_m - 0.010)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "aux_strip_width_m",
+              "rationale": "the dark strip is the host and widens with the key count exactly as the N=6 source widened it from 0.064 m to 0.076 m; once it reaches the case width the caps shrink instead. The strip is a perforated solid seated 0.3 mm into the shell, so each cap runs in a real opening",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "numeric_keypad: 0.035 * housing_length_m (pushed forward when a tilting head needs room). touchscreen_glass: glass_face_front_x_m + 0.42 * (face_front_x_m - glass_face_front_x_m), clamped to keep the strip clear of both the glass and the front boundary",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "aux_row_x_m",
+              "rationale": "station of the strip on the top face. Under a keypad face it sits just below the display with the numeric block filling the face beneath it. Under a screen-dominant face there is no numeric block, so the strip is stationed low in the apron the glass leaves — around 57-70% down the usable face — and reads as a bottom control row rather than a rim tucked under the screen",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-silver-handheld-wireless-point-of-sale-payment_20260708_092652_294276_074f8840",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L68-L72",
+            "model.py:L214-L220",
+            "model.py:L340-L355"
+          ]
+        },
+        {
+          "evidence": "The same auxiliary-key duty relocated to the right side edge: N slim caps standing proud of the side face, spaced along the length, each pressing inward along -X instead of down the face normal. Different host surface, different press axis and no strip part.",
+          "implementation_function": "_aux_key_row_side_hard_buttons_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "aux_span_m by button_height_m"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(aux_row_center_x_m, +body_width_m/2, aux_row_z_m)"
+              },
+              "kind": "plane",
+              "name": "aux_row_mount",
+              "part": "terminal_housing",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "aux_span_m by button_height_m"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(aux_row_center_x_m, +body_width_m/2, aux_row_z_m)"
+              },
+              "kind": "plane",
+              "name": "side_button_face",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": {
+                "motion_expression": "pressing q in [0, key_travel_m] moves the cap -q along +Y; at full travel it still protrudes aux_cap_height_m - key_travel_m >= 0.0018 m",
+                "normal_band_expression": "cap base sits flush with the side face and the crown reaches +aux_cap_height_m along +Y",
+                "opening_expression": "each cap owns an aux_key_size_m by button_height_m opening in the right side face at its even station; all N openings stay inside aux_span_m and below the magstripe groove floor",
+                "required_author_check": "category_anchor: every auxiliary key stays inside its host opening and keeps its exposed band",
+                "subject_role": "aux_key"
+              }
+            }
+          ],
+          "name": "side_hard_buttons",
+          "notes": "The same auxiliary-key duty on the right side edge: N slim caps spaced along X below the magstripe groove, each pressing inward along -Y. No strip part and a different press axis.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0026,
+              "minimum": 0.0012,
+              "mode": "independent",
+              "name": "key_travel_m",
+              "rationale": "prismatic press travel shared by the entry keys and the auxiliary key row; also sets the minimum keycap height so a pressed cap still stands proud",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m",
+                "body_length_m"
+              ],
+              "expression": "aux_span_m / max(aux_key_count - 1, 1) if aux_key_count > 1 else 0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "aux_pitch_m",
+              "rationale": "even spacing of the N auxiliary keys across their host span; the strip spans Y, the side row spans X",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m",
+                "body_length_m"
+              ],
+              "expression": "clamp(0.72 * aux_pitch_m, 0.0045, 0.013)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "aux_key_size_m",
+              "rationale": "key size shrinks with the pitch so six keys still leave a gap between neighbours",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "key_travel_m"
+              ],
+              "expression": "key_travel_m + 0.0018",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "aux_cap_height_m",
+              "rationale": "auxiliary cap height derived from travel so a pressed cap still stands 1.8 mm proud",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "clamp(0.34 * housing_length_m, 0.020, 0.080)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "aux_span_m",
+              "rationale": "usable run of the right side edge below the magstripe groove, along X",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "deck_height_m"
+              ],
+              "expression": "clamp(0.42 * groove_floor_z_m, 0.004, 0.012)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "aux_row_z_m",
+              "rationale": "button station height: always below the magstripe groove floor so the caps never break into the groove",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "numeric_keypad: 0.035 * housing_length_m. touchscreen_glass: glass_face_front_x_m + 0.42 * (face_front_x_m - glass_face_front_x_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "aux_row_x_m",
+              "rationale": "station of the auxiliary row on the top face; on a screen-dominant face it sits low in the apron the glass leaves rather than under the screen rim",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_point_of_sale_terminal_var_body_touchscreen",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L66-L72",
+            "model.py:L299-L326"
+          ]
+        }
+      ],
+      "component_type": "auxiliary key row",
+      "name": "aux_key_row",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Bezel and lit screen are visuals on the housing itself, seated into the sloped face by offsetting along its outward unit normal and rotated by the slope pitch. No extra part and no joint: the display is part of the shell.",
+          "implementation_function": "_display_mount_fixed_display_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "display_len_m by display_width_m"
+              },
+              "frame": {
+                "normal": "local top-face normal",
+                "point": "(display_center_x_m, 0, face_z(display_center_x_m))"
+              },
+              "kind": "plane",
+              "name": "display_seat",
+              "part": "terminal_housing",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "fixed_display",
+          "notes": "Bezel and screen are visuals on the housing itself; no extra part, no joint.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "0.00145 + 0.0025",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "display_normal_lift_m",
+              "rationale": "bezel and screen are offset along the real face normal, so the display follows the slope whenever the wedge parameters move",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-silver-handheld-wireless-point-of-sale-payment_20260708_092652_294276_074f8840",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L74-L93",
+            "model.py:L198-L212"
+          ]
+        },
+        {
+          "evidence": "Bezel and screen move onto a separate display_head part whose hinge boss barrel lies on the hinge line, and the housing grows a hinge bracket at the top-rear edge of the slope to cradle it. A revolute about -Y at that edge tilts the head up out of the slope plane; the head's local bezel/screen offsets are re-derived from the slope midpoint minus the hinge origin.",
+          "implementation_function": "_display_mount_tilt_display_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "boss bore of head_boss_radius_m running in the housing bracket cradle"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(0, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "head_boss_bore",
+              "part": "display_head",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "display_len_m by display_width_m"
+              },
+              "frame": {
+                "normal": "local top-face normal",
+                "point": "(head_local_seat_m, 0, head_local_seat_z_m)"
+              },
+              "kind": "plane",
+              "name": "display_seat",
+              "part": "display_head",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "tilt_display",
+          "notes": "Bezel and screen move onto a display_head part with a hinge boss barrel on the hinge line; the housing grows a bracket at the top-rear edge of the slope and a revolute about -Y tilts the head out of the face.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.66,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "display_tilt_rad",
+              "rationale": "upper limit of the display head hinge; the head must lift clear of the top face without striking the printer cover. The window is floored at 0.018 m so even the shallowest tilt on the shortest case produces a visible rise",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.049 * body_width_m, 0.0032, 0.0050)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "head_boss_radius_m",
+              "rationale": "hinge boss barrel radius, scaled with the case width, seated in the housing bracket",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "body_width_m - 0.018",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "head_boss_len_m",
+              "rationale": "boss barrel length, held inside the case width so it never breaks the side faces",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "body_width_m",
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "display_center_x_m - display_hinge_x_m, with display_center_x_m = cover_front_x_m + 0.004 + head_boss_radius_m + 0.0020 + display_len_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "head_local_seat_m",
+              "rationale": "a tilting head is anchored from its hinge end rather than from the entry face, so the boss barrel always clears the closed printer cover; the head's local bezel and screen offsets are then the face station minus the hinge origin, re-derived every time the wedge moves",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "head_boss_radius_m + 0.0008",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hinge_relief_radius_m",
+              "rationale": "the housing cuts a real relief channel at the hinge station so the boss barrel runs in a bore with 0.8 mm clearance instead of sinking into the shell",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_point_of_sale_terminal_var_display_tilt",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L86-L101",
+            "model.py:L215-L255"
+          ]
+        }
+      ],
+      "component_type": "display mount",
+      "name": "display_mount",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A rectangular compartment cut into the rear deck, closed by a plain filleted cover plate carrying a serrated tear bar at its free edge on a revolute at the rear edge, plus a separate paper_roll part — roll body and axle — on a CONTINUOUS spindle whose axle ends are captured in the compartment side walls as stand-in bearing slots. Two moving parts, one of them freely spinning.",
+          "implementation_function": "_receipt_printer_flip_cover_spindle_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "plain hinge seat at the rear rim"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(0, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "cover_knuckle_bore",
+              "part": "printer_cover",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "spindle bore of axle_radius_m running in the bay side-wall bearings"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(0, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "roll_spindle_axis",
+              "part": "paper_roll",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "flip_cover_spindle",
+          "notes": "Plain filleted cover with a serrated tear bar on a revolute at the rear rim, plus a separate paper_roll part (roll body and axle) on a CONTINUOUS spindle whose axle ends are captured in the bay side walls.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.9,
+              "minimum": 1.25,
+              "mode": "independent",
+              "name": "cover_open_rad",
+              "rationale": "upper limit of the printer cover hinge; the cover must clear the bay rim and the display over the whole range",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "-0.465 * housing_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bay_x_min_m",
+              "rationale": "rear end of the paper bay, from the silver hero's -0.086 m on a 0.185 m case",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "-0.238 * housing_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bay_x_max_m",
+              "rationale": "front end of the paper bay; the display and the glass are both held clear of it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.80 * body_width_m, 0.040, 0.080)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bay_width_m",
+              "rationale": "bay opening across Y, inside the case side walls",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "(bay_x_max_m - cover_hinge_x_m) + 0.008",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "cover_len_m",
+              "rationale": "the cover is sized from the bay opening the housing cut, so it spans the bay and lands on the front rim at every case length; the 8 mm overhang is the clearance a tilting display head is then held clear of",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "bay_width_m + 0.014",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "cover_width_m",
+              "rationale": "cover overlaps the bay rim on both sides",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "clamp(min(0.38 * (bay_x_max_m - bay_x_min_m), 0.5 * (face_z(roll_center_x_m) - bay_floor_z_m - 0.0022)), 0.006, 0.017)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "roll_radius_m",
+              "rationale": "the roll is sized both by the bay it lies in and by the headroom under the closed cover at that station, so it can never stand proud of the top face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "roll_len_m + 0.010",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axle_len_m",
+              "rationale": "the axle overhangs the roll at both ends so it is captured in the bay side walls, standing in for snap-in bearing slots",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-silver-handheld-wireless-point-of-sale-payment_20260708_092652_294276_074f8840",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L46-L58",
+            "model.py:L121-L127",
+            "model.py:L147-L159",
+            "model.py:L250-L297"
+          ]
+        },
+        {
+          "evidence": "The same printer built with real hinge hardware and no spindle: a bay pocket plus a paper exit slit across the top deck, a static roll lying in the bay as a housing visual, two hinge bosses on the housing rim, and a cover carrying knuckle barrels on the hinge axis, knuckle tabs joining them to the plate, and a grip ridge at the free edge. One moving part instead of two, and the roll is no longer articulated.",
+          "implementation_function": "_receipt_printer_knuckle_cover_static_roll_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "knuckle barrel bore of 0.0034 m closing over the housing hinge bosses"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(0, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "cover_knuckle_bore",
+              "part": "printer_cover",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "2 * roll_radius_m by roll_len_m"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "(roll_center_x_m, 0, bay_floor_z_m)"
+              },
+              "kind": "plane",
+              "name": "static_roll_seat",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "knuckle_cover_static_roll",
+          "notes": "Real hinge hardware and no spindle: two knuckle barrels and joining tabs on the cover closing over hinge bosses on the housing rim, a grip ridge at the free edge, a paper exit slit across the top deck, and the roll lying static in the bay as a housing visual.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.9,
+              "minimum": 1.25,
+              "mode": "independent",
+              "name": "cover_open_rad",
+              "rationale": "upper limit of the printer cover hinge; the cover must clear the bay rim and the display over the whole range",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "-0.465 * housing_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bay_x_min_m",
+              "rationale": "rear end of the paper bay, from the silver hero's -0.086 m on a 0.185 m case",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "-0.238 * housing_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bay_x_max_m",
+              "rationale": "front end of the paper bay; the display and the glass are both held clear of it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.80 * body_width_m, 0.040, 0.080)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bay_width_m",
+              "rationale": "bay opening across Y, inside the case side walls",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "(bay_x_max_m - cover_hinge_x_m) + 0.008",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "cover_len_m",
+              "rationale": "the cover is sized from the bay opening the housing cut, so it spans the bay and lands on the front rim at every case length; the 8 mm overhang is the clearance a tilting display head is then held clear of",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "bay_width_m + 0.014",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "cover_width_m",
+              "rationale": "cover overlaps the bay rim on both sides",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "clamp(min(0.38 * (bay_x_max_m - bay_x_min_m), 0.5 * (face_z(roll_center_x_m) - bay_floor_z_m - 0.0022)), 0.006, 0.017)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "roll_radius_m",
+              "rationale": "the roll is sized both by the bay it lies in and by the headroom under the closed cover at that station, so it can never stand proud of the top face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.58 * bay_width_m, 0.024, 0.052)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "knuckle_span_m",
+              "rationale": "the two knuckle barrels and the housing bosses that flank them are spaced from the bay width, so the hinge hardware follows the case",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "bay_x_max_m - 0.006",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "exit_slit_x_m",
+              "rationale": "paper exit slit station just in front of the cover front edge",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-gray-handheld-point-of-sale-payment-terminal-w_20260708_091455_488779_4430a86e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L45-L49",
+            "model.py:L124-L130",
+            "model.py:L148-L155",
+            "model.py:L230-L249",
+            "model.py:L262-L307"
+          ]
+        }
+      ],
+      "component_type": "receipt printer",
+      "name": "receipt_printer",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Both card paths are openings in the shell with nothing inserted: a chip pocket cut into the front face backed by a dark liner at the slot's back wall, and a magstripe groove cut along the right side with a dark liner along its floor. The liner lengths are tied to the cut lengths, so the groove reads as a recess rather than an applied strip.",
+          "implementation_function": "_card_interface_static_chip_slot_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "chip_slot_depth_m by chip_slot_width_m"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "(front_edge_x_m - chip_slot_depth_m / 2, 0, deck_height_m * 0.30)"
+              },
+              "kind": "plane",
+              "name": "chip_slot_floor",
+              "part": "terminal_housing",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "groove_len_m by 0.003 m"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(0, +body_width_m/2, groove_floor_z_m)"
+              },
+              "kind": "plane",
+              "name": "groove_floor",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "static_chip_slot",
+          "notes": "Both card paths are openings with nothing inserted: a chip pocket cut into the front face backed by a liner at its back wall, and a magstripe groove cut along the right side with a liner along its floor. Both liner lengths derive from their cut lengths.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "card_travel_m"
+              ],
+              "expression": "clamp(max(0.18 * housing_length_m, card_travel_m + 0.0140), 0.022, 0.046)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "chip_slot_depth_m",
+              "rationale": "how deep the chip pocket is cut into the front face. It is derived from the case length and from the stroke it has to retain a card through, so a fully withdrawn card is still held by at least 8 mm at every travel setting",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.68 * body_width_m, 0.040, 0.066)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "chip_slot_width_m",
+              "rationale": "chip pocket width, inside the case side walls",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "deck_height_m"
+              ],
+              "expression": "deck_height_m * 0.62",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "groove_floor_z_m",
+              "rationale": "magstripe groove floor height on the right side, derived from the front-edge height so the groove stays inside the wall at every wedge setting",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "groove_len_m - 0.002",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "groove_liner_len_m",
+              "rationale": "the dark liner is derived from the cut length it lines, so it can never extend beyond the housing it belongs to",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-silver-handheld-wireless-point-of-sale-payment_20260708_092652_294276_074f8840",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L129-L143",
+            "model.py:L222-L237"
+          ]
+        },
+        {
+          "evidence": "The chip slot is occupied: a filleted card plate with a logo patch and a stripe band is a separate part resting on the slot floor and protruding past the front face, on a prismatic slide that withdraws it toward the user while keeping part of it retained in the slot. Adds a part and a joint the static reading does not have.",
+          "implementation_function": "_card_interface_sliding_bank_card_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "card_len_m by card_width_m"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "(0, 0, -card_thickness_m / 2)"
+              },
+              "kind": "plane",
+              "name": "card_underside",
+              "part": "payment_card",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "sliding_bank_card",
+          "notes": "The chip slot is occupied: a filleted card plate with a logo patch and a stripe band on a prismatic slide that withdraws it toward the user while keeping it retained.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.023,
+              "minimum": 0.011,
+              "mode": "independent",
+              "name": "card_travel_m",
+              "rationale": "withdraw travel of the inserted chip card; the card must stay retained in the slot at full travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "card_travel_m"
+              ],
+              "expression": "clamp(max(0.18 * housing_length_m, card_travel_m + 0.0140), 0.022, 0.046)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "chip_slot_depth_m",
+              "rationale": "how deep the chip pocket is cut into the front face. It is derived from the case length and from the stroke it has to retain a card through, so a fully withdrawn card is still held by at least 8 mm at every travel setting",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.68 * body_width_m, 0.040, 0.066)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "chip_slot_width_m",
+              "rationale": "chip pocket width, inside the case side walls",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "deck_height_m"
+              ],
+              "expression": "deck_height_m * 0.62",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "groove_floor_z_m",
+              "rationale": "magstripe groove floor height on the right side, derived from the front-edge height so the groove stays inside the wall at every wedge setting",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "groove_len_m - 0.002",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "groove_liner_len_m",
+              "rationale": "the dark liner is derived from the cut length it lines, so it can never extend beyond the housing it belongs to",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "card_travel_m"
+              ],
+              "expression": "chip_slot_depth_m + card_travel_m + 0.030",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "card_len_m",
+              "rationale": "the card is sized from the slot it lives in plus the travel it must survive, so it is still retained by at least 8 mm when fully withdrawn",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "chip_slot_width_m - 0.002",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "card_width_m",
+              "rationale": "the card is derived from the slot width so it stays centred with a running clearance",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-gray-handheld-point-of-sale-payment-terminal-w_20260708_091455_488779_4430a86e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L56-L64",
+            "model.py:L140-L146",
+            "model.py:L375-L411"
+          ]
+        }
+      ],
+      "component_type": "card interface",
+      "name": "card_interface",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The housing is itself the grounded root, standing on four rubber pads lightly embedded into its underside at the four corners. No support part and no mount joint.",
+          "implementation_function": "_support_base_flat_feet_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "2 * foot_station_x_m by 2 * foot_station_y_m"
+              },
+              "frame": {
+                "normal": "-Z",
+                "point": "(0, 0, -foot_height_m)"
+              },
+              "kind": "plane",
+              "name": "ground_contact",
+              "part": "terminal_housing",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "flat_feet",
+          "notes": "The housing is the grounded root, standing on four rubber pads at its corners.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "0.368 * housing_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "foot_station_x_m",
+              "rationale": "foot stations follow the case length so the four pads stay under the corners",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "0.317 * body_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "foot_station_y_m",
+              "rationale": "foot stations follow the case width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.073 * body_width_m, 0.0045, 0.0075)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "foot_radius_m",
+              "rationale": "pad radius scaled with the case",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-silver-handheld-wireless-point-of-sale-payment_20260708_092652_294276_074f8840",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L239-L248"
+          ]
+        },
+        {
+          "evidence": "A cradle tray with a rear upstand wall and a front locating lip becomes the grounded root; the feet migrate to its underside, gold charging pads sit on the tray top, and a revolute about -Y at the tray surface reclines the terminal against the upstand. The housing stops being the root and gains a parent.",
+          "implementation_function": "_support_base_tilt_dock_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "recline pivot on the tray surface near the rear of the cradle"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(-0.027 * cradle_len_m, 0, cradle_height_m)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "mount_axis",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "cradle_len_m - 2 * wall_thick_m by cradle_width_m - 2 * wall_thick_m"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "(0, 0, cradle_height_m)"
+              },
+              "kind": "plane",
+              "name": "cradle_floor",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "tilt_dock",
+          "notes": "A cradle tray with a rear upstand and a front locating lip is the grounded root; the feet migrate to its underside, charging pads sit on the tray top, and a revolute about -Y at the tray surface reclines the terminal.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "dock_recline_rad",
+              "rationale": "upper limit of the cradle recline hinge; the terminal tail must stay clear of the tray while the front rises",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "housing_length_m + 0.045",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "cradle_len_m",
+              "rationale": "the tray is derived from the terminal it holds, so the case always lands inside the upstand and the front lip",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "body_width_m + 0.004 + 2 * (post_width_m + 0.006)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "cradle_width_m",
+              "rationale": "tray width derived from the terminal plus the two rear retention posts that stand outboard of it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "clamp(0.205 * housing_length_m, 0.028, 0.046)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "cradle_height_m",
+              "rationale": "tray thickness; also the height of the recline pivot above the counter",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "deck_height_m",
+                "wedge_rise_m"
+              ],
+              "expression": "clamp(0.62 * rear_height_m, 0.022, 0.040)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "upstand_height_m",
+              "rationale": "height of the two rear retention posts, derived from the terminal's rear height. They stand outboard of the case width rather than forming one solid wall, so the opened printer cover swings through the open centre even at full recline",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "0.008, stationed at body_width_m / 2 + 0.002 + post_width_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_width_m",
+              "rationale": "the rear retention posts sit just outboard of the terminal, leaving a centre gap wider than cover_width_m so the reclined cover never meets them",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m",
+                "dock_recline_rad"
+              ],
+              "expression": "(housing_length_m / 2) * sin(dock_recline_rad) + 0.004, with cradle_height_m = max(clamp(0.205 * housing_length_m, 0.028, 0.046), well_depth_m + 0.009)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "well_depth_m",
+              "rationale": "the recline pivot sits at the terminal's own origin, so the tail swings below the tray surface; the tray derives a well deep enough for that swing and a height that still leaves a floor under it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_point_of_sale_terminal_var_base_dock_tilt",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L60-L73",
+            "model.py:L188-L228",
+            "model.py:L246-L270",
+            "model.py:L321-L333"
+          ]
+        },
+        {
+          "evidence": "A weighted disk base, a column and a bearing collar form the grounded root, with an annular chrome trim ring let into the base perimeter and the feet on its underside. The mount joint is a revolute about vertical Z at the collar top, so the terminal yaws at raised height instead of reclining on a tray — a different root profile and a different axis direction from the cradle.",
+          "implementation_function": "_support_base_swivel_pedestal_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "vertical yaw axis through the collar centre, radius collar_radius_m"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(0, 0, stand_top_z_m)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "mount_axis",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "2 * collar_radius_m by 2 * collar_radius_m"
+              },
+              "frame": {
+                "normal": "+Z",
+                "point": "(0, 0, stand_top_z_m)"
+              },
+              "kind": "plane",
+              "name": "collar_seat",
+              "part": "support_base",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "swivel_pedestal",
+          "notes": "A weighted disk base, a column and a bearing collar form the grounded root with a trim ring at the perimeter and feet underneath; a revolute about vertical Z at the collar top yaws the terminal at raised height.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.55,
+              "minimum": 0.85,
+              "mode": "independent",
+              "name": "pedestal_yaw_rad",
+              "rationale": "symmetric yaw limit of the pedestal swivel; the terminal must clear the column at both extremes",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "clamp(0.46 * housing_length_m, 0.068, 0.098)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "base_radius_m",
+              "rationale": "the weighted disk is derived from the terminal it must counterbalance",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "clamp(0.60 * housing_length_m, 0.085, 0.130)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pole_height_m",
+              "rationale": "column height scaled with the terminal",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_width_m"
+              ],
+              "expression": "clamp(0.33 * body_width_m, 0.022, 0.034)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "collar_radius_m",
+              "rationale": "the bearing collar is derived from the case width so the underside always lands on a real seat",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "body_length_m"
+              ],
+              "expression": "base_height_m + pole_height_m + collar_height_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "stand_top_z_m",
+              "rationale": "mount height of the swivel; the terminal underside sits on it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_point_of_sale_terminal_var_base_pole_swivel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L86-L100",
+            "model.py:L189-L221",
+            "model.py:L241-L262",
+            "model.py:L312-L323"
+          ]
+        }
+      ],
+      "component_type": "support root",
+      "name": "support_base",
+      "required": true
+    }
+  ],
+  "slug": "point_of_sale_terminal",
+  "source_map_path": "articraft_template_authoring/source_maps/point_of_sale_terminal.md",
+  "source_map_sha256": "ff54a11199f8c7c7d10b845f3ed628f0c2fcbd03d9168a7678ec6def6856da41"
+}

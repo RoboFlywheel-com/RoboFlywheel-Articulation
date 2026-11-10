@@ -1,0 +1,174 @@
+# SPDX-License-Identifier: Apache-2.0
+
+"""
+WriteCode tool - Replace the editable code section in one operation.
+"""
+
+from __future__ import annotations
+
+import ast
+
+import aiofiles
+
+from agent.tools.base import (
+    BaseDeclarativeTool,
+    BoundFileToolInvocation,
+    ToolParamsModel,
+    ToolResult,
+    make_tool_schema,
+)
+from agent.tools.code_region import (
+    find_code_region,
+    map_syntax_error_line_to_editable,
+    replace_editable_code,
+)
+
+
+class WriteCodeParams(ToolParamsModel):
+    """Parameters for write_code tool"""
+
+    code: str
+
+
+class WriteCodeInvocation(BoundFileToolInvocation[WriteCodeParams, str]):
+    """Invocation for replacing editable code"""
+
+    def get_description(self) -> str:
+        preview = self.params.code[:50].replace("\n", "\\n")
+        if len(self.params.code) > 50:
+            preview += "..."
+        return f"Rewrite editable code in current target file: '{preview}'"
+
+    async def execute(self) -> ToolResult:
+        try:
+            if not self.file_path:
+                return ToolResult(error="file_path is required")
+
+            async with aiofiles.open(self.file_path, mode="r") as f:
+                full_code = await f.read()
+
+            region = find_code_region(full_code)
+            if region.has_region:
+                missing = self._missing_required_functions(self.params.code)
+                if missing:
+                    return ToolResult(
+                        error=(
+                            "write_code must include required top-level functions in the editable section: "
+                            + ", ".join(missing)
+                        )
+                    )
+
+            new_full_code = replace_editable_code(full_code, self.params.code)
+            validation = self._validate_python_syntax(new_full_code, self.file_path or "<string>")
+
+            async with aiofiles.open(self.file_path, mode="w") as f:
+                await f.write(new_full_code)
+
+            return ToolResult(output="Code rewritten successfully", compilation=validation)
+        except FileNotFoundError:
+            return ToolResult(error=f"File {self.file_path} not found")
+        except Exception as exc:
+            return ToolResult(error=f"Error writing code: {str(exc)}")
+
+    def _missing_required_functions(self, editable_code: str) -> list[str]:
+        required = ["build_object_model", "run_tests"]
+        try:
+            tree = ast.parse(editable_code)
+        except SyntaxError:
+            # Let syntax validation surface this with richer line mapping.
+            return []
+
+        defined = {
+            node.name
+            for node in tree.body
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+        }
+        return [name for name in required if name not in defined]
+
+    def _validate_python_syntax(self, full_code: str, filename: str) -> dict:
+        try:
+            compile(full_code, filename, "exec")
+            return {
+                "status": "success",
+                "error": None,
+            }
+        except SyntaxError as exc:
+            editable_line = map_syntax_error_line_to_editable(full_code, exc.lineno)
+            if editable_line is not None and editable_line != exc.lineno:
+                error_msg = f"Syntax error: {exc.msg} (editable line {editable_line}, full line {exc.lineno})"
+            else:
+                error_msg = f"Syntax error: {exc.msg} (line {exc.lineno})"
+            return {
+                "status": "error",
+                "error": error_msg,
+                "error_line": exc.lineno,
+                "error_line_editable": editable_line,
+            }
+        except Exception as exc:
+            return {
+                "status": "error",
+                "error": f"Validation error: {str(exc)}",
+            }
+
+
+class WriteFileParams(ToolParamsModel):
+    """Parameters for Gemini-style write_file alias."""
+
+    content: str
+    path: str | None = None
+
+
+class WriteFileInvocation(BoundFileToolInvocation[WriteFileParams, str]):
+    """Invocation for full editable-section rewrites under the official-style name."""
+
+    def get_description(self) -> str:
+        preview = self.params.content[:50].replace("\n", "\\n")
+        if len(self.params.content) > 50:
+            preview += "..."
+        return f"Write editable code in current target file: '{preview}'"
+
+    async def execute(self) -> ToolResult:
+        mapped = WriteCodeParams(code=self.params.content)
+        invocation = WriteCodeInvocation(mapped)
+        invocation.bind_file_path(self.file_path or "")
+        return await invocation.execute()
+
+
+class WriteFileTool(BaseDeclarativeTool):
+    """Gemini-style write_file tool scoped to the editable section."""
+
+    def __init__(self) -> None:
+        schema = make_tool_schema(
+            name="write_file",
+            description=(
+                "Replace the entire editable code section in the current bound `model.py` artifact.\n\n"
+                "This is the Gemini-style full rewrite tool. It writes only the editable user section, "
+                "not scaffold imports or footer code.\n\n"
+                "Use this when a targeted `replace` would be awkward or when you intend to rewrite the "
+                "whole editable section from scratch."
+            ),
+            parameters={
+                "content": {
+                    "type": "string",
+                    "description": (
+                        "Full replacement content for the editable code section. "
+                        "In scaffolded files, include top-level build_object_model() and run_tests()."
+                    ),
+                },
+                "path": {
+                    "type": "string",
+                    "description": (
+                        "Optional virtual path for parity with Gemini CLI. "
+                        'If provided, use `"model.py"`.'
+                    ),
+                },
+            },
+            required=["content"],
+        )
+        super().__init__("write_file", schema)
+
+    async def build(self, params: dict) -> WriteFileInvocation:
+        validated = WriteFileParams(**params)
+        if validated.path not in {None, "model.py"}:
+            raise ValueError("write_file only supports path='model.py' in this harness")
+        return WriteFileInvocation(validated)

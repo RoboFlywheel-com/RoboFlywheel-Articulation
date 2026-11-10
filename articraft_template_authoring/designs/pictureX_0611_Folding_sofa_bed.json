@@ -1,0 +1,504 @@
+{
+  "assembly_notes": "Single source (SOURCES=1). The fold-out conversion mechanism is a fixed shared core: one rigid sofa_frame root, one fixed seat_deck middle bed panel, a REVOLUTE backrest that reclines flat rearward onto fixed rear support legs, a REVOLUTE foot_panel that folds out forward to bed height, and deck_leg_count REVOLUTE fold-down deck legs under the foot panel (each with a real captured pivot receiver). Three peripheral component slots vary by controlled world-knowledge extrapolation without touching the mechanism: base_leg (4 rigid corner legs), arm_style (2 rigid arms), deck_support (fold-down deck-leg station geometry). deck_leg_count is a structural multiplicity on deck_support. width_m, seat_depth_m, and bed_height_m are independent continuous parameters that derive frame/seat/backrest/foot geometry, hinge positions, arm span, leg positions, and deck-leg length; palette and tufting are non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "base_leg_identity",
+      "applies_to": {
+        "candidates": [
+          "splayed_chrome",
+          "tapered_walnut",
+          "hairpin_steel"
+        ],
+        "slot": "base_leg"
+      },
+      "required_author_checks": [
+        "category_anchor: folding sofa-bed conversion mechanism",
+        "category_anchor: supported fold-down deck legs",
+        "category_anchor: base_leg identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "backrest",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "foot_panel",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "deck_leg",
+          "joint_type": "revolute",
+          "parent_role": "foot_panel"
+        },
+        {
+          "child_role": "support_leg",
+          "joint_type": "fixed",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "seat_deck"
+        },
+        {
+          "exact_count": 1,
+          "role": "backrest"
+        },
+        {
+          "exact_count": 1,
+          "role": "foot_panel"
+        },
+        {
+          "count_from": "deck_leg_count",
+          "role": "deck_leg"
+        },
+        {
+          "exact_count": 4,
+          "role": "support_leg"
+        },
+        {
+          "exact_count": 2,
+          "role": "armrest"
+        }
+      ]
+    },
+    {
+      "anchor_id": "arm_style_identity",
+      "applies_to": {
+        "candidates": [
+          "bolster_arm",
+          "roll_arm",
+          "track_arm"
+        ],
+        "slot": "arm_style"
+      },
+      "required_author_checks": [
+        "category_anchor: folding sofa-bed conversion mechanism",
+        "category_anchor: supported fold-down deck legs",
+        "category_anchor: arm_style identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "backrest",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "foot_panel",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "deck_leg",
+          "joint_type": "revolute",
+          "parent_role": "foot_panel"
+        },
+        {
+          "child_role": "armrest",
+          "joint_type": "fixed",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "seat_deck"
+        },
+        {
+          "exact_count": 1,
+          "role": "backrest"
+        },
+        {
+          "exact_count": 1,
+          "role": "foot_panel"
+        },
+        {
+          "count_from": "deck_leg_count",
+          "role": "deck_leg"
+        },
+        {
+          "exact_count": 4,
+          "role": "support_leg"
+        },
+        {
+          "exact_count": 2,
+          "role": "armrest"
+        }
+      ]
+    },
+    {
+      "anchor_id": "deck_support_identity",
+      "applies_to": {
+        "candidates": [
+          "single_post",
+          "splayed_strut"
+        ],
+        "slot": "deck_support"
+      },
+      "required_author_checks": [
+        "category_anchor: folding sofa-bed conversion mechanism",
+        "category_anchor: supported fold-down deck legs",
+        "category_anchor: deck_support identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "backrest",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "foot_panel",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "deck_leg",
+          "joint_type": "revolute",
+          "parent_role": "foot_panel"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "seat_deck"
+        },
+        {
+          "exact_count": 1,
+          "role": "backrest"
+        },
+        {
+          "exact_count": 1,
+          "role": "foot_panel"
+        },
+        {
+          "count_from": "deck_leg_count",
+          "role": "deck_leg"
+        },
+        {
+          "exact_count": 4,
+          "role": "support_leg"
+        },
+        {
+          "exact_count": 2,
+          "role": "armrest"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2 <= deck_leg_count <= 4; deck legs spaced across the foot-panel width",
+      "item_slot": "deck_support",
+      "name": "deck_leg_count",
+      "spacing_expression": "deck-leg x positions derive from width_m and deck_leg_count",
+      "values": [
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "source round chrome tube + ball foot, splayed",
+          "implementation_function": "_base_leg_splayed_chrome_build",
+          "interfaces": [],
+          "name": "splayed_chrome",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.7,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa/bed width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat/middle-panel depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height, sets deck-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_sofa_bed__001__png_rerun_48f5fc4582674cabbb6693a08e92001c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L122-L134"
+          ]
+        },
+        {
+          "evidence": "square tapered solid wood leg (world-knowledge variant)",
+          "implementation_function": "_base_leg_tapered_walnut_build",
+          "interfaces": [],
+          "name": "tapered_walnut",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.7,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa/bed width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat/middle-panel depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height, sets deck-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_sofa_bed__001__png_rerun_48f5fc4582674cabbb6693a08e92001c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L434-L454"
+          ]
+        },
+        {
+          "evidence": "thin bent double-rod hairpin leg (world-knowledge variant)",
+          "implementation_function": "_base_leg_hairpin_steel_build",
+          "interfaces": [],
+          "name": "hairpin_steel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.7,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa/bed width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat/middle-panel depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height, sets deck-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_sofa_bed__001__png_rerun_48f5fc4582674cabbb6693a08e92001c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L434-L454"
+          ]
+        }
+      ],
+      "component_type": "base_leg",
+      "name": "base_leg",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "source cylindrical pillow bolster arm",
+          "implementation_function": "_arm_style_bolster_arm_build",
+          "interfaces": [],
+          "name": "bolster_arm",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folding_sofa_bed__001__png_rerun_48f5fc4582674cabbb6693a08e92001c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L405-L419"
+          ]
+        },
+        {
+          "evidence": "rounded rolled upholstered arm (world-knowledge variant)",
+          "implementation_function": "_arm_style_roll_arm_build",
+          "interfaces": [],
+          "name": "roll_arm",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folding_sofa_bed__001__png_rerun_48f5fc4582674cabbb6693a08e92001c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L405-L419"
+          ]
+        },
+        {
+          "evidence": "low flat square track arm (world-knowledge variant)",
+          "implementation_function": "_arm_style_track_arm_build",
+          "interfaces": [],
+          "name": "track_arm",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folding_sofa_bed__001__png_rerun_48f5fc4582674cabbb6693a08e92001c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L405-L419"
+          ]
+        }
+      ],
+      "component_type": "arm_style",
+      "name": "arm_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "source one tube leg + ball foot per station",
+          "implementation_function": "_deck_support_single_post_build",
+          "interfaces": [],
+          "name": "single_post",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folding_sofa_bed__001__png_rerun_48f5fc4582674cabbb6693a08e92001c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L122-L134"
+          ]
+        },
+        {
+          "evidence": "twin splayed struts + crossbar foot per station (world-knowledge variant)",
+          "implementation_function": "_deck_support_splayed_strut_build",
+          "interfaces": [],
+          "name": "splayed_strut",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folding_sofa_bed__001__png_rerun_48f5fc4582674cabbb6693a08e92001c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L459-L481"
+          ]
+        }
+      ],
+      "component_type": "deck_support",
+      "name": "deck_support",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Folding_sofa_bed",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Folding_sofa_bed.md",
+  "source_map_sha256": "b64659d7fab2b9124a50d1da5c5de39c75cd40f5ae5a14ada7630eccb85e7adb"
+}

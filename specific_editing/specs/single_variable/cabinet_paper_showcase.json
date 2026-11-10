@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "name": "cabinet_paper_showcase",
+  "generator": "cabinet",
+  "base_config": {
+    "body_form": "rect_box",
+    "door_kind": "flush_slab",
+    "door_mechanism": "revolute_swing",
+    "support_base": "recessed_plinth",
+    "interior_fitment": "plain_shelf",
+    "door_count": 2,
+    "shelf_count": 2,
+    "carcass_width_m": 1.0,
+    "carcass_depth_m": 0.44,
+    "carcass_height_m": 1.25,
+    "palette": 1
+  },
+  "edits": [
+    {
+      "kind": "component",
+      "target": "door_kind",
+      "label": "Door module",
+      "values": [
+        "flush_slab",
+        "raised_panel",
+        "framed_cane",
+        "glazed_curtain"
+      ]
+    },
+    {
+      "kind": "count",
+      "target": "door_count",
+      "label": "Door count",
+      "values": [1, 2, 3, 4]
+    },
+    {
+      "kind": "material",
+      "target": "door",
+      "label": "Door material",
+      "values": [
+        {
+          "name": "walnut veneer",
+          "material_id": "blenderkit:c3f5ca2f-ba80-4b72-8f44-48d57e732fa3:df9aa2a3-5f5a-43cc-b5d4-1930beefcc2e",
+          "rgba": [0.29, 0.12, 0.055, 1.0],
+          "metallic": 0.0,
+          "roughness": 0.42
+        },
+        {
+          "name": "brushed aluminum",
+          "material_id": "blenderkit:c3ab2079-1dc6-4b6b-94d9-c56eb2339e91:3f4ded88-44d7-484c-8376-8a29ef92d331",
+          "rgba": [0.63, 0.67, 0.71, 1.0],
+          "metallic": 0.86,
+          "roughness": 0.24
+        },
+        {
+          "name": "red enamel",
+          "material_id": "blenderkit:940ca40e-25bd-4eab-8645-f11e37cf26a6:423ad6b6-81d2-46a0-a031-4bd57e10a13a",
+          "rgba": [0.82, 0.15, 0.10, 1.0],
+          "metallic": 0.05,
+          "roughness": 0.30
+        },
+        {
+          "name": "smoked glass",
+          "material_id": "blenderkit:eadd253d-ad6f-4f92-b848-b3e486bb3975:c18a0d67-6cc9-4a4b-83c3-3a5cf188b0a9",
+          "rgba": [0.16, 0.24, 0.28, 0.48],
+          "metallic": 0.0,
+          "roughness": 0.08,
+          "transmission": 0.78,
+          "ior": 1.5
+        }
+      ]
+    },
+    {
+      "kind": "size",
+      "target": "carcass_width_m",
+      "label": "Cabinet width (m)",
+      "values": [0.78, 1.26, 1.5]
+    }
+  ],
+  "render": {
+    "backend": "blender",
+    "views": ["front_iso"],
+    "poses": ["closed"],
+    "image_size": [1600, 1120],
+    "supersample": 1,
+    "shadow_strength": 0.6
+  }
+}

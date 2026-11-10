@@ -1,0 +1,3242 @@
+{
+  "assembly_notes": "Shared identity core in every combination: one grounded `chassis` root, one molded `hopper` on a REVOLUTE `hopper_tilt` trunnion about world Y, a REVOLUTE `latch_pivot` retaining mechanism, two CONTINUOUS main-wheel rolls on one transverse axle and two swivel casters (CONTINUOUS swivel about Z + CONTINUOUS roll about Y). Five structural slots vary around it: hopper_form (molded section family), latch (retaining mechanism), push_handle, chassis (under-structure: three framed tiers plus the frameless molded_underbody) and caster (plain vs braked). deck_bearer_count is a structural multiplicity on chassis: the transverse steel bearers the tub floor seats on. hopper_length_m / hopper_width_m / hopper_depth_m / main_wheel_radius_m are the independent continuous parameters; every mating height, station and joint limit derives from them. Palette is non-core. Every rotational joint is solved with mate_axes and registered with register_interface_mate; the template emits no allow_overlap, and every pin/bore fit is a clevis or a sub-tolerance axial lap. model.meta['motion_interlocks'] declares the real operation order: the hopper only tilts once the latch is released, and (for foot_pedal_release) the pedal only travels with the latch released.",
+  "bindings": [
+    {
+      "binding_id": "hopper_deck_seat",
+      "consumer": "chassis.deck_bearer_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "even spread over [x_floor_rear + 0.09, x_floor_front - 0.09]",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "bearer_x",
+          "rationale": "bearer stations follow the active tub floor footprint",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "rail_y_out - 0.005",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "bearer_half_y",
+          "rationale": "bearers reach the rails so the deck carries the floor load",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "hw_floor + 0.029",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "bracket_y0",
+          "rationale": "trunnion bracket sits just outboard of the hopper side channel",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "APRON_SIDE_FRAC * hw_floor - WALL_T, over x in [x_rim_rear + 0.030, x_floor_front], z in [rail_z0 - 0.008, floor_z]",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "underbody_apron",
+          "rationale": "host adaptation for the frameless chassis: the hopper carries its outer side wall on down past the pan as a closed molded apron built from the active hopper_form plan builder, and its inner face is what bounds the subframe track, the caster pads and the deck bearer span",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "hopper_form.hopper_floor_seat"
+    },
+    {
+      "binding_id": "caster_swivel_mount",
+      "consumer": "caster.kingpin_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "x_rim_rear + 0.140 * hopper_length_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "caster_x",
+          "rationale": "caster station under the push end of the tub",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "0.300 * hopper_width_m, or spine_y (= apron_inner_y - 0.045) for molded_underbody",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "caster_y",
+          "rationale": "caster track; host adaptation: the frameless tier bolts its casters to pads under the molded pan, inboard of the apron, instead of under outboard frame rails",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "continuous",
+      "provider": "chassis.caster_seat_axis"
+    },
+    {
+      "binding_id": "latch_keeper_capture",
+      "consumer": "latch.latch_pivot_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "latch_pivot_x + latch_dx",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "keeper_x",
+          "rationale": "keeper station derived from the chassis hinge and the throat throw",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "rear_beam_x + 0.040, where rear_beam_x = x_rim_rear - 0.100 on the framed tiers and is derived from the swept-claw clearance against the leaning molded rear wall on molded_underbody",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "latch_pivot_x",
+          "rationale": "hinge clevis welded onto the chassis rear outrigger beam; on the frameless tier there is no frame tail, so the beam station is derived from the latch claw sweep clearance instead",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "0.0, or rail_y_out + 0.042 for the over-centre side lever",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "latch_pivot_y",
+          "rationale": "host adaptation: the side lever hinges outboard on the rail line",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "hopper_form.latch_keeper_axis"
+    },
+    {
+      "binding_id": "handle_beam_mount",
+      "consumer": "push_handle.mount_foot",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "rear_beam_x",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "handle_x",
+          "rationale": "handle feet land on the rear outrigger beam",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "hw_rim + 0.075",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "rear_beam_half_y",
+          "rationale": "the beam is widened to carry the outboard handle uprights",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "chassis.rear_beam_seat"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "hopper_form_identity",
+      "applies_to": {
+        "candidates": [
+          "rounded_wedge",
+          "u_nose_scoop",
+          "v_nose_spout",
+          "barrel_side",
+          "chamfered_octagon"
+        ],
+        "slot": "hopper_form"
+      },
+      "required_author_checks": [
+        "category_anchor: tilting hopper on a trunnion axis",
+        "category_anchor: retaining latch captures the hopper keeper",
+        "category_anchor: hollow open-top molded tub",
+        "category_anchor: four-point rolling stance",
+        "category_anchor: push handle at the push end",
+        "category_anchor: deck bearers span the tub floor",
+        "category_anchor: hopper_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "hopper",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "main_wheel",
+          "joint_type": "continuous",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "caster_fork",
+          "joint_type": "continuous",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_wheel",
+          "joint_type": "continuous",
+          "parent_role": "caster_fork"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "latch",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "chassis"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hopper"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "main_wheel"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "caster_fork"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "caster_wheel"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "latch"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "push_handle"
+        }
+      ]
+    },
+    {
+      "anchor_id": "latch_identity",
+      "applies_to": {
+        "candidates": [
+          "gravity_hook",
+          "c_throat_claw",
+          "overcenter_side_lever",
+          "foot_pedal_release"
+        ],
+        "slot": "latch"
+      },
+      "required_author_checks": [
+        "category_anchor: tilting hopper on a trunnion axis",
+        "category_anchor: retaining latch captures the hopper keeper",
+        "category_anchor: hollow open-top molded tub",
+        "category_anchor: four-point rolling stance",
+        "category_anchor: push handle at the push end",
+        "category_anchor: deck bearers span the tub floor",
+        "category_anchor: latch identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "hopper",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "main_wheel",
+          "joint_type": "continuous",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "caster_fork",
+          "joint_type": "continuous",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_wheel",
+          "joint_type": "continuous",
+          "parent_role": "caster_fork"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "latch",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "chassis"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hopper"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "main_wheel"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "caster_fork"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "caster_wheel"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "latch"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "push_handle"
+        }
+      ]
+    },
+    {
+      "anchor_id": "push_handle_identity",
+      "applies_to": {
+        "candidates": [
+          "rear_loop",
+          "side_rails",
+          "folding_hoop"
+        ],
+        "slot": "push_handle"
+      },
+      "required_author_checks": [
+        "category_anchor: tilting hopper on a trunnion axis",
+        "category_anchor: retaining latch captures the hopper keeper",
+        "category_anchor: hollow open-top molded tub",
+        "category_anchor: four-point rolling stance",
+        "category_anchor: push handle at the push end",
+        "category_anchor: deck bearers span the tub floor",
+        "category_anchor: push_handle identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "hopper",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "main_wheel",
+          "joint_type": "continuous",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "caster_fork",
+          "joint_type": "continuous",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_wheel",
+          "joint_type": "continuous",
+          "parent_role": "caster_fork"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "latch",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "chassis"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hopper"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "main_wheel"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "caster_fork"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "caster_wheel"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "latch"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "push_handle"
+        }
+      ]
+    },
+    {
+      "anchor_id": "chassis_identity",
+      "applies_to": {
+        "candidates": [
+          "box_rail_deck",
+          "tube_frame",
+          "fork_pockets",
+          "molded_underbody"
+        ],
+        "slot": "chassis"
+      },
+      "required_author_checks": [
+        "category_anchor: tilting hopper on a trunnion axis",
+        "category_anchor: retaining latch captures the hopper keeper",
+        "category_anchor: hollow open-top molded tub",
+        "category_anchor: four-point rolling stance",
+        "category_anchor: push handle at the push end",
+        "category_anchor: deck bearers span the tub floor",
+        "category_anchor: chassis identity",
+        "chassis under-structure matches its declared visual tier"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "hopper",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "main_wheel",
+          "joint_type": "continuous",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "caster_fork",
+          "joint_type": "continuous",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_wheel",
+          "joint_type": "continuous",
+          "parent_role": "caster_fork"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "latch",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "chassis"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hopper"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "main_wheel"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "caster_fork"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "caster_wheel"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "latch"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "push_handle"
+        }
+      ]
+    },
+    {
+      "anchor_id": "caster_identity",
+      "applies_to": {
+        "candidates": [
+          "plain_swivel",
+          "braked_swivel"
+        ],
+        "slot": "caster"
+      },
+      "required_author_checks": [
+        "category_anchor: tilting hopper on a trunnion axis",
+        "category_anchor: retaining latch captures the hopper keeper",
+        "category_anchor: hollow open-top molded tub",
+        "category_anchor: four-point rolling stance",
+        "category_anchor: push handle at the push end",
+        "category_anchor: deck bearers span the tub floor",
+        "category_anchor: caster identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "hopper",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "main_wheel",
+          "joint_type": "continuous",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "caster_fork",
+          "joint_type": "continuous",
+          "parent_role": "chassis"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "caster_wheel",
+          "joint_type": "continuous",
+          "parent_role": "caster_fork"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "latch",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "chassis"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hopper"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "main_wheel"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "caster_fork"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "caster_wheel"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "latch"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "push_handle"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2 <= deck_bearer_count <= 4; below 2 the tub floor cantilevers off the trunnion, above 4 the bearers foul the main axle block and the latch clevis at the shortest hopper_length_m. On molded_underbody the bearers are the cradle ribs that pick the pan up inside the molded apron, so their half span is capped at apron_inner_y - 0.006 instead of the frame rail line; every N stays reachable at that narrower span.",
+      "item_slot": "chassis",
+      "name": "deck_bearer_count",
+      "spacing_expression": "bearer_x stations spread evenly over [x_floor_rear + 0.090, x_floor_front - 0.090]; the span derives from hopper_length_m and the active hopper_form floor descriptor. bearer_half_y = rail_y_out - 0.005 on the framed tiers and apron_inner_y - 0.006 on molded_underbody, so the cradle ribs stay inboard of the molded apron inner face.",
+      "values": [
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "HOPPER_OUTER_SECTIONS/HOPPER_INNER_SECTIONS rounded-rect loft, _hopper_tub, _arch_rib, _vertical_side_rib, _end_wall_rib, hopper part, hopper_tilt",
+          "implementation_function": "_hopper_form_rounded_wedge_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "footprint_half_y": "hw_floor",
+                "footprint_x": "x_floor_front - x_floor_rear"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, 0, floor_z - trunnion_z) in hopper local"
+              },
+              "kind": "plane",
+              "name": "hopper_floor_seat",
+              "part": "hopper",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "half_span": "keeper_half_span",
+                "radius": 0.009
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(keeper_x, 0, keeper_z) world"
+              },
+              "kind": "axis",
+              "name": "latch_keeper_axis",
+              "part": "hopper",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": 0.014
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(trunnion_x, 0, trunnion_z) world"
+              },
+              "kind": "axis",
+              "name": "trunnion_pin_axis",
+              "part": "hopper",
+              "role": "provider"
+            }
+          ],
+          "name": "rounded_wedge",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.85,
+              "minimum": 1.5,
+              "mode": "independent",
+              "name": "hopper_length_m",
+              "rationale": "rim length of the molded tub; sets the wheelbase and the trunnion station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.95,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "hopper_width_m",
+              "rationale": "rim width; sets the floor footprint, wheel track and rail spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.86,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "hopper_depth_m",
+              "rationale": "floor-to-rim tub depth; sets load volume and the dump stroke",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_width_m"
+              ],
+              "expression": "0.500 * hopper_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hw_rim",
+              "rationale": "rim half width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_width_m"
+              ],
+              "expression": "0.330 * hopper_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hw_floor",
+              "rationale": "floor half width (tapered wedge)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_length_m"
+              ],
+              "expression": "0.425 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "trunnion_x",
+              "rationale": "tilt axis station, forward of and above the main axle",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.925 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_rim_rear",
+              "rationale": "rear rim station; the whole tub sits behind the trunnion so tilting lifts it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.820 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_floor_rear",
+              "rationale": "rear floor station; the rear bound of the deck bearer span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.130 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_floor_front",
+              "rationale": "front floor station; the front bound of the deck bearer span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_depth_m"
+              ],
+              "expression": "0.90 + 0.30 * (hopper_depth_m - 0.55) / 0.31",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tilt_max_rad",
+              "rationale": "a deeper tub carries its discharge lip higher and needs a longer dump stroke",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_urban_environment__tilt_truck2__004_png__claude_code",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L116-L186",
+            "model.py:L269-L376",
+            "model.py:L615-L699"
+          ]
+        },
+        {
+          "evidence": "_section_points (flat rear + straight sides + semicircular U nose), _nose_wall_x, _OUTER_LEVELS, _build_hopper_solid",
+          "implementation_function": "_hopper_form_u_nose_scoop_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "footprint_half_y": "hw_floor",
+                "footprint_x": "x_floor_front - x_floor_rear"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, 0, floor_z - trunnion_z) in hopper local"
+              },
+              "kind": "plane",
+              "name": "hopper_floor_seat",
+              "part": "hopper",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "half_span": "keeper_half_span",
+                "radius": 0.009
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(keeper_x, 0, keeper_z) world"
+              },
+              "kind": "axis",
+              "name": "latch_keeper_axis",
+              "part": "hopper",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": 0.014
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(trunnion_x, 0, trunnion_z) world"
+              },
+              "kind": "axis",
+              "name": "trunnion_pin_axis",
+              "part": "hopper",
+              "role": "provider"
+            }
+          ],
+          "name": "u_nose_scoop",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.85,
+              "minimum": 1.5,
+              "mode": "independent",
+              "name": "hopper_length_m",
+              "rationale": "rim length of the molded tub; sets the wheelbase and the trunnion station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.95,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "hopper_width_m",
+              "rationale": "rim width; sets the floor footprint, wheel track and rail spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.86,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "hopper_depth_m",
+              "rationale": "floor-to-rim tub depth; sets load volume and the dump stroke",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_width_m"
+              ],
+              "expression": "0.500 * hopper_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hw_rim",
+              "rationale": "rim half width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_width_m"
+              ],
+              "expression": "0.330 * hopper_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hw_floor",
+              "rationale": "floor half width (tapered wedge)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_length_m"
+              ],
+              "expression": "0.425 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "trunnion_x",
+              "rationale": "tilt axis station, forward of and above the main axle",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.925 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_rim_rear",
+              "rationale": "rear rim station; the whole tub sits behind the trunnion so tilting lifts it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.820 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_floor_rear",
+              "rationale": "rear floor station; the rear bound of the deck bearer span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.130 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_floor_front",
+              "rationale": "front floor station; the front bound of the deck bearer span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_depth_m"
+              ],
+              "expression": "0.90 + 0.30 * (hopper_depth_m - 0.55) / 0.31",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tilt_max_rad",
+              "rationale": "a deeper tub carries its discharge lip higher and needs a longer dump stroke",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_tilt_truck2_var_form_rounded_nose",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L111-L181",
+            "model.py:L196-L253"
+          ]
+        },
+        {
+          "evidence": "_form_descriptor shared taper descriptor, _x_rear/_x_nose/_half_width/_corner_r/_catch_pin_position/_trunnion_wall_y/_bearer_contact_line, _section_points",
+          "implementation_function": "_hopper_form_v_nose_spout_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "footprint_half_y": "hw_floor",
+                "footprint_x": "x_floor_front - x_floor_rear"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, 0, floor_z - trunnion_z) in hopper local"
+              },
+              "kind": "plane",
+              "name": "hopper_floor_seat",
+              "part": "hopper",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "half_span": "keeper_half_span",
+                "radius": 0.009
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(keeper_x, 0, keeper_z) world"
+              },
+              "kind": "axis",
+              "name": "latch_keeper_axis",
+              "part": "hopper",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": 0.014
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(trunnion_x, 0, trunnion_z) world"
+              },
+              "kind": "axis",
+              "name": "trunnion_pin_axis",
+              "part": "hopper",
+              "role": "provider"
+            }
+          ],
+          "name": "v_nose_spout",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.85,
+              "minimum": 1.5,
+              "mode": "independent",
+              "name": "hopper_length_m",
+              "rationale": "rim length of the molded tub; sets the wheelbase and the trunnion station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.95,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "hopper_width_m",
+              "rationale": "rim width; sets the floor footprint, wheel track and rail spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.86,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "hopper_depth_m",
+              "rationale": "floor-to-rim tub depth; sets load volume and the dump stroke",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_width_m"
+              ],
+              "expression": "0.500 * hopper_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hw_rim",
+              "rationale": "rim half width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_width_m"
+              ],
+              "expression": "0.330 * hopper_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hw_floor",
+              "rationale": "floor half width (tapered wedge)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_length_m"
+              ],
+              "expression": "0.425 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "trunnion_x",
+              "rationale": "tilt axis station, forward of and above the main axle",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.925 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_rim_rear",
+              "rationale": "rear rim station; the whole tub sits behind the trunnion so tilting lifts it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.820 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_floor_rear",
+              "rationale": "rear floor station; the rear bound of the deck bearer span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.130 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_floor_front",
+              "rationale": "front floor station; the front bound of the deck bearer span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_depth_m"
+              ],
+              "expression": "0.90 + 0.30 * (hopper_depth_m - 0.55) / 0.31",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tilt_max_rad",
+              "rationale": "a deeper tub carries its discharge lip higher and needs a longer dump stroke",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_tilt_truck2_var_form_vnose",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L86-L108",
+            "model.py:L111-L156",
+            "model.py:L159-L180"
+          ]
+        },
+        {
+          "evidence": "_half_width convex belly (HW_FLOOR/HW_RIM/BULGE_AMP/PEAK_T), _section_points, _OUTER_LEVELS, _build_hopper_solid, _build_trunnion on the bulged wall",
+          "implementation_function": "_hopper_form_barrel_side_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "footprint_half_y": "hw_floor",
+                "footprint_x": "x_floor_front - x_floor_rear"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, 0, floor_z - trunnion_z) in hopper local"
+              },
+              "kind": "plane",
+              "name": "hopper_floor_seat",
+              "part": "hopper",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "half_span": "keeper_half_span",
+                "radius": 0.009
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(keeper_x, 0, keeper_z) world"
+              },
+              "kind": "axis",
+              "name": "latch_keeper_axis",
+              "part": "hopper",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": 0.014
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(trunnion_x, 0, trunnion_z) world"
+              },
+              "kind": "axis",
+              "name": "trunnion_pin_axis",
+              "part": "hopper",
+              "role": "provider"
+            }
+          ],
+          "name": "barrel_side",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.85,
+              "minimum": 1.5,
+              "mode": "independent",
+              "name": "hopper_length_m",
+              "rationale": "rim length of the molded tub; sets the wheelbase and the trunnion station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.95,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "hopper_width_m",
+              "rationale": "rim width; sets the floor footprint, wheel track and rail spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.86,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "hopper_depth_m",
+              "rationale": "floor-to-rim tub depth; sets load volume and the dump stroke",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_width_m"
+              ],
+              "expression": "0.500 * hopper_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hw_rim",
+              "rationale": "rim half width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_width_m"
+              ],
+              "expression": "0.330 * hopper_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hw_floor",
+              "rationale": "floor half width (tapered wedge)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_length_m"
+              ],
+              "expression": "0.425 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "trunnion_x",
+              "rationale": "tilt axis station, forward of and above the main axle",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.925 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_rim_rear",
+              "rationale": "rear rim station; the whole tub sits behind the trunnion so tilting lifts it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.820 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_floor_rear",
+              "rationale": "rear floor station; the rear bound of the deck bearer span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.130 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_floor_front",
+              "rationale": "front floor station; the front bound of the deck bearer span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_depth_m"
+              ],
+              "expression": "0.90 + 0.30 * (hopper_depth_m - 0.55) / 0.31",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tilt_max_rad",
+              "rationale": "a deeper tub carries its discharge lip higher and needs a longer dump stroke",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_tilt_truck2_var_form_barrel_side",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L103-L120",
+            "model.py:L123-L135",
+            "model.py:L150-L207",
+            "model.py:L210-L237"
+          ]
+        },
+        {
+          "evidence": "CHAMFER_WIDTH section descriptor, _octagon_profile true 45-degree facets, _section_wire/_loft, _side_pocket_cutter conformal on the facet, _hopper_tub",
+          "implementation_function": "_hopper_form_chamfered_octagon_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "footprint_half_y": "hw_floor",
+                "footprint_x": "x_floor_front - x_floor_rear"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, 0, floor_z - trunnion_z) in hopper local"
+              },
+              "kind": "plane",
+              "name": "hopper_floor_seat",
+              "part": "hopper",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "half_span": "keeper_half_span",
+                "radius": 0.009
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(keeper_x, 0, keeper_z) world"
+              },
+              "kind": "axis",
+              "name": "latch_keeper_axis",
+              "part": "hopper",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": 0.014
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(trunnion_x, 0, trunnion_z) world"
+              },
+              "kind": "axis",
+              "name": "trunnion_pin_axis",
+              "part": "hopper",
+              "role": "provider"
+            }
+          ],
+          "name": "chamfered_octagon",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.85,
+              "minimum": 1.5,
+              "mode": "independent",
+              "name": "hopper_length_m",
+              "rationale": "rim length of the molded tub; sets the wheelbase and the trunnion station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.95,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "hopper_width_m",
+              "rationale": "rim width; sets the floor footprint, wheel track and rail spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.86,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "hopper_depth_m",
+              "rationale": "floor-to-rim tub depth; sets load volume and the dump stroke",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_width_m"
+              ],
+              "expression": "0.500 * hopper_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hw_rim",
+              "rationale": "rim half width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_width_m"
+              ],
+              "expression": "0.330 * hopper_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "hw_floor",
+              "rationale": "floor half width (tapered wedge)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_length_m"
+              ],
+              "expression": "0.425 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "trunnion_x",
+              "rationale": "tilt axis station, forward of and above the main axle",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.925 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_rim_rear",
+              "rationale": "rear rim station; the whole tub sits behind the trunnion so tilting lifts it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.820 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_floor_rear",
+              "rationale": "rear floor station; the rear bound of the deck bearer span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "trunnion_x",
+                "hopper_length_m"
+              ],
+              "expression": "trunnion_x - 0.130 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "x_floor_front",
+              "rationale": "front floor station; the front bound of the deck bearer span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_depth_m"
+              ],
+              "expression": "0.90 + 0.30 * (hopper_depth_m - 0.55) / 0.31",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tilt_max_rad",
+              "rationale": "a deeper tub carries its discharge lip higher and needs a longer dump stroke",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_tilt_truck2_var_form_chamfered_octagonal",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L117-L141",
+            "model.py:L223-L250",
+            "model.py:L294-L338"
+          ]
+        }
+      ],
+      "component_type": "molded_tub",
+      "name": "hopper_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_latch_rod_points bent rod hook, latch_hook part, latch_boss, latch_hook_pivot REVOLUTE about -Y, LATCH_MAX",
+          "implementation_function": "_latch_gravity_hook_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "barrel_radius": 0.016
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(latch_pivot_x, latch_pivot_y, latch_pivot_z) world"
+              },
+              "kind": "axis",
+              "name": "latch_pivot_axis",
+              "part": "latch",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "keeper_radius": 0.009,
+                "throat_gap": 0.002
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(latch_dx, 0, latch_dz) latch local"
+              },
+              "kind": "plane",
+              "name": "throat_capture",
+              "part": "latch",
+              "role": "consumer"
+            }
+          ],
+          "name": "gravity_hook",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.105",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_dx",
+              "rationale": "pivot-to-keeper horizontal throw of the hook throat",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.085",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_dz",
+              "rationale": "pivot-to-keeper vertical throw of the hook throat",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "rail_z1 + 0.022",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_pivot_z",
+              "rationale": "hinge height, kept above the rail band",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "latch_pivot_z",
+                "latch_dz"
+              ],
+              "expression": "latch_pivot_z + latch_dz",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "keeper_z",
+              "rationale": "keeper bar height on the hopper rear wall",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.060 or latch_pivot_y + 0.030 for the side lever",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "keeper_half_span",
+              "rationale": "host adaptation: the side lever needs a catch bar out at its own y",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_urban_environment__tilt_truck2__002_png__claude_code",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L300-L318",
+            "model.py:L656-L678"
+          ]
+        },
+        {
+          "evidence": "_hook_prism/_hook_mouth/_band/_hook_lever/_hook_claw C-throat plate hook with an escape mouth, latch_hook part, latch_release REVOLUTE, hopper striker_rod",
+          "implementation_function": "_latch_c_throat_claw_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "barrel_radius": 0.016
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(latch_pivot_x, latch_pivot_y, latch_pivot_z) world"
+              },
+              "kind": "axis",
+              "name": "latch_pivot_axis",
+              "part": "latch",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "keeper_radius": 0.009,
+                "throat_gap": 0.002
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(latch_dx, 0, latch_dz) latch local"
+              },
+              "kind": "plane",
+              "name": "throat_capture",
+              "part": "latch",
+              "role": "consumer"
+            }
+          ],
+          "name": "c_throat_claw",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.105",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_dx",
+              "rationale": "pivot-to-keeper horizontal throw of the hook throat",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.085",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_dz",
+              "rationale": "pivot-to-keeper vertical throw of the hook throat",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "rail_z1 + 0.022",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_pivot_z",
+              "rationale": "hinge height, kept above the rail band",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "latch_pivot_z",
+                "latch_dz"
+              ],
+              "expression": "latch_pivot_z + latch_dz",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "keeper_z",
+              "rationale": "keeper bar height on the hopper rear wall",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.060 or latch_pivot_y + 0.030 for the side lever",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "keeper_half_span",
+              "rationale": "host adaptation: the side lever needs a catch bar out at its own y",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_urban_environment__tilt_truck2__004_png__claude_code",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L493-L555",
+            "model.py:L839-L860"
+          ]
+        },
+        {
+          "evidence": "LATCH_PIVOT moved to the chassis side rail, LATCH_LOCKED=-0.20/LATCH_RELEASED=1.00, _build_latch_lever (arm + hand grip + hooked jaw), latch_lever part, latch_lever_pivot REVOLUTE with a negative over-centre lower limit",
+          "implementation_function": "_latch_overcenter_side_lever_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "barrel_radius": 0.016
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(latch_pivot_x, latch_pivot_y, latch_pivot_z) world"
+              },
+              "kind": "axis",
+              "name": "latch_pivot_axis",
+              "part": "latch",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "keeper_radius": 0.009,
+                "throat_gap": 0.002
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(latch_dx, 0, latch_dz) latch local"
+              },
+              "kind": "plane",
+              "name": "throat_capture",
+              "part": "latch",
+              "role": "consumer"
+            }
+          ],
+          "name": "overcenter_side_lever",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.105",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_dx",
+              "rationale": "pivot-to-keeper horizontal throw of the hook throat",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.085",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_dz",
+              "rationale": "pivot-to-keeper vertical throw of the hook throat",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "rail_z1 + 0.022",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_pivot_z",
+              "rationale": "hinge height, kept above the rail band",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "latch_pivot_z",
+                "latch_dz"
+              ],
+              "expression": "latch_pivot_z + latch_dz",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "keeper_z",
+              "rationale": "keeper bar height on the hopper rear wall",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.060 or latch_pivot_y + 0.030 for the side lever",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "keeper_half_span",
+              "rationale": "host adaptation: the side lever needs a catch bar out at its own y",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_tilt_truck2_var_latch_overcenter_lever",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L77-L79",
+            "model.py:L283-L321",
+            "model.py:L666-L712"
+          ]
+        },
+        {
+          "evidence": "_frame_pedal_boss chassis boss + cross pin, _latch_tail, _xz_prism, _release_pedal_body (hub + arm + treaded foot pad), _release_pedal_pin, _release_rod, _release_rod_tip, extra release_pedal link on release_pedal_pivot REVOLUTE driving the retained hook",
+          "implementation_function": "_latch_foot_pedal_release_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "barrel_radius": 0.016
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(latch_pivot_x, latch_pivot_y, latch_pivot_z) world"
+              },
+              "kind": "axis",
+              "name": "latch_pivot_axis",
+              "part": "latch",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "keeper_radius": 0.009,
+                "throat_gap": 0.002
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(latch_dx, 0, latch_dz) latch local"
+              },
+              "kind": "plane",
+              "name": "throat_capture",
+              "part": "latch",
+              "role": "consumer"
+            }
+          ],
+          "name": "foot_pedal_release",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.105",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_dx",
+              "rationale": "pivot-to-keeper horizontal throw of the hook throat",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.085",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_dz",
+              "rationale": "pivot-to-keeper vertical throw of the hook throat",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "rail_z1 + 0.022",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_pivot_z",
+              "rationale": "hinge height, kept above the rail band",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "latch_pivot_z",
+                "latch_dz"
+              ],
+              "expression": "latch_pivot_z + latch_dz",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "keeper_z",
+              "rationale": "keeper bar height on the hopper rear wall",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.060 or latch_pivot_y + 0.030 for the side lever",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "keeper_half_span",
+              "rationale": "host adaptation: the side lever needs a catch bar out at its own y",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_tilt_truck2_var_latch_foot_pedal",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L502-L528",
+            "model.py:L626-L690",
+            "model.py:L1005-L1049"
+          ]
+        }
+      ],
+      "component_type": "retaining_mechanism",
+      "name": "latch",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "push_handle part, mount_strap_{i}, handle_tube tubular rear hoop, handle_mount FIXED",
+          "implementation_function": "_push_handle_rear_loop_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "foot_x": 0.07,
+                "foot_y": 0.07
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(handle_x, +/-handle_y, rail_z1) world"
+              },
+              "kind": "plane",
+              "name": "mount_foot",
+              "part": "push_handle",
+              "role": "consumer"
+            }
+          ],
+          "name": "rear_loop",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "hw_rim + 0.055",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "handle_y",
+              "rationale": "uprights stand outboard of the widest tub section, so the tilting hopper can never sweep into them (rotation about Y preserves y)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "rim_z + 0.100",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "handle_top_z",
+              "rationale": "grip height, derived from the rim plane",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "rail_z1 + 0.075",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "handle_hinge_z",
+              "rationale": "fold hinge height for the folding_hoop candidate",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_urban_environment__tilt_truck2__004_png__claude_code",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L701-L748"
+          ]
+        },
+        {
+          "evidence": "push_handle side grab tube on two bolted handle_mount_pad_{i} + handle_bolt_{i}_{b}, hopper_to_push_handle FIXED, a longitudinal side grab bar instead of a rear hoop",
+          "implementation_function": "_push_handle_side_rails_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "foot_x": 0.07,
+                "foot_y": 0.07
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(handle_x, +/-handle_y, rail_z1) world"
+              },
+              "kind": "plane",
+              "name": "mount_foot",
+              "part": "push_handle",
+              "role": "consumer"
+            }
+          ],
+          "name": "side_rails",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "hw_rim + 0.055",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "handle_y",
+              "rationale": "uprights stand outboard of the widest tub section, so the tilting hopper can never sweep into them (rotation about Y preserves y)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "rim_z + 0.100",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "handle_top_z",
+              "rationale": "grip height, derived from the rim plane",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "rail_z1 + 0.075",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "handle_hinge_z",
+              "rationale": "fold hinge height for the folding_hoop candidate",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_urban_environment__tilt_truck2__003_png__claude_code",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L510-L574",
+            "model.py:L704-L716"
+          ]
+        },
+        {
+          "evidence": "handle_barrel_{i}_bore/handle_barrel_{i}_bracket/handle_hinge_pin chassis hinge clevis, handle_stub_{i} on the moving hoop, push_handle_fold REVOLUTE 0 upright to 1.45 rad folded, replacing the FIXED mount",
+          "implementation_function": "_push_handle_folding_hoop_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "foot_x": 0.07,
+                "foot_y": 0.07
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(handle_x, +/-handle_y, rail_z1) world"
+              },
+              "kind": "plane",
+              "name": "mount_foot",
+              "part": "push_handle",
+              "role": "consumer"
+            }
+          ],
+          "name": "folding_hoop",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "hw_rim + 0.055",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "handle_y",
+              "rationale": "uprights stand outboard of the widest tub section, so the tilting hopper can never sweep into them (rotation about Y preserves y)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "rim_z + 0.100",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "handle_top_z",
+              "rationale": "grip height, derived from the rim plane",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "rail_z1 + 0.075",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "handle_hinge_z",
+              "rationale": "fold hinge height for the folding_hoop candidate",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_tilt_truck2_var_handle_folding",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L436-L469",
+            "model.py:L673-L727",
+            "model.py:L852-L862"
+          ]
+        }
+      ],
+      "component_type": "push_handle",
+      "name": "push_handle",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_frame_chassis box rails + cross members, _frame_deck_bearers (4 transverse bearers), _frame_trunnion_brackets with a real bore, _frame_axle, _frame_caster_seats, _frame_latch_clevis",
+          "implementation_function": "_chassis_box_rail_deck_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bearer_half_y": "bearer_half_y",
+                "bearer_width_x": 0.06
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(bearer_x[i], 0, floor_z) world"
+              },
+              "kind": "plane",
+              "name": "deck_bearer_seat",
+              "part": "chassis",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "raceway_radius": 0.032
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(caster_x, +/-caster_y, caster_swivel_z) world"
+              },
+              "kind": "axis",
+              "name": "caster_seat_axis",
+              "part": "chassis",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "beam_half_y": "rear_beam_half_y",
+                "beam_width_x": 0.06
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(rear_beam_x, +/-handle_y, rail_z1) world"
+              },
+              "kind": "plane",
+              "name": "rear_beam_seat",
+              "part": "chassis",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "hub_radius": 0.03
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(trunnion_x, 0, trunnion_z) world"
+              },
+              "kind": "axis",
+              "name": "trunnion_hub_axis",
+              "part": "chassis",
+              "role": "consumer"
+            }
+          ],
+          "name": "box_rail_deck",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.165,
+              "minimum": 0.125,
+              "mode": "independent",
+              "name": "main_wheel_radius_m",
+              "rationale": "fixed main wheel radius; sets deck height and every rail/caster height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "main_wheel_radius_m"
+              ],
+              "expression": "main_wheel_radius_m + 0.105",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "floor_z",
+              "rationale": "deck height the tub floor seats at",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "floor_z"
+              ],
+              "expression": "floor_z - 0.026",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rail_z1",
+              "rationale": "top of the frame rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rail_z1"
+              ],
+              "expression": "rail_z1 - 0.055",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rail_z0",
+              "rationale": "underside of the frame rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rail_z0"
+              ],
+              "expression": "rail_z0 - 0.020",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_swivel_z",
+              "rationale": "caster raceway plane bolted under the rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "trunnion_x - 0.090 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axle_x",
+              "rationale": "main axle station, just behind the trunnion",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_urban_environment__tilt_truck2__004_png__claude_code",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L378-L462",
+            "model.py:L579-L613"
+          ]
+        },
+        {
+          "evidence": "RAIL_PATH/NOSE_LOOP_PATH bent-tube rails, _tube, _mirror_y, rear_cross_channel, axle_tube, trunnion_yoke_{i}, caster_plate_{i}, latch_cheek_{i}, a tubular steel frame instead of a welded box deck",
+          "implementation_function": "_chassis_tube_frame_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bearer_half_y": "bearer_half_y",
+                "bearer_width_x": 0.06
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(bearer_x[i], 0, floor_z) world"
+              },
+              "kind": "plane",
+              "name": "deck_bearer_seat",
+              "part": "chassis",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "raceway_radius": 0.032
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(caster_x, +/-caster_y, caster_swivel_z) world"
+              },
+              "kind": "axis",
+              "name": "caster_seat_axis",
+              "part": "chassis",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "beam_half_y": "rear_beam_half_y",
+                "beam_width_x": 0.06
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(rear_beam_x, +/-handle_y, rail_z1) world"
+              },
+              "kind": "plane",
+              "name": "rear_beam_seat",
+              "part": "chassis",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "hub_radius": 0.03
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(trunnion_x, 0, trunnion_z) world"
+              },
+              "kind": "axis",
+              "name": "trunnion_hub_axis",
+              "part": "chassis",
+              "role": "consumer"
+            }
+          ],
+          "name": "tube_frame",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.165,
+              "minimum": 0.125,
+              "mode": "independent",
+              "name": "main_wheel_radius_m",
+              "rationale": "fixed main wheel radius; sets deck height and every rail/caster height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "main_wheel_radius_m"
+              ],
+              "expression": "main_wheel_radius_m + 0.105",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "floor_z",
+              "rationale": "deck height the tub floor seats at",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "floor_z"
+              ],
+              "expression": "floor_z - 0.026",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rail_z1",
+              "rationale": "top of the frame rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rail_z1"
+              ],
+              "expression": "rail_z1 - 0.055",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rail_z0",
+              "rationale": "underside of the frame rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rail_z0"
+              ],
+              "expression": "rail_z0 - 0.020",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_swivel_z",
+              "rationale": "caster raceway plane bolted under the rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "trunnion_x - 0.090 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axle_x",
+              "rationale": "main axle station, just behind the trunnion",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_urban_environment__tilt_truck2__002_png__claude_code",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L221-L267",
+            "model.py:L433-L529"
+          ]
+        },
+        {
+          "evidence": "FORK_POCKET_ descriptor (pitch/inside width/height/wall/top-z), _fork_pocket open-ended rectangular fork tunnel, _frame_chassis reduced to four full-width cross members tying the pockets, ride height and TRUNNION_Z/BEARER_Z1/RAIL_Z0/RAIL_Z1/CASTER_SWIVEL_Z re-derived from the pocket deck",
+          "implementation_function": "_chassis_fork_pockets_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bearer_half_y": "bearer_half_y",
+                "bearer_width_x": 0.06
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(bearer_x[i], 0, floor_z) world"
+              },
+              "kind": "plane",
+              "name": "deck_bearer_seat",
+              "part": "chassis",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "raceway_radius": 0.032
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(caster_x, +/-caster_y, caster_swivel_z) world"
+              },
+              "kind": "axis",
+              "name": "caster_seat_axis",
+              "part": "chassis",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "beam_half_y": "rear_beam_half_y",
+                "beam_width_x": 0.06
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(rear_beam_x, +/-handle_y, rail_z1) world"
+              },
+              "kind": "plane",
+              "name": "rear_beam_seat",
+              "part": "chassis",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "hub_radius": 0.03
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(trunnion_x, 0, trunnion_z) world"
+              },
+              "kind": "axis",
+              "name": "trunnion_hub_axis",
+              "part": "chassis",
+              "role": "consumer"
+            }
+          ],
+          "name": "fork_pockets",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.165,
+              "minimum": 0.125,
+              "mode": "independent",
+              "name": "main_wheel_radius_m",
+              "rationale": "fixed main wheel radius; sets deck height and every rail/caster height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "main_wheel_radius_m"
+              ],
+              "expression": "main_wheel_radius_m + 0.105",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "floor_z",
+              "rationale": "deck height the tub floor seats at",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "floor_z"
+              ],
+              "expression": "floor_z - 0.026",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rail_z1",
+              "rationale": "top of the frame rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rail_z1"
+              ],
+              "expression": "rail_z1 - 0.055",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rail_z0",
+              "rationale": "underside of the frame rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rail_z0"
+              ],
+              "expression": "rail_z0 - 0.020",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_swivel_z",
+              "rationale": "caster raceway plane bolted under the rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "trunnion_x - 0.090 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axle_x",
+              "rationale": "main axle station, just behind the trunnion",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_tilt_truck2_var_chassis_fork_pockets",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L145-L160",
+            "model.py:L188-L193",
+            "model.py:L396-L452"
+          ]
+        },
+        {
+          "evidence": "frameless tier: RAIL_Z0/RAIL_Z1=0.165/0.215 lies entirely below the MAIN_TIRE_R=0.140 wheel crown (0.280) and the Z_PAN=0.270 pan underside, so the under-structure is invisible in side view; the weldment is only trunnion_upright_{i} / axle_housing_{i} / caster_pad_{i} (CASTER_Y=0.240 inboard) / latch_cheek_{i} / main_axle plus four hopper_rest_pad_{i} the pan seats on, with no deck and no full-length exposed rails; side_ledge_{i} is the molded lower ledge the template generalises into the underbody apron",
+          "implementation_function": "_chassis_molded_underbody_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bearer_half_y": "bearer_half_y",
+                "bearer_width_x": 0.06
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(bearer_x[i], 0, floor_z) world"
+              },
+              "kind": "plane",
+              "name": "deck_bearer_seat",
+              "part": "chassis",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "raceway_radius": 0.032
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(caster_x, +/-caster_y, caster_swivel_z) world"
+              },
+              "kind": "axis",
+              "name": "caster_seat_axis",
+              "part": "chassis",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "beam_half_y": "rear_beam_half_y",
+                "beam_width_x": 0.06
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(rear_beam_x, +/-handle_y, rail_z1) world"
+              },
+              "kind": "plane",
+              "name": "rear_beam_seat",
+              "part": "chassis",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "hub_radius": 0.03
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(trunnion_x, 0, trunnion_z) world"
+              },
+              "kind": "axis",
+              "name": "trunnion_hub_axis",
+              "part": "chassis",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "apron_inner_half_y": "apron_inner_y",
+                "apron_x_span": "apron_x1 - apron_x0",
+                "apron_z_span": "floor_z - skirt_z0"
+              },
+              "frame": {
+                "normal": "(0,1,0)",
+                "point": "(apron_x0..apron_x1, +/-hw_floor, skirt_z0..floor_z) world"
+              },
+              "kind": "plane",
+              "name": "underbody_apron_shadow",
+              "part": "chassis",
+              "role": "consumer"
+            }
+          ],
+          "name": "molded_underbody",
+          "notes": "Structural family: molded body forms the underbody. The chassis root keeps only compact hardware (two narrow longitudinal subframe channels on a track inboard of the tub floor line, one caster crossbeam, one axle cradle, the trunnion tower, the axle, the caster pads and the rear latch/handle mount); the full-length side rails and the cross-member ladder are gone. The hopper gains a closed molded underbody apron derived from the ACTIVE hopper_form plan builder (so a V-nose apron tapers, a barrel apron bows, an octagon apron keeps its facets), spanning z [skirt_z0, floor_z] and hiding the whole subframe band in side view. Identity core is unchanged: the trunnion REVOLUTE, the latch REVOLUTE, two fixed main wheels and two swivel casters all stay on this root link -- 'frameless' is a visual tier, not a topology change.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.165,
+              "minimum": 0.125,
+              "mode": "independent",
+              "name": "main_wheel_radius_m",
+              "rationale": "fixed main wheel radius; sets deck height and every rail/caster height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "main_wheel_radius_m"
+              ],
+              "expression": "main_wheel_radius_m + 0.105",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "floor_z",
+              "rationale": "deck height the tub floor seats at",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "floor_z"
+              ],
+              "expression": "floor_z - 0.026",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rail_z1",
+              "rationale": "top of the frame rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rail_z1"
+              ],
+              "expression": "rail_z1 - 0.055",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rail_z0",
+              "rationale": "underside of the frame rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "trunnion_x - 0.090 * hopper_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axle_x",
+              "rationale": "main axle station, just behind the trunnion",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_width_m"
+              ],
+              "expression": "0.92 * hw_floor - WALL_T",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "apron_inner_y",
+              "rationale": "inner face of the molded underbody apron; the hard lateral bound every chassis element inside the apron derives from",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "main_wheel_radius_m"
+              ],
+              "expression": "rail_z0 - 0.008",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "skirt_z0",
+              "rationale": "bottom edge of the molded apron, kept just below the subframe band so the side view reads frameless",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "apron_inner_y"
+              ],
+              "expression": "apron_inner_y - 0.045",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "spine_y",
+              "rationale": "subframe channel track, tucked inside the apron instead of out on frame rails",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "rail_z0 - 0.020",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_swivel_z",
+              "rationale": "caster raceway plane bolted to pads under the molded pan",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hopper_length_m",
+                "hopper_depth_m"
+              ],
+              "expression": "(x_floor_rear - 0.045 * (x_floor_rear - x_rim_rear) / hopper_depth_m) - (hypot(latch_dx, latch_dz) + 0.020) - 0.012",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "latch_pivot_x",
+              "rationale": "with no frame tail, the rear mount pulls in as far as the swept latch claw still clears the backward-leaning molded rear wall; this derived stop sets how far the frameless chassis reaches behind the tub",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_urban_environment__tilt_truck2__003_png__claude_code",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L54-L115",
+            "model.py:L328-L356",
+            "model.py:L357-L419",
+            "model.py:L471-L481"
+          ]
+        }
+      ],
+      "component_type": "frame_understructure",
+      "name": "chassis",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_caster_swivel_ring/_caster_kingpin/_caster_yoke, caster_fork_{i} + caster_{i}_swivel CONTINUOUS about Z, caster_wheel_{i} + caster_{i}_roll CONTINUOUS about Y, real trail offset",
+          "implementation_function": "_caster_plain_swivel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "kingpin_radius": 0.011,
+                "ring_radius": 0.04
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,0) fork local"
+              },
+              "kind": "axis",
+              "name": "kingpin_axis",
+              "part": "caster_fork_{i}",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "stub_radius": 0.009
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(-caster_trail, 0, caster_axle_local_z)"
+              },
+              "kind": "axis",
+              "name": "fork_axle_axis",
+              "part": "caster_fork_{i}",
+              "role": "provider"
+            }
+          ],
+          "name": "plain_swivel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.300 * caster_swivel_z",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_radius",
+              "rationale": "caster wheel radius derived from the raceway height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "caster_radius"
+              ],
+              "expression": "0.500 * caster_radius",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_trail",
+              "rationale": "kingpin-to-axle trail offset",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "caster_radius"
+              ],
+              "expression": "caster_radius - caster_swivel_z",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_axle_local_z",
+              "rationale": "wheel axle height in the fork frame; puts the tread on the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "caster_radius"
+              ],
+              "expression": "0.300 * caster_radius",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_half_width",
+              "rationale": "tread half width, sets the fork gap",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_urban_environment__tilt_truck2__004_png__claude_code",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L465-L490",
+            "model.py:L780-L837"
+          ]
+        },
+        {
+          "evidence": "CASTER_BRAKE_BOSS_Y/CASTER_BRAKE_PIVOT/CASTER_BRAKE_ARM_LEN/CASTER_BRAKE_MAX, brake_pivot_boss on the yoke cheek, caster_brake_{i} link (pedal_pin, pedal_hub, brake_arm, foot_pad, brake_shoe), caster_brake_pivot_{i} REVOLUTE 0 to 0.35 rad per caster",
+          "implementation_function": "_caster_braked_swivel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "kingpin_radius": 0.011,
+                "ring_radius": 0.04
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,0) fork local"
+              },
+              "kind": "axis",
+              "name": "kingpin_axis",
+              "part": "caster_fork_{i}",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "stub_radius": 0.009
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(-caster_trail, 0, caster_axle_local_z)"
+              },
+              "kind": "axis",
+              "name": "fork_axle_axis",
+              "part": "caster_fork_{i}",
+              "role": "provider"
+            }
+          ],
+          "name": "braked_swivel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.300 * caster_swivel_z",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_radius",
+              "rationale": "caster wheel radius derived from the raceway height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "caster_radius"
+              ],
+              "expression": "0.500 * caster_radius",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_trail",
+              "rationale": "kingpin-to-axle trail offset",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "caster_radius"
+              ],
+              "expression": "caster_radius - caster_swivel_z",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_axle_local_z",
+              "rationale": "wheel axle height in the fork frame; puts the tread on the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "caster_radius"
+              ],
+              "expression": "0.300 * caster_radius",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "caster_half_width",
+              "rationale": "tread half width, sets the fork gap",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_tilt_truck2_var_caster_brake_pedals",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L92-L101",
+            "model.py:L647-L658",
+            "model.py:L683-L721",
+            "model.py:L800-L813"
+          ]
+        }
+      ],
+      "component_type": "swivel_caster",
+      "name": "caster",
+      "required": true
+    }
+  ],
+  "slug": "Urban_Environment_Tilt_Truck2",
+  "source_map_path": "<ARTI_SKILL_ROOT>/articraft_data/picture_expansion/template_source_maps/Urban_Environment__Tilt_Truck2.md",
+  "source_map_sha256": "38d5d520a2f863fa553a86edcf8b6e61b3245c955814a483c3cff3f6188fce20"
+}

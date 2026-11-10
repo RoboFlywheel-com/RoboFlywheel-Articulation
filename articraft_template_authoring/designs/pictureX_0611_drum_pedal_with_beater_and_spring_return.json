@@ -1,0 +1,1933 @@
+{
+  "assembly_notes": "Seven independent structural slots and no multiplicity: a pedal has one board, one cam and one beater. frame_style provides the heel hinge, the rocker axis and the clamp seat; board_style consumes the heel hinge and republishes a drive station whose position is derived from host capacity (it walks back along the board until the coupling has a real run to the cam lug); cam_style consumes the rocker axis and publishes both the drive lug and a beater seat offset in y so every beater clears the rim. All 2 x 3 x 4 x 2 x 3 x 2 x 2 = 864 combinations build with no compatibility gate. The flexible drive members are modelled as rigid parts anchored on the cam lug rather than on the board, because a rigid member fixed to the board would sweep through the cam when the board is pressed; the board carries the matching drive lug so the coupling still spans board and cam. Both hinge seats and the clamp seat are real clevises with stub pins, and the rocker shaft is journalled either side of the cam hub instead of running through it.",
+  "bindings": [
+    {
+      "binding_id": "frame_to_board",
+      "consumer": "board_style.heel_hinge",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "board_width_m"
+          ],
+          "expression": "the clevis cheeks sit at +-(board_width_m/2 + 0.0075) with stub pins that stop 0.0005 short of the board eye",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "hinge_clevis_gap_m",
+          "rationale": "the board must swing in real clearance, not through a solid block",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "frame_style.heel_hinge"
+    },
+    {
+      "binding_id": "frame_to_cam",
+      "consumer": "cam_style.rocker_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "shaft_height_m"
+          ],
+          "expression": "the shaft is journalled in two stubs outside the hub half length",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "hub_half_m",
+          "rationale": "the shaft may not run through the solid hub",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "frame_style.rocker_axis"
+    },
+    {
+      "binding_id": "cam_to_drive",
+      "consumer": "drive_style.drive_lug",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "board_length_m",
+            "shaft_height_m"
+          ],
+          "expression": "the coupling runs from the lug toward the board drive station and covers 0.34 of that run",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "drive_run_m",
+          "rationale": "the coupling is sized from the real shaft-to-board geometry",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "cam_style.drive_lug"
+    },
+    {
+      "binding_id": "cam_to_beater",
+      "consumer": "beater_style.beater_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "shaft_height_m"
+          ],
+          "expression": "the beater and the height carriage ride at y = cam_width/2 + 0.012",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "beater_offset_y_m",
+          "rationale": "the beater must clear the cam rim through the whole rotation",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "cam_style.beater_seat"
+    },
+    {
+      "binding_id": "frame_to_clamp",
+      "consumer": "clamp_style.clamp_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [],
+          "expression": "the clamp lever swings between cheeks at +-0.026 on stub pins",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "clamp_cheek_y_m",
+          "rationale": "the clamp lever needs a clevis, not a solid bridge",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "frame_style.clamp_seat"
+    },
+    {
+      "binding_id": "frame_to_spring",
+      "consumer": "spring_style.spring_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "frame_width_m"
+          ],
+          "expression": "the bracket stops 0.008 short of the spring own clamp block",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "spring_y_m",
+          "rationale": "the spring hangs outboard of the upright without biting into it",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "frame_style.rocker_axis"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "drum_pedal_identity",
+      "applies_to": {
+        "candidates": [
+          "hinged_plate",
+          "longboard",
+          "split_heel"
+        ],
+        "slot": "board_style"
+      },
+      "required_author_checks": [
+        "category_anchor: one floor frame carries the pedal",
+        "category_anchor: a hinged footboard rides the frame",
+        "category_anchor: a rocker cam turns on the frame shaft",
+        "category_anchor: a beater swings off the rocker shaft",
+        "category_anchor: turning the rocker swings the beater forward"
+      ],
+      "required_relations": [
+        {
+          "child_role": "footboard",
+          "joint_type": "revolute",
+          "parent_role": "frame"
+        },
+        {
+          "child_role": "drive_cam",
+          "joint_type": "revolute",
+          "parent_role": "frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive_cam"
+        },
+        {
+          "exact_count": 1,
+          "role": "beater"
+        }
+      ]
+    },
+    {
+      "anchor_id": "hoop_clamp_identity",
+      "applies_to": {
+        "candidates": [
+          "screw_clamp",
+          "overcenter_toggle"
+        ],
+        "slot": "clamp_style"
+      },
+      "required_author_checks": [
+        "category_anchor: a hoop clamp closes on the frame front"
+      ],
+      "required_relations": [
+        {
+          "child_role": "hoop_clamp",
+          "joint_type": "revolute",
+          "parent_role": "frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "hoop_clamp"
+        }
+      ]
+    },
+    {
+      "anchor_id": "return_spring_identity",
+      "applies_to": {
+        "candidates": [
+          "coil_return",
+          "leaf_return"
+        ],
+        "slot": "spring_style"
+      },
+      "required_author_checks": [
+        "category_anchor: a return spring is anchored to the frame"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "return_spring"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "One cast side post carries the rocker-shaft bearing, the heel hinge block and the rubber-footed base plate as a single closed body.",
+          "implementation_function": "_frame_style_cast_post_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0075"
+              },
+              "frame": {
+                "axis": "(0,-1,0)",
+                "point": "(heel_x, 0, 0.026)",
+                "radial": "board tilt"
+              },
+              "kind": "axis",
+              "name": "heel_hinge",
+              "part": "frame_style__cast_post__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": "0.013 hub"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0, 0, shaft_height_m)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "rocker_axis",
+              "part": "frame_style__cast_post__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "cheek_gap": "0.052"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(clamp_x, 0, 0.026)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "clamp_seat",
+              "part": "frame_style__cast_post__*",
+              "role": "provider"
+            }
+          ],
+          "name": "cast_post",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "board_length_m",
+              "rationale": "source footboards run 0.24-0.32 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.135,
+              "minimum": 0.085,
+              "mode": "independent",
+              "name": "board_width_m",
+              "rationale": "source boards are 0.09-0.13 m wide",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.2,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "shaft_height_m",
+              "rationale": "source rocker shafts sit 0.12-0.19 m up",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "beater_length_m",
+              "rationale": "source beater shafts are 0.18-0.24 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "frame_margin_m",
+              "rationale": "source frames leave 0.015-0.035 m clear beside the board",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_width_m",
+                "frame_margin_m"
+              ],
+              "expression": "frame_width_m = board_width_m + 2*(frame_margin_m + 0.010)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "frame_width_m",
+              "rationale": "host capacity: the frame is derived from the board it has to clear",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m",
+                "board_length_m"
+              ],
+              "expression": "board_tilt = asin(clamp(0.30*shaft_height_m/board_length_m, 0.08, 0.45)); board_press = clamp(board_tilt - 0.04, 0.05, 0.34)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "board_tilt_rad",
+              "rationale": "the rest angle and the hinge travel follow the real board run",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m"
+              ],
+              "expression": "cam_radius = clamp(shaft_height_m*0.21, 0.024, 0.040)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "cam_radius_m",
+              "rationale": "the cam grows with the pedal so the drive radius stays in proportion",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m",
+                "shaft_height_m"
+              ],
+              "expression": "the lug walks back from 0.92 of the board in 0.04 steps until it is at least drive_anchor_radius + 0.090 from the shaft",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "drive_station_ratio",
+              "rationale": "host capacity: the coupling needs a real run to the cam lug",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m"
+              ],
+              "expression": "heel_x = -(board_length_m + 0.020); base_length = 0.070 - heel_x + 0.030",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "heel_x_m",
+              "rationale": "the base plate always reaches under the whole board",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drum_pedal_with_beater_and_spring_return__001__png__airflex_batch_20260710_56292a78640e4f3984db72c4f8918ac9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L112-L248"
+          ]
+        },
+        {
+          "evidence": "Two uprights tied by an open cross rail, with the bearing bosses split between them \u2014 an open frame rather than one closed casting.",
+          "implementation_function": "_frame_style_twin_post_rail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0075"
+              },
+              "frame": {
+                "axis": "(0,-1,0)",
+                "point": "(heel_x, 0, 0.026)",
+                "radial": "board tilt"
+              },
+              "kind": "axis",
+              "name": "heel_hinge",
+              "part": "frame_style__twin_post_rail__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": "0.013 hub"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0, 0, shaft_height_m)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "rocker_axis",
+              "part": "frame_style__twin_post_rail__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "cheek_gap": "0.052"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(clamp_x, 0, 0.026)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "clamp_seat",
+              "part": "frame_style__twin_post_rail__*",
+              "role": "provider"
+            }
+          ],
+          "name": "twin_post_rail",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drum_pedal_var_twin_post_open_rail_frame_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L113-L278"
+          ]
+        }
+      ],
+      "component_type": "pedal frame",
+      "name": "frame_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A short ribbed plate hinged at the heel block, REVOLUTE about -Y with -0.05..0.20 rad travel.",
+          "implementation_function": "_board_style_hinged_plate_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0075"
+              },
+              "frame": {
+                "axis": "(0,-1,0)",
+                "point": "(0,0,0)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "heel_hinge",
+              "part": "board_style__hinged_plate__*",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "lug_height": "0.028"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(station, 0, board_t/2 + 0.028)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "drive_station",
+              "part": "board_style__hinged_plate__*",
+              "role": "provider"
+            }
+          ],
+          "name": "hinged_plate",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "board_length_m",
+              "rationale": "source footboards run 0.24-0.32 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.135,
+              "minimum": 0.085,
+              "mode": "independent",
+              "name": "board_width_m",
+              "rationale": "source boards are 0.09-0.13 m wide",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.2,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "shaft_height_m",
+              "rationale": "source rocker shafts sit 0.12-0.19 m up",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "beater_length_m",
+              "rationale": "source beater shafts are 0.18-0.24 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "frame_margin_m",
+              "rationale": "source frames leave 0.015-0.035 m clear beside the board",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_width_m",
+                "frame_margin_m"
+              ],
+              "expression": "frame_width_m = board_width_m + 2*(frame_margin_m + 0.010)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "frame_width_m",
+              "rationale": "host capacity: the frame is derived from the board it has to clear",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m",
+                "board_length_m"
+              ],
+              "expression": "board_tilt = asin(clamp(0.30*shaft_height_m/board_length_m, 0.08, 0.45)); board_press = clamp(board_tilt - 0.04, 0.05, 0.34)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "board_tilt_rad",
+              "rationale": "the rest angle and the hinge travel follow the real board run",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m"
+              ],
+              "expression": "cam_radius = clamp(shaft_height_m*0.21, 0.024, 0.040)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "cam_radius_m",
+              "rationale": "the cam grows with the pedal so the drive radius stays in proportion",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m",
+                "shaft_height_m"
+              ],
+              "expression": "the lug walks back from 0.92 of the board in 0.04 steps until it is at least drive_anchor_radius + 0.090 from the shaft",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "drive_station_ratio",
+              "rationale": "host capacity: the coupling needs a real run to the cam lug",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m"
+              ],
+              "expression": "heel_x = -(board_length_m + 0.020); base_length = 0.070 - heel_x + 0.030",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "heel_x_m",
+              "rationale": "the base plate always reaches under the whole board",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drum_pedal_with_beater_and_spring_return__001__png__airflex_batch_20260710_56292a78640e4f3984db72c4f8918ac9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L249-L309"
+          ]
+        },
+        {
+          "evidence": "One long flat board that reaches back past the heel hinge, so the whole plate is a single continuous playing surface.",
+          "implementation_function": "_board_style_longboard_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0075"
+              },
+              "frame": {
+                "axis": "(0,-1,0)",
+                "point": "(0,0,0)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "heel_hinge",
+              "part": "board_style__longboard__*",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "lug_height": "0.028"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(station, 0, board_t/2 + 0.028)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "drive_station",
+              "part": "board_style__longboard__*",
+              "role": "provider"
+            }
+          ],
+          "name": "longboard",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drum_pedal_var_longboard",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L242-L315"
+          ]
+        },
+        {
+          "evidence": "The board becomes two parts \u2014 heel_plate and toe_board \u2014 each on its own REVOLUTE hinge (L342-L354 and L405-L417) with different effort limits.",
+          "implementation_function": "_board_style_split_heel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0075"
+              },
+              "frame": {
+                "axis": "(0,-1,0)",
+                "point": "(0,0,0)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "heel_hinge",
+              "part": "board_style__split_heel__*",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "lug_height": "0.028"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(station, 0, board_t/2 + 0.028)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "drive_station",
+              "part": "board_style__split_heel__*",
+              "role": "provider"
+            }
+          ],
+          "name": "split_heel",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drum_pedal_var_split_heel_plate",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L301-L417"
+          ]
+        }
+      ],
+      "component_type": "footboard",
+      "name": "board_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "One chain link strip fixed to the footboard and wrapping the cam.",
+          "implementation_function": "_drive_style_single_chain_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "outward radial"
+              },
+              "kind": "axis",
+              "name": "drive_lug",
+              "part": "drive_style__single_chain__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "single_chain",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "board_length_m",
+              "rationale": "source footboards run 0.24-0.32 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.135,
+              "minimum": 0.085,
+              "mode": "independent",
+              "name": "board_width_m",
+              "rationale": "source boards are 0.09-0.13 m wide",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.2,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "shaft_height_m",
+              "rationale": "source rocker shafts sit 0.12-0.19 m up",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "beater_length_m",
+              "rationale": "source beater shafts are 0.18-0.24 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "frame_margin_m",
+              "rationale": "source frames leave 0.015-0.035 m clear beside the board",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_width_m",
+                "frame_margin_m"
+              ],
+              "expression": "frame_width_m = board_width_m + 2*(frame_margin_m + 0.010)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "frame_width_m",
+              "rationale": "host capacity: the frame is derived from the board it has to clear",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m",
+                "board_length_m"
+              ],
+              "expression": "board_tilt = asin(clamp(0.30*shaft_height_m/board_length_m, 0.08, 0.45)); board_press = clamp(board_tilt - 0.04, 0.05, 0.34)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "board_tilt_rad",
+              "rationale": "the rest angle and the hinge travel follow the real board run",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m"
+              ],
+              "expression": "cam_radius = clamp(shaft_height_m*0.21, 0.024, 0.040)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "cam_radius_m",
+              "rationale": "the cam grows with the pedal so the drive radius stays in proportion",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m",
+                "shaft_height_m"
+              ],
+              "expression": "the lug walks back from 0.92 of the board in 0.04 steps until it is at least drive_anchor_radius + 0.090 from the shaft",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "drive_station_ratio",
+              "rationale": "host capacity: the coupling needs a real run to the cam lug",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m"
+              ],
+              "expression": "heel_x = -(board_length_m + 0.020); base_length = 0.070 - heel_x + 0.030",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "heel_x_m",
+              "rationale": "the base plate always reaches under the whole board",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drum_pedal_with_beater_and_spring_return__001__png__airflex_batch_20260710_56292a78640e4f3984db72c4f8918ac9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L370-L394"
+          ]
+        },
+        {
+          "evidence": "Two indexed chain_row_i parts side by side, each separately fixed to the footboard.",
+          "implementation_function": "_drive_style_double_chain_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "outward radial"
+              },
+              "kind": "axis",
+              "name": "drive_lug",
+              "part": "drive_style__double_chain__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "double_chain",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drum_pedal_var_double_chain_drive",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L400-L445"
+          ]
+        },
+        {
+          "evidence": "A single wide nylon strap with a clamped end tab replaces the articulated chain links.",
+          "implementation_function": "_drive_style_strap_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "outward radial"
+              },
+              "kind": "axis",
+              "name": "drive_lug",
+              "part": "drive_style__strap__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "strap",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drum_pedal_var_strap_drive",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L430-L482"
+          ]
+        },
+        {
+          "evidence": "A rigid forged linkage that is REVOLUTE on the footboard (L437-L449) instead of a fixed flexible member.",
+          "implementation_function": "_drive_style_direct_link_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "outward radial"
+              },
+              "kind": "axis",
+              "name": "drive_lug",
+              "part": "drive_style__direct_link__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "direct_link",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drum_pedal_var_direct_drive_link",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L373-L449"
+          ]
+        }
+      ],
+      "component_type": "drive coupling",
+      "name": "drive_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A concentric round cam sprocket on the rocker shaft; constant drive radius.",
+          "implementation_function": "_cam_style_round_cam_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.013"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "rocker_axis",
+              "part": "cam_style__round_cam__*",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "lug_radius": "cam_max_radius*1.16 + 0.010"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "lug tip",
+                "radial": "outward radial"
+              },
+              "kind": "axis",
+              "name": "drive_lug",
+              "part": "cam_style__round_cam__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "beater_y": "0.020"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0, 0.020, 0)",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "beater_seat",
+              "part": "cam_style__round_cam__*",
+              "role": "provider"
+            }
+          ],
+          "name": "round_cam",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "board_length_m",
+              "rationale": "source footboards run 0.24-0.32 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.135,
+              "minimum": 0.085,
+              "mode": "independent",
+              "name": "board_width_m",
+              "rationale": "source boards are 0.09-0.13 m wide",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.2,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "shaft_height_m",
+              "rationale": "source rocker shafts sit 0.12-0.19 m up",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "beater_length_m",
+              "rationale": "source beater shafts are 0.18-0.24 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "frame_margin_m",
+              "rationale": "source frames leave 0.015-0.035 m clear beside the board",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_width_m",
+                "frame_margin_m"
+              ],
+              "expression": "frame_width_m = board_width_m + 2*(frame_margin_m + 0.010)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "frame_width_m",
+              "rationale": "host capacity: the frame is derived from the board it has to clear",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m",
+                "board_length_m"
+              ],
+              "expression": "board_tilt = asin(clamp(0.30*shaft_height_m/board_length_m, 0.08, 0.45)); board_press = clamp(board_tilt - 0.04, 0.05, 0.34)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "board_tilt_rad",
+              "rationale": "the rest angle and the hinge travel follow the real board run",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m"
+              ],
+              "expression": "cam_radius = clamp(shaft_height_m*0.21, 0.024, 0.040)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "cam_radius_m",
+              "rationale": "the cam grows with the pedal so the drive radius stays in proportion",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m",
+                "shaft_height_m"
+              ],
+              "expression": "the lug walks back from 0.92 of the board in 0.04 steps until it is at least drive_anchor_radius + 0.090 from the shaft",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "drive_station_ratio",
+              "rationale": "host capacity: the coupling needs a real run to the cam lug",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m"
+              ],
+              "expression": "heel_x = -(board_length_m + 0.020); base_length = 0.070 - heel_x + 0.030",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "heel_x_m",
+              "rationale": "the base plate always reaches under the whole board",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drum_pedal_with_beater_and_spring_return__001__png__airflex_batch_20260710_56292a78640e4f3984db72c4f8918ac9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L313-L366"
+          ]
+        },
+        {
+          "evidence": "An offset accelerator profile whose drive radius grows through the stroke \u2014 a different rim law, not a resized round cam.",
+          "implementation_function": "_cam_style_eccentric_accel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.013"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "rocker_axis",
+              "part": "cam_style__eccentric_accel__*",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "lug_radius": "cam_max_radius*1.16 + 0.010"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "lug tip",
+                "radial": "outward radial"
+              },
+              "kind": "axis",
+              "name": "drive_lug",
+              "part": "cam_style__eccentric_accel__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "beater_y": "0.020"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0, 0.020, 0)",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "beater_seat",
+              "part": "cam_style__eccentric_accel__*",
+              "role": "provider"
+            }
+          ],
+          "name": "eccentric_accel",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drum_pedal_var_eccentric_accelerator_cam_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L347-L419"
+          ]
+        },
+        {
+          "evidence": "_round_cam_sector extrudes a 135-degree pie slice with a central bore plus a cam_boss_ring bridging the axle to the sector bore.",
+          "implementation_function": "_cam_style_d_sector_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.013"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "rocker_axis",
+              "part": "cam_style__d_sector__*",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "lug_radius": "cam_max_radius*1.16 + 0.010"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "lug tip",
+                "radial": "outward radial"
+              },
+              "kind": "axis",
+              "name": "drive_lug",
+              "part": "cam_style__d_sector__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "beater_y": "0.020"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0, 0.020, 0)",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "beater_seat",
+              "part": "cam_style__d_sector__*",
+              "role": "provider"
+            }
+          ],
+          "name": "d_sector",
+          "notes": "A fan of overlapping radial fill bars capped by rim segments; the wrap is centred on the run the drive member actually takes, so the drive lug always lands on material.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [
+                "cam_radius_m"
+              ],
+              "expression": "135 degrees centred on atan2(drive_start_x, drive_start_z)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "sector_wrap_rad",
+              "rationale": "a partial disc must be oriented at the drive run or the anchor lug floats",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_drum_pedal_var_strap_drive",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L68-L390"
+          ]
+        }
+      ],
+      "component_type": "drive cam",
+      "name": "cam_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "One-piece shaft plus felt head clamped straight onto the cam hub.",
+          "implementation_function": "_beater_style_fixed_head_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "beater_seat",
+              "part": "beater_style__fixed_head__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "fixed_head",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "board_length_m",
+              "rationale": "source footboards run 0.24-0.32 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.135,
+              "minimum": 0.085,
+              "mode": "independent",
+              "name": "board_width_m",
+              "rationale": "source boards are 0.09-0.13 m wide",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.2,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "shaft_height_m",
+              "rationale": "source rocker shafts sit 0.12-0.19 m up",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "beater_length_m",
+              "rationale": "source beater shafts are 0.18-0.24 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "frame_margin_m",
+              "rationale": "source frames leave 0.015-0.035 m clear beside the board",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_width_m",
+                "frame_margin_m"
+              ],
+              "expression": "frame_width_m = board_width_m + 2*(frame_margin_m + 0.010)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "frame_width_m",
+              "rationale": "host capacity: the frame is derived from the board it has to clear",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m",
+                "board_length_m"
+              ],
+              "expression": "board_tilt = asin(clamp(0.30*shaft_height_m/board_length_m, 0.08, 0.45)); board_press = clamp(board_tilt - 0.04, 0.05, 0.34)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "board_tilt_rad",
+              "rationale": "the rest angle and the hinge travel follow the real board run",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m"
+              ],
+              "expression": "cam_radius = clamp(shaft_height_m*0.21, 0.024, 0.040)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "cam_radius_m",
+              "rationale": "the cam grows with the pedal so the drive radius stays in proportion",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m",
+                "shaft_height_m"
+              ],
+              "expression": "the lug walks back from 0.92 of the board in 0.04 steps until it is at least drive_anchor_radius + 0.090 from the shaft",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "drive_station_ratio",
+              "rationale": "host capacity: the coupling needs a real run to the cam lug",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m"
+              ],
+              "expression": "heel_x = -(board_length_m + 0.020); base_length = 0.070 - heel_x + 0.030",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "heel_x_m",
+              "rationale": "the base plate always reaches under the whole board",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drum_pedal_with_beater_and_spring_return__001__png__airflex_batch_20260710_56292a78640e4f3984db72c4f8918ac9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L398-L444"
+          ]
+        },
+        {
+          "evidence": "A separate beater_head on its own REVOLUTE joint about the shaft axis (L492-L508) so the felt and plastic faces can be swapped.",
+          "implementation_function": "_beater_style_reversible_head_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "beater_seat",
+              "part": "beater_style__reversible_head__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "reversible_head",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drum_pedal_var_reversible_beater_head_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L443-L508"
+          ]
+        },
+        {
+          "evidence": "A machined carriage rides the cam hub on a PRISMATIC joint (L450-L462) with its own locking knob, and the beater hangs off the carriage instead of the hub.",
+          "implementation_function": "_beater_style_height_carriage_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "beater_seat",
+              "part": "beater_style__height_carriage__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "height_carriage",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drum_pedal_var_beater_height_carriage_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L426-L555"
+          ]
+        }
+      ],
+      "component_type": "beater assembly",
+      "name": "beater_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A clamp lever hinged on the frame plus a knurled hoop adjuster screw turning on the lever.",
+          "implementation_function": "_clamp_style_screw_clamp_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "clamp_seat",
+              "part": "clamp_style__screw_clamp__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "screw_clamp",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "board_length_m",
+              "rationale": "source footboards run 0.24-0.32 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.135,
+              "minimum": 0.085,
+              "mode": "independent",
+              "name": "board_width_m",
+              "rationale": "source boards are 0.09-0.13 m wide",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.2,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "shaft_height_m",
+              "rationale": "source rocker shafts sit 0.12-0.19 m up",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "beater_length_m",
+              "rationale": "source beater shafts are 0.18-0.24 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "frame_margin_m",
+              "rationale": "source frames leave 0.015-0.035 m clear beside the board",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_width_m",
+                "frame_margin_m"
+              ],
+              "expression": "frame_width_m = board_width_m + 2*(frame_margin_m + 0.010)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "frame_width_m",
+              "rationale": "host capacity: the frame is derived from the board it has to clear",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m",
+                "board_length_m"
+              ],
+              "expression": "board_tilt = asin(clamp(0.30*shaft_height_m/board_length_m, 0.08, 0.45)); board_press = clamp(board_tilt - 0.04, 0.05, 0.34)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "board_tilt_rad",
+              "rationale": "the rest angle and the hinge travel follow the real board run",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m"
+              ],
+              "expression": "cam_radius = clamp(shaft_height_m*0.21, 0.024, 0.040)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "cam_radius_m",
+              "rationale": "the cam grows with the pedal so the drive radius stays in proportion",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m",
+                "shaft_height_m"
+              ],
+              "expression": "the lug walks back from 0.92 of the board in 0.04 steps until it is at least drive_anchor_radius + 0.090 from the shaft",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "drive_station_ratio",
+              "rationale": "host capacity: the coupling needs a real run to the cam lug",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m"
+              ],
+              "expression": "heel_x = -(board_length_m + 0.020); base_length = 0.070 - heel_x + 0.030",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "heel_x_m",
+              "rationale": "the base plate always reaches under the whole board",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drum_pedal_with_beater_and_spring_return__001__png__airflex_batch_20260710_56292a78640e4f3984db72c4f8918ac9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L447-L510"
+          ]
+        },
+        {
+          "evidence": "Three parts \u2014 cam_lever, toggle_link and pressure_shoe \u2014 on three chained REVOLUTE joints forming an over-centre latch.",
+          "implementation_function": "_clamp_style_overcenter_toggle_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "clamp_seat",
+              "part": "clamp_style__overcenter_toggle__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "overcenter_toggle",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drum_pedal_var_overcenter_hoop_clamp_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L452-L619"
+          ]
+        }
+      ],
+      "component_type": "hoop clamp",
+      "name": "clamp_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A coil spring hung on the frame post with a separate knurled tension adjuster turning about the vertical axis.",
+          "implementation_function": "_spring_style_coil_return_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "spring_y": "post_y + post_t/2 + 0.016"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0.006, spring_y, 0.30*shaft_height_m)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "spring_mount",
+              "part": "spring_style__coil_return__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "coil_return",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "board_length_m",
+              "rationale": "source footboards run 0.24-0.32 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.135,
+              "minimum": 0.085,
+              "mode": "independent",
+              "name": "board_width_m",
+              "rationale": "source boards are 0.09-0.13 m wide",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.2,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "shaft_height_m",
+              "rationale": "source rocker shafts sit 0.12-0.19 m up",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "beater_length_m",
+              "rationale": "source beater shafts are 0.18-0.24 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "frame_margin_m",
+              "rationale": "source frames leave 0.015-0.035 m clear beside the board",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_width_m",
+                "frame_margin_m"
+              ],
+              "expression": "frame_width_m = board_width_m + 2*(frame_margin_m + 0.010)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "frame_width_m",
+              "rationale": "host capacity: the frame is derived from the board it has to clear",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m",
+                "board_length_m"
+              ],
+              "expression": "board_tilt = asin(clamp(0.30*shaft_height_m/board_length_m, 0.08, 0.45)); board_press = clamp(board_tilt - 0.04, 0.05, 0.34)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "board_tilt_rad",
+              "rationale": "the rest angle and the hinge travel follow the real board run",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shaft_height_m"
+              ],
+              "expression": "cam_radius = clamp(shaft_height_m*0.21, 0.024, 0.040)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "cam_radius_m",
+              "rationale": "the cam grows with the pedal so the drive radius stays in proportion",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m",
+                "shaft_height_m"
+              ],
+              "expression": "the lug walks back from 0.92 of the board in 0.04 steps until it is at least drive_anchor_radius + 0.090 from the shaft",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "drive_station_ratio",
+              "rationale": "host capacity: the coupling needs a real run to the cam lug",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "board_length_m"
+              ],
+              "expression": "heel_x = -(board_length_m + 0.020); base_length = 0.070 - heel_x + 0.030",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "heel_x_m",
+              "rationale": "the base plate always reaches under the whole board",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drum_pedal_with_beater_and_spring_return__001__png__airflex_batch_20260710_56292a78640e4f3984db72c4f8918ac9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L512-L608"
+          ]
+        },
+        {
+          "evidence": "A cantilever leaf stack bolted to the frame with no coil and no rotating tension nut at all.",
+          "implementation_function": "_spring_style_leaf_return_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "spring_y": "post_y + post_t/2 + 0.016"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0.006, spring_y, 0.30*shaft_height_m)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "spring_mount",
+              "part": "spring_style__leaf_return__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "leaf_return",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drum_pedal_var_leaf_spring_return_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L601-L663"
+          ]
+        }
+      ],
+      "component_type": "return spring",
+      "name": "spring_style",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_drum_pedal_with_beater_and_spring_return",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_drum_pedal_with_beater_and_spring_return.md",
+  "source_map_sha256": "7f91bc56750c98fd7dc46e6d9ab7b337405d7e10209643fb248ccc5e4457045a"
+}

@@ -1,0 +1,370 @@
+{
+  "schema_version": 1,
+  "slug": "manual_grain_mill1",
+  "source_map_path": "articraft_template_authoring/source_maps/manual_grain_mill1.md",
+  "source_map_sha256": "47ed22706853cfccb29258f647f294d2c87917093aa739095b23e0c3bc1cd16c",
+  "assembly_notes": "A source-like stone rotary quern assembled from independent support, discharge, catch-rim, runner-feed and crank components. Shared quern radius, grinding-surface height, central bore, runner envelope, rear opening and crank axes are derived before geometry so every declared cross product is legal. The joint chain stays support_frame -> runner -> crank_grip.",
+  "slots": [
+    {
+      "name": "support_frame",
+      "component_type": "timber_frame_and_lower_quern",
+      "required": true,
+      "candidates": [
+        {
+          "name": "straight_four_leg",
+          "record_id": "rec_picturex_0611__manual_grain_mill__001__png_c673835d54464d63a16b129708043f07",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L103-L167"],
+          "evidence": "Four square legs and two upper rails directly carry the circular lower quern.",
+          "implementation_function": "_support_frame_straight_four_leg_build",
+          "parameters": [
+            {"name": "quern_radius_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.28, "maximum": 0.34, "choices": [], "expression": "", "depends_on": [], "rationale": "Scales the real stone bed, timber footprint and outlet without changing category."},
+            {"name": "support_height_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.9, "maximum": 1.1, "choices": [], "expression": "", "depends_on": [], "rationale": "Changes source-like leg height while re-deriving the complete grinding datum."}
+          ],
+          "interfaces": [
+            {"name": "grinding_axis", "kind": "axis", "role": "provider", "part": "stand", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"height": "grinding_surface_z", "bore_radius": "pivot_bore_radius"}},
+            {"name": "outlet_plane", "kind": "plane", "role": "provider", "part": "stand", "frame": {"normal": [0.0, -1.0, 0.0]}, "dimensions": {"width": "outlet_width", "height": "lower_stone_bottom"}}
+          ],
+          "notes": "Stone body, bearing seat, legs and rails form one connected source-style stand."
+        },
+        {
+          "name": "braced_four_leg",
+          "record_id": "rec_0611_manual_grain_mill1_var_stand_braced",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L84-L96", "model.py:L117-L223"],
+          "evidence": "Four load-bearing legs gain pegged knee braces and a low transverse stretcher.",
+          "implementation_function": "_support_frame_braced_four_leg_build",
+          "parameters": [
+            {"name": "quern_radius_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.28, "maximum": 0.34, "choices": [], "expression": "", "depends_on": [], "rationale": "Scales the quern and timber bearing footprint."},
+            {"name": "support_height_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.9, "maximum": 1.1, "choices": [], "expression": "", "depends_on": [], "rationale": "Derives leg, brace, rail and grinding heights together."}
+          ],
+          "interfaces": [
+            {"name": "grinding_axis", "kind": "axis", "role": "provider", "part": "stand", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"height": "grinding_surface_z", "bore_radius": "pivot_bore_radius"}},
+            {"name": "outlet_plane", "kind": "plane", "role": "provider", "part": "stand", "frame": {"normal": [0.0, -1.0, 0.0]}, "dimensions": {"width": "outlet_width", "height": "lower_stone_bottom"}}
+          ],
+          "notes": "Braces remain below the stones and outside the crank sweep."
+        },
+        {
+          "name": "splayed_trestle",
+          "record_id": "rec_0611_manual_grain_mill1_var_trestle_stand_splayed",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L84-L102", "model.py:L124-L210"],
+          "evidence": "Outward-splayed legs, paired heads/ties and a central stretcher form two connected trestles.",
+          "implementation_function": "_support_frame_splayed_trestle_build",
+          "parameters": [
+            {"name": "quern_radius_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.28, "maximum": 0.34, "choices": [], "expression": "", "depends_on": [], "rationale": "Drives quern diameter and trestle span."},
+            {"name": "support_height_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.9, "maximum": 1.1, "choices": [], "expression": "", "depends_on": [], "rationale": "Derives splay, head, tie and grinding heights together."}
+          ],
+          "interfaces": [
+            {"name": "grinding_axis", "kind": "axis", "role": "provider", "part": "stand", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"height": "grinding_surface_z", "bore_radius": "pivot_bore_radius"}},
+            {"name": "outlet_plane", "kind": "plane", "role": "provider", "part": "stand", "frame": {"normal": [0.0, -1.0, 0.0]}, "dimensions": {"width": "outlet_width", "height": "lower_stone_bottom"}}
+          ],
+          "notes": "The broad footprint remains exposed timber, not a table or cabinet."
+        },
+        {
+          "name": "low_skid_cradle",
+          "record_id": "rec_0611_manual_grain_mill_var_quern_stand_low_profile",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L103-L213"],
+          "evidence": "Long skids and cross-bearers carry the quern at a low workbench datum.",
+          "implementation_function": "_support_frame_low_skid_cradle_build",
+          "parameters": [
+            {"name": "quern_radius_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.28, "maximum": 0.34, "choices": [], "expression": "", "depends_on": [], "rationale": "Drives quern diameter, skid spacing and bearer width."},
+            {"name": "support_height_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.9, "maximum": 1.1, "choices": [], "expression": "", "depends_on": [], "rationale": "Changes the low cradle height without becoming a tall stand."}
+          ],
+          "interfaces": [
+            {"name": "grinding_axis", "kind": "axis", "role": "provider", "part": "stand", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"height": "grinding_surface_z", "bore_radius": "pivot_bore_radius"}},
+            {"name": "outlet_plane", "kind": "plane", "role": "provider", "part": "stand", "frame": {"normal": [0.0, -1.0, 0.0]}, "dimensions": {"width": "outlet_width", "height": "lower_stone_bottom"}}
+          ],
+          "notes": "Bearers meet the lower-stone underside and both skids remain grounded."
+        }
+      ]
+    },
+    {
+      "name": "discharge_system",
+      "component_type": "timber_discharge_path",
+      "required": true,
+      "candidates": [
+        {
+          "name": "open_sloped_board",
+          "record_id": "rec_picturex_0611__manual_grain_mill__001__png_c673835d54464d63a16b129708043f07",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L20-L49", "model.py:L143-L149"],
+          "evidence": "An exposed sloped timber board receives the lower-stone rear spout.",
+          "implementation_function": "_discharge_system_open_sloped_board_build",
+          "parameters": [
+            {"name": "discharge_width_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.48, "maximum": 0.66, "choices": [], "expression": "", "depends_on": [], "rationale": "Controls useful board width relative to the runner while keeping it inside the stand."}
+          ],
+          "interfaces": [
+            {"name": "inlet_plane", "kind": "plane", "role": "consumer", "part": "stand", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "chute_width", "height": "lower_stone_bottom"}}
+          ],
+          "notes": "One broad board with a dressed lower nose."
+        },
+        {
+          "name": "bridge_supported_chute",
+          "record_id": "rec_0611_manual_grain_mill_var_quern_stand_low_profile",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L162-L191"],
+          "evidence": "A lipped chute is tied into the frame by a transverse bridge.",
+          "implementation_function": "_discharge_system_bridge_supported_chute_build",
+          "parameters": [
+            {"name": "discharge_width_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.48, "maximum": 0.66, "choices": [], "expression": "", "depends_on": [], "rationale": "Derives board, lip separation and bridge width."}
+          ],
+          "interfaces": [
+            {"name": "inlet_plane", "kind": "plane", "role": "consumer", "part": "stand", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "chute_width", "height": "lower_stone_bottom"}}
+          ],
+          "notes": "Side lips are real connected rails, not decorative floating strips."
+        }
+      ]
+    },
+    {
+      "name": "rim_profile",
+      "component_type": "indexed_stone_catch_rim",
+      "required": true,
+      "candidates": [
+        {
+          "name": "rough_segmented_blocks",
+          "record_id": "rec_picturex_0611__manual_grain_mill__001__png_c673835d54464d63a16b129708043f07",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L109-L123"],
+          "evidence": "Chunky rectangular hand-dressed blocks preserve the source rim silhouette.",
+          "implementation_function": "_rim_profile_rough_segmented_blocks_build",
+          "parameters": [
+            {"name": "rim_height_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.16, "maximum": 0.24, "choices": [], "expression": "", "depends_on": [], "rationale": "Changes block height relative to lower stone radius while retaining crank clearance."}
+          ],
+          "interfaces": [
+            {"name": "clearance_axis", "kind": "axis", "role": "consumer", "part": "stand", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"inner_radius": "rim_inner_radius", "segment_count": "rim_segment_count"}}
+          ],
+          "notes": "Every N changes the actual number and angular width of indexed blocks."
+        },
+        {
+          "name": "fitted_stepped_voussoirs",
+          "record_id": "rec_0611_manual_grain_mill1_var_rim_profile_stepped",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L20-L103", "model.py:L157-L231"],
+          "evidence": "Low trapezoidal fitted voussoirs use a stepped top and restrained irregularity.",
+          "implementation_function": "_rim_profile_fitted_stepped_voussoirs_build",
+          "parameters": [
+            {"name": "rim_height_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.16, "maximum": 0.24, "choices": [], "expression": "", "depends_on": [], "rationale": "Changes fitted-block height while preserving the same radial profile and sweep clearance."}
+          ],
+          "interfaces": [
+            {"name": "clearance_axis", "kind": "axis", "role": "consumer", "part": "stand", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"inner_radius": "rim_inner_radius", "segment_count": "rim_segment_count"}}
+          ],
+          "notes": "Every N changes the actual number and angular width of fitted blocks."
+        }
+      ]
+    },
+    {
+      "name": "runner_profile",
+      "component_type": "rotating_upper_stone_and_feed_eye",
+      "required": true,
+      "candidates": [
+        {
+          "name": "shallow_circular_funnel",
+          "record_id": "rec_picturex_0611__manual_grain_mill__001__png_c673835d54464d63a16b129708043f07",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L52-L64"],
+          "evidence": "Circular full-thickness runner with a broad shallow funnel and true eye.",
+          "implementation_function": "_runner_profile_shallow_circular_funnel_build",
+          "parameters": [
+            {"name": "runner_radius_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.62, "maximum": 0.7, "choices": [], "expression": "", "depends_on": [], "rationale": "Sets the runner envelope relative to the lower stone and drives rim clearance."},
+            {"name": "feed_opening_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.48, "maximum": 0.7, "choices": [], "expression": "", "depends_on": [], "rationale": "Changes the actual funnel mouth while preserving the central throat and stone wall."}
+          ],
+          "interfaces": [
+            {"name": "rotation_axis", "kind": "axis", "role": "consumer", "part": "runner", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "runner_radius", "eye_radius": "runner_eye_radius"}},
+            {"name": "grip_axis", "kind": "axis", "role": "provider", "part": "runner", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"reach": "crank_reach", "pin_radius": "grip_pin_radius"}}
+          ],
+          "notes": "The central eye and feed depression are genuine cuts."
+        },
+        {
+          "name": "terraced_circular_feed",
+          "record_id": "rec_0611_manual_grain_mill1_var_runner_profile_funnel",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L52-L132"],
+          "evidence": "Shouldered circular runner with repeated-radius feed terraces and radial dressing grooves.",
+          "implementation_function": "_runner_profile_terraced_circular_feed_build",
+          "parameters": [
+            {"name": "runner_radius_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.62, "maximum": 0.7, "choices": [], "expression": "", "depends_on": [], "rationale": "Sets runner and rim envelopes."},
+            {"name": "feed_opening_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.48, "maximum": 0.7, "choices": [], "expression": "", "depends_on": [], "rationale": "Sets terrace mouth while retaining throat and outer shoulder."}
+          ],
+          "interfaces": [
+            {"name": "rotation_axis", "kind": "axis", "role": "consumer", "part": "runner", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "runner_radius", "eye_radius": "runner_eye_radius"}},
+            {"name": "grip_axis", "kind": "axis", "role": "provider", "part": "runner", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"reach": "crank_reach", "pin_radius": "grip_pin_radius"}}
+          ],
+          "notes": "Terraces and radial grooves are structural geometry."
+        },
+        {
+          "name": "faceted_polygonal_feed",
+          "record_id": "rec_0611_manual_grain_mill1_var_faceted_runner_feed_profile",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L52-L78"],
+          "evidence": "Fourteen-sided dressed perimeter and polygonal feed funnel.",
+          "implementation_function": "_runner_profile_faceted_polygonal_feed_build",
+          "parameters": [
+            {"name": "runner_radius_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.62, "maximum": 0.7, "choices": [], "expression": "", "depends_on": [], "rationale": "Sets faceted runner and rim envelopes."},
+            {"name": "feed_opening_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.48, "maximum": 0.7, "choices": [], "expression": "", "depends_on": [], "rationale": "Sets polygonal feed mouth while retaining a true round throat."}
+          ],
+          "interfaces": [
+            {"name": "rotation_axis", "kind": "axis", "role": "consumer", "part": "runner", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "runner_radius", "eye_radius": "runner_eye_radius"}},
+            {"name": "grip_axis", "kind": "axis", "role": "provider", "part": "runner", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"reach": "crank_reach", "pin_radius": "grip_pin_radius"}}
+          ],
+          "notes": "The faceted perimeter is not a uniformly scaled circular runner."
+        }
+      ]
+    },
+    {
+      "name": "drive",
+      "component_type": "fixed_crank_and_free_spinning_grip",
+      "required": true,
+      "candidates": [
+        {
+          "name": "straight_socket_crank",
+          "record_id": "rec_picturex_0611__manual_grain_mill__001__png_c673835d54464d63a16b129708043f07",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L67-L81", "model.py:L169-L229"],
+          "evidence": "Dressed timber arm, bored socket, washer, pin and bored tapered grip.",
+          "implementation_function": "_drive_straight_socket_crank_build",
+          "parameters": [
+            {"name": "crank_reach_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 1.55, "maximum": 1.85, "choices": [], "expression": "", "depends_on": [], "rationale": "Sets pin radius from runner center while preserving hand clearance."}
+          ],
+          "interfaces": [
+            {"name": "grip_axis", "kind": "axis", "role": "consumer", "part": "crank_grip", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"pin_radius": "grip_pin_radius", "bore_radius": "grip_bore_radius"}}
+          ],
+          "notes": "The grip bore is larger than the real retaining pin."
+        },
+        {
+          "name": "offset_counterweighted_crank",
+          "record_id": "rec_0611_manual_grain_mill1_var_offset_counterweighted_crank",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L67-L96", "model.py:L187-L264"],
+          "evidence": "Offset timber crank and opposed forged oval counterweight retain the same detailed grip stack.",
+          "implementation_function": "_drive_offset_counterweighted_crank_build",
+          "parameters": [
+            {"name": "crank_reach_ratio", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 1.55, "maximum": 1.85, "choices": [], "expression": "", "depends_on": [], "rationale": "Sets grip and opposed counterweight radii from the runner center."}
+          ],
+          "interfaces": [
+            {"name": "grip_axis", "kind": "axis", "role": "consumer", "part": "crank_grip", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"pin_radius": "grip_pin_radius", "bore_radius": "grip_bore_radius"}}
+          ],
+          "notes": "Counterweight remains fixed to the runner and does not add a fake articulation."
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "rim_segment_count",
+      "item_slot": "rim_profile",
+      "values": [10, 14, 18],
+      "spacing_expression": "usable rear-open arc / rim_segment_count",
+      "host_capacity_expression": "segment tangential width derives from mean rim radius, usable arc and N"
+    }
+  ],
+  "bindings": [
+    {
+      "binding_id": "support_to_runner",
+      "provider": "support_frame.grinding_axis",
+      "consumer": "runner_profile.rotation_axis",
+      "joint_type": "continuous",
+      "derived": [
+        {"name": "grinding_surface_z", "mode": "derived", "expression": "support_nominal_height * support_height_scale", "depends_on": ["support_nominal_height", "support_height_scale"], "rationale": "Moves the complete stone, bearing, rim, outlet and shaft datum together."},
+        {"name": "runner_radius", "mode": "derived", "expression": "quern_radius_m * runner_radius_ratio", "depends_on": ["quern_radius_m", "runner_radius_ratio"], "rationale": "Keeps the runner source-proportional and inside the lower quern."},
+        {"name": "grinding_bed_radius", "mode": "derived", "expression": "runner_radius + 0.030", "depends_on": ["runner_radius"], "rationale": "Provides a real annular grinding seat around every runner candidate."}
+      ]
+    },
+    {
+      "binding_id": "runner_to_rim_clearance",
+      "provider": "runner_profile.rotation_axis",
+      "consumer": "rim_profile.clearance_axis",
+      "joint_type": "radial_clearance",
+      "derived": [
+        {"name": "rim_inner_radius", "mode": "derived", "expression": "runner_radius + max(0.024, 0.08 * quern_radius_m)", "depends_on": ["runner_radius", "quern_radius_m"], "rationale": "Keeps the complete runner and crank socket radially clear of every rim profile."},
+        {"name": "rim_outer_radius", "mode": "derived", "expression": "quern_radius_m - 0.004", "depends_on": ["quern_radius_m"], "rationale": "Keeps repeated stones supported by the lower quern perimeter."}
+      ]
+    },
+    {
+      "binding_id": "support_to_discharge",
+      "provider": "support_frame.outlet_plane",
+      "consumer": "discharge_system.inlet_plane",
+      "joint_type": "fixed",
+      "derived": [
+        {"name": "chute_width", "mode": "derived", "expression": "runner_radius * discharge_width_ratio", "depends_on": ["runner_radius", "discharge_width_ratio"], "rationale": "Fits the chute beneath the rear stone outlet and inside every timber frame."},
+        {"name": "chute_upper_z", "mode": "derived", "expression": "lower_stone_bottom", "depends_on": ["lower_stone_bottom"], "rationale": "Makes the upper board edge meet the lower-quern underside."}
+      ]
+    },
+    {
+      "binding_id": "runner_to_drive",
+      "provider": "runner_profile.grip_axis",
+      "consumer": "drive.grip_axis",
+      "joint_type": "continuous",
+      "derived": [
+        {"name": "crank_reach", "mode": "derived", "expression": "runner_radius * crank_reach_ratio", "depends_on": ["runner_radius", "crank_reach_ratio"], "rationale": "Places the real grip pin outside the stone while keeping the arm source-proportional."},
+        {"name": "grip_bore_radius", "mode": "derived", "expression": "grip_pin_radius + 0.0015", "depends_on": ["grip_pin_radius"], "rationale": "Creates real running clearance instead of overlap."}
+      ]
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "straight_four_leg_quern_identity",
+      "applies_to": {"slot": "support_frame", "candidates": ["straight_four_leg"]},
+      "required_roles": [{"role": "support_frame", "exact_count": 1}, {"role": "runner_stone", "exact_count": 1}, {"role": "crank_grip", "exact_count": 1}],
+      "required_relations": [{"parent_role": "support_frame", "child_role": "runner_stone", "joint_type": "continuous", "axis": [0.0, 0.0, 1.0]}, {"parent_role": "runner_stone", "child_role": "crank_grip", "joint_type": "continuous", "axis": [0.0, 0.0, 1.0]}],
+      "required_author_checks": ["category_anchor: rotary stone quern identity", "category_anchor: supported coaxial grinding shaft", "category_anchor: source-detailed crank assembly", "category_anchor: straight_four_leg identity"]
+    },
+    {
+      "anchor_id": "braced_four_leg_quern_identity",
+      "applies_to": {"slot": "support_frame", "candidates": ["braced_four_leg"]},
+      "required_roles": [{"role": "support_frame", "exact_count": 1}, {"role": "runner_stone", "exact_count": 1}, {"role": "crank_grip", "exact_count": 1}],
+      "required_relations": [{"parent_role": "support_frame", "child_role": "runner_stone", "joint_type": "continuous", "axis": [0.0, 0.0, 1.0]}, {"parent_role": "runner_stone", "child_role": "crank_grip", "joint_type": "continuous", "axis": [0.0, 0.0, 1.0]}],
+      "required_author_checks": ["category_anchor: rotary stone quern identity", "category_anchor: supported coaxial grinding shaft", "category_anchor: source-detailed crank assembly", "category_anchor: braced_four_leg identity"]
+    },
+    {
+      "anchor_id": "splayed_trestle_quern_identity",
+      "applies_to": {"slot": "support_frame", "candidates": ["splayed_trestle"]},
+      "required_roles": [{"role": "support_frame", "exact_count": 1}, {"role": "runner_stone", "exact_count": 1}, {"role": "crank_grip", "exact_count": 1}],
+      "required_relations": [{"parent_role": "support_frame", "child_role": "runner_stone", "joint_type": "continuous", "axis": [0.0, 0.0, 1.0]}, {"parent_role": "runner_stone", "child_role": "crank_grip", "joint_type": "continuous", "axis": [0.0, 0.0, 1.0]}],
+      "required_author_checks": ["category_anchor: rotary stone quern identity", "category_anchor: supported coaxial grinding shaft", "category_anchor: source-detailed crank assembly", "category_anchor: splayed_trestle identity"]
+    },
+    {
+      "anchor_id": "low_skid_cradle_quern_identity",
+      "applies_to": {"slot": "support_frame", "candidates": ["low_skid_cradle"]},
+      "required_roles": [{"role": "support_frame", "exact_count": 1}, {"role": "runner_stone", "exact_count": 1}, {"role": "crank_grip", "exact_count": 1}],
+      "required_relations": [{"parent_role": "support_frame", "child_role": "runner_stone", "joint_type": "continuous", "axis": [0.0, 0.0, 1.0]}, {"parent_role": "runner_stone", "child_role": "crank_grip", "joint_type": "continuous", "axis": [0.0, 0.0, 1.0]}],
+      "required_author_checks": ["category_anchor: rotary stone quern identity", "category_anchor: supported coaxial grinding shaft", "category_anchor: source-detailed crank assembly", "category_anchor: low_skid_cradle identity"]
+    },
+    {
+      "anchor_id": "shallow_circular_runner_identity",
+      "applies_to": {"slot": "runner_profile", "candidates": ["shallow_circular_funnel"]},
+      "required_roles": [{"role": "runner_stone", "exact_count": 1}],
+      "required_relations": [],
+      "required_author_checks": ["category_anchor: real runner eye and feed profile", "category_anchor: shallow_circular_funnel identity"]
+    },
+    {
+      "anchor_id": "terraced_circular_runner_identity",
+      "applies_to": {"slot": "runner_profile", "candidates": ["terraced_circular_feed"]},
+      "required_roles": [{"role": "runner_stone", "exact_count": 1}],
+      "required_relations": [],
+      "required_author_checks": ["category_anchor: real runner eye and feed profile", "category_anchor: terraced_circular_feed identity"]
+    },
+    {
+      "anchor_id": "faceted_polygonal_runner_identity",
+      "applies_to": {"slot": "runner_profile", "candidates": ["faceted_polygonal_feed"]},
+      "required_roles": [{"role": "runner_stone", "exact_count": 1}],
+      "required_relations": [],
+      "required_author_checks": ["category_anchor: real runner eye and feed profile", "category_anchor: faceted_polygonal_feed identity"]
+    },
+    {
+      "anchor_id": "straight_socket_crank_identity",
+      "applies_to": {"slot": "drive", "candidates": ["straight_socket_crank"]},
+      "required_roles": [{"role": "crank_grip", "exact_count": 1}],
+      "required_relations": [],
+      "required_author_checks": ["category_anchor: source-detailed crank assembly", "category_anchor: straight_socket_crank identity"]
+    },
+    {
+      "anchor_id": "counterweighted_crank_identity",
+      "applies_to": {"slot": "drive", "candidates": ["offset_counterweighted_crank"]},
+      "required_roles": [{"role": "crank_grip", "exact_count": 1}],
+      "required_relations": [],
+      "required_author_checks": ["category_anchor: source-detailed crank assembly", "category_anchor: offset_counterweighted_crank identity"]
+    }
+  ]
+}

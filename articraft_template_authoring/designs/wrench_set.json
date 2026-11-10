@@ -1,0 +1,308 @@
+{
+  "schema_version": 1,
+  "slug": "wrench_set",
+  "source_map_path": "articraft_template_authoring/source_maps/wrench_set.md",
+  "source_map_sha256": "c04c05e2d1186d9a425dc674769e20b5fbbadf74106f8e784e8292f0dc7d88af",
+  "assembly_notes": "Each set_family is a coherent source-compatible tool-and-carrier assembly. tool_count is the total number of wrench/key parts and derives the number of seats, bosses or clips, extraction joints, carrier width, pitch, fan angles and graduated sizes.",
+  "slots": [
+    {
+      "name": "set_family",
+      "component_type": "set_family",
+      "required": true,
+      "candidates": [
+        {
+          "name": "l_hex_key_slot_holder",
+          "record_id": "rec_0611__wrench_set__001_png_867fcfc363504a5081e23c143d60d7fd",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L35-L135", "model.py:L206-L291"],
+          "evidence": "Source true-hex L sweeps and sloped molded wedge with one cut socket per key.",
+          "implementation_function": "_set_family_l_hex_key_slot_holder_build",
+          "parameters": [
+            {
+              "name": "tool_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.15,
+              "maximum": 0.24,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Source-like compact-to-long L-key leg length."
+            }
+          ],
+          "interfaces": [],
+          "notes": "One source wedge carrier; no external universal base."
+        },
+        {
+          "name": "l_flare_nut_slot_holder",
+          "record_id": "rec_0611_wrench_set_var_tool_family_flare_nut_set",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L35-L174", "model.py:L245-L346"],
+          "evidence": "Source L sweep with a slotted through-bore flare-nut head and molded socket carrier.",
+          "implementation_function": "_set_family_l_flare_nut_slot_holder_build",
+          "parameters": [
+            {
+              "name": "tool_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.16,
+              "maximum": 0.25,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Source-like L flare-nut wrench leg length."
+            }
+          ],
+          "interfaces": [],
+          "notes": "Slotted ring head remains visually and topologically distinct from a hex key."
+        },
+        {
+          "name": "combination_hanging_rack",
+          "record_id": "rec_0611__wrench_set__002_png_dc0b13c7c9ca4f21af11d049fae266fa",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L33-L158", "model.py:L161-L258"],
+          "evidence": "Source blue handled carrier with a graduated fan of real open/ring combination wrenches.",
+          "implementation_function": "_set_family_combination_hanging_rack_build",
+          "parameters": [
+            {
+              "name": "tool_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.20,
+              "maximum": 0.32,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Graduated forged combination wrench length."
+            }
+          ],
+          "interfaces": [],
+          "notes": "Real open jaw and polygonal through-bore ring."
+        },
+        {
+          "name": "ratcheting_combination_hanging_rack",
+          "record_id": "rec_0611_wrench_set_var_tool_family_ratcheting_combination",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L33-L195", "model.py:L198-L298"],
+          "evidence": "Source ratchet housing, toothed through bore and reversal detail in the blue carrier.",
+          "implementation_function": "_set_family_ratcheting_combination_hanging_rack_build",
+          "parameters": [
+            {
+              "name": "tool_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.21,
+              "maximum": 0.33,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Graduated ratcheting combination wrench length."
+            }
+          ],
+          "interfaces": [],
+          "notes": "The ratchet mechanism is structural rather than a color-only variation."
+        },
+        {
+          "name": "double_open_end_hanging_rack",
+          "record_id": "rec_0611__wrench_set__002_png_dc0b13c7c9ca4f21af11d049fae266fa",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L33-L97", "model.py:L100-L158"],
+          "evidence": "Source forged open-jaw construction adapted to both ends and retained by neck snap clips.",
+          "implementation_function": "_set_family_double_open_end_hanging_rack_build",
+          "parameters": [
+            {
+              "name": "tool_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.20,
+              "maximum": 0.32,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Graduated double-open wrench length."
+            }
+          ],
+          "interfaces": [],
+          "notes": "Uses neck clips, never a fake ring slot."
+        },
+        {
+          "name": "double_box_end_hanging_rack",
+          "record_id": "rec_0611__wrench_set__002_png_dc0b13c7c9ca4f21af11d049fae266fa",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L33-L97", "model.py:L100-L158"],
+          "evidence": "Source ring construction used at both ends with two true polygonal bores.",
+          "implementation_function": "_set_family_double_box_end_hanging_rack_build",
+          "parameters": [
+            {
+              "name": "tool_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.21,
+              "maximum": 0.33,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Graduated double-box wrench length."
+            }
+          ],
+          "interfaces": [],
+          "notes": "Both ends have real holes and are supported by the blue handled carrier."
+        },
+        {
+          "name": "offset_ring_hanging_rack",
+          "record_id": "rec_0611__wrench_set__002_png_dc0b13c7c9ca4f21af11d049fae266fa",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L33-L97", "model.py:L100-L158"],
+          "evidence": "Source ring-ended forged profile adapted with visibly offset necks.",
+          "implementation_function": "_set_family_offset_ring_hanging_rack_build",
+          "parameters": [
+            {
+              "name": "tool_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.22,
+              "maximum": 0.34,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Graduated offset-ring wrench length."
+            }
+          ],
+          "interfaces": [],
+          "notes": "Offset neck geometry distinguishes this family from a flat double-box set."
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "tool_count",
+      "item_slot": "set_family",
+      "values": [5, 8, 10],
+      "spacing_expression": "carrier pitch and fan angles derive from tool_count and maximum head envelope",
+      "host_capacity_expression": "carrier width = 2 * edge margin + (tool_count - 1) * pitch"
+    }
+  ],
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "l_hex_key_slot_holder_identity",
+      "applies_to": {"slot": "set_family", "candidates": ["l_hex_key_slot_holder"]},
+      "required_roles": [
+        {"role": "slot_holder", "exact_count": 1},
+        {"role": "wrench", "count_from": "tool_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "slot_holder", "child_role": "wrench", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: real wrench profile",
+        "category_anchor: source-like slot holder",
+        "category_anchor: l_hex_key_slot_holder identity"
+      ]
+    },
+    {
+      "anchor_id": "l_flare_nut_slot_holder_identity",
+      "applies_to": {"slot": "set_family", "candidates": ["l_flare_nut_slot_holder"]},
+      "required_roles": [
+        {"role": "slot_holder", "exact_count": 1},
+        {"role": "wrench", "count_from": "tool_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "slot_holder", "child_role": "wrench", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: real wrench profile",
+        "category_anchor: source-like slot holder",
+        "category_anchor: l_flare_nut_slot_holder identity"
+      ]
+    },
+    {
+      "anchor_id": "combination_hanging_rack_identity",
+      "applies_to": {"slot": "set_family", "candidates": ["combination_hanging_rack"]},
+      "required_roles": [
+        {"role": "hanging_holder", "exact_count": 1},
+        {"role": "wrench", "count_from": "tool_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "hanging_holder", "child_role": "wrench", "joint_type": "prismatic", "axis": [0.0, 0.0, -1.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: real wrench profile",
+        "category_anchor: source-like hanging holder",
+        "category_anchor: combination_hanging_rack identity"
+      ]
+    },
+    {
+      "anchor_id": "ratcheting_combination_hanging_rack_identity",
+      "applies_to": {"slot": "set_family", "candidates": ["ratcheting_combination_hanging_rack"]},
+      "required_roles": [
+        {"role": "hanging_holder", "exact_count": 1},
+        {"role": "wrench", "count_from": "tool_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "hanging_holder", "child_role": "wrench", "joint_type": "prismatic", "axis": [0.0, 0.0, -1.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: real wrench profile",
+        "category_anchor: source-like hanging holder",
+        "category_anchor: ratcheting_combination_hanging_rack identity"
+      ]
+    },
+    {
+      "anchor_id": "double_open_end_hanging_rack_identity",
+      "applies_to": {"slot": "set_family", "candidates": ["double_open_end_hanging_rack"]},
+      "required_roles": [
+        {"role": "hanging_holder", "exact_count": 1},
+        {"role": "wrench", "count_from": "tool_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "hanging_holder", "child_role": "wrench", "joint_type": "prismatic", "axis": [0.0, 0.0, -1.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: real wrench profile",
+        "category_anchor: source-like hanging holder",
+        "category_anchor: double_open_end_hanging_rack identity"
+      ]
+    },
+    {
+      "anchor_id": "double_box_end_hanging_rack_identity",
+      "applies_to": {"slot": "set_family", "candidates": ["double_box_end_hanging_rack"]},
+      "required_roles": [
+        {"role": "hanging_holder", "exact_count": 1},
+        {"role": "wrench", "count_from": "tool_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "hanging_holder", "child_role": "wrench", "joint_type": "prismatic", "axis": [0.0, 0.0, -1.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: real wrench profile",
+        "category_anchor: source-like hanging holder",
+        "category_anchor: double_box_end_hanging_rack identity"
+      ]
+    },
+    {
+      "anchor_id": "offset_ring_hanging_rack_identity",
+      "applies_to": {"slot": "set_family", "candidates": ["offset_ring_hanging_rack"]},
+      "required_roles": [
+        {"role": "hanging_holder", "exact_count": 1},
+        {"role": "wrench", "count_from": "tool_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "hanging_holder", "child_role": "wrench", "joint_type": "prismatic", "axis": [0.0, 0.0, -1.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: real wrench profile",
+        "category_anchor: source-like hanging holder",
+        "category_anchor: offset_ring_hanging_rack identity"
+      ]
+    }
+  ]
+}

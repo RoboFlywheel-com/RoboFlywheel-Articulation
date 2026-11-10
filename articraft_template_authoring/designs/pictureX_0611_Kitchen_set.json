@@ -1,0 +1,446 @@
+{
+  "assembly_notes": "One fixed carcass (base run + shallow upper run + tall left feature + cadquery countertop with sink/cooktop cutouts + sink basin + cooktop + backsplash + faucet) hosts N revolute upper doors and N prismatic base drawers. door_style and drawer_style are the two front part-trees; tower_style is the tall left feature. bay_count is the structural multiplicity driving both door and drawer counts plus dividers/gables; bay_width_m, counter_depth_m, and base_height_m are continuous dimensions (not core diversity).",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "appliance_tower_kitchen_identity",
+      "applies_to": {
+        "candidates": [
+          "appliance_tower"
+        ],
+        "slot": "tower_style"
+      },
+      "required_author_checks": [
+        "category_anchor: single installed kitchen carcass",
+        "category_anchor: N articulated doors and drawers",
+        "category_anchor: appliance_tower identity",
+        "category_anchor: island module identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "cabinet_door",
+          "joint_type": "revolute",
+          "parent_role": "kitchen_carcass"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "base_drawer",
+          "joint_type": "prismatic",
+          "parent_role": "kitchen_carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "kitchen_carcass"
+        },
+        {
+          "count_from": "bay_count",
+          "role": "cabinet_door"
+        },
+        {
+          "count_from": "bay_count",
+          "role": "base_drawer"
+        }
+      ]
+    },
+    {
+      "anchor_id": "open_shelf_tower_kitchen_identity",
+      "applies_to": {
+        "candidates": [
+          "open_shelf_tower"
+        ],
+        "slot": "tower_style"
+      },
+      "required_author_checks": [
+        "category_anchor: single installed kitchen carcass",
+        "category_anchor: N articulated doors and drawers",
+        "category_anchor: open_shelf_tower identity",
+        "category_anchor: island module identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "cabinet_door",
+          "joint_type": "revolute",
+          "parent_role": "kitchen_carcass"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "base_drawer",
+          "joint_type": "prismatic",
+          "parent_role": "kitchen_carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "kitchen_carcass"
+        },
+        {
+          "count_from": "bay_count",
+          "role": "cabinet_door"
+        },
+        {
+          "count_from": "bay_count",
+          "role": "base_drawer"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2 <= bay_count <= 5; each bay owns one base drawer and one upper door",
+      "item_slot": "drawer_style",
+      "name": "bay_count",
+      "spacing_expression": "bay centers and run width derive from bay_count * bay_width_m; N+1 base dividers and N+1 upper gables",
+      "values": [
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Perimeter-framed olive panel with two dark hinge knuckles at the hinge edge and an optional edge pull; revolute vertical hinge, swings outward toward the viewer.",
+          "implementation_function": "_door_style_framed_panel_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "door_style__framed_panel__cabinet_door_{index}",
+              "role": "consumer"
+            }
+          ],
+          "name": "framed_panel",
+          "notes": "Framed shaker-style door: four perimeter rails + recessed center panel + hinge knuckles + pull bar.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.75,
+              "minimum": 0.5,
+              "mode": "independent",
+              "name": "bay_width_m",
+              "rationale": "source bay/door width; sets door panel width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.92,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "base_height_m",
+              "rationale": "counter height; sets upper-row door z placement",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__kitchen_set__002__png_f3297107e4784723b3e657e0f26ed27f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L229-L301"
+          ]
+        },
+        {
+          "evidence": "Handleless flat slab with a narrow routed finger-edge reveal; revolute vertical hinge on the hinge line, swings outward.",
+          "implementation_function": "_door_style_slab_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "door_style__slab__cabinet_door_{index}",
+              "role": "consumer"
+            }
+          ],
+          "name": "slab",
+          "notes": "Handleless slab door with a routed finger reveal at the free edge; distinct part-tree from framed_panel.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.75,
+              "minimum": 0.5,
+              "mode": "independent",
+              "name": "bay_width_m",
+              "rationale": "source bay/door width; sets slab width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.92,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "base_height_m",
+              "rationale": "counter height; sets upper-row door z placement",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__kitchen_set__003__png_13615c53ca2c41eca2c6416dfaa3996d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L65-L102"
+          ]
+        }
+      ],
+      "component_type": "revolute cabinet door",
+      "name": "door_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Hollow tray (front + floor + two sides + back) with an edge-pull bar and two carcass-mounted side runners; prismatic pull toward the viewer.",
+          "implementation_function": "_drawer_style_runner_tray_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "slide_axis",
+              "part": "drawer_style__runner_tray__base_drawer_{index}",
+              "role": "consumer"
+            }
+          ],
+          "name": "runner_tray",
+          "notes": "Framed drawer front + hollow tray + edge pull; carcass carries two side runners for retention.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.75,
+              "minimum": 0.5,
+              "mode": "independent",
+              "name": "bay_width_m",
+              "rationale": "source bay/drawer width; sets front and tray width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.66,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "counter_depth_m",
+              "rationale": "carcass depth; sets tray box depth and travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.92,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "base_height_m",
+              "rationale": "counter height; sets drawer height and seat z",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__kitchen_set__002__png_f3297107e4784723b3e657e0f26ed27f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L303-L390"
+          ]
+        },
+        {
+          "evidence": "Hollow tray (front + bottom + two sides + back) with a handleless finger reveal, retained by side overlap; prismatic pull toward the viewer.",
+          "implementation_function": "_drawer_style_reveal_tray_build",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "slide_axis",
+              "part": "drawer_style__reveal_tray__base_drawer_{index}",
+              "role": "consumer"
+            }
+          ],
+          "name": "reveal_tray",
+          "notes": "Handleless drawer with a routed finger reveal; distinct part-tree from runner_tray (no edge-pull bar, no separate carcass runners).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.75,
+              "minimum": 0.5,
+              "mode": "independent",
+              "name": "bay_width_m",
+              "rationale": "source bay/drawer width; sets front and tray width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.66,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "counter_depth_m",
+              "rationale": "carcass depth; sets tray box depth and travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.92,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "base_height_m",
+              "rationale": "counter height; sets drawer height and seat z",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__kitchen_set__003__png_13615c53ca2c41eca2c6416dfaa3996d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L105-L161"
+          ]
+        }
+      ],
+      "component_type": "prismatic drawer",
+      "name": "drawer_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Closed full-height tower: two side gables, top, back, internal shelves, integrated black oven chassis + glass + control + handle.",
+          "implementation_function": "_tower_style_appliance_tower_build",
+          "interfaces": [],
+          "name": "appliance_tower",
+          "notes": "Enclosed appliance tower with a built-in oven; fixed geometry added to the carcass.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__kitchen_set__002__png_f3297107e4784723b3e657e0f26ed27f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L110-L126"
+          ]
+        },
+        {
+          "evidence": "Open full-height shelving tower: two side gables, ribbed charcoal back, stack of open horizontal shelves, vertical ribs.",
+          "implementation_function": "_tower_style_open_shelf_tower_build",
+          "interfaces": [],
+          "name": "open_shelf_tower",
+          "notes": "Open shelving tower; distinct part-tree from appliance_tower (open vs enclosed, no oven).",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__kitchen_set__003__png_13615c53ca2c41eca2c6416dfaa3996d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L253-L265"
+          ]
+        }
+      ],
+      "component_type": "fixed tall left feature",
+      "name": "tower_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Integral waterfall peninsula: counter unions a peninsula slab, full-height waterfall side panel, concealed rear brace.",
+          "implementation_function": "_island_module_waterfall_peninsula_build",
+          "interfaces": [],
+          "name": "waterfall_peninsula",
+          "notes": "Closed volume, no cubbies.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__kitchen_set__002__png_f3297107e4784723b3e657e0f26ed27f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L40",
+            "model.py:L178-L179"
+          ]
+        },
+        {
+          "evidence": "Island with dark open cubbies and a bank of pale-oak drawer fronts.",
+          "implementation_function": "_island_module_open_cubby_return_build",
+          "interfaces": [],
+          "name": "open_cubby_return",
+          "notes": "Open compartments plus a fixed drawer-front bank; attached as a return so it stays connected.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__kitchen_set__003__png_13615c53ca2c41eca2c6416dfaa3996d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L105-L161",
+            "model.py:L267-L268"
+          ]
+        }
+      ],
+      "component_type": "fixed counter-height return",
+      "name": "island_module",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Kitchen_set",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Kitchen_set.md",
+  "source_map_sha256": "7ff353c5ae084501b17294b1b162843169f304016fd42f1ad73e854e27b41998"
+}

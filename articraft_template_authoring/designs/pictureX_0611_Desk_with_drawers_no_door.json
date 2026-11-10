@@ -1,0 +1,1139 @@
+{
+  "assembly_notes": "One desk part carries the worktop, the legs or pedestals, the apron and the runner rails; every drawer is a separate moving hollow tray and no revolute joint exists anywhere. The desk form publishes the drawer zone and the top footprint, so tray width, graduated front height, box depth, travel and the leg stations all derive from the real host and from N. Every declared slot combination builds and no overlap allowance is emitted.",
+  "bindings": [
+    {
+      "binding_id": "zone_to_tray",
+      "consumer": "drawer_front.tray_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "pedestal_width_m",
+            "drawer_count"
+          ],
+          "expression": "zone width - both runner rails - clearance",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "tray_width_m",
+          "rationale": "Tray width follows the real pedestal or apron zone.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "desk_height_m",
+            "drawer_count"
+          ],
+          "expression": "zone height / levels - level reveal",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "front_height_m",
+          "rationale": "Front heights follow the zone and N.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "desk_depth_m"
+          ],
+          "expression": "box depth * drawer_travel_ratio",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "travel_m",
+          "rationale": "Travel keeps the side runners engaged at full extension.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "desk_form.drawer_zone"
+    },
+    {
+      "binding_id": "footprint_to_legs",
+      "consumer": "leg_form.top_underside",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "desk_width_m",
+            "desk_depth_m"
+          ],
+          "expression": "leg positions derived from the worktop footprint and the pedestal walls",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leg_station_m",
+          "rationale": "Legs stand where the top is not already carried by a pedestal.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "desk_height_m"
+          ],
+          "expression": "worktop height - top thickness",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leg_height_m",
+          "rationale": "Leg height follows the resolved worktop height.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "desk_form.top_footprint"
+    },
+    {
+      "binding_id": "footprint_to_top",
+      "consumer": "top_form.top_slab",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "desk_width_m",
+            "desk_depth_m"
+          ],
+          "expression": "worktop outline, including the return wing for the L form",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "top_extent_m",
+          "rationale": "The top always covers every pedestal and the return.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "desk_width_m"
+          ],
+          "expression": "inset field = top extent - 2 * inset_border",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "writing_field_m",
+          "rationale": "The leather field is inset from the real top outline.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "desk_form.top_footprint"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "desk_single_pedestal_identity",
+      "applies_to": {
+        "candidates": [
+          "single_pedestal"
+        ],
+        "slot": "desk_form"
+      },
+      "required_author_checks": [
+        "category_anchor: one desk carcass",
+        "category_anchor: every drawer is a moving child of the desk",
+        "category_anchor: drawer trays are hollow boxes",
+        "category_anchor: the desk has no door leaf"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "desk"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "desk"
+        },
+        {
+          "count_from": "drawer_count",
+          "role": "drawer"
+        }
+      ]
+    },
+    {
+      "anchor_id": "desk_twin_pedestal_identity",
+      "applies_to": {
+        "candidates": [
+          "twin_pedestal"
+        ],
+        "slot": "desk_form"
+      },
+      "required_author_checks": [
+        "category_anchor: one desk carcass",
+        "category_anchor: every drawer is a moving child of the desk",
+        "category_anchor: drawer trays are hollow boxes",
+        "category_anchor: the desk has no door leaf"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "desk"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "desk"
+        },
+        {
+          "count_from": "drawer_count",
+          "role": "drawer"
+        }
+      ]
+    },
+    {
+      "anchor_id": "desk_apron_rail_desk_identity",
+      "applies_to": {
+        "candidates": [
+          "apron_rail_desk"
+        ],
+        "slot": "desk_form"
+      },
+      "required_author_checks": [
+        "category_anchor: one desk carcass",
+        "category_anchor: every drawer is a moving child of the desk",
+        "category_anchor: drawer trays are hollow boxes",
+        "category_anchor: the desk has no door leaf"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "desk"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "desk"
+        },
+        {
+          "count_from": "drawer_count",
+          "role": "drawer"
+        }
+      ]
+    },
+    {
+      "anchor_id": "desk_l_shaped_return_identity",
+      "applies_to": {
+        "candidates": [
+          "l_shaped_return"
+        ],
+        "slot": "desk_form"
+      },
+      "required_author_checks": [
+        "category_anchor: one desk carcass",
+        "category_anchor: every drawer is a moving child of the desk",
+        "category_anchor: drawer trays are hollow boxes",
+        "category_anchor: the desk has no door leaf"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "desk"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "desk"
+        },
+        {
+          "count_from": "drawer_count",
+          "role": "drawer"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "each pedestal's zone height >= levels * (minimum front height + reveal) and its width >= minimum tray width plus both runner rails",
+      "item_slot": "drawer_front",
+      "name": "drawer_count",
+      "spacing_expression": "the trays are distributed over the available pedestals (one, two, the apron band or the L main run) and stacked at an even pitch inside each",
+      "values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "One drawer pedestal beside an open knee hole.",
+          "implementation_function": "_desk_form_single_pedestal_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "zone depth",
+                "height": "zone height",
+                "width": "pedestal or apron width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "drawer_zone",
+              "part": "desk",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "depth": "worktop depth",
+                "width": "worktop width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "top_footprint",
+              "part": "desk",
+              "role": "provider"
+            }
+          ],
+          "name": "single_pedestal",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.7,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "desk_width_m",
+              "rationale": "Origin 005 desk widths.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "desk_depth_m",
+              "rationale": "Origin 005 desk depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "desk_height_m",
+              "rationale": "Origin 005 worktop height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.48,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "pedestal_width_m",
+              "rationale": "Origin 005 pedestal width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "drawer_travel_ratio",
+              "rationale": "Open stroke as a fraction of the real box depth; the runners stay engaged at full extension.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__005__png__airflex_batch_20260710_69a514c4d7e942d49d0a196cbfa9012b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L137-L319"
+          ]
+        },
+        {
+          "evidence": "Mirrored drawer pedestals with a knee hole between them.",
+          "implementation_function": "_desk_form_twin_pedestal_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "zone depth",
+                "height": "zone height",
+                "width": "pedestal or apron width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "drawer_zone",
+              "part": "desk",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "depth": "worktop depth",
+                "width": "worktop width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "top_footprint",
+              "part": "desk",
+              "role": "provider"
+            }
+          ],
+          "name": "twin_pedestal",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.9,
+              "minimum": 1.1,
+              "mode": "independent",
+              "name": "desk_width_m",
+              "rationale": "Twin-pedestal fork widths.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.84,
+              "minimum": 0.56,
+              "mode": "independent",
+              "name": "desk_depth_m",
+              "rationale": "Twin-pedestal fork depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "desk_height_m",
+              "rationale": "Twin-pedestal fork worktop height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "pedestal_width_m",
+              "rationale": "Twin-pedestal fork pedestal width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "drawer_travel_ratio",
+              "rationale": "Open stroke as a fraction of the real box depth; the runners stay engaged at full extension.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_desk_with_drawers_fork_twin_pedestal_n8_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L155-L320"
+          ]
+        },
+        {
+          "evidence": "Shallow apron band under the top carrying shallow drawers.",
+          "implementation_function": "_desk_form_apron_rail_desk_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "zone depth",
+                "height": "zone height",
+                "width": "pedestal or apron width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "drawer_zone",
+              "part": "desk",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "depth": "worktop depth",
+                "width": "worktop width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "top_footprint",
+              "part": "desk",
+              "role": "provider"
+            }
+          ],
+          "name": "apron_rail_desk",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "desk_width_m",
+              "rationale": "Origin 004 desk widths.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.5,
+              "mode": "independent",
+              "name": "desk_depth_m",
+              "rationale": "Origin 004 desk depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "desk_height_m",
+              "rationale": "Origin 004 worktop height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.19,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "apron_depth_m",
+              "rationale": "Origin 004 apron band height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "drawer_travel_ratio",
+              "rationale": "Open stroke as a fraction of the real box depth; the runners stay engaged at full extension.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__004__png__airflex_batch_20260710_d23b1cac1d54454d99cc04c6c0bc6fcf",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L55"
+          ]
+        },
+        {
+          "evidence": "Main run plus a rear return wing on its own support.",
+          "implementation_function": "_desk_form_l_shaped_return_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "zone depth",
+                "height": "zone height",
+                "width": "pedestal or apron width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "drawer_zone",
+              "part": "desk",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "depth": "worktop depth",
+                "width": "worktop width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "top_footprint",
+              "part": "desk",
+              "role": "provider"
+            }
+          ],
+          "name": "l_shaped_return",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.8,
+              "minimum": 1.1,
+              "mode": "independent",
+              "name": "desk_width_m",
+              "rationale": "L-shaped fork main run width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.56,
+              "mode": "independent",
+              "name": "desk_depth_m",
+              "rationale": "L-shaped fork main depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "desk_height_m",
+              "rationale": "L-shaped fork worktop height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "return_depth_m",
+              "rationale": "L-shaped fork return wing depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "drawer_travel_ratio",
+              "rationale": "Open stroke as a fraction of the real box depth; the runners stay engaged at full extension.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_desk_with_drawers_fork_l_shaped_return_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L47-L386"
+          ]
+        }
+      ],
+      "component_type": "one drawer pedestal beside a knee hole",
+      "name": "desk_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Lathe-turned legs.",
+          "implementation_function": "_leg_form_turned_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "worktop depth",
+                "width": "worktop width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "top_underside",
+              "part": "desk",
+              "role": "consumer"
+            }
+          ],
+          "name": "turned_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.08,
+              "minimum": 0.04,
+              "mode": "independent",
+              "name": "turned_leg_d_m",
+              "rationale": "Origin 004 turned leg diameter.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__004__png__airflex_batch_20260710_d23b1cac1d54454d99cc04c6c0bc6fcf",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L44"
+          ]
+        },
+        {
+          "evidence": "Square legs tapering toward the floor.",
+          "implementation_function": "_leg_form_tapered_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "worktop depth",
+                "width": "worktop width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "top_underside",
+              "part": "desk",
+              "role": "consumer"
+            }
+          ],
+          "name": "tapered_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.072,
+              "minimum": 0.038,
+              "mode": "independent",
+              "name": "tapered_leg_top_m",
+              "rationale": "Origin 002 leg section at the top.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__002__png__airflex_batch_20260710_7613e188f1a643e0ae2025f65a32cc54",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L17-L328"
+          ]
+        },
+        {
+          "evidence": "Slim bent metal frame legs.",
+          "implementation_function": "_leg_form_hairpin_frame_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "worktop depth",
+                "width": "worktop width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "top_underside",
+              "part": "desk",
+              "role": "consumer"
+            }
+          ],
+          "name": "hairpin_frame",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.014,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "hairpin_rod_r_m",
+              "rationale": "Origin 003 frame rod radius.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__003__png__airflex_batch_20260710_e8f92b30f5d64469bc7be694c4008080",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L22-L43"
+          ]
+        },
+        {
+          "evidence": "Solid panel end supports.",
+          "implementation_function": "_leg_form_panel_end_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "worktop depth",
+                "width": "worktop width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "top_underside",
+              "part": "desk",
+              "role": "consumer"
+            }
+          ],
+          "name": "panel_end",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.042,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "end_panel_t_m",
+              "rationale": "Origin 001 end cheek thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__001__png__airflex_batch_20260710_0a4495b8d3674ce895b5dcc93b34fa8b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L30-L51"
+          ]
+        }
+      ],
+      "component_type": "lathe-turned legs",
+      "name": "leg_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Moulded front with a swing bail pull.",
+          "implementation_function": "_drawer_front_bail_pull_front_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived front height",
+                "width": "derived tray width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "bail_pull_front",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.055,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "bail_drop_m",
+              "rationale": "Origin 001 bail pull drop.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__001__png__airflex_batch_20260710_0a4495b8d3674ce895b5dcc93b34fa8b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L61-L151"
+          ]
+        },
+        {
+          "evidence": "Flush front with a routed finger grip.",
+          "implementation_function": "_drawer_front_flush_front_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived front height",
+                "width": "derived tray width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "flush_front",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.022,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "grip_depth_m",
+              "rationale": "Origin 003 finger grip depth.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__003__png__airflex_batch_20260710_e8f92b30f5d64469bc7be694c4008080",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L44-L306"
+          ]
+        },
+        {
+          "evidence": "Lipped front with a proud edge band and a knob.",
+          "implementation_function": "_drawer_front_lipped_front_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived front height",
+                "width": "derived tray width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "lipped_front",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.018,
+              "minimum": 0.005,
+              "mode": "independent",
+              "name": "lip_proud_m",
+              "rationale": "Origin 005 front lip projection.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__005__png__airflex_batch_20260710_69a514c4d7e942d49d0a196cbfa9012b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L136"
+          ]
+        }
+      ],
+      "component_type": "moulded front with a bail pull",
+      "name": "drawer_front",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Plain rectangular worktop with a square edge.",
+          "implementation_function": "_top_form_rect_top_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "worktop depth",
+                "width": "worktop width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "top_slab",
+              "part": "desk",
+              "role": "consumer"
+            }
+          ],
+          "name": "rect_top",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.044,
+              "minimum": 0.022,
+              "mode": "independent",
+              "name": "rect_top_t_m",
+              "rationale": "Origin 002 worktop thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__002__png__airflex_batch_20260710_7613e188f1a643e0ae2025f65a32cc54",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L17-L200"
+          ]
+        },
+        {
+          "evidence": "Leather writing field inset in a timber border.",
+          "implementation_function": "_top_form_leather_inset_top_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "worktop depth",
+                "width": "worktop width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "top_slab",
+              "part": "desk",
+              "role": "consumer"
+            }
+          ],
+          "name": "leather_inset_top",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "inset_border_m",
+              "rationale": "Origin 001 border width around the writing field.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__001__png__airflex_batch_20260710_0a4495b8d3674ce895b5dcc93b34fa8b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L219-L400"
+          ]
+        },
+        {
+          "evidence": "Thicker worktop with a rounded front edge.",
+          "implementation_function": "_top_form_bullnose_top_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "worktop depth",
+                "width": "worktop width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "top_slab",
+              "part": "desk",
+              "role": "consumer"
+            }
+          ],
+          "name": "bullnose_top",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.06,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "bullnose_top_t_m",
+              "rationale": "Apron fork worktop thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_desk_with_drawers_fork_shallow_apron_n2_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L56-L355"
+          ]
+        }
+      ],
+      "component_type": "rectangular worktop",
+      "name": "top_form",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Desk_with_drawers_no_door",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Desk_with_drawers_no_door.md",
+  "source_map_sha256": "f42895d0cd8ca98b9d66bc5c5e51f87ff8f4dea537825c839e02523a7058e96e"
+}

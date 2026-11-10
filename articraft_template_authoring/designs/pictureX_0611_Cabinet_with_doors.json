@@ -1,0 +1,1283 @@
+{
+  "assembly_notes": "One carcass part carries the body shell, the support base, the face frame and the shelf ladder; every door leaf is a separate moving part. The host body always derives a planar front jamb (a chord frame on the curved drum, the narrow top width on the tapered case) so any front treatment and any mechanism mounts on a real supporting face. Leaf width, height, hinge line, track planes and interior swing limits are derived from the opening and from N; no combination is excluded and no overlap allowance is emitted.",
+  "bindings": [
+    {
+      "binding_id": "opening_to_leaf",
+      "consumer": "door_kind.leaf_back",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "opening_width_m",
+            "door_count"
+          ],
+          "expression": "opening_width_m / doors_per_row - outer_reveal_m - centre_reveal_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leaf_width_m",
+          "rationale": "Leaf width follows the host opening and the row layout, never a source constant.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "opening_height_m",
+            "door_count"
+          ],
+          "expression": "row_height_m - 2 * row_reveal_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leaf_height_m",
+          "rationale": "Leaf height follows the row/tier split of the host cavity.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "body_form"
+          ],
+          "expression": "inner shell radius when the host is curved_bow_shell, else 0",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leaf_curvature_r_m",
+          "rationale": "A swinging leaf on the drum keeps the source-001 curved slab profile.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "body_form.front_opening"
+    },
+    {
+      "binding_id": "opening_to_mechanism",
+      "consumer": "door_mechanism.hinge_line",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "opening_width_m",
+            "door_count"
+          ],
+          "expression": "cell edge + outer_reveal_m on the leaf's hinge side",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "hinge_x_m",
+          "rationale": "Hinge line is inset from the real jamb so the swinging half-thickness clears it.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "door_swing_rad",
+            "door_count"
+          ],
+          "expression": "min(door_swing_rad, pi/2 + neighbour_clearance_rad)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "interior_leaf_limit_rad",
+          "rationale": "Leaves with a neighbour on the fold-back side stop before reaching it; no overlap allowance.",
+          "unit": "rad",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "front_opening_deg"
+          ],
+          "expression": "2 * inner_radius * sin(front_opening_deg / 2)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "chord_frame_w_m",
+          "rationale": "The drum derives a flat chord jamb so bypass tracks and fold hinges have a planar mount.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "body_form.front_opening"
+    },
+    {
+      "binding_id": "body_to_support",
+      "consumer": "support_base.body_underside",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "support_base"
+          ],
+          "expression": "support candidate height",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "body_bottom_z_m",
+          "rationale": "Cavity floor, shelf ladder and door rows all start from the resolved body bottom.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_width_m",
+            "carcass_depth_m"
+          ],
+          "expression": "carcass footprint inset per support candidate",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "support_footprint_m",
+          "rationale": "Legs, feet and plinths are placed from the real footprint, circular for the drum.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "body_form.front_opening"
+    },
+    {
+      "binding_id": "cavity_to_fitment",
+      "consumer": "interior_fitment.shelf_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_width_m",
+            "taper_top_ratio"
+          ],
+          "expression": "clear width between the side panels at the shelf height",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "shelf_span_m",
+          "rationale": "A tapered host narrows with height, so each shelf derives its own span.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "door_mechanism"
+          ],
+          "expression": "front intrusion of the active mechanism plus clearance",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "shelf_front_inset_m",
+          "rationale": "Bypass tracks reach into the cavity, so the shelf nose is pushed back for them.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "body_form.shelf_seat"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "swing_door_cabinet_identity",
+      "applies_to": {
+        "candidates": [
+          "revolute_swing"
+        ],
+        "slot": "door_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: one load-bearing carcass",
+        "category_anchor: every door leaf is a moving child of the carcass",
+        "category_anchor: swing leaf opens outward from the front plane"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "door_leaf",
+          "joint_type": "revolute",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "door_count",
+          "role": "door_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "bypass_door_cabinet_identity",
+      "applies_to": {
+        "candidates": [
+          "sliding_bypass"
+        ],
+        "slot": "door_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: one load-bearing carcass",
+        "category_anchor: every door leaf is a moving child of the carcass",
+        "category_anchor: bypass leaf translates across the opening"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "door_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "door_count",
+          "role": "door_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "bifold_door_cabinet_identity",
+      "applies_to": {
+        "candidates": [
+          "bifold"
+        ],
+        "slot": "door_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: one load-bearing carcass",
+        "category_anchor: every door leaf is a moving child of the carcass",
+        "category_anchor: fold leaf hinges off the primary leaf"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "door_leaf",
+          "joint_type": "revolute",
+          "parent_role": "carcass"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "fold_leaf",
+          "joint_type": "revolute",
+          "parent_role": "door_leaf"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "door_count",
+          "role": "door_leaf"
+        },
+        {
+          "count_from": "door_count",
+          "role": "fold_leaf"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "opening width >= N_row * (min leaf width + reveals); a two-tier layout also requires cavity height >= 2 * (min leaf height + tier reveal)",
+      "item_slot": "door_kind",
+      "name": "door_count",
+      "spacing_expression": "cell pitch = opening width / doors per row; N<=3 is one row, N=4 splits into two tiers of two; leaf width = cell pitch - outer reveal - centre reveal",
+      "values": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "host_capacity_expression": "clear cavity height >= (N + 1) * minimum shelf gap plus N * shelf thickness",
+      "item_slot": "interior_fitment",
+      "name": "shelf_count",
+      "spacing_expression": "shelves are evenly pitched over the clear cavity: z_i = cavity_lo + (i+1) * (cavity_hi - cavity_lo) / (N + 1)",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Two side panels, top slab, base panel and inset back board bounding a real cavity.",
+          "implementation_function": "_body_form_rect_box_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "cavity height between base panel and top slab",
+                "width": "carcass_width_m - 2 * rect_side_panel_t_m"
+              },
+              "frame": {
+                "normal": "-Y",
+                "point": "front face of the face frame"
+              },
+              "kind": "plane",
+              "name": "front_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "depth": "cavity depth behind the door swing",
+                "span": "clear width between the side panels"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "shelf_seat",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "rect_box",
+          "notes": "Hosts the door opening, the shelf ladder and the support base.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.5,
+              "minimum": 0.66,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "Origin 002/004 case widths from a single door to a three-door credenza.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.5,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "Origin 002/003/004 case depths.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.8,
+              "minimum": 0.92,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "Low credenza through full-height two-tier case.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "rect_side_panel_t_m",
+              "rationale": "Origin 002 panel stock thickness range.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__002__png__airflex_batch_20260710_561d6843d38e43fc97b410320d94e273",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L138-L215"
+          ]
+        },
+        {
+          "evidence": "Annular swept drum wall with a real front opening arc and disc top/base.",
+          "implementation_function": "_body_form_curved_bow_shell_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "cavity height between base disc and top disc",
+                "width": "2 * inner_radius * sin(front_opening_deg / 2)"
+              },
+              "frame": {
+                "normal": "-Y",
+                "point": "chord frame across the opening arc"
+              },
+              "kind": "plane",
+              "name": "front_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "depth": "inner drum diameter",
+                "span": "inner drum diameter"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "shelf_seat",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "curved_bow_shell",
+          "notes": "Hosts the door opening, the shelf ladder and the support base.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.92,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "Origin 001 compact drum diameter; the footprint stays circular.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "Origin 001 drum height range.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.044,
+              "minimum": 0.022,
+              "mode": "independent",
+              "name": "shell_wall_t_m",
+              "rationale": "Origin 001 annular shell wall thickness.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 148.0,
+              "minimum": 96.0,
+              "mode": "independent",
+              "name": "front_opening_deg",
+              "rationale": "Origin 001 front opening arc; wider arcs need a wider chord frame.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__001__png__airflex_batch_20260710_bd4dc1c159114aabb8cafb2af6082234",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L41-L111",
+            "model.py:L213-L262"
+          ]
+        },
+        {
+          "evidence": "Lofted side panels leaning inward from base to top with a narrower top slab.",
+          "implementation_function": "_body_form_tapered_box_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "cavity height",
+                "width": "taper_top_ratio * carcass_width_m - 2 * side panel thickness"
+              },
+              "frame": {
+                "normal": "-Y",
+                "point": "front face of the face frame"
+              },
+              "kind": "plane",
+              "name": "front_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "depth": "cavity depth",
+                "span": "clear width at the shelf height after taper"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "shelf_seat",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "tapered_box",
+          "notes": "Hosts the door opening, the shelf ladder and the support base.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.36,
+              "minimum": 0.66,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "var_tapered_body base width range.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.5,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "var_tapered_body case depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.7,
+              "minimum": 0.92,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "var_tapered_body case height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.92,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "taper_top_ratio",
+              "rationale": "var_tapered_body top width / base width.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_var_tapered_body",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L185-L265"
+          ]
+        }
+      ],
+      "component_type": "rectilinear panel carcass",
+      "name": "body_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Outer/inner stiles, top/bottom rails and a woven cane field with a vertical brass pull.",
+          "implementation_function": "_door_kind_framed_cane_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived leaf height",
+                "width": "derived leaf width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "leaf_back",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "framed_cane",
+          "notes": "Front treatment only; leaf curvature and size derive from the host body and mechanism.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.064,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "cane_frame_w_m",
+              "rationale": "Origin 002 stile/rail width.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__002__png__airflex_batch_20260710_561d6843d38e43fc97b410320d94e273",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L42-L137"
+          ]
+        },
+        {
+          "evidence": "Glass field inside a moulded frame with a pleated curtain backing and a drop pull.",
+          "implementation_function": "_door_kind_glazed_curtain_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived leaf height",
+                "width": "derived leaf width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "leaf_back",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "glazed_curtain",
+          "notes": "Front treatment only; leaf curvature and size derive from the host body and mechanism.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.018,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "curtain_pleat_depth_m",
+              "rationale": "Origin 004 gathered curtain relief depth.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__004__png__airflex_batch_20260710_01eba6da12584fa6b5a0b31b1845c152",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L96-L242"
+          ]
+        },
+        {
+          "evidence": "Pierced scroll bars standing in front of a recessed dark backing board.",
+          "implementation_function": "_door_kind_fretwork_pierced_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived leaf height",
+                "width": "derived leaf width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "leaf_back",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "fretwork_pierced",
+          "notes": "Front treatment only; leaf curvature and size derive from the host body and mechanism.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "fret_bar_w_m",
+              "rationale": "Origin 003 pierced scroll member width.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__003__png__airflex_batch_20260710_12a242b290fd4dba8e000851a219e985",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L51-L148"
+          ]
+        },
+        {
+          "evidence": "Bevelled raised centre field inside a moulded surround with a turned knob.",
+          "implementation_function": "_door_kind_raised_panel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived leaf height",
+                "width": "derived leaf width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "leaf_back",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "raised_panel",
+          "notes": "Front treatment only; leaf curvature and size derive from the host body and mechanism.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.024,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "raise_bevel_m",
+              "rationale": "Origin 005 raised field bevel depth.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__005__png__airflex_batch_20260710_77e13e813dc946b7a78cb9f35059e9ab",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L146"
+          ]
+        },
+        {
+          "evidence": "Single-thickness solid slab leaf with a surface-mounted pull and no frame.",
+          "implementation_function": "_door_kind_flush_slab_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived leaf height",
+                "width": "derived leaf width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "leaf_back",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "flush_slab",
+          "notes": "Front treatment only; leaf curvature and size derive from the host body and mechanism.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "slab_t_m",
+              "rationale": "var_flush_slab_doors leaf stock thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_var_flush_slab_doors",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L39-L80"
+          ]
+        }
+      ],
+      "component_type": "stile/rail frame with woven field",
+      "name": "door_kind",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Vertical butt hinge on the jamb-inset hinge line with outward-only travel.",
+          "implementation_function": "_door_mechanism_revolute_swing_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "hinge barrel radius"
+              },
+              "frame": {
+                "axis": "+Z"
+              },
+              "kind": "axis",
+              "name": "hinge_line",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "revolute_swing",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.92,
+              "minimum": 1.4,
+              "mode": "independent",
+              "name": "door_swing_rad",
+              "rationale": "Origin 002/003/005 outward door travel.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__002__png__airflex_batch_20260710_561d6843d38e43fc97b410320d94e273",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L216-L293"
+          ]
+        },
+        {
+          "evidence": "Two offset tracks; each leaf translates across the opening and passes its neighbour.",
+          "implementation_function": "_door_mechanism_sliding_bypass_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "leaf height",
+                "width": "leaf width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "track_seat",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "sliding_bypass",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "slide_travel_m",
+              "rationale": "var_sliding_doors bypass travel.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_var_sliding_doors",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L140-L260"
+          ]
+        },
+        {
+          "evidence": "Primary leaf on the carcass jamb plus a second leaf folding off its leading stile.",
+          "implementation_function": "_door_mechanism_bifold_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "fold knuckle radius"
+              },
+              "frame": {
+                "axis": "+Z"
+              },
+              "kind": "axis",
+              "name": "fold_line",
+              "part": "fold_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "bifold",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.75,
+              "minimum": 1.3,
+              "mode": "independent",
+              "name": "fold_swing_rad",
+              "rationale": "var_bifold_door secondary fold travel; the pair folds to a V and stops before the folding leaf can reach the primary leaf face.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_var_bifold_door",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L146-L280"
+          ]
+        }
+      ],
+      "component_type": "vertical butt hinge",
+      "name": "door_mechanism",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Four slender painted-steel legs with floor glides.",
+          "implementation_function": "_support_base_metal_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "metal_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "metal_leg_h_m",
+              "rationale": "Origin 001 leg height range.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__001__png__airflex_batch_20260710_bd4dc1c159114aabb8cafb2af6082234",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L162-L193"
+          ]
+        },
+        {
+          "evidence": "Four turned wood dowel legs seated in visible sockets.",
+          "implementation_function": "_support_base_dowel_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "dowel_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "dowel_leg_h_m",
+              "rationale": "Origin 002 leg height range.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__002__png__airflex_batch_20260710_561d6843d38e43fc97b410320d94e273",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L216-L260"
+          ]
+        },
+        {
+          "evidence": "Lathe-turned feet under a scalloped apron band.",
+          "implementation_function": "_support_base_turned_feet_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "turned_feet",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.18,
+              "minimum": 0.085,
+              "mode": "independent",
+              "name": "turned_foot_h_m",
+              "rationale": "Origin 004 turned foot height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__004__png__airflex_batch_20260710_01eba6da12584fa6b5a0b31b1845c152",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L25-L95"
+          ]
+        },
+        {
+          "evidence": "Corner bracket feet carrying a moulded plinth rail.",
+          "implementation_function": "_support_base_feet_plinth_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "feet_plinth",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.21,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "plinth_h_m",
+              "rationale": "Origin 003 plinth height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__003__png__airflex_batch_20260710_12a242b290fd4dba8e000851a219e985",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L149-L171"
+          ]
+        },
+        {
+          "evidence": "Continuous recessed toe-kick box under the base panel.",
+          "implementation_function": "_support_base_recessed_plinth_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "recessed_plinth",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "toe_kick_h_m",
+              "rationale": "var_plinth_base toe kick height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_var_plinth_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L141-L200"
+          ]
+        },
+        {
+          "evidence": "Rear hanging rails and mounting plates; no floor support.",
+          "implementation_function": "_support_base_wall_mount_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "wall_mount",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.25,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "mount_clearance_m",
+              "rationale": "var_wall_mounted floating height above the floor.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_var_wall_mounted",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L139-L200"
+          ]
+        }
+      ],
+      "component_type": "slender steel legs",
+      "name": "support_base",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Plain slab shelf spanning between the side panels.",
+          "implementation_function": "_interior_fitment_plain_shelf_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "clear cavity depth",
+                "span": "clear cavity width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "shelf_mount",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "plain_shelf",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "shelf_t_m",
+              "rationale": "Origin 002/004 shelf stock thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__002__png__airflex_batch_20260710_561d6843d38e43fc97b410320d94e273",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L210-L220"
+          ]
+        },
+        {
+          "evidence": "Shelf carrying a distinct front edge band along its nose.",
+          "implementation_function": "_interior_fitment_edge_banded_shelf_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "clear cavity depth",
+                "span": "clear cavity width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "shelf_mount",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "edge_banded_shelf",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.045,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "edge_band_h_m",
+              "rationale": "Origin 001 shelf_front_edge band height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors__001__png__airflex_batch_20260710_bd4dc1c159114aabb8cafb2af6082234",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L112-L129",
+            "model.py:L258-L270"
+          ]
+        }
+      ],
+      "component_type": "flat slab shelf",
+      "name": "interior_fitment",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Cabinet_with_doors",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Cabinet_with_doors.md",
+  "source_map_sha256": "ab6e6b827cdac6b7055b1843ca5b8077d5c70c4bcd6e49fd8c757633d8095ebc"
+}

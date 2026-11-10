@@ -1,0 +1,964 @@
+{
+ "assembly_notes": "The root is always the folded C-frame: one bored screw station per clamp_form candidate, an upright post, a post lock knob, a height carriage on a prismatic stroke and its own lock knob. The carriage adapts its shoulder locally: swing families get a vertical spigot, the vertical-plane parallelogram gets a bored clevis plus a strut bracket. Every arm candidate publishes one vertical head seat and every tray_head candidate consumes it with a yaw collar, so the deck stays level regardless of the arm family. All revolute and continuous joints are solved with mate_axes and registered with register_interface_mate; pin joints use bored fork cheeks with a connecting web, and sliding members run in real bores or channels. No ctx.allow_overlap is used anywhere. The desk clamp now also offers an over-centre cam station: a frame-mounted cam lever drives a prismatic follower jaw that carries the same pressure shoe on the same clamping axis, so the throat closes identically for either actuation. The tray head gains a rear fold hinge whose deck is offset forward of the pin so parking swings it up and back. Two orthogonal head slots ride on every tray candidate: the width interface (a plain deck or two captured side rails on bounded strokes) and the tilt lock (a friction knob or a toothed sector plus a pawl part on the tray).",
+ "bindings": [
+  {
+   "binding_id": "head_seat",
+   "consumer": "tray_head.yoke_collar",
+   "derived": [
+    {
+     "expression": "top surface of the arm's terminal link plus the 4 mm seat-pad standoff",
+     "mode": "derived",
+     "name": "seat_height_m",
+     "rationale": "The yaw collar must seat on a machined boss, not float above the link.",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "expression": "yoke post height 0.052 plus the 0.040 tray mount, sized so a tilted deck clears the yoke fork",
+     "mode": "derived",
+     "name": "tray_lift_m",
+     "rationale": "Deck tilt sweeps its rear edge downward; the lift derives from the tilt limit and tray_depth_m.",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "revolute",
+   "provider": "arm_form.head_seat"
+  }
+ ],
+ "category_anchors": [
+  {
+   "anchor_id": "clamp_and_column_core",
+   "applies_to": {
+    "candidates": [
+     "single_screw",
+     "dual_screw",
+     "overcenter_cam"
+    ],
+    "slot": "clamp_form"
+   },
+   "required_author_checks": [
+    "clamp keeps one screw station per source throat",
+    "post and height carriage are always present",
+    "height carriage rises along the upright post"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "height_carriage",
+     "joint_type": "prismatic",
+     "parent_role": "clamp_frame"
+    },
+    {
+     "child_role": "post_lock",
+     "joint_type": "continuous",
+     "parent_role": "clamp_frame"
+    },
+    {
+     "child_role": "carriage_lock",
+     "joint_type": "continuous",
+     "parent_role": "height_carriage"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "clamp_frame"
+    },
+    {
+     "exact_count": 1,
+     "role": "height_carriage"
+    },
+    {
+     "exact_count": 1,
+     "role": "post_lock"
+    },
+    {
+     "exact_count": 1,
+     "role": "carriage_lock"
+    }
+   ]
+  },
+  {
+   "anchor_id": "single_screw_station",
+   "applies_to": {
+    "candidates": [
+     "single_screw"
+    ],
+    "slot": "clamp_form"
+   },
+   "required_author_checks": [
+    "clamp station 0 closes its throat on the source screw axis"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "clamp_screw",
+     "joint_type": "prismatic",
+     "parent_role": "clamp_frame"
+    },
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "clamp_shoe",
+     "joint_type": "continuous",
+     "parent_role": "clamp_screw"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "clamp_screw"
+    },
+    {
+     "exact_count": 1,
+     "role": "clamp_shoe"
+    }
+   ]
+  },
+  {
+   "anchor_id": "dual_screw_stations",
+   "applies_to": {
+    "candidates": [
+     "dual_screw"
+    ],
+    "slot": "clamp_form"
+   },
+   "required_author_checks": [
+    "clamp station 0 closes its throat on the source screw axis",
+    "clamp station 1 closes its throat on the source screw axis"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "clamp_screw",
+     "joint_type": "prismatic",
+     "parent_role": "clamp_frame"
+    },
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "clamp_shoe",
+     "joint_type": "continuous",
+     "parent_role": "clamp_screw"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 2,
+     "role": "clamp_screw"
+    },
+    {
+     "exact_count": 2,
+     "role": "clamp_shoe"
+    }
+   ]
+  },
+  {
+   "anchor_id": "arm_carries_head",
+   "applies_to": {
+    "candidates": [
+     "two_link_arm",
+     "telescoping_boom",
+     "scissor_linkage",
+     "gas_spring_parallelogram"
+    ],
+    "slot": "arm_form"
+   },
+   "required_author_checks": [
+    "one source-backed arm structure carries the head"
+   ],
+   "required_relations": [
+    {
+     "child_role": "support_arm",
+     "joint_type": "revolute",
+     "parent_role": "height_carriage"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "support_arm"
+    }
+   ]
+  },
+  {
+   "anchor_id": "tray_head_core",
+   "applies_to": {
+    "candidates": [
+     "fixed_tilt_tray",
+     "sliding_rails",
+     "quick_release_dovetail",
+     "foldaway_hinge"
+    ],
+    "slot": "tray_head"
+   },
+   "required_author_checks": [
+    "tray head keeps one yaw yoke and one work tray",
+    "work tray keeps the source deck footprint",
+    "head yaw turns the tray about a vertical axis"
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "tray_yoke"
+    },
+    {
+     "exact_count": 1,
+     "role": "work_tray"
+    }
+   ]
+  },
+  {
+   "anchor_id": "overcenter_cam_station",
+   "applies_to": {
+    "candidates": [
+     "overcenter_cam"
+    ],
+    "slot": "clamp_form"
+   },
+   "required_author_checks": [
+    "clamp keeps one screw station per source throat",
+    "clamp station 0 closes its throat on the source screw axis"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "clamp_cam_lever",
+     "joint_type": "revolute",
+     "parent_role": "clamp_frame"
+    },
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "clamp_follower",
+     "joint_type": "prismatic",
+     "parent_role": "clamp_frame"
+    },
+    {
+     "child_role": "clamp_shoe",
+     "joint_type": "continuous",
+     "parent_role": "clamp_follower"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "clamp_cam_lever"
+    },
+    {
+     "exact_count": 1,
+     "role": "clamp_follower"
+    },
+    {
+     "exact_count": 1,
+     "role": "clamp_shoe"
+    }
+   ]
+  },
+  {
+   "anchor_id": "width_adjustable_deck",
+   "applies_to": {
+    "candidates": [
+     "sliding_side_rails"
+    ],
+    "slot": "tray_width"
+   },
+   "required_author_checks": [
+    "tray width interface matches the selected deck",
+    "side rails really widen the tray support"
+   ],
+   "required_relations": [
+    {
+     "child_role": "tray_side_rail",
+     "joint_type": "prismatic",
+     "parent_role": "work_tray"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 2,
+     "role": "tray_side_rail"
+    }
+   ]
+  },
+  {
+   "anchor_id": "sector_pawl_tilt_lock",
+   "applies_to": {
+    "candidates": [
+     "sector_pawl"
+    ],
+    "slot": "tilt_lock"
+   },
+   "required_author_checks": [
+    "tray tilt lock matches the selected mechanism"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "tilt_pawl",
+     "joint_type": "revolute",
+     "parent_role": "work_tray"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "tilt_pawl"
+    }
+   ]
+  }
+ ],
+ "multiplicities": [],
+ "schema_version": 1,
+ "slots": [
+  {
+   "candidates": [
+    {
+     "evidence": "One clamp_spindle with spindle_adjust, one pressure_pad and one wing handle on a single-throat frame.",
+     "implementation_function": "_clamp_form_single_screw_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "bore_radius": 0.0066,
+        "throat": "clamp_throat_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "screw_station",
+       "part": "clamp__frame",
+       "role": "provider"
+      }
+     ],
+     "name": "single_screw",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.062,
+       "minimum": 0.038,
+       "mode": "independent",
+       "name": "clamp_throat_m",
+       "rationale": "Clamp opening; the frame profile, plate height, screw stroke and jaw pad height derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.086,
+       "minimum": 0.052,
+       "mode": "independent",
+       "name": "clamp_width_m",
+       "rationale": "Frame extrusion depth; the throat width and station spacing derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__ergonomic_clamp_with_adjustable_components__002__png__airflex_batch_20260710_792cf2b0f2204b51a17dabc1a51732c3",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L174-L260"
+     ]
+    },
+    {
+     "evidence": "_wide_clamp_frame carries two throats and the loop emits clamp_spindle_{i}, pressure_pad_{i} and wing_handle_{i} with independent spindle_adjust_{i} joints.",
+     "implementation_function": "_clamp_form_dual_screw_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "bore_radius": 0.0066,
+        "throat": "clamp_throat_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "screw_station",
+       "part": "clamp__frame",
+       "role": "provider"
+      }
+     ],
+     "name": "dual_screw",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.062,
+       "minimum": 0.038,
+       "mode": "independent",
+       "name": "clamp_throat_m",
+       "rationale": "Clamp opening; the frame profile, plate height, screw stroke and jaw pad height derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.086,
+       "minimum": 0.052,
+       "mode": "independent",
+       "name": "clamp_width_m",
+       "rationale": "Frame extrusion depth; the throat width and station spacing derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_laptop_tray_arm_var_dual_screw_clamp",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L34-L56",
+      "model.py:L195-L294"
+     ]
+    },
+    {
+     "evidence": "cam_lever on a REVOLUTE at the frame drives cam_follower on a PRISMATIC; the pressure pad rides the follower and no spindle exists.",
+     "implementation_function": "_clamp_form_overcenter_cam_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "bore_radius": 0.0066,
+        "throat": "clamp_throat_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "screw_station",
+       "part": "clamp__cam_follower",
+       "role": "provider"
+      }
+     ],
+     "name": "overcenter_cam",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.062,
+       "minimum": 0.038,
+       "mode": "independent",
+       "name": "clamp_throat_m",
+       "rationale": "Clamp opening; the frame profile, plate height, screw stroke and jaw pad height derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.086,
+       "minimum": 0.052,
+       "mode": "independent",
+       "name": "clamp_width_m",
+       "rationale": "Frame extrusion depth; the throat width and station spacing derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_laptop_tray_arm_var_overcenter_cam_clamp_20260714",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L118-L236"
+     ]
+    }
+   ],
+   "component_type": "one screw station on a narrow C-frame",
+   "name": "clamp_form",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "primary_arm on carriage_to_arm plus secondary_arm on arm_elbow; two revolutes and two distinct link bodies.",
+     "implementation_function": "_arm_form_two_link_arm_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "arm_reach_m",
+        "seat_radius": 0.0162
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "head_seat",
+       "part": "arm_form__two_link_arm__secondary",
+       "role": "provider"
+      }
+     ],
+     "name": "two_link_arm",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.3,
+       "minimum": 0.17,
+       "mode": "independent",
+       "name": "arm_reach_m",
+       "rationale": "Horizontal reach of the arm structure; link lengths, telescope stroke and the head seat derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__ergonomic_clamp_with_adjustable_components__002__png__airflex_batch_20260710_792cf2b0f2204b51a17dabc1a51732c3",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L354-L433"
+     ]
+    },
+    {
+     "evidence": "_primary_outer_tube/_secondary_inner_tube are genuinely hollow sections and arm_telescope is prismatic, not a revolute elbow.",
+     "implementation_function": "_arm_form_telescoping_boom_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "arm_reach_m",
+        "seat_radius": 0.0162
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "head_seat",
+       "part": "arm_form__telescoping_boom__inner_boom",
+       "role": "provider"
+      }
+     ],
+     "name": "telescoping_boom",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.3,
+       "minimum": 0.17,
+       "mode": "independent",
+       "name": "arm_reach_m",
+       "rationale": "Horizontal reach of the arm structure; link lengths, telescope stroke and the head seat derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_laptop_tray_arm_var_telescoping_boom",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L43-L91",
+      "model.py:L415-L463"
+     ]
+    },
+    {
+     "evidence": "_scissor_upper_link/_scissor_lower_link cross at scissor_cross; the part tree is a scissor pair rather than a serial arm.",
+     "implementation_function": "_arm_form_scissor_linkage_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "arm_reach_m",
+        "seat_radius": 0.0162
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "head_seat",
+       "part": "arm_form__scissor_linkage__upper_link",
+       "role": "provider"
+      }
+     ],
+     "name": "scissor_linkage",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.3,
+       "minimum": 0.17,
+       "mode": "independent",
+       "name": "arm_reach_m",
+       "rationale": "Horizontal reach of the arm structure; link lengths, telescope stroke and the head seat derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_laptop_tray_arm_var_scissor_linkage",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L41-L141",
+      "model.py:L435-L507"
+     ]
+    },
+    {
+     "evidence": "lower_link/upper_link form the parallelogram and a separate gas_cylinder plus gas_piston add a gas_spring_extend prismatic force path.",
+     "implementation_function": "_arm_form_gas_spring_parallelogram_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "arm_reach_m",
+        "seat_radius": 0.0162
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "head_seat",
+       "part": "arm_form__gas_spring_parallelogram__upper_link",
+       "role": "provider"
+      }
+     ],
+     "name": "gas_spring_parallelogram",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.3,
+       "minimum": 0.17,
+       "mode": "independent",
+       "name": "arm_reach_m",
+       "rationale": "Horizontal reach of the arm structure; link lengths, telescope stroke and the head seat derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_laptop_tray_arm_var_gas_spring",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L229-L417"
+     ]
+    }
+   ],
+   "component_type": "primary and secondary link on an elbow",
+   "name": "arm_form",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "wrist_yoke on arm_to_wrist carries laptop_tray on one tray_tilt; no further head motion exists.",
+     "implementation_function": "_tray_head_fixed_tilt_tray_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "collar_radius": 0.016,
+        "post_height": 0.052
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "yoke_collar",
+       "part": "tray_head__fixed_tilt_tray__yoke",
+       "role": "consumer"
+      }
+     ],
+     "name": "fixed_tilt_tray",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.3,
+       "minimum": 0.19,
+       "mode": "independent",
+       "name": "tray_width_m",
+       "rationale": "Deck width; the perforation grid and front lip derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.23,
+       "minimum": 0.15,
+       "mode": "independent",
+       "name": "tray_depth_m",
+       "rationale": "Deck depth; the perforation grid and the tilt clearance above the yoke derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__ergonomic_clamp_with_adjustable_components__002__png__airflex_batch_20260710_792cf2b0f2204b51a17dabc1a51732c3",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L434-L495"
+     ]
+    },
+    {
+     "evidence": "tray_carriage adds a tray_slide prismatic and slide_latch a slide_latch_pivot revolute between yoke and tray.",
+     "implementation_function": "_tray_head_sliding_rails_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "collar_radius": 0.016,
+        "post_height": 0.052
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "yoke_collar",
+       "part": "tray_head__sliding_rails__yoke",
+       "role": "consumer"
+      }
+     ],
+     "name": "sliding_rails",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.3,
+       "minimum": 0.19,
+       "mode": "independent",
+       "name": "tray_width_m",
+       "rationale": "Deck width; the perforation grid and front lip derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.23,
+       "minimum": 0.15,
+       "mode": "independent",
+       "name": "tray_depth_m",
+       "rationale": "Deck depth; the perforation grid and the tilt clearance above the yoke derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_laptop_tray_arm_var_sliding_tray_rails",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L490-L595"
+     ]
+    },
+    {
+     "evidence": "dovetail_carriage on dovetail_slide plus lock_lever on lock_lever_pivot make the tray removable rather than fixed to the yoke.",
+     "implementation_function": "_tray_head_quick_release_dovetail_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "collar_radius": 0.016,
+        "post_height": 0.052
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "yoke_collar",
+       "part": "tray_head__quick_release_dovetail__yoke",
+       "role": "consumer"
+      }
+     ],
+     "name": "quick_release_dovetail",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.3,
+       "minimum": 0.19,
+       "mode": "independent",
+       "name": "tray_width_m",
+       "rationale": "Deck width; the perforation grid and front lip derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.23,
+       "minimum": 0.15,
+       "mode": "independent",
+       "name": "tray_depth_m",
+       "rationale": "Deck depth; the perforation grid and the tilt clearance above the yoke derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_laptop_tray_arm_var_quick_release_yoke",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L372-L503"
+     ]
+    },
+    {
+     "evidence": "A fold bracket with bored cheeks, a hinge pin and a detent plate park the deck vertically on a 0-to-90-degree fold.",
+     "implementation_function": "_tray_head_foldaway_hinge_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "collar_radius": 0.016,
+        "post_height": 0.052
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "yoke_collar",
+       "part": "tray_head__foldaway_hinge__yoke",
+       "role": "consumer"
+      }
+     ],
+     "name": "foldaway_hinge",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.3,
+       "minimum": 0.19,
+       "mode": "independent",
+       "name": "tray_width_m",
+       "rationale": "Deck width; the perforation grid and front lip derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "maximum": 0.23,
+       "minimum": 0.15,
+       "mode": "independent",
+       "name": "tray_depth_m",
+       "rationale": "Deck depth; the perforation grid and the tilt clearance above the yoke derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_laptop_tray_arm_var_foldaway_tray_hinge_20260714",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L370-L470"
+     ]
+    }
+   ],
+   "component_type": "yoke plus one tray on a single tilt",
+   "name": "tray_head",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "The origin deck is one fixed plate with no lateral support members.",
+     "implementation_function": "_add_width_rails",
+     "interfaces": [],
+     "name": "fixed_deck",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_picturex_0611__ergonomic_clamp_with_adjustable_components__002__png__airflex_batch_20260710_792cf2b0f2204b51a17dabc1a51732c3",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L434-L495"
+     ]
+    },
+    {
+     "evidence": "Left/right rails on bounded prismatic joints widen the support under the retained central deck.",
+     "implementation_function": "_add_width_rails",
+     "interfaces": [],
+     "name": "sliding_side_rails",
+     "notes": "",
+     "parameters": [
+      {
+       "maximum": 0.3,
+       "minimum": 0.19,
+       "mode": "independent",
+       "name": "tray_width_m",
+       "rationale": "Deck width; the side-rail stations and their stroke derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_laptop_tray_arm_var_width_adjustable_tray_20260714",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L149-L167",
+      "model.py:L534-L559"
+     ]
+    }
+   ],
+   "component_type": "tray width interface",
+   "name": "tray_width",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "The origin holds tray angle with a plain hand knob on the yoke axis and no indexing hardware.",
+     "implementation_function": "_add_tilt_lock",
+     "interfaces": [],
+     "name": "friction_handle",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_picturex_0611__ergonomic_clamp_with_adjustable_components__002__png__airflex_batch_20260710_792cf2b0f2204b51a17dabc1a51732c3",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L434-L495"
+     ]
+    },
+    {
+     "evidence": "A toothed sector on the tilt carrier and a sprung pawl part on its own release revolute index the tilt.",
+     "implementation_function": "_add_tilt_lock",
+     "interfaces": [],
+     "name": "sector_pawl",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_laptop_tray_arm_var_sector_tilt_lock_20260714",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L403-L467",
+      "model.py:L519-L572"
+     ]
+    }
+   ],
+   "component_type": "tray tilt lock",
+   "name": "tilt_lock",
+   "required": true
+  }
+ ],
+ "slug": "pictureX_0611_ergonomic_clamp_with_adjustable_components",
+ "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_ergonomic_clamp_with_adjustable_components.md",
+ "source_map_sha256": "e4c7d8ccf2ae542aad0a5eb7aab8df4a6412e47e51b2d54dc6cd161800ad6401"
+}

@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: Apache-2.0
+
+"""Prompt resources and loading helpers."""
+
+from .loader import (
+    ANTHROPIC_DESIGNER_PROMPT_NAME,
+    DESIGNER_PROMPT_NAME,
+    GEMINI_DESIGNER_PROMPT_NAME,
+    GENERATED_PROMPTS_DIR,
+    OPENAI_DESIGNER_PROMPT_NAME,
+    OPENROUTER_DESIGNER_PROMPT_NAME,
+    PROMPTS_ROOT,
+    SECTIONS_DIR,
+    PromptFiles,
+    load_prompt_section_text,
+    load_sdk_docs_reference,
+    load_system_prompt_text,
+    normalize_sdk_package,
+    resolve_system_prompt_path,
+)
+
+__all__ = [
+    "GENERATED_PROMPTS_DIR",
+    "PROMPTS_ROOT",
+    "PromptFiles",
+    "DESIGNER_PROMPT_NAME",
+    "ANTHROPIC_DESIGNER_PROMPT_NAME",
+    "OPENAI_DESIGNER_PROMPT_NAME",
+    "OPENROUTER_DESIGNER_PROMPT_NAME",
+    "GEMINI_DESIGNER_PROMPT_NAME",
+    "SECTIONS_DIR",
+    "load_prompt_section_text",
+    "normalize_sdk_package",
+    "load_sdk_docs_reference",
+    "resolve_system_prompt_path",
+    "load_system_prompt_text",
+]

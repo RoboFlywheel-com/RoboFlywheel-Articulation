@@ -1,0 +1,242 @@
+{
+  "assembly_notes": "",
+  "bindings": [],
+  "category_anchors": [],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "forged arms, opposed jaws, walnut handles, transverse pivot",
+          "implementation_function": "_mechanism_forged_wood_pliers_build",
+          "interfaces": [],
+          "name": "forged_wood_pliers",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__nutcracker__001__png_72ea48d3b6864ac1bf2864aab225ca4d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L610"
+          ]
+        },
+        {
+          "evidence": "stamped levers, serrated bowls and pivot hardware",
+          "implementation_function": "_mechanism_stamped_serrated_pliers_build",
+          "interfaces": [],
+          "name": "stamped_serrated_pliers",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__nutcracker__002__png_ff76a040583c4f96bdf4d50be4fa4f16",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L610"
+          ]
+        },
+        {
+          "evidence": "table base, lever arms and supported fulcrum",
+          "implementation_function": "_mechanism_table_lever_press_build",
+          "interfaces": [],
+          "name": "table_lever_press",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_nutcracker_var_mechanism_table_lever",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L518"
+          ]
+        },
+        {
+          "evidence": "paired links and offset load path",
+          "implementation_function": "_mechanism_compound_link_nutcracker_build",
+          "interfaces": [],
+          "name": "compound_link_nutcracker",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_nutcracker_var_mechanism_compound_link",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L482"
+          ]
+        },
+        {
+          "evidence": "stacked levers, screw press and captive pivot",
+          "implementation_function": "_mechanism_screw_press_build",
+          "interfaces": [],
+          "name": "screw_press",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_nutcracker_var_mechanism_screw_press",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L554"
+          ]
+        }
+      ],
+      "component_type": "mechanism",
+      "name": "mechanism",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "inward serrated cavity",
+          "implementation_function": "_jaw_profile_serrated_bowl_build",
+          "interfaces": [],
+          "name": "serrated_bowl",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__nutcracker__002__png_ff76a040583c4f96bdf4d50be4fa4f16",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L610"
+          ]
+        },
+        {
+          "evidence": "deeper rounded nut seat",
+          "implementation_function": "_jaw_profile_deep_cup_build",
+          "interfaces": [],
+          "name": "deep_cup",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_nutcracker_var_jaw_form_deep_cup",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L399"
+          ]
+        },
+        {
+          "evidence": "tapered serrated contact cone",
+          "implementation_function": "_jaw_profile_tapered_serrated_cone_build",
+          "interfaces": [],
+          "name": "tapered_serrated_cone",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_nutcracker_var_jaw_form_tapered_serrated_cone",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L491"
+          ]
+        }
+      ],
+      "component_type": "jaw_profile",
+      "name": "jaw_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "source walnut or stamped grip",
+          "implementation_function": "_handle_profile_standard_handle_build",
+          "interfaces": [],
+          "name": "standard_handle",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__nutcracker__001__png_72ea48d3b6864ac1bf2864aab225ca4d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L610"
+          ]
+        },
+        {
+          "evidence": "long curved user handle",
+          "implementation_function": "_handle_profile_long_curved_handle_build",
+          "interfaces": [],
+          "name": "long_curved_handle",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_nutcracker_var_handle_long_curved",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L611"
+          ]
+        },
+        {
+          "evidence": "enclosed ring handle",
+          "implementation_function": "_handle_profile_ring_handle_build",
+          "interfaces": [],
+          "name": "ring_handle",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_nutcracker_var_handle_ring_handle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L397"
+          ]
+        }
+      ],
+      "component_type": "handle_profile",
+      "name": "handle_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "open jaw shoulder",
+          "implementation_function": "_capacity_stop_open_jaw_build",
+          "interfaces": [],
+          "name": "open_jaw",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__nutcracker__002__png_ff76a040583c4f96bdf4d50be4fa4f16",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L610"
+          ]
+        },
+        {
+          "evidence": "indexed stop and contact shoulder",
+          "implementation_function": "_capacity_stop_indexed_jaw_stop_build",
+          "interfaces": [],
+          "name": "indexed_jaw_stop",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_nutcracker_var_capacity_indexed_jaw_stop",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L464"
+          ]
+        }
+      ],
+      "component_type": "capacity_stop",
+      "name": "capacity_stop",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "plain pivot hardware",
+          "implementation_function": "_return_system_plain_pivot_build",
+          "interfaces": [],
+          "name": "plain_pivot",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__nutcracker__001__png_72ea48d3b6864ac1bf2864aab225ca4d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L610"
+          ]
+        },
+        {
+          "evidence": "pivot torsion spring",
+          "implementation_function": "_return_system_torsion_spring_build",
+          "interfaces": [],
+          "name": "torsion_spring",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_nutcracker_var_return_torsion_spring",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L503"
+          ]
+        }
+      ],
+      "component_type": "return_system",
+      "name": "return_system",
+      "required": true
+    }
+  ],
+  "slug": "nutcracker",
+  "source_map_path": "articraft_template_authoring/source_maps/nutcracker.md",
+  "source_map_sha256": "8a5d2d0393fc9248aef97443028c6e420cfcc0bc5a1a9f3d5b044a98ba7f6534"
+}

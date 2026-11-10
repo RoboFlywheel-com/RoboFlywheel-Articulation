@@ -1,0 +1,3941 @@
+{
+  "assembly_notes": "DELIBERATE DOMAIN REDUCTION (recorded, not silent). core_domain was 6 x 5 x 4 x 4 x 4 x 3 = 5760 with two multiplicities; it is now 6 x 5 x 4 x 4 x 4 = 1920 with ONE multiplicity. `guide_roller` is no longer an independent slot - the roller form is derived from `bender_topology` - and `guide_roller_count` is no longer a multiplicity - the station count is derived from `former_count` and the host's placement law. WHY IT WAS DONE: preflight probe cost. 26 candidates plus 14 candidate x N min/max pairs is about 40 builds against a 120 s soft semantic budget and a 12 s per-build cap, and this category's builds run 2.5-3 s each. WHAT WAS GIVEN UP: 3840 core combinations - every pairing of a roller form with a host that form is not attested on - plus roller counts that differ from the former count, and any roller count above 4 (the source's five-station rack is now reachable only at former_count 4). WHAT THE EVIDENCE ACTUALLY SAYS, stated because the record must be accurate: guide rollers are NOT an L5-only feature. They are attested on L1 (004, guide_roller_0/1 on the rail), L2 (005, one roller on the cradle) and L5 (two and three stations), with two independently measured placement laws. What IS true, and what justifies this particular mapping, is that each roller FORM appears on exactly one lineage and never travels to a foreign host, and that L3 and L4 carry no frame-borne guide roller at all - so the slot was over-declared. The count reduction is budget rather than evidence, and is marked as such. Both measured laws stay written down verbatim in binding roller_track_to_guide_rollers so the cut is reversible.\n\nIDENTITY. A grounded or bench/vise-mounted forming tool whose defining articulation is a grooved former and a long moving member sweeping about a shared +Z bend axis, plus one or more spinning guide rollers and at least one adjustment degree of freedom. +Z is the bend axis in every seed; +X is the pipe feed direction; z=0 is the mount's ground plane. Fifteen of the twenty source records use ONLY (0,0,1) joints; the exceptions are the ram_tripod pump handle (0,1,0), the cast bench adjustment screw (1,0,0) and the two prismatic ram axes.\n\nDOMAIN. core_domain = 6 bender_topology x 5 drive x 4 former_profile x 4 follower_module x 4 mount x 3 guide_roller = 5760 combinations, every one of which must build - TemplateDomain has no compatibility gates. raw_domain = 5760 x 4 former_count values x 5 guide_roller_count values = 115200. Palette, handle length, former size class, mount height and index-plate hole density are continuous or decorative and count toward neither.\n\nSTRUCTURAL-FAMILY CALL. The six bender_topology candidates are ONE family, not six slots. Three of them are whole hosts drawn from three unrelated code lineages (different root part, 4/6/8 parts, 3/5/7 joints, revolute vs prismatic primary motion, scale 0.33 m to 1.11 m, 1130-1490 changed lines pairwise); the other three are host-local but host-specific. Declaring them independent would force combinations the pool never builds, such as a 0.050 m crescent shoe on a 0.029 m plier former. The contrast that proves the boundary is mount: mount_vise_mounted_frame changes NOTHING above the spindle, only SPINDLE_Z 0.936 -> 0.336 plus a new base, so mount IS an independent slot.\n\nCROSS-SLOT RISKS, resolved by derivation and never by a gate:\n(a) screw_feed_ram converts the primary joint REVOLUTE -> PRISMATIC. Only ram_tripod publishes a native ram_axis, so on the other five hosts binding ram_axis_to_crank_link instantiates an authored ram_crank_link part plus one revolute joint, with crank_link_length_m sized so the full ram stroke maps onto the host's full sweep. Named corner: screw_ram_on_rotary_host (five combinations).\n(b) hand_lever_plier has no base at all, so every mount candidate derives a clamp collar around its lower tang. Named corner: mount_on_hand_tool (four combinations).\n(c) former_count uses three different placement laws and guide_roller_count two; which law applies is a DERIVED value (former_placement_law, guide_placement_law), not a comment, so a rail-head host indexes formers along +X while a single-pivot host indexes them on a circle. Named corners: angular_turret_max_n, linear_rack_max_n, pipe_path_rollers_max_n.\n(d) rotary_draw_wrap_wheel wraps 300 degrees and needs its mouth to face the follower; crescent_conduit_shoe wraps the former from outside. Both derive from former_outer_r_m, so the largest-profile-on-smallest-host combination is a corner rather than an exclusion: named corner wrap_wheel_on_hand_tool.\n\nALLOWANCES. Every one of the 20 source records calls ctx.allow_overlap - about 70 sites in total - and preflight BLOCKS allow_overlap for Design-backed templates. ctx.allow_isolated_part is NOT blocked and is the sanctioned escape for a member carried by its joint on a running clearance; the pool already uses it three times for the loose spare die. Nine causes and their fixes:\n1. Bore equal to or smaller than the shaft (18 sites) -> binding shaft_to_bore_clearance, bore = shaft + 0.03*shaft + 0.0002, plus allow_isolated_part. LINEAGE L3 BORES EVERY HOLE 0.5-1.0 mm UNDER ITS PIN (hub 0.010 vs spindle 0.011, arm 0.0055 vs pin 0.006, bracket 0.0065 vs axle 0.007) and pedestal_ladder_rail bores its die at exactly the pin radius; the rebuild inverts the sign. This is a stated correction, not a silent one.\n2. Exactly-tangent seats, distance zero (26 sites) -> merge FIXED children such as the pipe cradle into the frame part (intra-part embedding is free per MECHANICAL_PRIORS 1c), and offset moving seats by 0.2 mm.\n3. Pawl buried in the ratchet (2 sites) -> pawl tip at tooth_tip_r + 0.0003 on a flank.\n4. Shoe ring fouling the lever boss (1 site) -> bore the boss full height at ring OD + 1 mm instead of cutting a rectangular slot.\n5. Roller declared overlapping a shoe bore it already clears (1 site) -> drop the allowance, keep expect_within.\n6. Chain wrapping sprockets that live on a different part (5 sites) -> the chain becomes its own part with band inner radius = tip radius + 0.0003 and allow_isolated_part.\n7. Turret former against its own bearing (3 sites) -> derive bearing top from the seat.\n8. Workpiece against the former and every roller (12 sites) -> DROP the workpiece part; both origins explicitly omit the loose demonstration tube.\n9. Prismatic stop stem inside a solid frame (3 sites) -> cut a real bore per MECHANICAL_PRIORS section 7.\n\nVISUAL AND COLLISION BUDGET. sdk/_core/v0/exact_collisions.py:94-118 derives one collision solid per visual, 1:1. Source seeds emit 31-38 visuals; the worst cases are 16 chain_pin cylinders embedded in the chain band, 8 grip ribs on a handle, 5 primitives per guide roller and 4 rigid caster wheels. Four deliberate deviations, each stated rather than silently applied: (i) guide rollers are welded into one CAD solid using the route cast_bench_mimic already takes, saving 4*N collision solids; (ii) grip ribs and chain pins are unioned into their host solid, saving 23 more; (iii) the workpiece is dropped; (iv) casters become REAL parts. Target budget is under 20 collision solids per seed at N=1.\n\nCASTER DEVIATION IN FULL. MECHANICAL_PRIORS section 5 requires a caster to have a vertical swivel axis and a spin axis through the wheel centre. The source gives it neither: four rigid wheel visuals on `stand`, no joints, and a 0.056-wide wheel inside a fork whose inner faces are 0.026 apart - legal only while wheel and fork are visuals of the same part. The rebuild adds 4 caster_swivel parts and 4 caster_wheel parts with 4 REVOLUTE (0,0,1) and 4 CONTINUOUS local-X joints, widens the fork to wheel width + 2 x fork_side_clearance_m, and re-grounds the deck so the contact patch is z=0 rather than the source's z=-0.108. That is 8 new parts and 8 new joints relative to the source, and it is the largest deviation in this design.\n\nMULTIPLICITY. former_count in {1,2,3,4}: N=1 is both origins and twelve variants, N=2 and N=3 are source-attested, and N=4 is an extrapolation the angular law's own clearance condition already covers - 2R*sin(pi/4) = 0.1414 against 2*0.035 + 0.006 = 0.076 at the source's R = 0.100. N=5 is deliberately NOT declared for formers: the pool's 'five' counts roller stations, not formers. guide_roller_count in {1,2,3,4,5} with every endpoint source-attested - 1 from cast_bench_mimic, 2 from pedestal_ladder_rail, 3 from guide_roller_count_3, 5 from the five-station rack, whose host derivation (rack_length = (x_{N-1} - PIVOT_X) + 0.145, base plate 0.40 -> 0.76, cradle relocated) is fully index-general.\n\nANCHOR SCOPING.\n- pipe_bender_rotating_former: SCOPED DELIBERATELY: pedestal_fixed_die_swing_handle is excluded because its former is a FIXED feature of the root part (Cylinder visuals on `stand`, L198-L209) and the handle is what sweeps. That is source-attested per candidate, not a modelling shortcut, so the anchor is scoped rather than weakened for everyone.\n- pipe_bender_drive_on_primary_axis: The revolute relation holds for four of the five drives. screw_feed_ram contributes a PRISMATIC joint (L356-L369); on ram_tripod it replaces the primary joint outright and on the other five hosts the authored ram_crank_link restores the revolute relation between bender_frame and moving_member, so the anchor is satisfied through the link rather than directly. That is what binding ram_axis_to_crank_link exists to guarantee.\n\nPART TREE. mount_base (root) -> bender_frame -> {N formers in parallel, moving_member, N guide rollers} and moving_member -> follower. drive_member parents to the frame for every candidate. Seeds carry 5 + former_count + guide_roller_count parts at minimum, plus 8 for caster_deck and 1 for the screw ram's crank link.\n\nONE CAUTION THE POOL CANNOT ANSWER. Source author tests are far weaker than the template checks - every record leans on allow_overlap and fail_if_parts_overlap_in_sampled_poses never ran against them. A construction being source-attested does not mean it survives QC; the bore-clearance evidence above is exactly that case.",
+  "bindings": [
+    {
+      "binding_id": "shaft_to_bore_clearance",
+      "consumer": "former_profile.former_bore_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "primary_shaft_r_m"
+          ],
+          "expression": "0.03 * primary_shaft_r_m + 0.0002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "bore_clearance_m",
+          "rationale": "THE central fit rule of the category, measured across the whole pool and fitted to three independent records at once: cast_bench_mimic 0.0015 at shaft 0.0090 (L82 vs L185), ram_tripod 0.0009 at shaft 0.0075 (L73 vs L465), hand_lever_plier 0.0003 at shaft 0.0052 (L347 vs L250). CORRECTION APPLIED, stated rather than silent: lineage L3 (pedestal_fixed_die_swing_handle and everything forked from it) bores every hole 0.5-1.0 mm UNDER its pin - hub bore 0.010 vs spindle 0.011, arm bore 0.0055 vs pin 0.006, bracket bore 0.0065 vs axle 0.007 - and pedestal_ladder_rail bores its die at exactly the pin radius (0.010 vs 0.010). Those are the sole cause of 18 of the pool's ~70 allow_overlap sites. The rebuild inverts the sign.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "primary_shaft_r_m",
+            "bore_clearance_m"
+          ],
+          "expression": "primary_shaft_r_m + bore_clearance_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "former_bore_r_m",
+          "rationale": "Through bore of every former, cut for real so the pin passes without a solid intersection. The clearance is geometric, not an allowance.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "guide_roller_axle_r_m"
+          ],
+          "expression": "guide_roller_axle_r_m + 0.03 * guide_roller_axle_r_m + 0.0002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "guide_roller_bore_r_m",
+          "rationale": "Same rule on the roller axles. Source cast_bench_mimic bores the guide roller at 0.0040 against a 0.0040 pin (L318 vs L304) - exact equality, hence its allow_overlap at L608-L617; ram_tripod does it correctly at 0.0084 against 0.0075.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "primary_shaft_r_m"
+          ],
+          "expression": "max(0.0028, 0.55 * primary_shaft_r_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "guide_roller_axle_r_m",
+          "rationale": "Roller axles are consistently about half the main spindle: 0.0075 vs 0.0110 (ram_tripod L425 vs pedestal L193), 0.0040 vs 0.0090 (cast_bench_mimic L304 vs L185), 0.0034 vs 0.0046 (hand_lever_plier L319 vs L244).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "primary_shaft_r_m",
+            "bore_clearance_m"
+          ],
+          "expression": "primary_shaft_r_m + bore_clearance_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_bore_r_m",
+          "rationale": "The drive member's hub bore. hand_lever_plier authors NO bore at all in its handle cheek (circle(0.023) solid over a 0.0046 pin, L285 vs L244), which is why it needs allow_overlap at L608-L614; the rebuild cuts one.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bore_clearance_m"
+          ],
+          "expression": "'allow_isolated_part'",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "moving_member_support",
+          "rationale": "Members carried by their joint on a running clearance are declared with ctx.allow_isolated_part, which preflight explicitly does NOT block. Closing the clearance to satisfy fail_if_isolated_parts would re-create the interference the pool already suffers from.",
+          "unit": "ratio",
+          "value_type": "str"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "bender_topology.primary_axis"
+    },
+    {
+      "binding_id": "former_seat_thrust_plane",
+      "consumer": "former_profile.former_underside",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "former_outer_r_m"
+          ],
+          "expression": "max(0.0035, 0.06 * former_outer_r_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "thrust_washer_height_m",
+          "rationale": "Thrust washer / bearing puck under the former. Source cast_bench_mimic L66-L68: _cylinder_z(0.025, 0.004, z0=0.016) minus a 0.0105 bore, i.e. 0.004 on a 0.064 former; ram_tripod L458-L462 uses a 0.010 puck on a 0.064 former.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "thrust_washer_height_m"
+          ],
+          "expression": "0.0002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "former_running_gap_m",
+          "rationale": "AUDIT CORRECTION (MECHANICAL_PRIORS 1c, rewritten). The former used to be seated EXACTLY on the thrust-washer top, reproducing cast_bench_mimic's expect_contact(contact_tol=0.0005) at L573-L580. Exact part-to-part tangency is now declared fragile, and this particular contact is between a REVOLUTE member and its host, so the honest fix is not an overlap but an explicit running clearance: the former is carried by its joint and declared with ctx.allow_isolated_part, exactly as binding shaft_to_bore_clearance already states for every other bore. 0.2 mm is the same offset the rebuild uses under the guide rollers (roller_seat_z_m) and the turret bearings (turret_bearing_top_z_m), so all three rotating seats now share one number.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "mount_height_m",
+            "host_stack_z_m",
+            "thrust_washer_height_m",
+            "former_running_gap_m"
+          ],
+          "expression": "mount_height_m + host_stack_z_m + thrust_washer_height_m + former_running_gap_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "former_seat_z_m",
+          "rationale": "THE seat derivation. cast_bench_mimic L66-L68 puts the washer top at z 0.020 and then authors base_to_die at exactly (0,0,0.020) (L378) with expect_contact(contact_tol=0.0005) (L573-L580). ram_tripod does the same with a bearing puck whose top is 0.3175 and a former extruded +-0.0225 about a joint at 0.340. The seat plane is READ OFF the washer, never authored twice. former_count_3 breaks the rule - its turret bearing top is 0.332 against a former underside at 0.3175, 14.5 mm of interference and one more allow_overlap (L888-L898) - and the rebuild re-derives it.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_seat_z_m",
+            "former_height_m",
+            "lever_seat_gap_m"
+          ],
+          "expression": "former_seat_z_m + former_height_m + lever_seat_gap_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "moving_member_seat_z_m",
+          "rationale": "The lever/handle rides above the former. cast_bench_mimic: former top 0.020 + 0.035 = 0.055 and base_to_lever sits at 0.056 (L362), a 1 mm gap.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_height_m"
+          ],
+          "expression": "0.001",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "lever_seat_gap_m",
+          "rationale": "Running gap between the former's top face and the moving member above it, from cast_bench_mimic L362 vs L378 + L73-L75.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_seat_z_m",
+            "moving_member_seat_z_m",
+            "former_is_part"
+          ],
+          "expression": "former_seat_z_m if former_is_part == 'yes' else moving_member_seat_z_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "primary_axis_z_m",
+          "rationale": "Where the primary revolute actually lives. On five hosts it is the former's own axis; on pedestal_fixed_die_swing_handle the former is a fixed feature of the root part (L198-L203) and the primary joint belongs to the handle, so the axis datum shifts.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bender_topology",
+            "head_height_m",
+            "head_plate_stack_m",
+            "cheek_height_m"
+          ],
+          "expression": "head_height_m if bender_topology == 'pedestal_ladder_rail' else (head_plate_stack_m if bender_topology == 'pedestal_fixed_die_swing_handle' else cheek_height_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "host_stack_z_m",
+          "rationale": "Height the host itself adds between the mount deck and the former seat. 0.583 for the ladder-rail head (L21), 0.122 for the stacked-plate head, 0.008 for the cast bench plate, 0.0 for the hand tool.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "bender_topology.former_seat"
+    },
+    {
+      "binding_id": "primary_axis_to_drive",
+      "consumer": "bender_topology.drive_input_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "drive",
+            "handle_length_m",
+            "wheel_outer_r_m",
+            "driven_pitch_r_m",
+            "sector_outer_r_m",
+            "screw_handwheel_r_m"
+          ],
+          "expression": "handle_length_m if drive == 'lever_handle' else (wheel_outer_r_m if drive == 'geared_handwheel' else (driven_pitch_r_m if drive == 'chain_sprocket_drive' else (sector_outer_r_m if drive == 'ratchet_sector_drive' else screw_handwheel_r_m)))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_torque_radius_m",
+          "rationale": "One number the host can size its clearance envelope against, whichever drive is fitted. Also the reason effort tracks the drive and not just scale: 140-420 for levers, 900-1200 for the mimicked bench die, 9000 for the screw, 18000 for the hydraulic ram.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drive",
+            "driver_pitch_r_m",
+            "wheel_outer_r_m",
+            "wheel_tooth_depth_m"
+          ],
+          "expression": "driver_pitch_r_m * 1.11 if drive == 'chain_sprocket_drive' else (wheel_outer_r_m + wheel_tooth_depth_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "gear_tip_r_driver_m",
+          "rationale": "Tip radius of the driving toothed member. _sprocket L105-L144 derives tip = 0.94*pr + 0.5*0.34*pr = 1.11*pr; the spur route adds the tooth depth to the base radius (hand_lever_plier L146-L155).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drive",
+            "driven_pitch_r_m",
+            "former_outer_r_m",
+            "wheel_tooth_depth_m"
+          ],
+          "expression": "driven_pitch_r_m * 1.11 if drive == 'chain_sprocket_drive' else (former_outer_r_m * 0.46 + wheel_tooth_depth_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "gear_tip_r_driven_m",
+          "rationale": "Tip radius of the driven member on the primary axis. hand_lever_plier L255-L264 puts a 22-tooth ring of base radius 0.0293 on a 0.029 former, i.e. roughly the former radius.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "gear_tip_r_driver_m",
+            "gear_tip_r_driven_m"
+          ],
+          "expression": "gear_tip_r_driver_m + gear_tip_r_driven_m + 0.0003",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "gear_centre_distance_m",
+          "rationale": "THE mesh rule, measured not guessed. hand_lever_plier is the pool's only real gear pair and it is built TANGENT: tips 0.0313 and 0.0158, centres (0.067, 0.007) and (0.024, -0.013) -> 0.04742 against a tip sum of 0.0471, a 0.32 mm gap, asserted as a mesh with expect_contact(contact_tol=0.0008) at L592-L599. Teeth NEVER overlap; MECHANICAL_PRIORS section 4 forbids substituting bulk overlap for mesh.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "gear_centre_distance_m"
+          ],
+          "expression": "0.001",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "gear_axial_overlap_m",
+          "rationale": "Axial engagement of the two toothed rings. hand_lever_plier: frame ring z 0.020..0.024 against a roller gear at 0.017..0.021 after its joint origin (L255-L264, L146-L155, L388).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "driven_pitch_r_m"
+          ],
+          "expression": "0.82 * driven_pitch_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "sprocket_root_r_m",
+          "rationale": "_sprocket L114: root_radius = pitch_radius * 0.82.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "driven_pitch_r_m",
+            "driver_tooth_count"
+          ],
+          "expression": "max(0.0022, 2.0 * pi * driven_pitch_r_m / driver_tooth_count * 0.48)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "sprocket_tooth_width_m",
+          "rationale": "_sprocket L120: tangential width is 48 percent of the pitch, floored at 0.0022. The spur equivalent is 58 percent (_toothed_disk L108) and the hand tool's ring is about 40 percent (0.0030 on a 0.0084 pitch), so the gullet is always real.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "driven_pitch_r_m"
+          ],
+          "expression": "0.42 * driven_pitch_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "sprocket_hub_r_m",
+          "rationale": "_sprocket L131: hub = pitch_radius * 0.42.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "gear_tip_r_driven_m"
+          ],
+          "expression": "gear_tip_r_driven_m + 0.0003",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "chain_band_inner_r_m",
+          "rationale": "The chain wraps on the tip circle plus the same 0.3 mm the gear pair uses. The source instead offsets both runs by the MEAN pitch radius (_chain_loop L160), which leaves it 2 mm off tangency and forces three allow_overlap sites.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "sector_outer_r_m"
+          ],
+          "expression": "sector_outer_r_m + 0.020 + 0.0003",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "pawl_tip_r_m",
+          "rationale": "Pawl tip radius at rest. The sector's own tooth tip is outer + 0.020 (L135); the pawl body must lie wholly OUTSIDE that circle and engage a flank. Both pool examples instead bury the pawl 8.5-8.7 mm inside the tooth circle (L322, and ratcheting_crossbow L233 vs L110), which is allowance group 3.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "sector_half_span_rad",
+            "sector_tooth_count",
+            "sector_outer_r_m"
+          ],
+          "expression": "0.45 * (2.0 * sector_half_span_rad / sector_tooth_count) * sector_outer_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "sector_tooth_half_width_m",
+          "rationale": "The source's own teeth just touch: half-width 0.010 at r 0.162 is 7.07 deg of arc against a 6.909 deg pitch (L127-L140). Capping at 45 percent of the pitch restores a gullet.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "primary_shaft_r_m"
+          ],
+          "expression": "primary_shaft_r_m * 0.7",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_second_axis_r_m",
+          "rationale": "Idler / sector pin on the frame for the two drives that need a second station. hand_lever_plier runs a 0.0046 pivot pin against a 0.0052 former axle (L244, L250); the L3 sector pin is 0.006 against an 0.011 spindle (L240, L193).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "primary_axis_z_m",
+            "drive_stack_offset_m"
+          ],
+          "expression": "primary_axis_z_m + drive_stack_offset_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_output_z_m",
+          "rationale": "Z of the drive's own toothed/geared plane above the primary axis datum.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "gear_axial_overlap_m"
+          ],
+          "expression": "0.004 + 0.5 * gear_axial_overlap_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_stack_offset_m",
+          "rationale": "hand_lever_plier stacks the ring 0.004 above the former top (L255-L264 z0=0.020 on an 0.018 former seated at 0.002).",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "bender_topology.primary_axis"
+    },
+    {
+      "binding_id": "ram_axis_to_crank_link",
+      "consumer": "bender_topology.ram_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "drive",
+            "bender_topology"
+          ],
+          "expression": "'prismatic' if (drive == 'screw_feed_ram' and bender_topology == 'ram_tripod') else 'revolute'",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "primary_joint_type",
+          "rationale": "screw_feed_ram converts the primary joint from REVOLUTE to PRISMATIC (L356-L369, axis (1,0,0), 0..0.090, effort 9000) and deletes the hub capture. Only ram_tripod publishes a native ram_axis (frame_to_ram, L581-L594), so only there does the screw replace the primary joint outright.",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drive",
+            "bender_topology"
+          ],
+          "expression": "'yes' if (drive == 'screw_feed_ram' and bender_topology != 'ram_tripod') else 'no'",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "ram_crank_link_required",
+          "rationale": "THE cross-slot gate expressed as a derivation instead of a compatibility gate. On the five rotary hosts the screw feed drives an authored `ram_crank_link` part with one extra revolute joint, so a linear feed still produces the rotary sweep. Adding one link part is a local adaptation - it changes neither the host's part tree above the primary axis nor its silhouette - which is what keeps all 30 drive x topology pairs inside the complete-combination principle. Named corner: screw_ram_on_rotary_host.",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_outer_r_m",
+            "screw_stroke_m",
+            "primary_sweep_rad"
+          ],
+          "expression": "max(1.6 * former_outer_r_m, screw_stroke_m / (2.0 * sin(0.5 * primary_sweep_rad)))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "crank_link_length_m",
+          "rationale": "Crank radius that maps the full ram stroke onto the host's full sweep. The chord of a sweep at radius r is 2*r*sin(sweep/2), so inverting it gives the shortest link that still reaches both stroke ends, floored so the link always clears the former.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "screw_stroke_m",
+            "crank_link_length_m"
+          ],
+          "expression": "2.0 * asin(min(0.999, screw_stroke_m / (2.0 * crank_link_length_m)))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "ram_stroke_to_sweep_rad",
+          "rationale": "The realised sweep, fed back into the primary joint limits so the ram's lower/upper and the primary joint's lower/upper are the same motion. Motion QC drives both ends.",
+          "unit": "rad",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "primary_shaft_r_m"
+          ],
+          "expression": "0.6 * primary_shaft_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "crank_pin_r_m",
+          "rationale": "Pin joining the ram nut to the crank link; its bore follows shaft_to_bore_clearance like every other bore in the model.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bender_topology",
+            "sweep_upper_rad",
+            "handle_open_rad"
+          ],
+          "expression": "sweep_upper_rad if bender_topology == 'cast_bench_mimic' else (handle_open_rad if bender_topology == 'hand_lever_plier' else 1.10)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "primary_sweep_rad",
+          "rationale": "Total primary sweep per host: 2.35 (cast_bench_mimic L368), 2.15 (pedestal_ladder_rail lever_pivot -2.00..0.15, L310-L314), 1.10 (pedestal_fixed_die_swing_handle -0.38..0.72, L357), 0.72 (hand_lever_plier -0.14..0.58, L338-L343), 0.70 (ram_tripod -0.35..0.35, L602-L606).",
+          "unit": "rad",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "primary_axis_z_m",
+            "former_height_m"
+          ],
+          "expression": "primary_axis_z_m + 0.5 * former_height_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "ram_axis_z_m",
+          "rationale": "Height of the ram / screw centre line. ram_tripod runs its ram at z 0.305 against a former joint at 0.340 (L586, L600); the screw drive runs at z 0.183 in the handle frame (L114).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "screw_shaft_r_m"
+          ],
+          "expression": "screw_shaft_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "ram_shaft_r_m",
+          "rationale": "Ram / screw core radius published on the ram_axis interface.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "bender_topology.ram_output"
+    },
+    {
+      "binding_id": "former_seat_to_groove",
+      "consumer": "former_profile.former_groove",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "groove_depth_ratio",
+            "former_outer_r_m",
+            "pipe_outer_r_m"
+          ],
+          "expression": "min(groove_depth_ratio * former_outer_r_m, 0.85 * pipe_outer_r_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "groove_depth_m",
+          "rationale": "Groove depth, capped so the die never swallows more than 85 percent of the tube radius. Pool ratios of depth to tube radius: 0.79 (pedestal_ladder_rail, 0.011/0.014), 0.64 (cast_bench_mimic, 0.011/0.0173), 0.31 (rotary_draw_wrap_wheel, 0.004/0.013). multi_radius_stepped states the same intent as a formula: min(R*(0.105-0.015*i), band_h*0.34) at L79.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_outer_r_m",
+            "groove_depth_m"
+          ],
+          "expression": "former_outer_r_m - groove_depth_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "groove_root_r_m",
+          "rationale": "Radius of the groove floor. Source values: 0.075 on an 0.086 former (pedestal_ladder_rail L72-L76), 0.053 on 0.064 (cast_bench_mimic L73-L75), 0.069 flat floor on 0.086 (square_tube_channel L25), 0.062 on 0.066 (rotary_draw_wrap_wheel L44-L45).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "groove_root_r_m",
+            "pipe_outer_r_m"
+          ],
+          "expression": "groove_root_r_m + pipe_outer_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "bend_radius_m",
+          "rationale": "The bend the tool actually produces: the tube centreline runs on the groove root circle. ram_tripod builds its workpiece on exactly this radius (0.0769 at L118 against a 0.064 former).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "pipe_outer_r_m",
+            "former_height_m",
+            "former_flange_h_m"
+          ],
+          "expression": "max(2.2 * pipe_outer_r_m, former_height_m - 2.0 * former_flange_h_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "groove_height_m",
+          "rationale": "Axial height of the groove between the flanges. cast_bench_mimic: 0.021 between two 0.007 flanges in a 0.035 former (L73-L75).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_profile",
+            "flange_height_ratio",
+            "former_height_m",
+            "wrap_flange_height_m"
+          ],
+          "expression": "flange_height_ratio * former_height_m if former_profile == 'round_flanged_groove' else wrap_flange_height_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "former_flange_h_m",
+          "rationale": "Flange height per profile candidate: 0.007/0.035 (round), 0.0045 in a 0.045 wheel (rotary draw L57-L62), 0.011/0.058 (ladder rail).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_height_m"
+          ],
+          "expression": "0.5 * former_height_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "groove_mid_z_m",
+          "rationale": "Mid-plane of the groove in the former's own frame; the follower and guide rollers align their tube seats to it.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_outer_r_m"
+          ],
+          "expression": "former_outer_r_m + 0.005",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "cheek_relief_r_m",
+          "rationale": "Host relief the frame must cut so the former is wrapped, not pierced. cast_bench_mimic L57 cuts _cylinder_z(0.069, 0.050) around a 0.064 former; three_roll_pyramid re-derives it to 0.043 for a 0.038 former (L58). MECHANICAL_PRIORS section 7: this is the mechanism, not decoration.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "bender_topology.former_seat"
+    },
+    {
+      "binding_id": "follower_station_geometry",
+      "consumer": "bender_topology.follower_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "bend_radius_m",
+            "pipe_outer_r_m"
+          ],
+          "expression": "bend_radius_m + pipe_outer_r_m + 0.004",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "follower_station_r_m",
+          "rationale": "Plan radius from the primary axis to the follower's own axis. cast_bench_mimic puts the shoe at (0.065, -0.060) = 0.0885 against a bend radius of 0.053 + 0.0173 = 0.0703 (L395, L73-L75); three_roll_pyramid moves it to (0.080, -0.080) = 0.113 when the rolls grow (L399).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "moving_member_seat_z_m"
+          ],
+          "expression": "moving_member_seat_z_m - 0.012",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "follower_station_z_m",
+          "rationale": "cast_bench_mimic drops the shoe joint 0.012 below the lever frame (L395); pedestal_ladder_rail drops it 0.042 (L322).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_seat_z_m",
+            "groove_mid_z_m"
+          ],
+          "expression": "former_seat_z_m + groove_mid_z_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "follower_seat_z_m",
+          "rationale": "The follower's tube seat must sit on the former's groove mid-plane, or the tube is pinched off-centre.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_outer_r_m",
+            "crescent_clearance_m"
+          ],
+          "expression": "former_outer_r_m + crescent_clearance_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "crescent_inner_r_m",
+          "rationale": "crescent_conduit_shoe only. Source L101-L106: inner 0.050 around the family's 0.040 fixed die = 0.010 running gap.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "pressure_roller_r_m"
+          ],
+          "expression": "pressure_roller_r_m + 0.0025 + 0.0025",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "roller_pocket_r_m",
+          "rationale": "Clearance pocket the crescent cuts for the pressure roller. Source L127-L132: circle(0.024) for a roller of OD 0.019 with a 0.0215 flange, i.e. 2.5 mm.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "shoe_bore_r_m"
+          ],
+          "expression": "shoe_bore_r_m + 0.001",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "shoe_boss_bore_r_m",
+          "rationale": "CORRECTION APPLIED: cast_bench_mimic cuts a RECTANGULAR slot (box(0.031, 0.026, 0.050), L109) through a circle(0.030) boss, but the shoe ring is OD 0.0215 - wider than the slot half-width 0.0155 - so the ring fouls the boss and the record declares allow_overlap at L627-L636. The rebuild bores the boss full height at ring OD + 1 mm instead.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "bender_topology.follower_station"
+    },
+    {
+      "binding_id": "roller_track_to_guide_rollers",
+      "consumer": "bender_topology.roller_underside",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "bender_topology"
+          ],
+          "expression": "'flanged_barrel_roller' if bender_topology in ('pedestal_ladder_rail', 'pedestal_fixed_die_swing_handle') else ('annular_disc_roller' if bender_topology == 'ram_tripod' else 'bored_spool_roller')",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "guide_roller_form",
+          "rationale": "DELIBERATE DOMAIN REDUCTION, recorded rather than silent. guide_roller was an independent slot with three candidates; it is now DERIVED from bender_topology, taking core_domain from 5760 to 1920 and preflight probe builds from about 40 to about 26. The REASON for reducing at all is compile and probe budget against a 120 s soft semantic budget. The particular mapping is evidence-backed rather than arbitrary: each roller FORM appears on exactly one lineage and never travels - flanged_barrel_roller is L1 only (004 L200-L233), bored_spool_roller is L2 only (005 L122-L139), annular_disc_roller is L5 only (guide_roller_count_3 L34-L40) - and no record in the pool pairs a roller form with a foreign host. That is the same host-local-but-host-specific test that folded three candidates into bender_topology. Lineages L3 and L4 carry no frame-borne guide roller at all: hickey_style_offset has only `pressure_roller` on the handle (L321-L348) and geared_ring_roller only `follower_roller` (L376-L391), so declaring the slot independent over all six topologies asserted two host families the pool never builds rollers on. NOTE, because the record must be accurate: guide rollers are NOT an L5-only feature - they are attested on L1 (004, two stations), L2 (005, one station on the cradle) and L5 (two and three stations), with TWO measured placement laws. WHAT WAS GIVEN UP: the 3840 core combinations that paired a roller form with a host it is not attested on.",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_count"
+          ],
+          "expression": "former_count",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "guide_roller_count_derived",
+          "rationale": "DELIBERATE DOMAIN REDUCTION, recorded rather than silent. guide_roller_count was a declared multiplicity over {1,2,3,4,5}; it is now DERIVED from former_count, leaving former_count as the template's only multiplicity. The evidence supports it: a second INDEPENDENT N was never attested. On the L1 family the SAME N drives both station sets - former_count_2 L227-L228 loops the roller stations `x = 0.145 + 0.110*i` over FORMER_COUNT, and former_count_5 L126-L158 / L263-L306 builds five roller + block + screw stations from that same FORMER_COUNT. L5 carries two rollers with one former (compact_rotary_draw) and three with one former (guide_roller_count_3), which the max(2, N) branch reproduces. WHAT WAS GIVEN UP: roller counts that differ from the former count on a rail host, and any count above 4 - the source's five-station rack is now reachable only at former_count 4. That part of the cut is budget, not evidence: two multiplicities compounding put the worst case at 23 parts / 22 joints and about 40 probe builds.",
+          "unit": "count",
+          "value_type": "int"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "pipe_outer_r_m",
+            "guide_roller_outer_r_m"
+          ],
+          "expression": "pipe_outer_r_m + guide_roller_outer_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "guide_roller_law_verbatim",
+          "rationale": "Both measured laws are kept VERBATIM so the reduction is reversible. pipe_path: every station sits on the tube centreline offset by r_pipe + r_roller, verified numerically at 0.0383 / 0.0380 / 0.0389 m against 0.013 + 0.025 = 0.038 (guide_roller_count_3 L410-L414 measured against its own _pipe_path L115-L168), with stations i >= 1 marching down the exit tangent at pitch 0.0851 m in direction (0.920, -0.392). rail_pitch: x_i = x_0 + 0.110*i at constant y with z at the rail top, the roller's lower flange landing on it (004 L46-L47, L204-L208, L338). Restoring guide_roller as a slot and guide_roller_count as a multiplicity needs only these two laws, which is exactly why they stay written down.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bender_topology"
+          ],
+          "expression": "'pipe_path_law' if bender_topology == 'ram_tripod' else 'rail_pitch_law'",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "guide_placement_law",
+          "rationale": "Which of the TWO measured guide-roller laws a host uses, carried as a derived value rather than a comment so the multiplicity can read it.",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "pipe_outer_r_m",
+            "guide_roller_outer_r_m"
+          ],
+          "expression": "pipe_outer_r_m + guide_roller_outer_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "roller_offset_from_tube_m",
+          "rationale": "The pipe_path_law offset, and it is nowhere written in the source - it was recovered by measuring the three hand-authored stations of guide_roller_count_3 (L410-L414) against its own generated pipe path (L115-L168): 0.0383 / 0.0380 / 0.0389 m against 0.013 + 0.025 = 0.038.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "guide_placement_law"
+          ],
+          "expression": "0.0851 if guide_placement_law == 'pipe_path_law' else 0.110",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "guide_pitch_m",
+          "rationale": "Station pitch. pipe_path_law: stations i>=1 march down the exit tangent at 0.0851 m in direction (0.920, -0.392), measured between (-0.0149, -0.1320) and (0.0635, -0.1651). rail_pitch_law: 0.110 m along +X, authored as a constant in former_count_2 L227-L228 and reused by the five-station rack L25-L30.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "rail_top_z_m"
+          ],
+          "expression": "rail_top_z_m + 0.0002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "roller_seat_z_m",
+          "rationale": "CORRECTION APPLIED: pedestal_ladder_rail lands the roller's lower flange EXACTLY on the rail top - rail boxes 0.018 thick centred at 0.574 give a top of 0.583 = FRAME_RAIL_TOP, and the joint origin is FRAME_RAIL_TOP with the flange underside at local 0 (L46-L47, L204-L208, L338). Distance zero is a collision, which is why L476-L485 needs an allowance. The rebuild offsets 0.2 mm and declares allow_isolated_part.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "mount_height_m",
+            "host_stack_z_m"
+          ],
+          "expression": "mount_height_m + host_stack_z_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "rail_top_z_m",
+          "rationale": "Top face of the guide rail / support deck the rollers stand on.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "guide_roller_count",
+            "guide_pitch_m",
+            "guide_roller_outer_r_m"
+          ],
+          "expression": "(guide_roller_count - 1) * guide_pitch_m + 2.0 * guide_roller_outer_r_m + 0.145",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "roller_track_length_m",
+          "rationale": "Host capacity, index-general and taken straight from the source: former_count_5 L53-L54 derives rack_length = (x_{N-1} - PIVOT_X) + 0.145 and rack_center_x = (x_0 + x_{N-1})/2, then widens the base plate 0.40 -> 0.76 and relocates the cradle to x 0.740 (L379-L385). The frame grows with N; N does not get squeezed into a fixed frame.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "roller_seat_z_m"
+          ],
+          "expression": "roller_seat_z_m - 0.0002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "roller_boss_top_z_m",
+          "rationale": "ram_tripod supports each roller on a circle(0.028) boss (L418-L423) and asserts expect_contact(contact_tol=0.001) at L872-L879; the boss top is derived from the seat, not authored.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "continuous",
+      "provider": "bender_topology.roller_track"
+    },
+    {
+      "binding_id": "former_placement_law_binding",
+      "consumer": "former_profile.former_bore_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "bender_topology",
+            "former_count"
+          ],
+          "expression": "'linear_bridge_turret' if (bender_topology in ('pedestal_ladder_rail', 'pedestal_fixed_die_swing_handle') and former_count <= 2) else ('linear_station_rack' if bender_topology in ('pedestal_ladder_rail', 'pedestal_fixed_die_swing_handle') else 'angular_turret')",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "former_placement_law",
+          "rationale": "ALL THREE measured laws stay reachable, and which one applies is a derived value, not a comment. Rail-head hosts march along +X; single-pivot rotating-former hosts index on a circle. The pool contains all three: former_count_2 L24-L26 and L88-L97 (linear bridge, pitch 0.160, station N-1 on the pivot), former_count_5 L24-L30 (linear rack, pitch 0.110 from x 0.200), former_count_3 L317-L321 (angular turret).",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_outer_r_m",
+            "former_count"
+          ],
+          "expression": "max(1.55 * former_outer_r_m, (former_outer_r_m + 0.003) / sin(pi / max(former_count, 2)))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "turret_radius_m",
+          "rationale": "Angular turret radius. former_count_3 L317-L321 builds an equilateral triangle of side 0.1732 about a centre at (-0.125, 0), i.e. R = 0.100 for a 0.064 working former - a ratio of 1.55. The second term is the index-general clearance condition rearranged: adjacent formers must clear each other by 3 mm per side.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "turret_radius_m"
+          ],
+          "expression": "pi",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "former_station_theta_rad",
+          "rationale": "Angular position of station 0. former_count_3 pins it to the host's original bending station at (-0.225, 0) relative to the turret centre (-0.125, 0), i.e. 180 deg. The working former never moves when N grows.",
+          "unit": "rad",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_placement_law"
+          ],
+          "expression": "0.160 if former_placement_law == 'linear_bridge_turret' else 0.110",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "former_pitch_m",
+          "rationale": "Linear pitch. 0.160 for the bridge turret (former_count_2 L25), 0.110 for the station rack (former_count_5 L25).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_count",
+            "former_pitch_m",
+            "former_outer_r_m"
+          ],
+          "expression": "(former_count - 1) * former_pitch_m + 2.0 * former_outer_r_m + 0.145",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "former_rack_length_m",
+          "rationale": "Host rail length for the linear laws, from former_count_5 L53-L54. The bridge-turret carrier uses the same skeleton: box(pitch*(N-1) + 0.070, 0.050, 0.018) plus a circle(0.038) pivot hub and one circle(0.010) bore (former_count_2 L88-L97). Note the source writes `-FORMER_SPACING / 2.0` for the carrier centre, which is only correct at N=2; the index-general form is -(N-1)*pitch/2.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_outer_r_m"
+          ],
+          "expression": "0.47 * former_outer_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "turret_crosshead_boss_r_m",
+          "rationale": "Boss under each turret station. former_count_3 L95-L102 unions a circle(0.030) boss at every station plus one chord bridge per adjacent pair - fully index-general, so N=4 needs no new mechanism.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_seat_z_m"
+          ],
+          "expression": "former_seat_z_m - 0.0002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "turret_bearing_top_z_m",
+          "rationale": "CORRECTION APPLIED: former_count_3's turret bearing (Cylinder(0.028, 0.092) at z 0.286, top 0.332, L450-L456) overlaps a former underside at 0.3175 by 14.5 mm and needs allow_overlap at L888-L898. Derive the bearing top from the seat instead.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_placement_law"
+          ],
+          "expression": "'bender_frame'",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "former_parent_role",
+          "rationale": "Every former parents to the FRAME, never to the crosshead - the crosshead is a visual on the frame (former_count_3 L390-L397, L595-L611). Same discipline as the arms in the protractor category.",
+          "unit": "ratio",
+          "value_type": "str"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "bender_topology.former_seat"
+    },
+    {
+      "binding_id": "mount_deck_to_host",
+      "consumer": "bender_topology.ground_footprint",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "mount",
+            "deck_thickness_m",
+            "pedestal_height_m",
+            "saddle_z_m"
+          ],
+          "expression": "deck_thickness_m if mount == 'bench_plate' else (0.014 + pedestal_height_m if mount == 'pedestal_floor_plate' else (saddle_z_m + 0.014 if mount == 'vise_tongue' else 0.025))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "mount_height_m",
+          "rationale": "Height of the mount's own deck above the ground plane. This is the binding the pool actually proves: mount_vise_mounted_frame changes SPINDLE_Z from 0.936 to 0.336 (L27-L29) and NOTHING above it - every head visual keeps its local offset - because 0.336 = saddle 0.200 + plate 0.014 + head stack 0.122.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bender_topology"
+          ],
+          "expression": "0.00020 if bender_topology == 'hand_lever_plier' else (0.00025 if bender_topology in ('cast_bench_mimic', 'three_roll_pyramid') else (0.00030 if bender_topology == 'ram_tripod' else (0.00040 if bender_topology == 'pedestal_ladder_rail' else 0.00060)))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "lineage_weld_m",
+          "rationale": "AUDIT CORRECTION (MECHANICAL_PRIORS 1c, rewritten). mount_base -> bender_frame is the ONE fixed part-to-part seat in the whole part tree (everything else hangs off a revolute, prismatic or continuous joint and runs on a declared clearance), and the design used to place the frame underside EXACTLY on mount_height_m. That is the tangency 1c now calls fragile, and here it is measurably fragile rather than theoretically: sdk/_core/v0/_urdf_export.py:64-65 writes every URDF float as '%.6g', so a seat at z 1.11 m (pedestal_fixed_die_swing_handle on pedestal_floor_plate) is quantised to 1e-5 m and can round the two faces up to 5e-6 apart on each side - five times the 1e-6 contact tolerance fail_if_isolated_parts uses (geometry_qc.py:3385-3389). At the hand tool's 0.33 m the same quantisation is 1e-6. Hence ONE VALUE PER LINEAGE, ordered by that lineage's scale: L4 hand tool 0.33 m -> 0.20 mm, L2 cast bench 0.30 m -> 0.25 mm, L5 ram tripod 0.44 m -> 0.30 mm, L1 pedestal ladder rail 0.58 m -> 0.40 mm, L3 floor pedestal 1.11 m -> 0.60 mm. Every value is >= 20x the URDF quantisation at its own seat height plus the 1.25e-3*R tessellation sagitta implied by the 0.1 rad angular tolerance in _mesh/cadquery_helpers.py:161-162, and every value stays under 1e-3 - the overlap tolerance find_geometry_overlaps actually defaults to (geometry_qc.py:3251) - so the weld can never be read as an interference. Sized against 1 mm, not the 5 mm env default.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "lineage_weld_m"
+          ],
+          "expression": "lineage_weld_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "intra_part_weld_m",
+          "rationale": "AUDIT CORRECTION (MECHANICAL_PRIORS 1c). The same number governs the OTHER half of 1c: separate visuals stacked inside ONE part are each a 1:1 collision solid (exact_collisions.py:94-118) and find_part_geometry_connectivity_findings walks them per link at contact_tol 1e-6 (geometry_qc.py:3088-3095), so a tangent stack inside a part is reported as broken geometry even though it is never an overlap - intra-part interpenetration is free. Every stacked primitive in this template therefore embeds by intra_part_weld_m: pedestal into deck, boss into plate, rail into post, grip rib into grip, caster fork into mount plate.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "mount_height_m",
+            "lineage_weld_m"
+          ],
+          "expression": "mount_height_m - lineage_weld_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "frame_seat_z_m",
+          "rationale": "Underside plane of bender_frame: the frame is dropped INTO the mount deck by lineage_weld_m so the fixed joint has a real solid intersection instead of a coincident face. The source asserts the tangent version (mount_wheeled_floor_stand L474-L481: abs(pedestal_z_min - base_z_max) < 0.001), which the weld still satisfies by construction.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "mount_height_m",
+            "host_stack_z_m"
+          ],
+          "expression": "mount_height_m + host_stack_z_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "spindle_z_m",
+          "rationale": "The host's primary axis height, derived from the mount rather than authored per host. Pool: 0.020 (bench plate + cast host), 0.336 (vise), 0.583 (pedestal ladder rail), 0.936 (floor pedestal).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "deck_x_m",
+            "host_footprint_r_m"
+          ],
+          "expression": "max(0.5 * deck_x_m, 1.25 * host_footprint_r_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "mount_footprint_r_m",
+          "rationale": "PlaneInterface extent, sized off the REAL bearing area rather than the host AABB (MECHANICAL_PRIORS section 2). Pool decks: 0.300 x 0.140 (bench), 0.34 x 0.30 (floor plate), 0.240 x 0.160 (vise saddle), 0.46 x 0.36 (caster deck).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "former_outer_r_m",
+            "roller_track_length_m"
+          ],
+          "expression": "max(2.2 * former_outer_r_m, 0.5 * roller_track_length_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "host_footprint_r_m",
+          "rationale": "What the host actually needs carried: the head plus the whole roller track, which grows with guide_roller_count.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bender_topology"
+          ],
+          "expression": "'yes' if bender_topology == 'hand_lever_plier' else 'no'",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "clamp_collar_required",
+          "rationale": "The second cross-slot risk, resolved by derivation. hand_lever_plier has no base of its own - its lower tang runs x -0.205 .. 0.0 (L179-L184) - so every mount candidate terminates in a clamp collar that grips that tang, exactly as a bench-mounted tube bender does. Named corner: mount_on_hand_tool.",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "tool_length_m"
+          ],
+          "expression": "0.5 * tool_length_m * 0.10 + 0.002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "clamp_collar_bore_m",
+          "rationale": "Collar bore around the tang. The tang is about 10 percent of the tool length in width (ribbon widths 0.031 -> 0.010 over 0.205, L180-L181).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "mount_height_m"
+          ],
+          "expression": "0.0",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "caster_swivel_axis_z_m",
+          "rationale": "caster_deck only. Each caster gets a REVOLUTE swivel about (0,0,1) at the deck underside and a CONTINUOUS spin about the wheel's local X through the wheel centre - two axes, never merged (MECHANICAL_PRIORS section 5). The source builds neither: four rigid wheel visuals on `stand` at L163-L171.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "caster_wheel_width_m",
+            "fork_side_clearance_m"
+          ],
+          "expression": "caster_wheel_width_m + 2.0 * fork_side_clearance_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "caster_fork_gap_m",
+          "rationale": "Inner clear width of the caster fork. The source's fork is NARROWER than its own wheel - legs at y +-0.019 with 0.012 thickness give inner faces at +-0.013 around a 0.056-wide wheel (L48-L50) - which only survives because wheel and fork are visuals of the same part (MECHANICAL_PRIORS section 1c). Once the caster is a real part the fork must genuinely clear it.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "mount_height_m"
+          ],
+          "expression": "0.0",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "ground_z_m",
+          "rationale": "Every mount grounds the tool at z=0. The source's wheeled stand does not - its caster contact patch is at z=-0.108 with the deck underside at z=0 (L36, L55) - and the rebuild re-grounds it.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "mount.mount_deck"
+    },
+    {
+      "binding_id": "topology_determines_actuation_and_follower",
+      "consumer": "bender_topology.actuation_module",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "bender_topology"
+          ],
+          "expression": "TOPOLOGY_DRIVE[bender_topology]",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_form",
+          "rationale": "Which actuation module the topology builds. Demoted from an independent slot: the archived legacy template admitted exactly one drive for three of its five mechanism families, and rewrote 457 of 480 declared combinations to reach a real domain of 23. Candidates retained verbatim: (already demoted)",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bender_topology"
+          ],
+          "expression": "TOPOLOGY_FOLLOWER[bender_topology]",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "follower_form",
+          "rationale": "Which pressure member the topology builds. Demoted from an independent slot: three of four candidates share a source record with a bender_topology candidate and the fourth comes from a topology variant folded into the structural family. Candidates retained verbatim: (already demoted)",
+          "unit": "ratio",
+          "value_type": "str"
+        }
+      ],
+      "provider": "bender_topology.primary_axis"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "pipe_bender_bend_axis_identity",
+      "applies_to": {
+        "candidates": [
+          "pedestal_ladder_rail",
+          "cast_bench_mimic",
+          "three_roll_pyramid",
+          "pedestal_fixed_die_swing_handle",
+          "hand_lever_plier",
+          "ram_tripod"
+        ],
+        "slot": "bender_topology"
+      },
+      "required_author_checks": [
+        "category_anchor: exactly one grounded root frame part",
+        "category_anchor: the bend axis is +Z and former, moving member and drive are concentric with it within 0.1 mm",
+        "category_anchor: the moving member reaches at least four former diameters from the bend axis",
+        "category_anchor: the frame provides a real cut relief, slot or bore for every moving member"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "moving_member",
+          "joint_type": "revolute",
+          "parent_role": "bender_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "bender_frame"
+        },
+        {
+          "count_from": "former_count",
+          "exact_count": null,
+          "role": "bending_former"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "moving_member"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pipe_bender_rotating_former",
+      "applies_to": {
+        "candidates": [
+          "pedestal_ladder_rail",
+          "cast_bench_mimic",
+          "three_roll_pyramid",
+          "hand_lever_plier",
+          "ram_tripod"
+        ],
+        "slot": "bender_topology"
+      },
+      "required_author_checks": [
+        "category_anchor: every former is a part with a real cut through bore strictly larger than the pin it runs on",
+        "category_anchor: every former seats on a derived thrust washer or bearing top, never on an authored constant",
+        "category_anchor: formers parent to the frame, never to the turret crosshead"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "bending_former",
+          "joint_type": "revolute",
+          "parent_role": "bender_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": "former_count",
+          "exact_count": null,
+          "role": "bending_former"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "bender_frame"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pipe_bender_drive_on_primary_axis",
+      "applies_to": {
+        "candidates": [
+          "pedestal_ladder_rail",
+          "cast_bench_mimic",
+          "three_roll_pyramid",
+          "pedestal_fixed_die_swing_handle",
+          "hand_lever_plier",
+          "ram_tripod"
+        ],
+        "slot": "bender_topology"
+      },
+      "required_author_checks": [
+        "category_anchor: the drive acts on the published primary axis, not on a tangential surface",
+        "category_anchor: meshing members are tangent - centre distance equals the sum of tip radii plus 0.3 mm, with no tooth interpenetration",
+        "category_anchor: a ratchet pawl tip lies outside the tooth tip circle and engages a flank"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "drive_member",
+          "joint_type": "revolute",
+          "parent_role": "bender_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "drive_member"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "bender_frame"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pipe_bender_adjustment_dof",
+      "applies_to": {
+        "candidates": [
+          "pedestal_ladder_rail",
+          "cast_bench_mimic",
+          "three_roll_pyramid",
+          "pedestal_fixed_die_swing_handle",
+          "hand_lever_plier",
+          "ram_tripod"
+        ],
+        "slot": "bender_topology"
+      },
+      "required_author_checks": [
+        "category_anchor: at least one prismatic or screw adjustment degree of freedom exists",
+        "category_anchor: the follower's tube seat lies on the former groove mid-plane",
+        "category_anchor: the follower runs in a real cut slot or bore in its carrier, not on a solid face"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "follower",
+          "joint_type": "prismatic",
+          "parent_role": "moving_member"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "follower"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "moving_member"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pipe_bender_roller_spin",
+      "applies_to": {
+        "candidates": [
+          "pedestal_ladder_rail",
+          "cast_bench_mimic",
+          "three_roll_pyramid",
+          "pedestal_fixed_die_swing_handle",
+          "hand_lever_plier",
+          "ram_tripod"
+        ],
+        "slot": "bender_topology"
+      },
+      "required_author_checks": [
+        "category_anchor: every guide roller spins about +Z through its own centre",
+        "category_anchor: every guide roller bore is strictly larger than its axle",
+        "category_anchor: guide roller spacing follows the host's declared placement law and the track grows with N"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "guide_roller",
+          "joint_type": "continuous",
+          "parent_role": "bender_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": "former_count",
+          "exact_count": null,
+          "role": "guide_roller"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "bender_frame"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pipe_bender_grounded_mount",
+      "applies_to": {
+        "candidates": [
+          "bench_plate",
+          "pedestal_floor_plate",
+          "vise_tongue",
+          "caster_deck"
+        ],
+        "slot": "mount"
+      },
+      "required_author_checks": [
+        "category_anchor: the tool is grounded at z=0 and the mount carries the whole host footprint",
+        "category_anchor: the primary axis height is derived from the mount, not authored per host",
+        "category_anchor: caster wheels have separate swivel and spin axes and clear their forks"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "bender_frame",
+          "joint_type": "fixed",
+          "parent_role": "mount_base"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "mount_base"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "bender_frame"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2.0 * turret_radius_m * sin(pi / max(former_count, 2)) >= 2.0 * former_outer_r_m + 0.006 when former_placement_law == 'angular_turret'; former_rack_length_m <= 1.9 * mount_footprint_r_m * 2.0 otherwise",
+      "item_slot": "former_profile",
+      "name": "former_count",
+      "spacing_expression": "angular_turret: theta_i = former_station_theta_rad + i * 2*pi/former_count on radius turret_radius_m about turret_centre; linear_bridge: x_i = -former_pitch_m * (former_count - 1 - i); linear_rack: x_i = former_rack_start_x_m + i * former_pitch_m",
+      "values": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "frame, bending_die, main_lever, follower_shoe, guide_roller_i, pipe_cradle, adjustment_block_i, adjustment_screw_i; die_pivot + lever_pivot two independent REVOLUTE on one axis at PIVOT_X",
+          "implementation_function": "_bender_topology_pedestal_ladder_rail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "primary_axis_z_m",
+                "radius": "primary_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "primary_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "former_seat_z_m",
+                "radius": "former_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_seat",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "follower_station_z_m",
+                "radius": "follower_station_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "follower_station",
+              "part": "moving_member",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "ram_axis_z_m",
+                "radius": "ram_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ram_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "roller_seat_z_m",
+                "radius": "roller_track_length_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "roller_track",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "host_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "ground_footprint",
+              "part": "bender_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "pedestal_ladder_rail",
+          "notes": "former_is_part=yes; primary_joint=revolute; former_placement_law=linear. Root part `frame`, 11 parts, 9 non-fixed joints. die_pivot (L289-L302) and lever_pivot (L303-L316) are two independent REVOLUTE joints about (0,0,1) at PIVOT_X = -0.070. The open ladder rail is the roller_track; the top rail carries the prismatic adjustment blocks. Guide rollers and adjustment stations march along +X, so this host uses the LINEAR former placement law.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.092,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "former_outer_r_m",
+              "rationale": "Outer (flange) radius of the working former. Pool spans the whole category scale: 0.029 (hand_lever_plier L347), 0.038 (three_roll_pyramid L74), 0.040 (the L3 family fixed die, conduit_shoe_lever L240), 0.064 (cast_bench_mimic L73 and ram_tripod L44), 0.066 (rotary_draw_wrap_wheel L45), 0.086 (pedestal_ladder_rail L72). Bore, pin radius, groove depth, roller radius and lever length are all derived from this.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.021,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "pipe_outer_r_m",
+              "rationale": "Outer radius of the tube the tool forms. Pool: 0.013 (ram_tripod L301 workpiece), 0.014 (pedestal_ladder_rail L97 shoe groove cut), 0.0173 (cast_bench_mimic L115 shoe bore). Sets groove depth and the guide-roller offset from the tube centreline.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.013,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "primary_shaft_r_m",
+              "rationale": "Radius of the pin/spindle the primary axis runs on. Pool: 0.0046 (hand_lever_plier L244), 0.0075 (ram_tripod L465), 0.0090 (cast_bench_mimic L185), 0.010 (pedestal_ladder_rail L143), 0.011 (pedestal_fixed_die_swing_handle L193). Every bore in the model is derived from this by binding shaft_to_bore_clearance.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.75,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "head_height_m",
+              "rationale": "Top face of the lower guide rail, which is the head datum of this host. Source L21 FRAME_RAIL_TOP = 0.583.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.25,
+              "mode": "independent",
+              "name": "post_height_m",
+              "rationale": "Square pedestal post. Source L42: 0.090 x 0.090 x 0.420.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_plate_x_m",
+              "rationale": "Base plate length. Source L38: 0.40, widened to 0.76 by the five-station rack (former_count_5 L43), so the range must reach both.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.1,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "lever_lift_m",
+              "rationale": "Z offset of the lever pivot above the former seat. Source L22-L23: LEVER_Z 0.650 - DIE_BOTTOM 0.587 = 0.063. This host is the one that gives the former and the lever two INDEPENDENT revolute joints on one axis.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__manual_pipe_bender__004__png_75c4edd745e04e5f94a148bf3f55d5f1",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L33-L67",
+            "model.py:L70-L81",
+            "model.py:L84-L89",
+            "model.py:L92-L100",
+            "model.py:L103-L114",
+            "model.py:L136-L287",
+            "model.py:L289-L381"
+          ]
+        },
+        {
+          "evidence": "base, bending_die, main_lever, follower_shoe, follower_roller, pipe_cradle, guide_roller, adjustment_screw; base_to_die carries Mimic(base_to_lever, 1.0); cheek relief cut at L57",
+          "implementation_function": "_bender_topology_cast_bench_mimic_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "primary_axis_z_m",
+                "radius": "primary_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "primary_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "former_seat_z_m",
+                "radius": "former_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_seat",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "follower_station_z_m",
+                "radius": "follower_station_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "follower_station",
+              "part": "moving_member",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "ram_axis_z_m",
+                "radius": "ram_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ram_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "roller_seat_z_m",
+                "radius": "roller_track_length_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "roller_track",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "host_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "ground_footprint",
+              "part": "bender_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "cast_bench_mimic",
+          "notes": "former_is_part=yes; primary_joint=revolute; former_placement_law=angular. Root part `base`, 8 parts, 6 non-fixed joints. The only mimic in the pool: base_to_die carries Mimic(base_to_lever, multiplier 1.0, offset 0.0) at L387, so the former is DRIVEN rather than idle. The side cheeks are cut back around the former (`body.cut(_cylinder_z(0.069, 0.050, z0=0.012))`, L57) - the cleanest MECHANICAL_PRIORS section 7 statement in the pool, and the relief radius must be re-derived whenever former_outer_r_m moves.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.092,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "former_outer_r_m",
+              "rationale": "Outer (flange) radius of the working former. Pool spans the whole category scale: 0.029 (hand_lever_plier L347), 0.038 (three_roll_pyramid L74), 0.040 (the L3 family fixed die, conduit_shoe_lever L240), 0.064 (cast_bench_mimic L73 and ram_tripod L44), 0.066 (rotary_draw_wrap_wheel L45), 0.086 (pedestal_ladder_rail L72). Bore, pin radius, groove depth, roller radius and lever length are all derived from this.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.021,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "pipe_outer_r_m",
+              "rationale": "Outer radius of the tube the tool forms. Pool: 0.013 (ram_tripod L301 workpiece), 0.014 (pedestal_ladder_rail L97 shoe groove cut), 0.0173 (cast_bench_mimic L115 shoe bore). Sets groove depth and the guide-roller offset from the tube centreline.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.013,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "primary_shaft_r_m",
+              "rationale": "Radius of the pin/spindle the primary axis runs on. Pool: 0.0046 (hand_lever_plier L244), 0.0075 (ram_tripod L465), 0.0090 (cast_bench_mimic L185), 0.010 (pedestal_ladder_rail L143), 0.011 (pedestal_fixed_die_swing_handle L193). Every bore in the model is derived from this by binding shaft_to_bore_clearance.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "plate_x_m",
+              "rationale": "Cast bench plate length. Source L49: 0.300.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "plate_y_m",
+              "rationale": "Cast bench plate width. Source L49: 0.140.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.012,
+              "mode": "independent",
+              "name": "cheek_height_m",
+              "rationale": "Raised longitudinal cheeks. Source L50-L51: 0.014 x 0.020 at y +-0.061.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.8,
+              "minimum": 1.2,
+              "mode": "independent",
+              "name": "sweep_upper_rad",
+              "rationale": "Upper limit of the primary bending sweep. Source L368: 2.35 rad, with lower -0.12. The die MIMICS the lever 1:1 (L387), so both share this range.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__manual_pipe_bender__005__png_388a055eab4842619094fb0bea63f2a0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L46-L63",
+            "model.py:L66-L68",
+            "model.py:L71-L82",
+            "model.py:L85-L110",
+            "model.py:L113-L119",
+            "model.py:L122-L139",
+            "model.py:L142-L146",
+            "model.py:L173-L355",
+            "model.py:L357-L460"
+          ]
+        },
+        {
+          "evidence": "same 8 parts and 6 joints as cast_bench_mimic; die r 0.038, both rolls r 0.0220, cheek relief 0.043, cradle at x -0.115; author test asserts the plan triangle",
+          "implementation_function": "_bender_topology_three_roll_pyramid_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "primary_axis_z_m",
+                "radius": "primary_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "primary_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "former_seat_z_m",
+                "radius": "former_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_seat",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "follower_station_z_m",
+                "radius": "follower_station_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "follower_station",
+              "part": "moving_member",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "ram_axis_z_m",
+                "radius": "ram_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ram_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "roller_seat_z_m",
+                "radius": "roller_track_length_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "roller_track",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "host_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "ground_footprint",
+              "part": "bender_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "three_roll_pyramid",
+          "notes": "former_is_part=yes; primary_joint=revolute; former_placement_law=angular. Same 8 parts and 6 joints as cast_bench_mimic - this candidate earns its place on PLAN TOPOLOGY, not size: three roll centres forming a triangle, asserted at L579-L617. Everything else it changes (former 0.064 -> 0.038, rolls -> 0.0220, cheek relief 0.069 -> 0.043, cradle x +0.125 -> -0.115) is proportion and is carried by the shared parameters.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.092,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "former_outer_r_m",
+              "rationale": "Outer (flange) radius of the working former. Pool spans the whole category scale: 0.029 (hand_lever_plier L347), 0.038 (three_roll_pyramid L74), 0.040 (the L3 family fixed die, conduit_shoe_lever L240), 0.064 (cast_bench_mimic L73 and ram_tripod L44), 0.066 (rotary_draw_wrap_wheel L45), 0.086 (pedestal_ladder_rail L72). Bore, pin radius, groove depth, roller radius and lever length are all derived from this.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.021,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "pipe_outer_r_m",
+              "rationale": "Outer radius of the tube the tool forms. Pool: 0.013 (ram_tripod L301 workpiece), 0.014 (pedestal_ladder_rail L97 shoe groove cut), 0.0173 (cast_bench_mimic L115 shoe bore). Sets groove depth and the guide-roller offset from the tube centreline.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.013,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "primary_shaft_r_m",
+              "rationale": "Radius of the pin/spindle the primary axis runs on. Pool: 0.0046 (hand_lever_plier L244), 0.0075 (ram_tripod L465), 0.0090 (cast_bench_mimic L185), 0.010 (pedestal_ladder_rail L143), 0.011 (pedestal_fixed_die_swing_handle L193). Every bore in the model is derived from this by binding shaft_to_bore_clearance.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "roll_span_x_m",
+              "rationale": "Plan distance between the two lower rolls. Source: guide roll at (-0.085, -0.080) via base_to_cradle L427 + cradle_to_roller L434, follower roll at (0.080, -0.080) via lever_to_shoe L398, i.e. 0.165. The record's own author test L579-L617 requires > 0.14.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "pyramid_offset_y_m",
+              "rationale": "Y offset of the driven upper roll above the two lower rolls - the pyramid itself. Source L579-L617 requires die_y > roll_y + 0.045; the build gives 0.080.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "support_roll_r_m",
+              "rationale": "Radius of both lower support rolls, enlarged from the parent's 0.0160/0.0140 because they now carry the bend. Source L274 and L318: 0.0220.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_manual_pipe_bender_var_bender_topology_three_roll_pyramid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L46-L64",
+            "model.py:L72-L83",
+            "model.py:L86-L111",
+            "model.py:L114-L120",
+            "model.py:L357-L460",
+            "model.py:L579-L617"
+          ]
+        },
+        {
+          "evidence": "stand, bending_handle, toothed_arm, pressure_roller; handle_swing + ratchet_pivot + roller_spin all (0,0,1); former is a Cylinder visual ON the stand, not a part",
+          "implementation_function": "_bender_topology_pedestal_fixed_die_swing_handle_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "primary_axis_z_m",
+                "radius": "primary_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "primary_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "former_seat_z_m",
+                "radius": "former_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_seat",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "follower_station_z_m",
+                "radius": "follower_station_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "follower_station",
+              "part": "moving_member",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "ram_axis_z_m",
+                "radius": "ram_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ram_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "roller_seat_z_m",
+                "radius": "roller_track_length_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "roller_track",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "host_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "ground_footprint",
+              "part": "bender_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "pedestal_fixed_die_swing_handle",
+          "notes": "former_is_part=no; primary_joint=revolute; former_placement_law=linear. Root part `stand`, 4 parts, 3 joints, ALL about (0,0,1). The defining difference: the former DOES NOT ROTATE - primary_offset_former (L198-L203) is a Cylinder visual on the stand and the handle sweeps the tube around it. category anchor pipe_bender_rotating_former is scoped to exclude this candidate for exactly that reason. CORRECTION APPLIED: this lineage bores every hole 0.5-1.0 mm UNDER its pin (hub bore 0.010 vs spindle 0.011 L86/L193; arm bore 0.0055 vs pin 0.006 L138/L240; bracket bore 0.0065 vs axle 0.007 L95/L332), which is the sole cause of its three allow_overlap sites. The rebuild inverts it via binding shaft_to_bore_clearance.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.092,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "former_outer_r_m",
+              "rationale": "Outer (flange) radius of the working former. Pool spans the whole category scale: 0.029 (hand_lever_plier L347), 0.038 (three_roll_pyramid L74), 0.040 (the L3 family fixed die, conduit_shoe_lever L240), 0.064 (cast_bench_mimic L73 and ram_tripod L44), 0.066 (rotary_draw_wrap_wheel L45), 0.086 (pedestal_ladder_rail L72). Bore, pin radius, groove depth, roller radius and lever length are all derived from this.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.021,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "pipe_outer_r_m",
+              "rationale": "Outer radius of the tube the tool forms. Pool: 0.013 (ram_tripod L301 workpiece), 0.014 (pedestal_ladder_rail L97 shoe groove cut), 0.0173 (cast_bench_mimic L115 shoe bore). Sets groove depth and the guide-roller offset from the tube centreline.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.013,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "primary_shaft_r_m",
+              "rationale": "Radius of the pin/spindle the primary axis runs on. Pool: 0.0046 (hand_lever_plier L244), 0.0075 (ram_tripod L465), 0.0090 (cast_bench_mimic L185), 0.010 (pedestal_ladder_rail L143), 0.011 (pedestal_fixed_die_swing_handle L193). Every bore in the model is derived from this by binding shaft_to_bore_clearance.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "head_plate_stack_m",
+              "rationale": "Vertical distance from the lower head plate to the upper frame plate - the stacked-plate head that defines this host. Source L188 (0.944) and L219 (1.096): 0.152.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "secondary_former_r_m",
+              "rationale": "Radius of the second, offset fixed former. Source L206: 0.021 in the hickey build; the family baseline (conduit_shoe_lever L240, mount_vise L215) uses 0.026.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.14,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "secondary_former_offset_m",
+              "rationale": "Plan distance from the spindle to the secondary former. Source L194 + L206: spindle (-0.035, 0), secondary (0.050, 0.050) -> 0.0986; the family baseline puts it at (0.052, 0.034) -> 0.0934.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "locating_arm_length_m",
+              "rationale": "Reach of the pivoted locating arm. Source L112: the profile runs to x 0.485.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_manual_pipe_bender_var_bender_topology_hickey_style_offset_be",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L33-L56",
+            "model.py:L59-L81",
+            "model.py:L84-L86",
+            "model.py:L89-L96",
+            "model.py:L99-L139",
+            "model.py:L152-L348",
+            "model.py:L350-L379"
+          ]
+        },
+        {
+          "evidence": "frame, upper_handle, bending_former, follower_roller, stop_pin, spare_former; _ribbon variable-width silhouette; handle_pivot axis (0,0,-1); allow_isolated_part on the loose spare",
+          "implementation_function": "_bender_topology_hand_lever_plier_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "primary_axis_z_m",
+                "radius": "primary_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "primary_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "former_seat_z_m",
+                "radius": "former_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_seat",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "follower_station_z_m",
+                "radius": "follower_station_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "follower_station",
+              "part": "moving_member",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "ram_axis_z_m",
+                "radius": "ram_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ram_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "roller_seat_z_m",
+                "radius": "roller_track_length_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "roller_track",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "host_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "ground_footprint",
+              "part": "bender_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "hand_lever_plier",
+          "notes": "former_is_part=yes; primary_joint=revolute; former_placement_law=angular. Root part `frame`, 6 parts, 4 non-fixed joints. Silhouettes come from `_ribbon` (L19-L61), a variable-width offset of a centreline polyline with computed normals and circular end caps - the only non-box, non-lathe generator in the pool, and the reason this host reads as a stamped hand tool. It has NO base of its own, so the mount slot must derive a clamp collar on the lower tang (binding mount_deck_to_host, corner mount_on_hand_tool).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.092,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "former_outer_r_m",
+              "rationale": "Outer (flange) radius of the working former. Pool spans the whole category scale: 0.029 (hand_lever_plier L347), 0.038 (three_roll_pyramid L74), 0.040 (the L3 family fixed die, conduit_shoe_lever L240), 0.064 (cast_bench_mimic L73 and ram_tripod L44), 0.066 (rotary_draw_wrap_wheel L45), 0.086 (pedestal_ladder_rail L72). Bore, pin radius, groove depth, roller radius and lever length are all derived from this.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.021,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "pipe_outer_r_m",
+              "rationale": "Outer radius of the tube the tool forms. Pool: 0.013 (ram_tripod L301 workpiece), 0.014 (pedestal_ladder_rail L97 shoe groove cut), 0.0173 (cast_bench_mimic L115 shoe bore). Sets groove depth and the guide-roller offset from the tube centreline.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.013,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "primary_shaft_r_m",
+              "rationale": "Radius of the pin/spindle the primary axis runs on. Pool: 0.0046 (hand_lever_plier L244), 0.0075 (ram_tripod L465), 0.0090 (cast_bench_mimic L185), 0.010 (pedestal_ladder_rail L143), 0.011 (pedestal_fixed_die_swing_handle L193). Every bore in the model is derived from this by binding shaft_to_bore_clearance.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "Overall length of the two-handle hand tool. Source L179-L184 and L272-L277: tangs reach x -0.207, the carrier reaches x +0.126, and the record's author test L548-L557 asserts a frame span > 0.31.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.095,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "former_offset_m",
+              "rationale": "Plan distance from the handle pivot to the former axle. Source L192: former_center (0.067, 0.007) -> 0.0674. This is the centre distance the gear mesh derivation works against.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.8,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "handle_open_rad",
+              "rationale": "Handle opening range. Source L338-L343: lower -0.14, upper 0.58, about axis (0,0,-1) - the only negative-Z axis in the pool.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "spare_former_r_m",
+              "rationale": "The deliberately loose spare die that ships with the tool. Source L430: 0.023. It is carried by ctx.allow_isolated_part (L642-L645), which preflight permits - it is the pool's own demonstration of the sanctioned escape.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_manual_pipe_bender_var_bender_topology_geared_ring_roller",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L19-L61",
+            "model.py:L64-L102",
+            "model.py:L105-L133",
+            "model.py:L136-L156",
+            "model.py:L178-L448"
+          ]
+        },
+        {
+          "evidence": "main_frame, ram_carriage, bending_former, guide_i, pump_handle; frame_to_ram PRISMATIC (-1,0,0) effort 18000; frame_to_handle is the pool's only horizontal axis (0,1,0)",
+          "implementation_function": "_bender_topology_ram_tripod_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "primary_axis_z_m",
+                "radius": "primary_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "primary_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "former_seat_z_m",
+                "radius": "former_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_seat",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "follower_station_z_m",
+                "radius": "follower_station_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "follower_station",
+              "part": "moving_member",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "ram_axis_z_m",
+                "radius": "ram_shaft_r_m"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "ram_axis",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "roller_seat_z_m",
+                "radius": "roller_track_length_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "roller_track",
+              "part": "bender_frame",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "host_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "ground_footprint",
+              "part": "bender_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "ram_tripod",
+          "notes": "former_is_part=yes; primary_joint=revolute; former_placement_law=angular. Root part `main_frame`, 8 parts, 6 non-fixed joints. This is the ONLY host that natively publishes `ram_axis` (frame_to_ram, L581-L594), so screw_feed_ram binds to it directly and needs no crank link here. The captured bent-tube `workpiece` part is dropped in the rebuild (SourceMap allowance group 8): both origins explicitly omit the loose demonstration tube and it generates 4-5 allow_overlap sites per seed.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.092,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "former_outer_r_m",
+              "rationale": "Outer (flange) radius of the working former. Pool spans the whole category scale: 0.029 (hand_lever_plier L347), 0.038 (three_roll_pyramid L74), 0.040 (the L3 family fixed die, conduit_shoe_lever L240), 0.064 (cast_bench_mimic L73 and ram_tripod L44), 0.066 (rotary_draw_wrap_wheel L45), 0.086 (pedestal_ladder_rail L72). Bore, pin radius, groove depth, roller radius and lever length are all derived from this.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.021,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "pipe_outer_r_m",
+              "rationale": "Outer radius of the tube the tool forms. Pool: 0.013 (ram_tripod L301 workpiece), 0.014 (pedestal_ladder_rail L97 shoe groove cut), 0.0173 (cast_bench_mimic L115 shoe bore). Sets groove depth and the guide-roller offset from the tube centreline.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.013,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "primary_shaft_r_m",
+              "rationale": "Radius of the pin/spindle the primary axis runs on. Pool: 0.0046 (hand_lever_plier L244), 0.0075 (ram_tripod L465), 0.0090 (cast_bench_mimic L185), 0.010 (pedestal_ladder_rail L143), 0.011 (pedestal_fixed_die_swing_handle L193). Every bore in the model is derived from this by binding shaft_to_bore_clearance.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.04,
+              "mode": "independent",
+              "name": "ram_stroke_m",
+              "rationale": "Stroke of the host's own carriage. Source L588-L593: PRISMATIC (-1,0,0), 0 .. 0.075, effort 18000.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "former_station_offset_m",
+              "rationale": "Distance from the frame origin back to the bending station. Source L600: the former joint sits at x -0.225. This is also the anchor of the angular turret: former_count_3 pins station 0 here (L317-L321).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.5,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "leg_reach_m",
+              "rationale": "Plan reach of the three splayed tripod legs. Source L382-L386: feet at (-0.295,-0.170), (0.080,-0.335), (0.245,0.185) -> max reach 0.341, and the author test L909-L927 requires a foot span > 0.45 m in both X and Y.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "pump_handle_length_m",
+              "rationale": "Length of the pump lever. Source L536-L549: direction (-0.870, 0, 0.493) scaled to 0.640, grip to 0.735. Its joint (L609-L622) is the ONLY horizontal axis in the pool, (0,1,0).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_manual_pipe_bender_var_guide_roller_count_3_guide_rollers",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L43-L75",
+            "model.py:L78-L86",
+            "model.py:L89-L103",
+            "model.py:L115-L168",
+            "model.py:L171-L249",
+            "model.py:L252-L631"
+          ]
+        }
+      ],
+      "component_type": "structural family host",
+      "name": "bender_topology",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "flange/web/flange 0.064/0.053/0.064 at heights 0.007/0.021/0.007, bore 0.0105, keyed stop lug 0.020x0.055x0.008",
+          "implementation_function": "_former_profile_round_flanged_groove_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "former_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_bore_axis",
+              "part": "bending_former",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "former_outer_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "former_underside",
+              "part": "bending_former",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "groove_mid_z_m",
+                "radius": "groove_root_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_groove",
+              "part": "bending_former",
+              "role": "provider"
+            }
+          ],
+          "name": "round_flanged_groove",
+          "notes": "Construction: three fused coaxial discs cut by one through bore. The former is emitted as ONE welded CAD solid with one cut through bore, so it costs exactly one collision solid per former (sdk/_core/v0/exact_collisions.py:94-118 is 1:1 with visuals). Groove root radius, bend radius and bore all come from binding former_seat_to_groove; nothing here is authored twice.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "groove_depth_ratio",
+              "rationale": "Groove depth as a fraction of former_outer_r_m. Pool: 0.061 (rotary_draw_wrap_wheel, 0.004/0.066), 0.070 (multi_radius_stepped, 0.00204/0.029), 0.128 (pedestal_ladder_rail, 0.011/0.086), 0.172 (cast_bench_mimic, 0.011/0.064), 0.198 (square_tube_channel, 0.017/0.086). Carried as a ratio so the groove tracks the former when former_outer_r_m sweeps 0.029 .. 0.086.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "former_height_m",
+              "rationale": "Overall axial height of the former. Pool: 0.018 (hand_lever_plier L347), 0.035 (cast_bench_mimic L73-L75), 0.045 (ram_tripod L46), 0.058 (square_tube_channel L26).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "flange_height_ratio",
+              "rationale": "Each flange as a fraction of the former height. Source L73-L75: 0.007/0.035 = 0.200; pedestal_ladder_rail L72-L78 gives 0.011/0.058 = 0.190.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.075,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "stop_lug_length_m",
+              "rationale": "Keyed stop lug that makes former rotation legible. Source L80: 0.020 x 0.055 x 0.008 at y 0.055.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__manual_pipe_bender__005__png_388a055eab4842619094fb0bea63f2a0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L71-L82",
+            "model.py:L197-L208",
+            "model.py:L373-L389"
+          ]
+        },
+        {
+          "evidence": "solid circle(0.086) drum 0.058 tall minus an annular circle(0.088)/circle(0.069) channel 0.036 tall at z 0.011; flat floor at r 0.069; author test probes three literal points with Shape.isInside",
+          "implementation_function": "_former_profile_square_tube_channel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "former_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_bore_axis",
+              "part": "bending_former",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "former_outer_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "former_underside",
+              "part": "bending_former",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "groove_mid_z_m",
+                "radius": "groove_root_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_groove",
+              "part": "bending_former",
+              "role": "provider"
+            }
+          ],
+          "name": "square_tube_channel",
+          "notes": "Construction: solid drum minus one annular channel; the FLOOR IS FLAT, which is the point. The former is emitted as ONE welded CAD solid with one cut through bore, so it costs exactly one collision solid per former (sdk/_core/v0/exact_collisions.py:94-118 is 1:1 with visuals). Groove root radius, bend radius and bore all come from binding former_seat_to_groove; nothing here is authored twice.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "groove_depth_ratio",
+              "rationale": "Groove depth as a fraction of former_outer_r_m. Pool: 0.061 (rotary_draw_wrap_wheel, 0.004/0.066), 0.070 (multi_radius_stepped, 0.00204/0.029), 0.128 (pedestal_ladder_rail, 0.011/0.086), 0.172 (cast_bench_mimic, 0.011/0.064), 0.198 (square_tube_channel, 0.017/0.086). Carried as a ratio so the groove tracks the former when former_outer_r_m sweeps 0.029 .. 0.086.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "former_height_m",
+              "rationale": "Overall axial height of the former. Pool: 0.018 (hand_lever_plier L347), 0.035 (cast_bench_mimic L73-L75), 0.045 (ram_tripod L46), 0.058 (square_tube_channel L26).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "channel_height_ratio",
+              "rationale": "Flat-bottom channel height as a fraction of the former height. Source L26-L28: (0.047 - 0.011)/0.058 = 0.621.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.004,
+              "minimum": 0.001,
+              "mode": "independent",
+              "name": "channel_overcut_m",
+              "rationale": "Radial overcut of the annular cutter beyond the drum so the channel opens cleanly. Source L80: circle(DIE_OUTER_RADIUS + 0.002).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_manual_pipe_bender_var_former_profile_square_tube_die",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L28",
+            "model.py:L75-L87",
+            "model.py:L553-L582"
+          ]
+        },
+        {
+          "evidence": "one revolved lathe section, 3 bands radius_factors (1.00,0.84,0.68), groove depth min(R(0.105-0.015i), h0.34), 6 profile points per band, 2 dark shoulder annuli",
+          "implementation_function": "_former_profile_multi_radius_stepped_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "former_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_bore_axis",
+              "part": "bending_former",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "former_outer_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "former_underside",
+              "part": "bending_former",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "groove_mid_z_m",
+                "radius": "groove_root_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_groove",
+              "part": "bending_former",
+              "role": "provider"
+            }
+          ],
+          "name": "multi_radius_stepped",
+          "notes": "Construction: ONE revolved lathe section (L96-L103), not stacked cylinders. The former is emitted as ONE welded CAD solid with one cut through bore, so it costs exactly one collision solid per former (sdk/_core/v0/exact_collisions.py:94-118 is 1:1 with visuals). Groove root radius, bend radius and bore all come from binding former_seat_to_groove; nothing here is authored twice.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "groove_depth_ratio",
+              "rationale": "Groove depth as a fraction of former_outer_r_m. Pool: 0.061 (rotary_draw_wrap_wheel, 0.004/0.066), 0.070 (multi_radius_stepped, 0.00204/0.029), 0.128 (pedestal_ladder_rail, 0.011/0.086), 0.172 (cast_bench_mimic, 0.011/0.064), 0.198 (square_tube_channel, 0.017/0.086). Carried as a ratio so the groove tracks the former when former_outer_r_m sweeps 0.029 .. 0.086.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "former_height_m",
+              "rationale": "Overall axial height of the former. Pool: 0.018 (hand_lever_plier L347), 0.035 (cast_bench_mimic L73-L75), 0.045 (ram_tripod L46), 0.058 (square_tube_channel L26).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                2,
+                3,
+                4
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "band_count",
+              "rationale": "Axial bending-radius bands. Source L323: radius_factors has 3 entries and band height is height/3.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "radius_step_ratio",
+              "rationale": "Radius decrement per band. Source L317: factors (1.00, 0.84, 0.68), i.e. a constant 0.16 step. Groove depth per band is NOT free - L79 derives it as min(R*(0.105 - 0.015*i), band_h*0.34).",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_manual_pipe_bender_var_former_profile_multi_radius_stepped_di",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L64-L136",
+            "model.py:L316-L344",
+            "model.py:L409-L436"
+          ]
+        },
+        {
+          "evidence": "300 deg sector (61 samples 30..330 deg), web at groove root 0.062 x 0.028 between two 0.066 flanges 0.0045 thick, hub circle(0.030), clamp lug 0.036x0.030, bore 0.0084, mouth open toward +X",
+          "implementation_function": "_former_profile_rotary_draw_wrap_wheel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "former_bore_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_bore_axis",
+              "part": "bending_former",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "former_outer_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "former_underside",
+              "part": "bending_former",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin_z": "groove_mid_z_m",
+                "radius": "groove_root_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "former_groove",
+              "part": "bending_former",
+              "role": "provider"
+            }
+          ],
+          "name": "rotary_draw_wrap_wheel",
+          "notes": "Construction: sector web + two sector flanges + hub + clamp lug, one solid, one bore. The former is emitted as ONE welded CAD solid with one cut through bore, so it costs exactly one collision solid per former (sdk/_core/v0/exact_collisions.py:94-118 is 1:1 with visuals). Groove root radius, bend radius and bore all come from binding former_seat_to_groove; nothing here is authored twice.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "groove_depth_ratio",
+              "rationale": "Groove depth as a fraction of former_outer_r_m. Pool: 0.061 (rotary_draw_wrap_wheel, 0.004/0.066), 0.070 (multi_radius_stepped, 0.00204/0.029), 0.128 (pedestal_ladder_rail, 0.011/0.086), 0.172 (cast_bench_mimic, 0.011/0.064), 0.198 (square_tube_channel, 0.017/0.086). Carried as a ratio so the groove tracks the former when former_outer_r_m sweeps 0.029 .. 0.086.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "former_height_m",
+              "rationale": "Overall axial height of the former. Pool: 0.018 (hand_lever_plier L347), 0.035 (cast_bench_mimic L73-L75), 0.045 (ram_tripod L46), 0.058 (square_tube_channel L26).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 5.76,
+              "minimum": 3.66,
+              "mode": "independent",
+              "name": "wrap_span_rad",
+              "rationale": "Angular wrap of the grooved wheel; the remaining mouth faces +X for the pressure shoe and the tube lead-in. Source L48: 61 samples from 30 to 330 deg = 300 deg = 5.236 rad.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.008,
+              "minimum": 0.0025,
+              "mode": "independent",
+              "name": "wrap_flange_height_m",
+              "rationale": "Each of the two flanges that close the groove. Source L57-L62: 0.0045 above and below a 0.028 web inside a 0.045 thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_manual_pipe_bender_var_bender_topology_compact_rotary_draw_be",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L41-L86",
+            "model.py:L491-L504",
+            "model.py:L747-L767"
+          ]
+        }
+      ],
+      "component_type": "former tooling",
+      "name": "former_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "0.300x0.140x0.012 cast plate, two 0.014 cheeks at y +-0.061, feed pad 0.060x0.108x0.018, pivot boss circle(0.027)x0.006, four real circle(0.0048) through-holes",
+          "implementation_function": "_mount_bench_plate_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "mount_height_m",
+                "radius": "mount_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "mount_deck",
+              "part": "mount_base",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "mount_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "ground_plane",
+              "part": "mount_base",
+              "role": "provider"
+            }
+          ],
+          "name": "bench_plate",
+          "notes": "mount_height_m expression: deck_thickness_m. mount is an INDEPENDENT slot, and the pool proves it: mount_vise_mounted_frame changes nothing above the spindle - only SPINDLE_Z 0.936 -> 0.336 (L27-L29) plus a new base shape - while every head visual keeps its local offsets. The host's spindle height is therefore derived from the mount, never authored per host. hand_lever_plier has no base of its own, so this mount derives a clamp collar around the tool's lower tang (binding mount_deck_to_host, corner mount_on_hand_tool).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "deck_x_m",
+              "rationale": "Cast plate length. Source L49: 0.300.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "deck_thickness_m",
+              "rationale": "Plate thickness. Source L49: 0.012.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.008,
+              "minimum": 0.003,
+              "mode": "independent",
+              "name": "bolt_hole_r_m",
+              "rationale": "Through-holes that make the base read as a bench tool. Source L62: circle(0.0048), cut for real.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                4,
+                6
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "bolt_hole_count",
+              "rationale": "Mounting holes. Source L61: 4.",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_picturex_0611__manual_pipe_bender__005__png_388a055eab4842619094fb0bea63f2a0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L46-L63",
+            "model.py:L173-L178"
+          ]
+        },
+        {
+          "evidence": "0.34x0.30x0.014 plate + 0.072 sq x 0.900 pedestal + 0.112x0.102x0.014 cap; four capsule slots (0.045x0.013 box unioned with two circle(0.0065) ends) cut through",
+          "implementation_function": "_mount_pedestal_floor_plate_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "mount_height_m",
+                "radius": "mount_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "mount_deck",
+              "part": "mount_base",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "mount_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "ground_plane",
+              "part": "mount_base",
+              "role": "provider"
+            }
+          ],
+          "name": "pedestal_floor_plate",
+          "notes": "mount_height_m expression: deck_thickness_default_m + pedestal_height_m. mount is an INDEPENDENT slot, and the pool proves it: mount_vise_mounted_frame changes nothing above the spindle - only SPINDLE_Z 0.936 -> 0.336 (L27-L29) plus a new base shape - while every head visual keeps its local offsets. The host's spindle height is therefore derived from the mount, never authored per host. hand_lever_plier has no base of its own, so this mount derives a clamp collar around the tool's lower tang (binding mount_deck_to_host, corner mount_on_hand_tool).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.5,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "deck_x_m",
+              "rationale": "Floor plate length. Source L36: 0.34 x 0.30 x 0.014.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "pedestal_height_m",
+              "rationale": "Square pedestal column. Source L167: Box(0.072, 0.072, 0.900). The vise fork of the same host shortens it to 0.100 (mount_vise L176), so the range must reach both.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.11,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "pedestal_side_m",
+              "rationale": "Pedestal cross-section. Source L167: 0.072, and the record's author test L455-L458 pins it to +-0.003.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "anchor_slot_length_m",
+              "rationale": "Capsule anchor slot - a straight box unioned with two end circles and cut through. Source L37-L38: 0.058 long x 0.013 wide.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_manual_pipe_bender_var_bender_topology_hickey_style_offset_be",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L33-L56",
+            "model.py:L161-L177",
+            "model.py:L444-L460"
+          ]
+        },
+        {
+          "evidence": "0.240x0.160x0.014 saddle at z 0.200, 0.020x0.132x0.200 vertical tongue, two 0.028x0.106x0.012 grip ribs at z 0.052/0.148 standing 4 mm proud, two 0.070x0.012x0.045 gussets; SPINDLE_Z 0.936 -> 0.336 is the only head change",
+          "implementation_function": "_mount_vise_tongue_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "mount_height_m",
+                "radius": "mount_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "mount_deck",
+              "part": "mount_base",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "mount_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "ground_plane",
+              "part": "mount_base",
+              "role": "provider"
+            }
+          ],
+          "name": "vise_tongue",
+          "notes": "mount_height_m expression: saddle_z_m + 0.014. mount is an INDEPENDENT slot, and the pool proves it: mount_vise_mounted_frame changes nothing above the spindle - only SPINDLE_Z 0.936 -> 0.336 (L27-L29) plus a new base shape - while every head visual keeps its local offsets. The host's spindle height is therefore derived from the mount, never authored per host. hand_lever_plier has no base of its own, so this mount derives a clamp collar around the tool's lower tang (binding mount_deck_to_host, corner mount_on_hand_tool).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.08,
+              "mode": "independent",
+              "name": "saddle_z_m",
+              "rationale": "Height of the saddle underside above the jaw datum. Source L36: 0.200.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.16,
+              "mode": "independent",
+              "name": "saddle_x_m",
+              "rationale": "Saddle plate length. Source L34: 0.240 x 0.160 x 0.014.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.012,
+              "mode": "independent",
+              "name": "tongue_thickness_m",
+              "rationale": "Vertical tongue clamped by the vise jaws. Source L60: box(0.020, 0.132, 0.200).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.008,
+              "minimum": 0.002,
+              "mode": "independent",
+              "name": "grip_rib_proud_m",
+              "rationale": "How far each grip rib stands proud of the tongue face - this IS the jaw contact plane. Source L61-L62: ribs are 0.028 wide on a 0.020 tongue, so (0.028 - 0.020)/2 = 0.004 per face.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_manual_pipe_bender_var_mount_vise_mounted_frame",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L27-L29",
+            "model.py:L32-L64",
+            "model.py:L161-L200",
+            "model.py:L452-L470"
+          ]
+        },
+        {
+          "evidence": "0.46x0.36x0.025 filleted deck, four caster stations at (+-0.180,+-0.135) with mount plate + swivel + crown + two fork legs + XZ axle unioned in; wheels circle(0.040) x 0.056 wide; four pedestal gussets",
+          "implementation_function": "_mount_caster_deck_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin_z": "mount_height_m",
+                "radius": "mount_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "mount_deck",
+              "part": "mount_base",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin_z": "0.0",
+                "radius": "mount_footprint_r_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "ground_plane",
+              "part": "mount_base",
+              "role": "provider"
+            }
+          ],
+          "name": "caster_deck",
+          "notes": "mount_height_m expression: 0.025. mount is an INDEPENDENT slot, and the pool proves it: mount_vise_mounted_frame changes nothing above the spindle - only SPINDLE_Z 0.936 -> 0.336 (L27-L29) plus a new base shape - while every head visual keeps its local offsets. The host's spindle height is therefore derived from the mount, never authored per host. hand_lever_plier has no base of its own, so this mount derives a clamp collar around the tool's lower tang (binding mount_deck_to_host, corner mount_on_hand_tool). DELIBERATE DEVIATION: casters become real parts with a vertical swivel joint and a spin joint through the wheel centre (MECHANICAL_PRIORS section 5). The source gives them neither - four rigid wheel visuals on `stand` (L163-L171) - and the deck is re-grounded so the contact patch is z=0 instead of the source's z=-0.108.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "deck_x_m",
+              "rationale": "Welded mobile deck. Source L36: box(0.46, 0.36, 0.025) filleted 0.018, and the author test L466-L467 requires > 0.45 x 0.35.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.06,
+              "minimum": 0.024,
+              "mode": "independent",
+              "name": "caster_wheel_r_m",
+              "rationale": "Caster wheel radius. Source L55: circle(0.040) on the XZ workplane.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.08,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "caster_wheel_width_m",
+              "rationale": "Caster wheel width. Source L55: extrude(0.028, both=True) = 0.056.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.003,
+              "minimum": 0.0008,
+              "mode": "independent",
+              "name": "fork_side_clearance_m",
+              "rationale": "Axial gap between each fork leg and the wheel face. DELIBERATE DEVIATION: the source has NO such gap - its fork legs sit at y +-0.019 with 0.012 thickness (inner faces +-0.013) around a 0.056-wide wheel (L48-L50), i.e. the wheel is wider than its own fork. That is legal only while the wheel is a visual on the same part. The rebuild makes casters real parts with swivel and spin joints per MECHANICAL_PRIORS section 5, so the fork must actually clear the wheel.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_manual_pipe_bender_var_mount_wheeled_floor_stand",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L32-L52",
+            "model.py:L54-L57",
+            "model.py:L154-L184",
+            "model.py:L457-L481"
+          ]
+        }
+      ],
+      "component_type": "grounded base",
+      "name": "mount",
+      "required": true
+    }
+  ],
+  "slug": "manual_pipe_bender",
+  "source_map_path": "articraft_template_authoring/source_maps/manual_pipe_bender.md",
+  "source_map_sha256": "17f7386f2ba288c8593e941b8ad00c2059590145fd766873038ef26cc5ad7b64"
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "name": "fence",
+  "generator": "fence",
+  "base_config": {
+    "panel_style": "mesh_infill",
+    "feet_style": "bridge_feet",
+    "panel_count": 2,
+    "rest_mode": "zigzag",
+    "material_style": "safety_orange",
+    "panel_len_scale": 1.0,
+    "panel_height_scale": 1.0,
+    "infill_density_scale": 1.0,
+    "foot_spread_scale": 1.0,
+    "joint_limit_scale": 1.0,
+    "rest_fold_scale": 1.0
+  },
+  "edits": [
+    {
+      "kind": "component",
+      "target": "panel_style",
+      "label": "Panel infill module",
+      "values": ["mesh_infill", "solid_half_panel"]
+    },
+    {
+      "kind": "count",
+      "target": "panel_count",
+      "label": "Panel count",
+      "values": [3, 4, 10]
+    },
+    {
+      "kind": "material",
+      "target": "panel_infill",
+      "label": "Panel infill material",
+      "values": [
+        {
+          "name": "brushed silver infill",
+          "material_id": "blenderkit:c3ab2079-1dc6-4b6b-94d9-c56eb2339e91:3f4ded88-44d7-484c-8376-8a29ef92d331",
+          "rgba": [0.63, 0.67, 0.71, 1.0],
+          "metallic": 0.86,
+          "roughness": 0.24
+        },
+        {
+          "name": "white enamel infill",
+          "material_id": "blenderkit:802fed00-3ed7-4fa1-8d0d-c4e264e59148:2c78ac26-ff2d-47ba-9b7b-a963b0b399e7",
+          "rgba": [0.88, 0.88, 0.85, 1.0],
+          "metallic": 0.05,
+          "roughness": 0.30
+        },
+        {
+          "name": "polished brass infill",
+          "material_id": "blenderkit:a20dfdf1-11e3-4787-98b4-7318060ecd80:209f75fd-8eda-41dd-bf69-22a44b784583",
+          "rgba": [0.78, 0.56, 0.16, 1.0],
+          "metallic": 0.92,
+          "roughness": 0.20
+        }
+      ]
+    },
+    {
+      "kind": "size",
+      "target": "panel_len_scale",
+      "label": "Panel length scale",
+      "values": [0.90, 1.12]
+    }
+  ],
+  "render": {
+    "backend": "blender",
+    "frame_scope": "edit_group",
+    "compact_comparison_kinds": ["count"],
+    "normalize_comparison_foreground": true,
+    "views": ["front_iso"],
+    "poses": ["closed"],
+    "image_size": [1600, 1120],
+    "supersample": 1,
+    "shadow_strength": 0.6
+  }
+}

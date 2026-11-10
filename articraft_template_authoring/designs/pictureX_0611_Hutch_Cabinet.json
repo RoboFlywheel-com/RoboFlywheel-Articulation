@@ -1,0 +1,926 @@
+{
+  "assembly_notes": "One carcass part carries the deeper base cabinet, the deck, the shallower upper case, the crown and the back treatment. Both tiers publish their own clear opening, so the upper front mechanism and the lower units never share geometry: leaf and tray sizes, hinge lines, track runs, cubby pitch and travel all derive from the tier they belong to and from N. Every combination builds and no overlap allowance is emitted.",
+  "bindings": [
+    {
+      "binding_id": "upper_opening_to_front",
+      "consumer": "upper_front.upper_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_width_m"
+          ],
+          "expression": "upper clear width / leaves - reveals",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "upper_leaf_w_m",
+          "rationale": "Upper leaf width follows the upper case.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "upper_height_m"
+          ],
+          "expression": "upper clear height - reveals",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "upper_leaf_h_m",
+          "rationale": "Upper leaf height follows the upper case.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "upper_height_m"
+          ],
+          "expression": "clear width - leaf width for a bypass, clear height for a tambour",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "upper_travel_m",
+          "rationale": "Every upper stroke is bounded by its own opening.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "crown_form.upper_opening"
+    },
+    {
+      "binding_id": "base_opening_to_front",
+      "consumer": "lower_front.lower_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_width_m",
+            "lower_unit_count"
+          ],
+          "expression": "base clear width / N - reveals",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "lower_unit_w_m",
+          "rationale": "Lower unit width follows the base opening and N.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "base_height_m",
+            "lower_unit_count"
+          ],
+          "expression": "base clear height, or base clear height / N for stacked trays",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "lower_unit_h_m",
+          "rationale": "Stacked trays split the base height by N.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "base_depth_m"
+          ],
+          "expression": "box depth * lower_travel_ratio",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "lower_travel_m",
+          "rationale": "Tray travel keeps the runners engaged at full extension.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "crown_form.base_opening"
+    },
+    {
+      "binding_id": "upper_back_shelves",
+      "consumer": "back_treatment.upper_back",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_width_m"
+          ],
+          "expression": "upper clear width",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "shelf_span_m",
+          "rationale": "Shelves and plate rails span the real upper opening.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "upper_height_m",
+            "upper_shelf_count"
+          ],
+          "expression": "upper clear height / (N + 1)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "shelf_pitch_m",
+          "rationale": "Shelf pitch follows the upper case and N.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "crown_form.upper_opening"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "hutch_double_doors_identity",
+      "applies_to": {
+        "candidates": [
+          "double_doors"
+        ],
+        "slot": "lower_front"
+      },
+      "required_author_checks": [
+        "category_anchor: one two-tier carcass",
+        "category_anchor: the hutch has a lower storage unit",
+        "category_anchor: the upper case has its own front or shelves"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "lower_unit",
+          "joint_type": "revolute",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "lower_unit_count",
+          "role": "lower_unit"
+        }
+      ]
+    },
+    {
+      "anchor_id": "hutch_drawer_bank_identity",
+      "applies_to": {
+        "candidates": [
+          "drawer_bank"
+        ],
+        "slot": "lower_front"
+      },
+      "required_author_checks": [
+        "category_anchor: one two-tier carcass",
+        "category_anchor: the hutch has a lower storage unit",
+        "category_anchor: the upper case has its own front or shelves"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "lower_unit",
+          "joint_type": "prismatic",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "lower_unit_count",
+          "role": "lower_unit"
+        }
+      ]
+    },
+    {
+      "anchor_id": "hutch_wine_cubby_grid_identity",
+      "applies_to": {
+        "candidates": [
+          "wine_cubby_grid"
+        ],
+        "slot": "lower_front"
+      },
+      "required_author_checks": [
+        "category_anchor: one two-tier carcass",
+        "category_anchor: the hutch has a lower storage unit",
+        "category_anchor: the upper case has its own front or shelves"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "lower_unit",
+          "joint_type": "prismatic",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "lower_unit_count",
+          "role": "lower_unit"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "base opening width >= N * (minimum leaf width + reveal) for side-by-side units, and base opening height >= N * (minimum front height + reveal) for stacked trays",
+      "item_slot": "lower_front",
+      "name": "lower_unit_count",
+      "spacing_expression": "the base opening is split into N equal cells for leaves and cubby columns, or into N stacked levels for trays",
+      "values": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "host_capacity_expression": "upper clear height >= (N + 1) * minimum shelf gap plus N * shelf thickness",
+      "item_slot": "back_treatment",
+      "name": "upper_shelf_count",
+      "spacing_expression": "shelves are evenly pitched over the upper clear height: z_i = lo + (i+1) * (hi - lo) / (N + 1)",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Glazed leaves with muntins on vertical hinges.",
+          "implementation_function": "_upper_front_glass_hinged_doors_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "upper opening width"
+              },
+              "frame": {},
+              "kind": "axis",
+              "name": "upper_mount",
+              "part": "upper_unit",
+              "role": "consumer"
+            }
+          ],
+          "name": "glass_hinged_doors",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.85,
+              "minimum": 1.3,
+              "mode": "independent",
+              "name": "upper_swing_rad",
+              "rationale": "Fork outward travel of a glazed upper leaf.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hutch_cabinet_fork_upper_glass_hinged_doors_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L172-L246"
+          ]
+        },
+        {
+          "evidence": "Open upper bay with real fixed shelves and no leaf.",
+          "implementation_function": "_upper_front_open_shelves_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "upper opening width"
+              },
+              "frame": {},
+              "kind": "plane",
+              "name": "upper_mount",
+              "part": "upper_unit",
+              "role": "consumer"
+            }
+          ],
+          "name": "open_shelves",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "open_bay_reveal_m",
+              "rationale": "Fork reveal between the open bay and the case edge.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hutch_cabinet_fork_open_upper_shelves_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L116-L257"
+          ]
+        },
+        {
+          "evidence": "Glazed leaves on offset upper tracks.",
+          "implementation_function": "_upper_front_sliding_glass_doors_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "upper opening width"
+              },
+              "frame": {},
+              "kind": "plane",
+              "name": "upper_mount",
+              "part": "upper_unit",
+              "role": "consumer"
+            }
+          ],
+          "name": "sliding_glass_doors",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "upper_slide_travel_m",
+              "rationale": "Fork bypass travel of an upper glazed leaf.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hutch_cabinet_fork_sliding_glass_upper_doors_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L120-L280"
+          ]
+        },
+        {
+          "evidence": "Slatted curtain that rolls up behind the case.",
+          "implementation_function": "_upper_front_tambour_roll_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "upper opening width"
+              },
+              "frame": {},
+              "kind": "plane",
+              "name": "upper_mount",
+              "part": "upper_unit",
+              "role": "consumer"
+            }
+          ],
+          "name": "tambour_roll",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.48,
+              "minimum": 0.16,
+              "mode": "independent",
+              "name": "tambour_travel_m",
+              "rationale": "Fork roll-up travel of the slat curtain.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hutch_cabinet_fork_tambour_roll_front_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L95-L155"
+          ]
+        },
+        {
+          "evidence": "Bottom-pivoted fall front forming a writing surface.",
+          "implementation_function": "_upper_front_drop_front_desk_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "upper opening width"
+              },
+              "frame": {},
+              "kind": "axis",
+              "name": "upper_mount",
+              "part": "upper_unit",
+              "role": "consumer"
+            }
+          ],
+          "name": "drop_front_desk",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.6,
+              "minimum": 1.3,
+              "mode": "independent",
+              "name": "drop_front_rad",
+              "rationale": "Fork fall-front travel to the horizontal.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hutch_cabinet_fork_drop_front_secretary_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L169-L234"
+          ]
+        },
+        {
+          "evidence": "Top-hinged flap lifting up and out.",
+          "implementation_function": "_upper_front_lift_up_flap_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "upper opening width"
+              },
+              "frame": {},
+              "kind": "axis",
+              "name": "upper_mount",
+              "part": "upper_unit",
+              "role": "consumer"
+            }
+          ],
+          "name": "lift_up_flap",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.6,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "lift_flap_rad",
+              "rationale": "Fork lift-up travel of the upper flap.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hutch_cabinet_fork_lift_up_flap_upper_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L120-L260"
+          ]
+        }
+      ],
+      "component_type": "hinged glazed upper doors",
+      "name": "upper_front",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Panelled leaves on the base cabinet.",
+          "implementation_function": "_lower_front_double_doors_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "base opening width"
+              },
+              "frame": {},
+              "kind": "axis",
+              "name": "lower_mount",
+              "part": "lower_unit",
+              "role": "consumer"
+            }
+          ],
+          "name": "double_doors",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.9,
+              "minimum": 1.3,
+              "mode": "independent",
+              "name": "lower_swing_rad",
+              "rationale": "Fork outward travel of a lower leaf.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hutch_cabinet_fork_lower_double_door_base_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L55-L94"
+          ]
+        },
+        {
+          "evidence": "Hollow trays stacked in the base cabinet.",
+          "implementation_function": "_lower_front_drawer_bank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "base opening width"
+              },
+              "frame": {},
+              "kind": "plane",
+              "name": "lower_mount",
+              "part": "lower_unit",
+              "role": "consumer"
+            }
+          ],
+          "name": "drawer_bank",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "lower_travel_ratio",
+              "rationale": "Open stroke as a fraction of the real box depth; the runners stay engaged at full extension.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hutch_cabinet_fork_lower_drawer_bank_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L214-L234"
+          ]
+        },
+        {
+          "evidence": "Cubby grid filling the base opening.",
+          "implementation_function": "_lower_front_wine_cubby_grid_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "base opening width"
+              },
+              "frame": {},
+              "kind": "plane",
+              "name": "lower_mount",
+              "part": "lower_unit",
+              "role": "consumer"
+            }
+          ],
+          "name": "wine_cubby_grid",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.026,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "cubby_rib_t_m",
+              "rationale": "Fork cubby rib thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hutch_cabinet_fork_wine_cubby_lower_grid_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L120-L260"
+          ]
+        }
+      ],
+      "component_type": "hinged lower doors",
+      "name": "lower_front",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Stepped moulded cornice over the upper case.",
+          "implementation_function": "_crown_form_moulded_cornice_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "upper clear height",
+                "width": "upper clear width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "upper_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "height": "base clear height",
+                "width": "base clear width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "base_opening",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "moulded_cornice",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.5,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "Origin 001 hutch width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "base_depth_m",
+              "rationale": "Origin 001 base depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.0,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "base_height_m",
+              "rationale": "Origin 001 base cabinet height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.15,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "upper_height_m",
+              "rationale": "Origin 001 upper case height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "cornice_step_m",
+              "rationale": "Origin 001 cornice projection.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hutch_cabinet__001__png_06992399ece7490a91f934345df0f0ba",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L50"
+          ]
+        },
+        {
+          "evidence": "Arched broken pediment over the upper case.",
+          "implementation_function": "_crown_form_arched_pediment_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "upper clear height",
+                "width": "upper clear width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "upper_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "height": "base clear height",
+                "width": "base clear width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "base_opening",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "arched_pediment",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.4,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "Origin 001 hutch width under an arched top.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "base_depth_m",
+              "rationale": "Origin 001 base depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.98,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "base_height_m",
+              "rationale": "Origin 001 base cabinet height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "upper_height_m",
+              "rationale": "Origin 001 upper case height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.18,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "pediment_rise_m",
+              "rationale": "Origin 001 arch rise over the upper case.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hutch_cabinet__001__png_06992399ece7490a91f934345df0f0ba",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L51-L124"
+          ]
+        }
+      ],
+      "component_type": "stepped moulded crown",
+      "name": "crown_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Plain boarded back behind the upper bay.",
+          "implementation_function": "_back_treatment_plain_back_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "upper clear width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "upper_back",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "plain_back",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.024,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "back_board_t_m",
+              "rationale": "Fork back board thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hutch_cabinet_fork_open_upper_shelves_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L116-L200"
+          ]
+        },
+        {
+          "evidence": "Grooved plate rack with rails and spindles.",
+          "implementation_function": "_back_treatment_plate_rack_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "upper clear width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "upper_back",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "plate_rack",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.026,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "plate_rail_t_m",
+              "rationale": "Fork plate rail thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hutch_cabinet_fork_plate_rack_back_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L120-L260"
+          ]
+        }
+      ],
+      "component_type": "plain boarded back",
+      "name": "back_treatment",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Hutch_Cabinet",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Hutch_Cabinet.md",
+  "source_map_sha256": "e01440737c503df9420c18b585ed41eafa7a12a25b43ace53e95f93acd18587a"
+}

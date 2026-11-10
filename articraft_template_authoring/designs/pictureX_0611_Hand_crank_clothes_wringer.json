@@ -1,0 +1,352 @@
+{
+  "assembly_notes": "Hand-crank clothes wringer with one rigid frame, an exposed geared horizontal roller bank, two vertically sliding pressure-bearing carriers, and a side crank. The five independent core slots are support_mount (4), pressure_mechanism (4), crank_style (2), feed_module (2), and roller_bank (1), giving 4*4*2*2*1 = 64 core combinations. roller_count is multiplicity N in {2,3}, so raw coverage is 128. N=2 emits one fixed lower roller and one pressure-carried upper roller; N=3 emits two fixed rollers and one pressure-carried upper roller, with every roller receiving a real bored bearing pair and registered continuous spin joint. The frame height, fixed bearing rows, upper carrier position, top beam, pressure bridge, crank axis, and exposed gear train all derive from N and roller radius, so no combination is gated. The fixed crank is one part; the folding crank adds a separate bounded-revolute handle. The plain apron is welded to the frame; the shelf adds a separate bounded-revolute feed part. Clamp, floor, and wall supports alter the primary mounting silhouette independently. The exposed-twin-gear fork is deliberately rejected as a duplicate of the origin rather than counted as a false candidate. roller_length_m, roller_radius_m, and frame_height_m are continuous, and palette is non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "support_mount_identity",
+      "applies_to": {
+        "slot": "support_mount",
+        "candidates": [
+          "classic_boss_clamps",
+          "reinforced_table_clamps",
+          "freestanding_floor_frame",
+          "wall_bench_bracket"
+        ]
+      },
+      "required_author_checks": [
+        "category_anchor: hand-crank wringer nip and drive chain",
+        "category_anchor: rollers stay journalled in their bearing bores",
+        "category_anchor: support_mount identity"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {"role": "frame", "exact_count": 1},
+        {"role": "pressure_block", "exact_count": 2},
+        {"role": "crank_drive", "exact_count": 1}
+      ]
+    },
+    {
+      "anchor_id": "pressure_mechanism_identity",
+      "applies_to": {
+        "slot": "pressure_mechanism",
+        "candidates": [
+          "centre_screw",
+          "overhead_screw_bridge",
+          "spring_loaded_bridge",
+          "dual_handwheels"
+        ]
+      },
+      "required_author_checks": [
+        "category_anchor: hand-crank wringer nip and drive chain",
+        "category_anchor: pressure_mechanism identity"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {"role": "pressure_block", "exact_count": 2}
+      ]
+    },
+    {
+      "anchor_id": "crank_style_identity",
+      "applies_to": {
+        "slot": "crank_style",
+        "candidates": [
+          "fixed_bent_crank",
+          "folding_park_crank"
+        ]
+      },
+      "required_author_checks": [
+        "category_anchor: hand-crank wringer nip and drive chain",
+        "category_anchor: crank_style identity"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {"role": "crank_drive", "exact_count": 1}
+      ]
+    },
+    {
+      "anchor_id": "feed_module_identity",
+      "applies_to": {
+        "slot": "feed_module",
+        "candidates": [
+          "plain_front_apron",
+          "fold_down_shelf"
+        ]
+      },
+      "required_author_checks": [
+        "category_anchor: feed_module identity"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {"role": "frame", "exact_count": 1}
+      ]
+    },
+    {
+      "anchor_id": "roller_bank_identity",
+      "applies_to": {
+        "slot": "roller_bank",
+        "candidates": [
+          "indexed_parallel_roller_bank"
+        ]
+      },
+      "required_author_checks": [
+        "category_anchor: hand-crank wringer nip and drive chain",
+        "category_anchor: rollers stay journalled in their bearing bores",
+        "category_anchor: roller_bank multiplicity"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {"role": "roller", "count_from": "roller_count"}
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "roller_count",
+      "item_slot": "roller_bank",
+      "values": [2, 3],
+      "spacing_expression": "roller i uses z_i = lower_axis_z + i*(2*roller_radius_m + 0.002); the top indexed roller is pressure-carried and all lower indexed rollers are frame-carried",
+      "host_capacity_expression": "top beam and side rails derive upward from upper_axis_z = lower_axis_z + (roller_count-1)*(2*roller_radius_m+0.002), plus pressure travel, bearing half-height, and 14 mm headroom"
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "name": "support_mount",
+      "component_type": "wringer support and installation structure",
+      "required": true,
+      "candidates": [
+        {
+          "name": "classic_boss_clamps",
+          "implementation_function": "_support_mount_classic_boss_clamps_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex_0611__hand_crank_clothes_wringer__001__png_528e7f40341c4a72899b19b423e8248b",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L125-L137", "model.py:L274-L296"],
+          "evidence": "Two compact bored bosses under the beam carry prismatic clamp screws and broad pads.",
+          "notes": ""
+        },
+        {
+          "name": "reinforced_table_clamps",
+          "implementation_function": "_support_mount_reinforced_table_clamps_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex0611_hand_crank_clothes_wringer_fork_table_clamp_frame_20260713",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L127-L150", "model.py:L286-L329"],
+          "evidence": "Deep brackets, triangular gussets, threaded bushings, retained pads, and cross handles visibly replace the compact boss mounts.",
+          "notes": ""
+        },
+        {
+          "name": "freestanding_floor_frame",
+          "implementation_function": "_support_mount_freestanding_floor_frame_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex0611_hand_crank_clothes_wringer_fork_freestanding_floor_frame_20260713",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L84-L142"],
+          "evidence": "Four tall legs terminate in paired foot bars and pads and are tied by base crosses and diagonal braces.",
+          "notes": ""
+        },
+        {
+          "name": "wall_bench_bracket",
+          "implementation_function": "_support_mount_wall_bench_bracket_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex0611_hand_crank_clothes_wringer_fork_wall_bench_bracket_20260713",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L179-L214"],
+          "evidence": "A rear plate with four mounting bolts and two triangular gussets creates a compact wall or bench installation topology.",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "pressure_mechanism",
+      "component_type": "upper roller pressure loading mechanism",
+      "required": true,
+      "candidates": [
+        {
+          "name": "centre_screw",
+          "implementation_function": "_pressure_mechanism_centre_screw_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex_0611__hand_crank_clothes_wringer__001__png_528e7f40341c4a72899b19b423e8248b",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L251-L272"],
+          "evidence": "One threaded stem passes through the top beam and carries a cross handle and hub.",
+          "notes": ""
+        },
+        {
+          "name": "overhead_screw_bridge",
+          "implementation_function": "_pressure_mechanism_overhead_screw_bridge_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex0611_hand_crank_clothes_wringer_fork_pressure_screw_bridge_20260713",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L152-L181", "model.py:L285-L338"],
+          "evidence": "Twin posts and gussets support a crossbar and bushing; a knurled screw drives a pressure bar with two pads.",
+          "notes": ""
+        },
+        {
+          "name": "spring_loaded_bridge",
+          "implementation_function": "_pressure_mechanism_spring_loaded_bridge_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex0611_hand_crank_clothes_wringer_fork_spring_loaded_bridge_20260713",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L155-L175", "model.py:L204-L241"],
+          "evidence": "Guide posts, bridge bar, two helical springs, and seats visibly load the moving bearing blocks.",
+          "notes": ""
+        },
+        {
+          "name": "dual_handwheels",
+          "implementation_function": "_pressure_mechanism_dual_handwheels_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex0611_hand_crank_clothes_wringer_fork_dual_handwheel_pressure_20260714",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L255-L327"],
+          "evidence": "Two handwheel parts turn above the bearing lines on threaded posts tied by a transverse bar.",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "crank_style",
+      "component_type": "hand crank and grip topology",
+      "required": true,
+      "candidates": [
+        {
+          "name": "fixed_bent_crank",
+          "implementation_function": "_crank_style_fixed_bent_crank_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex_0611__hand_crank_clothes_wringer__001__png_528e7f40341c4a72899b19b423e8248b",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L205-L248"],
+          "evidence": "A single crank-drive part carries the swept bent arm, long grip, and end cap.",
+          "notes": ""
+        },
+        {
+          "name": "folding_park_crank",
+          "implementation_function": "_crank_style_folding_park_crank_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex0611_hand_crank_clothes_wringer_fork_folding_crank_handle_20260714",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L215-L282", "model.py:L369-L378"],
+          "evidence": "A crank stub with hinge ear and pin carries a separate handle through a bounded revolute park joint.",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "feed_module",
+      "component_type": "front laundry feed surface",
+      "required": true,
+      "candidates": [
+        {
+          "name": "plain_front_apron",
+          "implementation_function": "_feed_module_plain_front_apron_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex_0611__hand_crank_clothes_wringer__001__png_528e7f40341c4a72899b19b423e8248b",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L96-L100"],
+          "evidence": "The baseline has only a narrow fixed front apron ahead of the nip.",
+          "notes": ""
+        },
+        {
+          "name": "fold_down_shelf",
+          "implementation_function": "_feed_module_fold_down_shelf_build",
+          "interfaces": [],
+          "parameters": [],
+          "record_id": "rec_picturex0611_hand_crank_clothes_wringer_fork_fold_down_feed_shelf_20260714",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L151-L166", "model.py:L314-L341", "model.py:L439-L452"],
+          "evidence": "A broad perforated shelf with hinge barrels and side stops folds against frame knuckles on a bounded axis.",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "roller_bank",
+      "component_type": "indexed two-or-three roller bank",
+      "required": true,
+      "candidates": [
+        {
+          "name": "indexed_parallel_roller_bank",
+          "implementation_function": "_roller_bank_indexed_parallel_roller_bank_build",
+          "interfaces": [],
+          "parameters": [
+            {
+              "name": "roller_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.28,
+              "maximum": 0.42,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "rubber roller face width; derives beam span, bearing planes, and support footprint"
+            },
+            {
+              "name": "roller_radius_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.024,
+              "maximum": 0.04,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "roller radius; derives nip pitch, bearing height, gear tip radius, and host height"
+            },
+            {
+              "name": "frame_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.2,
+              "maximum": 0.3,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "requested frame height before roller-count headroom derivation"
+            },
+            {
+              "name": "bearing_plane_x_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "choices": [],
+              "depends_on": ["roller_length_m"],
+              "expression": "roller_length_m/2 + 0.022",
+              "rationale": "bearing blocks remain just outboard of the rubber face"
+            },
+            {
+              "name": "nip_centre_distance_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "choices": [],
+              "depends_on": ["roller_radius_m"],
+              "expression": "2*roller_radius_m + 0.002",
+              "rationale": "adjacent roller axes remain one diameter plus the closed wringing gap apart"
+            }
+          ],
+          "record_id": "rec_picturex0611_hand_crank_clothes_wringer_fork_three_roller_feed_path_20260713",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L215-L400"],
+          "evidence": "One index-general loop emits every roller, its two bearing interfaces, and a registered spin joint; N=3 proves real part, joint, and host growth while the origin supplies N=2.",
+          "notes": "The single candidate owns the placement law. roller_count is multiplicity and therefore excluded from core arithmetic."
+        }
+      ]
+    }
+  ],
+  "slug": "pictureX_0611_Hand_crank_clothes_wringer",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Hand_crank_clothes_wringer.md",
+  "source_map_sha256": "0999d3891503c1676f172b653151e5872a32adfae06f46de3d4f55e296bf0ccf"
+}

@@ -1,0 +1,1202 @@
+{
+  "assembly_notes": "Batch ice-cream freezer on one vertical axis. The grounded `vessel` part carries the body and the freezing cavity of the active vessel candidate; every candidate exports the same three numbers - mouth height, rim radius and cavity depth - so the lid, mount, dasher and drive fit without a compatibility gate. A `drive_mount` part - a posted bridge yoke, a cast shoulder arch, or a low flat bearing web - is FIXED on the rim and carries a bored bearing sleeve on the axis; the `drive` (hand crank or motor spindle) turns CONTINUOUS in that sleeve and the `dasher` turns CONTINUOUS on the same axis, mimicking the drive so the scrape and the input can never disagree. dasher_blade_count blades are set at even yaws and staggered heights, each reaching to 4 mm from the wall. The `access_lid` seats on the rim and either lifts straight off along the axis or swings on a real rim hinge; its centre bore clears the dasher shaft with a 0.8 mm running fit in both cases, and the lift-off travel stops below the mount bridge. vessel_radius_m, vessel_depth_m and crank_throw_m are honest continuous parameters deriving the cavity, shaft length, blade reach, rim, lid, post height and crank arm; palette, stave seams, bands and vent slots are non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "vessel_body_identity",
+      "applies_to": {
+        "candidates": [
+          "countertop_bowl",
+          "coopered_bucket",
+          "upright_tub"
+        ],
+        "slot": "vessel_body"
+      },
+      "required_author_checks": [
+        "category_anchor: batch freezer vessel, dasher and drive chain",
+        "category_anchor: the dasher scrapes the wall without cutting it",
+        "category_anchor: vessel_body identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "drive_mount",
+          "joint_type": "fixed",
+          "parent_role": "vessel"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "drive",
+          "joint_type": "continuous",
+          "parent_role": "drive_mount"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "dasher",
+          "joint_type": "continuous",
+          "parent_role": "drive_mount"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "vessel"
+        },
+        {
+          "exact_count": 1,
+          "role": "dasher"
+        },
+        {
+          "exact_count": 1,
+          "role": "access_lid"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive_mount"
+        }
+      ]
+    },
+    {
+      "anchor_id": "dasher_form_identity",
+      "applies_to": {
+        "candidates": [
+          "paddle_blades",
+          "scraper_bars",
+          "radial_plates"
+        ],
+        "slot": "dasher_form"
+      },
+      "required_author_checks": [
+        "category_anchor: batch freezer vessel, dasher and drive chain",
+        "category_anchor: the dasher scrapes the wall without cutting it",
+        "category_anchor: dasher_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "drive_mount",
+          "joint_type": "fixed",
+          "parent_role": "vessel"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "drive",
+          "joint_type": "continuous",
+          "parent_role": "drive_mount"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "dasher",
+          "joint_type": "continuous",
+          "parent_role": "drive_mount"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "vessel"
+        },
+        {
+          "exact_count": 1,
+          "role": "dasher"
+        },
+        {
+          "exact_count": 1,
+          "role": "access_lid"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive_mount"
+        }
+      ]
+    },
+    {
+      "anchor_id": "drive_mount_identity",
+      "applies_to": {
+        "candidates": [
+          "arch_frame",
+          "bridge_yoke",
+          "bearing_web"
+        ],
+        "slot": "drive_mount"
+      },
+      "required_author_checks": [
+        "category_anchor: batch freezer vessel, dasher and drive chain",
+        "category_anchor: the dasher scrapes the wall without cutting it",
+        "category_anchor: drive_mount identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "drive_mount",
+          "joint_type": "fixed",
+          "parent_role": "vessel"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "drive",
+          "joint_type": "continuous",
+          "parent_role": "drive_mount"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "dasher",
+          "joint_type": "continuous",
+          "parent_role": "drive_mount"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "vessel"
+        },
+        {
+          "exact_count": 1,
+          "role": "dasher"
+        },
+        {
+          "exact_count": 1,
+          "role": "access_lid"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive_mount"
+        }
+      ]
+    },
+    {
+      "anchor_id": "access_form_identity",
+      "applies_to": {
+        "candidates": [
+          "lift_off_lid",
+          "hinged_cap"
+        ],
+        "slot": "access_form"
+      },
+      "required_author_checks": [
+        "category_anchor: batch freezer vessel, dasher and drive chain",
+        "category_anchor: the dasher scrapes the wall without cutting it",
+        "category_anchor: access_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "drive_mount",
+          "joint_type": "fixed",
+          "parent_role": "vessel"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "drive",
+          "joint_type": "continuous",
+          "parent_role": "drive_mount"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "dasher",
+          "joint_type": "continuous",
+          "parent_role": "drive_mount"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "vessel"
+        },
+        {
+          "exact_count": 1,
+          "role": "dasher"
+        },
+        {
+          "exact_count": 1,
+          "role": "access_lid"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive_mount"
+        }
+      ]
+    },
+    {
+      "anchor_id": "drive_form_identity",
+      "applies_to": {
+        "candidates": [
+          "hand_crank",
+          "motor_pod"
+        ],
+        "slot": "drive_form"
+      },
+      "required_author_checks": [
+        "category_anchor: batch freezer vessel, dasher and drive chain",
+        "category_anchor: the dasher scrapes the wall without cutting it",
+        "category_anchor: drive_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "drive_mount",
+          "joint_type": "fixed",
+          "parent_role": "vessel"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "drive",
+          "joint_type": "continuous",
+          "parent_role": "drive_mount"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "dasher",
+          "joint_type": "continuous",
+          "parent_role": "drive_mount"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "vessel"
+        },
+        {
+          "exact_count": 1,
+          "role": "dasher"
+        },
+        {
+          "exact_count": 1,
+          "role": "access_lid"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive_mount"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2 <= dasher_blade_count <= 4; adjacent blades keep 8 mm of clear arc at the hub",
+      "item_slot": "dasher_form",
+      "name": "dasher_blade_count",
+      "spacing_expression": "blade i is set at yaw 2*pi*i/N and at a staggered height down the shaft",
+      "values": [
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "A rounded rectangular body is cut with a bowl recess and fused with a raised seating collar, integrated feet and a control-panel recess.",
+          "implementation_function": "_vessel_countertop_bowl_build",
+          "interfaces": [],
+          "name": "countertop_bowl",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "vessel_radius_m"
+              ],
+              "expression": "vessel_radius_m + wall (0.006)",
+              "mode": "derived",
+              "name": "rim_radius_m",
+              "rationale": "the rim is the cavity plus the vessel wall, and every lid and yoke spans it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_ice_crream_machine_var_countertop_compressor",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L49-L110"
+          ]
+        },
+        {
+          "evidence": "A frustum shell carries 24 indexed stave seams, lighter strips and steel bands around a real inner cavity.",
+          "implementation_function": "_vessel_coopered_bucket_build",
+          "interfaces": [],
+          "name": "coopered_bucket",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "vessel_radius_m"
+              ],
+              "expression": "vessel_radius_m + wall (0.006)",
+              "mode": "derived",
+              "name": "rim_radius_m",
+              "rationale": "the rim is the cavity plus the vessel wall, and every lid and yoke spans it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_ice_crream_machine_var_bucket_churn_refill",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L108-L196"
+          ]
+        },
+        {
+          "evidence": "A revolved section gives a genuinely hollow tapered pail with a sealed floor and a rolled top edge.",
+          "implementation_function": "_vessel_upright_tub_build",
+          "interfaces": [],
+          "name": "upright_tub",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "vessel_radius_m"
+              ],
+              "expression": "vessel_radius_m + wall (0.006)",
+              "mode": "derived",
+              "name": "rim_radius_m",
+              "rationale": "the rim is the cavity plus the vessel wall, and every lid and yoke spans it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__ice_crream_machine__003__png_efc3f3416f3b42a9b21a9061d85e4469",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L60-L74"
+          ]
+        }
+      ],
+      "component_type": "appliance base with a seated bowl",
+      "name": "vessel_body",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A hub collar carries n_paddles flat blades at evenly rotated yaws and staggered heights on the shaft.",
+          "implementation_function": "_dasher_paddle_blades_build",
+          "interfaces": [],
+          "name": "paddle_blades",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "vessel_radius_m",
+                "dasher_blade_count"
+              ],
+              "expression": "vessel_radius_m - 0.004 - shaft_radius",
+              "mode": "derived",
+              "name": "blade_reach_m",
+              "rationale": "a blade sweeps to 4 mm from the wall so the scrape is real but never cuts it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_ice_crream_machine_var_dasher_paddles_n4_gt10",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L371-L399"
+          ]
+        },
+        {
+          "evidence": "A shaft with a thrust collar carries full-diameter bars alternating in yaw down the canister.",
+          "implementation_function": "_dasher_scraper_bars_build",
+          "interfaces": [],
+          "name": "scraper_bars",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "vessel_radius_m",
+                "dasher_blade_count"
+              ],
+              "expression": "vessel_radius_m - 0.004 - shaft_radius",
+              "mode": "derived",
+              "name": "blade_reach_m",
+              "rationale": "a blade sweeps to 4 mm from the wall so the scrape is real but never cuts it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_ice_crream_machine_var_bucket_churn_refill",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L380-L406"
+          ]
+        },
+        {
+          "evidence": "A bearing-collared shaft carries long plates standing radially off the shaft with a real clearance to the wall.",
+          "implementation_function": "_dasher_radial_plates_build",
+          "interfaces": [],
+          "name": "radial_plates",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "vessel_radius_m",
+                "dasher_blade_count"
+              ],
+              "expression": "vessel_radius_m - 0.004 - shaft_radius",
+              "mode": "derived",
+              "name": "blade_reach_m",
+              "rationale": "a blade sweeps to 4 mm from the wall so the scrape is real but never cuts it",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_ice_crream_machine_var_horizontal_batch_freezer_gt10",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L201-L258"
+          ]
+        }
+      ],
+      "component_type": "hub with indexed paddles",
+      "name": "dasher_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Two cast shoulder plates rise from the rim to a gearbox block with a tall hollow bearing sleeve bored for the dasher shaft.",
+          "implementation_function": "_drive_mount_arch_frame_build",
+          "interfaces": [],
+          "name": "arch_frame",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "vessel_radius_m",
+                "vessel_depth_m"
+              ],
+              "expression": "2*rim_radius_m + 0.030",
+              "mode": "derived",
+              "name": "yoke_span_m",
+              "rationale": "the mount straddles the rim and carries the drive bearing on the axis",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__ice_crream_machine__003__png_efc3f3416f3b42a9b21a9061d85e4469",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L92-L129"
+          ]
+        },
+        {
+          "evidence": "A bored bridge plate spans the vessel on two side supports with clamp tabs gripping the rim.",
+          "implementation_function": "_drive_mount_bridge_yoke_build",
+          "interfaces": [],
+          "name": "bridge_yoke",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "vessel_radius_m",
+                "vessel_depth_m"
+              ],
+              "expression": "2*rim_radius_m + 0.030",
+              "mode": "derived",
+              "name": "yoke_span_m",
+              "rationale": "the mount straddles the rim and carries the drive bearing on the axis",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_ice_crream_machine_var_bucket_churn_refill",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L229-L258"
+          ]
+        },
+        {
+          "evidence": "A single flat bridge across the mouth carries a small bored ring on the axis, with no posts or shoulders.",
+          "implementation_function": "_drive_mount_bearing_web_build",
+          "interfaces": [],
+          "name": "bearing_web",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "vessel_radius_m",
+                "vessel_depth_m"
+              ],
+              "expression": "2*rim_radius_m + 0.030",
+              "mode": "derived",
+              "name": "yoke_span_m",
+              "rationale": "the mount straddles the rim and carries the drive bearing on the axis",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__ice_crream_machine__002__png_5ea881a7da9e4a00a7bf5d1390f2178c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L108-L123"
+          ]
+        }
+      ],
+      "component_type": "cast arch with a bearing sleeve",
+      "name": "drive_mount",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A disc with a seating skirt and a centre hub bore lifts straight off the vessel rim.",
+          "implementation_function": "_build_access",
+          "interfaces": [],
+          "name": "lift_off_lid",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "vessel_radius_m"
+              ],
+              "expression": "rim_radius_m + 0.004",
+              "mode": "derived",
+              "name": "lid_radius_m",
+              "rationale": "the lid overhangs the rim it seats on",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_ice_crream_machine_var_countertop_compressor",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L176-L191"
+          ]
+        },
+        {
+          "evidence": "A cap swings on a real hinge line at the edge of the housing instead of lifting away.",
+          "implementation_function": "_build_access",
+          "interfaces": [],
+          "name": "hinged_cap",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "vessel_radius_m"
+              ],
+              "expression": "rim_radius_m + 0.004",
+              "mode": "derived",
+              "name": "lid_radius_m",
+              "rationale": "the lid overhangs the rim it seats on",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__ice_crream_machine__004__png_ee7cae5d293b4afe8ff800e2b09be2f0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L140-L164"
+          ]
+        }
+      ],
+      "component_type": "lift-off lid with skirt",
+      "name": "access_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A drive shaft carries an offset crank arm and a grip that spins on its own axis.",
+          "implementation_function": "_drive_hand_crank_build",
+          "interfaces": [],
+          "name": "hand_crank",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "crank_throw_m",
+                "vessel_depth_m"
+              ],
+              "expression": "mouth_z + 0.075",
+              "mode": "derived",
+              "name": "drive_axis_z_m",
+              "rationale": "the drive sits clear above the lid travel on the vessel axis",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_ice_crream_machine_var_bucket_churn_refill",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L407-L457"
+          ]
+        },
+        {
+          "evidence": "A rounded pod is cut with four vent slots and fused with a downward drive shaft and coupling collar instead of a hand crank.",
+          "implementation_function": "_drive_motor_pod_build",
+          "interfaces": [],
+          "name": "motor_pod",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "vessel_radius_m",
+              "rationale": "inner radius of the freezing cavity; derives blade reach, rim, lid and yoke span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "vessel_depth_m",
+              "rationale": "cavity depth; derives shaft length, blade spacing, body height and post height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "crank offset or motor pod reach; derives the drive arm, grip position and pod size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "crank_throw_m",
+                "vessel_depth_m"
+              ],
+              "expression": "mouth_z + 0.075",
+              "mode": "derived",
+              "name": "drive_axis_z_m",
+              "rationale": "the drive sits clear above the lid travel on the vessel axis",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_ice_crream_machine_var_countertop_compressor",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L111-L148"
+          ]
+        }
+      ],
+      "component_type": "crank arm with free grip",
+      "name": "drive_form",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Ice_crream_machine",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Ice_crream_machine.md",
+  "source_map_sha256": "72a1bd46564bc0fcce53c7b7ae7a3c870529b37ee0c8e6c51a9eb10908d9f8d5"
+}

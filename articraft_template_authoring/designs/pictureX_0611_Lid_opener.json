@@ -1,0 +1,1046 @@
+{
+  "assembly_notes": "A pictureX_0611 lid opener is one fixed stamped stainless `frame` (working-head carrier, lower handle tang, molded lower grip, main pivot pin) and one moving `lever` (stamped lever plate, moving jaw finger, upper tang, molded upper grip), joined by a single bounded REVOLUTE `handle_pivot` about the vertical carrier axis (0,0,1) solved by mate_axes and registered with register_interface_mate. Negative pivot values squeeze the handles together, which -- because the head is on the far side of the pivot -- drives the moving jaw finger toward the carrier's fixed upper lip; positive values open the tool. Range -0.30 .. +0.26 rad, full travel, never clamped. The `head` slot owns the joint graph: rotary_crank adds three CONTINUOUS Z rotors (drive gear + crank/knob, feed wheel, cutter disc), feed_gear adds one CONTINUOUS serrated feed rotor plus a static cutting wheel, lever_cutter parents the sharpened cutting wheel to the MOVING lever with static reduction/feed gears on the frame, and guarded_head is all-static under a folded U guard. Cross-component derivations are recorded here rather than as bindings because both endpoints of every one of them hang off the shared non-slotted `frame` / `lever` hosts, which are not declared component slots: frame_to_lever_pivot: frame.pivot_axis -> lever.pivot_bore (revolute); the pin top is derived to lever_plate_z0 + 0.0006 so it is really seated in the lever plate. | frame_to_rotor_shaft_i: frame.shaft_axis_i -> head.rotor_axis (continuous); station_i and radius_i are derived from head_span_m and each rotor hub bottom is derived to carrier_top - 0.0006. | carrier_to_mouth: the mouth outline/hole is derived from mouth_x = -(head_span_m + 0.012) and mouth_size_m, so the head slot and the mouth slot never contend for the same carrier region. | tang_to_grip: frame_tang_reach / lever_tang_reach are derived from grip_length_m so either grip family stays bridged to its stamped half. Layering contract that makes the full 4x4x2x2 cartesian product buildable without any overlap allowance: every frame element except the pivot pin ends at or below z=0.0100 and every lever element starts at or above z=0.0110, so the two plier halves only ever meet at the pivot, and there the contact is a 0.6 mm vertical lap whose world-AABB depth on Z stays under the collision tolerance. No multiplicity: none of the four records repeats a structural unit a variable number of times.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "lid_opener_plier_identity",
+      "applies_to": {
+        "candidates": [
+          "rotary_crank",
+          "feed_gear",
+          "lever_cutter",
+          "guarded_head"
+        ],
+        "slot": "head"
+      },
+      "required_author_checks": [
+        "category_anchor: one stamped frame and one lever plier half on a pivot",
+        "category_anchor: the lever squeezes on a registered vertical pivot axis"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "opener_lever",
+          "joint_type": "revolute",
+          "parent_role": "opener_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "opener_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "opener_lever"
+        }
+      ]
+    },
+    {
+      "anchor_id": "rotary_head_shafts",
+      "applies_to": {
+        "candidates": [
+          "rotary_crank",
+          "feed_gear"
+        ],
+        "slot": "head"
+      },
+      "required_author_checks": [
+        "category_anchor: the head family supplies its own rotor joint graph",
+        "category_anchor: the head family's own hardware sits on the right half"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "head_rotor",
+          "joint_type": "continuous",
+          "parent_role": "opener_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "opener_frame"
+        },
+        {
+          "count_from": "resolved.rotor_count",
+          "exact_count": null,
+          "role": "head_rotor"
+        }
+      ]
+    },
+    {
+      "anchor_id": "working_lid_mouth",
+      "applies_to": {
+        "candidates": [
+          "crescent",
+          "round_throat",
+          "notched_cheek",
+          "hooked_jaw"
+        ],
+        "slot": "mouth"
+      },
+      "required_author_checks": [
+        "category_anchor: the working lid mouth is real carrier geometry"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "opener_frame"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Three spinning shafts on the stamped cheek: cutter disc + axle (L269-292), serrated feed wheel + axle (L295-318) and a spur drive gear with a short crank arm and molded knob (L321-372). The only record with a hand crank and more than one rotary axis.",
+          "implementation_function": "_head_rotary_crank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "drive_gear_radius",
+                "seat_lap": 0.0006
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  "drive_station_x",
+                  -0.01,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "rotor_axis",
+              "part": "head__rotary_crank__drive_shaft",
+              "role": "consumer"
+            }
+          ],
+          "name": "rotary_crank",
+          "notes": "Emits three CONTINUOUS Z rotor parts; the crank sweep envelope is derived to clear the feed wheel.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.072,
+              "minimum": 0.048,
+              "mode": "independent",
+              "name": "head_span_m",
+              "rationale": "Pivot-to-mouth span of the working head; drives every gear station, radius and the carrier nose.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "-(head_span_m + 0.012)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mouth_x",
+              "rationale": "Working-mouth centre on the nose axis, so the mouth slot always lands past the head hardware.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.115 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "drive_r",
+              "rationale": "Drive-gear radius derived from the head span; the station is -0.34 * head_span_m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.100 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "feed_r",
+              "rationale": "Feed-wheel radius; its station -0.66 * head_span_m keeps a >= 0.10 * head_span gap from the drive gear.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.105 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "cutter_r",
+              "rationale": "Cutter-disc radius at station (-0.62 * head_span_m, 0.019).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__lid_opener__001__png_3629ffb09bed420e8847dce28465922d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L258-L372"
+          ]
+        },
+        {
+          "evidence": "One serrated `feed_gear` part on a CONTINUOUS `gear_rotation` axis (L261-291) beside a STATIC cutter bracket, sharpened cutting wheel and cutter screw fixed to the cheek (L167-184): 1 revolute + 1 continuous joint topology.",
+          "implementation_function": "_head_feed_gear_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.13 * head_span_m",
+                "seat_lap": 0.0006
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  "feed_station_x",
+                  -0.004,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "rotor_axis",
+              "part": "head__feed_gear__feed_gear",
+              "role": "consumer"
+            }
+          ],
+          "name": "feed_gear",
+          "notes": "One rotor only; the cutting wheel stays on the frame.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.072,
+              "minimum": 0.048,
+              "mode": "independent",
+              "name": "head_span_m",
+              "rationale": "Pivot-to-mouth span of the working head; drives every gear station, radius and the carrier nose.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "-(head_span_m + 0.012)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mouth_x",
+              "rationale": "Working-mouth centre on the nose axis, so the mouth slot always lands past the head hardware.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.115 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "drive_r",
+              "rationale": "Drive-gear radius derived from the head span; the station is -0.34 * head_span_m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.100 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "feed_r",
+              "rationale": "Feed-wheel radius; its station -0.66 * head_span_m keeps a >= 0.10 * head_span gap from the drive gear.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.105 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "cutter_r",
+              "rationale": "Cutter-disc radius at station (-0.62 * head_span_m, 0.019).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_094150_036146_45e44262",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L167-L184",
+            "model.py:L261-L291"
+          ]
+        },
+        {
+          "evidence": "The reduction `drive_gear` and serrated `feed_wheel` are static visuals of the `body` (L180-195) while the sharpened `cutting_wheel` and its axle are visuals of the MOVING `upper_handle` (L305-318), so the cutter swings toward the fixed feed wheel as the handles close. Part-tree difference: cutter on the lever.",
+          "implementation_function": "_head_lever_cutter_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "clearance_below": 0.001,
+                "lap": 0.0006
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  -0.025,
+                  0.004,
+                  0.0166
+                ]
+              },
+              "kind": "plane",
+              "name": "lever_cutter_seat",
+              "part": "lever",
+              "role": "consumer"
+            }
+          ],
+          "name": "lever_cutter",
+          "notes": "Zero rotors; the moving cutter is emitted onto the lever by _lever_head_extras.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.072,
+              "minimum": 0.048,
+              "mode": "independent",
+              "name": "head_span_m",
+              "rationale": "Pivot-to-mouth span of the working head; drives every gear station, radius and the carrier nose.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "-(head_span_m + 0.012)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mouth_x",
+              "rationale": "Working-mouth centre on the nose axis, so the mouth slot always lands past the head hardware.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.115 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "drive_r",
+              "rationale": "Drive-gear radius derived from the head span; the station is -0.34 * head_span_m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.100 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "feed_r",
+              "rationale": "Feed-wheel radius; its station -0.66 * head_span_m keeps a >= 0.10 * head_span gap from the drive gear.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.105 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "cutter_r",
+              "rationale": "Cutter-disc radius at station (-0.62 * head_span_m, 0.019).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_094150_039038_45e44262",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L180-L195",
+            "model.py:L305-L318"
+          ]
+        },
+        {
+          "evidence": "All head hardware is fixed on the stamped carrier: reduction/feed gears (L138-141), a static cutting disc + rivet (L163-174), a guide roller (L175-180) and a folded U guard built from guard_post / guard_bridge / guard_post_2 (L181-198). No rotary joint at all.",
+          "implementation_function": "_head_guarded_head_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "guard_height": 0.012,
+                "guard_span": "0.16 * head_span_m + 0.005"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  "-0.62 * head_span_m",
+                  0.018,
+                  0.003
+                ]
+              },
+              "kind": "plane",
+              "name": "guard_seat",
+              "part": "frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "guarded_head",
+          "notes": "Zero rotors; the folded guard silhouette is the family's read.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.072,
+              "minimum": 0.048,
+              "mode": "independent",
+              "name": "head_span_m",
+              "rationale": "Pivot-to-mouth span of the working head; drives every gear station, radius and the carrier nose.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "-(head_span_m + 0.012)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mouth_x",
+              "rationale": "Working-mouth centre on the nose axis, so the mouth slot always lands past the head hardware.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.115 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "drive_r",
+              "rationale": "Drive-gear radius derived from the head span; the station is -0.34 * head_span_m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.100 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "feed_r",
+              "rationale": "Feed-wheel radius; its station -0.66 * head_span_m keeps a >= 0.10 * head_span gap from the drive gear.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_span_m"
+              ],
+              "expression": "0.105 * head_span_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "cutter_r",
+              "rationale": "Cutter-disc radius at station (-0.62 * head_span_m, 0.019).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_094513_583310_45e44262",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L138-L198"
+          ]
+        }
+      ],
+      "component_type": "working head mechanism (owns the rotary joint graph)",
+      "name": "head",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The stamped carrier's working mouth is cut as a circle unioned with a squared `mouth_exit` box (L91-102), leaving an open crescent throat, and a rubber `jaw_pad` protects the lid rim on the lower lip (L201-206).",
+          "implementation_function": "_mouth_crescent_outline",
+          "interfaces": [
+            {
+              "dimensions": {
+                "open_radius": "0.45 * mouth_size_m",
+                "open_to": "-X"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  "mouth_x",
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "lid_opening",
+              "part": "frame",
+              "role": "provider"
+            }
+          ],
+          "name": "crescent",
+          "notes": "Replaces the nose face with a 0.45*mouth_size arc, leaving two jaw tips.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.026,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "mouth_size_m",
+              "rationale": "Nominal size of the working lid opening; drives the crescent arc, bored throat, notch and hook claw.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "mouth_x"
+              ],
+              "expression": "mouth_x - 0.020",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "nose_tip_x",
+              "rationale": "Carrier nose tip, so every mouth form still leaves a closed rim beyond the opening.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_094513_583310_45e44262",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L91-L102",
+            "model.py:L201-L206"
+          ]
+        },
+        {
+          "evidence": "A functional round `throat` is cut clean through the nose of the stamped frame (L121-129) instead of a solid symbolic head, with a formed `nose_rivet` beside it (L198-208).",
+          "implementation_function": "_mouth_round_throat_outline",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "0.42 * mouth_size_m",
+                "open_to": "closed"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  "mouth_x",
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "lid_opening",
+              "part": "frame",
+              "role": "provider"
+            }
+          ],
+          "name": "round_throat",
+          "notes": "Closed bored opening: the carrier becomes ExtrudeWithHolesGeometry.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.026,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "mouth_size_m",
+              "rationale": "Nominal size of the working lid opening; drives the crescent arc, bored throat, notch and hook claw.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "mouth_x"
+              ],
+              "expression": "mouth_x - 0.020",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "nose_tip_x",
+              "rationale": "Carrier nose tip, so every mouth form still leaves a closed rim beyond the opening.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_094150_039038_45e44262",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L121-L129",
+            "model.py:L198-L208"
+          ]
+        },
+        {
+          "evidence": "The lower stamped cheek is built with `notch=(-47.0, -3.0, 10.5)` (L159), i.e. the working bite is a notch taken out of the cheek EDGE rather than an opening bored in the nose.",
+          "implementation_function": "_mouth_notched_cheek_outline",
+          "interfaces": [
+            {
+              "dimensions": {
+                "notch_depth": "0.62 * mouth_size_m",
+                "notch_width": "0.55 * mouth_size_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  "mouth_x",
+                  -0.024,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "lid_opening",
+              "part": "frame",
+              "role": "provider"
+            }
+          ],
+          "name": "notched_cheek",
+          "notes": "Squared bottle-cap notch in the lower edge, plus a folded stiffening lip.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.026,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "mouth_size_m",
+              "rationale": "Nominal size of the working lid opening; drives the crescent arc, bored throat, notch and hook claw.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "mouth_x"
+              ],
+              "expression": "mouth_x - 0.020",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "nose_tip_x",
+              "rationale": "Carrier nose tip, so every mouth form still leaves a closed rim beyond the opening.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__lid_opener__001__png_3629ffb09bed420e8847dce28465922d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L143-L165"
+          ]
+        },
+        {
+          "evidence": "The nose carries a separate hooked anti-slip `hooked_jaw` claw profile plus a support block (L154-172); the carrier itself stays solid, so the gripping geometry is an added hook, not a cut.",
+          "implementation_function": "_mouth_hooked_jaw_outline",
+          "interfaces": [
+            {
+              "dimensions": {
+                "hook_scale": "mouth_size_m / 0.021",
+                "open_to": "-X"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  "mouth_x",
+                  -0.008,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "lid_opening",
+              "part": "frame",
+              "role": "provider"
+            }
+          ],
+          "name": "hooked_jaw",
+          "notes": "Solid nose + a real claw profile scaled by mouth_size_m.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.026,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "mouth_size_m",
+              "rationale": "Nominal size of the working lid opening; drives the crescent arc, bored throat, notch and hook claw.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "mouth_x"
+              ],
+              "expression": "mouth_x - 0.020",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "nose_tip_x",
+              "rationale": "Carrier nose tip, so every mouth form still leaves a closed rim beyond the opening.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_094150_036146_45e44262",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L154-L172"
+          ]
+        }
+      ],
+      "component_type": "working lid opening on the carrier nose",
+      "name": "mouth",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "`_handle_loft` lofts varying ellipse sections on planes normal to a curved centreline (L37-58) and the UPPER/LOWER section tables (L97-119) give a palm swell and tapered rounded ends: a genuinely 3D oval, not a flat plate.",
+          "implementation_function": "_grip_lofted_oval_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "max_half_thickness": 0.0088,
+                "span": "grip_length_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.04,
+                  0.0,
+                  -0.002
+                ]
+              },
+              "kind": "plane",
+              "name": "grip_root",
+              "part": "frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "lofted_oval",
+          "notes": "Loft sections stack along the loft's local +Z, then the visual origin maps that onto the handle azimuth.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "grip_length_m",
+              "rationale": "Length of each molded handle grip; drives the grip outline/loft span and both stamped tangs.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "grip_length_m"
+              ],
+              "expression": "0.038 + 0.55 * grip_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "frame_tang_reach",
+              "rationale": "Lower stamped tang reach: it must run past the grip root so the grip is never a floating island.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "grip_length_m"
+              ],
+              "expression": "0.045 + 0.50 * grip_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "lever_tang_reach",
+              "rationale": "Upper stamped tang reach, bridging the lever plate band into the grip core.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__lid_opener__001__png_3629ffb09bed420e8847dce28465922d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L37-L58",
+            "model.py:L97-L119"
+          ]
+        },
+        {
+          "evidence": "Both grips are closed outlines extruded to a constant 17 mm thickness with a thin raised soft-touch inlay (L111-124, L214-234); corroborated by ...039038 model.py:L149-L158 / L274-L303 and ...583310 model.py:L106-L128 / L243-L265.",
+          "implementation_function": "_grip_stamped_molded_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "span": "grip_length_m",
+                "thickness": 0.018
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.04,
+                  0.0,
+                  -0.011
+                ]
+              },
+              "kind": "plane",
+              "name": "grip_root",
+              "part": "frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "stamped_molded",
+          "notes": "Flat stamped plate silhouette; shared by the three plier records.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "grip_length_m",
+              "rationale": "Length of each molded handle grip; drives the grip outline/loft span and both stamped tangs.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "grip_length_m"
+              ],
+              "expression": "0.038 + 0.55 * grip_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "frame_tang_reach",
+              "rationale": "Lower stamped tang reach: it must run past the grip root so the grip is never a floating island.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "grip_length_m"
+              ],
+              "expression": "0.045 + 0.50 * grip_length_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "lever_tang_reach",
+              "rationale": "Upper stamped tang reach, bridging the lever plate band into the grip core.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_094150_036146_45e44262",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L111-L124",
+            "model.py:L214-L234"
+          ]
+        }
+      ],
+      "component_type": "molded handle grip construction (both halves)",
+      "name": "grip",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A folded rear bracket built from a web plus two folded legs physically ties the sheet layers together under the cheek (L190-209).",
+          "implementation_function": "_spine_folded_bracket_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": 0.01,
+                "members": 3
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "point": [
+                  0.002,
+                  0.01,
+                  -0.003
+                ]
+              },
+              "kind": "plane",
+              "name": "reinforcement_seat",
+              "part": "frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "folded_bracket",
+          "notes": "Three-member U section under the carrier; frame-local, so it never meets a moving part.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__lid_opener__001__png_3629ffb09bed420e8847dce28465922d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L183-L209"
+          ]
+        },
+        {
+          "evidence": "A second stamped `mechanism_backplate` is spot-welded behind the working head to carry the load path from the cheek plate to the jaw and both axles (L88-96).",
+          "implementation_function": "_spine_weld_backplate_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": 0.0035,
+                "members": 2
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "point": [
+                  "-0.30 * head_span_m - 0.004",
+                  -0.006,
+                  -0.003
+                ]
+              },
+              "kind": "plane",
+              "name": "reinforcement_seat",
+              "part": "frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "weld_backplate",
+          "notes": "Single flat plate + rivet instead of a folded section.",
+          "parameters": [],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_094150_036146_45e44262",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L088-L096"
+          ]
+        }
+      ],
+      "component_type": "stamped carrier reinforcement layer",
+      "name": "spine",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Lid_opener",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Lid_opener.md",
+  "source_map_sha256": "14043e233a60d190160177d9a6b7d58348389425355a8e285238420629dc26b4"
+}

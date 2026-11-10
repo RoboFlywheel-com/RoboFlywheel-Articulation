@@ -1,0 +1,791 @@
+{
+  "assembly_notes": "Vertical single-acting hydraulic bottle/ram jack. One rigid jack_frame root carries the painted cylinder shell, the horizontal hand-pump body, the manifold and the routed hose. ram_stage_count nested telescopic ram stages extend upward: stage 0 is a PRISMATIC (+z) child of jack_frame and stage i is a PRISMATIC (+z) child of stage i-1, each with a real guide land that stays inside the next larger bore over the whole stroke. The head_fitting rides the topmost stage; screw_extension additionally adds a REVOLUTE screw joint about +z. pump_handle is a REVOLUTE (+y) lever in a real two-eared clevis and release_valve is a REVOLUTE (+y) knob on the pump end block. Four component slots vary without touching the mechanism: ram_stage (stage tube form), head_fitting (load interface), pump_drive (lever vs air-over-hydraulic module) and base_mount (base footprint). body_height_m, bore_radius_m and pump_reach_m are independent continuous parameters that derive stage lengths, stroke, radii, clevis position, handle length, hose routing and base footprint; palette and label marks are non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "ram_stage_identity",
+      "applies_to": {
+        "candidates": [
+          "chrome_rod",
+          "stepped_ram"
+        ],
+        "slot": "ram_stage"
+      },
+      "required_author_checks": [
+        "category_anchor: vertical hydraulic ram jack mechanism",
+        "category_anchor: telescopic ram stages stay journalled",
+        "category_anchor: ram_stage identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "pump_handle",
+          "joint_type": "revolute",
+          "parent_role": "jack_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "release_valve",
+          "joint_type": "revolute",
+          "parent_role": "jack_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_frame"
+        },
+        {
+          "count_from": "ram_stage_count",
+          "role": "ram_stage"
+        },
+        {
+          "exact_count": 1,
+          "role": "head_fitting"
+        },
+        {
+          "exact_count": 1,
+          "role": "pump_handle"
+        },
+        {
+          "exact_count": 1,
+          "role": "release_valve"
+        }
+      ]
+    },
+    {
+      "anchor_id": "head_fitting_identity",
+      "applies_to": {
+        "candidates": [
+          "flat_saddle",
+          "screw_extension",
+          "grooved_cradle"
+        ],
+        "slot": "head_fitting"
+      },
+      "required_author_checks": [
+        "category_anchor: vertical hydraulic ram jack mechanism",
+        "category_anchor: telescopic ram stages stay journalled",
+        "category_anchor: head_fitting identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "pump_handle",
+          "joint_type": "revolute",
+          "parent_role": "jack_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "release_valve",
+          "joint_type": "revolute",
+          "parent_role": "jack_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_frame"
+        },
+        {
+          "count_from": "ram_stage_count",
+          "role": "ram_stage"
+        },
+        {
+          "exact_count": 1,
+          "role": "head_fitting"
+        },
+        {
+          "exact_count": 1,
+          "role": "pump_handle"
+        },
+        {
+          "exact_count": 1,
+          "role": "release_valve"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pump_drive_identity",
+      "applies_to": {
+        "candidates": [
+          "lever_pump",
+          "air_over_hydraulic"
+        ],
+        "slot": "pump_drive"
+      },
+      "required_author_checks": [
+        "category_anchor: vertical hydraulic ram jack mechanism",
+        "category_anchor: telescopic ram stages stay journalled",
+        "category_anchor: pump_drive identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "pump_handle",
+          "joint_type": "revolute",
+          "parent_role": "jack_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "release_valve",
+          "joint_type": "revolute",
+          "parent_role": "jack_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_frame"
+        },
+        {
+          "count_from": "ram_stage_count",
+          "role": "ram_stage"
+        },
+        {
+          "exact_count": 1,
+          "role": "head_fitting"
+        },
+        {
+          "exact_count": 1,
+          "role": "pump_handle"
+        },
+        {
+          "exact_count": 1,
+          "role": "release_valve"
+        }
+      ]
+    },
+    {
+      "anchor_id": "base_mount_identity",
+      "applies_to": {
+        "candidates": [
+          "flat_pad",
+          "flanged_bolt",
+          "channel_skid"
+        ],
+        "slot": "base_mount"
+      },
+      "required_author_checks": [
+        "category_anchor: vertical hydraulic ram jack mechanism",
+        "category_anchor: telescopic ram stages stay journalled",
+        "category_anchor: base_mount identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "pump_handle",
+          "joint_type": "revolute",
+          "parent_role": "jack_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "release_valve",
+          "joint_type": "revolute",
+          "parent_role": "jack_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_frame"
+        },
+        {
+          "count_from": "ram_stage_count",
+          "role": "ram_stage"
+        },
+        {
+          "exact_count": 1,
+          "role": "head_fitting"
+        },
+        {
+          "exact_count": 1,
+          "role": "pump_handle"
+        },
+        {
+          "exact_count": 1,
+          "role": "release_valve"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= ram_stage_count <= 3; total extended height <= body_height_m * (1 + 0.62 * ram_stage_count)",
+      "item_slot": "ram_stage",
+      "name": "ram_stage_count",
+      "spacing_expression": "stage i is nested inside stage i-1; per-stage rod radius and land depth derive from bore_radius_m",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Plain polished ram rod with a wiper-riding land and a saddle disc on top.",
+          "implementation_function": "_ram_stage_chrome_rod_build",
+          "interfaces": [],
+          "name": "chrome_rod",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "cylinder shell height; derives stage lengths, stroke and clevis height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.056,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "outer cylinder radius; derives per-stage rod radii, collars and base footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.23,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "pump_reach_m",
+              "rationale": "pump-body length; derives clevis x position, handle length and hose run",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack1__001__png_fe4f01a5f14542c8ac8e1e3e53fb8613",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L273-L291"
+          ]
+        },
+        {
+          "evidence": "Telescopic stage tube turned down to a neck above a machined shoulder collar, with a stop land at the foot; each stage carries its own PRISMATIC joint.",
+          "implementation_function": "_ram_stage_stepped_ram_build",
+          "interfaces": [],
+          "name": "stepped_ram",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "cylinder shell height; derives stage lengths, stroke and clevis height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.056,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "outer cylinder radius; derives per-stage rod radii, collars and base footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.23,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "pump_reach_m",
+              "rationale": "pump-body length; derives clevis x position, handle length and hose run",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack1_fork_double_stage_ram_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L279-L325"
+          ]
+        }
+      ],
+      "component_type": "ram stage tube",
+      "name": "ram_stage",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Knurled flat saddle disc with a hardened contact face on the ram head.",
+          "implementation_function": "_head_fitting_flat_saddle_build",
+          "interfaces": [],
+          "name": "flat_saddle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "cylinder shell height; derives stage lengths, stroke and clevis height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.056,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "outer cylinder radius; derives per-stage rod radii, collars and base footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.23,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "pump_reach_m",
+              "rationale": "pump-body length; derives clevis x position, handle length and hose run",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack1__001__png_fe4f01a5f14542c8ac8e1e3e53fb8613",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L273-L291"
+          ]
+        },
+        {
+          "evidence": "Threaded extension screw and collar on the ram head, turned on its own REVOLUTE joint to add reach.",
+          "implementation_function": "_head_fitting_screw_extension_build",
+          "interfaces": [],
+          "name": "screw_extension",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "cylinder shell height; derives stage lengths, stroke and clevis height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.056,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "outer cylinder radius; derives per-stage rod radii, collars and base footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.23,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "pump_reach_m",
+              "rationale": "pump-body length; derives clevis x position, handle length and hose run",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack1_fork_screw_extension_saddle_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L329-L361"
+          ]
+        },
+        {
+          "evidence": "Vee-grooved transmission cradle whose two inclined cheeks meet at the groove root, with raised side lips.",
+          "implementation_function": "_head_fitting_grooved_cradle_build",
+          "interfaces": [],
+          "name": "grooved_cradle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "cylinder shell height; derives stage lengths, stroke and clevis height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.056,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "outer cylinder radius; derives per-stage rod radii, collars and base footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.23,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "pump_reach_m",
+              "rationale": "pump-body length; derives clevis x position, handle length and hose run",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack1_fork_transmission_cradle_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L220-L246"
+          ]
+        }
+      ],
+      "component_type": "ram load interface",
+      "name": "head_fitting",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Bare lever bar with a rubber grip swinging on the pump clevis.",
+          "implementation_function": "_pump_drive_lever_pump_build",
+          "interfaces": [],
+          "name": "lever_pump",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "cylinder shell height; derives stage lengths, stroke and clevis height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.056,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "outer cylinder radius; derives per-stage rod radii, collars and base footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.23,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "pump_reach_m",
+              "rationale": "pump-body length; derives clevis x position, handle length and hose run",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack1__001__png_fe4f01a5f14542c8ac8e1e3e53fb8613",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L293-L312"
+          ]
+        },
+        {
+          "evidence": "Air motor can with a banded shell and inlet fitting on the pump body, driven by a short trigger lever instead of a long hand bar.",
+          "implementation_function": "_pump_drive_air_over_hydraulic_build",
+          "interfaces": [],
+          "name": "air_over_hydraulic",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "cylinder shell height; derives stage lengths, stroke and clevis height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.056,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "outer cylinder radius; derives per-stage rod radii, collars and base footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.23,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "pump_reach_m",
+              "rationale": "pump-body length; derives clevis x position, handle length and hose run",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack1_fork_air_over_hydraulic_module_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L338-L381"
+          ]
+        }
+      ],
+      "component_type": "pump input",
+      "name": "pump_drive",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Plain rolled base pad with a pressed rim under the cylinder.",
+          "implementation_function": "_base_mount_flat_pad_build",
+          "interfaces": [],
+          "name": "flat_pad",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "cylinder shell height; derives stage lengths, stroke and clevis height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.056,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "outer cylinder radius; derives per-stage rod radii, collars and base footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.23,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "pump_reach_m",
+              "rationale": "pump-body length; derives clevis x position, handle length and hose run",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack1_fork_bottle_jack_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L87-L201"
+          ]
+        },
+        {
+          "evidence": "Wider bolt-down flange carrying four corner fixing bosses and bolt heads.",
+          "implementation_function": "_base_mount_flanged_bolt_build",
+          "interfaces": [],
+          "name": "flanged_bolt",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "cylinder shell height; derives stage lengths, stroke and clevis height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.056,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "outer cylinder radius; derives per-stage rod radii, collars and base footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.23,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "pump_reach_m",
+              "rationale": "pump-body length; derives clevis x position, handle length and hose run",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack1_fork_safety_lock_bar_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L189-L243"
+          ]
+        },
+        {
+          "evidence": "Twin folded channel skids lifting the plate clear of the floor, with a front toe plate.",
+          "implementation_function": "_base_mount_channel_skid_build",
+          "interfaces": [],
+          "name": "channel_skid",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "cylinder shell height; derives stage lengths, stroke and clevis height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.056,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "bore_radius_m",
+              "rationale": "outer cylinder radius; derives per-stage rod radii, collars and base footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.23,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "pump_reach_m",
+              "rationale": "pump-body length; derives clevis x position, handle length and hose run",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack1_fork_toe_jack_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L144-L333"
+          ]
+        }
+      ],
+      "component_type": "base footprint",
+      "name": "base_mount",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_hydraulic_jack1",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_hydraulic_jack1.md",
+  "source_map_sha256": "fb203ec9d4b531a0be55acef2d044b7aef7ab6ebf35e8f4bfb6e3464ff068025"
+}

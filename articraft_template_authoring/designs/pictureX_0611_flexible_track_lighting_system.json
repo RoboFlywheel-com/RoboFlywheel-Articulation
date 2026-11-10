@@ -1,0 +1,814 @@
+{
+  "assembly_notes": "One lighting_track (root) carries N independently aimable heads. Each head is a pan_gimbal (REVOLUTE about vertical Z) plus a light_head (REVOLUTE about horizontal Y tilt trunnion, parent=gimbal). The track_adapter slot decides how the pan REVOLUTE reaches the track: flush_block (REC_001) embeds the mount as fixed track geometry so the pan joint's parent IS the track link, while shoe_spindle_mount (REC_002) emits one rail-shoe LINK per head, bolts it to the track with a FIXED joint, and re-parents the pan REVOLUTE onto that link's spindle. head_count is the multiplicity applied to light_head; it emits one gimbal, one pan joint, one tilt joint and (with shoe_spindle_mount) one adapter link plus one FIXED mount joint per head. Head pan-pivot spacing is derived from the worst-case pan/tilt motion envelope (head_length_m, head_radius_m, tilt_max) so adjacent heads never collide; the straight rail length and the oval semi-axes are both derived from head_count and that spacing. track x adapter x head x gimbal fully combine: the head always exposes a Y-axis pivot axle any yoke can capture, both gimbals expose the same swivel-seat top plane at their pan origin, and the shoe seats on the rail underside plane that both track candidates provide.",
+  "bindings": [
+    {
+      "binding_id": "track_to_adapter_seat",
+      "consumer": "track_adapter.rail_seat",
+      "derived": [
+        {
+          "depends_on": [],
+          "expression": "rail_underside_z - shoe_half_height + 0.0005",
+          "mode": "derived",
+          "name": "shoe_seat_z",
+          "rationale": "The rail shoe's top face is pressed 0.5 mm into the rail underside so the seat is genuine contact while the world-AABB overlap stays under the 1 mm collision tolerance on Z."
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "lighting_track.adapter_seat"
+    },
+    {
+      "binding_id": "track_to_gimbal_pan",
+      "consumer": "pan_gimbal.pan_mount",
+      "derived": [
+        {
+          "depends_on": [
+            "head_length_m",
+            "tilt_max",
+            "head_radius_m",
+            "yoke_half_width",
+            "clearance"
+          ],
+          "expression": "2*(head_length_m*sin(tilt_max)+head_radius_m+yoke_half_width)+clearance",
+          "mode": "derived",
+          "name": "head_spacing",
+          "rationale": "Track span/pivot spacing derives from the swept head envelope so adjacent heads stay clear at full tilt."
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "lighting_track.pan_axis"
+    },
+    {
+      "binding_id": "gimbal_to_head_tilt",
+      "consumer": "light_head.tilt_mount",
+      "derived": [
+        {
+          "depends_on": [
+            "drop_length_m"
+          ],
+          "expression": "-drop_length_m",
+          "mode": "derived",
+          "name": "tilt_pivot_drop",
+          "rationale": "The tilt trunnion sits drop_length_m below the pan pivot in the gimbal frame."
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "pan_gimbal.tilt_axis"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "flexible_oval_rail_identity",
+      "applies_to": {
+        "candidates": [
+          "flexible_oval_rail"
+        ],
+        "slot": "lighting_track"
+      },
+      "required_author_checks": [
+        "category_anchor: track carries N pan and tilt heads",
+        "category_anchor: independent pan and tilt per head",
+        "category_anchor: flexible_oval_rail track identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "light_head",
+          "joint_type": "revolute",
+          "parent_role": "pan_gimbal"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "lighting_track"
+        },
+        {
+          "count_from": "head_count",
+          "role": "pan_gimbal"
+        },
+        {
+          "count_from": "head_count",
+          "role": "light_head"
+        }
+      ]
+    },
+    {
+      "anchor_id": "straight_rigid_rail_identity",
+      "applies_to": {
+        "candidates": [
+          "straight_rigid_rail"
+        ],
+        "slot": "lighting_track"
+      },
+      "required_author_checks": [
+        "category_anchor: track carries N pan and tilt heads",
+        "category_anchor: independent pan and tilt per head",
+        "category_anchor: straight_rigid_rail track identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "light_head",
+          "joint_type": "revolute",
+          "parent_role": "pan_gimbal"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "lighting_track"
+        },
+        {
+          "count_from": "head_count",
+          "role": "pan_gimbal"
+        },
+        {
+          "count_from": "head_count",
+          "role": "light_head"
+        }
+      ]
+    },
+    {
+      "anchor_id": "flush_block_mount_identity",
+      "applies_to": {
+        "candidates": [
+          "flush_block"
+        ],
+        "slot": "track_adapter"
+      },
+      "required_author_checks": [
+        "category_anchor: track carries N pan and tilt heads",
+        "category_anchor: independent pan and tilt per head",
+        "category_anchor: flush_block track mount interface"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "pan_gimbal",
+          "joint_type": "revolute",
+          "parent_role": "lighting_track"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "light_head",
+          "joint_type": "revolute",
+          "parent_role": "pan_gimbal"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "lighting_track"
+        },
+        {
+          "count_from": "head_count",
+          "role": "pan_gimbal"
+        },
+        {
+          "count_from": "head_count",
+          "role": "light_head"
+        },
+        {
+          "exact_count": 0,
+          "role": "track_adapter"
+        }
+      ]
+    },
+    {
+      "anchor_id": "shoe_spindle_mount_identity",
+      "applies_to": {
+        "candidates": [
+          "shoe_spindle_mount"
+        ],
+        "slot": "track_adapter"
+      },
+      "required_author_checks": [
+        "category_anchor: track carries N pan and tilt heads",
+        "category_anchor: independent pan and tilt per head",
+        "category_anchor: shoe_spindle_mount track mount interface"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "track_adapter",
+          "joint_type": "fixed",
+          "parent_role": "lighting_track"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "pan_gimbal",
+          "joint_type": "revolute",
+          "parent_role": "track_adapter"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "light_head",
+          "joint_type": "revolute",
+          "parent_role": "pan_gimbal"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "lighting_track"
+        },
+        {
+          "count_from": "head_count",
+          "role": "pan_gimbal"
+        },
+        {
+          "count_from": "head_count",
+          "role": "light_head"
+        },
+        {
+          "count_from": "head_count",
+          "role": "track_adapter"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "3 <= head_count <= 8; track length (straight) or oval perimeter derived from head_count*head_spacing so every head has a non-colliding pan/tilt envelope",
+      "item_slot": "light_head",
+      "name": "head_count",
+      "spacing_expression": "adjacent pan pivots at head_spacing = 2*(head_length_m*sin(tilt_max)+head_radius_m+yoke_half_width)+clearance",
+      "values": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Closed-spline oval monorail bent into the broad ~1.22x0.56 product silhouette with three ceiling suspension stems and canopies.",
+          "implementation_function": "_lighting_track_flexible_oval_rail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "pivot_spacing": "head_spacing"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "pan_axis",
+              "part": "lighting_track__flexible_oval_rail__track",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "seat_gap": "0.020"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "adapter_seat",
+              "part": "lighting_track__flexible_oval_rail__track",
+              "role": "provider"
+            }
+          ],
+          "name": "flexible_oval_rail",
+          "notes": "tube_from_spline_points closed oval; pan pivots placed at equal arc length around the ellipse; suspension stems/canopies are fixed track visuals.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "track_thickness_m",
+              "rationale": "oval tube cross-section radius",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__flexible_track_lighting_system__001__png__airflex_batch_20260710_eedb0610ab714620adb4449ccd2a0ecd",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L83-L140"
+          ]
+        },
+        {
+          "evidence": "Straight rigid extruded rail (1.02x0.05x0.03 rounded box) with an underside power channel; surface/flush mounted, no suspension stems.",
+          "implementation_function": "_lighting_track_straight_rigid_rail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "pivot_spacing": "head_spacing"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "pan_axis",
+              "part": "lighting_track__straight_rigid_rail__track",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "seat_gap": "0.020"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "adapter_seat",
+              "part": "lighting_track__straight_rigid_rail__track",
+              "role": "provider"
+            }
+          ],
+          "name": "straight_rigid_rail",
+          "notes": "Extruded rail; pan pivots evenly along X; length derived from head_count and head_spacing.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "track_thickness_m",
+              "rationale": "rail cross-section reference thickness",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__flexible_track_lighting_system__002__png__airflex_batch_20260710_3dd257f9175a487bb8d42cefcfea70cc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L23-L33",
+            "model.py:L231-L232"
+          ]
+        }
+      ],
+      "component_type": "lighting_track_family",
+      "name": "lighting_track",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "REC_001 mounts each lamp with a fixed box embedded in the track itself: `track_frame.visual(Box((0.034,0.026,0.029)), name=f\"track_adapter_{index}\")` (L243-L248) and the pan REVOLUTE `lamp_{index}_pan` is authored `parent=track_frame, child=swivel` (L271-L276). No adapter link and no fixed joint exist in the part tree.",
+          "implementation_function": "_track_adapter_flush_block_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "block_height": "0.020"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "rail_seat",
+              "part": "lighting_track__<candidate>__track",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "pan_seat",
+              "part": "lighting_track__<candidate>__track",
+              "role": "provider"
+            }
+          ],
+          "name": "flush_block",
+          "notes": "Mount is fixed track geometry; the pan REVOLUTE's parent link is the track part. Adds no links and no joints.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__flexible_track_lighting_system__001__png__airflex_batch_20260710_eedb0610ab714620adb4449ccd2a0ecd",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L243-L248",
+            "model.py:L271-L276"
+          ]
+        },
+        {
+          "evidence": "REC_002 gives every lamp a dedicated rail-shoe link: `_add_adapter_visuals` builds rail_shoe + locking_tab + swivel_boss + pan_spindle (L91-L116) on `model.part(f\"adapter_{index}\")` (L243-L245); `mount_{index}` is a FIXED articulation track->adapter (L261-L268) and `pan_{index}` is authored `parent=adapter_{index}` (L269-L276), so the pan REVOLUTE's parent link changes.",
+          "implementation_function": "_track_adapter_shoe_spindle_mount_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "shoe_press": "0.0005"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "rail_seat",
+              "part": "track_adapter__shoe_spindle_mount__adapter_{index}",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "spindle_engagement": "0.0006"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "pan_seat",
+              "part": "track_adapter__shoe_spindle_mount__adapter_{index}",
+              "role": "provider"
+            }
+          ],
+          "name": "shoe_spindle_mount",
+          "notes": "Adds one adapter link and one FIXED joint per head and re-parents the pan REVOLUTE onto the adapter's spindle. The shoe's top face presses 0.5 mm into the rail underside (horizontal mate, so the world-AABB overlap is 0.5 mm on Z only) and the gimbal's swivel seat journals 0.6 mm onto the spindle tip -- both under overlap_tol=1e-3, so no overlap allowance is used.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__flexible_track_lighting_system__002__png__airflex_batch_20260710_3dd257f9175a487bb8d42cefcfea70cc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L91-L116",
+            "model.py:L243-L245",
+            "model.py:L261-L268",
+            "model.py:L269-L276"
+          ]
+        }
+      ],
+      "component_type": "track_adapter_family",
+      "name": "track_adapter",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Straight cylindrical open-lens can with rear cap, gold reflector disc, warm translucent lens, and a Y-axis trunnion axle.",
+          "implementation_function": "_light_head_cylindrical_can_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "head_radius": "head_radius_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                "radial": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "tilt_mount",
+              "part": "light_head__cylindrical_can__head_{index}",
+              "role": "consumer"
+            }
+          ],
+          "name": "cylindrical_can",
+          "notes": "_spotlight_shell cylinder with open lens cavity; optical axis points down (-Z) at neutral.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.115,
+              "minimum": 0.066,
+              "mode": "independent",
+              "name": "head_length_m",
+              "rationale": "housing length below the tilt pivot; drives envelope and spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.036,
+              "minimum": 0.024,
+              "mode": "independent",
+              "name": "head_radius_m",
+              "rationale": "housing/front radius; drives lens, reflector, axle span, spacing",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__flexible_track_lighting_system__001__png__airflex_batch_20260710_eedb0610ab714620adb4449ccd2a0ecd",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L25-L34",
+            "model.py:L287-L313"
+          ]
+        },
+        {
+          "evidence": "Tapered lofted flared can with a thick front rim and rear neck; conical gold reflector and warm circular lens; Y-axis trunnion axle.",
+          "implementation_function": "_light_head_tapered_can_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "head_radius": "head_radius_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                "radial": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "tilt_mount",
+              "part": "light_head__tapered_can__head_{index}",
+              "role": "consumer"
+            }
+          ],
+          "name": "tapered_can",
+          "notes": "_housing_geometry twin-loft shell + front_rim + rear_neck; front (wide) opening points down.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.115,
+              "minimum": 0.066,
+              "mode": "independent",
+              "name": "head_length_m",
+              "rationale": "housing length below the tilt pivot; drives envelope and spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.036,
+              "minimum": 0.024,
+              "mode": "independent",
+              "name": "head_radius_m",
+              "rationale": "front (wide) radius; drives rim, reflector, axle span, spacing",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__flexible_track_lighting_system__002__png__airflex_batch_20260710_3dd257f9175a487bb8d42cefcfea70cc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L35-L88",
+            "model.py:L158-L180"
+          ]
+        }
+      ],
+      "component_type": "light_head_family",
+      "name": "light_head",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Compact crossbar trunnion: swivel collar + drop stem + a horizontal crossbar bridging two short arms that capture the head's Y axle.",
+          "implementation_function": "_build_crossbar_trunnion",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "pan_mount",
+              "part": "pan_gimbal__crossbar_trunnion__gimbal_{index}",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "drop": "drop_length_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                "radial": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "tilt_axis",
+              "part": "pan_gimbal__crossbar_trunnion__gimbal_{index}",
+              "role": "provider"
+            }
+          ],
+          "name": "crossbar_trunnion",
+          "notes": "Pan about Z at the gimbal origin; tilt trunnion at z=-drop_length_m.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.1,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "drop_length_m",
+              "rationale": "drop from the pan pivot (track plane) to the tilt pivot",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__flexible_track_lighting_system__001__png__airflex_batch_20260710_eedb0610ab714620adb4449ccd2a0ecd",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L37-L53",
+            "model.py:L250-L267"
+          ]
+        },
+        {
+          "evidence": "Tall flat U-bracket: swivel puck + stem + flat bridge + two long side arms + external pivot knobs at the axle ends.",
+          "implementation_function": "_build_u_bracket",
+          "interfaces": [
+            {
+              "dimensions": {},
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "pan_mount",
+              "part": "pan_gimbal__u_bracket__gimbal_{index}",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "drop": "drop_length_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                "radial": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "tilt_axis",
+              "part": "pan_gimbal__u_bracket__gimbal_{index}",
+              "role": "provider"
+            }
+          ],
+          "name": "u_bracket",
+          "notes": "Pan about Z at the gimbal origin; tall U arms carry the tilt trunnion at z=-drop_length_m.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.1,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "drop_length_m",
+              "rationale": "drop from the pan pivot (track plane) to the tilt pivot",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__flexible_track_lighting_system__002__png__airflex_batch_20260710_3dd257f9175a487bb8d42cefcfea70cc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L91-L155"
+          ]
+        }
+      ],
+      "component_type": "pan_gimbal_family",
+      "name": "pan_gimbal",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_flexible_track_lighting_system",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_flexible_track_lighting_system.md",
+  "source_map_sha256": "00c01c1ea5100018602f5889807c887ad9e1c8e6286253e9bbced168414465a5"
+}

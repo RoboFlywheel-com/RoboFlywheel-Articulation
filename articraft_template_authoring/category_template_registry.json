@@ -1,0 +1,1303 @@
+{
+  "schema_version": 2,
+  "counting_policy": {
+    "raw_domain": "Compatibility-gated core structural/function axes multiplied by bounded integer multiplicity.",
+    "core_domain": "Compatibility-gated skeleton, mechanism, form-family, and genuine structural/function axes; multiplicity is excluded.",
+    "multiplicity_coverage": "Every admitted integer must be reachable and min/mid/max boundaries are reported separately; N never inflates core diversity.",
+    "profile_selection": "Every template declares a non-empty diversity_profile_reason; both profile and reason are included in the domain hash.",
+    "excluded": "Palette, material, host-conformal decoration, and continuous dimensions."
+  },
+  "templates": {
+    "speed_gate": {
+      "category_slug": "speed_gate",
+      "template_slug": "speed_gate",
+      "mechanism_profile": "swing_revolute",
+      "export_namespace": "speed_gate",
+      "template_path": "agent/templates/speed_gate.py",
+      "spec_path": "articraft_template_authoring/specs_modular_v1/speed_gate.md",
+      "source_map_path": "articraft_data/picture_expansion/template_source_maps/0611__speed_gate.md",
+      "sweep_report_path": null,
+      "diversity_profile": "constrained",
+      "diversity_profile_reason": "One fixed swing spine with three pedestal forms, four coupled barrier forms, and two reader modules; lane count is audited separately.",
+      "structural_axes": {
+        "pedestal_form": {
+          "kind": "primary_form",
+          "values": [
+            "tapered_hex",
+            "drafted_rounded",
+            "slim_rounded"
+          ]
+        },
+        "barrier_form": {
+          "kind": "primary_form",
+          "values": [
+            "flat_mid",
+            "curved_glass",
+            "full_height",
+            "waist_high"
+          ]
+        },
+        "reader_terminal": {
+          "kind": "functional_module",
+          "values": [
+            "flush_pad",
+            "raised_terminal"
+          ]
+        },
+        "lane_count": {
+          "kind": "multiplicity",
+          "integer_range": [
+            1,
+            5
+          ]
+        }
+      },
+      "compatibility_gates": [],
+      "visual_risk": [
+        "curved_fit",
+        "multi_joint"
+      ]
+    },
+    "sliding_turnstile": {
+      "category_slug": "sliding_turnstile",
+      "template_slug": "sliding_turnstile",
+      "mechanism_profile": "horizontal_prismatic_retract",
+      "export_namespace": "sliding_turnstile",
+      "template_path": "agent/templates/sliding_turnstile.py",
+      "spec_path": "articraft_template_authoring/specs_modular_v1/sliding_turnstile.md",
+      "source_map_path": "articraft_data/picture_expansion/template_source_maps/0611__sliding_turnstile.md",
+      "sweep_report_path": null,
+      "diversity_profile": "constrained",
+      "diversity_profile_reason": "One fixed horizontal-retract spine with three hollow hosts, four leaf forms, two readers, and a restrictive round-host compatibility gate; lane count is audited separately.",
+      "structural_axes": {
+        "pedestal_form": {
+          "kind": "primary_form",
+          "values": [
+            "capsule_hollow",
+            "slim_capsule_hollow",
+            "round_hollow"
+          ]
+        },
+        "barrier_form": {
+          "kind": "primary_form",
+          "values": [
+            "rectangular",
+            "waist_high",
+            "full_height",
+            "sloped_shoulder"
+          ]
+        },
+        "reader_module": {
+          "kind": "functional_module",
+          "values": [
+            "flush_sensor",
+            "raised_biometric"
+          ]
+        },
+        "lane_count": {
+          "kind": "multiplicity",
+          "integer_range": [
+            2,
+            6
+          ]
+        }
+      },
+      "compatibility_gates": [
+        {
+          "id": "round_host_requires_rectangular_leaf",
+          "action": "deny",
+          "when": {
+            "pedestal_form": "round_hollow",
+            "barrier_form": [
+              "waist_high",
+              "full_height",
+              "sloped_shoulder"
+            ]
+          },
+          "reason": "The accepted round well only captures the rectangular retracting leaf."
+        }
+      ],
+      "visual_risk": [
+        "hidden_slide",
+        "multi_joint"
+      ]
+    },
+    "wine_cabinet": {
+      "category_slug": "wine_cabinet",
+      "template_slug": "wine_cabinet",
+      "mechanism_profile": "multi_access_cabinet",
+      "export_namespace": "wine_cabinet",
+      "template_path": "agent/templates/wine_cabinet.py",
+      "spec_path": "articraft_template_authoring/specs_modular_v1/wine_cabinet.md",
+      "source_map_path": "articraft_data/picture_expansion/template_source_maps/0611__wine_cabinet.md",
+      "sweep_report_path": null,
+      "diversity_profile": "compositional",
+      "diversity_profile_reason": "Six source-backed cabinet bodies with body-specific door and rack interfaces plus three service states yield 125 stable core configurations; drawer and bottle N remain separate.",
+      "structural_axes": {
+        "body_form": {
+          "kind": "primary_form",
+          "values": [
+            "paired_display",
+            "wide_low_sideboard",
+            "single_tall",
+            "arched_display",
+            "built_in_bar_wall",
+            "corner_wrap"
+          ]
+        },
+        "door_style": {
+          "kind": "functional_module",
+          "values": [
+            "paired_glass_hinged",
+            "mesh_bifold",
+            "smoked_glass_cooler",
+            "sliding_glass",
+            "none"
+          ]
+        },
+        "rack_topology": {
+          "kind": "functional_module",
+          "values": [
+            "horizontal_cradles",
+            "diamond_lattice",
+            "vertical_pegs",
+            "open_shelves",
+            "none"
+          ]
+        },
+        "service_motion": {
+          "kind": "functional_module",
+          "values": [
+            "none",
+            "fold_out_counter",
+            "pull_out_tasting_shelf"
+          ]
+        },
+        "drawer_count": {
+          "kind": "multiplicity",
+          "values": [
+            0,
+            1,
+            3,
+            5,
+            9
+          ]
+        },
+        "bottle_count": {
+          "kind": "multiplicity",
+          "values": [
+            0,
+            12,
+            24,
+            50
+          ]
+        }
+      },
+      "compatibility_gates": [
+        {
+          "id": "paired_door_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "paired_display",
+            "door_style": [
+              "mesh_bifold",
+              "sliding_glass",
+              "none"
+            ]
+          },
+          "reason": "Not present in the paired-display opening."
+        },
+        {
+          "id": "wide_door_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "wide_low_sideboard",
+            "door_style": [
+              "sliding_glass",
+              "none"
+            ]
+          },
+          "reason": "Not present in the wide sideboard opening."
+        },
+        {
+          "id": "single_door_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "single_tall",
+            "door_style": [
+              "mesh_bifold",
+              "none"
+            ]
+          },
+          "reason": "Not present in the tall single opening."
+        },
+        {
+          "id": "arched_door_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "arched_display",
+            "door_style": [
+              "mesh_bifold",
+              "sliding_glass",
+              "none"
+            ]
+          },
+          "reason": "The arched host accepts only its hinged/cooler fronts."
+        },
+        {
+          "id": "builtin_door_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "built_in_bar_wall",
+            "door_style": [
+              "paired_glass_hinged",
+              "mesh_bifold",
+              "sliding_glass"
+            ]
+          },
+          "reason": "The built-in anchor accepts cooler or open fronts."
+        },
+        {
+          "id": "corner_door_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "corner_wrap",
+            "door_style": [
+              "mesh_bifold",
+              "sliding_glass"
+            ]
+          },
+          "reason": "The corner shell lacks those interfaces."
+        },
+        {
+          "id": "paired_rack_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "paired_display",
+            "rack_topology": [
+              "vertical_pegs",
+              "none"
+            ]
+          },
+          "reason": "Unsupported by the paired bay."
+        },
+        {
+          "id": "wide_rack_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "wide_low_sideboard",
+            "rack_topology": "none"
+          },
+          "reason": "Wine storage must remain present."
+        },
+        {
+          "id": "single_rack_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "single_tall",
+            "rack_topology": [
+              "diamond_lattice",
+              "none"
+            ]
+          },
+          "reason": "Unsupported by the narrow bay."
+        },
+        {
+          "id": "arched_rack_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "arched_display",
+            "rack_topology": [
+              "vertical_pegs",
+              "none"
+            ]
+          },
+          "reason": "Unsupported by the arched bay."
+        },
+        {
+          "id": "builtin_rack_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "built_in_bar_wall",
+            "rack_topology": "none"
+          },
+          "reason": "Wine storage must remain present."
+        },
+        {
+          "id": "corner_rack_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "corner_wrap",
+            "rack_topology": [
+              "diamond_lattice",
+              "none"
+            ]
+          },
+          "reason": "Unsupported by the corner shell."
+        },
+        {
+          "id": "foldout_rejects_slide",
+          "action": "deny",
+          "when": {
+            "door_style": "sliding_glass",
+            "service_motion": "fold_out_counter"
+          },
+          "reason": "Their header interfaces compete; other service+door pairs receive a derived upper service bay."
+        },
+        {
+          "id": "short_body_rejects_pullout_service",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "wide_low_sideboard",
+              "built_in_bar_wall"
+            ],
+            "service_motion": "pull_out_tasting_shelf"
+          },
+          "reason": "The short display volume lacks headroom."
+        },
+        {
+          "id": "paired_rejects_drawers",
+          "action": "deny",
+          "when": {
+            "body_form": "paired_display",
+            "drawer_count": [
+              1,
+              3,
+              5,
+              9
+            ]
+          },
+          "reason": "Its structural divider has no accepted single-stack drawer interface."
+        },
+        {
+          "id": "three_drawer_body_caps",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "wide_low_sideboard",
+              "single_tall",
+              "arched_display"
+            ],
+            "drawer_count": [
+              5,
+              9
+            ]
+          },
+          "reason": "These bodies support at most three complete drawers."
+        },
+        {
+          "id": "corner_drawer_cap",
+          "action": "deny",
+          "when": {
+            "body_form": "corner_wrap",
+            "drawer_count": 9
+          },
+          "reason": "The corner body supports at most five complete drawers."
+        },
+        {
+          "id": "empty_content_requires_open_shelf",
+          "action": "deny",
+          "when": {
+            "rack_topology": [
+              "horizontal_cradles",
+              "diamond_lattice",
+              "vertical_pegs"
+            ],
+            "bottle_count": 0
+          },
+          "reason": "An empty specialized rack projects to the accepted open-shelf omission state."
+        },
+        {
+          "id": "open_shelf_capacity_gate",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "wide_low_sideboard",
+              "single_tall",
+              "arched_display",
+              "built_in_bar_wall",
+              "corner_wrap"
+            ],
+            "rack_topology": "open_shelves",
+            "bottle_count": [
+              24,
+              50
+            ]
+          },
+          "reason": "These open-shelf hosts admit at most the supported 12-bottle display density; the paired-display source retains its 24-place two-compartment anchor."
+        },
+        {
+          "id": "wide_open_drawer_occupancy",
+          "action": "deny",
+          "when": {
+            "body_form": "wide_low_sideboard",
+            "rack_topology": "open_shelves",
+            "drawer_count": [
+              1,
+              3
+            ],
+            "bottle_count": 12
+          },
+          "reason": "The drawer band removes standing-bottle headroom."
+        },
+        {
+          "id": "builtin_open_drawer_occupancy",
+          "action": "deny",
+          "when": {
+            "body_form": "built_in_bar_wall",
+            "rack_topology": "open_shelves",
+            "drawer_count": [
+              1,
+              3,
+              5,
+              9
+            ],
+            "bottle_count": 12
+          },
+          "reason": "The drawer band removes standing-bottle headroom."
+        },
+        {
+          "id": "corner_open_drawer_occupancy",
+          "action": "deny",
+          "when": {
+            "body_form": "corner_wrap",
+            "rack_topology": "open_shelves",
+            "drawer_count": [
+              1,
+              3,
+              5
+            ],
+            "bottle_count": 12
+          },
+          "reason": "The drawer band removes standing-bottle headroom."
+        },
+        {
+          "id": "peg_capacity_gate",
+          "action": "deny",
+          "when": {
+            "rack_topology": "vertical_pegs",
+            "bottle_count": [
+              24,
+              50
+            ]
+          },
+          "reason": "The accepted peg layouts admit twelve complete bottles."
+        },
+        {
+          "id": "peg_drawer_headroom_gate",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "wide_low_sideboard",
+              "built_in_bar_wall",
+              "corner_wrap"
+            ],
+            "rack_topology": "vertical_pegs",
+            "drawer_count": [
+              1,
+              3,
+              5,
+              9
+            ]
+          },
+          "reason": "These shallow hosts lose peg-bottle headroom when a drawer band is present."
+        },
+        {
+          "id": "fifty_bottle_body_gate",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "paired_display",
+              "single_tall",
+              "arched_display",
+              "corner_wrap"
+            ],
+            "bottle_count": 50
+          },
+          "reason": "Only the two large hosts have fifty supported cells."
+        },
+        {
+          "id": "wide_fifty_drawer_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "wide_low_sideboard",
+            "drawer_count": 3,
+            "bottle_count": 50
+          },
+          "reason": "Three drawers consume the third fifty-bottle row."
+        },
+        {
+          "id": "builtin_fifty_drawer_gate",
+          "action": "deny",
+          "when": {
+            "body_form": "built_in_bar_wall",
+            "drawer_count": [
+              5,
+              9
+            ],
+            "bottle_count": 50
+          },
+          "reason": "The large drawer banks consume the fifty-bottle grid."
+        },
+        {
+          "id": "open_front_requires_motion",
+          "action": "deny",
+          "when": {
+            "door_style": "none",
+            "drawer_count": 0,
+            "service_motion": "none"
+          },
+          "reason": "At least one articulated access member is required."
+        }
+      ],
+      "visual_risk": [
+        "drawer",
+        "hidden_slide",
+        "multi_joint",
+        "rack_content_fit"
+      ]
+    },
+    "wine_cabinet1": {
+      "category_slug": "wine_cabinet1",
+      "template_slug": "wine_cabinet1",
+      "mechanism_profile": "mixed_gated_wine_storage",
+      "export_namespace": "wine_cabinet1",
+      "template_path": "agent/templates/wine_cabinet1.py",
+      "spec_path": "articraft_template_authoring/specs_modular_v1/wine_cabinet1.md",
+      "source_map_path": "articraft_data/picture_expansion/template_source_maps/0611__wine_cabinet1.md",
+      "sweep_report_path": null,
+      "diversity_profile": "constrained",
+      "diversity_profile_reason": "Compatibility-gated body, door, rack and service bundles yield exactly 16 core configurations; door and rack N are audited separately.",
+      "structural_axes": {
+        "body_form": {
+          "kind": "primary_form",
+          "values": [
+            "glass_front_cabinet",
+            "white_display_hutch",
+            "tall_cooler",
+            "low_sideboard",
+            "narrow_tower",
+            "quarter_round_corner"
+          ]
+        },
+        "door_motion": {
+          "kind": "functional_module",
+          "values": [
+            "hinged",
+            "sliding",
+            "bifold"
+          ]
+        },
+        "rack_style": {
+          "kind": "functional_module",
+          "values": [
+            "horizontal_shelves",
+            "cubby_grid"
+          ]
+        },
+        "service_module": {
+          "kind": "functional_module",
+          "values": [
+            "fixed_storage",
+            "fold_out_counter",
+            "pull_out_shelves",
+            "rotating_shelves",
+            "hanging_stem_rack"
+          ]
+        },
+        "door_count": {
+          "kind": "multiplicity",
+          "integer_range": [
+            0,
+            3
+          ]
+        },
+        "rack_count": {
+          "kind": "multiplicity",
+          "values": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            18,
+            24
+          ]
+        }
+      },
+      "compatibility_gates": [
+        {
+          "id": "service_modules_require_quarter_round",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "glass_front_cabinet",
+              "white_display_hutch",
+              "tall_cooler",
+              "low_sideboard",
+              "narrow_tower"
+            ],
+            "service_module": [
+              "fold_out_counter",
+              "pull_out_shelves",
+              "rotating_shelves",
+              "hanging_stem_rack"
+            ]
+          },
+          "reason": "These service modules require the accepted quarter-round support shell."
+        },
+        {
+          "id": "slide_and_bifold_require_tall_cooler",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "glass_front_cabinet",
+              "white_display_hutch",
+              "low_sideboard",
+              "narrow_tower",
+              "quarter_round_corner"
+            ],
+            "door_motion": [
+              "sliding",
+              "bifold"
+            ]
+          },
+          "reason": "Only the accepted tall cooler has these captured door interfaces."
+        },
+        {
+          "id": "cubby_body_gate",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "tall_cooler",
+              "quarter_round_corner"
+            ],
+            "rack_style": "cubby_grid"
+          },
+          "reason": "These bodies lack the accepted six-column cubby interface."
+        }
+      ],
+      "visual_risk": [
+        "curved_fit",
+        "hidden_slide",
+        "multi_joint",
+        "rack_content_fit"
+      ]
+    },
+    "wine_cabinet2": {
+      "category_slug": "wine_cabinet2",
+      "template_slug": "wine_cabinet2",
+      "mechanism_profile": "mixed_cabinet_fronts",
+      "export_namespace": "wine_cabinet2",
+      "template_path": "agent/templates/wine_cabinet2.py",
+      "spec_path": "articraft_template_authoring/specs_modular_v1/wine_cabinet2.md",
+      "source_map_path": "articraft_data/picture_expansion/template_source_maps/0611__wine_cabinet2.md",
+      "sweep_report_path": null,
+      "diversity_profile": "standard",
+      "diversity_profile_reason": "Four cabinet forms, host-zoned front mechanisms, five source-backed rack families and the service module yield 63 legal core configurations after paneled-bank identity gates; all N axes remain separate.",
+      "structural_axes": {
+        "body_form": {
+          "kind": "primary_form",
+          "values": [
+            "contemporary_bookcase",
+            "freestanding_hutch",
+            "modular_light_wood",
+            "built_in_wall"
+          ]
+        },
+        "door_mechanism": {
+          "kind": "functional_module",
+          "values": [
+            "swing_glass",
+            "swing_divided_glass",
+            "swing_paneled",
+            "swing_cooler",
+            "sliding_glass",
+            "pocket_glass"
+          ]
+        },
+        "rack_topology": {
+          "kind": "functional_module",
+          "values": [
+            "glass_shelf_bay",
+            "diamond_lattice",
+            "horizontal_bar_rack",
+            "vertical_peg_rack",
+            "hybrid_display_rack"
+          ]
+        },
+        "service_motion": {
+          "kind": "functional_module",
+          "values": [
+            "none",
+            "pull_out_tasting_shelf"
+          ]
+        },
+        "door_count": {
+          "kind": "multiplicity",
+          "integer_range": [
+            1,
+            4
+          ]
+        },
+        "drawer_count": {
+          "kind": "multiplicity",
+          "values": [
+            0,
+            2,
+            3,
+            4
+          ]
+        },
+        "bottle_count": {
+          "kind": "multiplicity",
+          "integer_range": [
+            6,
+            20
+          ]
+        }
+      },
+      "compatibility_gates": [
+        {
+          "id": "paneled_lower_bank_built_in_only",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "contemporary_bookcase",
+              "freestanding_hutch",
+              "modular_light_wood"
+            ],
+            "door_mechanism": "swing_paneled"
+          },
+          "reason": "The accepted paneled leaves are the lower cupboard bank of the built-in-wall FormFamily; they are not full-height display facades."
+        },
+        {
+          "id": "paneled_lower_bank_count",
+          "action": "deny",
+          "when": {
+            "body_form": "built_in_wall",
+            "door_mechanism": "swing_paneled",
+            "door_count": [
+              1,
+              2
+            ]
+          },
+          "reason": "The reviewed built-in paneled bank is a three/four-leaf lower zone; one/two enlarged leaves collapse the source zoning."
+        },
+        {
+          "id": "horizontal_bar_hutch_only",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "contemporary_bookcase",
+              "modular_light_wood",
+              "built_in_wall"
+            ],
+            "rack_topology": "horizontal_bar_rack"
+          },
+          "reason": "The horizontal bar anchor belongs to the freestanding hutch."
+        },
+        {
+          "id": "wide_racks_need_wide_body",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "contemporary_bookcase",
+              "freestanding_hutch"
+            ],
+            "rack_topology": [
+              "diamond_lattice",
+              "vertical_peg_rack"
+            ]
+          },
+          "reason": "These backed rack interfaces require a wide deep bay."
+        },
+        {
+          "id": "hybrid_display_modular_only",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "contemporary_bookcase",
+              "freestanding_hutch",
+              "built_in_wall"
+            ],
+            "rack_topology": "hybrid_display_rack"
+          },
+          "reason": "The accepted 4-upright + 9-diamond + 7-cooler support bundle belongs to the modular light-wood host."
+        },
+        {
+          "id": "hybrid_display_occupies_lower_service_band",
+          "action": "deny",
+          "when": {
+            "rack_topology": "hybrid_display_rack",
+            "service_motion": "pull_out_tasting_shelf"
+          },
+          "reason": "The seven cooler positions occupy the same lower service band as the pull-out tasting shelf."
+        },
+        {
+          "id": "pocket_rejects_narrow_hutch",
+          "action": "deny",
+          "when": {
+            "body_form": "freestanding_hutch",
+            "door_mechanism": "pocket_glass"
+          },
+          "reason": "The narrow hutch lacks a full side well."
+        },
+        {
+          "id": "tasting_shelf_host_gate",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "contemporary_bookcase",
+              "freestanding_hutch",
+              "built_in_wall"
+            ],
+            "service_motion": "pull_out_tasting_shelf"
+          },
+          "reason": "The accepted tasting shelf belongs to the modular light-wood service bay."
+        },
+        {
+          "id": "tasting_shelf_rejects_pocket",
+          "action": "deny",
+          "when": {
+            "door_mechanism": "pocket_glass",
+            "service_motion": "pull_out_tasting_shelf"
+          },
+          "reason": "The shelf and pocket well compete for the same framing."
+        },
+        {
+          "id": "hutch_glass_capacity_8",
+          "action": "deny",
+          "when": {
+            "body_form": "freestanding_hutch",
+            "rack_topology": "glass_shelf_bay",
+            "bottle_count": [
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ]
+          },
+          "reason": "The narrow hutch glass bay has eight complete supported seats."
+        },
+        {
+          "id": "modular_glass_capacity_10",
+          "action": "deny",
+          "when": {
+            "body_form": "modular_light_wood",
+            "rack_topology": "glass_shelf_bay",
+            "bottle_count": [
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ]
+          },
+          "reason": "The standalone modular glass-bay family is conservatively admitted at ten complete seats; N=20 uses the separate source-matched hybrid bundle."
+        },
+        {
+          "id": "glass_capacity_12",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "contemporary_bookcase",
+              "built_in_wall"
+            ],
+            "rack_topology": "glass_shelf_bay",
+            "bottle_count": [
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ]
+          },
+          "reason": "These glass bays admit twelve complete supported seats."
+        },
+        {
+          "id": "horizontal_bar_capacity_12",
+          "action": "deny",
+          "when": {
+            "body_form": "freestanding_hutch",
+            "rack_topology": "horizontal_bar_rack",
+            "bottle_count": [
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ]
+          },
+          "reason": "The accepted hutch bar layout is bounded to twelve complete supported bottles."
+        },
+        {
+          "id": "vertical_peg_capacity_12",
+          "action": "deny",
+          "when": {
+            "body_form": [
+              "modular_light_wood",
+              "built_in_wall"
+            ],
+            "rack_topology": "vertical_peg_rack",
+            "bottle_count": [
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ]
+          },
+          "reason": "The four-by-three pegboard has twelve paired peg-and-saddle seats."
+        }
+      ],
+      "visual_risk": [
+        "drawer",
+        "hidden_slide",
+        "pocket",
+        "multi_joint",
+        "rack_content_fit"
+      ]
+    },
+    "makeup": {
+      "category_slug": "Makeup",
+      "template_slug": "makeup",
+      "mechanism_profile": "portable_palette_carrier",
+      "export_namespace": "Makeup",
+      "template_path": "agent/templates/makeup.py",
+      "spec_path": "articraft_template_authoring/specs_modular_v1/makeup.md",
+      "source_map_path": "articraft_data/picture_expansion/template_source_maps/0611__Makeup.md",
+      "sweep_report_path": null,
+      "diversity_profile": "constrained",
+      "diversity_profile_reason": "Production executes nine complete accepted source bundles: two origins, four case-form anchors, and three mechanically repaired count anchors for N=3/5/7. Source record is the only core structural axis; N is audited separately and continuous host/travel parameters do not inflate the core count. The honest domain therefore needs a user-approved constrained-profile exception rather than synthetic combinations.",
+      "structural_axes": {
+        "source_record": {
+          "kind": "primary_form",
+          "values": [
+            "rec_picturex_0611__makeup__001__png_25a74d42e2cc47b8be52d1f0dd9e0807",
+            "rec_use-the-attached-reference-image-as-the-primary-_20260710_093913_953497_b3fcb0ac",
+            "rec_0611_makeup_var_case_form_train_case_tower",
+            "rec_0611_makeup_var_case_form_book_style_folio",
+            "rec_0611_makeup_var_case_form_round_compact",
+            "rec_0611_makeup_var_case_form_cylindrical_vanity_case",
+            "rec_0611_makeup_var_palette_count_3_palette_trays",
+            "rec_0611_makeup_var_palette_count_5_palette_trays",
+            "rec_0611_makeup_var_palette_count_7_palette_trays"
+          ]
+        },
+        "palette_count": {
+          "kind": "multiplicity",
+          "values": [
+            2,
+            3,
+            5,
+            7
+          ]
+        }
+      },
+      "compatibility_gates": [
+        {
+          "id": "n2_source_records_are_coupled",
+          "action": "deny",
+          "when": {
+            "source_record": [
+              "rec_picturex_0611__makeup__001__png_25a74d42e2cc47b8be52d1f0dd9e0807",
+              "rec_0611_makeup_var_case_form_train_case_tower",
+              "rec_0611_makeup_var_case_form_book_style_folio",
+              "rec_0611_makeup_var_case_form_round_compact"
+            ],
+            "palette_count": [
+              3,
+              5,
+              7
+            ]
+          },
+          "reason": "These complete accepted source records contain exactly two articulated carriers."
+        },
+        {
+          "id": "n3_source_records_are_coupled",
+          "action": "deny",
+          "when": {
+            "source_record": [
+              "rec_use-the-attached-reference-image-as-the-primary-_20260710_093913_953497_b3fcb0ac",
+              "rec_0611_makeup_var_case_form_cylindrical_vanity_case",
+              "rec_0611_makeup_var_palette_count_3_palette_trays"
+            ],
+            "palette_count": [
+              2,
+              5,
+              7
+            ]
+          },
+          "reason": "These complete accepted source records contain exactly three articulated carriers."
+        },
+        {
+          "id": "n5_source_record_is_coupled",
+          "action": "deny",
+          "when": {
+            "source_record": "rec_0611_makeup_var_palette_count_5_palette_trays",
+            "palette_count": [
+              2,
+              3,
+              7
+            ]
+          },
+          "reason": "The accepted N=5 record is a complete five-carrier bundle."
+        },
+        {
+          "id": "n7_source_record_is_coupled",
+          "action": "deny",
+          "when": {
+            "source_record": "rec_0611_makeup_var_palette_count_7_palette_trays",
+            "palette_count": [
+              2,
+              3,
+              5
+            ]
+          },
+          "reason": "The accepted N=7 record is a complete seven-carrier bundle."
+        }
+      ],
+      "visual_risk": [
+        "drawer",
+        "multi_joint",
+        "dense_multiplicity",
+        "form_dependency",
+        "source_identity"
+      ],
+      "diversity_exception": {
+        "status": "approved",
+        "reason": "User approved a Makeup-specific constrained-profile exception: nine complete source-bound mechanical bundles are the honest core domain; N and continuous dimensions must not be used to pad the count.",
+        "approved_by": "user",
+        "approved_at": "2026-07-17T03:25:29Z",
+        "approved_domain_sha256": "fa53c78d0c05bee02fb89ea97fce1cc8fbdf7090f4d66375b8f2bf092c399ca1",
+        "diversity_profile": "constrained",
+        "legal_core_combination_count": 9,
+        "legal_raw_combination_count": 9
+      }
+    },
+    "round_cabinet": {
+      "category_slug": "Round_cabinet",
+      "template_slug": "round_cabinet",
+      "mechanism_profile": "partitioned_curved_storage",
+      "export_namespace": "Round_cabinet",
+      "template_path": "agent/templates/round_cabinet.py",
+      "spec_path": "articraft_template_authoring/specs_modular_v1/round_cabinet.md",
+      "source_map_path": "articraft_data/picture_expansion/template_source_maps/0611__round_cabinet.md",
+      "sweep_report_path": null,
+      "diversity_profile": "standard",
+      "diversity_profile_reason": "The oval source lacks a valid constant-curvature arc/tambour carrier, so gated body/facade pairs yield 40 core configurations. This remains below the standard floor pending an approved exception or another source-backed core axis; drawer and shelf counts are audited separately.",
+      "structural_axes": {
+        "body_form": {
+          "kind": "primary_form",
+          "values": [
+            "d_shape",
+            "full_cylinder",
+            "oval_drum"
+          ]
+        },
+        "facade_profile": {
+          "kind": "functional_module",
+          "values": [
+            "hinged_side_door_drawers",
+            "arc_slide_side_door_drawers",
+            "tambour_side_door_drawers",
+            "paired_curved_doors"
+          ]
+        },
+        "base_profile": {
+          "kind": "functional_module",
+          "values": [
+            "tapered_legs",
+            "rotating_pedestal"
+          ]
+        },
+        "handedness": {
+          "kind": "primary_form",
+          "values": [
+            "door_left",
+            "door_right"
+          ]
+        },
+        "drawer_count": {
+          "kind": "multiplicity",
+          "values": [
+            0,
+            2,
+            3,
+            4
+          ]
+        },
+        "shelf_count": {
+          "kind": "multiplicity",
+          "integer_range": [
+            2,
+            6
+          ]
+        }
+      },
+      "compatibility_gates": [
+        {
+          "id": "oval_rejects_constant_curvature_carriers",
+          "action": "deny",
+          "when": {
+            "body_form": "oval_drum",
+            "facade_profile": [
+              "arc_slide_side_door_drawers",
+              "tambour_side_door_drawers"
+            ]
+          },
+          "reason": "The accepted oval-drum source has no mechanically valid constant-curvature carrier bundle."
+        },
+        {
+          "id": "paired_doors_replace_drawer_bank",
+          "action": "deny",
+          "when": {
+            "facade_profile": "paired_curved_doors",
+            "drawer_count": [
+              2,
+              3,
+              4
+            ]
+          },
+          "reason": "The accepted paired-door profile replaces the entire drawer bank."
+        },
+        {
+          "id": "hybrid_profiles_require_drawer_bank",
+          "action": "deny",
+          "when": {
+            "facade_profile": [
+              "hinged_side_door_drawers",
+              "arc_slide_side_door_drawers",
+              "tambour_side_door_drawers"
+            ],
+            "drawer_count": 0
+          },
+          "reason": "The accepted hybrid profiles retain a complete opposite-quadrant drawer bank."
+        }
+      ],
+      "visual_risk": [
+        "drawer",
+        "curved_fit",
+        "hidden_slide",
+        "multi_joint"
+      ]
+    },
+    "pictureX_0611_compass": {
+      "category_slug": "pictureX_0611_compass",
+      "template_slug": "pictureX_0611_compass",
+      "mechanism_profile": "magnetic_capsule_rotating_indicator_with_hinged_lid",
+      "export_namespace": "pictureX_0611_compass",
+      "template_path": "agent/templates/pictureX_0611_compass.py",
+      "spec_path": "articraft_template_authoring/specs_modular_v1/pictureX_0611_compass.md",
+      "source_map_path": "articraft_data/picture_expansion/template_source_maps/0611__compass.md",
+      "sweep_report_path": null,
+      "diversity_profile": "constrained",
+      "diversity_profile_reason": "One fixed magnetic-capsule spine (coaxial bezel + freely rotating indicator on a central pivot + rear-hinged lid) is the category identity and cannot vary. Honest core vocabulary is four carrier forms x three indicator mechanisms x family-matched lids = 30 gated combinations, bounded by the confirmed 8-record pool (1 origin + 7 single-axis forks). No multiplicity axis exists: ticks/grips are host-conformal decoration.",
+      "structural_axes": {
+        "case_platform": {
+          "kind": "primary_form",
+          "values": [
+            "round_pocket_case",
+            "square_lensatic_case",
+            "rectangular_baseplate",
+            "wrist_cradle_case"
+          ]
+        },
+        "indicator": {
+          "kind": "functional_module",
+          "values": [
+            "two_color_needle",
+            "full_dial_card",
+            "liquid_damped_needle"
+          ]
+        },
+        "cover": {
+          "kind": "primary_form",
+          "values": [
+            "domed_lid",
+            "mirror_sighting_lid",
+            "sight_wire_lid",
+            "square_flat_lid",
+            "flat_clear_lid"
+          ]
+        }
+      },
+      "compatibility_gates": [
+        {
+          "id": "round_family_takes_only_round_family_lids",
+          "action": "deny",
+          "when": {
+            "case_platform": [
+              "round_pocket_case",
+              "wrist_cradle_case"
+            ],
+            "cover": [
+              "square_flat_lid",
+              "flat_clear_lid"
+            ]
+          },
+          "reason": "The square flat lid matches the square shell outline and the clear disc lid hinges on the baseplate capsule wall; neither has an accepted round-shell anchor."
+        },
+        {
+          "id": "square_shell_takes_square_or_sighting_lids",
+          "action": "deny",
+          "when": {
+            "case_platform": "square_lensatic_case",
+            "cover": [
+              "domed_lid",
+              "flat_clear_lid"
+            ]
+          },
+          "reason": "The stamped dome is sized to the round shell rim and the clear disc belongs to the baseplate capsule; the square shell's accepted lid is the rounded-square plate."
+        },
+        {
+          "id": "baseplate_takes_only_clear_disc_lid",
+          "action": "deny",
+          "when": {
+            "case_platform": "rectangular_baseplate",
+            "cover": [
+              "domed_lid",
+              "mirror_sighting_lid",
+              "sight_wire_lid",
+              "square_flat_lid"
+            ]
+          },
+          "reason": "The baseplate hinges its lid on the capsule wall rim, whose only accepted anchor is the transparent acrylic disc; shell-rim lids have no baseplate anchor."
+        }
+      ],
+      "visual_risk": [
+        "curved_fit",
+        "multi_joint"
+      ]
+    }
+  }
+}

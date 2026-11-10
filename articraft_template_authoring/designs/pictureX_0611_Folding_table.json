@@ -1,0 +1,833 @@
+{
+  "assembly_notes": "Three independent structural slots plus the support multiplicity. top_style owns the tabletop family and exports the under-top interface (top plane, usable half-length/half-depth and one hinge line per station); support_style consumes only that interface and reports its foot positions, which foot_style consumes. All 4x7x3 = 84 combinations build without a gate. Every fold axis is solved by mate_axes and registered with register_interface_mate; supports ride carcass-side hinge pins carried on bracket cheeks, so a folded support keeps a real support path at every angle. For the split tops the stations right of the seam hang from the moving half, so the whole table still folds as one assembly.",
+  "bindings": [
+    {
+      "binding_id": "top_to_support",
+      "consumer": "support_style.under_top",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "top_height_m",
+            "top_thickness_m"
+          ],
+          "expression": "under_top_z_m - hinge_r, on the station's x line",
+          "mode": "derived",
+          "name": "hinge_axis_z_m",
+          "rationale": "the fold axis rides the under-top rail",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "top_length_m",
+            "leg_count"
+          ],
+          "expression": "stations left of centre fold with positive q, right of centre with negative q",
+          "mode": "derived",
+          "name": "fold_direction",
+          "rationale": "every support folds inward under the top",
+          "unit": "ratio",
+          "value_type": "ratio"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "top_style.under_top"
+    },
+    {
+      "binding_id": "support_to_foot",
+      "consumer": "foot_style.foot_plane",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "top_depth_m"
+          ],
+          "expression": "the support reports its foot y positions; the foot candidate sizes pads or the rail from them",
+          "mode": "derived",
+          "name": "foot_span_m",
+          "rationale": "pads and rails must match the support's real footprint",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "support_style.under_top"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "folding_table_identity",
+      "applies_to": {
+        "candidates": [
+          "folding_legs",
+          "webbed_legs",
+          "brace_legs",
+          "beam_frame",
+          "scissor_base",
+          "a_frame_trestle",
+          "telescoping_legs"
+        ],
+        "slot": "support_style"
+      },
+      "required_author_checks": [
+        "category_anchor: a tabletop carries the table",
+        "category_anchor: N folding support assemblies under the top",
+        "category_anchor: every support folds on a real revolute joint"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "leg",
+          "joint_type": "revolute",
+          "parent_role": "tabletop"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": "leg_count",
+          "role": "leg"
+        }
+      ]
+    },
+    {
+      "anchor_id": "telescoping_leg_identity",
+      "applies_to": {
+        "candidates": [
+          "telescoping_legs"
+        ],
+        "slot": "support_style"
+      },
+      "required_author_checks": [
+        "category_anchor: N folding support assemblies under the top"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "leg_extension",
+          "joint_type": "prismatic",
+          "parent_role": "leg"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": "leg_count",
+          "role": "leg"
+        },
+        {
+          "count_from": "leg_count",
+          "role": "leg_extension"
+        }
+      ]
+    },
+    {
+      "anchor_id": "bifold_top_identity",
+      "applies_to": {
+        "candidates": [
+          "split_halves",
+          "suitcase_bifold_handle"
+        ],
+        "slot": "top_style"
+      },
+      "required_author_checks": [
+        "category_anchor: the bi-fold top folds on its centre seam"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "tabletop"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2 <= leg_count <= 6; top_length_m is derived upward so stations keep >= 0.20 m of pitch",
+      "item_slot": "support_style",
+      "name": "leg_count",
+      "spacing_expression": "station i sits at -top_length_m/2 + 0.075 + i*station_pitch_m; brace geometry, scissor reach and foot spacing re-derived per N",
+      "values": [
+        2,
+        4,
+        6
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "tabletop slats + rails",
+          "implementation_function": "_top_style_single_panel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "half_depth": "top_depth_m/2",
+                "station_pitch": "derived per N"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(station_x, 0, under_top_z - hinge_r)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "under_top",
+              "part": "top_style__single_panel__tabletop",
+              "role": "provider"
+            }
+          ],
+          "name": "single_panel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.85,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "source tops 0.90-1.80 m long",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.86,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "top_depth_m",
+              "rationale": "source tops 0.55-0.75 m deep",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "top_height_m",
+              "rationale": "source working heights 0.35-0.74 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "top_thickness_m",
+              "rationale": "source top panels 0.014-0.030 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_height_m",
+                "top_thickness_m"
+              ],
+              "expression": "under_top_z_m = top_height_m - top_thickness_m - rail_h; leg_length_m = under_top_z_m - foot_h",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "leg_length_m",
+              "rationale": "the support reaches the floor from the under-top plane",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_count",
+                "top_length_m"
+              ],
+              "expression": "top_length_m grows to 0.20*(leg_count-1) + 0.25; station_pitch_m = (top_length_m - 2*0.075)/(leg_count-1)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "station_pitch_m",
+              "rationale": "host capacity: the stations must fit along the top",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table__002__png_f2f71083d3f24464854e6f048c746976",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L41-L149"
+          ]
+        },
+        {
+          "evidence": "tabletop_half_0/1, seam hinge",
+          "implementation_function": "_top_style_split_halves_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "half_depth": "top_depth_m/2",
+                "station_pitch": "derived per N"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(station_x, 0, under_top_z - hinge_r)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "under_top",
+              "part": "top_style__split_halves__tabletop",
+              "role": "provider"
+            }
+          ],
+          "name": "split_halves",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folding_table__001__png_4c4c814847524e32a28ec810e398ef86",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L131-L262"
+          ]
+        },
+        {
+          "evidence": "left_top/right_top, beam frame",
+          "implementation_function": "_top_style_framed_panel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "half_depth": "top_depth_m/2",
+                "station_pitch": "derived per N"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(station_x, 0, under_top_z - hinge_r)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "under_top",
+              "part": "top_style__framed_panel__tabletop",
+              "role": "provider"
+            }
+          ],
+          "name": "framed_panel",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folding_table__003__png_20026283e1e34d9cbb817acb4dbbd289",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L37-L200"
+          ]
+        },
+        {
+          "evidence": "latch tabs, handle",
+          "implementation_function": "_top_style_suitcase_bifold_handle_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "half_depth": "top_depth_m/2",
+                "station_pitch": "derived per N"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(station_x, 0, under_top_z - hinge_r)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "under_top",
+              "part": "top_style__suitcase_bifold_handle__tabletop",
+              "role": "provider"
+            }
+          ],
+          "name": "suitcase_bifold_handle",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex0611_folding_table_suitcase_bifold_handle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L201-L336"
+          ]
+        }
+      ],
+      "component_type": "top_style",
+      "name": "top_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "leg_i, revolute about the depth axis",
+          "implementation_function": "_support_style_folding_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leg_length": "leg_length_m",
+                "leg_span": "0.68*top_depth_m"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "under_top",
+              "part": "support_style__folding_legs__leg_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "folding_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.85,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "source tops 0.90-1.80 m long",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.86,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "top_depth_m",
+              "rationale": "source tops 0.55-0.75 m deep",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "top_height_m",
+              "rationale": "source working heights 0.35-0.74 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "top_thickness_m",
+              "rationale": "source top panels 0.014-0.030 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_height_m",
+                "top_thickness_m"
+              ],
+              "expression": "under_top_z_m = top_height_m - top_thickness_m - rail_h; leg_length_m = under_top_z_m - foot_h",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "leg_length_m",
+              "rationale": "the support reaches the floor from the under-top plane",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_count",
+                "top_length_m"
+              ],
+              "expression": "top_length_m grows to 0.20*(leg_count-1) + 0.25; station_pitch_m = (top_length_m - 2*0.075)/(leg_count-1)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "station_pitch_m",
+              "rationale": "host capacity: the stations must fit along the top",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table__001__png_4c4c814847524e32a28ec810e398ef86",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L263-L400"
+          ]
+        },
+        {
+          "evidence": "leg_i web panel",
+          "implementation_function": "_support_style_webbed_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leg_length": "leg_length_m",
+                "leg_span": "0.68*top_depth_m"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "under_top",
+              "part": "support_style__webbed_legs__leg_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "webbed_legs",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folding_table__002__png_f2f71083d3f24464854e6f048c746976",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L210"
+          ]
+        },
+        {
+          "evidence": "leg_pair_i, brace_i",
+          "implementation_function": "_support_style_brace_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leg_length": "leg_length_m",
+                "leg_span": "0.68*top_depth_m"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "under_top",
+              "part": "support_style__brace_legs__leg_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "brace_legs",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folding_table__004__png_a30fb8a6461c4f59ae6ad0834120488b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L130-L340"
+          ]
+        },
+        {
+          "evidence": "beam spine, end frames",
+          "implementation_function": "_support_style_beam_frame_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leg_length": "leg_length_m",
+                "leg_span": "0.68*top_depth_m"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "under_top",
+              "part": "support_style__beam_frame__leg_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "beam_frame",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folding_table__003__png_20026283e1e34d9cbb817acb4dbbd289",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L201-L330"
+          ]
+        },
+        {
+          "evidence": "scissor_arm_i",
+          "implementation_function": "_support_style_scissor_base_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leg_length": "leg_length_m",
+                "leg_span": "0.68*top_depth_m"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "under_top",
+              "part": "support_style__scissor_base__leg_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "scissor_base",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex0611_folding_table_scissor_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L142-L260"
+          ]
+        },
+        {
+          "evidence": "trestle_i, spreader",
+          "implementation_function": "_support_style_a_frame_trestle_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leg_length": "leg_length_m",
+                "leg_span": "0.68*top_depth_m"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "under_top",
+              "part": "support_style__a_frame_trestle__leg_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "a_frame_trestle",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex0611_folding_table_a_frame_trestle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L141-L400"
+          ]
+        },
+        {
+          "evidence": "leg_i, leg_inner_i",
+          "implementation_function": "_support_style_telescoping_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leg_length": "leg_length_m",
+                "leg_span": "0.68*top_depth_m"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "under_top",
+              "part": "support_style__telescoping_legs__leg_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "telescoping_legs",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex0611_folding_table_telescoping_legs",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L152-L295"
+          ]
+        }
+      ],
+      "component_type": "support_style",
+      "name": "support_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "glide pads",
+          "implementation_function": "_foot_style_flat_glide_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "foot_span": "derived from the support's foot positions"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, foot_y, -leg_length_m)",
+                "tangent_u": "(0,1,0)"
+              },
+              "kind": "plane",
+              "name": "foot_plane",
+              "part": "support_style__<candidate>__leg_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "flat_glide",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.85,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "source tops 0.90-1.80 m long",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.86,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "top_depth_m",
+              "rationale": "source tops 0.55-0.75 m deep",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "top_height_m",
+              "rationale": "source working heights 0.35-0.74 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "top_thickness_m",
+              "rationale": "source top panels 0.014-0.030 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_height_m",
+                "top_thickness_m"
+              ],
+              "expression": "under_top_z_m = top_height_m - top_thickness_m - rail_h; leg_length_m = under_top_z_m - foot_h",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "leg_length_m",
+              "rationale": "the support reaches the floor from the under-top plane",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_count",
+                "top_length_m"
+              ],
+              "expression": "top_length_m grows to 0.20*(leg_count-1) + 0.25; station_pitch_m = (top_length_m - 2*0.075)/(leg_count-1)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "station_pitch_m",
+              "rationale": "host capacity: the stations must fit along the top",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table__002__png_f2f71083d3f24464854e6f048c746976",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L150-L210"
+          ]
+        },
+        {
+          "evidence": "foot stems + pads",
+          "implementation_function": "_foot_style_swivel_pad_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "foot_span": "derived from the support's foot positions"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, foot_y, -leg_length_m)",
+                "tangent_u": "(0,1,0)"
+              },
+              "kind": "plane",
+              "name": "foot_plane",
+              "part": "support_style__<candidate>__leg_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "swivel_pad",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folding_table__001__png_4c4c814847524e32a28ec810e398ef86",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L300-L346"
+          ]
+        },
+        {
+          "evidence": "spreader/floor rail",
+          "implementation_function": "_foot_style_floor_rail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "foot_span": "derived from the support's foot positions"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, foot_y, -leg_length_m)",
+                "tangent_u": "(0,1,0)"
+              },
+              "kind": "plane",
+              "name": "foot_plane",
+              "part": "support_style__<candidate>__leg_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "floor_rail",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex0611_folding_table_a_frame_trestle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L191-L223"
+          ]
+        }
+      ],
+      "component_type": "foot_style",
+      "name": "foot_style",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Folding_table",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Folding_table.md",
+  "source_map_sha256": "919cf2b62805400b839bf5fc1afc971acffbfabaf62ddd876541dff5b015e378"
+}

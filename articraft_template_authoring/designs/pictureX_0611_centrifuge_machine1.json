@@ -1,0 +1,907 @@
+{
+  "assembly_notes": "Benchtop laboratory centrifuge. The grounded `housing` part is a CadQuery body with a real recessed rotor well, a drive boss on the well floor bored for the rotor shaft, a moulded well rim and a front control panel. The `rotor` turns CONTINUOUS about +z on that boss and carries tube_holder_count holders on one derived circle; the well radius is the rotor radius plus a running gap, so the swept envelope never touches the wall. The `lid` closes over the rim and either swings REVOLUTE on a rear hinge line, slides PRISMATIC back on side rails, or lifts PRISMATIC straight up between two guide posts; either way it clears the tallest holder by a real gap when shut, and the rails or hinge knuckles keep it in contact with the housing at every pose. housing_form varies the body (lofted benchtop shell, the same shell on a continuous moulded plinth, squared clinical cabinet, compact microfuge) and each derives the same well datum. rotor_form varies the holders between drilled fixed-angle wells and hung swing-bucket carriers. rotor_radius_m, body_height_m and holder_depth_m are honest continuous parameters deriving the well, boss, holder circle, rotor height and lid clearance; palette and panel graphics are non-core. panel_control puts one real front control on the housing: a pivoting latch lever on its own REVOLUTE shaft, or a momentary push button on a short PRISMATIC travel into its recess.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "housing_form_identity",
+      "applies_to": {
+        "candidates": [
+          "benchtop_shell",
+          "clinical_box",
+          "microfuge",
+          "plinth_shell"
+        ],
+        "slot": "housing_form"
+      },
+      "required_author_checks": [
+        "category_anchor: recessed rotor well with a spinning holder ring",
+        "category_anchor: the rotor turns clear of the well and under the closed lid",
+        "category_anchor: housing_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "housing"
+        },
+        {
+          "exact_count": 1,
+          "role": "rotor"
+        },
+        {
+          "exact_count": 1,
+          "role": "lid"
+        }
+      ]
+    },
+    {
+      "anchor_id": "rotor_form_identity",
+      "applies_to": {
+        "candidates": [
+          "fixed_angle",
+          "swing_bucket"
+        ],
+        "slot": "rotor_form"
+      },
+      "required_author_checks": [
+        "category_anchor: recessed rotor well with a spinning holder ring",
+        "category_anchor: the rotor turns clear of the well and under the closed lid",
+        "category_anchor: rotor_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "housing"
+        },
+        {
+          "exact_count": 1,
+          "role": "rotor"
+        },
+        {
+          "exact_count": 1,
+          "role": "lid"
+        }
+      ]
+    },
+    {
+      "anchor_id": "lid_action_identity",
+      "applies_to": {
+        "candidates": [
+          "hinged_lid",
+          "sliding_lid",
+          "lift_lid"
+        ],
+        "slot": "lid_action"
+      },
+      "required_author_checks": [
+        "category_anchor: recessed rotor well with a spinning holder ring",
+        "category_anchor: the rotor turns clear of the well and under the closed lid",
+        "category_anchor: lid_action identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "housing"
+        },
+        {
+          "exact_count": 1,
+          "role": "rotor"
+        },
+        {
+          "exact_count": 1,
+          "role": "lid"
+        }
+      ]
+    },
+    {
+      "anchor_id": "panel_control_identity",
+      "applies_to": {
+        "candidates": [
+          "latch_lever",
+          "push_button"
+        ],
+        "slot": "panel_control"
+      },
+      "required_author_checks": [
+        "category_anchor: recessed rotor well with a spinning holder ring",
+        "category_anchor: the rotor turns clear of the well and under the closed lid",
+        "category_anchor: panel_control identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotor",
+          "joint_type": "continuous",
+          "parent_role": "housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "housing"
+        },
+        {
+          "exact_count": 1,
+          "role": "rotor"
+        },
+        {
+          "exact_count": 1,
+          "role": "lid"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "8 <= tube_holder_count <= 24; adjacent holders keep 2 mm of clear arc",
+      "item_slot": "rotor_form",
+      "name": "tube_holder_count",
+      "spacing_expression": "holder i sits at angle 2*pi*i/N on holder_circle_m",
+      "values": [
+        8,
+        12,
+        24
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "A lofted outline shell is cut with a circular rotor recess and a moulded well rim.",
+          "implementation_function": "_housing_benchtop_shell_build",
+          "interfaces": [],
+          "name": "benchtop_shell",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "rotor_radius_m",
+              "rationale": "rotor radius; derives the well radius, housing footprint, holder circle and lid span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "housing height; derives the well floor, drive boss height and panel position, and is lifted to max(body_height_m, well_depth + 0.045) when a deep well would leave no base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "holder_depth_m",
+              "rationale": "tube holder depth; derives the rotor body height and the lid clearance above it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_m"
+              ],
+              "expression": "rotor_radius_m + 0.010",
+              "mode": "derived",
+              "name": "well_radius_m",
+              "rationale": "the well clears the rotor by a real running gap on every housing",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__centrifuge_machine1__001__png__redo_20260710_51206fe6f50f4dcea7bd67881b14c6cc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L106-L188"
+          ]
+        },
+        {
+          "evidence": "A squarer cabinet body with a stepped front shelf carries the same rotor recess.",
+          "implementation_function": "_housing_clinical_box_build",
+          "interfaces": [],
+          "name": "clinical_box",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "rotor_radius_m",
+              "rationale": "rotor radius; derives the well radius, housing footprint, holder circle and lid span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "housing height; derives the well floor, drive boss height and panel position, and is lifted to max(body_height_m, well_depth + 0.045) when a deep well would leave no base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "holder_depth_m",
+              "rationale": "tube holder depth; derives the rotor body height and the lid clearance above it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_m"
+              ],
+              "expression": "rotor_radius_m + 0.010",
+              "mode": "derived",
+              "name": "well_radius_m",
+              "rationale": "the well clears the rotor by a real running gap on every housing",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_centrifuge_machine1_var_clinical_box",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L98-L200"
+          ]
+        },
+        {
+          "evidence": "A small tall body whose narrow rotor well sits just under the top face.",
+          "implementation_function": "_housing_microfuge_build",
+          "interfaces": [],
+          "name": "microfuge",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "rotor_radius_m",
+              "rationale": "rotor radius; derives the well radius, housing footprint, holder circle and lid span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "housing height; derives the well floor, drive boss height and panel position, and is lifted to max(body_height_m, well_depth + 0.045) when a deep well would leave no base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "holder_depth_m",
+              "rationale": "tube holder depth; derives the rotor body height and the lid clearance above it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_m"
+              ],
+              "expression": "rotor_radius_m + 0.010",
+              "mode": "derived",
+              "name": "well_radius_m",
+              "rationale": "the well clears the rotor by a real running gap on every housing",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_centrifuge_machine1_var_microfuge",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L73-L180"
+          ]
+        },
+        {
+          "evidence": "A continuous lofted pedestal skirt under the body meets the bench and lifts the whole shell.",
+          "implementation_function": "_housing_plinth_shell_build",
+          "interfaces": [],
+          "name": "plinth_shell",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "rotor_radius_m",
+              "rationale": "rotor radius; derives the well radius, housing footprint, holder circle and lid span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "housing height; derives the well floor, drive boss height and panel position, and is lifted to max(body_height_m, well_depth + 0.045) when a deep well would leave no base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "holder_depth_m",
+              "rationale": "tube holder depth; derives the rotor body height and the lid clearance above it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_m"
+              ],
+              "expression": "rotor_radius_m + 0.010",
+              "mode": "derived",
+              "name": "well_radius_m",
+              "rationale": "the well clears the rotor by a real running gap on every housing",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_centrifuge_machine1_var_plinth_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L161-L175"
+          ]
+        }
+      ],
+      "component_type": "lofted benchtop shell",
+      "name": "housing_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A solid conical rotor is drilled with evenly indexed angled tube wells.",
+          "implementation_function": "_rotor_fixed_angle_build",
+          "interfaces": [],
+          "name": "fixed_angle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "rotor_radius_m",
+              "rationale": "rotor radius; derives the well radius, housing footprint, holder circle and lid span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "housing height; derives the well floor, drive boss height and panel position, and is lifted to max(body_height_m, well_depth + 0.045) when a deep well would leave no base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "holder_depth_m",
+              "rationale": "tube holder depth; derives the rotor body height and the lid clearance above it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_m",
+                "tube_holder_count"
+              ],
+              "expression": "rotor_radius_m - holder_radius - 0.006",
+              "mode": "derived",
+              "name": "holder_circle_m",
+              "rationale": "holders sit on one circle inside the rotor rim whatever the count",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__centrifuge_machine1__001__png__redo_20260710_51206fe6f50f4dcea7bd67881b14c6cc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L189-L260"
+          ]
+        },
+        {
+          "evidence": "Indexed bucket carriers hang off the rotor arms instead of being drilled into the body.",
+          "implementation_function": "_rotor_swing_bucket_build",
+          "interfaces": [],
+          "name": "swing_bucket",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "rotor_radius_m",
+              "rationale": "rotor radius; derives the well radius, housing footprint, holder circle and lid span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "housing height; derives the well floor, drive boss height and panel position, and is lifted to max(body_height_m, well_depth + 0.045) when a deep well would leave no base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "holder_depth_m",
+              "rationale": "tube holder depth; derives the rotor body height and the lid clearance above it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_m",
+                "tube_holder_count"
+              ],
+              "expression": "rotor_radius_m - holder_radius - 0.006",
+              "mode": "derived",
+              "name": "holder_circle_m",
+              "rationale": "holders sit on one circle inside the rotor rim whatever the count",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_centrifuge_machine1_var_swing_bucket",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L196-L300"
+          ]
+        }
+      ],
+      "component_type": "drilled fixed-angle rotor",
+      "name": "rotor_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The cover swings up on a rear hinge line above the well rim.",
+          "implementation_function": "_build_lid",
+          "interfaces": [],
+          "name": "hinged_lid",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "rotor_radius_m",
+              "rationale": "rotor radius; derives the well radius, housing footprint, holder circle and lid span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "housing height; derives the well floor, drive boss height and panel position, and is lifted to max(body_height_m, well_depth + 0.045) when a deep well would leave no base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "holder_depth_m",
+              "rationale": "tube holder depth; derives the rotor body height and the lid clearance above it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_m",
+                "holder_depth_m"
+              ],
+              "expression": "well_floor + rotor_height + 0.012",
+              "mode": "derived",
+              "name": "lid_clear_z_m",
+              "rationale": "the closed lid clears the tallest holder by a real gap",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__centrifuge_machine1__001__png__redo_20260710_51206fe6f50f4dcea7bd67881b14c6cc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L261-L340"
+          ]
+        },
+        {
+          "evidence": "The cover runs back on side rails across the well instead of hinging.",
+          "implementation_function": "_build_lid",
+          "interfaces": [],
+          "name": "sliding_lid",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "rotor_radius_m",
+              "rationale": "rotor radius; derives the well radius, housing footprint, holder circle and lid span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "housing height; derives the well floor, drive boss height and panel position, and is lifted to max(body_height_m, well_depth + 0.045) when a deep well would leave no base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "holder_depth_m",
+              "rationale": "tube holder depth; derives the rotor body height and the lid clearance above it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_m",
+                "holder_depth_m"
+              ],
+              "expression": "well_floor + rotor_height + 0.012",
+              "mode": "derived",
+              "name": "lid_clear_z_m",
+              "rationale": "the closed lid clears the tallest holder by a real gap",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_centrifuge_machine1_var_sliding_lid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L262-L360"
+          ]
+        },
+        {
+          "evidence": "The cover rises straight off the well on a prismatic lift, guided by two vertical posts on the rear deck.",
+          "implementation_function": "_build_lid",
+          "interfaces": [],
+          "name": "lift_lid",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "rotor_radius_m",
+              "rationale": "rotor radius; derives the well radius, housing footprint, holder circle and lid span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "housing height; derives the well floor, drive boss height and panel position, and is lifted to max(body_height_m, well_depth + 0.045) when a deep well would leave no base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "holder_depth_m",
+              "rationale": "tube holder depth; derives the rotor body height and the lid clearance above it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_m",
+                "holder_depth_m"
+              ],
+              "expression": "well_floor + rotor_height + 0.012",
+              "mode": "derived",
+              "name": "lid_clear_z_m",
+              "rationale": "the closed lid clears the tallest holder by a real gap",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_centrifuge_machine1_var_lift_lid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L285-L300"
+          ]
+        }
+      ],
+      "component_type": "rear-hinged cover",
+      "name": "lid_action",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A shafted lever with a tipped handle swings on the housing front to lock the lid.",
+          "implementation_function": "_panel_control_latch_lever_build",
+          "interfaces": [],
+          "name": "latch_lever",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "rotor_radius_m",
+              "rationale": "rotor radius; derives the well radius, housing footprint, holder circle and lid span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "housing height; derives the well floor, drive boss height and panel position, and is lifted to max(body_height_m, well_depth + 0.045) when a deep well would leave no base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "holder_depth_m",
+              "rationale": "tube holder depth; derives the rotor body height and the lid clearance above it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_m"
+              ],
+              "expression": "rotor_radius_m + 0.010",
+              "mode": "derived",
+              "name": "well_radius_m",
+              "rationale": "the well clears the rotor by a real running gap on every housing",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_centrifuge_machine1_var_lift_lid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L405-L432"
+          ]
+        },
+        {
+          "evidence": "A small momentary button travels straight into its housing recess.",
+          "implementation_function": "_panel_control_push_button_build",
+          "interfaces": [],
+          "name": "push_button",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.06,
+              "mode": "independent",
+              "name": "rotor_radius_m",
+              "rationale": "rotor radius; derives the well radius, housing footprint, holder circle and lid span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.29,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "housing height; derives the well floor, drive boss height and panel position, and is lifted to max(body_height_m, well_depth + 0.045) when a deep well would leave no base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "holder_depth_m",
+              "rationale": "tube holder depth; derives the rotor body height and the lid clearance above it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "rotor_radius_m"
+              ],
+              "expression": "rotor_radius_m + 0.010",
+              "mode": "derived",
+              "name": "well_radius_m",
+              "rationale": "the well clears the rotor by a real running gap on every housing",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_centrifuge_machine1_var_lift_lid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L434-L452"
+          ]
+        }
+      ],
+      "component_type": "front panel control",
+      "name": "panel_control",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_centrifuge_machine1",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_centrifuge_machine1.md",
+  "source_map_sha256": "c3746ae9220f557438093735f77b2f94c4a0822d3c5bf715f8c236e435610eea"
+}

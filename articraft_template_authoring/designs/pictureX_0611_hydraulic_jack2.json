@@ -1,0 +1,938 @@
+{
+  "assembly_notes": "Wheeled hydraulic floor (trolley) jack. One rigid jack_chassis root carries the side frames, the ram cylinder, the front roller stubs and the rear station brackets. The lift_arm is a REVOLUTE (+x) child of the chassis at the rear pivot and is the only independent lift joint; the saddle_head is a REVOLUTE (+x) child of the arm nose mimicking the arm at multiplier -1, which is the real parallel-linkage that keeps a floor-jack head level through the whole lift. The ram piston is an independent PRISMATIC child of the chassis sliding inside a real cylinder bore (a prismatic cannot mimic a revolute, and the source authors it independently too). pump_input is a REVOLUTE (+x) lever at the rear. Two front_roller wheels are CONTINUOUS (+x); rear_station_count wheel_station parts carry the rear, each either a swivel caster (REVOLUTE kingpin about +z plus a CONTINUOUS wheel) or a rigid roller (CONTINUOUS only). Four component slots vary without touching the mechanism: saddle_head, chassis_style, pump_drive and wheel_station. chassis_len_m, chassis_width_m and arm_reach_ratio are independent continuous parameters deriving arm length, lift height, wheel track, station pitch, ram station and handle length; palette is non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "saddle_head_identity",
+      "applies_to": {
+        "candidates": [
+          "disc_saddle",
+          "screw_post",
+          "vee_cradle",
+          "wide_platform"
+        ],
+        "slot": "saddle_head"
+      },
+      "required_author_checks": [
+        "category_anchor: rear-pivoted floor jack lift arm",
+        "category_anchor: load head stays level as the arm rises",
+        "category_anchor: saddle_head identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "lift_arm",
+          "joint_type": "revolute",
+          "parent_role": "jack_chassis"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "saddle_head",
+          "joint_type": "revolute",
+          "parent_role": "lift_arm"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "pump_input",
+          "joint_type": "revolute",
+          "parent_role": "jack_chassis"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "front_roller",
+          "joint_type": "continuous",
+          "parent_role": "jack_chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_chassis"
+        },
+        {
+          "exact_count": 1,
+          "role": "lift_arm"
+        },
+        {
+          "exact_count": 1,
+          "role": "saddle_head"
+        },
+        {
+          "exact_count": 1,
+          "role": "pump_input"
+        },
+        {
+          "exact_count": 2,
+          "role": "front_roller"
+        },
+        {
+          "count_from": "rear_station_count",
+          "role": "wheel_station"
+        }
+      ]
+    },
+    {
+      "anchor_id": "chassis_style_identity",
+      "applies_to": {
+        "candidates": [
+          "plate_frame",
+          "low_profile",
+          "boxed_frame"
+        ],
+        "slot": "chassis_style"
+      },
+      "required_author_checks": [
+        "category_anchor: rear-pivoted floor jack lift arm",
+        "category_anchor: load head stays level as the arm rises",
+        "category_anchor: chassis_style identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "lift_arm",
+          "joint_type": "revolute",
+          "parent_role": "jack_chassis"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "saddle_head",
+          "joint_type": "revolute",
+          "parent_role": "lift_arm"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "pump_input",
+          "joint_type": "revolute",
+          "parent_role": "jack_chassis"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "front_roller",
+          "joint_type": "continuous",
+          "parent_role": "jack_chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_chassis"
+        },
+        {
+          "exact_count": 1,
+          "role": "lift_arm"
+        },
+        {
+          "exact_count": 1,
+          "role": "saddle_head"
+        },
+        {
+          "exact_count": 1,
+          "role": "pump_input"
+        },
+        {
+          "exact_count": 2,
+          "role": "front_roller"
+        },
+        {
+          "count_from": "rear_station_count",
+          "role": "wheel_station"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pump_drive_identity",
+      "applies_to": {
+        "candidates": [
+          "lever_handle",
+          "air_over_hydraulic"
+        ],
+        "slot": "pump_drive"
+      },
+      "required_author_checks": [
+        "category_anchor: rear-pivoted floor jack lift arm",
+        "category_anchor: load head stays level as the arm rises",
+        "category_anchor: pump_drive identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "lift_arm",
+          "joint_type": "revolute",
+          "parent_role": "jack_chassis"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "saddle_head",
+          "joint_type": "revolute",
+          "parent_role": "lift_arm"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "pump_input",
+          "joint_type": "revolute",
+          "parent_role": "jack_chassis"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "front_roller",
+          "joint_type": "continuous",
+          "parent_role": "jack_chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_chassis"
+        },
+        {
+          "exact_count": 1,
+          "role": "lift_arm"
+        },
+        {
+          "exact_count": 1,
+          "role": "saddle_head"
+        },
+        {
+          "exact_count": 1,
+          "role": "pump_input"
+        },
+        {
+          "exact_count": 2,
+          "role": "front_roller"
+        },
+        {
+          "count_from": "rear_station_count",
+          "role": "wheel_station"
+        }
+      ]
+    },
+    {
+      "anchor_id": "wheel_station_identity",
+      "applies_to": {
+        "candidates": [
+          "swivel_caster",
+          "fixed_roller"
+        ],
+        "slot": "wheel_station"
+      },
+      "required_author_checks": [
+        "category_anchor: rear-pivoted floor jack lift arm",
+        "category_anchor: load head stays level as the arm rises",
+        "category_anchor: wheel_station identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "lift_arm",
+          "joint_type": "revolute",
+          "parent_role": "jack_chassis"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "saddle_head",
+          "joint_type": "revolute",
+          "parent_role": "lift_arm"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "pump_input",
+          "joint_type": "revolute",
+          "parent_role": "jack_chassis"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "front_roller",
+          "joint_type": "continuous",
+          "parent_role": "jack_chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_chassis"
+        },
+        {
+          "exact_count": 1,
+          "role": "lift_arm"
+        },
+        {
+          "exact_count": 1,
+          "role": "saddle_head"
+        },
+        {
+          "exact_count": 1,
+          "role": "pump_input"
+        },
+        {
+          "exact_count": 2,
+          "role": "front_roller"
+        },
+        {
+          "count_from": "rear_station_count",
+          "role": "wheel_station"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2 <= rear_station_count <= 4; station pitch >= 2.2 * wheel diameter across chassis_width_m",
+      "item_slot": "wheel_station",
+      "name": "rear_station_count",
+      "spacing_expression": "rear stations are spread evenly across the chassis track at the rear cross member",
+      "values": [
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Knurled disc saddle with a hardened contact face on the arm nose.",
+          "implementation_function": "_saddle_head_disc_saddle_build",
+          "interfaces": [],
+          "name": "disc_saddle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "chassis_len_m",
+              "rationale": "chassis length; derives arm length, wheelbase, ram station and handle length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "chassis_width_m",
+              "rationale": "chassis width; derives side-plate stations, wheel track and head width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "arm_reach_ratio",
+              "rationale": "lift-arm length as a fraction of chassis length; derives lift height, nose station and ram lever arm",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack2__001__png_1e3d36c9f6f846b59e6a82e93b80e5e0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L225-L245"
+          ]
+        },
+        {
+          "evidence": "Threaded screw post and collar carrying a load pad well above the arm nose.",
+          "implementation_function": "_saddle_head_screw_post_build",
+          "interfaces": [],
+          "name": "screw_post",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "chassis_len_m",
+              "rationale": "chassis length; derives arm length, wheelbase, ram station and handle length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "chassis_width_m",
+              "rationale": "chassis width; derives side-plate stations, wheel track and head width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "arm_reach_ratio",
+              "rationale": "lift-arm length as a fraction of chassis length; derives lift height, nose station and ram lever arm",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack2_fork_screw_extension_saddle_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L246-L340"
+          ]
+        },
+        {
+          "evidence": "Vee cradle whose inclined cheeks meet at the groove root, with raised end lips.",
+          "implementation_function": "_saddle_head_vee_cradle_build",
+          "interfaces": [],
+          "name": "vee_cradle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "chassis_len_m",
+              "rationale": "chassis length; derives arm length, wheelbase, ram station and handle length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "chassis_width_m",
+              "rationale": "chassis width; derives side-plate stations, wheel track and head width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "arm_reach_ratio",
+              "rationale": "lift-arm length as a fraction of chassis length; derives lift height, nose station and ram lever arm",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack2_fork_transmission_cradle_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L227-L292"
+          ]
+        },
+        {
+          "evidence": "Wide ribbed platform spanning most of the chassis width with turned-down edges.",
+          "implementation_function": "_saddle_head_wide_platform_build",
+          "interfaces": [],
+          "name": "wide_platform",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "chassis_len_m",
+              "rationale": "chassis length; derives arm length, wheelbase, ram station and handle length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "chassis_width_m",
+              "rationale": "chassis width; derives side-plate stations, wheel track and head width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "arm_reach_ratio",
+              "rationale": "lift-arm length as a fraction of chassis length; derives lift height, nose station and ram lever arm",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack2_fork_motorcycle_platform_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L237-L283"
+          ]
+        }
+      ],
+      "component_type": "lift-arm load head",
+      "name": "saddle_head",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Twin pressed side plates with a rolled top edge and open sides.",
+          "implementation_function": "_chassis_style_plate_frame_build",
+          "interfaces": [],
+          "name": "plate_frame",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "chassis_len_m",
+              "rationale": "chassis length; derives arm length, wheelbase, ram station and handle length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "chassis_width_m",
+              "rationale": "chassis width; derives side-plate stations, wheel track and head width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "arm_reach_ratio",
+              "rationale": "lift-arm length as a fraction of chassis length; derives lift height, nose station and ram lever arm",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack2__001__png_1e3d36c9f6f846b59e6a82e93b80e5e0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L67-L146"
+          ]
+        },
+        {
+          "evidence": "Long shallow low-entry chassis with a tapered nose reaching under a low sill.",
+          "implementation_function": "_chassis_style_low_profile_build",
+          "interfaces": [],
+          "name": "low_profile",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "chassis_len_m",
+              "rationale": "chassis length; derives arm length, wheelbase, ram station and handle length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "chassis_width_m",
+              "rationale": "chassis width; derives side-plate stations, wheel track and head width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "arm_reach_ratio",
+              "rationale": "lift-arm length as a fraction of chassis length; derives lift height, nose station and ram lever arm",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack2_fork_low_profile_floor_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L67-L153"
+          ]
+        },
+        {
+          "evidence": "Short welded box chassis with closed side boxes and a deep cross deck.",
+          "implementation_function": "_chassis_style_boxed_frame_build",
+          "interfaces": [],
+          "name": "boxed_frame",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "chassis_len_m",
+              "rationale": "chassis length; derives arm length, wheelbase, ram station and handle length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "chassis_width_m",
+              "rationale": "chassis width; derives side-plate stations, wheel track and head width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "arm_reach_ratio",
+              "rationale": "lift-arm length as a fraction of chassis length; derives lift height, nose station and ram lever arm",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack2_fork_bottle_jack_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L52-L107"
+          ]
+        }
+      ],
+      "component_type": "chassis section",
+      "name": "chassis_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Long two-piece hand lever with a rubber grip swinging on the rear socket.",
+          "implementation_function": "_pump_drive_lever_handle_build",
+          "interfaces": [],
+          "name": "lever_handle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "chassis_len_m",
+              "rationale": "chassis length; derives arm length, wheelbase, ram station and handle length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "chassis_width_m",
+              "rationale": "chassis width; derives side-plate stations, wheel track and head width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "arm_reach_ratio",
+              "rationale": "lift-arm length as a fraction of chassis length; derives lift height, nose station and ram lever arm",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack2__001__png_1e3d36c9f6f846b59e6a82e93b80e5e0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L246-L290"
+          ]
+        },
+        {
+          "evidence": "Air-assist can with a regulator knob and hose on the chassis, driven by a short trigger lever.",
+          "implementation_function": "_pump_drive_air_over_hydraulic_build",
+          "interfaces": [],
+          "name": "air_over_hydraulic",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "chassis_len_m",
+              "rationale": "chassis length; derives arm length, wheelbase, ram station and handle length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "chassis_width_m",
+              "rationale": "chassis width; derives side-plate stations, wheel track and head width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "arm_reach_ratio",
+              "rationale": "lift-arm length as a fraction of chassis length; derives lift height, nose station and ram lever arm",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack2_fork_air_over_hydraulic_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L321-L408"
+          ]
+        }
+      ],
+      "component_type": "pump input",
+      "name": "pump_drive",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Swivel fork on a vertical REVOLUTE kingpin carrying a wheel that spins on its own CONTINUOUS axle.",
+          "implementation_function": "_wheel_station_swivel_caster_build",
+          "interfaces": [],
+          "name": "swivel_caster",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "chassis_len_m",
+              "rationale": "chassis length; derives arm length, wheelbase, ram station and handle length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "chassis_width_m",
+              "rationale": "chassis width; derives side-plate stations, wheel track and head width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "arm_reach_ratio",
+              "rationale": "lift-arm length as a fraction of chassis length; derives lift height, nose station and ram lever arm",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack2__001__png_1e3d36c9f6f846b59e6a82e93b80e5e0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L339-L393"
+          ]
+        },
+        {
+          "evidence": "Rigid roller on a stub axle bracket with a single CONTINUOUS spin axis and no kingpin.",
+          "implementation_function": "_wheel_station_fixed_roller_build",
+          "interfaces": [],
+          "name": "fixed_roller",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.05,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "chassis_len_m",
+              "rationale": "chassis length; derives arm length, wheelbase, ram station and handle length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "chassis_width_m",
+              "rationale": "chassis width; derives side-plate stations, wheel track and head width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.82,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "arm_reach_ratio",
+              "rationale": "lift-arm length as a fraction of chassis length; derives lift height, nose station and ram lever arm",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack2__001__png_1e3d36c9f6f846b59e6a82e93b80e5e0",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L314-L338"
+          ]
+        }
+      ],
+      "component_type": "rear wheel station",
+      "name": "wheel_station",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_hydraulic_jack2",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_hydraulic_jack2.md",
+  "source_map_sha256": "88f8e4b85f5b2be374a878a91ce2a60673ccde3e6ff3f19594a8706dbf01f852"
+}

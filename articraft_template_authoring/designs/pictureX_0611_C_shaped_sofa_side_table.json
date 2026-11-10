@@ -1,0 +1,836 @@
+{
+  "assembly_notes": "The root is always the sofa frame. Its underframe is open (four legs and two side rails) so every table frame family can slide its foot beneath the seat. Each sofa_form candidate publishes the seat plan (width, depth, cushion top); the table height derives from that cushion top so the top always clears the seat whatever the sofa. N side tables park outside the sofa ends and slide inward on prismatic joints whose stroke is table_reach_m. table_top and base_form fill the frame's top seat and floor interface. The front platform slides toward the sofa on its own prismatic joint. No ctx.allow_overlap is used anywhere.",
+  "bindings": [
+    {
+      "binding_id": "seat_plan",
+      "consumer": "table_frame.seat_plan",
+      "derived": [
+        {
+          "expression": "seat_height_m + 0.115 cushion + 0.075 clearance",
+          "mode": "derived",
+          "name": "table_height_m",
+          "rationale": "The cantilevered top must clear the cushions of every sofa candidate, not a fixed source height.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "expression": "sofa_width_m/2 + table_top_width_m/2 + 0.030",
+          "mode": "derived",
+          "name": "table_x_m",
+          "rationale": "The parked station follows the host width and the chosen top so the table starts beside the sofa.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "sofa_form.seat_plan"
+    },
+    {
+      "binding_id": "top_seat",
+      "consumer": "table_top.top_seat",
+      "derived": [
+        {
+          "expression": "table_height_m + 0.013",
+          "mode": "derived",
+          "name": "top_z_m",
+          "rationale": "Every top plan seats on the same frame rail, so its height follows the frame, not the plan.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "table_frame.top_seat"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "seating_group_core",
+      "applies_to": {
+        "candidates": [
+          "two_seat_sofa",
+          "backless_bench",
+          "daybed_chaise"
+        ],
+        "slot": "sofa_form"
+      },
+      "required_author_checks": [
+        "group keeps one sofa, N sliding C tables and one front platform",
+        "the front platform sits low and in front of the sofa",
+        "the seating group keeps a plausible seated scale"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "front_platform",
+          "joint_type": "prismatic",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "front_platform"
+        },
+        {
+          "count_from": "side_table_count",
+          "role": "side_table"
+        }
+      ]
+    },
+    {
+      "anchor_id": "sliding_c_table",
+      "applies_to": {
+        "candidates": [
+          "c_bracket",
+          "loop_frame",
+          "l_bracket",
+          "u_straddle"
+        ],
+        "slot": "table_frame"
+      },
+      "required_author_checks": [
+        "every side table belongs to the selected frame family",
+        "side table 0 slides in over the seat"
+      ],
+      "required_relations": [
+        {
+          "child_role": "side_table",
+          "joint_type": "prismatic",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": "side_table_count",
+          "role": "side_table"
+        },
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        }
+      ]
+    },
+    {
+      "anchor_id": "top_clears_the_seat",
+      "applies_to": {
+        "candidates": [
+          "rect_top",
+          "round_top",
+          "kidney_top"
+        ],
+        "slot": "table_top"
+      },
+      "required_author_checks": [
+        "the table top clears the seat cushions"
+      ],
+      "required_roles": [
+        {
+          "count_from": "side_table_count",
+          "role": "side_table"
+        }
+      ]
+    },
+    {
+      "anchor_id": "table_stands_on_the_floor",
+      "applies_to": {
+        "candidates": [
+          "sled_foot",
+          "caster_base",
+          "height_column"
+        ],
+        "slot": "base_form"
+      },
+      "required_author_checks": [
+        "side table 0 slides in over the seat"
+      ],
+      "required_roles": [
+        {
+          "count_from": "side_table_count",
+          "role": "side_table"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "each table needs table_top_width_m of clear end space, so two tables cap at sofa_width_m = 1.10 m with the widest 0.52 m top and still park clear of one another",
+      "item_slot": "table_frame",
+      "name": "side_table_count",
+      "spacing_expression": "one table parks at each sofa end at x = \u00b1(sofa_width_m/2 + table_top_width_m/2 + 0.03)",
+      "values": [
+        1,
+        2
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "_rect_tube_x/_rect_tube_y build the upright, the return foot that slides under the seat and the top rail of the C.",
+          "implementation_function": "_table_frame_c_bracket_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "clear_height": "derived from seat_height_m",
+                "reach": "table_reach_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "seat_plan",
+              "part": "table_frame__c_bracket__table_0",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "rail_span": "table_reach_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "top_seat",
+              "part": "table_frame__c_bracket__table_0",
+              "role": "provider"
+            }
+          ],
+          "name": "c_bracket",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "table_reach_m",
+              "rationale": "How far the frame reaches over the seat; upright spacing, foot length, top rail span and the slide stroke derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__c_shaped_sofa_side_table__001__png__airflex_batch_20260710_0a5651d7c61e45efa46d91745f16886b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L34-L75",
+            "model.py:L76-L411"
+          ]
+        },
+        {
+          "evidence": "_loop_base_with_slot closes the bracket into a continuous loop and cuts a genuine slot through it.",
+          "implementation_function": "_table_frame_loop_frame_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "clear_height": "derived from seat_height_m",
+                "reach": "table_reach_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "seat_plan",
+              "part": "table_frame__loop_frame__table_0",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "rail_span": "table_reach_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "top_seat",
+              "part": "table_frame__loop_frame__table_0",
+              "role": "provider"
+            }
+          ],
+          "name": "loop_frame",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "table_reach_m",
+              "rationale": "How far the frame reaches over the seat; upright spacing, foot length, top rail span and the slide stroke derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_c_shaped_sofa_side_table_var_loop_frame",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L102",
+            "model.py:L103-L467"
+          ]
+        },
+        {
+          "evidence": "The return foot is deleted, so a single upright cantilevers the top from a weighted base.",
+          "implementation_function": "_table_frame_l_bracket_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "clear_height": "derived from seat_height_m",
+                "reach": "table_reach_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "seat_plan",
+              "part": "table_frame__l_bracket__table_0",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "rail_span": "table_reach_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "top_seat",
+              "part": "table_frame__l_bracket__table_0",
+              "role": "provider"
+            }
+          ],
+          "name": "l_bracket",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "table_reach_m",
+              "rationale": "How far the frame reaches over the seat; upright spacing, foot length, top rail span and the slide stroke derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_c_shaped_sofa_side_table_var_lbracket_frame",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L34-L75",
+            "model.py:L76-L423"
+          ]
+        },
+        {
+          "evidence": "Both uprights reach the floor either side of the seat, so the top spans the sofa instead of cantilevering.",
+          "implementation_function": "_table_frame_u_straddle_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "clear_height": "derived from seat_height_m",
+                "reach": "table_reach_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "seat_plan",
+              "part": "table_frame__u_straddle__table_0",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "rail_span": "table_reach_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "top_seat",
+              "part": "table_frame__u_straddle__table_0",
+              "role": "provider"
+            }
+          ],
+          "name": "u_straddle",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.4,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "table_reach_m",
+              "rationale": "How far the frame reaches over the seat; upright spacing, foot length, top rail span and the slide stroke derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_c_shaped_sofa_side_table_var_u_straddle_table",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L34-L75",
+            "model.py:L76-L430"
+          ]
+        }
+      ],
+      "component_type": "C bracket with a return foot under the seat",
+      "name": "table_frame",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_rounded_box gives the plain rectangular top of 001.png.",
+          "implementation_function": "_table_top_rect_top_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "plan": "table_top_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "top_seat",
+              "part": "table_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "rect_top",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.52,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "table_top_width_m",
+              "rationale": "Top plan size; the parked X station and the overhang over the seat derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__c_shaped_sofa_side_table__001__png__airflex_batch_20260710_0a5651d7c61e45efa46d91745f16886b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L20-L33",
+            "model.py:L76-L411"
+          ]
+        },
+        {
+          "evidence": "_disc_top drives the whole overhang and edge band from a radius instead of a rectangle.",
+          "implementation_function": "_table_top_round_top_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "plan": "table_top_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "top_seat",
+              "part": "table_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "round_top",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.52,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "table_top_width_m",
+              "rationale": "Top plan size; the parked X station and the overhang over the seat derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_c_shaped_sofa_side_table_var_round_top",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L34-L51",
+            "model.py:L94-L423"
+          ]
+        },
+        {
+          "evidence": "_kidney_top_shape/_kidney_edge_band produce a real concave plan and a band that follows it.",
+          "implementation_function": "_table_top_kidney_top_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "plan": "table_top_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "top_seat",
+              "part": "table_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "kidney_top",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 0.52,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "table_top_width_m",
+              "rationale": "Top plan size; the parked X station and the overhang over the seat derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_c_shaped_sofa_side_table_var_kidney_top",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L181",
+            "model.py:L182-L532"
+          ]
+        }
+      ],
+      "component_type": "rectangular top with a square edge",
+      "name": "table_top",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The foot is a flat sled slab that slides under the sofa on its own footprint.",
+          "implementation_function": "_base_form_sled_foot_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "stand_footprint": "table_reach_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "floor",
+              "part": "table_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "sled_foot",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__c_shaped_sofa_side_table__001__png__airflex_batch_20260710_0a5651d7c61e45efa46d91745f16886b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L55-L75",
+            "model.py:L76-L411"
+          ]
+        },
+        {
+          "evidence": "Wheel bodies and their yokes stand under the column instead of a flat sled.",
+          "implementation_function": "_base_form_caster_base_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "stand_footprint": "table_reach_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "floor",
+              "part": "table_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "caster_base",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_c_shaped_sofa_side_table_var_caster_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L34-L75",
+            "model.py:L76-L418"
+          ]
+        },
+        {
+          "evidence": "_rect_tube_z adds a real inner/outer column section so the top height is set by a sliding member.",
+          "implementation_function": "_base_form_height_column_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "stand_footprint": "table_reach_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "floor",
+              "part": "table_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "height_column",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_c_shaped_sofa_side_table_var_height_adjust",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L96",
+            "model.py:L97-L481"
+          ]
+        }
+      ],
+      "component_type": "flat sled foot on the floor",
+      "name": "base_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The host has a back, two arms and two seat cushions, matching 001.png.",
+          "implementation_function": "_sofa_form_two_seat_sofa_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "cushion_top": "seat_height_m",
+                "depth": "sofa_depth_m",
+                "width": "sofa_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "seat_plan",
+              "part": "sofa__frame",
+              "role": "provider"
+            }
+          ],
+          "name": "two_seat_sofa",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 1.8,
+              "minimum": 1.1,
+              "mode": "independent",
+              "name": "sofa_width_m",
+              "rationale": "Seat width; cushion count spacing, underframe span, table station and platform width derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 1.05,
+              "minimum": 0.75,
+              "mode": "independent",
+              "name": "sofa_depth_m",
+              "rationale": "Seat depth; the deck, back position and the front platform station derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.46,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "Seat height; the cushion top and hence the whole table height derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__c_shaped_sofa_side_table__001__png__airflex_batch_20260710_0a5651d7c61e45efa46d91745f16886b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L411"
+          ]
+        },
+        {
+          "evidence": "The back and arms are deleted, so the table top cantilevers over an open deck.",
+          "implementation_function": "_sofa_form_backless_bench_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "cushion_top": "seat_height_m",
+                "depth": "sofa_depth_m",
+                "width": "sofa_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "seat_plan",
+              "part": "sofa__frame",
+              "role": "provider"
+            }
+          ],
+          "name": "backless_bench",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 1.8,
+              "minimum": 1.1,
+              "mode": "independent",
+              "name": "sofa_width_m",
+              "rationale": "Seat width; cushion count spacing, underframe span, table station and platform width derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 1.05,
+              "minimum": 0.75,
+              "mode": "independent",
+              "name": "sofa_depth_m",
+              "rationale": "Seat depth; the deck, back position and the front platform station derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.46,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "Seat height; the cushion top and hence the whole table height derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_c_shaped_sofa_side_table_var_backless_bench",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L377"
+          ]
+        },
+        {
+          "evidence": "One arm and a deeper deck change the plan the table has to straddle.",
+          "implementation_function": "_sofa_form_daybed_chaise_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "cushion_top": "seat_height_m",
+                "depth": "sofa_depth_m",
+                "width": "sofa_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "plane",
+              "name": "seat_plan",
+              "part": "sofa__frame",
+              "role": "provider"
+            }
+          ],
+          "name": "daybed_chaise",
+          "notes": "",
+          "parameters": [
+            {
+              "maximum": 1.8,
+              "minimum": 1.1,
+              "mode": "independent",
+              "name": "sofa_width_m",
+              "rationale": "Seat width; cushion count spacing, underframe span, table station and platform width derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 1.05,
+              "minimum": 0.75,
+              "mode": "independent",
+              "name": "sofa_depth_m",
+              "rationale": "Seat depth; the deck, back position and the front platform station derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "maximum": 0.46,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "Seat height; the cushion top and hence the whole table height derive from it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_c_shaped_sofa_side_table_var_daybed_chaise",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L408"
+          ]
+        }
+      ],
+      "component_type": "two-seat sofa with back and arms",
+      "name": "sofa_form",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_C_shaped_sofa_side_table",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_C_shaped_sofa_side_table.md",
+  "source_map_sha256": "5103c042f7a5dcf51b621ca6fd06f16eaaf81a864678e261cc813de122fc71a3"
+}

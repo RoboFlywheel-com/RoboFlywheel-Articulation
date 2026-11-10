@@ -1,0 +1,1260 @@
+{
+  "assembly_notes": "One carcass part carries the case shell, the support base, the zone split (mid rail or centre divider), the hinge mullions and the runner rails. Door leaves and drawers are separate moving parts and both mechanisms are always present. The host publishes a plan profile and a clear opening, so leaves and drawer fronts are struck from the host front curve, and leaf size, hinge line, track run, tray width, box depth and travel all derive from the zone split and from N. No combination is excluded and no overlap allowance is emitted.",
+  "bindings": [
+    {
+      "binding_id": "opening_to_zones",
+      "consumer": "storage_layout.zone_split",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_height_m",
+            "carcass_width_m"
+          ],
+          "expression": "cavity height or clear width split by the layout ratio",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "door_zone_extent_m",
+          "rationale": "The mid rail or divider position follows the host cavity, never a source constant.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_height_m",
+            "carcass_width_m"
+          ],
+          "expression": "the remainder of the cavity after the door zone",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drawer_zone_extent_m",
+          "rationale": "Both zones always exist, so both mechanisms are always present.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "body_form.front_opening"
+    },
+    {
+      "binding_id": "zones_to_leaf",
+      "consumer": "door_kind.leaf_back",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_width_m"
+          ],
+          "expression": "door zone width / leaves - reveals",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leaf_width_m",
+          "rationale": "Leaf width follows the door zone.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_height_m"
+          ],
+          "expression": "door zone height - reveals",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leaf_height_m",
+          "rationale": "Leaf height follows the door zone.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_depth_m"
+          ],
+          "expression": "host front y(x) sampled over the leaf x-range",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leaf_curve_points",
+          "rationale": "A bow-front case gives arced leaves.",
+          "unit": null,
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "storage_layout.zone_split"
+    },
+    {
+      "binding_id": "leaf_to_mechanism",
+      "consumer": "door_mechanism.leaf_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_width_m"
+          ],
+          "expression": "door zone edge plus the jamb inset",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "hinge_x_m",
+          "rationale": "The hinge line is inset from the real jamb.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_width_m"
+          ],
+          "expression": "leaf width plus its own travel",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "track_run_m",
+          "rationale": "A sliding leaf derives its rail run from its stroke.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "door_kind.leaf_back"
+    },
+    {
+      "binding_id": "zones_to_tray",
+      "consumer": "drawer_front.tray_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_width_m",
+            "drawer_count"
+          ],
+          "expression": "drawer zone width - both runner rails - clearance",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "tray_width_m",
+          "rationale": "Tray width follows the drawer zone and the layout.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_height_m",
+            "drawer_count"
+          ],
+          "expression": "drawer zone height / N - level reveal",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "front_height_m",
+          "rationale": "Front heights follow the real drawer zone and N.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_depth_m"
+          ],
+          "expression": "box depth * drawer_travel_ratio",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "travel_m",
+          "rationale": "Travel keeps the side runners engaged with their rails at full extension.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "storage_layout.zone_split"
+    },
+    {
+      "binding_id": "body_to_support",
+      "consumer": "support_base.body_underside",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_height_m"
+          ],
+          "expression": "support candidate height",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "body_bottom_z_m",
+          "rationale": "Cavity floor, zone split and rails all start from the resolved body bottom.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "body_form.front_opening"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "hinged_door_and_drawer_identity",
+      "applies_to": {
+        "candidates": [
+          "hinged_swing"
+        ],
+        "slot": "door_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: one load-bearing carcass",
+        "category_anchor: the cabinet has both a door and a drawer",
+        "category_anchor: every drawer is a moving child of the carcass",
+        "category_anchor: drawer trays are hollow boxes",
+        "category_anchor: swing leaf opens outward from the front plane"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "door_leaf",
+          "joint_type": "revolute",
+          "parent_role": "carcass"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "drawer_count",
+          "role": "drawer"
+        },
+        {
+          "count_from": "resolved.door_leaf_count",
+          "role": "door_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "sliding_door_and_drawer_identity",
+      "applies_to": {
+        "candidates": [
+          "sliding_track"
+        ],
+        "slot": "door_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: one load-bearing carcass",
+        "category_anchor: the cabinet has both a door and a drawer",
+        "category_anchor: every drawer is a moving child of the carcass",
+        "category_anchor: drawer trays are hollow boxes",
+        "category_anchor: sliding leaf translates across its zone"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "door_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "carcass"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "drawer_count",
+          "role": "drawer"
+        },
+        {
+          "count_from": "resolved.door_leaf_count",
+          "role": "door_leaf"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "drawer zone height >= N * (minimum front height + level reveal) and the zone width >= minimum tray width plus both runner rails",
+      "item_slot": "drawer_front",
+      "name": "drawer_count",
+      "spacing_expression": "the drawer zone is split into N levels of equal pitch; level pitch = drawer zone height / N, front height = pitch - level reveal",
+      "values": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Straight prism carcass with a planar door and drawer front.",
+          "implementation_function": "_body_form_rect_box_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "clear cavity depth",
+                "height": "clear cavity height",
+                "width": "clear width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "front_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "front_offset": "y(x) of the front face"
+              },
+              "frame": {
+                "point": "front curve in plan"
+              },
+              "kind": "plane",
+              "name": "plan_profile",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "rect_box",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.6,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "Origin 003/004 case widths.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "Origin 003/004 case depths.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.75,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "Low sideboard through tall secretary.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "rect_wall_t_m",
+              "rationale": "Origin 003 panel stock thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors_and_drawers__003__png__airflex_batch_20260710_6c25f05e215043839872a63a4125bcf7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L32-L72"
+          ]
+        },
+        {
+          "evidence": "Convex front carcass whose doors and drawer fronts arc with it.",
+          "implementation_function": "_body_form_bow_front_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "clear cavity depth",
+                "height": "clear cavity height",
+                "width": "clear width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "front_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "front_offset": "y(x) of the front face"
+              },
+              "frame": {
+                "point": "front curve in plan"
+              },
+              "kind": "plane",
+              "name": "plan_profile",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "bow_front",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.44,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "var_body_bowfront case width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "var_body_bowfront case depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.6,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "var_body_bowfront case height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.052,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "bow_depth_m",
+              "rationale": "var_body_bowfront front bow amplitude.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_and_drawers_var_body_bowfront",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L65-L137"
+          ]
+        },
+        {
+          "evidence": "Canted carcass whose side walls lean inward with height.",
+          "implementation_function": "_body_form_tapered_box_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "clear cavity depth",
+                "height": "clear cavity height",
+                "width": "clear width"
+              },
+              "frame": {
+                "normal": "-Y"
+              },
+              "kind": "plane",
+              "name": "front_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "front_offset": "y(x) of the front face"
+              },
+              "frame": {
+                "point": "front curve in plan"
+              },
+              "kind": "plane",
+              "name": "plan_profile",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "tapered_box",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.44,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "var_body_tapered case width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "var_body_tapered case depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.68,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "var_body_tapered case height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.96,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "case_taper_ratio",
+              "rationale": "var_body_tapered top width / base width.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_and_drawers_var_body_tapered",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L41-L81"
+          ]
+        }
+      ],
+      "component_type": "straight panel carcass",
+      "name": "body_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A pair of doors over a drawer bank, split by a mid rail.",
+          "implementation_function": "_storage_layout_doors_over_drawers_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "door_zone": "door zone extent",
+                "drawer_zone": "drawer zone extent"
+              },
+              "frame": {
+                "normal": "+Z or +X"
+              },
+              "kind": "plane",
+              "name": "zone_split",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "doors_over_drawers",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "door_zone_ratio",
+              "rationale": "Origin 003 door zone height / cavity height.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors_and_drawers__003__png__airflex_batch_20260710_6c25f05e215043839872a63a4125bcf7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L113-L285"
+          ]
+        },
+        {
+          "evidence": "A drawer bank over a pair of doors.",
+          "implementation_function": "_storage_layout_drawers_over_doors_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "door_zone": "door zone extent",
+                "drawer_zone": "drawer zone extent"
+              },
+              "frame": {
+                "normal": "+Z or +X"
+              },
+              "kind": "plane",
+              "name": "zone_split",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "drawers_over_doors",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "drawer_zone_ratio",
+              "rationale": "var_layout_drawers_over_door drawer zone height / cavity height.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_and_drawers_var_layout_drawers_over_door",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L117-L290"
+          ]
+        },
+        {
+          "evidence": "One broad door beside a vertical drawer column.",
+          "implementation_function": "_storage_layout_door_beside_drawers_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "door_zone": "door zone extent",
+                "drawer_zone": "drawer zone extent"
+              },
+              "frame": {
+                "normal": "+Z or +X"
+              },
+              "kind": "plane",
+              "name": "zone_split",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "door_beside_drawers",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "door_column_ratio",
+              "rationale": "Origin 004 door column width / clear width.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors_and_drawers__004__png__airflex_batch_20260710_cd51c566f69c4a0fa9ccb95e9e04b94f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L200-L469"
+          ]
+        },
+        {
+          "evidence": "A door on each flank of a central drawer bank.",
+          "implementation_function": "_storage_layout_doors_flanking_drawers_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "door_zone": "door zone extent",
+                "drawer_zone": "drawer zone extent"
+              },
+              "frame": {
+                "normal": "+Z or +X"
+              },
+              "kind": "plane",
+              "name": "zone_split",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "doors_flanking_drawers",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "flank_column_ratio",
+              "rationale": "var_layout_flanking_doors flank width / clear width.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_and_drawers_var_layout_flanking_doors",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L127-L280"
+          ]
+        }
+      ],
+      "component_type": "doors above a drawer bank",
+      "name": "storage_layout",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Flush slab leaf with a shaped front cheek.",
+          "implementation_function": "_door_kind_slab_panel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived leaf height",
+                "width": "derived leaf width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "leaf_back",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "slab_panel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "slab_leaf_t_m",
+              "rationale": "Origin 001 leaf stock thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors_and_drawers__001__png__airflex_batch_20260710_b26f14a0a8da4826b66cc6fc0294d744",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L38-L66"
+          ]
+        },
+        {
+          "evidence": "Moulded surround around a recessed centre field.",
+          "implementation_function": "_door_kind_recessed_panel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived leaf height",
+                "width": "derived leaf width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "leaf_back",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "recessed_panel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.018,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "recess_depth_m",
+              "rationale": "Origin 003 recessed field depth.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors_and_drawers__003__png__airflex_batch_20260710_6c25f05e215043839872a63a4125bcf7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L73-L96"
+          ]
+        },
+        {
+          "evidence": "Glass field crossed by real lattice members.",
+          "implementation_function": "_door_kind_glazed_lattice_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived leaf height",
+                "width": "derived leaf width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "leaf_back",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "glazed_lattice",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.022,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "lattice_bar_w_m",
+              "rationale": "Origin 002 lattice member width.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors_and_drawers__002__png__airflex_batch_20260710_8b60aed7a3bb4c399528842527b03ecd",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L135-L228"
+          ]
+        }
+      ],
+      "component_type": "plain slab leaf",
+      "name": "door_kind",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Vertical butt hinge with outward travel.",
+          "implementation_function": "_door_mechanism_hinged_swing_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "hinge barrel radius"
+              },
+              "frame": {
+                "axis": "+Z"
+              },
+              "kind": "axis",
+              "name": "leaf_mount",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "hinged_swing",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.92,
+              "minimum": 1.4,
+              "mode": "independent",
+              "name": "door_swing_rad",
+              "rationale": "Origin 003 outward door travel.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors_and_drawers__003__png__airflex_batch_20260710_6c25f05e215043839872a63a4125bcf7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L113-L285"
+          ]
+        },
+        {
+          "evidence": "Leaf riding top and bottom rails on a prismatic joint.",
+          "implementation_function": "_door_mechanism_sliding_track_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "width": "leaf width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "leaf_mount",
+              "part": "door_leaf",
+              "role": "consumer"
+            }
+          ],
+          "name": "sliding_track",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "slide_travel_m",
+              "rationale": "var_door_sliding leaf travel.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_and_drawers_var_door_sliding",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L202-L476"
+          ]
+        }
+      ],
+      "component_type": "vertical butt hinge",
+      "name": "door_mechanism",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Plain drawer front with a simple pull.",
+          "implementation_function": "_drawer_front_plain_slab_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived front height",
+                "width": "derived tray width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "plain_slab",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "front_t_m",
+              "rationale": "var_drawers_n2 front stock thickness.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "drawer_travel_ratio",
+              "rationale": "Open stroke as a fraction of the real box depth; the runners stay engaged at full extension.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_and_drawers_var_drawers_n2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L118-L201"
+          ]
+        },
+        {
+          "evidence": "Grained/veneered front with real grain members.",
+          "implementation_function": "_drawer_front_grained_slab_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived front height",
+                "width": "derived tray width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "grained_slab",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.011,
+              "minimum": 0.003,
+              "mode": "independent",
+              "name": "grain_relief_m",
+              "rationale": "Origin 004 grain member relief.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "drawer_travel_ratio",
+              "rationale": "Open stroke as a fraction of the real box depth; the runners stay engaged at full extension.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors_and_drawers__004__png__airflex_batch_20260710_cd51c566f69c4a0fa9ccb95e9e04b94f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L73-L115"
+          ]
+        }
+      ],
+      "component_type": "plain drawer front",
+      "name": "drawer_front",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Four slender tapered legs.",
+          "implementation_function": "_support_base_tapered_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "footprint depth",
+                "width": "footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "tapered_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "tapered_leg_h_m",
+              "rationale": "Origin 001 leg height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors_and_drawers__001__png__airflex_batch_20260710_b26f14a0a8da4826b66cc6fc0294d744",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L26-L37"
+          ]
+        },
+        {
+          "evidence": "Solid stone plinth block.",
+          "implementation_function": "_support_base_stone_plinth_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "footprint depth",
+                "width": "footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "stone_plinth",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "stone_plinth_h_m",
+              "rationale": "Origin 002 plinth height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors_and_drawers__002__png__airflex_batch_20260710_8b60aed7a3bb4c399528842527b03ecd",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L229-L300"
+          ]
+        },
+        {
+          "evidence": "Cutout apron plinth between corner feet.",
+          "implementation_function": "_support_base_apron_feet_plinth_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "footprint depth",
+                "width": "footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "apron_feet_plinth",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.21,
+              "minimum": 0.08,
+              "mode": "independent",
+              "name": "apron_plinth_h_m",
+              "rationale": "Origin 003 apron plinth height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_doors_and_drawers__003__png__airflex_batch_20260710_6c25f05e215043839872a63a4125bcf7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L113-L180"
+          ]
+        },
+        {
+          "evidence": "Slim metal legs with floor pads.",
+          "implementation_function": "_support_base_metal_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "footprint depth",
+                "width": "footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "metal_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "metal_leg_h_m",
+              "rationale": "var_support_metal_legs leg height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_doors_and_drawers_var_support_metal_legs",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L200-L300"
+          ]
+        }
+      ],
+      "component_type": "four tapered legs",
+      "name": "support_base",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Cabinet_with_doors_and_drawers",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Cabinet_with_doors_and_drawers.md",
+  "source_map_sha256": "2f037d3cf88ab43b06f8aaeaa61498d76f82cac84428d52fc92a00c010b677ee"
+}

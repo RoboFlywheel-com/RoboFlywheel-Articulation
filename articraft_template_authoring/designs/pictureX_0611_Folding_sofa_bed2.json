@@ -1,0 +1,815 @@
+{
+  "assembly_notes": "Reclining convertible sofa. One rigid sofa_frame root carries the carcass, the fixed arms, the seat decks and every hinge bracket. Each of seat_count seat units contributes a seat_back that is a REVOLUTE (+x) child of the frame reclining rearward into free space, and a legrest that is a REVOLUTE (+x) child of the frame hanging stowed in front of the plinth and swinging UP and forward to seat level. Both are independent joints and both sweep only into free space, so every single-joint boundary pose is clear. A recline_control knob is a REVOLUTE (+y) child of the frame on the outer arm. Four component slots vary without touching the mechanism: back_build, base_style, deck_build and legrest_style. seat_width_m, seat_depth_m and seat_height_m are independent continuous parameters deriving carcass width and depth, seat pitch, hinge stations and legrest length; palette is non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "back_build_identity",
+      "applies_to": {
+        "candidates": [
+          "single_back",
+          "split_ratchet",
+          "bifold_panels"
+        ],
+        "slot": "back_build"
+      },
+      "required_author_checks": [
+        "category_anchor: per-seat reclining back and pop-out legrest",
+        "category_anchor: legrest swings up to seat level and clears the floor",
+        "category_anchor: back_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "seat_back",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "legrest",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "recline_control",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "count_from": "seat_count",
+          "role": "seat_back"
+        },
+        {
+          "count_from": "seat_count",
+          "role": "legrest"
+        },
+        {
+          "exact_count": 1,
+          "role": "recline_control"
+        }
+      ]
+    },
+    {
+      "anchor_id": "base_style_identity",
+      "applies_to": {
+        "candidates": [
+          "plinth_base",
+          "metal_futon",
+          "storage_base"
+        ],
+        "slot": "base_style"
+      },
+      "required_author_checks": [
+        "category_anchor: per-seat reclining back and pop-out legrest",
+        "category_anchor: legrest swings up to seat level and clears the floor",
+        "category_anchor: base_style identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "seat_back",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "legrest",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "recline_control",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "count_from": "seat_count",
+          "role": "seat_back"
+        },
+        {
+          "count_from": "seat_count",
+          "role": "legrest"
+        },
+        {
+          "exact_count": 1,
+          "role": "recline_control"
+        }
+      ]
+    },
+    {
+      "anchor_id": "deck_build_identity",
+      "applies_to": {
+        "candidates": [
+          "upholstered_deck",
+          "slatted_deck"
+        ],
+        "slot": "deck_build"
+      },
+      "required_author_checks": [
+        "category_anchor: per-seat reclining back and pop-out legrest",
+        "category_anchor: legrest swings up to seat level and clears the floor",
+        "category_anchor: deck_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "seat_back",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "legrest",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "recline_control",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "count_from": "seat_count",
+          "role": "seat_back"
+        },
+        {
+          "count_from": "seat_count",
+          "role": "legrest"
+        },
+        {
+          "exact_count": 1,
+          "role": "recline_control"
+        }
+      ]
+    },
+    {
+      "anchor_id": "legrest_style_identity",
+      "applies_to": {
+        "candidates": [
+          "pad_legrest",
+          "chaise_legrest"
+        ],
+        "slot": "legrest_style"
+      },
+      "required_author_checks": [
+        "category_anchor: per-seat reclining back and pop-out legrest",
+        "category_anchor: legrest swings up to seat level and clears the floor",
+        "category_anchor: legrest_style identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "seat_back",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "legrest",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "recline_control",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "count_from": "seat_count",
+          "role": "seat_back"
+        },
+        {
+          "count_from": "seat_count",
+          "role": "legrest"
+        },
+        {
+          "exact_count": 1,
+          "role": "recline_control"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= seat_count <= 3; carcass width = seat_count * seat_width_m + 2 * arm width",
+      "item_slot": "back_build",
+      "name": "seat_count",
+      "spacing_expression": "seat units are pitched at seat_width_m across the carcass, each with its own backrest and legrest",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "One upholstered back pad with a piped top edge on a single hinge.",
+          "implementation_function": "_back_build_single_back_build",
+          "interfaces": [],
+          "name": "single_back",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.74,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "width of one seat unit; derives carcass width, back and legrest widths and seat pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat depth; derives cushion depth, back hinge station and legrest reach",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "seat surface height; derives plinth height, hinge heights and legrest length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_sofa_bed2__001__png_bc9181ca88b34f609f35ca0b26987e36",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L279-L329"
+          ]
+        },
+        {
+          "evidence": "Back split into stacked panels with exposed side ratchet plates and notches.",
+          "implementation_function": "_back_build_split_ratchet_build",
+          "interfaces": [],
+          "name": "split_ratchet",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.74,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "width of one seat unit; derives carcass width, back and legrest widths and seat pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat depth; derives cushion depth, back hinge station and legrest reach",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "seat surface height; derives plinth height, hinge heights and legrest length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_sofa_bed2_split_ratchet_back",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L359-L432"
+          ]
+        },
+        {
+          "evidence": "Back built as two hinged mattress panels with a seam bead between them.",
+          "implementation_function": "_back_build_bifold_panels_build",
+          "interfaces": [],
+          "name": "bifold_panels",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.74,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "width of one seat unit; derives carcass width, back and legrest widths and seat pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat depth; derives cushion depth, back hinge station and legrest reach",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "seat surface height; derives plinth height, hinge heights and legrest length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_sofa_bed2_bifold_mattress_panels",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L226-L300"
+          ]
+        }
+      ],
+      "component_type": "seat backrest",
+      "name": "back_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Upholstered plinth with a recessed toe kick and short block feet.",
+          "implementation_function": "_base_style_plinth_base_build",
+          "interfaces": [],
+          "name": "plinth_base",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.74,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "width of one seat unit; derives carcass width, back and legrest widths and seat pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat depth; derives cushion depth, back hinge station and legrest reach",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "seat surface height; derives plinth height, hinge heights and legrest length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_sofa_bed2__001__png_bc9181ca88b34f609f35ca0b26987e36",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L126-L278"
+          ]
+        },
+        {
+          "evidence": "Exposed tubular metal futon frame with open side rails and splayed tube legs.",
+          "implementation_function": "_base_style_metal_futon_build",
+          "interfaces": [],
+          "name": "metal_futon",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.74,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "width of one seat unit; derives carcass width, back and legrest widths and seat pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat depth; derives cushion depth, back hinge station and legrest reach",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "seat surface height; derives plinth height, hinge heights and legrest length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_sofa_bed2_metal_futon_frame",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L237-L381"
+          ]
+        },
+        {
+          "evidence": "Boxy storage plinth with a recessed front door panel and pull.",
+          "implementation_function": "_base_style_storage_base_build",
+          "interfaces": [],
+          "name": "storage_base",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.74,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "width of one seat unit; derives carcass width, back and legrest widths and seat pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat depth; derives cushion depth, back hinge station and legrest reach",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "seat surface height; derives plinth height, hinge heights and legrest length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_sofa_bed2_storage_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L128-L315"
+          ]
+        }
+      ],
+      "component_type": "carcass base",
+      "name": "base_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Padded seat cushion with a welted front edge over a closed deck.",
+          "implementation_function": "_deck_build_upholstered_deck_build",
+          "interfaces": [],
+          "name": "upholstered_deck",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.74,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "width of one seat unit; derives carcass width, back and legrest widths and seat pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat depth; derives cushion depth, back hinge station and legrest reach",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "seat surface height; derives plinth height, hinge heights and legrest length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_sofa_bed2__001__png_bc9181ca88b34f609f35ca0b26987e36",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L126-L278"
+          ]
+        },
+        {
+          "evidence": "Open deck of repeated transverse slats across the side rails.",
+          "implementation_function": "_deck_build_slatted_deck_build",
+          "interfaces": [],
+          "name": "slatted_deck",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.74,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "width of one seat unit; derives carcass width, back and legrest widths and seat pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat depth; derives cushion depth, back hinge station and legrest reach",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "seat surface height; derives plinth height, hinge heights and legrest length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_sofa_bed2_slatted_deck",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L127-L291"
+          ]
+        }
+      ],
+      "component_type": "seat deck",
+      "name": "deck_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Short padded legrest panel with a welted edge on its swing hinge.",
+          "implementation_function": "_legrest_style_pad_legrest_build",
+          "interfaces": [],
+          "name": "pad_legrest",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.74,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "width of one seat unit; derives carcass width, back and legrest widths and seat pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat depth; derives cushion depth, back hinge station and legrest reach",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "seat surface height; derives plinth height, hinge heights and legrest length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_sofa_bed2__001__png_bc9181ca88b34f609f35ca0b26987e36",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L330-L399"
+          ]
+        },
+        {
+          "evidence": "Long chaise pad with raised side bolsters and a deeper cushion.",
+          "implementation_function": "_legrest_style_chaise_legrest_build",
+          "interfaces": [],
+          "name": "chaise_legrest",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.74,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "width of one seat unit; derives carcass width, back and legrest widths and seat pitch",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "seat depth; derives cushion depth, back hinge station and legrest reach",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "seat surface height; derives plinth height, hinge heights and legrest length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_sofa_bed2_chaise_extension",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L473-L543"
+          ]
+        }
+      ],
+      "component_type": "seat legrest",
+      "name": "legrest_style",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Folding_sofa_bed2",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Folding_sofa_bed2.md",
+  "source_map_sha256": "c4fd466e0f425daf54c354d3b37e9e6665fa0c3576fc7f504d6baf5ebde29db7"
+}

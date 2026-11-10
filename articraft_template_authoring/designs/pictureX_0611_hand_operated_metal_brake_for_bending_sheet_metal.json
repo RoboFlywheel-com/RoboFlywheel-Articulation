@@ -1,0 +1,1367 @@
+{
+ "assembly_notes": "Hand-operated sheet-metal bending brake. The grounded `frame` part is the bed: a plate with a bending edge rail along +x at y=0, forked hinge ears for both moving members, a rear apron and the adjuster posts behind it. The `clamp_beam` part hinges REVOLUTE about +x at the back of the bed and lifts its nose off the bed, and the `bending_leaf` part hinges REVOLUTE about +x one clearance in front of the bending edge and folds up through a travel that stops just short of the bend line, so it never reaches back under the clamp nose. Each clamp station carries a `handle_{i}` lever on the clamp beam and an `adjuster_{i}` screw on a PRISMATIC slide behind the bed. frame_form varies the ground end: a bare bed, a bench-top pad with bolt lugs, or a welded floor stand with splayed legs; the bed height it sets carries through to both hinge lines and every station. clamp_form varies the clamp face: one continuous bar, bolted segments, removable fingers, or screw-down clamps. leaf_form varies the leaf: one plain plate with a lift bar, or stiffened segments with ribs between them. accessory adds a PRISMATIC bend-stop fence behind the bed or a long centre lever on its own REVOLUTE. brake_width_m, bed_depth_m and leaf_length_m are the honest continuous parameters; clamp_station_count and leaf_rib_count are the multiplicities; palette is neither.",
+ "bindings": [
+  {
+   "binding_id": "frame_carries_clamp",
+   "consumer": "clamp_form.clamp_pivot_axis",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "bed_depth_m"
+     ],
+     "expression": "bed_depth_m - 0.035",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "clamp_reach_m",
+     "rationale": "the clamp beam always reaches from its hinge to just behind the bending edge",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "revolute",
+   "provider": "frame_form.clamp_hinge_axis"
+  },
+  {
+   "binding_id": "frame_carries_leaf",
+   "consumer": "leaf_form.leaf_pivot_axis",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "bed_depth_m"
+     ],
+     "expression": "0.006",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "leaf_hinge_y_m",
+     "rationale": "the leaf hinge sits one clearance in front of the bending edge the frame built",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "revolute",
+   "provider": "frame_form.leaf_hinge_axis"
+  },
+  {
+   "binding_id": "frame_carries_accessory",
+   "consumer": "accessory.accessory_mount_axis",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "bed_depth_m"
+     ],
+     "expression": "-(bed_depth_m + 0.060)",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "accessory_station_y_m",
+     "rationale": "the accessory rides behind the bed the frame candidate built",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "revolute",
+   "provider": "frame_form.clamp_hinge_axis"
+  }
+ ],
+ "category_anchors": [
+  {
+   "anchor_id": "frame_form_identity",
+   "applies_to": {
+    "candidates": [
+     "plain_bed",
+     "bench_top",
+     "floor_stand"
+    ],
+    "slot": "frame_form"
+   },
+   "required_author_checks": [
+    "category_anchor: a clamp beam and a bending leaf hinge on the same grounded bed",
+    "category_anchor: the leaf folds up without ever reaching back under the clamp nose",
+    "category_anchor: frame_form identity"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "child_role": "leaf",
+     "joint_type": "revolute",
+     "parent_role": "frame"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "frame"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "clamp"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "leaf"
+    },
+    {
+     "count_from": "clamp_station_count",
+     "exact_count": null,
+     "role": "handle"
+    },
+    {
+     "count_from": "clamp_station_count",
+     "exact_count": null,
+     "role": "adjuster"
+    }
+   ]
+  },
+  {
+   "anchor_id": "clamp_form_identity",
+   "applies_to": {
+    "candidates": [
+     "plain_clamp_bar",
+     "segmented_clamp",
+     "finger_clamp",
+     "screw_down_clamp"
+    ],
+    "slot": "clamp_form"
+   },
+   "required_author_checks": [
+    "category_anchor: a clamp beam and a bending leaf hinge on the same grounded bed",
+    "category_anchor: the leaf folds up without ever reaching back under the clamp nose",
+    "category_anchor: clamp_form identity"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "child_role": "leaf",
+     "joint_type": "revolute",
+     "parent_role": "frame"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "frame"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "clamp"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "leaf"
+    },
+    {
+     "count_from": "clamp_station_count",
+     "exact_count": null,
+     "role": "handle"
+    },
+    {
+     "count_from": "clamp_station_count",
+     "exact_count": null,
+     "role": "adjuster"
+    }
+   ]
+  },
+  {
+   "anchor_id": "leaf_form_identity",
+   "applies_to": {
+    "candidates": [
+     "plain_leaf",
+     "segmented_leaf"
+    ],
+    "slot": "leaf_form"
+   },
+   "required_author_checks": [
+    "category_anchor: a clamp beam and a bending leaf hinge on the same grounded bed",
+    "category_anchor: the leaf folds up without ever reaching back under the clamp nose",
+    "category_anchor: leaf_form identity"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "child_role": "leaf",
+     "joint_type": "revolute",
+     "parent_role": "frame"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "frame"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "clamp"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "leaf"
+    },
+    {
+     "count_from": "clamp_station_count",
+     "exact_count": null,
+     "role": "handle"
+    },
+    {
+     "count_from": "clamp_station_count",
+     "exact_count": null,
+     "role": "adjuster"
+    }
+   ]
+  },
+  {
+   "anchor_id": "accessory_identity",
+   "applies_to": {
+    "candidates": [
+     "bend_stop_fence",
+     "center_lever"
+    ],
+    "slot": "accessory"
+   },
+   "required_author_checks": [
+    "category_anchor: a clamp beam and a bending leaf hinge on the same grounded bed",
+    "category_anchor: the leaf folds up without ever reaching back under the clamp nose",
+    "category_anchor: accessory identity"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "child_role": "leaf",
+     "joint_type": "revolute",
+     "parent_role": "frame"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "frame"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "clamp"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "leaf"
+    },
+    {
+     "count_from": "clamp_station_count",
+     "exact_count": null,
+     "role": "handle"
+    },
+    {
+     "count_from": "clamp_station_count",
+     "exact_count": null,
+     "role": "adjuster"
+    }
+   ]
+  }
+ ],
+ "multiplicities": [
+  {
+   "host_capacity_expression": "2 <= clamp_station_count <= 4; the station pitch is derived from the width so adjacent stations keep a real gap at the narrowest brake",
+   "item_slot": "clamp_form",
+   "name": "clamp_station_count",
+   "spacing_expression": "station k sits at -(brake_width_m-0.080)/2 + k * station_pitch_m",
+   "values": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "host_capacity_expression": "3 <= leaf_rib_count <= 7; the rib width is derived from the rib pitch so adjacent ribs never merge",
+   "item_slot": "leaf_form",
+   "name": "leaf_rib_count",
+   "spacing_expression": "rib k sits at -(brake_width_m-0.060)/2 + k * rib_pitch_m",
+   "values": [
+    3,
+    5,
+    7
+   ]
+  }
+ ],
+ "schema_version": 1,
+ "slots": [
+  {
+   "candidates": [
+    {
+     "evidence": "A bare bed casting with the bending edge and the hinge ears, sitting straight on the table.",
+     "implementation_function": "_frame_form_plain_bed_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "span": "brake_width_m"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "clamp_hinge_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      },
+      {
+       "dimensions": {
+        "span": "brake_width_m"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "leaf_hinge_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "plain_bed",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.7,
+       "minimum": 0.3,
+       "mode": "independent",
+       "name": "brake_width_m",
+       "rationale": "working width along the bend line; derives the bed, both hinge lines, the station pitch and the rib pitch",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.1,
+       "mode": "independent",
+       "name": "bed_depth_m",
+       "rationale": "bed depth behind the bending edge; derives the clamp reach, the hinge stand-off and the adjuster station",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "bed_depth_m"
+       ],
+       "expression": "plain_bed: 0.055; bench_top: 0.075; floor_stand: 0.300",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "bed_height_m",
+       "rationale": "working height of the bed top, set by the frame candidate",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__hand_operated_metal_brake_for_bending_sheet_metal__001__png_7e96ce87aa024cdbb5f0c1be8c9b999d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L138-L184"
+     ]
+    },
+    {
+     "evidence": "The same bed on a bench-top pad with bolt-down lugs at each corner.",
+     "implementation_function": "_frame_form_bench_top_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "span": "brake_width_m"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "clamp_hinge_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      },
+      {
+       "dimensions": {
+        "span": "brake_width_m"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "leaf_hinge_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "bench_top",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.7,
+       "minimum": 0.3,
+       "mode": "independent",
+       "name": "brake_width_m",
+       "rationale": "working width along the bend line; derives the bed, both hinge lines, the station pitch and the rib pitch",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.1,
+       "mode": "independent",
+       "name": "bed_depth_m",
+       "rationale": "bed depth behind the bending edge; derives the clamp reach, the hinge stand-off and the adjuster station",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "bed_depth_m"
+       ],
+       "expression": "plain_bed: 0.055; bench_top: 0.075; floor_stand: 0.300",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "bed_height_m",
+       "rationale": "working height of the bed top, set by the frame candidate",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_metal_brake_var_bench_top",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L137-L214"
+     ]
+    },
+    {
+     "evidence": "A welded floor frame with splayed legs and a tie rail standing the bed at working height.",
+     "implementation_function": "_frame_form_floor_stand_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "span": "brake_width_m"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "clamp_hinge_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      },
+      {
+       "dimensions": {
+        "span": "brake_width_m"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "leaf_hinge_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "floor_stand",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.7,
+       "minimum": 0.3,
+       "mode": "independent",
+       "name": "brake_width_m",
+       "rationale": "working width along the bend line; derives the bed, both hinge lines, the station pitch and the rib pitch",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.1,
+       "mode": "independent",
+       "name": "bed_depth_m",
+       "rationale": "bed depth behind the bending edge; derives the clamp reach, the hinge stand-off and the adjuster station",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "bed_depth_m"
+       ],
+       "expression": "plain_bed: 0.055; bench_top: 0.075; floor_stand: 0.300",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "bed_height_m",
+       "rationale": "working height of the bed top, set by the frame candidate",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_metal_brake_var_floor_stand",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L155-L226"
+     ]
+    }
+   ],
+   "component_type": "grounded frame",
+   "name": "frame_form",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "One continuous clamp bar with a plain nose that lands on the bed across the whole width.",
+     "implementation_function": "_clamp_form_plain_clamp_bar_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "bed_depth_m - 0.035"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "clamp_pivot_axis",
+       "part": "clamp_beam",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "plain_clamp_bar",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.7,
+       "minimum": 0.3,
+       "mode": "independent",
+       "name": "brake_width_m",
+       "rationale": "working width along the bend line; derives the bed, both hinge lines, the station pitch and the rib pitch",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.1,
+       "mode": "independent",
+       "name": "bed_depth_m",
+       "rationale": "bed depth behind the bending edge; derives the clamp reach, the hinge stand-off and the adjuster station",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "brake_width_m"
+       ],
+       "expression": "(brake_width_m - 0.080) / max(1, clamp_station_count - 1)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "station_pitch_m",
+       "rationale": "hand stations are spread over the same derived width",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "bed_depth_m"
+       ],
+       "expression": "bed_height_m + 0.042",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "clamp_hinge_z_m",
+       "rationale": "the clamp beam hinge sits one beam half-height above the bed",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__hand_operated_metal_brake_for_bending_sheet_metal__001__png_7e96ce87aa024cdbb5f0c1be8c9b999d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L185-L241"
+     ]
+    },
+    {
+     "evidence": "The clamp bar is split into bolted segments with visible joints across the width.",
+     "implementation_function": "_clamp_form_segmented_clamp_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "bed_depth_m - 0.035"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "clamp_pivot_axis",
+       "part": "clamp_beam",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "segmented_clamp",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.7,
+       "minimum": 0.3,
+       "mode": "independent",
+       "name": "brake_width_m",
+       "rationale": "working width along the bend line; derives the bed, both hinge lines, the station pitch and the rib pitch",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.1,
+       "mode": "independent",
+       "name": "bed_depth_m",
+       "rationale": "bed depth behind the bending edge; derives the clamp reach, the hinge stand-off and the adjuster station",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "brake_width_m"
+       ],
+       "expression": "(brake_width_m - 0.080) / max(1, clamp_station_count - 1)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "station_pitch_m",
+       "rationale": "hand stations are spread over the same derived width",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "bed_depth_m"
+       ],
+       "expression": "bed_height_m + 0.042",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "clamp_hinge_z_m",
+       "rationale": "the clamp beam hinge sits one beam half-height above the bed",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_metal_brake_var_segmented_clamp",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L185-L262"
+     ]
+    },
+    {
+     "evidence": "Separate removable fingers are bolted to the beam so box corners can be folded.",
+     "implementation_function": "_clamp_form_finger_clamp_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "bed_depth_m - 0.035"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "clamp_pivot_axis",
+       "part": "clamp_beam",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "finger_clamp",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.7,
+       "minimum": 0.3,
+       "mode": "independent",
+       "name": "brake_width_m",
+       "rationale": "working width along the bend line; derives the bed, both hinge lines, the station pitch and the rib pitch",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.1,
+       "mode": "independent",
+       "name": "bed_depth_m",
+       "rationale": "bed depth behind the bending edge; derives the clamp reach, the hinge stand-off and the adjuster station",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "brake_width_m"
+       ],
+       "expression": "(brake_width_m - 0.080) / max(1, clamp_station_count - 1)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "station_pitch_m",
+       "rationale": "hand stations are spread over the same derived width",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "bed_depth_m"
+       ],
+       "expression": "bed_height_m + 0.042",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "clamp_hinge_z_m",
+       "rationale": "the clamp beam hinge sits one beam half-height above the bed",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_metal_brake_var_five_fingers",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L203-L268"
+     ]
+    },
+    {
+     "evidence": "Screw-down clamps on their own PRISMATIC travel replace the cam handles.",
+     "implementation_function": "_clamp_form_screw_down_clamp_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "bed_depth_m - 0.035"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "clamp_pivot_axis",
+       "part": "clamp_beam",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "screw_down_clamp",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.7,
+       "minimum": 0.3,
+       "mode": "independent",
+       "name": "brake_width_m",
+       "rationale": "working width along the bend line; derives the bed, both hinge lines, the station pitch and the rib pitch",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.1,
+       "mode": "independent",
+       "name": "bed_depth_m",
+       "rationale": "bed depth behind the bending edge; derives the clamp reach, the hinge stand-off and the adjuster station",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "brake_width_m"
+       ],
+       "expression": "(brake_width_m - 0.080) / max(1, clamp_station_count - 1)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "station_pitch_m",
+       "rationale": "hand stations are spread over the same derived width",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "bed_depth_m"
+       ],
+       "expression": "bed_height_m + 0.042",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "clamp_hinge_z_m",
+       "rationale": "the clamp beam hinge sits one beam half-height above the bed",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_metal_brake_var_screw_down_clamp",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L296-L362"
+     ]
+    }
+   ],
+   "component_type": "clamp beam face",
+   "name": "clamp_form",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "A plain one-piece bending leaf hinged on the bed edge with a full-width lift bar.",
+     "implementation_function": "_leaf_form_plain_leaf_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "leaf_length_m"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "leaf_pivot_axis",
+       "part": "bending_leaf",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "plain_leaf",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.7,
+       "minimum": 0.3,
+       "mode": "independent",
+       "name": "brake_width_m",
+       "rationale": "working width along the bend line; derives the bed, both hinge lines, the station pitch and the rib pitch",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.14,
+       "minimum": 0.06,
+       "mode": "independent",
+       "name": "leaf_length_m",
+       "rationale": "bending leaf reach in front of the edge; derives the lift bar station and the fold envelope",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "brake_width_m"
+       ],
+       "expression": "(brake_width_m - 0.060) / max(1, leaf_rib_count - 1)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "rib_pitch_m",
+       "rationale": "leaf ribs are spread over the same derived width",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "leaf_length_m"
+       ],
+       "expression": "1.45",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "fold_travel_rad",
+       "rationale": "the leaf folds up to just short of the bend line so it never reaches back into the clamp",
+       "unit": "rad",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__hand_operated_metal_brake_for_bending_sheet_metal__001__png_7e96ce87aa024cdbb5f0c1be8c9b999d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L242-L304"
+     ]
+    },
+    {
+     "evidence": "The leaf is split into stiffened segments with ribs standing between them.",
+     "implementation_function": "_leaf_form_segmented_leaf_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "reach": "leaf_length_m"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "leaf_pivot_axis",
+       "part": "bending_leaf",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "segmented_leaf",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.7,
+       "minimum": 0.3,
+       "mode": "independent",
+       "name": "brake_width_m",
+       "rationale": "working width along the bend line; derives the bed, both hinge lines, the station pitch and the rib pitch",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.14,
+       "minimum": 0.06,
+       "mode": "independent",
+       "name": "leaf_length_m",
+       "rationale": "bending leaf reach in front of the edge; derives the lift bar station and the fold envelope",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "brake_width_m"
+       ],
+       "expression": "(brake_width_m - 0.060) / max(1, leaf_rib_count - 1)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "rib_pitch_m",
+       "rationale": "leaf ribs are spread over the same derived width",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "leaf_length_m"
+       ],
+       "expression": "1.45",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "fold_travel_rad",
+       "rationale": "the leaf folds up to just short of the bend line so it never reaches back into the clamp",
+       "unit": "rad",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_metal_brake_var_segmented_leaf",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L247-L333"
+     ]
+    }
+   ],
+   "component_type": "bending leaf",
+   "name": "leaf_form",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "A bend_stop_fence carriage on a real PRISMATIC slide behind the bed that sets the fold depth.",
+     "implementation_function": "_accessory_bend_stop_fence_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "span": "brake_width_m"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "accessory_mount_axis",
+       "part": "accessory",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "bend_stop_fence",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.7,
+       "minimum": 0.3,
+       "mode": "independent",
+       "name": "brake_width_m",
+       "rationale": "working width along the bend line; derives the bed, both hinge lines, the station pitch and the rib pitch",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.1,
+       "mode": "independent",
+       "name": "bed_depth_m",
+       "rationale": "bed depth behind the bending edge; derives the clamp reach, the hinge stand-off and the adjuster station",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_metal_brake_var_bend_stop",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L403-L468"
+     ]
+    },
+    {
+     "evidence": "A long centre lever on its own REVOLUTE at mid span, worked instead of the end handles.",
+     "implementation_function": "_accessory_center_lever_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "span": "brake_width_m"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "accessory_mount_axis",
+       "part": "accessory",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "center_lever",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.7,
+       "minimum": 0.3,
+       "mode": "independent",
+       "name": "brake_width_m",
+       "rationale": "working width along the bend line; derives the bed, both hinge lines, the station pitch and the rib pitch",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.2,
+       "minimum": 0.1,
+       "mode": "independent",
+       "name": "bed_depth_m",
+       "rationale": "bed depth behind the bending edge; derives the clamp reach, the hinge stand-off and the adjuster station",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_metal_brake_var_center_lever",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L153-L212"
+     ]
+    }
+   ],
+   "component_type": "accessory",
+   "name": "accessory",
+   "required": true
+  }
+ ],
+ "slug": "pictureX_0611_hand_operated_metal_brake_for_bending_sheet_metal",
+ "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_hand_operated_metal_brake_for_bending_sheet_metal.md",
+ "source_map_sha256": "c3e6ee8f2b74be792bd472c720eeae82dec3bfc4faec4aad5446a58586cde8a3"
+}

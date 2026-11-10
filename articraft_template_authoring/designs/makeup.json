@@ -1,0 +1,3214 @@
+{
+  "schema_version": 1,
+  "slug": "makeup",
+  "source_map_path": "articraft_template_authoring/source_maps/makeup.md",
+  "source_map_sha256": "6e7b7bcf344d6a3705cbcebd1e86056e7163b2e0ff389188561005e1b2d14ddb",
+  "assembly_notes": "Five component slots form 300 complete structural combinations; the palette_count multiplicity raises the raw domain to 1800. The chassis is always one rooted case_body with a real deck recess whose rim the lid box closes onto; the lid is always a rear-hinged mirrored box registered from an AxisInterface mate. Stations cycle the left/right/front walls and each owns its own derived vertical level, so the chassis height, plinth, cavities, runners, bearing bridges, posts and knuckle lugs all grow with N and with the tray dimensions. Prismatic trays are seated with mate_planes on their real runner footprint; every rotational joint is solved with mate_axes and registered with register_interface_mate. All palette motion stays below the case rim in Z or outboard of the case plan, so a closed lid never shares space with a deployed tray. No overlap allowance is used anywhere.",
+  "slots": [
+    {
+      "name": "case_form",
+      "component_type": "case_body_chassis",
+      "required": true,
+      "candidates": [
+        {
+          "name": "rounded_train_case",
+          "record_id": "rec_picturex_0611__makeup__001__png_25a74d42e2cc47b8be52d1f0dd9e0807",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L30-L44",
+            "model.py:L158-L199"
+          ],
+          "evidence": "_rounded_case_shell outer box with filleted vertical edges minus an inset cavity; case_base, case_shell, organizer_insert, base_hinge_barrel_{i}, front_latch.",
+          "implementation_function": "_case_form_rounded_train_case_build",
+          "parameters": [
+            {
+              "name": "case_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.265,
+              "maximum": 0.405,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Sets the whole plan profile, rim, deck recess, lid plan and every side station span."
+            },
+            {
+              "name": "case_depth_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.155,
+              "maximum": 0.235,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Sets the plan depth, hinge line inset, front station cavity and the pan/applicator zone split."
+            },
+            {
+              "name": "case_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.055,
+              "maximum": 0.15,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Requested chassis height; the plinth below the derived station stack is derived from it."
+            },
+            {
+              "name": "corner_radius_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.005,
+              "maximum": 0.028,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Plan corner softness of the rectangular families and of the deck recess."
+            },
+            {
+              "name": "inner_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_width_m - 2 * WALL_M",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Interior width available for station cavities and runners."
+            },
+            {
+              "name": "recess_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_width_m - 2 * (WALL_M + RIM_EXTRA_M)",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Deck recess plan width; the remaining border is the rim the lid closes onto."
+            },
+            {
+              "name": "required_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "FLOOR_M + palette_count * level_pitch_m + DECK_SLAB_M + recess_drop_m",
+              "depends_on": [
+                "palette_count",
+                "level_pitch_m",
+                "recess_drop_m"
+              ],
+              "rationale": "Host capacity: the chassis must be tall enough for every derived station level."
+            },
+            {
+              "name": "body_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(case_height_m, required_height_m)",
+              "depends_on": [
+                "case_height_m",
+                "required_height_m"
+              ],
+              "rationale": "The requested height is only honoured above the N-derived requirement."
+            },
+            {
+              "name": "plinth_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - required_height_m",
+              "depends_on": [
+                "body_height_m",
+                "required_height_m"
+              ],
+              "rationale": "Solid plinth under the lowest station bay; never negative."
+            },
+            {
+              "name": "deck_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - recess_drop_m",
+              "depends_on": [
+                "body_height_m",
+                "recess_drop_m"
+              ],
+              "rationale": "Elevation of the deck recess floor that carries the pan and applicator zones."
+            },
+            {
+              "name": "hinge_axis_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - FIT_M",
+              "depends_on": [
+                "body_height_m"
+              ],
+              "rationale": "The hinge line sits on the case rim so the lid box lands on it when closed."
+            },
+            {
+              "name": "plan_fill",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "1.0",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Fraction of the recess plan a rectangular insert may occupy inside this profile."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "deck_plane",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "recess_width_m * plan_fill",
+                "width": "recess_depth_m * plan_fill"
+              }
+            },
+            {
+              "name": "palette_bay_column",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "levels": "palette_count",
+                "pitch": "level_pitch_m",
+                "height": "bay_height_m"
+              }
+            },
+            {
+              "name": "lid_hinge_axis",
+              "kind": "axis",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "radius": "PIN_R_M",
+                "span": "case_width_m - 0.040"
+              }
+            }
+          ],
+          "notes": "Filleted rectangular shell plus a proud top rim lip band."
+        },
+        {
+          "name": "round_compact",
+          "record_id": "rec_0611_makeup_var_case_form_round_compact",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L30-L36",
+            "model.py:L137-L178"
+          ],
+          "evidence": "Circular extruded shell minus a coaxial cavity; the lid becomes a disc + rim (_lid_frame L39-L60) and the hinge knuckles move inboard to x=\u00b10.083.",
+          "implementation_function": "_case_form_round_compact_build",
+          "parameters": [
+            {
+              "name": "case_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.265,
+              "maximum": 0.405,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Sets the whole plan profile, rim, deck recess, lid plan and every side station span."
+            },
+            {
+              "name": "case_depth_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.155,
+              "maximum": 0.235,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Sets the plan depth, hinge line inset, front station cavity and the pan/applicator zone split."
+            },
+            {
+              "name": "case_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.055,
+              "maximum": 0.15,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Requested chassis height; the plinth below the derived station stack is derived from it."
+            },
+            {
+              "name": "corner_radius_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.005,
+              "maximum": 0.028,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Plan corner softness of the rectangular families and of the deck recess."
+            },
+            {
+              "name": "inner_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_width_m - 2 * WALL_M",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Interior width available for station cavities and runners."
+            },
+            {
+              "name": "recess_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_width_m - 2 * (WALL_M + RIM_EXTRA_M)",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Deck recess plan width; the remaining border is the rim the lid closes onto."
+            },
+            {
+              "name": "required_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "FLOOR_M + palette_count * level_pitch_m + DECK_SLAB_M + recess_drop_m",
+              "depends_on": [
+                "palette_count",
+                "level_pitch_m",
+                "recess_drop_m"
+              ],
+              "rationale": "Host capacity: the chassis must be tall enough for every derived station level."
+            },
+            {
+              "name": "body_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(case_height_m, required_height_m)",
+              "depends_on": [
+                "case_height_m",
+                "required_height_m"
+              ],
+              "rationale": "The requested height is only honoured above the N-derived requirement."
+            },
+            {
+              "name": "plinth_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - required_height_m",
+              "depends_on": [
+                "body_height_m",
+                "required_height_m"
+              ],
+              "rationale": "Solid plinth under the lowest station bay; never negative."
+            },
+            {
+              "name": "deck_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - recess_drop_m",
+              "depends_on": [
+                "body_height_m",
+                "recess_drop_m"
+              ],
+              "rationale": "Elevation of the deck recess floor that carries the pan and applicator zones."
+            },
+            {
+              "name": "hinge_axis_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - FIT_M",
+              "depends_on": [
+                "body_height_m"
+              ],
+              "rationale": "The hinge line sits on the case rim so the lid box lands on it when closed."
+            },
+            {
+              "name": "plan_fill",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.7",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Fraction of the recess plan a rectangular insert may occupy inside this profile."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "deck_plane",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "recess_width_m * plan_fill",
+                "width": "recess_depth_m * plan_fill"
+              }
+            },
+            {
+              "name": "palette_bay_column",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "levels": "palette_count",
+                "pitch": "level_pitch_m",
+                "height": "bay_height_m"
+              }
+            },
+            {
+              "name": "lid_hinge_axis",
+              "kind": "axis",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "radius": "PIN_R_M",
+                "span": "case_width_m - 0.040"
+              }
+            }
+          ],
+          "notes": "Elliptical shell with a proud top rim ring and a base ring."
+        },
+        {
+          "name": "train_case_tower",
+          "record_id": "rec_0611_makeup_var_case_form_train_case_tower",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L31-L89",
+            "model.py:L240-L275"
+          ],
+          "evidence": "TOWER_DROP=0.082 deep body, two wraparound reinforcement rails (rail_outer.cut(rail_inner)) and a proud foot ring; lid gains raised edge rails (L124-L138).",
+          "implementation_function": "_case_form_train_case_tower_build",
+          "parameters": [
+            {
+              "name": "case_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.265,
+              "maximum": 0.405,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Sets the whole plan profile, rim, deck recess, lid plan and every side station span."
+            },
+            {
+              "name": "case_depth_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.155,
+              "maximum": 0.235,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Sets the plan depth, hinge line inset, front station cavity and the pan/applicator zone split."
+            },
+            {
+              "name": "case_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.055,
+              "maximum": 0.15,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Requested chassis height; the plinth below the derived station stack is derived from it."
+            },
+            {
+              "name": "corner_radius_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.005,
+              "maximum": 0.028,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Plan corner softness of the rectangular families and of the deck recess."
+            },
+            {
+              "name": "inner_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_width_m - 2 * WALL_M",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Interior width available for station cavities and runners."
+            },
+            {
+              "name": "recess_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_width_m - 2 * (WALL_M + RIM_EXTRA_M)",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Deck recess plan width; the remaining border is the rim the lid closes onto."
+            },
+            {
+              "name": "required_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "FLOOR_M + palette_count * level_pitch_m + DECK_SLAB_M + recess_drop_m",
+              "depends_on": [
+                "palette_count",
+                "level_pitch_m",
+                "recess_drop_m"
+              ],
+              "rationale": "Host capacity: the chassis must be tall enough for every derived station level."
+            },
+            {
+              "name": "body_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(case_height_m, required_height_m)",
+              "depends_on": [
+                "case_height_m",
+                "required_height_m"
+              ],
+              "rationale": "The requested height is only honoured above the N-derived requirement."
+            },
+            {
+              "name": "plinth_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - required_height_m",
+              "depends_on": [
+                "body_height_m",
+                "required_height_m"
+              ],
+              "rationale": "Solid plinth under the lowest station bay; never negative."
+            },
+            {
+              "name": "deck_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - recess_drop_m",
+              "depends_on": [
+                "body_height_m",
+                "recess_drop_m"
+              ],
+              "rationale": "Elevation of the deck recess floor that carries the pan and applicator zones."
+            },
+            {
+              "name": "hinge_axis_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - FIT_M",
+              "depends_on": [
+                "body_height_m"
+              ],
+              "rationale": "The hinge line sits on the case rim so the lid box lands on it when closed."
+            },
+            {
+              "name": "plan_fill",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "1.0",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Fraction of the recess plan a rectangular insert may occupy inside this profile."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "deck_plane",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "recess_width_m * plan_fill",
+                "width": "recess_depth_m * plan_fill"
+              }
+            },
+            {
+              "name": "palette_bay_column",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "levels": "palette_count",
+                "pitch": "level_pitch_m",
+                "height": "bay_height_m"
+              }
+            },
+            {
+              "name": "lid_hinge_axis",
+              "kind": "axis",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "radius": "PIN_R_M",
+                "span": "case_width_m - 0.040"
+              }
+            }
+          ],
+          "notes": "Crisper rectangular shell with two wraparound reinforcement rails and a foot ring."
+        },
+        {
+          "name": "book_style_folio",
+          "record_id": "rec_0611_makeup_var_case_form_book_style_folio",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L30-L67",
+            "model.py:L171-L212"
+          ],
+          "evidence": "Oversized rounded cover board (CASE_W+0.012), thin filleted shell and a bound rear spine bolster; lid becomes cover board + rim + lower binding (L70-L86).",
+          "implementation_function": "_case_form_book_style_folio_build",
+          "parameters": [
+            {
+              "name": "case_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.265,
+              "maximum": 0.405,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Sets the whole plan profile, rim, deck recess, lid plan and every side station span."
+            },
+            {
+              "name": "case_depth_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.155,
+              "maximum": 0.235,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Sets the plan depth, hinge line inset, front station cavity and the pan/applicator zone split."
+            },
+            {
+              "name": "case_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.055,
+              "maximum": 0.15,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Requested chassis height; the plinth below the derived station stack is derived from it."
+            },
+            {
+              "name": "corner_radius_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.005,
+              "maximum": 0.028,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Plan corner softness of the rectangular families and of the deck recess."
+            },
+            {
+              "name": "inner_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_width_m - 2 * WALL_M",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Interior width available for station cavities and runners."
+            },
+            {
+              "name": "recess_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_width_m - 2 * (WALL_M + RIM_EXTRA_M)",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Deck recess plan width; the remaining border is the rim the lid closes onto."
+            },
+            {
+              "name": "required_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "FLOOR_M + palette_count * level_pitch_m + DECK_SLAB_M + recess_drop_m",
+              "depends_on": [
+                "palette_count",
+                "level_pitch_m",
+                "recess_drop_m"
+              ],
+              "rationale": "Host capacity: the chassis must be tall enough for every derived station level."
+            },
+            {
+              "name": "body_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(case_height_m, required_height_m)",
+              "depends_on": [
+                "case_height_m",
+                "required_height_m"
+              ],
+              "rationale": "The requested height is only honoured above the N-derived requirement."
+            },
+            {
+              "name": "plinth_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - required_height_m",
+              "depends_on": [
+                "body_height_m",
+                "required_height_m"
+              ],
+              "rationale": "Solid plinth under the lowest station bay; never negative."
+            },
+            {
+              "name": "deck_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - recess_drop_m",
+              "depends_on": [
+                "body_height_m",
+                "recess_drop_m"
+              ],
+              "rationale": "Elevation of the deck recess floor that carries the pan and applicator zones."
+            },
+            {
+              "name": "hinge_axis_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - FIT_M",
+              "depends_on": [
+                "body_height_m"
+              ],
+              "rationale": "The hinge line sits on the case rim so the lid box lands on it when closed."
+            },
+            {
+              "name": "plan_fill",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "1.0",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Fraction of the recess plan a rectangular insert may occupy inside this profile."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "deck_plane",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "recess_width_m * plan_fill",
+                "width": "recess_depth_m * plan_fill"
+              }
+            },
+            {
+              "name": "palette_bay_column",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "levels": "palette_count",
+                "pitch": "level_pitch_m",
+                "height": "bay_height_m"
+              }
+            },
+            {
+              "name": "lid_hinge_axis",
+              "kind": "axis",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "radius": "PIN_R_M",
+                "span": "case_width_m - 0.040"
+              }
+            }
+          ],
+          "notes": "Softest rectangular shell over an oversized cover board with a bound rear spine."
+        },
+        {
+          "name": "cylindrical_vanity_case",
+          "record_id": "rec_0611_makeup_var_case_form_cylindrical_vanity_case",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L37-L50",
+            "model.py:L220-L300",
+            "model.py:L356-L393"
+          ],
+          "evidence": "_cylindrical_disc drum body with real slide tunnels cut through the curved wall, an arc-conformal front_pale_band, and a round lid disc hinged on the rear tangent line.",
+          "implementation_function": "_case_form_cylindrical_vanity_case_build",
+          "parameters": [
+            {
+              "name": "case_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.265,
+              "maximum": 0.405,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Sets the whole plan profile, rim, deck recess, lid plan and every side station span."
+            },
+            {
+              "name": "case_depth_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.155,
+              "maximum": 0.235,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Sets the plan depth, hinge line inset, front station cavity and the pan/applicator zone split."
+            },
+            {
+              "name": "case_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.055,
+              "maximum": 0.15,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Requested chassis height; the plinth below the derived station stack is derived from it."
+            },
+            {
+              "name": "corner_radius_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.005,
+              "maximum": 0.028,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Plan corner softness of the rectangular families and of the deck recess."
+            },
+            {
+              "name": "inner_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_width_m - 2 * WALL_M",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Interior width available for station cavities and runners."
+            },
+            {
+              "name": "recess_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_width_m - 2 * (WALL_M + RIM_EXTRA_M)",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Deck recess plan width; the remaining border is the rim the lid closes onto."
+            },
+            {
+              "name": "required_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "FLOOR_M + palette_count * level_pitch_m + DECK_SLAB_M + recess_drop_m",
+              "depends_on": [
+                "palette_count",
+                "level_pitch_m",
+                "recess_drop_m"
+              ],
+              "rationale": "Host capacity: the chassis must be tall enough for every derived station level."
+            },
+            {
+              "name": "body_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(case_height_m, required_height_m)",
+              "depends_on": [
+                "case_height_m",
+                "required_height_m"
+              ],
+              "rationale": "The requested height is only honoured above the N-derived requirement."
+            },
+            {
+              "name": "plinth_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - required_height_m",
+              "depends_on": [
+                "body_height_m",
+                "required_height_m"
+              ],
+              "rationale": "Solid plinth under the lowest station bay; never negative."
+            },
+            {
+              "name": "deck_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - recess_drop_m",
+              "depends_on": [
+                "body_height_m",
+                "recess_drop_m"
+              ],
+              "rationale": "Elevation of the deck recess floor that carries the pan and applicator zones."
+            },
+            {
+              "name": "hinge_axis_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_height_m - FIT_M",
+              "depends_on": [
+                "body_height_m"
+              ],
+              "rationale": "The hinge line sits on the case rim so the lid box lands on it when closed."
+            },
+            {
+              "name": "plan_fill",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.88",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Fraction of the recess plan a rectangular insert may occupy inside this profile."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "deck_plane",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "recess_width_m * plan_fill",
+                "width": "recess_depth_m * plan_fill"
+              }
+            },
+            {
+              "name": "palette_bay_column",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "levels": "palette_count",
+                "pitch": "level_pitch_m",
+                "height": "bay_height_m"
+              }
+            },
+            {
+              "name": "lid_hinge_axis",
+              "kind": "axis",
+              "role": "provider",
+              "part": "case_body",
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "radius": "PIN_R_M",
+                "span": "case_width_m - 0.040"
+              }
+            }
+          ],
+          "notes": "Capsule drum plan with a front arc band and a base plinth ring; the recess and cavities conform to the curved wall."
+        }
+      ]
+    },
+    {
+      "name": "palette_topology",
+      "component_type": "articulated_palette_tray",
+      "required": true,
+      "candidates": [
+        {
+          "name": "pull_out_drawer",
+          "record_id": "rec_0611_makeup_var_palette_topology_pull_out_drawer_carri",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L38-L81",
+            "model.py:L443-L475",
+            "model.py:L531-L567",
+            "model.py:L597-L624"
+          ],
+          "evidence": "_hollow_tray (outer minus inner, reinforced rim) + twin carrier rails and an inner crossbar (front_slide_tail, side_slide_tail) riding real runners; prismatic along the true pull direction.",
+          "implementation_function": "_palette_topology_pull_out_drawer_build",
+          "parameters": [
+            {
+              "name": "tray_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.011,
+              "maximum": 0.026,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Real palette tray wall height; it drives bay height, level pitch and body height."
+            },
+            {
+              "name": "tray_extension_ratio",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": 0.45,
+              "maximum": 0.82,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Travel as a fraction of the tray body length; it drives tail length and cavity depth."
+            },
+            {
+              "name": "bay_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tray_height_m + bay_bearing_allowance_m",
+              "depends_on": [
+                "tray_height_m"
+              ],
+              "rationale": "Bay band height: the mechanism bearing allowance (0.009 prismatic, 0.017 fan, 0.026 flip, 0.031 accordion) is added to the tray wall height."
+            },
+            {
+              "name": "level_pitch_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "bay_height_m + LEVEL_WALL_M",
+              "depends_on": [
+                "bay_height_m"
+              ],
+              "rationale": "Vertical pitch between station levels, leaving real shell material between bays."
+            },
+            {
+              "name": "tan_span_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "(inner_depth_m - min(0.034, 0.16 * inner_depth_m)) * tangential_fill / band_count",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Tangential span a station owns on its wall; the fill factor keeps a straight-edged tray inside an elliptical or capsule wall."
+            },
+            {
+              "name": "tangential_fill",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "1.0 rect / 0.72 ellipse / 0.86 capsule",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Fraction of the nominal plan span a station may occupy inside the selected case form."
+            },
+            {
+              "name": "tray_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tan_span_m - 0.012",
+              "depends_on": [
+                "tan_span_m"
+              ],
+              "rationale": "Real tray width with running clearance to both sides of its span."
+            },
+            {
+              "name": "body_len_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.32 * inner_width_m",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Tray body length measured inward from the wall opening."
+            },
+            {
+              "name": "travel_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tray_extension_ratio * body_len_m * telescoping_gain",
+              "depends_on": [
+                "tray_extension_ratio",
+                "body_len_m"
+              ],
+              "rationale": "Prismatic full extension; lower = closed, upper = full extension."
+            },
+            {
+              "name": "tail_len_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "travel_m + 0.012",
+              "depends_on": [
+                "travel_m"
+              ],
+              "rationale": "Captured slide tail: it keeps the tray on its runners at full extension."
+            },
+            {
+              "name": "cavity_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_len_m + tail_len_m + 0.010",
+              "depends_on": [
+                "body_len_m",
+                "tail_len_m"
+              ],
+              "rationale": "Real host cavity depth; it grows with tray length and travel."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "station_mount",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "palette_tray",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ]
+              },
+              "dimensions": {
+                "length": "body_len_m + tail_len_m",
+                "width": "tray_width_m"
+              }
+            },
+            {
+              "name": "station_runner",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "cavity_depth_m",
+                "width": "tan_span_m"
+              }
+            }
+          ],
+          "notes": "Hollow tray (front, floor, two sides, back) with a reinforced rim, twin carrier rails and an inner crossbar on real side runners; prismatic along the true pull direction."
+        },
+        {
+          "name": "telescoping_side_tray",
+          "record_id": "rec_0611_makeup_var_opening_motion_telescoping_side_trays",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L436-L515",
+            "model.py:L544-L572"
+          ],
+          "evidence": "Two-stage shell: a shallow stepped outer carriage unioned with a taller narrower inner tray, plus telescoping_stage_collar; travel grows from 0.105 to 0.130.",
+          "implementation_function": "_palette_topology_telescoping_side_tray_build",
+          "parameters": [
+            {
+              "name": "tray_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.011,
+              "maximum": 0.026,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Real palette tray wall height; it drives bay height, level pitch and body height."
+            },
+            {
+              "name": "tray_extension_ratio",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": 0.45,
+              "maximum": 0.82,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Travel as a fraction of the tray body length; it drives tail length and cavity depth."
+            },
+            {
+              "name": "bay_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tray_height_m + bay_bearing_allowance_m",
+              "depends_on": [
+                "tray_height_m"
+              ],
+              "rationale": "Bay band height: the mechanism bearing allowance (0.009 prismatic, 0.017 fan, 0.026 flip, 0.031 accordion) is added to the tray wall height."
+            },
+            {
+              "name": "level_pitch_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "bay_height_m + LEVEL_WALL_M",
+              "depends_on": [
+                "bay_height_m"
+              ],
+              "rationale": "Vertical pitch between station levels, leaving real shell material between bays."
+            },
+            {
+              "name": "tan_span_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "(inner_depth_m - min(0.034, 0.16 * inner_depth_m)) * tangential_fill / band_count",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Tangential span a station owns on its wall; the fill factor keeps a straight-edged tray inside an elliptical or capsule wall."
+            },
+            {
+              "name": "tangential_fill",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "1.0 rect / 0.72 ellipse / 0.86 capsule",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Fraction of the nominal plan span a station may occupy inside the selected case form."
+            },
+            {
+              "name": "tray_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tan_span_m - 0.012",
+              "depends_on": [
+                "tan_span_m"
+              ],
+              "rationale": "Real tray width with running clearance to both sides of its span."
+            },
+            {
+              "name": "body_len_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.32 * inner_width_m",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Tray body length measured inward from the wall opening."
+            },
+            {
+              "name": "travel_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tray_extension_ratio * body_len_m * telescoping_gain",
+              "depends_on": [
+                "tray_extension_ratio",
+                "body_len_m"
+              ],
+              "rationale": "Prismatic full extension; lower = closed, upper = full extension."
+            },
+            {
+              "name": "tail_len_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "travel_m + 0.012",
+              "depends_on": [
+                "travel_m"
+              ],
+              "rationale": "Captured slide tail: it keeps the tray on its runners at full extension."
+            },
+            {
+              "name": "cavity_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "body_len_m + tail_len_m + 0.010",
+              "depends_on": [
+                "body_len_m",
+                "tail_len_m"
+              ],
+              "rationale": "Real host cavity depth; it grows with tray length and travel."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "station_mount",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "palette_tray",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ]
+              },
+              "dimensions": {
+                "length": "body_len_m + tail_len_m",
+                "width": "tray_width_m"
+              }
+            },
+            {
+              "name": "station_runner",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "cavity_depth_m",
+                "width": "tan_span_m"
+              }
+            }
+          ],
+          "notes": "Two-stage shell: a shallow stepped outer carriage unioned with a taller inner tray plus a stage collar; travel gains 1.28x and the host cavity deepens with it."
+        },
+        {
+          "name": "fan_out_wing",
+          "record_id": "rec_0611_makeup_var_palette_topology_fan_out_wing_carrier",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L38-L87",
+            "model.py:L470-L540",
+            "model.py:L573-L596"
+          ],
+          "evidence": "_hollow_tray(..., fan_pivot=...) grows a real pivot boss + bridge at the tray's corner; wing_pivot_cap, wing_carrier_arm; revolute about Z at the rear side corner. Also origin 1 base_to_palette_{i} (model.py:L348-L365).",
+          "implementation_function": "_palette_topology_fan_out_wing_build",
+          "parameters": [
+            {
+              "name": "tray_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.011,
+              "maximum": 0.026,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Real palette tray wall height; it drives bay height, level pitch and body height."
+            },
+            {
+              "name": "bay_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tray_height_m + bay_bearing_allowance_m",
+              "depends_on": [
+                "tray_height_m"
+              ],
+              "rationale": "Bay band height: the mechanism bearing allowance (0.009 prismatic, 0.017 fan, 0.026 flip, 0.031 accordion) is added to the tray wall height."
+            },
+            {
+              "name": "level_pitch_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "bay_height_m + LEVEL_WALL_M",
+              "depends_on": [
+                "bay_height_m"
+              ],
+              "rationale": "Vertical pitch between station levels, leaving real shell material between bays."
+            },
+            {
+              "name": "tan_span_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "(inner_depth_m - min(0.034, 0.16 * inner_depth_m)) * tangential_fill / band_count",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Tangential span a station owns on its wall; the fill factor keeps a straight-edged tray inside an elliptical or capsule wall."
+            },
+            {
+              "name": "tangential_fill",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "1.0 rect / 0.72 ellipse / 0.86 capsule",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Fraction of the nominal plan span a station may occupy inside the selected case form."
+            },
+            {
+              "name": "tray_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tan_span_m - 0.012",
+              "depends_on": [
+                "tan_span_m"
+              ],
+              "rationale": "Real tray width with running clearance to both sides of its span."
+            },
+            {
+              "name": "arm_len_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.34 * inner_width_m",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Radial reach of the swing-out palette wing."
+            },
+            {
+              "name": "inner_edge_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.028 if accordion else 0.014",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Gap between the captured hub and the tray so the carrier reads as real hardware."
+            },
+            {
+              "name": "post_gap_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(POST_GAP_M, form_standoff_m + POST_R_M + 0.0018)",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Outboard bearing post standoff: it clears the selected case form's proud bands, lips, cover board or foot ring."
+            },
+            {
+              "name": "tier_rise_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.006 * (station_index % 3)",
+              "depends_on": [
+                "palette_count"
+              ],
+              "rationale": "Staggered accordion tier rise carried by the diagonal cantilever strut."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "station_mount",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "palette_tray",
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "radius": "POST_R_M"
+              }
+            },
+            {
+              "name": "station_runner",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "cavity_depth_m",
+                "width": "tan_span_m"
+              }
+            }
+          ],
+          "notes": "Hollow wing on a real outboard bearing post seated in a wall pocket; revolute about the vertical post axis, lower = folded, upper = deployed."
+        },
+        {
+          "name": "flip_over_leaf",
+          "record_id": "rec_0611_makeup_var_palette_topology_flip_over_double_sided_leaf",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L214-L231",
+            "model.py:L366-L407",
+            "model.py:L589-L601"
+          ],
+          "evidence": "flip_palette_leaf slab with palette_axle and pans on both faces (upper_face_pan_, reverse_face_pan_) captured by two palette_pivot_socket_ knuckle tubes; revolute 0 \u2192 3.02 rad.",
+          "implementation_function": "_palette_topology_flip_over_leaf_build",
+          "parameters": [
+            {
+              "name": "tray_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.011,
+              "maximum": 0.026,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Real palette tray wall height; it drives bay height, level pitch and body height."
+            },
+            {
+              "name": "bay_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tray_height_m + bay_bearing_allowance_m",
+              "depends_on": [
+                "tray_height_m"
+              ],
+              "rationale": "Bay band height: the mechanism bearing allowance (0.009 prismatic, 0.017 fan, 0.026 flip, 0.031 accordion) is added to the tray wall height."
+            },
+            {
+              "name": "level_pitch_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "bay_height_m + LEVEL_WALL_M",
+              "depends_on": [
+                "bay_height_m"
+              ],
+              "rationale": "Vertical pitch between station levels, leaving real shell material between bays."
+            },
+            {
+              "name": "tan_span_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "(inner_depth_m - min(0.034, 0.16 * inner_depth_m)) * tangential_fill / band_count",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Tangential span a station owns on its wall; the fill factor keeps a straight-edged tray inside an elliptical or capsule wall."
+            },
+            {
+              "name": "tangential_fill",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "1.0 rect / 0.72 ellipse / 0.86 capsule",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Fraction of the nominal plan span a station may occupy inside the selected case form."
+            },
+            {
+              "name": "tray_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tan_span_m - 0.012",
+              "depends_on": [
+                "tan_span_m"
+              ],
+              "rationale": "Real tray width with running clearance to both sides of its span."
+            },
+            {
+              "name": "leaf_len_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.30 * inner_width_m",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Leaf length; it is also the cantilever shelf length so the sweep stays outboard."
+            },
+            {
+              "name": "band_count",
+              "mode": "derived",
+              "value_type": "int",
+              "unit": "count",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "ceil(palette_count / 3)",
+              "depends_on": [
+                "palette_count"
+              ],
+              "rationale": "Tangential bands per wall so neighbouring leaves never share a sweep volume."
+            },
+            {
+              "name": "leaf_thickness_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "min(0.010, tray_height_m * 0.62)",
+              "depends_on": [
+                "tray_height_m"
+              ],
+              "rationale": "Double sided leaf thickness; pans sit on both faces."
+            },
+            {
+              "name": "leaf_standoff_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "form_standoff_m + 0.0022",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Radial standoff of the leaf's inner edge and of its cantilever shelf from the plan face."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "station_mount",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "palette_tray",
+              "frame": {
+                "axis": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "radius": "0.0034"
+              }
+            },
+            {
+              "name": "station_runner",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "cavity_depth_m",
+                "width": "tan_span_m"
+              }
+            }
+          ],
+          "notes": "Double sided leaf resting on a cantilever shelf and hinged on two captured knuckle lugs at the shelf's outer edge; revolute 0..pi with the whole sweep outboard of the case plan."
+        },
+        {
+          "name": "accordion_tier",
+          "record_id": "rec_0611_makeup_var_palette_topology_accordion_tier_carrie",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L78-L135",
+            "model.py:L343-L384"
+          ],
+          "evidence": "_palette_frame(direction, tier_index) raises each tray by tier_z = 0.010 + tier_index0.016 on a broad diagonal cantilever carrier rising from the captured corner hub, with an inner_edge=0.024 gap.",
+          "implementation_function": "_palette_topology_accordion_tier_build",
+          "parameters": [
+            {
+              "name": "tray_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.011,
+              "maximum": 0.026,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Real palette tray wall height; it drives bay height, level pitch and body height."
+            },
+            {
+              "name": "bay_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tray_height_m + bay_bearing_allowance_m",
+              "depends_on": [
+                "tray_height_m"
+              ],
+              "rationale": "Bay band height: the mechanism bearing allowance (0.009 prismatic, 0.017 fan, 0.026 flip, 0.031 accordion) is added to the tray wall height."
+            },
+            {
+              "name": "level_pitch_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "bay_height_m + LEVEL_WALL_M",
+              "depends_on": [
+                "bay_height_m"
+              ],
+              "rationale": "Vertical pitch between station levels, leaving real shell material between bays."
+            },
+            {
+              "name": "tan_span_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "(inner_depth_m - min(0.034, 0.16 * inner_depth_m)) * tangential_fill / band_count",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Tangential span a station owns on its wall; the fill factor keeps a straight-edged tray inside an elliptical or capsule wall."
+            },
+            {
+              "name": "tangential_fill",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "1.0 rect / 0.72 ellipse / 0.86 capsule",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Fraction of the nominal plan span a station may occupy inside the selected case form."
+            },
+            {
+              "name": "tray_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "tan_span_m - 0.012",
+              "depends_on": [
+                "tan_span_m"
+              ],
+              "rationale": "Real tray width with running clearance to both sides of its span."
+            },
+            {
+              "name": "arm_len_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.34 * inner_width_m",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Radial reach of the swing-out palette wing."
+            },
+            {
+              "name": "inner_edge_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.028 if accordion else 0.014",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Gap between the captured hub and the tray so the carrier reads as real hardware."
+            },
+            {
+              "name": "post_gap_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(POST_GAP_M, form_standoff_m + POST_R_M + 0.0018)",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Outboard bearing post standoff: it clears the selected case form's proud bands, lips, cover board or foot ring."
+            },
+            {
+              "name": "tier_rise_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.006 * (station_index % 3)",
+              "depends_on": [
+                "palette_count"
+              ],
+              "rationale": "Staggered accordion tier rise carried by the diagonal cantilever strut."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "station_mount",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "palette_tray",
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "radius": "POST_R_M"
+              }
+            },
+            {
+              "name": "station_runner",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "cavity_depth_m",
+                "width": "tan_span_m"
+              }
+            }
+          ],
+          "notes": "Staggered tier raised above the hub by a diagonal cantilever carrier with a real inner gap; taller post and deeper bay band."
+        }
+      ]
+    },
+    {
+      "name": "applicator_storage",
+      "component_type": "applicator_retention_interface",
+      "required": true,
+      "candidates": [
+        {
+          "name": "front_organizer_channels",
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260710_093913_953497_b3fcb0ac",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L86-L123",
+            "model.py:L393-L419"
+          ],
+          "evidence": "_pocketed_plate with slot_pockets cut as real brush channels plus brush_channel_{i} shadow strips inside them.",
+          "implementation_function": "_applicator_storage_front_organizer_channels_build",
+          "parameters": [
+            {
+              "name": "applicator_zone_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(0.030, 0.30 * recess_depth_m * plan_fill)",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Front strip of the deck recess reserved for applicator storage."
+            },
+            {
+              "name": "recess_drop_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.025 + upright_tool_allowance_m",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Deck recess depth: deep enough that the pan module clears the lid knuckle envelope, plus an allowance for standing tools."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "applicator_zone",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "recess_width_m * plan_fill - 0.012",
+                "width": "applicator_zone_depth_m"
+              }
+            }
+          ],
+          "notes": "Pocketed channel plate with real slot recesses and brush handles lying in them."
+        },
+        {
+          "name": "lid_brush_roll",
+          "record_id": "rec_0611_makeup_var_applicator_storage_lid_brush_roll",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L86-L103",
+            "model.py:L391-L429",
+            "model.py:L455-L478"
+          ],
+          "evidence": "lid_brush_roll_panel fitted to the lid's inner apron with six _tube_y retaining sleeves and brush_handle_{i} rods; the front organiser degrades to a plain front_accessory_pocket.",
+          "implementation_function": "_applicator_storage_lid_brush_roll_build",
+          "parameters": [
+            {
+              "name": "applicator_zone_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(0.030, 0.30 * recess_depth_m * plan_fill)",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Front strip of the deck recess reserved for applicator storage."
+            },
+            {
+              "name": "recess_drop_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.025 + upright_tool_allowance_m",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Deck recess depth: deep enough that the pan module clears the lid knuckle envelope, plus an allowance for standing tools."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "applicator_zone",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "recess_width_m * plan_fill - 0.012",
+                "width": "applicator_zone_depth_m"
+              }
+            },
+            {
+              "name": "lid_inner_face",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "mirror_lid",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ]
+              },
+              "dimensions": {
+                "length": "lid_plan_width_m * 0.78",
+                "width": "lid_plan_depth_m * 0.24"
+              }
+            }
+          ],
+          "notes": "Open accessory pocket in the case plus a fitted roll panel with six retaining sleeves inside the lid box; the lid box depth is raised to at least 0.024 m."
+        },
+        {
+          "name": "upright_tool_well",
+          "record_id": "rec_picturex_0611__makeup__001__png_25a74d42e2cc47b8be52d1f0dd9e0807",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L240-L262"
+          ],
+          "evidence": "Three narrow upright channels retaining tool_handle_{i} pencils plus central_tube and tube_cap standing in the organiser.",
+          "implementation_function": "_applicator_storage_upright_tool_well_build",
+          "parameters": [
+            {
+              "name": "applicator_zone_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(0.030, 0.30 * recess_depth_m * plan_fill)",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Front strip of the deck recess reserved for applicator storage."
+            },
+            {
+              "name": "recess_drop_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "0.025 + upright_tool_allowance_m",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Deck recess depth: deep enough that the pan module clears the lid knuckle envelope, plus an allowance for standing tools."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "applicator_zone",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "recess_width_m * plan_fill - 0.012",
+                "width": "applicator_zone_depth_m"
+              }
+            }
+          ],
+          "notes": "Deep hollow well with a divider holding upright pencils plus a standing tube and cap; the deck recess deepens by 0.013 m."
+        }
+      ]
+    },
+    {
+      "name": "pan_module_interface",
+      "component_type": "pan_seating_interface",
+      "required": true,
+      "candidates": [
+        {
+          "name": "fixed_round_wells",
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260710_093913_953497_b3fcb0ac",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L86-L123",
+            "model.py:L213-L236"
+          ],
+          "evidence": "central_palette_insert plate with circle_pockets recesses and central_pan_{i} cylinders seated in them.",
+          "implementation_function": "_pan_module_interface_fixed_round_wells_build",
+          "parameters": [
+            {
+              "name": "pan_pitch_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.03,
+              "maximum": 0.052,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Pan grid pitch: it changes column/row counts, pan radius and tile size."
+            },
+            {
+              "name": "pan_zone_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "recess_width_m * plan_fill - 0.008",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Pan module plan width inside the deck recess."
+            },
+            {
+              "name": "pan_zone_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "recess_depth_m * plan_fill - applicator_zone_depth_m - 0.019",
+              "depends_on": [
+                "case_depth_m",
+                "applicator_zone_depth_m"
+              ],
+              "rationale": "Pan module plan depth: whatever the applicator strip leaves."
+            },
+            {
+              "name": "pan_cols",
+              "mode": "derived",
+              "value_type": "int",
+              "unit": "count",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "clamp(round(pan_zone_width_m / pan_pitch_m), 3, 6)",
+              "depends_on": [
+                "pan_zone_width_m",
+                "pan_pitch_m"
+              ],
+              "rationale": "Cell columns derived from the pan pitch."
+            },
+            {
+              "name": "pan_rows",
+              "mode": "derived",
+              "value_type": "int",
+              "unit": "count",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "clamp(round(pan_zone_depth_m / pan_pitch_m), 1, 3)",
+              "depends_on": [
+                "pan_zone_depth_m",
+                "pan_pitch_m"
+              ],
+              "rationale": "Cell rows derived from the pan pitch."
+            },
+            {
+              "name": "pan_radius_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "min(0.40 * pan_pitch_m, 0.42 * pan_zone_width_m / pan_cols, 0.42 * pan_zone_depth_m / pan_rows)",
+              "depends_on": [
+                "pan_pitch_m",
+                "pan_cols",
+                "pan_rows"
+              ],
+              "rationale": "Pan radius always follows the pitch so the module responds even when counts clamp."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "pan_zone",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "pan_zone_width_m",
+                "width": "pan_zone_depth_m"
+              }
+            }
+          ],
+          "notes": "Pocketed insert plate with round recesses and cylindrical pans seated on the pocket floors."
+        },
+        {
+          "name": "keyed_snap_tile_grid",
+          "record_id": "rec_0611_makeup_var_pan_module_interface_snap_in_tile_grid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L126-L190",
+            "model.py:L266-L384"
+          ],
+          "evidence": "snap_tile_grid_insert = base + perimeter rim + X/Y dividers; _keyed_tile_seat adds a locating key and finger notch per cell; _keyed_snap_tile refills have an asymmetric keyed corner.",
+          "implementation_function": "_pan_module_interface_keyed_snap_tile_grid_build",
+          "parameters": [
+            {
+              "name": "pan_pitch_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.03,
+              "maximum": 0.052,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Pan grid pitch: it changes column/row counts, pan radius and tile size."
+            },
+            {
+              "name": "pan_zone_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "recess_width_m * plan_fill - 0.008",
+              "depends_on": [
+                "case_width_m"
+              ],
+              "rationale": "Pan module plan width inside the deck recess."
+            },
+            {
+              "name": "pan_zone_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "recess_depth_m * plan_fill - applicator_zone_depth_m - 0.019",
+              "depends_on": [
+                "case_depth_m",
+                "applicator_zone_depth_m"
+              ],
+              "rationale": "Pan module plan depth: whatever the applicator strip leaves."
+            },
+            {
+              "name": "pan_cols",
+              "mode": "derived",
+              "value_type": "int",
+              "unit": "count",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "clamp(round(pan_zone_width_m / pan_pitch_m), 3, 6)",
+              "depends_on": [
+                "pan_zone_width_m",
+                "pan_pitch_m"
+              ],
+              "rationale": "Cell columns derived from the pan pitch."
+            },
+            {
+              "name": "pan_rows",
+              "mode": "derived",
+              "value_type": "int",
+              "unit": "count",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "clamp(round(pan_zone_depth_m / pan_pitch_m), 1, 3)",
+              "depends_on": [
+                "pan_zone_depth_m",
+                "pan_pitch_m"
+              ],
+              "rationale": "Cell rows derived from the pan pitch."
+            },
+            {
+              "name": "pan_radius_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "min(0.40 * pan_pitch_m, 0.42 * pan_zone_width_m / pan_cols, 0.42 * pan_zone_depth_m / pan_rows)",
+              "depends_on": [
+                "pan_pitch_m",
+                "pan_cols",
+                "pan_rows"
+              ],
+              "rationale": "Pan radius always follows the pitch so the module responds even when counts clamp."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "pan_zone",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "pan_zone_width_m",
+                "width": "pan_zone_depth_m"
+              }
+            }
+          ],
+          "notes": "Grid insert: base plate, perimeter rim, X/Y dividers and one asymmetric locating key per cell holding rectangular refill tiles."
+        }
+      ]
+    },
+    {
+      "name": "closure",
+      "component_type": "lid_closure",
+      "required": true,
+      "candidates": [
+        {
+          "name": "front_latch_strike",
+          "record_id": "rec_picturex_0611__makeup__001__png_25a74d42e2cc47b8be52d1f0dd9e0807",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L194-L199",
+            "model.py:L282-L287"
+          ],
+          "evidence": "Fixed gold front_latch strike on the case front plus the mating lid_clasp tab on the lid; no extra joint. Also origin 2 gold_clasp/clasp_jewel/lid_clasp_catch (model.py:L264-L276, L366-L371).",
+          "implementation_function": "_closure_front_latch_strike_build",
+          "parameters": [
+            {
+              "name": "lid_depth_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.01,
+              "maximum": 0.055,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Lid box wall height: a flat compact lid through a deep train-case top box."
+            },
+            {
+              "name": "lid_box_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(lid_depth_m, lid_brush_roll_minimum_m)",
+              "depends_on": [
+                "lid_depth_m"
+              ],
+              "rationale": "Lid box wall height; the brush-roll applicator raises the minimum so its sleeves fit inside."
+            },
+            {
+              "name": "lid_plan_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_depth_m - 0.002",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Lid plan depth follows the chassis plan so the box walls land on the rim."
+            },
+            {
+              "name": "keeper_axis_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(lid_box_depth_m * 0.55, 0.0155)",
+              "depends_on": [
+                "lid_box_depth_m"
+              ],
+              "rationale": "Clasp keeper axis height; clamped so the keeper bar never dips below the case rim on a shallow lid."
+            },
+            {
+              "name": "keeper_axis_y_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "lid_front_local_y_m + 0.0047",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "The keeper axis stands outboard of the lid front wall so the lever, grip and hook swing in free air."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "lid_front_edge",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "mirror_lid",
+              "frame": {
+                "normal": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "length": "0.046",
+                "height": "lid_box_depth_m"
+              }
+            },
+            {
+              "name": "case_strike_seat",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "length": "0.048",
+                "height": "0.018"
+              }
+            }
+          ],
+          "notes": "Fixed gold strike on the case front plus the mating catch on the lid front wall; no extra joint."
+        },
+        {
+          "name": "over_center_clasp",
+          "record_id": "rec_0611_makeup_var_closure_over_center_clasp",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L78-L96",
+            "model.py:L303-L351"
+          ],
+          "evidence": "_clasp_mount U-shaped keeper with two ears on the lid rail plus a separate lid_clasp part (clasp_pin, clasp_lever, clasp_grip) on its own revolute lid_to_clasp joint.",
+          "implementation_function": "_closure_over_center_clasp_build",
+          "parameters": [
+            {
+              "name": "lid_depth_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.01,
+              "maximum": 0.055,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Lid box wall height: a flat compact lid through a deep train-case top box."
+            },
+            {
+              "name": "lid_box_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(lid_depth_m, lid_brush_roll_minimum_m)",
+              "depends_on": [
+                "lid_depth_m"
+              ],
+              "rationale": "Lid box wall height; the brush-roll applicator raises the minimum so its sleeves fit inside."
+            },
+            {
+              "name": "lid_plan_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "case_depth_m - 0.002",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "Lid plan depth follows the chassis plan so the box walls land on the rim."
+            },
+            {
+              "name": "keeper_axis_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "max(lid_box_depth_m * 0.55, 0.0155)",
+              "depends_on": [
+                "lid_box_depth_m"
+              ],
+              "rationale": "Clasp keeper axis height; clamped so the keeper bar never dips below the case rim on a shallow lid."
+            },
+            {
+              "name": "keeper_axis_y_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": null,
+              "maximum": null,
+              "choices": [],
+              "expression": "lid_front_local_y_m + 0.0047",
+              "depends_on": [
+                "case_depth_m"
+              ],
+              "rationale": "The keeper axis stands outboard of the lid front wall so the lever, grip and hook swing in free air."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "lid_front_edge",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "mirror_lid",
+              "frame": {
+                "normal": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "length": "0.046",
+                "height": "lid_box_depth_m"
+              }
+            },
+            {
+              "name": "case_strike_seat",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "case_body",
+              "frame": {
+                "normal": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "length": "0.048",
+                "height": "0.018"
+              }
+            }
+          ],
+          "notes": "U-shaped keeper with two ears on the lid plus a separate lever part (pin, arm, grip) on its own revolute joint about the keeper axis."
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "palette_count",
+      "item_slot": "palette_topology",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "spacing_expression": "level_pitch_m = bay_height_m + LEVEL_WALL_M",
+      "host_capacity_expression": "body_height_m >= FLOOR_M + palette_count * level_pitch_m + DECK_SLAB_M + recess_drop_m"
+    }
+  ],
+  "bindings": [
+    {
+      "binding_id": "case_deck_to_pan_module",
+      "provider": "case_form.deck_plane",
+      "consumer": "pan_module_interface.pan_zone",
+      "joint_type": "fixed",
+      "derived": [
+        {
+          "name": "pan_zone_width_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "expression": "recess_width_m * plan_fill - 0.008",
+          "depends_on": [
+            "case_width_m",
+            "plan_fill"
+          ],
+          "rationale": "The pan module plan shrinks to the inscribed rectangle of the selected profile."
+        },
+        {
+          "name": "pan_zone_y_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "expression": "-recess_depth_m * plan_fill / 2 + 0.009 + pan_zone_depth_m / 2",
+          "depends_on": [
+            "case_depth_m",
+            "pan_zone_depth_m"
+          ],
+          "rationale": "The pan module is pushed to the rear of the recess, behind the applicator strip."
+        }
+      ]
+    },
+    {
+      "binding_id": "case_deck_to_applicator_zone",
+      "provider": "case_form.deck_plane",
+      "consumer": "applicator_storage.applicator_zone",
+      "joint_type": "fixed",
+      "derived": [
+        {
+          "name": "applicator_zone_depth_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "expression": "max(0.030, 0.30 * recess_depth_m * plan_fill)",
+          "depends_on": [
+            "case_depth_m",
+            "plan_fill"
+          ],
+          "rationale": "Front strip depth of the recess reserved for the applicator interface."
+        },
+        {
+          "name": "recess_drop_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "expression": "0.025 + upright_tool_allowance_m",
+          "depends_on": [
+            "case_depth_m"
+          ],
+          "rationale": "The deck recess deepens for standing tools so the closed lid still clears them."
+        }
+      ]
+    },
+    {
+      "binding_id": "case_wall_to_palette_stations",
+      "provider": "case_form.palette_bay_column",
+      "consumer": "palette_topology.station_runner",
+      "joint_type": "host_cavity",
+      "derived": [
+        {
+          "name": "cavity_depth_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "expression": "body_len_m + tail_len_m + 0.010",
+          "depends_on": [
+            "body_len_m",
+            "tail_len_m"
+          ],
+          "rationale": "Every station cuts a real cavity or wall pocket sized from its own mechanism."
+        },
+        {
+          "name": "required_height_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "expression": "FLOOR_M + palette_count * level_pitch_m + DECK_SLAB_M + recess_drop_m",
+          "depends_on": [
+            "palette_count",
+            "level_pitch_m",
+            "recess_drop_m"
+          ],
+          "rationale": "The chassis grows in height so every station level has real shell material."
+        },
+        {
+          "name": "bay_z0_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "expression": "FLOOR_M + plinth_height_m + station_index * level_pitch_m",
+          "depends_on": [
+            "plinth_height_m",
+            "level_pitch_m"
+          ],
+          "rationale": "Elevation of each station bay inside the derived stack."
+        },
+        {
+          "name": "hinge_relief_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "expression": "2 * (KNUCKLE_GAP_M + KNUCKLE_LEN_M + 0.0025)",
+          "depends_on": [
+            "case_width_m"
+          ],
+          "rationale": "Width of the real hinge relief channel cut through the rear rim for the lid knuckles."
+        }
+      ]
+    },
+    {
+      "binding_id": "case_hinge_to_lid_closure",
+      "provider": "case_form.lid_hinge_axis",
+      "consumer": "closure.lid_front_edge",
+      "joint_type": "revolute",
+      "derived": [
+        {
+          "name": "hinge_axis_z_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "expression": "body_height_m - FIT_M",
+          "depends_on": [
+            "body_height_m"
+          ],
+          "rationale": "The hinge line sits on the case rim so the lid box lands on it at the lower limit."
+        },
+        {
+          "name": "lid_plan_width_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "expression": "case_width_m - 0.002",
+          "depends_on": [
+            "case_width_m"
+          ],
+          "rationale": "The lid plan follows the chassis plan for every case form."
+        },
+        {
+          "name": "keeper_axis_z_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "expression": "max(lid_box_depth_m * 0.55, 0.0155)",
+          "depends_on": [
+            "lid_box_depth_m"
+          ],
+          "rationale": "Clasp keeper axis height on the lid front wall, opposite the case strike."
+        }
+      ]
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "makeup_case_chassis_identity",
+      "applies_to": {
+        "slot": "case_form",
+        "candidates": [
+          "rounded_train_case",
+          "round_compact",
+          "train_case_tower",
+          "book_style_folio",
+          "cylindrical_vanity_case"
+        ]
+      },
+      "required_roles": [
+        {
+          "role": "case_body",
+          "exact_count": 1,
+          "count_from": null
+        },
+        {
+          "role": "mirror_lid",
+          "exact_count": 1,
+          "count_from": null
+        },
+        {
+          "role": "palette_tray",
+          "exact_count": null,
+          "count_from": "palette_count"
+        }
+      ],
+      "required_relations": [
+        {
+          "parent_role": "case_body",
+          "child_role": "mirror_lid",
+          "joint_type": "revolute",
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: makeup train case identity",
+        "category_anchor: rear hinged mirrored lid over a real case rim",
+        "category_anchor: independently articulated palette trays"
+      ]
+    },
+    {
+      "anchor_id": "makeup_prismatic_palette_identity",
+      "applies_to": {
+        "slot": "palette_topology",
+        "candidates": [
+          "pull_out_drawer",
+          "telescoping_side_tray"
+        ]
+      },
+      "required_roles": [
+        {
+          "role": "case_body",
+          "exact_count": 1,
+          "count_from": null
+        },
+        {
+          "role": "mirror_lid",
+          "exact_count": 1,
+          "count_from": null
+        },
+        {
+          "role": "palette_tray",
+          "exact_count": null,
+          "count_from": "palette_count"
+        }
+      ],
+      "required_relations": [
+        {
+          "parent_role": "case_body",
+          "child_role": "mirror_lid",
+          "joint_type": "revolute",
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "parent_role": "case_body",
+          "child_role": "palette_tray",
+          "joint_type": "prismatic",
+          "axis": null
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: makeup train case identity",
+        "category_anchor: independently articulated palette trays"
+      ]
+    },
+    {
+      "anchor_id": "makeup_rotational_palette_identity",
+      "applies_to": {
+        "slot": "palette_topology",
+        "candidates": [
+          "fan_out_wing",
+          "accordion_tier",
+          "flip_over_leaf"
+        ]
+      },
+      "required_roles": [
+        {
+          "role": "case_body",
+          "exact_count": 1,
+          "count_from": null
+        },
+        {
+          "role": "mirror_lid",
+          "exact_count": 1,
+          "count_from": null
+        },
+        {
+          "role": "palette_tray",
+          "exact_count": null,
+          "count_from": "palette_count"
+        }
+      ],
+      "required_relations": [
+        {
+          "parent_role": "case_body",
+          "child_role": "mirror_lid",
+          "joint_type": "revolute",
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "parent_role": "case_body",
+          "child_role": "palette_tray",
+          "joint_type": "revolute",
+          "axis": null
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: makeup train case identity",
+        "category_anchor: independently articulated palette trays"
+      ]
+    }
+  ]
+}

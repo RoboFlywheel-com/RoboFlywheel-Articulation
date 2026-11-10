@@ -1,0 +1,942 @@
+{
+  "assembly_notes": "Manual car scissor jack. One rigid jack_base root carries the base pan and both lower pin lugs. The linkage is a real pinned rhombus expressed as two chains in the URDF tree, both REVOLUTE about +y: base -> lower_arm_0 (the single independent driver) -> end_block_0 (mimic -1, so the block stays level) -> upper_arm_0 (mimic +1) -> saddle_head (mimic -1, so the saddle stays level); and base -> lower_arm_1 (mimic -1) -> end_block_1 (mimic +1) -> upper_arm_1 (mimic +1), whose free end tracks the saddle pin exactly by symmetry and bears on it. Those mimic multipliers are what make the closed rhombus exact: the saddle rises straight up to 2*arm_len*sin(theta) with no sideways drift. The lead_screw is a REVOLUTE (+x) child of end_block_0 running through the bore of end_block_1, which is built as a real square tube so the shank passes through it with running clearance. Four component slots vary without touching the mechanism: saddle_head, base_style, drive_head and arm_style; arm_plate_count repeats the arm plates across the frame width. arm_len_m, frame_width_m and screw_radius_m are independent continuous parameters deriving lift height, waist span, pin stations, block bore, nut size and drive head size; palette is non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "saddle_head_identity",
+      "applies_to": {
+        "candidates": [
+          "notched_saddle",
+          "beam_saddle",
+          "flat_plate_saddle"
+        ],
+        "slot": "saddle_head"
+      },
+      "required_author_checks": [
+        "category_anchor: pinned rhombus scissor linkage",
+        "category_anchor: saddle rises vertically and stays level",
+        "category_anchor: lead screw spans the waist blocks",
+        "category_anchor: saddle_head identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "lower_arm",
+          "joint_type": "revolute",
+          "parent_role": "jack_base"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "end_block",
+          "joint_type": "revolute",
+          "parent_role": "lower_arm"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "upper_arm",
+          "joint_type": "revolute",
+          "parent_role": "end_block"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "saddle_head",
+          "joint_type": "revolute",
+          "parent_role": "upper_arm"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_base"
+        },
+        {
+          "exact_count": 2,
+          "role": "lower_arm"
+        },
+        {
+          "exact_count": 2,
+          "role": "upper_arm"
+        },
+        {
+          "exact_count": 2,
+          "role": "end_block"
+        },
+        {
+          "exact_count": 1,
+          "role": "saddle_head"
+        },
+        {
+          "exact_count": 1,
+          "role": "lead_screw"
+        }
+      ]
+    },
+    {
+      "anchor_id": "base_style_identity",
+      "applies_to": {
+        "candidates": [
+          "pressed_pan",
+          "dual_rail",
+          "wide_plate"
+        ],
+        "slot": "base_style"
+      },
+      "required_author_checks": [
+        "category_anchor: pinned rhombus scissor linkage",
+        "category_anchor: saddle rises vertically and stays level",
+        "category_anchor: lead screw spans the waist blocks",
+        "category_anchor: base_style identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "lower_arm",
+          "joint_type": "revolute",
+          "parent_role": "jack_base"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "end_block",
+          "joint_type": "revolute",
+          "parent_role": "lower_arm"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "upper_arm",
+          "joint_type": "revolute",
+          "parent_role": "end_block"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "saddle_head",
+          "joint_type": "revolute",
+          "parent_role": "upper_arm"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_base"
+        },
+        {
+          "exact_count": 2,
+          "role": "lower_arm"
+        },
+        {
+          "exact_count": 2,
+          "role": "upper_arm"
+        },
+        {
+          "exact_count": 2,
+          "role": "end_block"
+        },
+        {
+          "exact_count": 1,
+          "role": "saddle_head"
+        },
+        {
+          "exact_count": 1,
+          "role": "lead_screw"
+        }
+      ]
+    },
+    {
+      "anchor_id": "drive_head_identity",
+      "applies_to": {
+        "candidates": [
+          "crank_ring",
+          "hex_socket",
+          "folding_crank"
+        ],
+        "slot": "drive_head"
+      },
+      "required_author_checks": [
+        "category_anchor: pinned rhombus scissor linkage",
+        "category_anchor: saddle rises vertically and stays level",
+        "category_anchor: lead screw spans the waist blocks",
+        "category_anchor: drive_head identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "lower_arm",
+          "joint_type": "revolute",
+          "parent_role": "jack_base"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "end_block",
+          "joint_type": "revolute",
+          "parent_role": "lower_arm"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "upper_arm",
+          "joint_type": "revolute",
+          "parent_role": "end_block"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "saddle_head",
+          "joint_type": "revolute",
+          "parent_role": "upper_arm"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_base"
+        },
+        {
+          "exact_count": 2,
+          "role": "lower_arm"
+        },
+        {
+          "exact_count": 2,
+          "role": "upper_arm"
+        },
+        {
+          "exact_count": 2,
+          "role": "end_block"
+        },
+        {
+          "exact_count": 1,
+          "role": "saddle_head"
+        },
+        {
+          "exact_count": 1,
+          "role": "lead_screw"
+        }
+      ]
+    },
+    {
+      "anchor_id": "arm_style_identity",
+      "applies_to": {
+        "candidates": [
+          "stamped_channel",
+          "twin_plate"
+        ],
+        "slot": "arm_style"
+      },
+      "required_author_checks": [
+        "category_anchor: pinned rhombus scissor linkage",
+        "category_anchor: saddle rises vertically and stays level",
+        "category_anchor: lead screw spans the waist blocks",
+        "category_anchor: arm_style identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "lower_arm",
+          "joint_type": "revolute",
+          "parent_role": "jack_base"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "end_block",
+          "joint_type": "revolute",
+          "parent_role": "lower_arm"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "upper_arm",
+          "joint_type": "revolute",
+          "parent_role": "end_block"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "saddle_head",
+          "joint_type": "revolute",
+          "parent_role": "upper_arm"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "jack_base"
+        },
+        {
+          "exact_count": 2,
+          "role": "lower_arm"
+        },
+        {
+          "exact_count": 2,
+          "role": "upper_arm"
+        },
+        {
+          "exact_count": 2,
+          "role": "end_block"
+        },
+        {
+          "exact_count": 1,
+          "role": "saddle_head"
+        },
+        {
+          "exact_count": 1,
+          "role": "lead_screw"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= arm_plate_count <= 3; plate pitch >= plate thickness + 4 mm within frame_width_m",
+      "item_slot": "arm_style",
+      "name": "arm_plate_count",
+      "spacing_expression": "plates are spread evenly across frame_width_m on the shared arm pins, with spacer collars between them",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Pressed saddle with a central notch and raised end horns that trap a sill seam.",
+          "implementation_function": "_saddle_head_notched_saddle_build",
+          "interfaces": [],
+          "name": "notched_saddle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "arm_len_m",
+              "rationale": "scissor arm length; derives lift height, waist span and screw length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "frame_width_m",
+              "rationale": "linkage width across the pins; derives arm plate stations, screw housing width, block cheeks and saddle width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "screw_radius_m",
+              "rationale": "lead screw shank radius; derives the block bore, nut size and drive head size",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__car_scissor_jack_with_screw_mechanism__001__png__airflex_batch_20260710_ce3a0ecf99d2427b8e3b266171137760",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L329-L344"
+          ]
+        },
+        {
+          "evidence": "Long transverse beam saddle spanning well past the arm width, with end caps.",
+          "implementation_function": "_saddle_head_beam_saddle_build",
+          "interfaces": [],
+          "name": "beam_saddle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "arm_len_m",
+              "rationale": "scissor arm length; derives lift height, waist span and screw length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "frame_width_m",
+              "rationale": "linkage width across the pins; derives arm plate stations, screw housing width, block cheeks and saddle width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "screw_radius_m",
+              "rationale": "lead screw shank radius; derives the block bore, nut size and drive head size",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_car_scissor_jack_with_screw_mechanism_var_beam_saddle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L390-L405"
+          ]
+        },
+        {
+          "evidence": "Plain flat bearing plate with a turned-down rim and no notch.",
+          "implementation_function": "_saddle_head_flat_plate_saddle_build",
+          "interfaces": [],
+          "name": "flat_plate_saddle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "arm_len_m",
+              "rationale": "scissor arm length; derives lift height, waist span and screw length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "frame_width_m",
+              "rationale": "linkage width across the pins; derives arm plate stations, screw housing width, block cheeks and saddle width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "screw_radius_m",
+              "rationale": "lead screw shank radius; derives the block bore, nut size and drive head size",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_car_scissor_jack_with_screw_mechanism_var_flat_plate_saddle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L372-L387"
+          ]
+        }
+      ],
+      "component_type": "apex load head",
+      "name": "saddle_head",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Single pressed pan with upturned side flanges carrying the lower pin lugs.",
+          "implementation_function": "_base_style_pressed_pan_build",
+          "interfaces": [],
+          "name": "pressed_pan",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "arm_len_m",
+              "rationale": "scissor arm length; derives lift height, waist span and screw length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "frame_width_m",
+              "rationale": "linkage width across the pins; derives arm plate stations, screw housing width, block cheeks and saddle width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "screw_radius_m",
+              "rationale": "lead screw shank radius; derives the block bore, nut size and drive head size",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__car_scissor_jack_with_screw_mechanism__001__png__airflex_batch_20260710_ce3a0ecf99d2427b8e3b266171137760",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L280-L295"
+          ]
+        },
+        {
+          "evidence": "Two separate folded rails under the linkage with an open centre.",
+          "implementation_function": "_base_style_dual_rail_build",
+          "interfaces": [],
+          "name": "dual_rail",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "arm_len_m",
+              "rationale": "scissor arm length; derives lift height, waist span and screw length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "frame_width_m",
+              "rationale": "linkage width across the pins; derives arm plate stations, screw housing width, block cheeks and saddle width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "screw_radius_m",
+              "rationale": "lead screw shank radius; derives the block bore, nut size and drive head size",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_car_scissor_jack_with_screw_mechanism_var_dual_rail_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L315-L330"
+          ]
+        },
+        {
+          "evidence": "Single broad footplate with turned edges spreading the load.",
+          "implementation_function": "_base_style_wide_plate_build",
+          "interfaces": [],
+          "name": "wide_plate",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "arm_len_m",
+              "rationale": "scissor arm length; derives lift height, waist span and screw length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "frame_width_m",
+              "rationale": "linkage width across the pins; derives arm plate stations, screw housing width, block cheeks and saddle width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "screw_radius_m",
+              "rationale": "lead screw shank radius; derives the block bore, nut size and drive head size",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_car_scissor_jack_with_screw_mechanism_var_wide_plate_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L297-L312"
+          ]
+        }
+      ],
+      "component_type": "base footprint",
+      "name": "base_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Bent rod crank ring formed on the screw end.",
+          "implementation_function": "_drive_head_crank_ring_build",
+          "interfaces": [],
+          "name": "crank_ring",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "arm_len_m",
+              "rationale": "scissor arm length; derives lift height, waist span and screw length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "frame_width_m",
+              "rationale": "linkage width across the pins; derives arm plate stations, screw housing width, block cheeks and saddle width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "screw_radius_m",
+              "rationale": "lead screw shank radius; derives the block bore, nut size and drive head size",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__car_scissor_jack_with_screw_mechanism__001__png__airflex_batch_20260710_ce3a0ecf99d2427b8e3b266171137760",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L378-L386"
+          ]
+        },
+        {
+          "evidence": "Hex drive socket on the screw end for a wheel brace.",
+          "implementation_function": "_drive_head_hex_socket_build",
+          "interfaces": [],
+          "name": "hex_socket",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "arm_len_m",
+              "rationale": "scissor arm length; derives lift height, waist span and screw length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "frame_width_m",
+              "rationale": "linkage width across the pins; derives arm plate stations, screw housing width, block cheeks and saddle width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "screw_radius_m",
+              "rationale": "lead screw shank radius; derives the block bore, nut size and drive head size",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_car_scissor_jack_with_screw_mechanism_var_hex_drive_socket",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L394-L402"
+          ]
+        },
+        {
+          "evidence": "Folding crank handle with a knuckle and grip on the screw end.",
+          "implementation_function": "_drive_head_folding_crank_build",
+          "interfaces": [],
+          "name": "folding_crank",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "arm_len_m",
+              "rationale": "scissor arm length; derives lift height, waist span and screw length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "frame_width_m",
+              "rationale": "linkage width across the pins; derives arm plate stations, screw housing width, block cheeks and saddle width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "screw_radius_m",
+              "rationale": "lead screw shank radius; derives the block bore, nut size and drive head size",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_car_scissor_jack_with_screw_mechanism_var_folding_crank_handle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L438-L470"
+          ]
+        }
+      ],
+      "component_type": "screw drive end",
+      "name": "drive_head",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Single stamped channel section arm with folded flanges and pressed pin bosses.",
+          "implementation_function": "_arm_style_stamped_channel_build",
+          "interfaces": [],
+          "name": "stamped_channel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "arm_len_m",
+              "rationale": "scissor arm length; derives lift height, waist span and screw length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "frame_width_m",
+              "rationale": "linkage width across the pins; derives arm plate stations, screw housing width, block cheeks and saddle width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "screw_radius_m",
+              "rationale": "lead screw shank radius; derives the block bore, nut size and drive head size",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__car_scissor_jack_with_screw_mechanism__001__png__airflex_batch_20260710_ce3a0ecf99d2427b8e3b266171137760",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L296-L320"
+          ]
+        },
+        {
+          "evidence": "Arm built from parallel flat plates on a shared pin, with spacer collars between them.",
+          "implementation_function": "_arm_style_twin_plate_build",
+          "interfaces": [],
+          "name": "twin_plate",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.17,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "arm_len_m",
+              "rationale": "scissor arm length; derives lift height, waist span and screw length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.12,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "frame_width_m",
+              "rationale": "linkage width across the pins; derives arm plate stations, screw housing width, block cheeks and saddle width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.0055,
+              "mode": "independent",
+              "name": "screw_radius_m",
+              "rationale": "lead screw shank radius; derives the block bore, nut size and drive head size",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_car_scissor_jack_with_screw_mechanism_var_twin_plate_arms",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L339-L365"
+          ]
+        }
+      ],
+      "component_type": "scissor arm",
+      "name": "arm_style",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_car_scissor_jack_with_screw_mechanism",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_car_scissor_jack_with_screw_mechanism.md",
+  "source_map_sha256": "38c3764d2005ce26e6630ec5e4447467ea7d9986f92e005477cc45f7aac801eb"
+}

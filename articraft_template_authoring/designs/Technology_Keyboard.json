@@ -1,0 +1,405 @@
+{
+  "schema_version": 1,
+  "slug": "Technology_Keyboard",
+  "source_map_path": "articraft_template_authoring/source_maps/Technology_Keyboard.md",
+  "source_map_sha256": "441c7b07bac3d04c4e286cb3fe413e14177b5dc770df4f12d028355bfeeebda8",
+  "assembly_notes": "Build one source-backed keyboard chassis, mount one repeated sculpted key array whose N value selects the 61/87/93/104 source placement rule, and independently compose the source-backed media-control and support modules. Chassis width, deck surface, key press axis, knob mount, and rear support mounts derive from the selected enclosure and key count.",
+  "slots": [
+    {
+      "name": "chassis_family",
+      "component_type": "keyboard enclosure and key deck",
+      "required": true,
+      "candidates": [
+        {
+          "name": "tapered_low_profile",
+          "implementation_function": "_chassis_family_tapered_low_profile_build",
+          "evidence": "Closed tapered mesh has a shallow front lip, higher rear deck, and separate raised back edge.",
+          "record_id": "rec_a-white-compact-wireless-computer-keyboard-tenke_20260624_123545_283861_38c84f4e",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L95-L129", "model.py:L411-L451"],
+          "parameters": [
+            {
+              "name": "low_profile_depth_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.108,
+              "maximum": 0.142,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source low-profile keyboard depth family."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "key_deck",
+              "kind": "plane",
+              "part": "keyboard_chassis",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"width": "derived from key_count", "depth": "selected case depth"}
+            }
+          ]
+        },
+        {
+          "name": "recessed_well_slab",
+          "implementation_function": "_chassis_family_recessed_well_slab_build",
+          "evidence": "Raked slab plus four raised rim walls visibly nests the key field.",
+          "record_id": "rec_full-size-black-wireless-computer-keyboard-with-_20260605_173906_815714_c52b6770",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L97-L187"],
+          "parameters": [
+            {
+              "name": "well_depth_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.003,
+              "maximum": 0.007,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source recessed key-well depth."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "key_deck",
+              "kind": "plane",
+              "part": "keyboard_chassis",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"width": "derived from key_count", "depth": "case depth"}
+            }
+          ]
+        },
+        {
+          "name": "stepped_high_profile",
+          "implementation_function": "_chassis_family_stepped_high_profile_build",
+          "evidence": "Tall grooved case body and deep raised rim preserve the high-profile tray form.",
+          "record_id": "rec_keyboard_var_highprofile",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L102-L222", "model.py:L224-L351"],
+          "parameters": [
+            {
+              "name": "high_profile_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.024,
+              "maximum": 0.034,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source high-profile enclosure height."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "key_deck",
+              "kind": "plane",
+              "part": "keyboard_chassis",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"width": "derived from key_count", "depth": "deep tray depth"}
+            }
+          ]
+        },
+        {
+          "name": "tented_split",
+          "implementation_function": "_chassis_family_tented_split_build",
+          "evidence": "Mirrored tilted shells and a central bridge preserve the ergonomic split form.",
+          "record_id": "rec_keyboard_var_split",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L113-L201", "model.py:L298-L369", "model.py:L489-L541"],
+          "parameters": [
+            {
+              "name": "tent_angle_rad",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "rad",
+              "minimum": 0.07,
+              "maximum": 0.16,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source split-keyboard tent angle."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "key_deck",
+              "kind": "plane",
+              "part": "keyboard_chassis",
+              "role": "provider",
+              "frame": {"normal": "+Z", "surface": "piecewise tented"},
+              "dimensions": {"width": "derived from key_count", "depth": "split case depth"}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "key_array",
+      "component_type": "repeated sculpted keycap array",
+      "required": true,
+      "candidates": [
+        {
+          "name": "sculpted_prismatic_keys",
+          "implementation_function": "_key_array_sculpted_prismatic_keys_build",
+          "evidence": "Rounded loft caps, plungers, switch feet, legends, and representative downward key travel retain source keyboard construction.",
+          "record_id": "rec_a-white-compact-wireless-computer-keyboard-tenke_20260624_123545_283861_38c84f4e",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L130-L290"],
+          "parameters": [
+            {
+              "name": "key_pitch_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.0175,
+              "maximum": 0.0200,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source desktop key pitch range."
+            },
+            {
+              "name": "key_travel_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.0010,
+              "maximum": 0.0020,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source key press travel range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "keybed_mount",
+              "kind": "plane",
+              "part": "keybed",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"count": "key_count", "pitch": "key_pitch_m"}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "control_module",
+      "component_type": "deck media-control treatment",
+      "required": true,
+      "candidates": [
+        {
+          "name": "plain_deck",
+          "implementation_function": "_control_module_plain_deck_build",
+          "evidence": "The reviewed tenkeyless source leaves the rear deck clear beyond the key field.",
+          "record_id": "rec_a-white-compact-wireless-computer-keyboard-tenke_20260624_123545_283861_38c84f4e",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L411-L451"],
+          "parameters": [],
+          "interfaces": []
+        },
+        {
+          "name": "rotary_media_knob",
+          "implementation_function": "_control_module_rotary_media_knob_build",
+          "evidence": "Knurled cylindrical knob seats on a raised boss and rotates about a vertical deck axis.",
+          "record_id": "rec_keyboard_var_knob",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L454-L515"],
+          "parameters": [
+            {
+              "name": "knob_diameter_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.014,
+              "maximum": 0.022,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source media-control diameter range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "knob_axis",
+              "kind": "axis",
+              "part": "media_knob",
+              "role": "consumer",
+              "frame": {"axis": "+Z"},
+              "dimensions": {"diameter": "knob_diameter_m"}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "support_module",
+      "component_type": "underside keyboard support",
+      "required": true,
+      "candidates": [
+        {
+          "name": "fixed_pads",
+          "implementation_function": "_support_module_fixed_pads_build",
+          "evidence": "The recessed-well source uses a stable slab baseline without moving rear props.",
+          "record_id": "rec_full-size-black-wireless-computer-keyboard-with-_20260605_173906_815714_c52b6770",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L128-L187"],
+          "parameters": [],
+          "interfaces": []
+        },
+        {
+          "name": "flip_tilt_feet",
+          "implementation_function": "_support_module_flip_tilt_feet_build",
+          "evidence": "Two rear hinge pads carry folding legs that rotate downward to prop the chassis.",
+          "record_id": "rec_keyboard_var_tiltfeet",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L49-L60", "model.py:L193-L213", "model.py:L268-L311"],
+          "parameters": [
+            {
+              "name": "foot_angle_rad",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "rad",
+              "minimum": 0.35,
+              "maximum": 0.65,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source rear tilt-leg deployment range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "foot_axis",
+              "kind": "axis",
+              "part": "tilt_foot",
+              "role": "consumer",
+              "frame": {"axis": "+X"},
+              "dimensions": {"count": 2}
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "key_count",
+      "item_slot": "key_array",
+      "values": [61, 68, 75, 82, 87, 93, 98, 104],
+      "spacing_expression": "N progressively fills the reviewed base, function/navigation, macro-column, and numpad position sequence while preserving one sculpted key construction; source counts anchor the rule but do not form a whitelist.",
+      "host_capacity_expression": "Chassis width, key-well width, group gaps, knob clearance, and split-half span derive from N and key pitch."
+    }
+  ],
+  "bindings": [
+    {
+      "binding_id": "chassis_to_keybed",
+      "provider": "chassis_family.key_deck",
+      "consumer": "key_array.keybed_mount",
+      "joint_type": "fixed",
+      "derived": [
+        {
+          "name": "case_width_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["key_count", "key_pitch_m"],
+          "expression": "reviewed layout span for N times key pitch plus side borders and optional media-control clearance",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "The host grows with the complete repeated key layout."
+        },
+        {
+          "name": "deck_z_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["chassis_family"],
+          "expression": "selected shell top or piecewise tented surface plus key seating clearance",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "Keys remain seated on every source-backed enclosure."
+        }
+      ]
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "desktop_keyboard_identity",
+      "applies_to": {
+        "slot": "key_array",
+        "candidates": ["sculpted_prismatic_keys"]
+      },
+      "required_roles": [
+        {"role": "keyboard_chassis", "exact_count": 1},
+        {"role": "keybed", "exact_count": 1},
+        {"role": "key_press", "count_from": "key_count"}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "keybed",
+          "child_role": "key_press",
+          "joint_type": "prismatic",
+          "axis": [0.0, 0.0, -1.0]
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: keyboard is wider than deep",
+        "category_anchor: key count matches multiplicity",
+        "category_anchor: every key presses toward the deck"
+      ]
+    },
+    {
+      "anchor_id": "rotary_control_identity",
+      "applies_to": {
+        "slot": "control_module",
+        "candidates": ["rotary_media_knob"]
+      },
+      "required_roles": [
+        {"role": "media_knob", "exact_count": 1}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "keyboard_chassis",
+          "child_role": "media_knob",
+          "joint_type": "revolute",
+          "axis": [0.0, 0.0, 1.0]
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: media knob rotates on its deck boss"
+      ]
+    },
+    {
+      "anchor_id": "tilt_support_identity",
+      "applies_to": {
+        "slot": "support_module",
+        "candidates": ["flip_tilt_feet"]
+      },
+      "required_roles": [
+        {"role": "tilt_foot", "exact_count": 2}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "keyboard_chassis",
+          "child_role": "tilt_foot",
+          "joint_type": "revolute",
+          "axis": [1.0, 0.0, 0.0]
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: paired tilt feet deploy below the chassis"
+      ]
+    }
+  ]
+}

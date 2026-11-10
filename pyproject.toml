@@ -1,0 +1,144 @@
+[project]
+name = "rfwa"
+version = "0.1.0"
+description = "RFW-A: agentic construction and procedural sampling of articulated object generators."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = { file = "LICENSE" }
+authors = [{ name = "RFW-A contributors" }]
+keywords = ["3d-assets", "articulation", "cad", "urdf", "agentic-generation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Graphics :: 3D Modeling",
+]
+dependencies = [
+    "aiofiles>=24.1.0",
+    "cadquery>=2.5",
+    "fastapi>=0.111.0",
+    "google-genai",
+    "numpy>=2.4.1",
+    "openai>=1.40.0",
+    "pillow>=12.2.0",
+    "python-dotenv>=1.0.0",
+    "rich>=13.7.0",
+    "uvicorn>=0.30.0",
+    "pydantic>=2.0.0",
+    "manifold3d>=3.3.2",
+    "trimesh>=4.11.3",
+    "python-fcl>=0.7.0.8",
+    "websockets>=15.0.1",
+    "networkx>=3.6.1",
+    "rtree>=1.4.1",
+    "zstandard>=0.23.0",
+    "bm25s>=0.3.2.post1",
+    "scipy>=1.17.1",
+    "anthropic>=0.101.0",
+]
+
+[project.scripts]
+rfwa = "rfwa.cli:main"
+articraft = "cli.main:main"
+
+[project.urls]
+Homepage = "https://github.com/RoboFlywheel-com/RoboFlywheel-Articulation"
+Repository = "https://github.com/RoboFlywheel-com/RoboFlywheel-Articulation"
+Issues = "https://github.com/RoboFlywheel-com/RoboFlywheel-Articulation/issues"
+
+[project.optional-dependencies]
+preview = [
+    "pyrender>=0.1.45",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "rfwa",
+    "scripts",
+    "specific_editing",
+    "controlled_morphology",
+    "articraft",
+    "agent",
+    "cli",
+    "storage",
+    "viewer",
+    "sdk",
+]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    "/.claude",
+    "/.mypy_cache",
+    "/.pytest_cache",
+    "/.ruff_cache",
+    "/.uv-cache",
+    "/.venv",
+    "/assets",
+    "/data/cache",
+    "/data/local",
+    "/data/records",
+    "/dist",
+    "/node_modules",
+    "/viewer/web/dist",
+    "/viewer/web/node_modules",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.2.0",
+    "pytest>=8.4.0",
+    "pytest-xdist>=3.8.0",
+    "ruff>=0.11.0",
+]
+
+[tool.uv]
+required-version = ">=0.9.17"
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "specific_editing/tests", "controlled_morphology/tests"]
+# Use `-n0` on an invocation to force serial execution for debugging.
+addopts = [
+    "--import-mode=importlib",
+    "-n",
+    "auto",
+    "--maxprocesses=8",
+    "--dist=worksteal",
+]
+markers = [
+    "template_asset: optional regression tests tied to one concrete template",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["data"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"scaffold.py" = ["F821"]
+"sdk/_core/v0/mesh.py" = ["F401"]
+"sdk/_core/v0/testing.py" = ["F401"]
+"sdk/_core/v0/_mesh/__init__.py" = ["F401"]
+"sdk/_core/v0/_mesh/*.py" = ["F401", "F403", "F405", "F821"]
+"sdk/_core/v0/_testing/*.py" = ["F401", "F403", "F405", "F821"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.hatch.build.targets.wheel.force-include]
+"scaffold.py" = "scaffold.py"

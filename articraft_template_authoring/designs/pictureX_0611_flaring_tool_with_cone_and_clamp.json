@@ -1,0 +1,881 @@
+{
+  "assembly_notes": "Plumbing/tubing flaring tool.  A split clamp bar (root) carries N progressively sized tube seats plus the continuous flare groove that links them.  A cast yoke BRIDGES the working seat in X -- its legs come down fore and aft of the seat and seat on the bar's top face with a 0.6 mm captured lap -- and hosts the rotary feed screw (revolute on the true spindle Z axis, registered via mate_axes/register_interface_mate) and the flaring cone (prismatic -Z on the same axis, constrained_by the feed screw).  The yoke deliberately does not straddle the bar in Y: at the yoke station the hinged moving jaw sweeps a*tan(q) sideways, so a Y cheek is struck long before the clamp is usefully open; bridging in X keeps the whole yoke above the bar's top plane on the jaw side and makes the clamp-open and yoke poses independent.  A side yoke-lock screw turns about Y, captured by two ball detents inside its real bore (a shoulder bearing on the boss face inflates on world AABBs when the yoke pivots).  handle_style, yoke_frame, yoke_mount and end_clamp are independent structural slots; every combination builds through the shared derivations (yoke bore > cone envelope, collar bore > screw shaft, knuckle bore > pin, lock/clamp bore > stem, groove half width > cone radius at the bar's top plane), so no whole-part or per-element overlap allowance is used anywhere.  tube_hole_count is a multiplicity on end_clamp.",
+  "bindings": [
+    {
+      "binding_id": "yoke_bridges_the_clamp_bar",
+      "consumer": "yoke_frame.leg_feet",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "bar_width_m"
+          ],
+          "expression": "bar_width_m - 0.003",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "yoke_half_span_y",
+          "rationale": "The yoke's legs must land inside both clamp halves' top faces for any bar width.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bar_height_m"
+          ],
+          "expression": "bar_height_m - 0.0006",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "leg_foot_z",
+          "rationale": "0.6 mm captured seating on the bar's top face, under the collision tolerance, invariant along the mount joint's travel.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bar_height_m"
+          ],
+          "expression": "cone_profile_radius(cone_penetration) <= groove_half_width - bore_fit",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "cone_radius_at_bar_top",
+          "rationale": "The cone descends into the bar's flare groove, so its radius at the top plane is derived from the groove, not from any single seat diameter.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "seated_bridge",
+      "provider": "end_clamp.bar_seat_face"
+    },
+    {
+      "binding_id": "mount_joint_rides_the_seat_row",
+      "consumer": "yoke_mount.carriage_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "bar_pitch_m"
+          ],
+          "expression": "(hole_xs[0], hole_xs[-1]) = ((0 - N//2) * bar_pitch_m, (N - 1 - N//2) * bar_pitch_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "yoke_travel",
+          "rationale": "Sliding travel is exactly the seat row; pivoting instead swings +-0.16 rad about the working seat so both families keep the cone over real bar geometry.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bar_pitch_m"
+          ],
+          "expression": "1.4 * bar_pitch_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "end_margin",
+          "rationale": "Holds the yoke's half length (0.030) clear of the hinge hardware and of the end screw's head envelope at both travel extremes.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute_or_prismatic_family",
+      "provider": "end_clamp.hinge_axis"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "end_clamp_plain_hinge_core",
+      "applies_to": {
+        "candidates": [
+          "plain_hinge"
+        ],
+        "slot": "end_clamp"
+      },
+      "required_author_checks": [
+        "category_anchor: flaring tool core mechanism",
+        "category_anchor: screw-fed cone on the spindle axis",
+        "category_anchor: clamp bar with sized tube holes",
+        "category_anchor: plain_hinge identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "moving_jaw",
+          "joint_type": "revolute",
+          "parent_role": "clamp_bar"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "feed_screw",
+          "joint_type": "revolute",
+          "parent_role": "yoke"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "child_role": "flaring_cone",
+          "joint_type": "prismatic",
+          "parent_role": "yoke"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "yoke_lock",
+          "joint_type": "revolute",
+          "parent_role": "yoke"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "clamp_bar"
+        },
+        {
+          "exact_count": 1,
+          "role": "moving_jaw"
+        },
+        {
+          "exact_count": 1,
+          "role": "yoke"
+        },
+        {
+          "exact_count": 1,
+          "role": "feed_screw"
+        },
+        {
+          "exact_count": 1,
+          "role": "flaring_cone"
+        },
+        {
+          "exact_count": 1,
+          "role": "yoke_lock"
+        }
+      ]
+    },
+    {
+      "anchor_id": "end_clamp_screw_clamp_core",
+      "applies_to": {
+        "candidates": [
+          "screw_clamp"
+        ],
+        "slot": "end_clamp"
+      },
+      "required_author_checks": [
+        "category_anchor: flaring tool core mechanism",
+        "category_anchor: screw-fed cone on the spindle axis",
+        "category_anchor: clamp bar with sized tube holes",
+        "category_anchor: screw_clamp identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "moving_jaw",
+          "joint_type": "revolute",
+          "parent_role": "clamp_bar"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "clamp_screw",
+          "joint_type": "revolute",
+          "parent_role": "clamp_bar"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "feed_screw",
+          "joint_type": "revolute",
+          "parent_role": "yoke"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "child_role": "flaring_cone",
+          "joint_type": "prismatic",
+          "parent_role": "yoke"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "yoke_lock",
+          "joint_type": "revolute",
+          "parent_role": "yoke"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "clamp_bar"
+        },
+        {
+          "exact_count": 1,
+          "role": "moving_jaw"
+        },
+        {
+          "exact_count": 1,
+          "role": "yoke"
+        },
+        {
+          "exact_count": 1,
+          "role": "feed_screw"
+        },
+        {
+          "exact_count": 1,
+          "role": "flaring_cone"
+        },
+        {
+          "exact_count": 1,
+          "role": "yoke_lock"
+        },
+        {
+          "exact_count": 1,
+          "role": "clamp_screw"
+        }
+      ]
+    },
+    {
+      "anchor_id": "yoke_mount_sliding_identity",
+      "applies_to": {
+        "candidates": [
+          "sliding"
+        ],
+        "slot": "yoke_mount"
+      },
+      "required_author_checks": [
+        "category_anchor: sliding yoke mount"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "yoke",
+          "joint_type": "prismatic",
+          "parent_role": "clamp_bar"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "yoke"
+        }
+      ]
+    },
+    {
+      "anchor_id": "yoke_mount_pivoting_identity",
+      "applies_to": {
+        "candidates": [
+          "pivoting"
+        ],
+        "slot": "yoke_mount"
+      },
+      "required_author_checks": [
+        "category_anchor: pivoting yoke mount"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "yoke",
+          "joint_type": "revolute",
+          "parent_role": "clamp_bar"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "yoke"
+        }
+      ]
+    },
+    {
+      "anchor_id": "yoke_frame_inverted_u_cast_identity",
+      "applies_to": {
+        "candidates": [
+          "inverted_u_cast"
+        ],
+        "slot": "yoke_frame"
+      },
+      "required_author_checks": [
+        "category_anchor: inverted_u_cast frame"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "yoke"
+        }
+      ]
+    },
+    {
+      "anchor_id": "yoke_frame_twin_cheek_cast_identity",
+      "applies_to": {
+        "candidates": [
+          "twin_cheek_cast"
+        ],
+        "slot": "yoke_frame"
+      },
+      "required_author_checks": [
+        "category_anchor: twin_cheek_cast frame"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "yoke"
+        }
+      ]
+    },
+    {
+      "anchor_id": "handle_style_tommy_bar_identity",
+      "applies_to": {
+        "candidates": [
+          "tommy_bar"
+        ],
+        "slot": "handle_style"
+      },
+      "required_author_checks": [
+        "category_anchor: tommy_bar handles"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "feed_screw"
+        }
+      ]
+    },
+    {
+      "anchor_id": "handle_style_wing_handle_identity",
+      "applies_to": {
+        "candidates": [
+          "wing_handle"
+        ],
+        "slot": "handle_style"
+      },
+      "required_author_checks": [
+        "category_anchor: wing_handle handles"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "feed_screw"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "clamp-bar length = (N-1)*bar_pitch_m + 2*end_margin; 4 <= N <= 7",
+      "item_slot": "end_clamp",
+      "name": "tube_hole_count",
+      "spacing_expression": "hole i at x=(i - N//2)*bar_pitch_m; working hole at x=0; N counterbore-rim visuals grow with N",
+      "values": [
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "REC001 straight sliding tommy bar with two spherical stops through a hub, driving the feed and lock screws.",
+          "implementation_function": "_handle_style_tommy_bar_build",
+          "interfaces": [],
+          "name": "tommy_bar",
+          "notes": "Straight sliding tommy bar with two ball stops; dresses the feed, yoke-lock and (screw_clamp) end screws.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__flaring_tool_with_cone_and_clamp__001__png__airflex_batch_20260710_52f7016c9eb84902806fb01f2892cffe",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L251-L313"
+          ]
+        },
+        {
+          "evidence": "REC002 broad cast two-lobe butterfly wing on a hub.",
+          "implementation_function": "_handle_style_wing_handle_build",
+          "interfaces": [],
+          "name": "wing_handle",
+          "notes": "Broad cast two-lobe butterfly wing on a boss; dresses the same three screws.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__flaring_tool_with_cone_and_clamp__002__png__airflex_batch_20260710_11b92ba5965f4a87b12afcd7024803e9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L142-L163"
+          ]
+        }
+      ],
+      "component_type": "turning-handle style shared by feed/lock/clamp screws",
+      "name": "handle_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "REC001 single cast inverted-U arch with an open lower window straddling the bar, top boss and vertical feed bore.",
+          "implementation_function": "_yoke_frame_inverted_u_cast_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leg_inner_x": 0.02,
+                "leg_outer_x": 0.03,
+                "span_y": "2 * (bar_width_m - 0.003)"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  "bar_height_m - 0.0006"
+                ]
+              },
+              "kind": "plane",
+              "name": "leg_feet",
+              "part": "yoke_frame__inverted_u_cast__yoke",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "radius": 0.0135
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "spindle_axis",
+              "part": "yoke_frame__inverted_u_cast__yoke",
+              "role": "provider"
+            }
+          ],
+          "name": "inverted_u_cast",
+          "notes": "One continuous cast arch, full bar width, arched crown, narrow top boss, open lower window.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__flaring_tool_with_cone_and_clamp__001__png__airflex_batch_20260710_52f7016c9eb84902806fb01f2892cffe",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L78-L121"
+          ]
+        },
+        {
+          "evidence": "REC002 two opposed cast cheeks, top bridge and bored threaded collar, open below.",
+          "implementation_function": "_yoke_frame_twin_cheek_cast_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leg_inner_x": 0.02,
+                "leg_outer_x": 0.03,
+                "span_y": "2 * (bar_width_m - 0.003)"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  "bar_height_m - 0.0006"
+                ]
+              },
+              "kind": "plane",
+              "name": "leg_feet",
+              "part": "yoke_frame__twin_cheek_cast__yoke",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "radius": 0.0135
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "spindle_axis",
+              "part": "yoke_frame__twin_cheek_cast__yoke",
+              "role": "provider"
+            }
+          ],
+          "name": "twin_cheek_cast",
+          "notes": "Two opposed cast cheeks tied by a top bridge box and a wide bored collar; open between the cheeks.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__flaring_tool_with_cone_and_clamp__002__png__airflex_batch_20260710_11b92ba5965f4a87b12afcd7024803e9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L96-L139"
+          ]
+        }
+      ],
+      "component_type": "cast yoke frame geometry",
+      "name": "yoke_frame",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "REC001 yoke slides along +X across the hole row (prismatic).",
+          "implementation_function": "_yoke_mount_sliding_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "travel_hi": "hole_xs[-1]",
+                "travel_lo": "hole_xs[0]"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "carriage_axis",
+              "part": "end_clamp__plain_hinge__clamp_bar",
+              "role": "consumer"
+            }
+          ],
+          "name": "sliding",
+          "notes": "Prismatic X carriage indexing the whole tube-seat row (travel = hole_xs[0]..hole_xs[-1]).",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__flaring_tool_with_cone_and_clamp__001__png__airflex_batch_20260710_52f7016c9eb84902806fb01f2892cffe",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L324-L332"
+          ]
+        },
+        {
+          "evidence": "REC002 yoke swings about a vertical axis at the working hole (revolute Z).",
+          "implementation_function": "_yoke_mount_pivoting_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "swing_span": 0.16
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "carriage_axis",
+              "part": "end_clamp__plain_hinge__clamp_bar",
+              "role": "consumer"
+            }
+          ],
+          "name": "pivoting",
+          "notes": "Revolute Z swing about the working seat; the swing axis IS the spindle axis, so the cone never leaves the bore.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__flaring_tool_with_cone_and_clamp__002__png__airflex_batch_20260710_11b92ba5965f4a87b12afcd7024803e9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L372-L380"
+          ]
+        }
+      ],
+      "component_type": "yoke-to-bar mount joint",
+      "name": "yoke_mount",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "REC001 clamp bar closed by the moving-jaw hinge only; pin on the bar, clearance bore in the moving jaw; no captured end screw.",
+          "implementation_function": "_end_clamp_plain_hinge_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "groove_half_width": 0.0032,
+                "span_x": "bar_length",
+                "span_y": "bar_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  "bar_height_m"
+                ]
+              },
+              "kind": "plane",
+              "name": "bar_seat_face",
+              "part": "end_clamp__plain_hinge__clamp_bar",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": 0.0048
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  "hinge_x",
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "end_clamp__plain_hinge__clamp_bar",
+              "role": "provider"
+            }
+          ],
+          "name": "plain_hinge",
+          "notes": "Hinge-only split clamp bar with a pressed pin retainer; hosts the N tube seats.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.046,
+              "minimum": 0.038,
+              "mode": "independent",
+              "name": "bar_pitch_m",
+              "rationale": "source tube-hole centre spacing (REC001 ~0.040, REC002 ~0.042)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.024,
+              "mode": "independent",
+              "name": "bar_width_m",
+              "rationale": "source clamp-bar half-width / jaw width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "bar_height_m",
+              "rationale": "source clamp-bar/jaw height (tube-hole depth)",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__flaring_tool_with_cone_and_clamp__001__png__airflex_batch_20260710_52f7016c9eb84902806fb01f2892cffe",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L31-L75"
+          ]
+        },
+        {
+          "evidence": "REC002 split clamp bar with a captured rotary end wing screw (revolute Z) in a split end bore.",
+          "implementation_function": "_end_clamp_screw_clamp_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "groove_half_width": 0.0032,
+                "span_x": "bar_length",
+                "span_y": "bar_width_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  0.0,
+                  0.0,
+                  "bar_height_m"
+                ]
+              },
+              "kind": "plane",
+              "name": "bar_seat_face",
+              "part": "end_clamp__screw_clamp__clamp_bar",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": 0.0048
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  "hinge_x",
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "end_clamp__screw_clamp__clamp_bar",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": 0.0053
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "point": [
+                  "clamp_screw_x",
+                  "clamp_screw_y",
+                  "bar_height_m"
+                ]
+              },
+              "kind": "axis",
+              "name": "clamp_bore_axis",
+              "part": "end_clamp__screw_clamp__clamp_bar",
+              "role": "provider"
+            }
+          ],
+          "name": "screw_clamp",
+          "notes": "Adds a captured rotary end tightening screw (revolute Z) in a real split end bore.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.046,
+              "minimum": 0.038,
+              "mode": "independent",
+              "name": "bar_pitch_m",
+              "rationale": "source tube-hole centre spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.024,
+              "mode": "independent",
+              "name": "bar_width_m",
+              "rationale": "source clamp-bar half-width / jaw width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "bar_height_m",
+              "rationale": "source clamp-bar/jaw height (tube-hole depth)",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__flaring_tool_with_cone_and_clamp__002__png__airflex_batch_20260710_11b92ba5965f4a87b12afcd7024803e9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L57-L93"
+          ]
+        }
+      ],
+      "component_type": "split clamp-bar family (hosts tube holes and the end-clamp option)",
+      "name": "end_clamp",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_flaring_tool_with_cone_and_clamp",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_flaring_tool_with_cone_and_clamp.md",
+  "source_map_sha256": "47cc5255b32a80d41f514aff7dbf8d7046c3755a5f7f605da4b43fe71cbf16ac"
+}

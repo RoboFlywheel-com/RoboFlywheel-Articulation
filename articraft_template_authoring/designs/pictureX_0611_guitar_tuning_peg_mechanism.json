@@ -1,0 +1,3483 @@
+{
+  "assembly_notes": "Frame: +Z is up, the worm turns about +Z with its button on top, and the string post turns about +Y and projects toward +Y. The decorated cover/screw face is -Y, which is both the majority of the source pool (002, 004, 005) and the octant the shared preview camera looks from. Units repeat along +X.\n\nUnit i is placed at x_i = i * unit_pitch_m. The driven wheel centre IS the unit origin, and the worm axis runs through (x_i - center_distance_m, 0, 0). Both rotors are authored centred on their own joint origin so mate_axes / register_interface_mate see a real axis, and so the worm screw and the wheel share the z = 0 mesh plane.\n\nThe mesh is the load-bearing derivation. SpurGear.r0 = module * teeth / 2 and Worm.r0 = module / (2 tan lead) in sdk/v0/gears.py, so tangent pitch circles mean exactly center_distance_m = gear_pitch_r_m + worm_pitch_r_m. Everything else -- the worm boss station, the mount's left edge, the gear chamber, the strip length -- is measured from it. Tooth tips interpenetrate by a fraction of a millimetre at a volume far below the SDK threshold, so no allow_overlap is used or needed.\n\nHost adaptation across slots is by derivation, never exclusion. gear_chamber_r_m and mount_body_r_m are cut and grown from whichever wheel the active post presents, so a 30-tooth high_ratio_post fits inside sealed_housing, die_cast_housing and gearbox_bulb as well as it fits the open plates -- this mirrors the source fork, whose plate grew from 28x32 to 34x42 mm when its wheel went from 14 to 21 teeth. unit_pitch_m takes the widest of the wheel, button and centre-distance envelopes, so a large cloverleaf spreads the strip instead of colliding with its neighbour. button_seat_z_m is measured from mount_top_z_m, so a tall eared plate and a short die-cast block both get a button that clears them by the 3 mm 005 asserts.\n\nFits are real, not interpenetrations: every bore is shaft + 0.4 mm, inside the 1 mm gap the baseline QC still counts as support, and the worm and wheel are held at the pitch line by the centre distance rather than pushed into each other.\n\nlocking_split_post is the one candidate that changes the part and joint count: it adds a lock_screw part per unit on its own continuous joint about the post axis, which is what its source does. That is carried in a second category anchor rather than hidden.\n",
+  "bindings": [
+    {
+      "binding_id": "post_wheel_sizes_the_mount",
+      "consumer": "mount_form.post_bearing_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "gear_pitch_r_m",
+            "worm_pitch_r_m"
+          ],
+          "expression": "gear_pitch_r_m + worm_pitch_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "center_distance_m",
+          "rationale": "The mount places its worm bearings exactly one centre distance to -X of the wheel it is fitted with, so the pitch circles stay tangent for every tooth count and every lead angle. This is the binding that makes the mesh correct rather than approximately correct.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "gear_tip_r_m"
+          ],
+          "expression": "gear_tip_r_m + 0.0012",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "gear_chamber_r_m",
+          "rationale": "The clear space the mount hollows out around whichever wheel arrives. This is the host adaptation that lets a 30-tooth high_ratio_post live inside sealed_housing, die_cast_housing or gearbox_bulb instead of the combination being excluded.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "gear_chamber_r_m",
+            "mount_wall_m"
+          ],
+          "expression": "gear_chamber_r_m + mount_wall_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "mount_body_r_m",
+          "rationale": "The mount's outer envelope at the wheel station grows with the wheel: the gear lobe of an open plate, the bulb of a pod, the block half-height of a die casting. Mirrors the source fork, whose plate went 28x32 to 34x42 mm when the wheel went 14 to 21 teeth.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "post_shank_r_m"
+          ],
+          "expression": "post_shank_r_m + 0.0004",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "post_bore_r_m",
+          "rationale": "The journal is bored to the shank the active post candidate presents, on a running clearance under the 1 mm support gap.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "gear_teeth"
+          ],
+          "expression": "gear_teeth",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "worm_ratio",
+          "rationale": "The mimic multiplier the mount's post joint carries is -1/gear_teeth, so swapping the post candidate really does change the reduction.",
+          "unit": "count",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "continuous",
+      "provider": "post_form.gear_pitch_circle"
+    },
+    {
+      "binding_id": "worm_line_carries_the_button",
+      "consumer": "button_form.button_hub_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "mount_top_z_m"
+          ],
+          "expression": "mount_top_z_m + 0.003",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "button_seat_z_m",
+          "rationale": "The button sits 3 mm above whatever height the active mount's upper worm bearing reaches, so a tall eared plate and a short die-cast block both get a button that clears them.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "gear_tip_r_m",
+            "button_reach_m",
+            "center_distance_m"
+          ],
+          "expression": "max(2 * gear_tip_r_m, 2 * button_reach_m, 2 * center_distance_m) + 0.005",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "unit_pitch_m",
+          "rationale": "The strip's unit spacing is driven by whichever of the three rotating or fixed envelopes is widest. The button term normally wins, so fitting a large cloverleaf really does spread the tuners along the mount.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "worm_pitch_r_m"
+          ],
+          "expression": "clamp(0.62 * worm_pitch_r_m, 0.0014, 0.0026)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "worm_shaft_r_m",
+          "rationale": "The shaft, its bearing bore and the button's hub bore are all one fit derived from the worm the lead angle produced.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "mount_form.worm_bearing_axis"
+    },
+    {
+      "binding_id": "post_reach_clears_the_mount_back",
+      "consumer": "post_form.post_root_plane",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "gear_width_m",
+            "mount_wall_m"
+          ],
+          "expression": "gear_width_m / 2 + mount_wall_m + 0.0015",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "post_exit_y_m",
+          "rationale": "Where the +Y face of the journal actually is, given the wheel face width the active post presents and the wall of the active mount. A thin bracket and a thick die casting put it in different places.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "post_reach_m"
+          ],
+          "expression": "post_reach_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "post_free_len_m",
+          "rationale": "The post's modelled shank is post_reach_m beyond post_exit_y_m plus the journal depth behind it, so the visible projection is honest and the post is always carried by the bore rather than cantilevered off the wheel.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "mount_form.post_exit_plane"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "machine_head_identity",
+      "applies_to": {
+        "candidates": [
+          "plain_post",
+          "high_ratio_post",
+          "classical_roller_post"
+        ],
+        "slot": "post_form"
+      },
+      "required_author_checks": [
+        "category_anchor: one mount carries every worm rotor and string post",
+        "category_anchor: each post is worm-driven at its own tooth ratio",
+        "category_anchor: the worm meshes the driven wheel at the pitch line",
+        "category_anchor: the button turns clear of the mount",
+        "category_anchor: mount_form identity",
+        "category_anchor: post_form identity",
+        "category_anchor: button_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "worm_rotor",
+          "joint_type": "continuous",
+          "parent_role": "mount"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "string_post",
+          "joint_type": "continuous",
+          "parent_role": "mount"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "mount"
+        },
+        {
+          "count_from": "tuner_count",
+          "exact_count": null,
+          "role": "worm_rotor"
+        },
+        {
+          "count_from": "tuner_count",
+          "exact_count": null,
+          "role": "string_post"
+        },
+        {
+          "count_from": null,
+          "exact_count": 0,
+          "role": "lock_screw"
+        }
+      ]
+    },
+    {
+      "anchor_id": "locking_machine_head_identity",
+      "applies_to": {
+        "candidates": [
+          "locking_split_post"
+        ],
+        "slot": "post_form"
+      },
+      "required_author_checks": [
+        "category_anchor: one mount carries every worm rotor and string post",
+        "category_anchor: each post is worm-driven at its own tooth ratio",
+        "category_anchor: the worm meshes the driven wheel at the pitch line",
+        "category_anchor: the button turns clear of the mount",
+        "category_anchor: mount_form identity",
+        "category_anchor: post_form identity",
+        "category_anchor: button_form identity",
+        "category_anchor: the locking screw turns on the split post axis"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "worm_rotor",
+          "joint_type": "continuous",
+          "parent_role": "mount"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "string_post",
+          "joint_type": "continuous",
+          "parent_role": "mount"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "lock_screw",
+          "joint_type": "continuous",
+          "parent_role": "string_post"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "mount"
+        },
+        {
+          "count_from": "tuner_count",
+          "exact_count": null,
+          "role": "worm_rotor"
+        },
+        {
+          "count_from": "tuner_count",
+          "exact_count": null,
+          "role": "string_post"
+        },
+        {
+          "count_from": "tuner_count",
+          "exact_count": null,
+          "role": "lock_screw"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= tuner_count <= 3. The loop is index-general -- every station is re-derived from unit_pitch_m and nothing is indexed by a literal -- so the ceiling is budget, not mechanism. At N=3 with locking_split_post the seed builds 10 parts and 9 joints, each carrying tessellated involute worm and wheel solids; the pool's own maximum is also 3 (three_on_strip). A real six-a-side headstock strip is therefore not reproduced at full count, as recorded in the SourceMap's N derivation.",
+      "item_slot": "mount_form",
+      "name": "tuner_count",
+      "spacing_expression": "unit i sits at x_i = i * unit_pitch_m along +X, with unit_pitch_m derived from the widest of the wheel, button and centre-distance envelopes. Each unit contributes one worm rotor part, one string post part (plus one lock screw under locking_split_post) and its own mimic pair, and the mount grows from mount_x0_m to (N-1)*unit_pitch_m + mount_body_r_m. This is exactly the rule three_on_strip L308/L323 applies at N=3 (`WORM_CENTER[0] + x_m`), and staggered_posts L338/L348 applies at N=2.",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "_mounting_plate_shape is a filleted stamped rectangle unioned with a large gear lobe and a small lower lobe, then pierced for the post journal and two screws. The worm runs in two free-standing _annular_bearing_shape rings on bridge tabs, so the gear train is fully exposed.",
+          "implementation_function": "_mount_form_open_plate_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radius": "worm_bore_r_m, seated over worm_span_m between two bearings"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "worm_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(x_i, 0, 0)",
+                "radius": "post_bore_r_m through the journal at post_exit_y_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(x_i, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "post_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "a disc of radius mount_body_r_m about the wheel station"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(x_i, post_exit_y_m, 0)"
+              },
+              "kind": "plane",
+              "name": "post_exit_plane",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "open_plate",
+          "notes": "One welded stamped plate standing in the XZ plane: a filleted rectangle unioned with a gear lobe of radius mount_body_r_m at each wheel station and a smaller lower lobe at each worm station, pierced by the post journal and two screw clearances. The worm runs in two free-standing annular bearing rings carried on bridge tabs, so the whole train stays visible -- 001 L26-L73. Joint: root part; parents every worm rotor (continuous, +Z) and every string post (continuous, +Y).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.00125,
+              "minimum": 0.0007,
+              "mode": "independent",
+              "name": "gear_module_m",
+              "rationale": "Tooth module shared by the worm and the driven wheel -- the one number that sets both pitch radii and therefore the centre distance. Pool: 0.00062 and 0.00066 (005 L177/L245/L307), 0.0008 (003 L134/L158), 0.0010 (001 L298/L354), 0.0012 (002 L230/L281, 004 L283).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.33,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "worm_lead_angle_rad",
+              "rationale": "Lead angle of the one-start worm. Worm.r0 = module / (2 tan lead) in sdk/v0/gears.py, so this is a real geometric parameter: it changes the worm's own diameter and hence the centre distance and the mount's worm boss. Pool: 8 deg (002 L231), 16 deg (cloverleaf L145, side_mount L142), 18 deg (001 L299, 005 L247, die_cast L255), 20 deg (004 L221).",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0017,
+              "mode": "independent",
+              "name": "mount_wall_m",
+              "rationale": "Stamped plate thickness, or the wall of a sealed shell. Pool: 0.0017 (002 L73 extrude both=True), 0.002 (001 L28 box 2.0 mm), 0.003 (004 L57 extrude 1.5 both=True), 0.003 (side_mount L56 box y-thickness).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "worm_span_m",
+              "rationale": "Distance between the two worm bearing seats, i.e. the supported length of the vertical shaft. Pool: 0.024 (001 L183 bearings at z 7 and 31 mm), 0.032 (open_back_ratio L193/L199 at 7 and 39 mm), 0.034 (002 L112-L115 ears at 6 and 40 mm), 0.0215 (die_cast L34/L44 bosses at 1 and 31.5 mm).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_lead_angle_rad"
+              ],
+              "expression": "gear_module_m / (2 * tan(worm_lead_angle_rad))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_pitch_r_m",
+              "rationale": "Worm pitch radius, read straight off `Worm.r0` in sdk/v0/gears.py so the template and the generator agree on where the pitch line is.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "worm_pitch_r_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_tip_r_m",
+              "rationale": "Worm tip radius (`Worm.ra`). Sizes the worm boss bore and the cavity a sealed shell has to hollow out around the thread.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m",
+                "worm_pitch_r_m"
+              ],
+              "expression": "gear_pitch_r_m + worm_pitch_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "center_distance_m",
+              "rationale": "The common perpendicular between the two skew axes, laid along -X. Tangent pitch circles are the definition of a correct worm/wheel mesh; every station in the assembly is measured from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_span_m"
+              ],
+              "expression": "min(max(16 * gear_module_m, 0.008), 0.62 * worm_span_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_len_m",
+              "rationale": "Threaded length of the worm, in modules rather than in wheel radii: the pool runs 15-22 modules (001 18/1.0, 002 27/1.2, 003 12/0.8, 004 16/1.0, 005 14.5/0.66), and it still has to fit between the two bearing seats. Tying it to the wheel instead made the worm grow with the tooth count, which is both untrue to the sources and unaffordable -- each extra turn costs ~2.5k triangles on a spline-surfaced solid that collision QC re-evaluates at every pose.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_tip_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "worm_tip_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_boss_r_m",
+              "rationale": "Outer radius of the mount's worm bearing boss or ear ring; grows with the worm so a fat low-lead worm never bursts its bearing.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m"
+              ],
+              "expression": "gear_tip_r_m + 0.0012",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_chamber_r_m",
+              "rationale": "Radius of the clear space the mount must leave around the driven wheel. The sealed candidates boolean-cut exactly this cavity, which is what lets a 30-tooth wheel live inside the same shell as a 14-tooth one instead of the combination being excluded.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_chamber_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_chamber_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_body_r_m",
+              "rationale": "Outer radius of the mount around the wheel station -- the gear lobe of an open plate, the bulb of a gearbox pod, the half-height of a die-cast block.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_m",
+                "mount_body_r_m"
+              ],
+              "expression": "max(worm_span_m, 2 * mount_body_r_m + 0.004)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_span_eff_m",
+              "rationale": "Effective distance between the two worm bearings. The bearings have to STRADDLE the gear housing, so the declared span can never be shorter than the housing's own diameter -- 001 puts its bearings 24 mm apart around a 12 mm gear lobe. This is the derivation that keeps the button above every mount silhouette no matter which wheel the active post candidate brought with it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_eff_m",
+                "mount_wall_m"
+              ],
+              "expression": "0.5 * worm_span_eff_m + 1.5 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_top_z_m",
+              "rationale": "Top of the mount at the worm station: the upper bearing seat plus its own thickness. The button seat is measured from here, never from a constant.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "center_distance_m",
+                "worm_boss_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "-(center_distance_m + worm_boss_r_m + mount_wall_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x0_m",
+              "rationale": "Left edge of the mount: far enough past the worm boss of unit 0 to carry it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tuner_count",
+                "unit_pitch_m",
+                "mount_body_r_m"
+              ],
+              "expression": "(tuner_count - 1) * unit_pitch_m + mount_body_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x1_m",
+              "rationale": "Right edge: past the wheel lobe of the last unit. Together with mount_x0_m this is how the strip grows with N rather than being a fixed plate.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_shank_r_m"
+              ],
+              "expression": "post_shank_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_bore_r_m",
+              "rationale": "Radius of the mount's post journal. The 0.4 mm running clearance stays inside the 1 mm gap the baseline QC still counts as support, so the post is carried without the bore having to interpenetrate it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_shaft_r_m"
+              ],
+              "expression": "worm_shaft_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_bore_r_m",
+              "rationale": "Radius of the mount's worm bearing bore, on the same clearance rule.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m",
+                "button_reach_m",
+                "center_distance_m"
+              ],
+              "expression": "max(2 * gear_tip_r_m, 2 * button_reach_m, 2 * center_distance_m) + 0.005",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "unit_pitch_m",
+              "rationale": "Spacing of tuner units along +X. Every one of the three terms is a real interference: neighbouring wheels, neighbouring buttons at any rotation, and a worm boss reaching back into the previous wheel lobe. The button term normally dominates, which is why the strip widens when a big cloverleaf is fitted.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_width_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_width_m / 2 + 0.0008 + 2 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_exit_y_m",
+              "rationale": "The +Y face the string post emerges from; the free length of the post is measured from here so post_reach_m always means the visible projection.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__guitar_tuning_peg_mechanism__001__png_6025567b16c44b3d82c56a57ea1dc988",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L26-L73",
+            "model.py:L165-L268"
+          ]
+        },
+        {
+          "evidence": "_make_mounting_plate is a 17-point stamped polyline outline with rolled rims fused around the screw holes, and the worm is carried by two bent ears \u2014 each a ring plus an arm block fused onto the plate face. One welded plate solid, no separate bearing visuals.",
+          "implementation_function": "_mount_form_eared_plate_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radius": "worm_bore_r_m, seated over worm_span_m between two bearings"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "worm_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(x_i, 0, 0)",
+                "radius": "post_bore_r_m through the journal at post_exit_y_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(x_i, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "post_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "a disc of radius mount_body_r_m about the wheel station"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(x_i, post_exit_y_m, 0)"
+              },
+              "kind": "plane",
+              "name": "post_exit_plane",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "eared_plate",
+          "notes": "The stamped outline is a polyline silhouette rather than a filleted rectangle, rolled rims are fused around the screw holes, and the worm is carried by two bent ears -- each a ring plus an arm block fused onto the plate face instead of a separate bearing. One welded solid, no bridge tabs -- 002 L52-L132. Joint: root part; parents every worm rotor (continuous, +Z) and every string post (continuous, +Y).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.00125,
+              "minimum": 0.0007,
+              "mode": "independent",
+              "name": "gear_module_m",
+              "rationale": "Tooth module shared by the worm and the driven wheel -- the one number that sets both pitch radii and therefore the centre distance. Pool: 0.00062 and 0.00066 (005 L177/L245/L307), 0.0008 (003 L134/L158), 0.0010 (001 L298/L354), 0.0012 (002 L230/L281, 004 L283).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.33,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "worm_lead_angle_rad",
+              "rationale": "Lead angle of the one-start worm. Worm.r0 = module / (2 tan lead) in sdk/v0/gears.py, so this is a real geometric parameter: it changes the worm's own diameter and hence the centre distance and the mount's worm boss. Pool: 8 deg (002 L231), 16 deg (cloverleaf L145, side_mount L142), 18 deg (001 L299, 005 L247, die_cast L255), 20 deg (004 L221).",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0017,
+              "mode": "independent",
+              "name": "mount_wall_m",
+              "rationale": "Stamped plate thickness, or the wall of a sealed shell. Pool: 0.0017 (002 L73 extrude both=True), 0.002 (001 L28 box 2.0 mm), 0.003 (004 L57 extrude 1.5 both=True), 0.003 (side_mount L56 box y-thickness).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "worm_span_m",
+              "rationale": "Distance between the two worm bearing seats, i.e. the supported length of the vertical shaft. Pool: 0.024 (001 L183 bearings at z 7 and 31 mm), 0.032 (open_back_ratio L193/L199 at 7 and 39 mm), 0.034 (002 L112-L115 ears at 6 and 40 mm), 0.0215 (die_cast L34/L44 bosses at 1 and 31.5 mm).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_lead_angle_rad"
+              ],
+              "expression": "gear_module_m / (2 * tan(worm_lead_angle_rad))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_pitch_r_m",
+              "rationale": "Worm pitch radius, read straight off `Worm.r0` in sdk/v0/gears.py so the template and the generator agree on where the pitch line is.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "worm_pitch_r_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_tip_r_m",
+              "rationale": "Worm tip radius (`Worm.ra`). Sizes the worm boss bore and the cavity a sealed shell has to hollow out around the thread.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m",
+                "worm_pitch_r_m"
+              ],
+              "expression": "gear_pitch_r_m + worm_pitch_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "center_distance_m",
+              "rationale": "The common perpendicular between the two skew axes, laid along -X. Tangent pitch circles are the definition of a correct worm/wheel mesh; every station in the assembly is measured from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_span_m"
+              ],
+              "expression": "min(max(16 * gear_module_m, 0.008), 0.62 * worm_span_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_len_m",
+              "rationale": "Threaded length of the worm, in modules rather than in wheel radii: the pool runs 15-22 modules (001 18/1.0, 002 27/1.2, 003 12/0.8, 004 16/1.0, 005 14.5/0.66), and it still has to fit between the two bearing seats. Tying it to the wheel instead made the worm grow with the tooth count, which is both untrue to the sources and unaffordable -- each extra turn costs ~2.5k triangles on a spline-surfaced solid that collision QC re-evaluates at every pose.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_tip_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "worm_tip_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_boss_r_m",
+              "rationale": "Outer radius of the mount's worm bearing boss or ear ring; grows with the worm so a fat low-lead worm never bursts its bearing.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m"
+              ],
+              "expression": "gear_tip_r_m + 0.0012",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_chamber_r_m",
+              "rationale": "Radius of the clear space the mount must leave around the driven wheel. The sealed candidates boolean-cut exactly this cavity, which is what lets a 30-tooth wheel live inside the same shell as a 14-tooth one instead of the combination being excluded.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_chamber_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_chamber_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_body_r_m",
+              "rationale": "Outer radius of the mount around the wheel station -- the gear lobe of an open plate, the bulb of a gearbox pod, the half-height of a die-cast block.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_m",
+                "mount_body_r_m"
+              ],
+              "expression": "max(worm_span_m, 2 * mount_body_r_m + 0.004)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_span_eff_m",
+              "rationale": "Effective distance between the two worm bearings. The bearings have to STRADDLE the gear housing, so the declared span can never be shorter than the housing's own diameter -- 001 puts its bearings 24 mm apart around a 12 mm gear lobe. This is the derivation that keeps the button above every mount silhouette no matter which wheel the active post candidate brought with it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_eff_m",
+                "mount_wall_m"
+              ],
+              "expression": "0.5 * worm_span_eff_m + 1.5 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_top_z_m",
+              "rationale": "Top of the mount at the worm station: the upper bearing seat plus its own thickness. The button seat is measured from here, never from a constant.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "center_distance_m",
+                "worm_boss_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "-(center_distance_m + worm_boss_r_m + mount_wall_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x0_m",
+              "rationale": "Left edge of the mount: far enough past the worm boss of unit 0 to carry it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tuner_count",
+                "unit_pitch_m",
+                "mount_body_r_m"
+              ],
+              "expression": "(tuner_count - 1) * unit_pitch_m + mount_body_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x1_m",
+              "rationale": "Right edge: past the wheel lobe of the last unit. Together with mount_x0_m this is how the strip grows with N rather than being a fixed plate.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_shank_r_m"
+              ],
+              "expression": "post_shank_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_bore_r_m",
+              "rationale": "Radius of the mount's post journal. The 0.4 mm running clearance stays inside the 1 mm gap the baseline QC still counts as support, so the post is carried without the bore having to interpenetrate it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_shaft_r_m"
+              ],
+              "expression": "worm_shaft_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_bore_r_m",
+              "rationale": "Radius of the mount's worm bearing bore, on the same clearance rule.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m",
+                "button_reach_m",
+                "center_distance_m"
+              ],
+              "expression": "max(2 * gear_tip_r_m, 2 * button_reach_m, 2 * center_distance_m) + 0.005",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "unit_pitch_m",
+              "rationale": "Spacing of tuner units along +X. Every one of the three terms is a real interference: neighbouring wheels, neighbouring buttons at any rotation, and a worm boss reaching back into the previous wheel lobe. The button term normally dominates, which is why the strip widens when a big cloverleaf is fitted.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_width_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_width_m / 2 + 0.0008 + 2 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_exit_y_m",
+              "rationale": "The +Y face the string post emerges from; the free length of the post is measured from here so post_reach_m always means the visible projection.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__guitar_tuning_peg_mechanism__002__png_0b7df3fa3d43402f853370564a63df8f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L52-L132",
+            "model.py:L208-L218"
+          ]
+        },
+        {
+          "evidence": "_build_housing closes a filleted box, an elliptical loft shoulder and a top boss over the train, then cuts a gear cavity, worm cavity, worm bore and post bore. A round proud cover with a bezel and two _build_cover_screw heads seals the gear side.",
+          "implementation_function": "_mount_form_sealed_housing_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radius": "worm_bore_r_m, seated over worm_span_m between two bearings"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "worm_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(x_i, 0, 0)",
+                "radius": "post_bore_r_m through the journal at post_exit_y_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(x_i, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "post_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "a disc of radius mount_body_r_m about the wheel station"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(x_i, post_exit_y_m, 0)"
+              },
+              "kind": "plane",
+              "name": "post_exit_plane",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "sealed_housing",
+          "notes": "A closed right-angle box: a filleted body, an elliptical loft shoulder rising to the worm boss, and a round proud cover with a bezel and two screw heads over the gear side. Hollowed by a gear cavity of gear_chamber_r_m, a worm cavity, and both shaft bores -- 003 L51-L105. Joint: root part; parents every worm rotor (continuous, +Z) and every string post (continuous, +Y).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.00125,
+              "minimum": 0.0007,
+              "mode": "independent",
+              "name": "gear_module_m",
+              "rationale": "Tooth module shared by the worm and the driven wheel -- the one number that sets both pitch radii and therefore the centre distance. Pool: 0.00062 and 0.00066 (005 L177/L245/L307), 0.0008 (003 L134/L158), 0.0010 (001 L298/L354), 0.0012 (002 L230/L281, 004 L283).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.33,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "worm_lead_angle_rad",
+              "rationale": "Lead angle of the one-start worm. Worm.r0 = module / (2 tan lead) in sdk/v0/gears.py, so this is a real geometric parameter: it changes the worm's own diameter and hence the centre distance and the mount's worm boss. Pool: 8 deg (002 L231), 16 deg (cloverleaf L145, side_mount L142), 18 deg (001 L299, 005 L247, die_cast L255), 20 deg (004 L221).",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0017,
+              "mode": "independent",
+              "name": "mount_wall_m",
+              "rationale": "Stamped plate thickness, or the wall of a sealed shell. Pool: 0.0017 (002 L73 extrude both=True), 0.002 (001 L28 box 2.0 mm), 0.003 (004 L57 extrude 1.5 both=True), 0.003 (side_mount L56 box y-thickness).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "worm_span_m",
+              "rationale": "Distance between the two worm bearing seats, i.e. the supported length of the vertical shaft. Pool: 0.024 (001 L183 bearings at z 7 and 31 mm), 0.032 (open_back_ratio L193/L199 at 7 and 39 mm), 0.034 (002 L112-L115 ears at 6 and 40 mm), 0.0215 (die_cast L34/L44 bosses at 1 and 31.5 mm).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_lead_angle_rad"
+              ],
+              "expression": "gear_module_m / (2 * tan(worm_lead_angle_rad))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_pitch_r_m",
+              "rationale": "Worm pitch radius, read straight off `Worm.r0` in sdk/v0/gears.py so the template and the generator agree on where the pitch line is.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "worm_pitch_r_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_tip_r_m",
+              "rationale": "Worm tip radius (`Worm.ra`). Sizes the worm boss bore and the cavity a sealed shell has to hollow out around the thread.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m",
+                "worm_pitch_r_m"
+              ],
+              "expression": "gear_pitch_r_m + worm_pitch_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "center_distance_m",
+              "rationale": "The common perpendicular between the two skew axes, laid along -X. Tangent pitch circles are the definition of a correct worm/wheel mesh; every station in the assembly is measured from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_span_m"
+              ],
+              "expression": "min(max(16 * gear_module_m, 0.008), 0.62 * worm_span_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_len_m",
+              "rationale": "Threaded length of the worm, in modules rather than in wheel radii: the pool runs 15-22 modules (001 18/1.0, 002 27/1.2, 003 12/0.8, 004 16/1.0, 005 14.5/0.66), and it still has to fit between the two bearing seats. Tying it to the wheel instead made the worm grow with the tooth count, which is both untrue to the sources and unaffordable -- each extra turn costs ~2.5k triangles on a spline-surfaced solid that collision QC re-evaluates at every pose.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_tip_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "worm_tip_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_boss_r_m",
+              "rationale": "Outer radius of the mount's worm bearing boss or ear ring; grows with the worm so a fat low-lead worm never bursts its bearing.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m"
+              ],
+              "expression": "gear_tip_r_m + 0.0012",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_chamber_r_m",
+              "rationale": "Radius of the clear space the mount must leave around the driven wheel. The sealed candidates boolean-cut exactly this cavity, which is what lets a 30-tooth wheel live inside the same shell as a 14-tooth one instead of the combination being excluded.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_chamber_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_chamber_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_body_r_m",
+              "rationale": "Outer radius of the mount around the wheel station -- the gear lobe of an open plate, the bulb of a gearbox pod, the half-height of a die-cast block.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_m",
+                "mount_body_r_m"
+              ],
+              "expression": "max(worm_span_m, 2 * mount_body_r_m + 0.004)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_span_eff_m",
+              "rationale": "Effective distance between the two worm bearings. The bearings have to STRADDLE the gear housing, so the declared span can never be shorter than the housing's own diameter -- 001 puts its bearings 24 mm apart around a 12 mm gear lobe. This is the derivation that keeps the button above every mount silhouette no matter which wheel the active post candidate brought with it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_eff_m",
+                "mount_wall_m"
+              ],
+              "expression": "0.5 * worm_span_eff_m + 1.5 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_top_z_m",
+              "rationale": "Top of the mount at the worm station: the upper bearing seat plus its own thickness. The button seat is measured from here, never from a constant.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "center_distance_m",
+                "worm_boss_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "-(center_distance_m + worm_boss_r_m + mount_wall_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x0_m",
+              "rationale": "Left edge of the mount: far enough past the worm boss of unit 0 to carry it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tuner_count",
+                "unit_pitch_m",
+                "mount_body_r_m"
+              ],
+              "expression": "(tuner_count - 1) * unit_pitch_m + mount_body_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x1_m",
+              "rationale": "Right edge: past the wheel lobe of the last unit. Together with mount_x0_m this is how the strip grows with N rather than being a fixed plate.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_shank_r_m"
+              ],
+              "expression": "post_shank_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_bore_r_m",
+              "rationale": "Radius of the mount's post journal. The 0.4 mm running clearance stays inside the 1 mm gap the baseline QC still counts as support, so the post is carried without the bore having to interpenetrate it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_shaft_r_m"
+              ],
+              "expression": "worm_shaft_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_bore_r_m",
+              "rationale": "Radius of the mount's worm bearing bore, on the same clearance rule.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m",
+                "button_reach_m",
+                "center_distance_m"
+              ],
+              "expression": "max(2 * gear_tip_r_m, 2 * button_reach_m, 2 * center_distance_m) + 0.005",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "unit_pitch_m",
+              "rationale": "Spacing of tuner units along +X. Every one of the three terms is a real interference: neighbouring wheels, neighbouring buttons at any rotation, and a worm boss reaching back into the previous wheel lobe. The button term normally dominates, which is why the strip widens when a big cloverleaf is fitted.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_width_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_width_m / 2 + 0.0008 + 2 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_exit_y_m",
+              "rationale": "The +Y face the string post emerges from; the free length of the post is measured from here so post_reach_m always means the visible projection.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__guitar_tuning_peg_mechanism__003__png_810f64ddef444b75a5caedd5bec3790f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L51-L105",
+            "model.py:L191-L215"
+          ]
+        },
+        {
+          "evidence": "_sealed_housing_shape is a filleted 28x14x28 mm block with three protruding cylindrical bearing bosses (worm above and below, post on the front face), through-bores for both shafts, two back mounting holes, and a parting-line ridge around the equator.",
+          "implementation_function": "_mount_form_die_cast_housing_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radius": "worm_bore_r_m, seated over worm_span_m between two bearings"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "worm_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(x_i, 0, 0)",
+                "radius": "post_bore_r_m through the journal at post_exit_y_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(x_i, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "post_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "a disc of radius mount_body_r_m about the wheel station"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(x_i, post_exit_y_m, 0)"
+              },
+              "kind": "plane",
+              "name": "post_exit_plane",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "die_cast_housing",
+          "notes": "A filleted rectangular block with three protruding cylindrical bearing bosses -- worm above and below, post on the -Y face -- through-bores for both shafts, two back mounting holes and a parting-line ridge around the equator that reads as a die-cast split -- die_cast L26-L103. Joint: root part; parents every worm rotor (continuous, +Z) and every string post (continuous, +Y).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.00125,
+              "minimum": 0.0007,
+              "mode": "independent",
+              "name": "gear_module_m",
+              "rationale": "Tooth module shared by the worm and the driven wheel -- the one number that sets both pitch radii and therefore the centre distance. Pool: 0.00062 and 0.00066 (005 L177/L245/L307), 0.0008 (003 L134/L158), 0.0010 (001 L298/L354), 0.0012 (002 L230/L281, 004 L283).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.33,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "worm_lead_angle_rad",
+              "rationale": "Lead angle of the one-start worm. Worm.r0 = module / (2 tan lead) in sdk/v0/gears.py, so this is a real geometric parameter: it changes the worm's own diameter and hence the centre distance and the mount's worm boss. Pool: 8 deg (002 L231), 16 deg (cloverleaf L145, side_mount L142), 18 deg (001 L299, 005 L247, die_cast L255), 20 deg (004 L221).",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0017,
+              "mode": "independent",
+              "name": "mount_wall_m",
+              "rationale": "Stamped plate thickness, or the wall of a sealed shell. Pool: 0.0017 (002 L73 extrude both=True), 0.002 (001 L28 box 2.0 mm), 0.003 (004 L57 extrude 1.5 both=True), 0.003 (side_mount L56 box y-thickness).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "worm_span_m",
+              "rationale": "Distance between the two worm bearing seats, i.e. the supported length of the vertical shaft. Pool: 0.024 (001 L183 bearings at z 7 and 31 mm), 0.032 (open_back_ratio L193/L199 at 7 and 39 mm), 0.034 (002 L112-L115 ears at 6 and 40 mm), 0.0215 (die_cast L34/L44 bosses at 1 and 31.5 mm).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_lead_angle_rad"
+              ],
+              "expression": "gear_module_m / (2 * tan(worm_lead_angle_rad))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_pitch_r_m",
+              "rationale": "Worm pitch radius, read straight off `Worm.r0` in sdk/v0/gears.py so the template and the generator agree on where the pitch line is.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "worm_pitch_r_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_tip_r_m",
+              "rationale": "Worm tip radius (`Worm.ra`). Sizes the worm boss bore and the cavity a sealed shell has to hollow out around the thread.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m",
+                "worm_pitch_r_m"
+              ],
+              "expression": "gear_pitch_r_m + worm_pitch_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "center_distance_m",
+              "rationale": "The common perpendicular between the two skew axes, laid along -X. Tangent pitch circles are the definition of a correct worm/wheel mesh; every station in the assembly is measured from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_span_m"
+              ],
+              "expression": "min(max(16 * gear_module_m, 0.008), 0.62 * worm_span_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_len_m",
+              "rationale": "Threaded length of the worm, in modules rather than in wheel radii: the pool runs 15-22 modules (001 18/1.0, 002 27/1.2, 003 12/0.8, 004 16/1.0, 005 14.5/0.66), and it still has to fit between the two bearing seats. Tying it to the wheel instead made the worm grow with the tooth count, which is both untrue to the sources and unaffordable -- each extra turn costs ~2.5k triangles on a spline-surfaced solid that collision QC re-evaluates at every pose.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_tip_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "worm_tip_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_boss_r_m",
+              "rationale": "Outer radius of the mount's worm bearing boss or ear ring; grows with the worm so a fat low-lead worm never bursts its bearing.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m"
+              ],
+              "expression": "gear_tip_r_m + 0.0012",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_chamber_r_m",
+              "rationale": "Radius of the clear space the mount must leave around the driven wheel. The sealed candidates boolean-cut exactly this cavity, which is what lets a 30-tooth wheel live inside the same shell as a 14-tooth one instead of the combination being excluded.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_chamber_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_chamber_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_body_r_m",
+              "rationale": "Outer radius of the mount around the wheel station -- the gear lobe of an open plate, the bulb of a gearbox pod, the half-height of a die-cast block.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_m",
+                "mount_body_r_m"
+              ],
+              "expression": "max(worm_span_m, 2 * mount_body_r_m + 0.004)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_span_eff_m",
+              "rationale": "Effective distance between the two worm bearings. The bearings have to STRADDLE the gear housing, so the declared span can never be shorter than the housing's own diameter -- 001 puts its bearings 24 mm apart around a 12 mm gear lobe. This is the derivation that keeps the button above every mount silhouette no matter which wheel the active post candidate brought with it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_eff_m",
+                "mount_wall_m"
+              ],
+              "expression": "0.5 * worm_span_eff_m + 1.5 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_top_z_m",
+              "rationale": "Top of the mount at the worm station: the upper bearing seat plus its own thickness. The button seat is measured from here, never from a constant.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "center_distance_m",
+                "worm_boss_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "-(center_distance_m + worm_boss_r_m + mount_wall_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x0_m",
+              "rationale": "Left edge of the mount: far enough past the worm boss of unit 0 to carry it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tuner_count",
+                "unit_pitch_m",
+                "mount_body_r_m"
+              ],
+              "expression": "(tuner_count - 1) * unit_pitch_m + mount_body_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x1_m",
+              "rationale": "Right edge: past the wheel lobe of the last unit. Together with mount_x0_m this is how the strip grows with N rather than being a fixed plate.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_shank_r_m"
+              ],
+              "expression": "post_shank_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_bore_r_m",
+              "rationale": "Radius of the mount's post journal. The 0.4 mm running clearance stays inside the 1 mm gap the baseline QC still counts as support, so the post is carried without the bore having to interpenetrate it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_shaft_r_m"
+              ],
+              "expression": "worm_shaft_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_bore_r_m",
+              "rationale": "Radius of the mount's worm bearing bore, on the same clearance rule.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m",
+                "button_reach_m",
+                "center_distance_m"
+              ],
+              "expression": "max(2 * gear_tip_r_m, 2 * button_reach_m, 2 * center_distance_m) + 0.005",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "unit_pitch_m",
+              "rationale": "Spacing of tuner units along +X. Every one of the three terms is a real interference: neighbouring wheels, neighbouring buttons at any rotation, and a worm boss reaching back into the previous wheel lobe. The button term normally dominates, which is why the strip widens when a big cloverleaf is fitted.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_width_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_width_m / 2 + 0.0008 + 2 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_exit_y_m",
+              "rationale": "The +Y face the string post emerges from; the free length of the post is measured from here so post_reach_m always means the visible projection.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_guitar_tuning_peg_var_sealed_die_cast_housing",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L26-L103",
+            "model.py:L194-L226"
+          ]
+        },
+        {
+          "evidence": "_build_mounting_plate is a narrow 20x3x40 mm flat bracket with compact worm and post bearing bosses unioned on, both shaft bores and two screw holes cut through, and _build_mount_screw_head phillips heads seated on the back face.",
+          "implementation_function": "_mount_form_side_mount_bracket_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radius": "worm_bore_r_m, seated over worm_span_m between two bearings"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "worm_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(x_i, 0, 0)",
+                "radius": "post_bore_r_m through the journal at post_exit_y_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(x_i, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "post_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "a disc of radius mount_body_r_m about the wheel station"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(x_i, post_exit_y_m, 0)"
+              },
+              "kind": "plane",
+              "name": "post_exit_plane",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "side_mount_bracket",
+          "notes": "A narrow flat bracket only mount_wall_m thick with compact worm and post bearing bosses unioned on, both shaft bores and two screw holes cut through, and phillips screw heads seated on the -Y back face. The train is exposed on both sides of a thin blade rather than enclosed -- side_mount L51-L102. Joint: root part; parents every worm rotor (continuous, +Z) and every string post (continuous, +Y).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.00125,
+              "minimum": 0.0007,
+              "mode": "independent",
+              "name": "gear_module_m",
+              "rationale": "Tooth module shared by the worm and the driven wheel -- the one number that sets both pitch radii and therefore the centre distance. Pool: 0.00062 and 0.00066 (005 L177/L245/L307), 0.0008 (003 L134/L158), 0.0010 (001 L298/L354), 0.0012 (002 L230/L281, 004 L283).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.33,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "worm_lead_angle_rad",
+              "rationale": "Lead angle of the one-start worm. Worm.r0 = module / (2 tan lead) in sdk/v0/gears.py, so this is a real geometric parameter: it changes the worm's own diameter and hence the centre distance and the mount's worm boss. Pool: 8 deg (002 L231), 16 deg (cloverleaf L145, side_mount L142), 18 deg (001 L299, 005 L247, die_cast L255), 20 deg (004 L221).",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0017,
+              "mode": "independent",
+              "name": "mount_wall_m",
+              "rationale": "Stamped plate thickness, or the wall of a sealed shell. Pool: 0.0017 (002 L73 extrude both=True), 0.002 (001 L28 box 2.0 mm), 0.003 (004 L57 extrude 1.5 both=True), 0.003 (side_mount L56 box y-thickness).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "worm_span_m",
+              "rationale": "Distance between the two worm bearing seats, i.e. the supported length of the vertical shaft. Pool: 0.024 (001 L183 bearings at z 7 and 31 mm), 0.032 (open_back_ratio L193/L199 at 7 and 39 mm), 0.034 (002 L112-L115 ears at 6 and 40 mm), 0.0215 (die_cast L34/L44 bosses at 1 and 31.5 mm).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_lead_angle_rad"
+              ],
+              "expression": "gear_module_m / (2 * tan(worm_lead_angle_rad))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_pitch_r_m",
+              "rationale": "Worm pitch radius, read straight off `Worm.r0` in sdk/v0/gears.py so the template and the generator agree on where the pitch line is.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "worm_pitch_r_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_tip_r_m",
+              "rationale": "Worm tip radius (`Worm.ra`). Sizes the worm boss bore and the cavity a sealed shell has to hollow out around the thread.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m",
+                "worm_pitch_r_m"
+              ],
+              "expression": "gear_pitch_r_m + worm_pitch_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "center_distance_m",
+              "rationale": "The common perpendicular between the two skew axes, laid along -X. Tangent pitch circles are the definition of a correct worm/wheel mesh; every station in the assembly is measured from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_span_m"
+              ],
+              "expression": "min(max(16 * gear_module_m, 0.008), 0.62 * worm_span_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_len_m",
+              "rationale": "Threaded length of the worm, in modules rather than in wheel radii: the pool runs 15-22 modules (001 18/1.0, 002 27/1.2, 003 12/0.8, 004 16/1.0, 005 14.5/0.66), and it still has to fit between the two bearing seats. Tying it to the wheel instead made the worm grow with the tooth count, which is both untrue to the sources and unaffordable -- each extra turn costs ~2.5k triangles on a spline-surfaced solid that collision QC re-evaluates at every pose.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_tip_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "worm_tip_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_boss_r_m",
+              "rationale": "Outer radius of the mount's worm bearing boss or ear ring; grows with the worm so a fat low-lead worm never bursts its bearing.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m"
+              ],
+              "expression": "gear_tip_r_m + 0.0012",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_chamber_r_m",
+              "rationale": "Radius of the clear space the mount must leave around the driven wheel. The sealed candidates boolean-cut exactly this cavity, which is what lets a 30-tooth wheel live inside the same shell as a 14-tooth one instead of the combination being excluded.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_chamber_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_chamber_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_body_r_m",
+              "rationale": "Outer radius of the mount around the wheel station -- the gear lobe of an open plate, the bulb of a gearbox pod, the half-height of a die-cast block.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_m",
+                "mount_body_r_m"
+              ],
+              "expression": "max(worm_span_m, 2 * mount_body_r_m + 0.004)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_span_eff_m",
+              "rationale": "Effective distance between the two worm bearings. The bearings have to STRADDLE the gear housing, so the declared span can never be shorter than the housing's own diameter -- 001 puts its bearings 24 mm apart around a 12 mm gear lobe. This is the derivation that keeps the button above every mount silhouette no matter which wheel the active post candidate brought with it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_eff_m",
+                "mount_wall_m"
+              ],
+              "expression": "0.5 * worm_span_eff_m + 1.5 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_top_z_m",
+              "rationale": "Top of the mount at the worm station: the upper bearing seat plus its own thickness. The button seat is measured from here, never from a constant.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "center_distance_m",
+                "worm_boss_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "-(center_distance_m + worm_boss_r_m + mount_wall_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x0_m",
+              "rationale": "Left edge of the mount: far enough past the worm boss of unit 0 to carry it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tuner_count",
+                "unit_pitch_m",
+                "mount_body_r_m"
+              ],
+              "expression": "(tuner_count - 1) * unit_pitch_m + mount_body_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x1_m",
+              "rationale": "Right edge: past the wheel lobe of the last unit. Together with mount_x0_m this is how the strip grows with N rather than being a fixed plate.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_shank_r_m"
+              ],
+              "expression": "post_shank_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_bore_r_m",
+              "rationale": "Radius of the mount's post journal. The 0.4 mm running clearance stays inside the 1 mm gap the baseline QC still counts as support, so the post is carried without the bore having to interpenetrate it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_shaft_r_m"
+              ],
+              "expression": "worm_shaft_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_bore_r_m",
+              "rationale": "Radius of the mount's worm bearing bore, on the same clearance rule.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m",
+                "button_reach_m",
+                "center_distance_m"
+              ],
+              "expression": "max(2 * gear_tip_r_m, 2 * button_reach_m, 2 * center_distance_m) + 0.005",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "unit_pitch_m",
+              "rationale": "Spacing of tuner units along +X. Every one of the three terms is a real interference: neighbouring wheels, neighbouring buttons at any rotation, and a worm boss reaching back into the previous wheel lobe. The button term normally dominates, which is why the strip widens when a big cloverleaf is fitted.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_width_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_width_m / 2 + 0.0008 + 2 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_exit_y_m",
+              "rationale": "The +Y face the string post emerges from; the free length of the post is measured from here so post_reach_m always means the visible projection.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_guitar_tuning_peg_var_side_mount_clover",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L51-L102",
+            "model.py:L196-L222"
+          ]
+        },
+        {
+          "evidence": "_housing_shell is a circular bulb around the gear unioned with a tall cylindrical worm-bearing tower and a filleted shoulder, hollowed by a gear cavity, worm cavity and both bores. A medallion, a knurled bezel ring, a nickel ring and two cover screws dress the front.",
+          "implementation_function": "_mount_form_gearbox_bulb_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radius": "worm_bore_r_m, seated over worm_span_m between two bearings"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(x_i - center_distance_m, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "worm_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(x_i, 0, 0)",
+                "radius": "post_bore_r_m through the journal at post_exit_y_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(x_i, 0, 0)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "post_bearing_axis",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "a disc of radius mount_body_r_m about the wheel station"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(x_i, post_exit_y_m, 0)"
+              },
+              "kind": "plane",
+              "name": "post_exit_plane",
+              "part": "mount",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "gearbox_bulb",
+          "notes": "A circular bulb of mount_body_r_m around the wheel unioned with a tall cylindrical worm-bearing tower and a filleted shoulder joining them, hollowed by the gear cavity, the worm cavity and both bores. Dressed with a medallion, a knurled bezel and two cover screws on the -Y face -- 005 L44-L98. Joint: root part; parents every worm rotor (continuous, +Z) and every string post (continuous, +Y).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.00125,
+              "minimum": 0.0007,
+              "mode": "independent",
+              "name": "gear_module_m",
+              "rationale": "Tooth module shared by the worm and the driven wheel -- the one number that sets both pitch radii and therefore the centre distance. Pool: 0.00062 and 0.00066 (005 L177/L245/L307), 0.0008 (003 L134/L158), 0.0010 (001 L298/L354), 0.0012 (002 L230/L281, 004 L283).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.33,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "worm_lead_angle_rad",
+              "rationale": "Lead angle of the one-start worm. Worm.r0 = module / (2 tan lead) in sdk/v0/gears.py, so this is a real geometric parameter: it changes the worm's own diameter and hence the centre distance and the mount's worm boss. Pool: 8 deg (002 L231), 16 deg (cloverleaf L145, side_mount L142), 18 deg (001 L299, 005 L247, die_cast L255), 20 deg (004 L221).",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0017,
+              "mode": "independent",
+              "name": "mount_wall_m",
+              "rationale": "Stamped plate thickness, or the wall of a sealed shell. Pool: 0.0017 (002 L73 extrude both=True), 0.002 (001 L28 box 2.0 mm), 0.003 (004 L57 extrude 1.5 both=True), 0.003 (side_mount L56 box y-thickness).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "worm_span_m",
+              "rationale": "Distance between the two worm bearing seats, i.e. the supported length of the vertical shaft. Pool: 0.024 (001 L183 bearings at z 7 and 31 mm), 0.032 (open_back_ratio L193/L199 at 7 and 39 mm), 0.034 (002 L112-L115 ears at 6 and 40 mm), 0.0215 (die_cast L34/L44 bosses at 1 and 31.5 mm).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_lead_angle_rad"
+              ],
+              "expression": "gear_module_m / (2 * tan(worm_lead_angle_rad))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_pitch_r_m",
+              "rationale": "Worm pitch radius, read straight off `Worm.r0` in sdk/v0/gears.py so the template and the generator agree on where the pitch line is.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "worm_pitch_r_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_tip_r_m",
+              "rationale": "Worm tip radius (`Worm.ra`). Sizes the worm boss bore and the cavity a sealed shell has to hollow out around the thread.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m",
+                "worm_pitch_r_m"
+              ],
+              "expression": "gear_pitch_r_m + worm_pitch_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "center_distance_m",
+              "rationale": "The common perpendicular between the two skew axes, laid along -X. Tangent pitch circles are the definition of a correct worm/wheel mesh; every station in the assembly is measured from it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "worm_span_m"
+              ],
+              "expression": "min(max(16 * gear_module_m, 0.008), 0.62 * worm_span_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_len_m",
+              "rationale": "Threaded length of the worm, in modules rather than in wheel radii: the pool runs 15-22 modules (001 18/1.0, 002 27/1.2, 003 12/0.8, 004 16/1.0, 005 14.5/0.66), and it still has to fit between the two bearing seats. Tying it to the wheel instead made the worm grow with the tooth count, which is both untrue to the sources and unaffordable -- each extra turn costs ~2.5k triangles on a spline-surfaced solid that collision QC re-evaluates at every pose.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_tip_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "worm_tip_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_boss_r_m",
+              "rationale": "Outer radius of the mount's worm bearing boss or ear ring; grows with the worm so a fat low-lead worm never bursts its bearing.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m"
+              ],
+              "expression": "gear_tip_r_m + 0.0012",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_chamber_r_m",
+              "rationale": "Radius of the clear space the mount must leave around the driven wheel. The sealed candidates boolean-cut exactly this cavity, which is what lets a 30-tooth wheel live inside the same shell as a 14-tooth one instead of the combination being excluded.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_chamber_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_chamber_r_m + mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_body_r_m",
+              "rationale": "Outer radius of the mount around the wheel station -- the gear lobe of an open plate, the bulb of a gearbox pod, the half-height of a die-cast block.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_m",
+                "mount_body_r_m"
+              ],
+              "expression": "max(worm_span_m, 2 * mount_body_r_m + 0.004)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_span_eff_m",
+              "rationale": "Effective distance between the two worm bearings. The bearings have to STRADDLE the gear housing, so the declared span can never be shorter than the housing's own diameter -- 001 puts its bearings 24 mm apart around a 12 mm gear lobe. This is the derivation that keeps the button above every mount silhouette no matter which wheel the active post candidate brought with it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_span_eff_m",
+                "mount_wall_m"
+              ],
+              "expression": "0.5 * worm_span_eff_m + 1.5 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_top_z_m",
+              "rationale": "Top of the mount at the worm station: the upper bearing seat plus its own thickness. The button seat is measured from here, never from a constant.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "center_distance_m",
+                "worm_boss_r_m",
+                "mount_wall_m"
+              ],
+              "expression": "-(center_distance_m + worm_boss_r_m + mount_wall_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x0_m",
+              "rationale": "Left edge of the mount: far enough past the worm boss of unit 0 to carry it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tuner_count",
+                "unit_pitch_m",
+                "mount_body_r_m"
+              ],
+              "expression": "(tuner_count - 1) * unit_pitch_m + mount_body_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "mount_x1_m",
+              "rationale": "Right edge: past the wheel lobe of the last unit. Together with mount_x0_m this is how the strip grows with N rather than being a fixed plate.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_shank_r_m"
+              ],
+              "expression": "post_shank_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_bore_r_m",
+              "rationale": "Radius of the mount's post journal. The 0.4 mm running clearance stays inside the 1 mm gap the baseline QC still counts as support, so the post is carried without the bore having to interpenetrate it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_shaft_r_m"
+              ],
+              "expression": "worm_shaft_r_m + 0.0004",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_bore_r_m",
+              "rationale": "Radius of the mount's worm bearing bore, on the same clearance rule.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_tip_r_m",
+                "button_reach_m",
+                "center_distance_m"
+              ],
+              "expression": "max(2 * gear_tip_r_m, 2 * button_reach_m, 2 * center_distance_m) + 0.005",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "unit_pitch_m",
+              "rationale": "Spacing of tuner units along +X. Every one of the three terms is a real interference: neighbouring wheels, neighbouring buttons at any rotation, and a worm boss reaching back into the previous wheel lobe. The button term normally dominates, which is why the strip widens when a big cloverleaf is fitted.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_width_m",
+                "mount_wall_m"
+              ],
+              "expression": "gear_width_m / 2 + 0.0008 + 2 * mount_wall_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_exit_y_m",
+              "rationale": "The +Y face the string post emerges from; the free length of the post is measured from here so post_reach_m always means the visible projection.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__guitar_tuning_peg_mechanism__005__png_6f66eb339bfd4847a01b803622118370",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L44-L98",
+            "model.py:L153-L236"
+          ]
+        }
+      ],
+      "component_type": "mount and gear enclosure",
+      "name": "mount_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The driven SpurGear sits on a hub with a plain stepped axle and a larger-diameter string post projecting behind the mount, closed by a slotted gear screw on the front face. This is the baseline post: one part, one joint.",
+          "implementation_function": "_post_form_plain_post_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "the wheel centre, local origin",
+                "radius": "post_shank_r_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "the wheel centre, local origin",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "post_pivot_axis",
+              "part": "post_plain",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "the wheel centre, local origin",
+                "radius": "gear_pitch_r_m (tip gear_tip_r_m, face gear_width_m)"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "the wheel centre, local origin",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "gear_pitch_circle",
+              "part": "post_plain",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "a disc of radius post_shank_r_m"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(0, post_exit_y_m, 0) in the unit frame"
+              },
+              "kind": "plane",
+              "name": "post_root_plane",
+              "part": "post_plain",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "plain_post",
+          "notes": "The involute wheel on a hub, a stepped shank through the mount journal, and a larger-diameter winding post beyond it with a cross-drilled string hole, closed by a slotted gear screw on the -Y face. One part, one joint -- 004 L268-L328 with the drilled hole from 002 L175-L185. Joint: child of mount, continuous about +Y, mimic(worm, -1/gear_teeth).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 19,
+              "minimum": 14,
+              "mode": "independent",
+              "name": "gear_teeth",
+              "rationale": "Driven tooth count for the baseline machine head. Band anchored on its own sources: 14 (004 L279) and 19 (002 L282). Sets gear_pitch_r_m and the mimic multiplier -1/gear_teeth.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.042,
+              "minimum": 0.022,
+              "mode": "independent",
+              "name": "post_reach_m",
+              "rationale": "Visible projection of the winding post, roller yoke or split tube beyond the mount's +Y face. Pool: 0.032 (001 L373), 0.040 (002 L177), 0.036 (003 L162), 0.041 (004 L302+L309), 0.039 (005 L323), 0.036 (locking L179).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "gear_teeth"
+              ],
+              "expression": "gear_module_m * gear_teeth / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_pitch_r_m",
+              "rationale": "Driven wheel pitch radius, read straight off `SpurGear.r0` in sdk/v0/gears.py.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "gear_pitch_r_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_tip_r_m",
+              "rationale": "Driven wheel tip radius (`SpurGear.ra`); this is the envelope the mount has to leave clear and the neighbouring unit has to stay away from.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m"
+              ],
+              "expression": "clamp(3.5 * gear_module_m, 0.0032, 0.0055)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_width_m",
+              "rationale": "Face width of the driven wheel. Pool: 4.0 mm at module 1.0 (001 L358), 3.2 at 1.2 (004 L282), 4.0 at 0.8 (003 L152), 4.2 at 0.66 (005 L310) -- 3.3x to 6x module, clamped so a thin-module wheel still has a face the worm can span.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_teeth"
+              ],
+              "expression": "gear_teeth",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_ratio",
+              "rationale": "Reduction of the one-start worm drive; the post joint mimics the worm joint at -1/worm_ratio. Every source states this explicitly with its own tooth count (001 -1/14, 002 -1/19, 003 -1/18, 004 -1/14, 005 -1/24, ratio fork -1/21).",
+              "unit": "count",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m"
+              ],
+              "expression": "clamp(0.30 * gear_pitch_r_m, 0.0022, 0.0035)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_shank_r_m",
+              "rationale": "Radius of the shank running in the mount journal. Pool: 0.0028 (002 L177), 0.0029 (003 L162), 0.00285 (005 L323), 0.00245 (004 L302).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_exit_y_m"
+              ],
+              "expression": "post_exit_y_m + 0.0016",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_barrel_y0_m",
+              "rationale": "Where a post candidate may start its beyond-journal feature -- the winding barrel, the split tube or the roller collar. A mount is allowed to protrude a post bearing boss up to 0.6 mm past its +Y face, so starting the fatter barrel flush with post_exit_y_m drives the two parts into one another; measured worst case 0.72 mm of axial overlap at 1.5 mm of radial interference.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_reach_m"
+              ],
+              "expression": "post_reach_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_free_len_m",
+              "rationale": "Visible projection of the post beyond post_exit_y_m; the modelled shank is this plus the journal depth so the post is always carried, never floating.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_shank_r_m",
+                "gear_pitch_r_m"
+              ],
+              "expression": "min(post_shank_r_m + 0.0018, 0.55 * gear_pitch_r_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_hub_r_m",
+              "rationale": "Hub boss on the -Y wheel face, capped so it can never swallow the teeth of a small wheel. 002 L302 and 004 L295 both carry one.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__guitar_tuning_peg_mechanism__004__png_48157ac16c654657b262f522935a05e2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L268-L328"
+          ]
+        },
+        {
+          "evidence": "The driven gear goes from 14 to 21 teeth on the same module, so the mimic multiplier changes with it, and the host plate grows from 28x32 to 34x42 mm with a 14 mm gear lobe to keep the bigger wheel enclosed. Ratio is a real geometric change, not a scale.",
+          "implementation_function": "_post_form_high_ratio_post_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "the wheel centre, local origin",
+                "radius": "post_shank_r_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "the wheel centre, local origin",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "post_pivot_axis",
+              "part": "post_high_ratio",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "the wheel centre, local origin",
+                "radius": "gear_pitch_r_m (tip gear_tip_r_m, face gear_width_m)"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "the wheel centre, local origin",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "gear_pitch_circle",
+              "part": "post_high_ratio",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "a disc of radius post_shank_r_m"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(0, post_exit_y_m, 0) in the unit frame"
+              },
+              "kind": "plane",
+              "name": "post_root_plane",
+              "part": "post_high_ratio",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "high_ratio_post",
+          "notes": "The same construction as the baseline post carrying a much larger wheel, plus the stepped bearing collar the taller support needs between the wheel face and the mount. gear_chamber_r_m and mount_body_r_m grow with the wheel through the post_wheel_sizes_the_mount binding, so a sealed shell still encloses it -- open_back_ratio L26-L63 and L352-L414. Joint: child of mount, continuous about +Y, mimic(worm, -1/gear_teeth).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 30,
+              "minimum": 21,
+              "mode": "independent",
+              "name": "gear_teeth",
+              "rationale": "Driven tooth count for the high-ratio fork. Its source raises the wheel from 14 to 21 teeth on the same module (open_back_ratio L355 against 001 L355), so the band starts there. A different tooth count is a different involute solid and a different mimic multiplier, not a scale of the baseline, and the host grows with it -- the source plate went 28x32 to 34x42 mm with a 14 mm gear lobe.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.042,
+              "minimum": 0.022,
+              "mode": "independent",
+              "name": "post_reach_m",
+              "rationale": "Visible projection of the winding post, roller yoke or split tube beyond the mount's +Y face. Pool: 0.032 (001 L373), 0.040 (002 L177), 0.036 (003 L162), 0.041 (004 L302+L309), 0.039 (005 L323), 0.036 (locking L179).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "gear_teeth"
+              ],
+              "expression": "gear_module_m * gear_teeth / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_pitch_r_m",
+              "rationale": "Driven wheel pitch radius, read straight off `SpurGear.r0` in sdk/v0/gears.py.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "gear_pitch_r_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_tip_r_m",
+              "rationale": "Driven wheel tip radius (`SpurGear.ra`); this is the envelope the mount has to leave clear and the neighbouring unit has to stay away from.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m"
+              ],
+              "expression": "clamp(3.5 * gear_module_m, 0.0032, 0.0055)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_width_m",
+              "rationale": "Face width of the driven wheel. Pool: 4.0 mm at module 1.0 (001 L358), 3.2 at 1.2 (004 L282), 4.0 at 0.8 (003 L152), 4.2 at 0.66 (005 L310) -- 3.3x to 6x module, clamped so a thin-module wheel still has a face the worm can span.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_teeth"
+              ],
+              "expression": "gear_teeth",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_ratio",
+              "rationale": "Reduction of the one-start worm drive; the post joint mimics the worm joint at -1/worm_ratio. Every source states this explicitly with its own tooth count (001 -1/14, 002 -1/19, 003 -1/18, 004 -1/14, 005 -1/24, ratio fork -1/21).",
+              "unit": "count",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m"
+              ],
+              "expression": "clamp(0.30 * gear_pitch_r_m, 0.0022, 0.0035)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_shank_r_m",
+              "rationale": "Radius of the shank running in the mount journal. Pool: 0.0028 (002 L177), 0.0029 (003 L162), 0.00285 (005 L323), 0.00245 (004 L302).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_exit_y_m"
+              ],
+              "expression": "post_exit_y_m + 0.0016",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_barrel_y0_m",
+              "rationale": "Where a post candidate may start its beyond-journal feature -- the winding barrel, the split tube or the roller collar. A mount is allowed to protrude a post bearing boss up to 0.6 mm past its +Y face, so starting the fatter barrel flush with post_exit_y_m drives the two parts into one another; measured worst case 0.72 mm of axial overlap at 1.5 mm of radial interference.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_reach_m"
+              ],
+              "expression": "post_reach_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_free_len_m",
+              "rationale": "Visible projection of the post beyond post_exit_y_m; the modelled shank is this plus the journal depth so the post is always carried, never floating.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_shank_r_m",
+                "gear_pitch_r_m"
+              ],
+              "expression": "min(post_shank_r_m + 0.0018, 0.55 * gear_pitch_r_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_hub_r_m",
+              "rationale": "Hub boss on the -Y wheel face, capped so it can never swallow the teeth of a small wheel. 002 L302 and 004 L295 both carry one.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_guitar_tuning_peg_var_open_back_ratio",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L26-L63",
+            "model.py:L352-L414"
+          ]
+        },
+        {
+          "evidence": "_make_locking_split_post is a hollow tube whose wall is slit for 70% of its height, and _make_locking_screw is a cap head with a hex socket. The screw is a separate part on its own CONTINUOUS joint about the post axis, so this candidate adds one part and one joint per unit.",
+          "implementation_function": "_post_form_locking_split_post_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "the wheel centre, local origin",
+                "radius": "post_shank_r_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "the wheel centre, local origin",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "post_pivot_axis",
+              "part": "post_locking",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "the wheel centre, local origin",
+                "radius": "gear_pitch_r_m (tip gear_tip_r_m, face gear_width_m)"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "the wheel centre, local origin",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "gear_pitch_circle",
+              "part": "post_locking",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "a disc of radius post_shank_r_m"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(0, post_exit_y_m, 0) in the unit frame"
+              },
+              "kind": "plane",
+              "name": "post_root_plane",
+              "part": "post_locking",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(0, post_exit_y_m + post_free_len_m, 0) in the unit frame",
+                "radius": "the split tube outer radius, screw head 1.2x it"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(0, post_exit_y_m + post_free_len_m, 0) in the unit frame",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "lock_screw_axis",
+              "part": "post_locking",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "locking_split_post",
+          "notes": "The winding post is a hollow tube whose wall is slit for 70% of its height, and a cap-head hex-socket screw clamps it. The screw is a SEPARATE part on its own continuous joint about the post axis, so this candidate adds one part and one joint per tuner unit -- the only source in the pool that changes the joint count -- locking L170-L251 and L443-L453. Joint: child of mount, continuous about +Y, mimic(worm, -1/gear_teeth); additionally parents one lock_screw per unit, continuous about +Y.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 19,
+              "minimum": 14,
+              "mode": "independent",
+              "name": "gear_teeth",
+              "rationale": "Driven tooth count for the locking fork; its source is a 19-tooth wheel (locking L282), so it shares the baseline band.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.042,
+              "minimum": 0.022,
+              "mode": "independent",
+              "name": "post_reach_m",
+              "rationale": "Visible projection of the winding post, roller yoke or split tube beyond the mount's +Y face. Pool: 0.032 (001 L373), 0.040 (002 L177), 0.036 (003 L162), 0.041 (004 L302+L309), 0.039 (005 L323), 0.036 (locking L179).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "gear_teeth"
+              ],
+              "expression": "gear_module_m * gear_teeth / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_pitch_r_m",
+              "rationale": "Driven wheel pitch radius, read straight off `SpurGear.r0` in sdk/v0/gears.py.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "gear_pitch_r_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_tip_r_m",
+              "rationale": "Driven wheel tip radius (`SpurGear.ra`); this is the envelope the mount has to leave clear and the neighbouring unit has to stay away from.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m"
+              ],
+              "expression": "clamp(3.5 * gear_module_m, 0.0032, 0.0055)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_width_m",
+              "rationale": "Face width of the driven wheel. Pool: 4.0 mm at module 1.0 (001 L358), 3.2 at 1.2 (004 L282), 4.0 at 0.8 (003 L152), 4.2 at 0.66 (005 L310) -- 3.3x to 6x module, clamped so a thin-module wheel still has a face the worm can span.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_teeth"
+              ],
+              "expression": "gear_teeth",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_ratio",
+              "rationale": "Reduction of the one-start worm drive; the post joint mimics the worm joint at -1/worm_ratio. Every source states this explicitly with its own tooth count (001 -1/14, 002 -1/19, 003 -1/18, 004 -1/14, 005 -1/24, ratio fork -1/21).",
+              "unit": "count",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m"
+              ],
+              "expression": "clamp(0.30 * gear_pitch_r_m, 0.0022, 0.0035)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_shank_r_m",
+              "rationale": "Radius of the shank running in the mount journal. Pool: 0.0028 (002 L177), 0.0029 (003 L162), 0.00285 (005 L323), 0.00245 (004 L302).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_exit_y_m"
+              ],
+              "expression": "post_exit_y_m + 0.0016",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_barrel_y0_m",
+              "rationale": "Where a post candidate may start its beyond-journal feature -- the winding barrel, the split tube or the roller collar. A mount is allowed to protrude a post bearing boss up to 0.6 mm past its +Y face, so starting the fatter barrel flush with post_exit_y_m drives the two parts into one another; measured worst case 0.72 mm of axial overlap at 1.5 mm of radial interference.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_reach_m"
+              ],
+              "expression": "post_reach_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_free_len_m",
+              "rationale": "Visible projection of the post beyond post_exit_y_m; the modelled shank is this plus the journal depth so the post is always carried, never floating.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_shank_r_m",
+                "gear_pitch_r_m"
+              ],
+              "expression": "min(post_shank_r_m + 0.0018, 0.55 * gear_pitch_r_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_hub_r_m",
+              "rationale": "Hub boss on the -Y wheel face, capped so it can never swallow the teeth of a small wheel. 002 L302 and 004 L295 both carry one.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_guitar_tuning_peg_var_locking_split_post",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L170-L251",
+            "model.py:L409-L423",
+            "model.py:L443-L453"
+          ]
+        },
+        {
+          "evidence": "_roller_yoke carries a collar, a bridge plate and two prongs projecting along the post axis with a transverse axle at their tips, and _string_roller is a barrel spanning between them. The string wraps a crosswise roller instead of an upright post.",
+          "implementation_function": "_post_form_classical_roller_post_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "the wheel centre, local origin",
+                "radius": "post_shank_r_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "the wheel centre, local origin",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "post_pivot_axis",
+              "part": "post_roller",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "the wheel centre, local origin",
+                "radius": "gear_pitch_r_m (tip gear_tip_r_m, face gear_width_m)"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "the wheel centre, local origin",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "gear_pitch_circle",
+              "part": "post_roller",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "a disc of radius post_shank_r_m"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(0, post_exit_y_m, 0) in the unit frame"
+              },
+              "kind": "plane",
+              "name": "post_root_plane",
+              "part": "post_roller",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "classical_roller_post",
+          "notes": "Instead of an upright post the shank carries a fork: a collar, a bridge plate and two prongs projecting along +Y with a transverse axle at their tips, spanned by a barrel roller lying along X. The string wraps a crosswise roller, which is what a classical slot-head tuner does -- roller L135-L192. Joint: child of mount, continuous about +Y, mimic(worm, -1/gear_teeth).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 24,
+              "minimum": 18,
+              "mode": "independent",
+              "name": "gear_teeth",
+              "rationale": "Driven tooth count for the classical roller fork; its source runs a 24-tooth wheel (roller L369).",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.042,
+              "minimum": 0.022,
+              "mode": "independent",
+              "name": "post_reach_m",
+              "rationale": "Visible projection of the winding post, roller yoke or split tube beyond the mount's +Y face. Pool: 0.032 (001 L373), 0.040 (002 L177), 0.036 (003 L162), 0.041 (004 L302+L309), 0.039 (005 L323), 0.036 (locking L179).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m",
+                "gear_teeth"
+              ],
+              "expression": "gear_module_m * gear_teeth / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_pitch_r_m",
+              "rationale": "Driven wheel pitch radius, read straight off `SpurGear.r0` in sdk/v0/gears.py.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "gear_pitch_r_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_tip_r_m",
+              "rationale": "Driven wheel tip radius (`SpurGear.ra`); this is the envelope the mount has to leave clear and the neighbouring unit has to stay away from.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_module_m"
+              ],
+              "expression": "clamp(3.5 * gear_module_m, 0.0032, 0.0055)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_width_m",
+              "rationale": "Face width of the driven wheel. Pool: 4.0 mm at module 1.0 (001 L358), 3.2 at 1.2 (004 L282), 4.0 at 0.8 (003 L152), 4.2 at 0.66 (005 L310) -- 3.3x to 6x module, clamped so a thin-module wheel still has a face the worm can span.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_teeth"
+              ],
+              "expression": "gear_teeth",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_ratio",
+              "rationale": "Reduction of the one-start worm drive; the post joint mimics the worm joint at -1/worm_ratio. Every source states this explicitly with its own tooth count (001 -1/14, 002 -1/19, 003 -1/18, 004 -1/14, 005 -1/24, ratio fork -1/21).",
+              "unit": "count",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_pitch_r_m"
+              ],
+              "expression": "clamp(0.30 * gear_pitch_r_m, 0.0022, 0.0035)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_shank_r_m",
+              "rationale": "Radius of the shank running in the mount journal. Pool: 0.0028 (002 L177), 0.0029 (003 L162), 0.00285 (005 L323), 0.00245 (004 L302).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_exit_y_m"
+              ],
+              "expression": "post_exit_y_m + 0.0016",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_barrel_y0_m",
+              "rationale": "Where a post candidate may start its beyond-journal feature -- the winding barrel, the split tube or the roller collar. A mount is allowed to protrude a post bearing boss up to 0.6 mm past its +Y face, so starting the fatter barrel flush with post_exit_y_m drives the two parts into one another; measured worst case 0.72 mm of axial overlap at 1.5 mm of radial interference.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_reach_m"
+              ],
+              "expression": "post_reach_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "post_free_len_m",
+              "rationale": "Visible projection of the post beyond post_exit_y_m; the modelled shank is this plus the journal depth so the post is always carried, never floating.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "post_shank_r_m",
+                "gear_pitch_r_m"
+              ],
+              "expression": "min(post_shank_r_m + 0.0018, 0.55 * gear_pitch_r_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_hub_r_m",
+              "rationale": "Hub boss on the -Y wheel face, capped so it can never swallow the teeth of a small wheel. 002 L302 and 004 L295 both carry one.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_guitar_tuning_peg_var_classical_roller_post",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L135-L192",
+            "model.py:L359-L396"
+          ]
+        }
+      ],
+      "component_type": "string post",
+      "name": "post_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_paddle_button is a broad filleted keystone plate with clipped lower corners, extruded in the plane containing the shaft, plus a recessed oval washer and a face screw. One solid blade.",
+          "implementation_function": "_button_form_paddle_button_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0, 0, button_seat_z_m) in the rotor frame",
+                "radius": "button_bore_r_m"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(0, 0, button_seat_z_m) in the rotor frame",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "button_hub_axis",
+              "part": "worm_rotor",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "paddle_button",
+          "notes": "A broad filleted keystone blade with clipped lower shoulders, extruded in the plane that contains the shaft, plus a recessed oval washer and a face screw. One solid blade whose silhouette is wide in X and thin in Y -- 005 L101-L123, with the shield profile of 003 L108-L129 as the same family. Joint: fixed to the worm rotor; turns with the worm's continuous +Z joint.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.021,
+              "minimum": 0.011,
+              "mode": "independent",
+              "name": "button_reach_m",
+              "rationale": "Radius the button sweeps about the worm axis. This is what decides unit_pitch_m, so it is the parameter that widens the whole strip. Pool: 0.0145 semi-minor / 0.026 semi-major (002 L138), 0.0140 (003 L112), 0.0190 (005 L109), 0.0156 (cloverleaf lobe_offset 0.0088 + lobe_r 0.0068).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.006,
+              "minimum": 0.0028,
+              "mode": "independent",
+              "name": "button_thick_m",
+              "rationale": "Thickness of the pressed button blade or plate. Pool: 0.0034 (002 L138 extrude both=True), 0.0068 (003 L127), 0.0047 (005 L120), 0.0036 (cloverleaf L114).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_tip_r_m",
+                "worm_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "max(clamp(0.55 * worm_tip_r_m, 0.0013, 0.0026), worm_pitch_r_m - 1.25 * gear_module_m + 0.0003)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_shaft_r_m",
+              "rationale": "Radius of the plain shaft the worm thread is cut into, and of the section running up to the button. It has to reach the thread root (r0 - 1.25 m) or the thread floats off its own shaft -- measured 0.27 mm clear at the largest module and lowest lead. Pool: 0.00215 (002 L224), 0.00172 (003 L233), 0.00155 (004 L235), 0.00205 (005 L261), 0.00135 (001 L273).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "mount_top_z_m"
+              ],
+              "expression": "mount_top_z_m + 0.003",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "button_seat_z_m",
+              "rationale": "Underside of the button. The 3 mm standoff is the source's own assertion: 005 L490-L499 checks expect_gap(tuner_button, gearbox_shell, min_gap=0.0025, max_gap=0.0035). Because it is measured from mount_top_z_m the button clears any worm span rather than a remembered constant.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_shaft_r_m"
+              ],
+              "expression": "worm_shaft_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "button_bore_r_m",
+              "rationale": "The button hub is bored to the shaft it is pinned to; both belong to the same rotor part, so this is a fit, not a joint.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__guitar_tuning_peg_mechanism__005__png_6f66eb339bfd4847a01b803622118370",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L101-L123",
+            "model.py:L272-L298"
+          ]
+        },
+        {
+          "evidence": "_make_button is an ellipse unioned with a tapered lower web, then pierced by four rotated elliptical windows that leave a central X-shaped load-carrying web. The open windows are the identity.",
+          "implementation_function": "_button_form_butterfly_button_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0, 0, button_seat_z_m) in the rotor frame",
+                "radius": "button_bore_r_m"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(0, 0, button_seat_z_m) in the rotor frame",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "button_hub_axis",
+              "part": "worm_rotor",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "butterfly_button",
+          "notes": "An ellipse unioned with a tapered lower web, then pierced by four rotated elliptical windows that leave a central X-shaped load-carrying web. The open windows are the identity: this candidate has holes through it, the paddle does not -- 002 L135-L172. Joint: fixed to the worm rotor; turns with the worm's continuous +Z joint.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.021,
+              "minimum": 0.011,
+              "mode": "independent",
+              "name": "button_reach_m",
+              "rationale": "Radius the button sweeps about the worm axis. This is what decides unit_pitch_m, so it is the parameter that widens the whole strip. Pool: 0.0145 semi-minor / 0.026 semi-major (002 L138), 0.0140 (003 L112), 0.0190 (005 L109), 0.0156 (cloverleaf lobe_offset 0.0088 + lobe_r 0.0068).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.006,
+              "minimum": 0.0028,
+              "mode": "independent",
+              "name": "button_thick_m",
+              "rationale": "Thickness of the pressed button blade or plate. Pool: 0.0034 (002 L138 extrude both=True), 0.0068 (003 L127), 0.0047 (005 L120), 0.0036 (cloverleaf L114).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_tip_r_m",
+                "worm_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "max(clamp(0.55 * worm_tip_r_m, 0.0013, 0.0026), worm_pitch_r_m - 1.25 * gear_module_m + 0.0003)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_shaft_r_m",
+              "rationale": "Radius of the plain shaft the worm thread is cut into, and of the section running up to the button. It has to reach the thread root (r0 - 1.25 m) or the thread floats off its own shaft -- measured 0.27 mm clear at the largest module and lowest lead. Pool: 0.00215 (002 L224), 0.00172 (003 L233), 0.00155 (004 L235), 0.00205 (005 L261), 0.00135 (001 L273).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "mount_top_z_m"
+              ],
+              "expression": "mount_top_z_m + 0.003",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "button_seat_z_m",
+              "rationale": "Underside of the button. The 3 mm standoff is the source's own assertion: 005 L490-L499 checks expect_gap(tuner_button, gearbox_shell, min_gap=0.0025, max_gap=0.0035). Because it is measured from mount_top_z_m the button clears any worm span rather than a remembered constant.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_shaft_r_m"
+              ],
+              "expression": "worm_shaft_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "button_bore_r_m",
+              "rationale": "The button hub is bored to the shaft it is pinned to; both belong to the same rotor part, so this is a fit, not a joint.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__guitar_tuning_peg_mechanism__002__png_0b7df3fa3d43402f853370564a63df8f",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L135-L172",
+            "model.py:L258-L276"
+          ]
+        },
+        {
+          "evidence": "_build_cloverleaf_button unions a centre disk with four lobe cylinders at 90 degree spacing into a plate lying perpendicular to the shaft axis, with a hub boss below and a bore through. Unlike the other two it sweeps a disc, not a blade.",
+          "implementation_function": "_button_form_cloverleaf_button_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0, 0, button_seat_z_m) in the rotor frame",
+                "radius": "button_bore_r_m"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(0, 0, button_seat_z_m) in the rotor frame",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "button_hub_axis",
+              "part": "worm_rotor",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "cloverleaf_button",
+          "notes": "A centre disc unioned with four lobe cylinders at 90 degree spacing, lying PERPENDICULAR to the shaft rather than containing it, with a hub boss below and a bore through. Unlike the other two it sweeps a disc, so its silhouette is the same from every rotation -- cloverleaf L108-L140. Joint: fixed to the worm rotor; turns with the worm's continuous +Z joint.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.021,
+              "minimum": 0.011,
+              "mode": "independent",
+              "name": "button_reach_m",
+              "rationale": "Radius the button sweeps about the worm axis. This is what decides unit_pitch_m, so it is the parameter that widens the whole strip. Pool: 0.0145 semi-minor / 0.026 semi-major (002 L138), 0.0140 (003 L112), 0.0190 (005 L109), 0.0156 (cloverleaf lobe_offset 0.0088 + lobe_r 0.0068).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.006,
+              "minimum": 0.0028,
+              "mode": "independent",
+              "name": "button_thick_m",
+              "rationale": "Thickness of the pressed button blade or plate. Pool: 0.0034 (002 L138 extrude both=True), 0.0068 (003 L127), 0.0047 (005 L120), 0.0036 (cloverleaf L114).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_tip_r_m",
+                "worm_pitch_r_m",
+                "gear_module_m"
+              ],
+              "expression": "max(clamp(0.55 * worm_tip_r_m, 0.0013, 0.0026), worm_pitch_r_m - 1.25 * gear_module_m + 0.0003)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "worm_shaft_r_m",
+              "rationale": "Radius of the plain shaft the worm thread is cut into, and of the section running up to the button. It has to reach the thread root (r0 - 1.25 m) or the thread floats off its own shaft -- measured 0.27 mm clear at the largest module and lowest lead. Pool: 0.00215 (002 L224), 0.00172 (003 L233), 0.00155 (004 L235), 0.00205 (005 L261), 0.00135 (001 L273).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "mount_top_z_m"
+              ],
+              "expression": "mount_top_z_m + 0.003",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "button_seat_z_m",
+              "rationale": "Underside of the button. The 3 mm standoff is the source's own assertion: 005 L490-L499 checks expect_gap(tuner_button, gearbox_shell, min_gap=0.0025, max_gap=0.0035). Because it is measured from mount_top_z_m the button clears any worm span rather than a remembered constant.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worm_shaft_r_m"
+              ],
+              "expression": "worm_shaft_r_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "button_bore_r_m",
+              "rationale": "The button hub is bored to the shaft it is pinned to; both belong to the same rotor part, so this is a fit, not a joint.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_guitar_tuning_peg_var_cloverleaf_button",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L108-L140",
+            "model.py:L227-L239"
+          ]
+        }
+      ],
+      "component_type": "button",
+      "name": "button_form",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_guitar_tuning_peg_mechanism",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_guitar_tuning_peg_mechanism.md",
+  "source_map_sha256": "b047ef38c769ca08005867d440a5e37681fbad630dfbc3e5aa6301482d5208eb"
+}

@@ -1,0 +1,295 @@
+{
+  "assembly_notes": "",
+  "bindings": [],
+  "category_anchors": [],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "chamfered shell and optical seat",
+          "implementation_function": "_body_form_compact_chamfered_body_build",
+          "interfaces": [],
+          "name": "compact_chamfered_body",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__projector__001__png_2526f16c5b7d4ad68b1f2be3b40e0a32",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L660"
+          ]
+        },
+        {
+          "evidence": "low rectangular shell",
+          "implementation_function": "_body_form_slim_rectangular_body_build",
+          "interfaces": [],
+          "name": "slim_rectangular_body",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_projector_var_body_form_slim_rectangular",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L681"
+          ]
+        },
+        {
+          "evidence": "angular tapered shell with stepped top shoulder",
+          "implementation_function": "_body_form_wedge_chamfered_body_build",
+          "interfaces": [],
+          "name": "wedge_chamfered_body",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_projector_var_body_form_slim_rectangular",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L745"
+          ]
+        }
+      ],
+      "component_type": "body_form",
+      "name": "body_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "single off-centre lens",
+          "implementation_function": "_lens_layout_offset_single_lens_build",
+          "interfaces": [],
+          "name": "offset_single_lens",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__projector__001__png_2526f16c5b7d4ad68b1f2be3b40e0a32",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L660"
+          ]
+        },
+        {
+          "evidence": "centered aperture",
+          "implementation_function": "_lens_layout_center_single_lens_build",
+          "interfaces": [],
+          "name": "center_single_lens",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_projector_var_lens_layout_center_lens",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L660"
+          ]
+        },
+        {
+          "evidence": "paired seated lens layout",
+          "implementation_function": "_lens_layout_dual_lens_build",
+          "interfaces": [],
+          "name": "dual_lens",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_projector_var_lens_layout_dual_lens",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L717"
+          ]
+        }
+      ],
+      "component_type": "lens_layout",
+      "name": "lens_layout",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "coaxial focus ring and negative-Y revolute",
+          "implementation_function": "_optics_motion_focus_ring_build",
+          "interfaces": [],
+          "name": "focus_ring",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__projector__001__png_2526f16c5b7d4ad68b1f2be3b40e0a32",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L660"
+          ]
+        },
+        {
+          "evidence": "stepped zoom ring and revolute",
+          "implementation_function": "_optics_motion_zoom_ring_build",
+          "interfaces": [],
+          "name": "zoom_ring",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_projector_var_optics_motion_zoom_ring",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L660"
+          ]
+        },
+        {
+          "evidence": "bounded vertical optical carriage",
+          "implementation_function": "_optics_motion_vertical_lens_shift_build",
+          "interfaces": [],
+          "name": "vertical_lens_shift",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_projector_var_optics_motion_vertical_lens_shift",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L720"
+          ]
+        }
+      ],
+      "component_type": "optics_motion",
+      "name": "optics_motion",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "integrated bottom support",
+          "implementation_function": "_support_base_feet_build",
+          "interfaces": [],
+          "name": "base_feet",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__projector__001__png_2526f16c5b7d4ad68b1f2be3b40e0a32",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L660"
+          ]
+        },
+        {
+          "evidence": "underside hinged kickstand",
+          "implementation_function": "_support_folding_kickstand_build",
+          "interfaces": [],
+          "name": "folding_kickstand",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_projector_var_support_folding_kickstand",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L618"
+          ]
+        },
+        {
+          "evidence": "yoke and column transition",
+          "implementation_function": "_support_ceiling_yoke_build",
+          "interfaces": [],
+          "name": "ceiling_yoke",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_projector_var_support_ceiling_yoke",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L824"
+          ]
+        }
+      ],
+      "component_type": "support",
+      "name": "support",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "open front lens",
+          "implementation_function": "_closure_open_lens_build",
+          "interfaces": [],
+          "name": "open_lens",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__projector__001__png_2526f16c5b7d4ad68b1f2be3b40e0a32",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L660"
+          ]
+        },
+        {
+          "evidence": "sliding front shutter",
+          "implementation_function": "_closure_sliding_lens_shutter_build",
+          "interfaces": [],
+          "name": "sliding_lens_shutter",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_projector_var_closure_sliding_lens_shutter",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L739"
+          ]
+        }
+      ],
+      "component_type": "closure",
+      "name": "closure",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "front/side/rear vents",
+          "implementation_function": "_cooling_standard_vents_build",
+          "interfaces": [],
+          "name": "standard_vents",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__projector__001__png_2526f16c5b7d4ad68b1f2be3b40e0a32",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L660"
+          ]
+        },
+        {
+          "evidence": "paired side fan housings",
+          "implementation_function": "_cooling_dual_side_fan_modules_build",
+          "interfaces": [],
+          "name": "dual_side_fan_modules",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_projector_var_cooling_dual_side_fan_modules",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L828"
+          ]
+        }
+      ],
+      "component_type": "cooling",
+      "name": "cooling",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "fixed top seam/panel",
+          "implementation_function": "_control_panel_fixed_top_panel_build",
+          "interfaces": [],
+          "name": "fixed_top_panel",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__projector__001__png_2526f16c5b7d4ad68b1f2be3b40e0a32",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L660"
+          ]
+        },
+        {
+          "evidence": "hinged top control panel",
+          "implementation_function": "_control_panel_tilting_panel_build",
+          "interfaces": [],
+          "name": "tilting_panel",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_projector_var_control_panel_tilting_panel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L795"
+          ]
+        }
+      ],
+      "component_type": "control_panel",
+      "name": "control_panel",
+      "required": true
+    }
+  ],
+  "slug": "projector",
+  "source_map_path": "articraft_template_authoring/source_maps/projector.md",
+  "source_map_sha256": "6e811b99d2402c23ed2d18568f45ffb0b28a56ee6220071ce5262133c51813ce"
+}

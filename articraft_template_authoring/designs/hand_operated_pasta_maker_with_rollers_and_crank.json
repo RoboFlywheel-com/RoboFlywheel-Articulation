@@ -1,0 +1,1158 @@
+{
+  "assembly_notes": "The root is always one source-001 frame: base, two bored side cheeks, front apron with rolled lip, lower crossbar, front top rail, a rear guard/bridge and N under-table clamp brackets. Everything else is a mechanism seated in a region of that host, and each region is owned by exactly one slot, so the full cartesian product is buildable through local host adaptation only.\nfeed_rollers owns the -X..+X bore column: index 0 is crank-driven, index 1 counter-rotates through a Mimic across the nip, and index k>=2 stacks above on rolling contact. The cheek peak, the bearing collars and the enclosed-case cavity all derive from that column, never from a fixed constant.\ncutter_stage owns the rear-top region and rewrites the host there: fixed_twin_cutter gets two bores, two collar pairs and a solid guard; removable_cassette gets no bores at all but four keyed vertical rail channels and an open-centre bridge so the cartridge can actually lift out; single_narrow_module gets one bore, a support shelf below and a top retention rail.\ntransmission owns the -X outboard cheek face, crank owns the +X socket and thickness_adjust owns the -X lower boss, so the three never share geometry. The enclosed case is emitted as frame geometry because the source bolts it rigidly; only its access cover is a separate part on a bounded revolute.\nNo overlap allowance is used anywhere. allow_isolated_part is restricted to joint-retained rotating and sliding members whose running clearance comes from the source mechanism (rollers, gears, crank links, grip, selector, cassette and clamp screws).",
+  "bindings": [
+    {
+      "binding_id": "feed_column_drives_transmission",
+      "consumer": "transmission.drive_cheek_face",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "nip_center_distance_m",
+            "spur_teeth"
+          ],
+          "expression": "nip_center_distance_m / spur_teeth",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "spur_module_m",
+          "rationale": "exposed_twin_spur must mesh exactly across the live nip centre distance.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "feed_roller_count",
+            "idler_stack_height_m",
+            "roller_radius_m"
+          ],
+          "expression": "nip_z + (feed_roller_count - 2)*idler_stack_height_m + roller_radius_m + 0.006*scale",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "case_cavity_top_z_m",
+          "rationale": "enclosed_gear_case must enclose every feed-roller pinion, so its cavity height follows the column.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "feed_roller_count"
+          ],
+          "expression": "feed_roller_count",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "case_passage_count",
+          "rationale": "One drilled pass-through and bearing collar per feed-roller shaft entering the case.",
+          "unit": "count",
+          "value_type": "int"
+        }
+      ],
+      "joint_type": "continuous",
+      "provider": "feed_rollers.feed_column_bores"
+    },
+    {
+      "binding_id": "drive_socket_carries_crank",
+      "consumer": "crank.crank_socket_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "nip_z"
+          ],
+          "expression": "nip_z",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "crank_axis_z_m",
+          "rationale": "Both crank candidates seat on the driven roller axis, never on a separate stub.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "crank_reach_m"
+          ],
+          "expression": "crank_reach_m + 0.009*scale",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "crank_swept_radius_m",
+          "rationale": "Grip envelope the +X cheek and clamp bracket must clear.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "continuous",
+      "provider": "feed_rollers.drive_socket_axis"
+    },
+    {
+      "binding_id": "host_cradle_carries_cutter_stage",
+      "consumer": "feed_rollers.feed_column_bores",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "roller_radius_m"
+          ],
+          "expression": "0.70*roller_radius_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "cutter_disc_radius_m",
+          "rationale": "The cutter discs stay proportional to the sheet rollers as in every source.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "guard_z_m"
+          ],
+          "expression": "guard_z_m - 0.018*scale",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "cutter_z_m",
+          "rationale": "The cutter axes hang a fixed clearance below the rear guard/bridge, which itself follows the cheek peak.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "continuous",
+      "provider": "cutter_stage.cutter_cradle_bores"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "pasta_maker_core_identity",
+      "applies_to": {
+        "candidates": [
+          "open_pinion_pair",
+          "exposed_twin_spur",
+          "enclosed_gear_case"
+        ],
+        "slot": "transmission"
+      },
+      "required_author_checks": [
+        "hand pasta maker source identity",
+        "all selected slots are recorded",
+        "feed rollers counter-rotate on the crank axis",
+        "clamp screws hang below the base"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "feed_roller",
+          "joint_type": "continuous",
+          "parent_role": "housing"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "manual_drive",
+          "joint_type": "continuous",
+          "parent_role": "housing"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "thickness_selector",
+          "joint_type": "revolute",
+          "parent_role": "housing"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "table_clamp",
+          "joint_type": "continuous",
+          "parent_role": "housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "housing"
+        },
+        {
+          "count_from": "feed_roller_count",
+          "role": "feed_roller"
+        },
+        {
+          "exact_count": 1,
+          "role": "manual_drive"
+        },
+        {
+          "exact_count": 1,
+          "role": "free_spinning_grip"
+        },
+        {
+          "exact_count": 1,
+          "role": "thickness_selector"
+        },
+        {
+          "count_from": "clamp_screw_count",
+          "role": "table_clamp"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pasta_maker_fixed_cutter_pair",
+      "applies_to": {
+        "candidates": [
+          "fixed_twin_cutter"
+        ],
+        "slot": "cutter_stage"
+      },
+      "required_author_checks": [
+        "cutter stage matches its host cradle"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "cutter_roller",
+          "joint_type": "continuous",
+          "parent_role": "housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "housing"
+        },
+        {
+          "exact_count": 2,
+          "role": "cutter_roller"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pasta_maker_cassette_cutter",
+      "applies_to": {
+        "candidates": [
+          "removable_cassette"
+        ],
+        "slot": "cutter_stage"
+      },
+      "required_author_checks": [
+        "cutter stage matches its host cradle"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "cutter_cassette",
+          "joint_type": "prismatic",
+          "parent_role": "housing"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "cutter_roller",
+          "joint_type": "continuous",
+          "parent_role": "cutter_cassette"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "housing"
+        },
+        {
+          "exact_count": 1,
+          "role": "cutter_cassette"
+        },
+        {
+          "exact_count": 2,
+          "role": "cutter_roller"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pasta_maker_single_cutter_module",
+      "applies_to": {
+        "candidates": [
+          "single_narrow_module"
+        ],
+        "slot": "cutter_stage"
+      },
+      "required_author_checks": [
+        "cutter stage matches its host cradle"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "cutter_roller",
+          "joint_type": "continuous",
+          "parent_role": "housing"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "housing"
+        },
+        {
+          "exact_count": 1,
+          "role": "cutter_roller"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "the cheek profile peak is derived as max(0.154*scale, feed_column_top_z + 0.008*scale) so every bore keeps a supported wall; N is capped at 3 because a second stacked idler would push the column above the rear cutter guard and leave the front cheek with no material between the bore and the sheet entry",
+      "item_slot": "feed_rollers",
+      "name": "feed_roller_count",
+      "spacing_expression": "index 0 at (nip_y_mid - nip_center_distance_m/2, nip_z) and index 1 at (nip_y_mid + nip_center_distance_m/2, nip_z); index k>=2 stacks at (nip_y_mid, nip_z + (k-1)*idler_stack_height_m) on rolling contact with 1 mm running clearance",
+      "values": [
+        2,
+        3
+      ]
+    },
+    {
+      "host_capacity_expression": "the 0.215*scale base spans both source centres with 0.024*scale bracket width and 0.010*scale edge margin; a third bracket would land under the crank-side cheek and foul the drive socket",
+      "item_slot": "clamp_screws",
+      "name": "clamp_screw_count",
+      "spacing_expression": "N=1 keeps the single source-001 bracket at x=0.056*scale; N>=2 spreads the brackets symmetrically about x=0 with half-span 0.045*scale",
+      "values": [
+        1,
+        2
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "_gear_shape builds an 18-tooth alternating-radius pinion at x=-0.112 for both smooth rollers and a 16-tooth pinion at x=+0.116 for both cutters; the gears are visuals of the roller parts, so torque transfer is expressed purely by the Mimic chain.",
+          "implementation_function": "_transmission_open_pinion_pair_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "pinion_plane_x": "-0.112*scale",
+                "pitch_radius": "1.08*roller_radius_m"
+              },
+              "frame": {
+                "normal": "(-1,0,0)",
+                "point": "(-inner_cheek_x, nip_y_mid, nip_z)"
+              },
+              "kind": "plane",
+              "name": "drive_cheek_face",
+              "part": "frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "open_pinion_pair",
+          "notes": "No extra part and no extra joint: the pinion is a visual of the roller it drives, so torque is carried by the Mimic chain exactly as in source 001.",
+          "parameters": [
+            {
+              "choices": [
+                16,
+                18,
+                20
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "pinion_teeth",
+              "rationale": "Tooth count of the pinion visuals fused to every feed-roller and cutter shaft; changes the emitted profile polygon.",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hand_operated_pasta_maker_with_rollers_and_crank__001__png_c564ec43cdba467fa808bf8fd76627c8",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L52-L64",
+            "model.py:L296-L342"
+          ]
+        },
+        {
+          "evidence": "SpurGear(module=0.002, teeth_number=17, width=0.006) bored 9 mm, rotated onto the X shaft axis, with the driven gear clocked by pi/17 so teeth interleave across the 34 mm roller centre distance; each gear has an 8 mm annular hub and its own continuous joint mimicking the crank at ±1.0.",
+          "implementation_function": "_transmission_exposed_twin_spur_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "module": "nip_center_distance_m / spur_teeth",
+                "pitch_radius": "nip_center_distance_m/2"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "point": "(-0.115*scale, nip_y_0, nip_z)"
+              },
+              "kind": "axis",
+              "name": "spur_mesh_axis",
+              "part": "transmission_gear_drive",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "exposed_twin_spur",
+          "notes": "Two independent gear parts on their own continuous joints, the driven gear clocked by pi/teeth so the teeth interleave. The gear pair spans only the crank-driven nip pair; extra idlers are driven by rolling contact, as in the source.",
+          "parameters": [
+            {
+              "choices": [
+                15,
+                17,
+                19
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "spur_teeth",
+              "rationale": "Tooth number of both involute spur gears; module is derived from the nip centre distance so the pair always meshes.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "nip_center_distance_m",
+                "spur_teeth"
+              ],
+              "expression": "nip_center_distance_m / spur_teeth",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "spur_module_m",
+              "rationale": "Meshing constraint: the sum of the two equal pitch radii must equal the nip centre distance.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_pasta_var_exposed_twin_gear",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L68-L94",
+            "model.py:L398-L418",
+            "model.py:L493-L516"
+          ]
+        },
+        {
+          "evidence": "_gear_housing_shape cuts a 2.5 mm-wall cavity open on −X, drills both shaft pass-throughs, adds bearing collars, a bolted mounting flange with four fastener holes, a top-edge hinge barrel and an internal gear support shelf; _housing_cover_shape is a panel with three hinge knuckles and a latch tab on a 0–1.8 rad revolute.",
+          "implementation_function": "_transmission_enclosed_gear_case_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "collar_outer_radius": "0.0095*scale",
+                "passage_count": "feed_roller_count",
+                "passage_radius": "0.007*scale"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "point": "(-0.117*scale, feed_roller_y[k], feed_roller_z[k])"
+              },
+              "kind": "axis",
+              "name": "case_shaft_passages",
+              "part": "frame",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "0.0035*scale"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "point": "(-0.117*scale - gear_case_depth_m/2 - 0.006, case_y_mid, case_top_z)"
+              },
+              "kind": "axis",
+              "name": "cover_hinge_axis",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "enclosed_gear_case",
+          "notes": "The shell is emitted as frame geometry (the source bolts it rigidly to the cheek); only the access cover is a separate part, on a real bounded revolute.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "gear_case_depth_m",
+              "rationale": "Outboard depth of the bolted gear shell; drives the cavity, the cover panel offset and the hinge barrel position.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_pasta_var_enclosed_gears",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L263-L341",
+            "model.py:L342-L376",
+            "model.py:L505-L551",
+            "model.py:L630-L655"
+          ]
+        }
+      ],
+      "component_type": "crank-to-roller transmission on the -X drive cheek",
+      "name": "transmission",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_crank_shape is a square-socket insert from x=-0.011 to x=0.030, a radial leg to (0.045, -0.026) and a grip stub; the black grip is a separate part free-spinning on crank_to_grip.",
+          "implementation_function": "_crank_rigid_offset_crank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0047*scale"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "point": "(0,0,0)"
+              },
+              "kind": "axis",
+              "name": "crank_socket_axis",
+              "part": "crank",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "rigid_offset_crank",
+          "notes": "One rigid bent rod: socket insert, radial leg and grip stub, with the grip free on its own continuous joint.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.058,
+              "minimum": 0.038,
+              "mode": "independent",
+              "name": "crank_reach_m",
+              "rationale": "Radial offset of the crank leg from the drive axis; sets the swept envelope.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.058,
+              "minimum": 0.04,
+              "mode": "independent",
+              "name": "grip_length_m",
+              "rationale": "Length of the free-spinning black grip barrel.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hand_operated_pasta_maker_with_rollers_and_crank__001__png_c564ec43cdba467fa808bf8fd76627c8",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L233-L237",
+            "model.py:L344-L363",
+            "model.py:L401-L419"
+          ]
+        },
+        {
+          "evidence": "_crank_inner_shape ends in a 12 mm hinge eye carrying a visible 2.5 mm pivot pin; _crank_outer_shape starts at a mating eye and continues the radial leg to the grip stub; crank_inner_to_outer is a 0–2.8 rad revolute about the shaft-parallel X axis so the outer link folds against the body.",
+          "implementation_function": "_crank_folding_two_link_crank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0047*scale"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "point": "(0,0,0)"
+              },
+              "kind": "axis",
+              "name": "crank_socket_axis",
+              "part": "crank_inner",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "0.0060*scale"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "point": "(0.026*scale, inner_link_y, inner_link_z)"
+              },
+              "kind": "axis",
+              "name": "fold_pivot_axis",
+              "part": "crank_inner",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "folding_two_link_crank",
+          "notes": "Three parts: inner link with a bored hinge eye and a visible pivot pin, outer link with the mating eye, and the free grip.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.058,
+              "minimum": 0.038,
+              "mode": "independent",
+              "name": "crank_reach_m",
+              "rationale": "Total radial offset, split between the two links by fold_link_ratio.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "fold_link_ratio",
+              "rationale": "Share of the reach carried by the inner link; moves the fold pivot and both link lengths.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.058,
+              "minimum": 0.04,
+              "mode": "independent",
+              "name": "grip_length_m",
+              "rationale": "Length of the free-spinning black grip barrel.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "fold_link_ratio",
+                "crank_reach_m",
+                "scale"
+              ],
+              "expression": "pi - acos(clamp((near_outer**2 + near_inner**2 - clearance**2) / (2*near_outer*near_inner), -1, 1)), capped at 2.2; near_outer = 0.010*scale, near_inner = max(0.5*inner_link_len, 0.007*scale), clearance = 0.0098*scale",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "fold_sweep_rad",
+              "rationale": "Fold limit set by the two link near-ends: the outer rod starts 10 mm out from the pivot, the inner rod ends at half the inner link, and both 0.0042 rods keep 1.4 mm of air at the stop.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_pasta_var_folding_crank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L233-L243",
+            "model.py:L244-L254",
+            "model.py:L359-L391",
+            "model.py:L442-L465"
+          ]
+        }
+      ],
+      "component_type": "removable hand crank on the +X drive socket",
+      "name": "crank",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_dial_shape extrudes a 32-point alternating 21/19 mm flute profile plus a 4.3 mm captive stem and a 15 mm index face; the marker sphere reads the selected step; the frame carries a hollow boss ring at (-0.058, 0.087).",
+          "implementation_function": "_thickness_adjust_fluted_rotary_dial_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0043*scale"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "point": "(0,0,0)"
+              },
+              "kind": "axis",
+              "name": "adjust_boss_axis",
+              "part": "adjustment_dial",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "fluted_rotary_dial",
+          "notes": "Rotary knob captive in the hollow side boss; bounded revolute so lower/upper are real detent extremes.",
+          "parameters": [
+            {
+              "choices": [
+                24,
+                28,
+                32
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "dial_flutes",
+              "rationale": "Number of flute pairs on the knob rim; changes the extruded polygon.",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hand_operated_pasta_maker_with_rollers_and_crank__001__png_c564ec43cdba467fa808bf8fd76627c8",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L240-L260",
+            "model.py:L365-L376",
+            "model.py:L459-L468"
+          ]
+        },
+        {
+          "evidence": "_lever_shape is a captive stem, a 10 mm pivot hub, a 48 mm flat arm, a finger grip and a 2.5 mm detent pin at radius 10 mm; _detent_plate_shape is a bored 18 mm plate whose outer edge is cut by _LEVER_DETENT_COUNT = 7 scallops spread over _LEVER_ARC_SWEEP = 1.05 rad at the pin radius, with a mounting tab into the cheek.",
+          "implementation_function": "_thickness_adjust_indexed_detent_lever_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0050*scale"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "point": "(0,0,0)"
+              },
+              "kind": "axis",
+              "name": "adjust_boss_axis",
+              "part": "thickness_lever",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "pin_radius": "0.010*scale",
+                "plate_radius": "0.018*scale"
+              },
+              "frame": {
+                "normal": "(-1,0,0)",
+                "point": "(-inner_cheek_x, adjust_y, adjust_z)"
+              },
+              "kind": "plane",
+              "name": "detent_plate_seat",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "indexed_detent_lever",
+          "notes": "Lever plus a notched detent plate emitted as frame geometry; the bounded revolute sweeps exactly the indexed arc.",
+          "parameters": [
+            {
+              "choices": [
+                5,
+                7,
+                9
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "lever_detent_count",
+              "rationale": "Number of scallops cut into the frame-mounted detent plate and therefore of indexed lever positions.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "lever_detent_count"
+              ],
+              "expression": "0.175 * (lever_detent_count - 1)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "lever_arc_rad",
+              "rationale": "Constant angular detent pitch: the sweep grows with the number of indexed positions.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_pasta_var_detent_thickness",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L240-L243",
+            "model.py:L246-L278",
+            "model.py:L280-L318",
+            "model.py:L430-L445",
+            "model.py:L527-L544"
+          ]
+        }
+      ],
+      "component_type": "sheet-thickness selector on the -X lower boss",
+      "name": "thickness_adjust",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_cutter_roller_shape is an 8.2 mm core with a through axle and 25 discs of radius 10.5 mm at 6 mm pitch; the two shafts sit in the frame's (0.043, 0.145) and (0.069, 0.145) bores and counter-rotate through a mimic pair.",
+          "implementation_function": "_cutter_stage_fixed_twin_cutter_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_count": 2,
+                "bore_radius": "0.0062*scale",
+                "center_distance": "2*cutter_disc_radius_m + 0.005*scale"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "point": "(0, cutter_y_0, cutter_z)"
+              },
+              "kind": "axis",
+              "name": "cutter_cradle_bores",
+              "part": "frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "fixed_twin_cutter",
+          "notes": "Two permanently bored cutter shafts under a solid cutter guard; host emits both bores, both collar pairs, the guard and its tabs.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0075,
+              "minimum": 0.0045,
+              "mode": "independent",
+              "name": "disc_pitch_m",
+              "rationale": "Axial pitch of the cutting discs; sets the emitted disc count and therefore the noodle width.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hand_operated_pasta_maker_with_rollers_and_crank__001__png_c564ec43cdba467fa808bf8fd76627c8",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L216-L230",
+            "model.py:L320-L342",
+            "model.py:L440-L458"
+          ]
+        },
+        {
+          "evidence": "_cassette_frame_shape builds two side plates, a top bridge with grip rib, a front entry lip, a rear separator comb, four keyed outer grooves and two bored roller bearings; _cassette_roller_shape uses an asymmetric axle so the cutter gear sits outside the cassette plate; frame_to_cassette is a 0–60 mm vertical lift-out and both cassette rollers are children of the cassette.",
+          "implementation_function": "_cutter_stage_removable_cassette_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "channel_gap": "0.0054*scale",
+                "rail_length": "0.020*scale + 0.7*cassette_lift_m",
+                "rail_pairs": 4
+              },
+              "frame": {
+                "normal": "(-1,0,0)",
+                "point": "(inner_cheek_x, cutter_y_k, cutter_z)"
+              },
+              "kind": "plane",
+              "name": "cassette_guide_rails",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "removable_cassette",
+          "notes": "Host drops both cutter bores and the solid guard, and instead emits four vertical keyed rail channels plus an open-centre retention bridge so the cassette can lift through.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0075,
+              "minimum": 0.0045,
+              "mode": "independent",
+              "name": "disc_pitch_m",
+              "rationale": "Axial pitch of the cassette cutting discs.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.075,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "cassette_lift_m",
+              "rationale": "Vertical lift-out travel; also sets the length of the keyed guide rails the host must emit.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_pasta_var_interchangeable_cutter",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L235-L316",
+            "model.py:L317-L341",
+            "model.py:L432-L472",
+            "model.py:L573-L605"
+          ]
+        },
+        {
+          "evidence": "_cutter_module_shape is a 48 mm-long, 8.0 mm core with only 15 discs, visibly narrower than the sheet rollers, carried on an axle that reaches its own 14-tooth driven gear at x=0.108; frame_to_cutter_module mimics the crank at 1.33 to express the smaller pitch diameter.",
+          "implementation_function": "_cutter_stage_single_narrow_module_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_count": 1,
+                "bore_radius": "0.0062*scale",
+                "cradle_shelf_z": "cutter_z - 0.017*scale"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "point": "(0, cutter_module_y, cutter_module_z)"
+              },
+              "kind": "axis",
+              "name": "module_cradle_bore",
+              "part": "frame",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "single_narrow_module",
+          "notes": "One short cutter shaft in a single cradle bore, with a support shelf below and a top retention rail; driven off the crank at 1.33 to express its smaller pitch diameter.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0075,
+              "minimum": 0.0045,
+              "mode": "independent",
+              "name": "disc_pitch_m",
+              "rationale": "Axial pitch of the narrow module's cutting discs.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_pasta_var_single_cutter_attachment",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L232-L250",
+            "model.py:L343-L359",
+            "model.py:L463-L473"
+          ]
+        }
+      ],
+      "component_type": "rear-top noodle cutter stage and its host cradle",
+      "name": "cutter_stage",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "This is the multiplicity item candidate emitted N times. The fork proves the rule is index-general at the host: one extra entry (-0.007, 0.153) in _frame_shape's bearing_centers produces the matching bore, both collar rings and the side-cheek support, and the extra roller is a full _smooth_roller_shape part on its own continuous joint mimicking the crank at ±1.0.",
+          "implementation_function": "_feed_rollers_smooth_nip_roller_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_count": "feed_roller_count",
+                "bore_radius": "0.0062*scale",
+                "collar_outer_radius": "0.0090*scale"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "point": "(0, feed_roller_y[k], feed_roller_z[k])"
+              },
+              "kind": "axis",
+              "name": "feed_column_bores",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "0.0056*scale"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "point": "(0.112*scale, nip_y_0, nip_z)"
+              },
+              "kind": "axis",
+              "name": "drive_socket_axis",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "smooth_nip_roller",
+          "notes": "The multiplicity item. Index 0 is the crank-driven roller, index 1 counter-rotates through a Mimic, and every further index stacks above the nip on rolling contact.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.92,
+              "mode": "independent",
+              "name": "scale",
+              "rationale": "Overall machine proportion; every host and mechanism dimension derives from it.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.017,
+              "minimum": 0.013,
+              "mode": "independent",
+              "name": "roller_radius_m",
+              "rationale": "Polished roller body radius; drives the nip centre distance, the idler stack height, the cheek peak and the bearing collars.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.006,
+              "minimum": 0.002,
+              "mode": "independent",
+              "name": "nip_gap_m",
+              "rationale": "Sheet thickness at the nip; the real reason the two driven rollers are not tangent.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "roller_radius_m",
+                "nip_gap_m"
+              ],
+              "expression": "2*roller_radius_m + nip_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "nip_center_distance_m",
+              "rationale": "Centre distance of the driven pair; also the spur-gear pitch-radius sum.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "roller_radius_m",
+                "nip_center_distance_m"
+              ],
+              "expression": "sqrt((2*roller_radius_m + 0.001)**2 - (nip_center_distance_m/2)**2)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "idler_stack_height_m",
+              "rationale": "Height of each stacked idler above the previous axis, set by rolling contact with 1 mm running clearance.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_pasta_var_three_roller_feed",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L67-L110",
+            "model.py:L321-L332",
+            "model.py:L453-L462"
+          ]
+        }
+      ],
+      "component_type": "indexed polished sheet roller in the shared bore column",
+      "name": "feed_rollers",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "This is the multiplicity item candidate emitted N times. Bracket and screw both come from one loop over CLAMP_X_CENTERS = (-0.045, 0.045) at CLAMP_Y = 0.055, CLAMP_Z_ORIGIN = -0.056; each index owns a drop, a tapped jaw, a bored hole, a threaded stem, a broad pad, a tommy handle and its own continuous screw joint.",
+          "implementation_function": "_clamp_screws_tommy_bar_screw_clamp_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bracket_count": "clamp_screw_count",
+                "jaw_width": "0.044*scale",
+                "tapped_bore_radius": "0.0050*scale"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(clamp_x[k], clamp_y, -clamp_drop_m)"
+              },
+              "kind": "plane",
+              "name": "clamp_bracket_seat",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "tommy_bar_screw_clamp",
+          "notes": "The multiplicity item. Each index owns its own bracket drop, tapped jaw, bored hole, threaded stem, broad pad, tommy bar and continuous screw joint.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.075,
+              "minimum": 0.055,
+              "mode": "independent",
+              "name": "clamp_drop_m",
+              "rationale": "Height of the under-table bracket drop; sets the jaw height, the stem length and the screw seat.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_pasta_var_twin_screw_clamp",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L26-L28",
+            "model.py:L93-L116",
+            "model.py:L388-L412",
+            "model.py:L482-L496"
+          ]
+        }
+      ],
+      "component_type": "indexed under-frame table clamp",
+      "name": "clamp_screws",
+      "required": true
+    }
+  ],
+  "slug": "hand_operated_pasta_maker_with_rollers_and_crank",
+  "source_map_path": "articraft_template_authoring/source_maps/hand_operated_pasta_maker_with_rollers_and_crank.md",
+  "source_map_sha256": "9f32a49ba3d8fc3a87f9e6b125bb154f4744e599243fc92bcdb16ab72a221008"
+}

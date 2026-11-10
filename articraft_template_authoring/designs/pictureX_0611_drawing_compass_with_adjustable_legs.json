@@ -1,0 +1,2133 @@
+{
+  "assembly_notes": "Six independent structural slots and no multiplicity: a compass has exactly two legs. head_style provides the shared pivot axis and a crown seat; leg_style consumes the pivot and re-publishes a station frame and a tip frame; adjuster_style consumes the station frame (or grows its own spine off the head), and the two tip slots consume the tip frame. All 5 x 4 x 8 x 5 x 2 x 3 = 4800 combinations build with no compatibility gate. Because the two legs' local frames are mirrored by their axis mates, the one world-side front hardware plane sits at a different local depth on each leg; every feature placed there is fused back to its leg by a derived standoff boss, which is what keeps each leg one connected body. Cross-leg hardware (cross screw guide jaws, rack teeth, pawl tooth) is deliberately thin so that any interference as a leg swings stays far below the 5 mm penetration budget. Every rotational joint is solved by mate_axes and registered with register_interface_mate. The collet publishes its bore as a plane interface with a surface_relation: the needle cartridge is an insert driven through that mouth, so it is checked at FULL insertion with expect_footprint_within plus expect_normal_band(minimum_protrusion=0.0080) \u2014 a cartridge that swallowed its own point would otherwise pass a rest-pose check.",
+  "bindings": [
+    {
+      "binding_id": "head_to_leg",
+      "consumer": "leg_style.hinge_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "leg_thickness_m"
+          ],
+          "expression": "the two legs sit at y = -+leg_offset_y_m on one pin of length 2*leg_offset_y_m + 0.0026",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "hinge_stack_y_m",
+          "rationale": "the pin and its caps must span whatever plate thickness the leg candidate uses",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "open_angle_rad"
+          ],
+          "expression": "the provider radial is (sin(+-open_angle_rad), 0, -cos(open_angle_rad))",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "leg_splay_rad",
+          "rationale": "the rest splay is solved by the axis mate, not by a hand-written origin",
+          "unit": "rad",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "head_style.hinge_axis"
+    },
+    {
+      "binding_id": "leg_to_adjuster",
+      "consumer": "adjuster_style.leg_station",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "leg_thickness_m"
+          ],
+          "expression": "world y = -(leg_offset_y_m + leg_thickness_m/2 + 0.0035); each leg converts it into its own frame and grows a standoff boss to reach it",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "front_plane_y_m",
+          "rationale": "both legs and the head must present their adjuster hardware on one plane",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "leg_length_m",
+            "open_angle_rad",
+            "adjuster_station_ratio"
+          ],
+          "expression": "spanning adjusters size their shaft from tip_span_m; head-mounted adjusters size their spine from station_m",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "adjuster_span_m",
+          "rationale": "the adjuster must reach across whatever opening the legs are set to",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "leg_style.leg_station"
+    },
+    {
+      "binding_id": "leg_to_tip_hardware",
+      "consumer": "lead_end_style.leg_tip",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "leg_length_m"
+          ],
+          "expression": "tip_z = -leg_length_m on a one-piece leg and -(leg_length_m - knee_m) in the lower section of a folding leg",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "tip_z_m",
+          "rationale": "the tip hardware follows whichever part actually carries the tip",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "leg_style.leg_tip"
+    },
+    {
+      "binding_id": "head_to_handle",
+      "consumer": "handle_style.head_crown",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "head_scale"
+          ],
+          "expression": "crown_z is each head candidate's real top; the crown boss is fused into the head so a fixed cap, a spinning grip or a bounded handle all seat on it",
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "mode": "derived",
+          "name": "crown_z_m",
+          "rationale": "the handle must sit on real head geometry, not on a nominal height",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "head_style.head_crown"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "compass_identity",
+      "applies_to": {
+        "candidates": [
+          "sheet_taper",
+          "plate_profile",
+          "tubular",
+          "folding_knee"
+        ],
+        "slot": "leg_style"
+      },
+      "required_author_checks": [
+        "category_anchor: one head hub carries the instrument",
+        "category_anchor: exactly two legs hinge on the head pivot",
+        "category_anchor: both leg hinges are revolute on the shared pivot axis",
+        "category_anchor: the centre point and the lead end sit on opposite legs"
+      ],
+      "required_relations": [
+        {
+          "child_role": "leg",
+          "joint_type": "revolute",
+          "parent_role": "head"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "head"
+        },
+        {
+          "exact_count": 2,
+          "role": "leg"
+        }
+      ]
+    },
+    {
+      "anchor_id": "radius_adjuster_identity",
+      "applies_to": {
+        "candidates": [
+          "cross_screw",
+          "center_spindle",
+          "side_link_wheel",
+          "head_wheel",
+          "bow_spreader",
+          "rack_pinion",
+          "ratchet_quadrant",
+          "center_wheel"
+        ],
+        "slot": "adjuster_style"
+      },
+      "required_author_checks": [
+        "category_anchor: a radius adjuster links the legs or the head"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "adjuster"
+        }
+      ]
+    },
+    {
+      "anchor_id": "folding_leg_identity",
+      "applies_to": {
+        "candidates": [
+          "folding_knee"
+        ],
+        "slot": "leg_style"
+      },
+      "required_author_checks": [
+        "category_anchor: a folding leg has a real knee joint per leg"
+      ],
+      "required_relations": [
+        {
+          "child_role": "leg_lower",
+          "joint_type": "revolute",
+          "parent_role": "leg"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "leg"
+        },
+        {
+          "exact_count": 2,
+          "role": "leg_lower"
+        }
+      ]
+    },
+    {
+      "anchor_id": "replaceable_center_point",
+      "applies_to": {
+        "candidates": [
+          "collet_cartridge"
+        ],
+        "slot": "needle_end_style"
+      },
+      "required_author_checks": [
+        "category_anchor: the needle cartridge keeps its point proud of the collet"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "center_point"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "_head_ring builds a hollow annular bow (outer 0.0155 / inner 0.0125) with an integral hinge bridge; the head part adds a transverse hinge_pin and two hinge_cap disks (L196-L225).",
+          "implementation_function": "_head_style_horseshoe_ring_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "hinge eye radius 0.0062",
+                "stack": "2*leg_offset_y_m"
+              },
+              "frame": {
+                "axis": "(0,+-1,0)",
+                "point": "(0, +-leg_offset_y_m, 0)",
+                "radial": "leg splay"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "head_style__horseshoe_ring__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": "0.0032 crown boss"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,crown_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "head_crown",
+              "part": "head_style__horseshoe_ring__*",
+              "role": "provider"
+            }
+          ],
+          "name": "horseshoe_ring",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.19,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "leg_length_m",
+              "rationale": "source legs run 0.128-0.199 m from pivot to tip",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "source rest openings are 0.17-0.38 rad half-angle",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.85,
+              "mode": "independent",
+              "name": "head_scale",
+              "rationale": "source head hubs are 0.0125-0.0176 m in radius",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.006,
+              "minimum": 0.0024,
+              "mode": "independent",
+              "name": "leg_thickness_m",
+              "rationale": "source leg plates are 0.0026-0.006 m thick",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.45,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "adjuster_station_ratio",
+              "rationale": "source adjuster stations sit 0.22-0.34 of the way down the leg",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_scale"
+              ],
+              "expression": "hub_radius_m = 0.0135 * head_scale; crown_z follows each head candidate's real top",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "hub_radius_m",
+              "rationale": "the head, its crown seat and the handle all scale together",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_thickness_m"
+              ],
+              "expression": "leg_offset_y_m = leg_thickness_m/2 + 0.0005; hinge pin length = 2*leg_offset + thickness",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "leg_offset_y_m",
+              "rationale": "a thicker plate widens the whole hinge stack and the front hardware plane with it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "adjuster_station_ratio"
+              ],
+              "expression": "station_m = leg_length_m * adjuster_station_ratio",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "station_m",
+              "rationale": "the adjuster mounts at a real fraction of the leg, not a fixed constant",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m"
+              ],
+              "expression": "knee_m = leg_length_m * 0.55 (folding_knee only)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "knee_m",
+              "rationale": "the knee stays below every adjuster station so both mechanisms coexist",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "open_angle_rad"
+              ],
+              "expression": "tip_span_m = 2 * leg_length_m * sin(open_angle_rad)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "tip_span_m",
+              "rationale": "the drawing radius the spanning adjusters must bridge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "open_angle_rad"
+              ],
+              "expression": "open_travel = clamp(0.52 - open_angle_rad, 0.10, 0.28); close_travel = clamp(open_angle_rad - 0.06, 0.06, 0.20)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "open_travel_rad",
+              "rationale": "hinge limits derive from the rest opening so the legs never stack or over-splay",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__001__png__airflex_batch_20260710_68de3d909b2143c5a9bd0ba516a4d072",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L79-L101"
+          ]
+        },
+        {
+          "evidence": "Solid head_hub disk (r=0.0125) plus a rectangular head_saddle Box(0.019,0.004,0.010) below it and a long hinge_pin \u2014 a closed disk head, not an open ring.",
+          "implementation_function": "_head_style_disk_hub_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "hinge eye radius 0.0062",
+                "stack": "2*leg_offset_y_m"
+              },
+              "frame": {
+                "axis": "(0,+-1,0)",
+                "point": "(0, +-leg_offset_y_m, 0)",
+                "radial": "leg splay"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "head_style__disk_hub__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": "0.0032 crown boss"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,crown_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "head_crown",
+              "part": "head_style__disk_hub__*",
+              "role": "provider"
+            }
+          ],
+          "name": "disk_hub",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__003__png__airflex_batch_20260710_2d7c021809004b9f99791a92647edf13",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L179-L197"
+          ]
+        },
+        {
+          "evidence": "head_yoke is an extruded front-view plate profile carrying a front_bridge, a 0.12 m spreader_beam and upper/lower threaded spindles \u2014 a fabricated yoke with a built-in adjuster spine.",
+          "implementation_function": "_head_style_plate_yoke_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "hinge eye radius 0.0062",
+                "stack": "2*leg_offset_y_m"
+              },
+              "frame": {
+                "axis": "(0,+-1,0)",
+                "point": "(0, +-leg_offset_y_m, 0)",
+                "radial": "leg splay"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "head_style__plate_yoke__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": "0.0032 crown boss"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,crown_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "head_crown",
+              "part": "head_style__plate_yoke__*",
+              "role": "provider"
+            }
+          ],
+          "name": "plate_yoke",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__004__png__airflex_batch_20260710_1dfc7a8e26e24466a8a1f62fd5cfc736",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L174"
+          ]
+        },
+        {
+          "evidence": "_spring_bow sweeps a curved arch above the pivot and _head_spine tapers from the hinge area to the bow apex; the head is a sprung arch instead of a closed ring or disk.",
+          "implementation_function": "_head_style_spring_bow_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "hinge eye radius 0.0062",
+                "stack": "2*leg_offset_y_m"
+              },
+              "frame": {
+                "axis": "(0,+-1,0)",
+                "point": "(0, +-leg_offset_y_m, 0)",
+                "radial": "leg splay"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "head_style__spring_bow__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": "0.0032 crown boss"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,crown_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "head_crown",
+              "part": "head_style__spring_bow__*",
+              "role": "provider"
+            }
+          ],
+          "name": "spring_bow",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_bow_spring_head",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L82-L130"
+          ]
+        },
+        {
+          "evidence": "_head_frame_shape fuses a hollow annulus, a solid R7 mm pivot cheek at the bore centre and two triangular cheeks splaying up and out.",
+          "implementation_function": "_head_style_cheeked_horseshoe_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "hinge eye radius 0.0062",
+                "stack": "2*leg_offset_y_m"
+              },
+              "frame": {
+                "axis": "(0,+-1,0)",
+                "point": "(0, +-leg_offset_y_m, 0)",
+                "radial": "leg splay"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "head_style__cheeked_horseshoe__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "radius": "0.0032 crown boss"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,crown_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "head_crown",
+              "part": "head_style__cheeked_horseshoe__*",
+              "role": "provider"
+            }
+          ],
+          "name": "cheeked_horseshoe",
+          "notes": "Four fused bodies: arc segments for the annulus, a solid pivot disc that reaches the bore wall, and two rotated boxes for the flared cheeks.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__002__png__airflex_batch_20260710_3559da21872945b8bdb7caba02a48c14",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L27-L58"
+          ]
+        }
+      ],
+      "component_type": "compass head / hinge hub",
+      "name": "head_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_leg_body lofts a tapered forged blade through width stations and unions an annular hinge eye; the leg is a flat plate of LEG_THICKNESS.",
+          "implementation_function": "_leg_style_sheet_taper_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0062"
+              },
+              "frame": {
+                "axis": "(0,+-1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "leg_style__sheet_taper__*",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "front_gap": "0.0035",
+                "station_z": "-station_m"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "leg_style__sheet_taper__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "tip_z": "-leg_length_m (or -(leg_length_m-knee_m) on a folding leg)"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,tip_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "leg_tip",
+              "part": "leg_style__sheet_taper__*",
+              "role": "provider"
+            }
+          ],
+          "name": "sheet_taper",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.19,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "leg_length_m",
+              "rationale": "source legs run 0.128-0.199 m from pivot to tip",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "source rest openings are 0.17-0.38 rad half-angle",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.85,
+              "mode": "independent",
+              "name": "head_scale",
+              "rationale": "source head hubs are 0.0125-0.0176 m in radius",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.006,
+              "minimum": 0.0024,
+              "mode": "independent",
+              "name": "leg_thickness_m",
+              "rationale": "source leg plates are 0.0026-0.006 m thick",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.45,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "adjuster_station_ratio",
+              "rationale": "source adjuster stations sit 0.22-0.34 of the way down the leg",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_scale"
+              ],
+              "expression": "hub_radius_m = 0.0135 * head_scale; crown_z follows each head candidate's real top",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "hub_radius_m",
+              "rationale": "the head, its crown seat and the handle all scale together",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_thickness_m"
+              ],
+              "expression": "leg_offset_y_m = leg_thickness_m/2 + 0.0005; hinge pin length = 2*leg_offset + thickness",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "leg_offset_y_m",
+              "rationale": "a thicker plate widens the whole hinge stack and the front hardware plane with it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "adjuster_station_ratio"
+              ],
+              "expression": "station_m = leg_length_m * adjuster_station_ratio",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "station_m",
+              "rationale": "the adjuster mounts at a real fraction of the leg, not a fixed constant",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m"
+              ],
+              "expression": "knee_m = leg_length_m * 0.55 (folding_knee only)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "knee_m",
+              "rationale": "the knee stays below every adjuster station so both mechanisms coexist",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "open_angle_rad"
+              ],
+              "expression": "tip_span_m = 2 * leg_length_m * sin(open_angle_rad)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "tip_span_m",
+              "rationale": "the drawing radius the spanning adjusters must bridge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "open_angle_rad"
+              ],
+              "expression": "open_travel = clamp(0.52 - open_angle_rad, 0.10, 0.28); close_travel = clamp(open_angle_rad - 0.06, 0.06, 0.20)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "open_travel_rad",
+              "rationale": "hinge limits derive from the rest opening so the legs never stack or over-splay",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__001__png__airflex_batch_20260710_68de3d909b2143c5a9bd0ba516a4d072",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L41-L76"
+          ]
+        },
+        {
+          "evidence": "needle_leg_body is a 6 mm extruded front-view profile with a separate 10 mm needle_hinge_eye cylinder, a thin needle_leg_inlay face plate and a needle_leg_rivet. Layered plate construction, not a single lofted blade.",
+          "implementation_function": "_leg_style_plate_profile_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0062"
+              },
+              "frame": {
+                "axis": "(0,+-1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "leg_style__plate_profile__*",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "front_gap": "0.0035",
+                "station_z": "-station_m"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "leg_style__plate_profile__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "tip_z": "-leg_length_m (or -(leg_length_m-knee_m) on a folding leg)"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,tip_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "leg_tip",
+              "part": "leg_style__plate_profile__*",
+              "role": "provider"
+            }
+          ],
+          "name": "plate_profile",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__004__png__airflex_batch_20260710_1dfc7a8e26e24466a8a1f62fd5cfc736",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L176-L237"
+          ]
+        },
+        {
+          "evidence": "leg_0/leg_1 are built as hollow tubes with a pivot lug at the head end and a tip socket at the point end (construction: hollow tube with pivot lug and tip socket).",
+          "implementation_function": "_leg_style_tubular_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0062"
+              },
+              "frame": {
+                "axis": "(0,+-1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "leg_style__tubular__*",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "front_gap": "0.0035",
+                "station_z": "-station_m"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "leg_style__tubular__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "tip_z": "-leg_length_m (or -(leg_length_m-knee_m) on a folding leg)"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,tip_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "leg_tip",
+              "part": "leg_style__tubular__*",
+              "role": "provider"
+            }
+          ],
+          "name": "tubular",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_tubular_legs_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L220-L298"
+          ]
+        },
+        {
+          "evidence": "_upper_leg_shape ends in a knee knuckle and _lower_leg_shape starts from one; each leg becomes two parts joined by a REVOLUTE left_knee/right_knee (L556-L573) with 0..2.4 rad travel.",
+          "implementation_function": "_leg_style_folding_knee_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0062"
+              },
+              "frame": {
+                "axis": "(0,+-1,0)",
+                "point": "(0,0,0)",
+                "radial": "(0,0,-1)"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "leg_style__folding_knee__*",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "front_gap": "0.0035",
+                "station_z": "-station_m"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "leg_style__folding_knee__*",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "tip_z": "-leg_length_m (or -(leg_length_m-knee_m) on a folding leg)"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,tip_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "leg_tip",
+              "part": "leg_style__folding_knee__*",
+              "role": "provider"
+            }
+          ],
+          "name": "folding_knee",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_folding_lower_legs_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L65-L103"
+          ]
+        }
+      ],
+      "component_type": "compass leg",
+      "name": "leg_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_threaded_shaft spans both leg bosses and _adjustment_wheel sits edge-on at one end; joint adjust_screw_spin is CONTINUOUS about the transverse X axis on the needle leg (L416-L430).",
+          "implementation_function": "_adjuster_style_cross_screw_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_gap": "0.0035"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "adjuster_style__cross_screw__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "cross_screw",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.19,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "leg_length_m",
+              "rationale": "source legs run 0.128-0.199 m from pivot to tip",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "source rest openings are 0.17-0.38 rad half-angle",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.85,
+              "mode": "independent",
+              "name": "head_scale",
+              "rationale": "source head hubs are 0.0125-0.0176 m in radius",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.006,
+              "minimum": 0.0024,
+              "mode": "independent",
+              "name": "leg_thickness_m",
+              "rationale": "source leg plates are 0.0026-0.006 m thick",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.45,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "adjuster_station_ratio",
+              "rationale": "source adjuster stations sit 0.22-0.34 of the way down the leg",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_scale"
+              ],
+              "expression": "hub_radius_m = 0.0135 * head_scale; crown_z follows each head candidate's real top",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "hub_radius_m",
+              "rationale": "the head, its crown seat and the handle all scale together",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_thickness_m"
+              ],
+              "expression": "leg_offset_y_m = leg_thickness_m/2 + 0.0005; hinge pin length = 2*leg_offset + thickness",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "leg_offset_y_m",
+              "rationale": "a thicker plate widens the whole hinge stack and the front hardware plane with it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "adjuster_station_ratio"
+              ],
+              "expression": "station_m = leg_length_m * adjuster_station_ratio",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "station_m",
+              "rationale": "the adjuster mounts at a real fraction of the leg, not a fixed constant",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m"
+              ],
+              "expression": "knee_m = leg_length_m * 0.55 (folding_knee only)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "knee_m",
+              "rationale": "the knee stays below every adjuster station so both mechanisms coexist",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "open_angle_rad"
+              ],
+              "expression": "tip_span_m = 2 * leg_length_m * sin(open_angle_rad)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "tip_span_m",
+              "rationale": "the drawing radius the spanning adjusters must bridge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "open_angle_rad"
+              ],
+              "expression": "open_travel = clamp(0.52 - open_angle_rad, 0.10, 0.28); close_travel = clamp(open_angle_rad - 0.06, 0.06, 0.20)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "open_travel_rad",
+              "rationale": "hinge limits derive from the rest opening so the legs never stack or over-splay",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__001__png__airflex_batch_20260710_68de3d909b2143c5a9bd0ba516a4d072",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L104-L145"
+          ]
+        },
+        {
+          "evidence": "The spindle is centred between two hex pivot nuts captured in bracket pockets on both legs and the knurled wheel sits at mid-span, instead of 001's end wheel plus guide collar.",
+          "implementation_function": "_adjuster_style_center_spindle_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_gap": "0.0035"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "adjuster_style__center_spindle__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "center_spindle",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_side_spindle_adjuster_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L471-L514"
+          ]
+        },
+        {
+          "evidence": "A separate adjustment_link swings on the leg (REVOLUTE, L477-L485) and carries an adjustment_wheel that spins on the link (REVOLUTE, L486-L499) \u2014 a two-joint side linkage.",
+          "implementation_function": "_adjuster_style_side_link_wheel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_gap": "0.0035"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "adjuster_style__side_link_wheel__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "side_link_wheel",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__003__png__airflex_batch_20260710_2d7c021809004b9f99791a92647edf13",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L362-L402"
+          ]
+        },
+        {
+          "evidence": "The adjuster is a single knurled wheel mounted on the head's threaded spindle spine, CONTINUOUS about the vertical Z axis (L406-L414), rather than anything mounted on a leg.",
+          "implementation_function": "_adjuster_style_head_wheel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_gap": "0.0035"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "adjuster_style__head_wheel__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "head_wheel",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__004__png__airflex_batch_20260710_1dfc7a8e26e24466a8a1f62fd5cfc736",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L388-L414"
+          ]
+        },
+        {
+          "evidence": "_spreader_shaft is a vertical threaded spreader in the head frame and _spreader_wheel is its thumbwheel; joint spreader_screw_spin is CONTINUOUS about Z at the head (L457-L471).",
+          "implementation_function": "_adjuster_style_bow_spreader_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_gap": "0.0035"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "adjuster_style__bow_spreader__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "bow_spreader",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_bow_spring_head",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L133-L175"
+          ]
+        },
+        {
+          "evidence": "A pinion part with real module/teeth metadata sits at _PINION_CENTER in the head and engages opposed curved rack sectors on the two legs; joint head_to_pinion is REVOLUTE about Y with \u00b12.0 rad.",
+          "implementation_function": "_adjuster_style_rack_pinion_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_gap": "0.0035"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "adjuster_style__rack_pinion__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "rack_pinion",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_rack_pinion_head_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L337-L433"
+          ]
+        },
+        {
+          "evidence": "Three parts \u2014 a toothed quadrant on the right leg, a pawl on the left leg and a release_tab on the pawl \u2014 with three REVOLUTE joints (L567-L605) forming a locking ratchet instead of a screw.",
+          "implementation_function": "_adjuster_style_ratchet_quadrant_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_gap": "0.0035"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "adjuster_style__ratchet_quadrant__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "ratchet_quadrant",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_ratchet_quadrant_lock_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L442-L503"
+          ]
+        },
+        {
+          "evidence": "center_wheel is a knurled wheel on a threaded axle with two cantilever release arms, hinged REVOLUTE on the lead leg with a bounded \u00b10.35 rad quick-set travel (L403-L412).",
+          "implementation_function": "_adjuster_style_center_wheel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_gap": "0.0035"
+              },
+              "frame": {
+                "axis": "(1,0,0) or (0,0,1) depending on the candidate",
+                "point": "(0, front_plane_y, -station_m) in the owning leg's frame",
+                "radial": "(0,0,1)"
+              },
+              "kind": "axis",
+              "name": "leg_station",
+              "part": "adjuster_style__center_wheel__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "center_wheel",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_quick_set_center_wheel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L308-L358"
+          ]
+        }
+      ],
+      "component_type": "radius adjuster",
+      "name": "adjuster_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "lead_collet and lead_point are fused into the lead leg itself; the only moving hardware is the clamp screw. Simplest lead end.",
+          "implementation_function": "_lead_end_style_fixed_collet_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "tip_z": "-leg_length_m"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,tip_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "leg_tip",
+              "part": "lead_end_style__fixed_collet__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "fixed_collet",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.19,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "leg_length_m",
+              "rationale": "source legs run 0.128-0.199 m from pivot to tip",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "source rest openings are 0.17-0.38 rad half-angle",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.85,
+              "mode": "independent",
+              "name": "head_scale",
+              "rationale": "source head hubs are 0.0125-0.0176 m in radius",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.006,
+              "minimum": 0.0024,
+              "mode": "independent",
+              "name": "leg_thickness_m",
+              "rationale": "source leg plates are 0.0026-0.006 m thick",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.45,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "adjuster_station_ratio",
+              "rationale": "source adjuster stations sit 0.22-0.34 of the way down the leg",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_scale"
+              ],
+              "expression": "hub_radius_m = 0.0135 * head_scale; crown_z follows each head candidate's real top",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "hub_radius_m",
+              "rationale": "the head, its crown seat and the handle all scale together",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_thickness_m"
+              ],
+              "expression": "leg_offset_y_m = leg_thickness_m/2 + 0.0005; hinge pin length = 2*leg_offset + thickness",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "leg_offset_y_m",
+              "rationale": "a thicker plate widens the whole hinge stack and the front hardware plane with it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "adjuster_station_ratio"
+              ],
+              "expression": "station_m = leg_length_m * adjuster_station_ratio",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "station_m",
+              "rationale": "the adjuster mounts at a real fraction of the leg, not a fixed constant",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m"
+              ],
+              "expression": "knee_m = leg_length_m * 0.55 (folding_knee only)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "knee_m",
+              "rationale": "the knee stays below every adjuster station so both mechanisms coexist",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "open_angle_rad"
+              ],
+              "expression": "tip_span_m = 2 * leg_length_m * sin(open_angle_rad)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "tip_span_m",
+              "rationale": "the drawing radius the spanning adjusters must bridge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "open_angle_rad"
+              ],
+              "expression": "open_travel = clamp(0.52 - open_angle_rad, 0.10, 0.28); close_travel = clamp(open_angle_rad - 0.06, 0.06, 0.20)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "open_travel_rad",
+              "rationale": "hinge limits derive from the rest opening so the legs never stack or over-splay",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__001__png__airflex_batch_20260710_68de3d909b2143c5a9bd0ba516a4d072",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L337-L363"
+          ]
+        },
+        {
+          "evidence": "pencil_holder is a separate plate part with its own hinge eye, REVOLUTE on the pencil leg (L371-L384) so the lead stays vertical as the legs open.",
+          "implementation_function": "_lead_end_style_hinged_holder_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "tip_z": "-leg_length_m"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,tip_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "leg_tip",
+              "part": "lead_end_style__hinged_holder__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "hinged_holder",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__004__png__airflex_batch_20260710_1dfc7a8e26e24466a8a1f62fd5cfc736",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L287-L341"
+          ]
+        },
+        {
+          "evidence": "An extension_rail part slides on the leg via PRISMATIC pencil_leg_to_extension_rail (0..0.032 m, L456-L472) and carries the hinged holder at its lower end.",
+          "implementation_function": "_lead_end_style_extension_rail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "tip_z": "-leg_length_m"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,tip_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "leg_tip",
+              "part": "lead_end_style__extension_rail__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "extension_rail",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_extension_bar_radius",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L330-L367"
+          ]
+        },
+        {
+          "evidence": "An adapter_yoke part is hinged on the pencil holder (REVOLUTE \u00b115\u00b0, L527-L540) to clamp a technical pen \u2014 a second-stage holder that the other candidates do not have.",
+          "implementation_function": "_lead_end_style_pen_adapter_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "tip_z": "-leg_length_m"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,tip_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "leg_tip",
+              "part": "lead_end_style__pen_adapter__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "pen_adapter",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_hinged_pen_adapter_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L441-L540"
+          ]
+        },
+        {
+          "evidence": "lead_collet is promoted to its own part turning about the leg axis (left_leg_to_collet, L571-L584) so the cartridge can be screwed in, instead of being fused into the leg.",
+          "implementation_function": "_lead_end_style_rotating_collet_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "tip_z": "-leg_length_m"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,tip_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "leg_tip",
+              "part": "lead_end_style__rotating_collet__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "rotating_collet",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_lead_cartridge",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L444-L477"
+          ]
+        }
+      ],
+      "component_type": "lead / pen holder",
+      "name": "lead_end_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "needle_socket and needle_point are cylinders fused into the needle leg along the leg direction, retained by a lower_fastener.",
+          "implementation_function": "_needle_end_style_fixed_needle_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "tip_z": "-leg_length_m"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,tip_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "leg_tip",
+              "part": "needle_end_style__fixed_needle__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "fixed_needle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.19,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "leg_length_m",
+              "rationale": "source legs run 0.128-0.199 m from pivot to tip",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "source rest openings are 0.17-0.38 rad half-angle",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.85,
+              "mode": "independent",
+              "name": "head_scale",
+              "rationale": "source head hubs are 0.0125-0.0176 m in radius",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.006,
+              "minimum": 0.0024,
+              "mode": "independent",
+              "name": "leg_thickness_m",
+              "rationale": "source leg plates are 0.0026-0.006 m thick",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.45,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "adjuster_station_ratio",
+              "rationale": "source adjuster stations sit 0.22-0.34 of the way down the leg",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_scale"
+              ],
+              "expression": "hub_radius_m = 0.0135 * head_scale; crown_z follows each head candidate's real top",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "hub_radius_m",
+              "rationale": "the head, its crown seat and the handle all scale together",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_thickness_m"
+              ],
+              "expression": "leg_offset_y_m = leg_thickness_m/2 + 0.0005; hinge pin length = 2*leg_offset + thickness",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "leg_offset_y_m",
+              "rationale": "a thicker plate widens the whole hinge stack and the front hardware plane with it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "adjuster_station_ratio"
+              ],
+              "expression": "station_m = leg_length_m * adjuster_station_ratio",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "station_m",
+              "rationale": "the adjuster mounts at a real fraction of the leg, not a fixed constant",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m"
+              ],
+              "expression": "knee_m = leg_length_m * 0.55 (folding_knee only)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "knee_m",
+              "rationale": "the knee stays below every adjuster station so both mechanisms coexist",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "open_angle_rad"
+              ],
+              "expression": "tip_span_m = 2 * leg_length_m * sin(open_angle_rad)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "tip_span_m",
+              "rationale": "the drawing radius the spanning adjusters must bridge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "open_angle_rad"
+              ],
+              "expression": "open_travel = clamp(0.52 - open_angle_rad, 0.10, 0.28); close_travel = clamp(open_angle_rad - 0.06, 0.06, 0.20)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "open_travel_rad",
+              "rationale": "hinge limits derive from the rest opening so the legs never stack or over-splay",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__001__png__airflex_batch_20260710_68de3d909b2143c5a9bd0ba516a4d072",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L279-L305"
+          ]
+        },
+        {
+          "evidence": "A needle_cartridge part slides in the slotted collet on a PRISMATIC joint (0..0.006 m, L595-L609) and a knurled release_sleeve spins about the leg axis (L653-L662) to release it.",
+          "implementation_function": "_needle_end_style_collet_cartridge_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "tip_z": "-leg_length_m"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,tip_z)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "leg_tip",
+              "part": "needle_end_style__collet_cartridge__*",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "extent": "0.0064 x 0.0064 \u2014 the collet bore"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, 0, insert_origin_z + 0.0020) in the needle leg's tip frame",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "collet_mouth",
+              "part": "needle_end_style__collet_cartridge__cartridge",
+              "role": "consumer",
+              "surface_relation": {
+                "motion_expression": "inserting q in [0, 0.0060] drives the cartridge up into the bore; at q = 0.0060 the needle tip still protrudes 0.010 m >= 0.0080 m past the mouth. Both projections name their element, because a whole-part AABB is inflated by the leg's own tilt at preflight fidelity",
+                "normal_band_expression": "measured out of the mouth, the needle_point element occupies [-0.004, +0.010] at full insertion; the allowed band is [-0.0060, +0.0120]",
+                "opening_expression": "the cartridge_shoulder element is 0.0025 m in radius against a 0.0032 m collet bore, so the widest section passes the mouth with 0.0007 m to spare",
+                "required_author_check": "category_anchor: the needle cartridge keeps its point proud of the collet",
+                "subject_role": "center_point"
+              }
+            }
+          ],
+          "name": "collet_cartridge",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_drawing_compass_var_center_point_collet_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L556-L652"
+          ]
+        }
+      ],
+      "component_type": "centre point",
+      "name": "needle_end_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "top_grip is a banded cylindrical grip on its own CONTINUOUS top_grip_spin joint about the vertical axis at the head top (L247-L256).",
+          "implementation_function": "_handle_style_spin_grip_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0026-0.0032"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,0)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "head_crown",
+              "part": "handle_style__spin_grip__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "spin_grip",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.19,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "leg_length_m",
+              "rationale": "source legs run 0.128-0.199 m from pivot to tip",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "source rest openings are 0.17-0.38 rad half-angle",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.85,
+              "mode": "independent",
+              "name": "head_scale",
+              "rationale": "source head hubs are 0.0125-0.0176 m in radius",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.006,
+              "minimum": 0.0024,
+              "mode": "independent",
+              "name": "leg_thickness_m",
+              "rationale": "source leg plates are 0.0026-0.006 m thick",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.45,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "adjuster_station_ratio",
+              "rationale": "source adjuster stations sit 0.22-0.34 of the way down the leg",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "head_scale"
+              ],
+              "expression": "hub_radius_m = 0.0135 * head_scale; crown_z follows each head candidate's real top",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "hub_radius_m",
+              "rationale": "the head, its crown seat and the handle all scale together",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_thickness_m"
+              ],
+              "expression": "leg_offset_y_m = leg_thickness_m/2 + 0.0005; hinge pin length = 2*leg_offset + thickness",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "leg_offset_y_m",
+              "rationale": "a thicker plate widens the whole hinge stack and the front hardware plane with it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "adjuster_station_ratio"
+              ],
+              "expression": "station_m = leg_length_m * adjuster_station_ratio",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "station_m",
+              "rationale": "the adjuster mounts at a real fraction of the leg, not a fixed constant",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m"
+              ],
+              "expression": "knee_m = leg_length_m * 0.55 (folding_knee only)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "knee_m",
+              "rationale": "the knee stays below every adjuster station so both mechanisms coexist",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "leg_length_m",
+                "open_angle_rad"
+              ],
+              "expression": "tip_span_m = 2 * leg_length_m * sin(open_angle_rad)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "tip_span_m",
+              "rationale": "the drawing radius the spanning adjusters must bridge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "open_angle_rad"
+              ],
+              "expression": "open_travel = clamp(0.52 - open_angle_rad, 0.10, 0.28); close_travel = clamp(open_angle_rad - 0.06, 0.06, 0.20)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "open_travel_rad",
+              "rationale": "hinge limits derive from the rest opening so the legs never stack or over-splay",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__001__png__airflex_batch_20260710_68de3d909b2143c5a9bd0ba516a4d072",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L227-L256"
+          ]
+        },
+        {
+          "evidence": "handle is a stem plus a knurled knob on a bounded REVOLUTE head_to_handle joint (\u00b1\u03c0, L449-L462) \u2014 a different body and a bounded joint.",
+          "implementation_function": "_handle_style_knurled_handle_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0026-0.0032"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,0)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "head_crown",
+              "part": "handle_style__knurled_handle__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "knurled_handle",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__003__png__airflex_batch_20260710_2d7c021809004b9f99791a92647edf13",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L326-L347"
+          ]
+        },
+        {
+          "evidence": "handle_stem and handle_cap are visuals of the head itself with no joint at all \u2014 a rigid moulded cap instead of a turning grip.",
+          "implementation_function": "_handle_style_fixed_cap_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.0026-0.0032"
+              },
+              "frame": {
+                "axis": "(0,0,1)",
+                "point": "(0,0,0)",
+                "radial": "(1,0,0)"
+              },
+              "kind": "axis",
+              "name": "head_crown",
+              "part": "handle_style__fixed_cap__*",
+              "role": "consumer"
+            }
+          ],
+          "name": "fixed_cap",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__drawing_compass_with_adjustable_legs__004__png__airflex_batch_20260710_1dfc7a8e26e24466a8a1f62fd5cfc736",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L103-L115"
+          ]
+        }
+      ],
+      "component_type": "top handle",
+      "name": "handle_style",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_drawing_compass_with_adjustable_legs",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_drawing_compass_with_adjustable_legs.md",
+  "source_map_sha256": "8042b9e2a4e2cf41e3c455f93f278b625bf770a9755c43465b7f7c34d63bb942"
+}

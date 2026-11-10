@@ -1,0 +1,1644 @@
+{
+  "schema_version": 1,
+  "slug": "makeup3",
+  "source_map_path": "articraft_template_authoring/source_maps/makeup3.md",
+  "source_map_sha256": "a6f2e1353fa326117beb44a3a1f074a4ea55bbb726ae311b2f10c7a513890c13",
+  "assembly_notes": "Five independent component slots (3 x 2 x 3 x 2 x 2 = 72 complete structural combinations) plus one multiplicity N in {1,2,3,4} (raw 288). The root part is `case`; it carries one `lid`, one `closure` and N `powder_pan_i` parts. case_to_lid is REVOLUTE about the real rear hinge line (flip_hinge) or PRISMATIC along the real guide-slot direction (guided_slide); case_to_closure is PRISMATIC along the real wall-pocket axis (push_slide_button) or REVOLUTE about the real front pivot pin (toggle_latch); every powder pan is FIXED on a real seat pocket. Both revolute joints are solved with mate_axes and registered with register_interface_mate; both planar mounts (sliding cover, powder pans) are solved with mate_planes using real supporting footprints. There are no compatibility gates: the closure lives inside a derived front band that is above the tray plate and below the cover plane, which is what lets a guided-slide cover and a push-slide button coexist, and the well pack radius/pitch is solved against the real cavity boundary for every footprint and N, which is what lets the tightest rounded-rect four-well case keep real clearance. No allow_overlap.",
+  "slots": [
+    {
+      "name": "case_form",
+      "component_type": "shallow_compact_case_body",
+      "required": true,
+      "candidates": [
+        {
+          "name": "round",
+          "record_id": "rec_0611_makeup3_var_case_form_round",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L27-L43",
+            "model.py:L177-L206",
+            "model.py:L417-L447"
+          ],
+          "evidence": "Axisymmetric stepped case wall, circular floor and rim; the fork asserts a near-circular XY footprint.",
+          "implementation_function": "_case_form_round_build",
+          "parameters": [
+            {
+              "name": "case_span_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Overall X span; the wall, cavity, rim, tray, cover plan and every hardware station derive from it.",
+              "minimum": 0.07,
+              "maximum": 0.104
+            },
+            {
+              "name": "case_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Rim height; floor, cavity depth, cup depth, closure band and skirt drop derive from it.",
+              "minimum": 0.0135,
+              "maximum": 0.0235
+            },
+            {
+              "name": "hy_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Footprint Y half-extent per primary form (hexagon apothem, 80/96 mm rect plan).",
+              "expression": "case_span_m / 2 if case_form == 'round' else case_span_m / 2 * cos(pi/6) if case_form == 'hexagonal' else case_span_m / 2 * 0.82",
+              "depends_on": [
+                "case_span_m"
+              ]
+            },
+            {
+              "name": "cav_hx_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Real cavity half-extent that the tray, well pack and closure lug must respect.",
+              "expression": "offset(hx_m, -wall_thk_m)",
+              "depends_on": [
+                "case_span_m",
+                "wall_thk_m"
+              ]
+            },
+            {
+              "name": "wall_thk_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Shell wall thickness scales with the case so the pocket and lug stay printable.",
+              "expression": "max(0.0019, 0.045 * case_span_m / 2)",
+              "depends_on": [
+                "case_span_m"
+              ]
+            },
+            {
+              "name": "floor_h_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Cavity floor height; also the powder seat plane.",
+              "expression": "max(0.0022, 0.22 * case_height_m)",
+              "depends_on": [
+                "case_height_m"
+              ]
+            },
+            {
+              "name": "tray_thk_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Well tray plate thickness.",
+              "expression": "max(0.0006, 0.05 * case_height_m)",
+              "depends_on": [
+                "case_height_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "rim_seat",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "2 * rim_mid_hx_m",
+                "width": "2 * rim_mid_hy_m"
+              }
+            },
+            {
+              "name": "cavity_floor",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "2 * cav_hx_m",
+                "width": "2 * cav_hy_m",
+                "seat_z": "floor_h_m"
+              }
+            },
+            {
+              "name": "front_wall",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "band_lo": "front_band_lo_m",
+                "band_hi": "front_band_hi_m",
+                "thickness": "wall_thk_m"
+              }
+            },
+            {
+              "name": "rear_hinge_station",
+              "kind": "axis",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "axis": [
+                  -1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "y": "hinge_y_m",
+                "z": "hinge_z_m",
+                "bore_radius": "bore_r_m"
+              }
+            }
+          ],
+          "notes": "hy = hx, so the cavity inradius is the case radius."
+        },
+        {
+          "name": "rounded_rect",
+          "record_id": "rec_0611_makeup3_var_case_form_rectangular",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L19-L28",
+            "model.py:L33-L75",
+            "model.py:L98-L176",
+            "model.py:L393-L412"
+          ],
+          "evidence": "Rounded-rectangle 96x80 mm plan with corner fillet, matching rectangular lid and skirt; the fork asserts dx > dy.",
+          "implementation_function": "_case_form_rounded_rect_build",
+          "parameters": [
+            {
+              "name": "case_span_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Overall X span; the wall, cavity, rim, tray, cover plan and every hardware station derive from it.",
+              "minimum": 0.07,
+              "maximum": 0.104
+            },
+            {
+              "name": "case_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Rim height; floor, cavity depth, cup depth, closure band and skirt drop derive from it.",
+              "minimum": 0.0135,
+              "maximum": 0.0235
+            },
+            {
+              "name": "hy_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Footprint Y half-extent per primary form (hexagon apothem, 80/96 mm rect plan).",
+              "expression": "case_span_m / 2 if case_form == 'round' else case_span_m / 2 * cos(pi/6) if case_form == 'hexagonal' else case_span_m / 2 * 0.82",
+              "depends_on": [
+                "case_span_m"
+              ]
+            },
+            {
+              "name": "cav_hx_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Real cavity half-extent that the tray, well pack and closure lug must respect.",
+              "expression": "offset(hx_m, -wall_thk_m)",
+              "depends_on": [
+                "case_span_m",
+                "wall_thk_m"
+              ]
+            },
+            {
+              "name": "wall_thk_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Shell wall thickness scales with the case so the pocket and lug stay printable.",
+              "expression": "max(0.0019, 0.045 * case_span_m / 2)",
+              "depends_on": [
+                "case_span_m"
+              ]
+            },
+            {
+              "name": "floor_h_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Cavity floor height; also the powder seat plane.",
+              "expression": "max(0.0022, 0.22 * case_height_m)",
+              "depends_on": [
+                "case_height_m"
+              ]
+            },
+            {
+              "name": "tray_thk_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Well tray plate thickness.",
+              "expression": "max(0.0006, 0.05 * case_height_m)",
+              "depends_on": [
+                "case_height_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "rim_seat",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "2 * rim_mid_hx_m",
+                "width": "2 * rim_mid_hy_m"
+              }
+            },
+            {
+              "name": "cavity_floor",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "2 * cav_hx_m",
+                "width": "2 * cav_hy_m",
+                "seat_z": "floor_h_m"
+              }
+            },
+            {
+              "name": "front_wall",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "band_lo": "front_band_lo_m",
+                "band_hi": "front_band_hi_m",
+                "thickness": "wall_thk_m"
+              }
+            },
+            {
+              "name": "rear_hinge_station",
+              "kind": "axis",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "axis": [
+                  -1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "y": "hinge_y_m",
+                "z": "hinge_z_m",
+                "bore_radius": "bore_r_m"
+              }
+            }
+          ],
+          "notes": "hy = 0.82 hx and the corner radius insets with the wall, so the well pack solves against the real rounded corner."
+        },
+        {
+          "name": "hexagonal",
+          "record_id": "rec_0611_makeup3_var_case_form_hexagonal",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L164-L224",
+            "model.py:L304-L344",
+            "model.py:L549-L565"
+          ],
+          "evidence": "Six-sided polygon body, tray, rim and lid shell with vertices on +/-X; the fork asserts dx > 1.08 dy.",
+          "implementation_function": "_case_form_hexagonal_build",
+          "parameters": [
+            {
+              "name": "case_span_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Overall X span; the wall, cavity, rim, tray, cover plan and every hardware station derive from it.",
+              "minimum": 0.07,
+              "maximum": 0.104
+            },
+            {
+              "name": "case_height_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Rim height; floor, cavity depth, cup depth, closure band and skirt drop derive from it.",
+              "minimum": 0.0135,
+              "maximum": 0.0235
+            },
+            {
+              "name": "hy_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Footprint Y half-extent per primary form (hexagon apothem, 80/96 mm rect plan).",
+              "expression": "case_span_m / 2 if case_form == 'round' else case_span_m / 2 * cos(pi/6) if case_form == 'hexagonal' else case_span_m / 2 * 0.82",
+              "depends_on": [
+                "case_span_m"
+              ]
+            },
+            {
+              "name": "cav_hx_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Real cavity half-extent that the tray, well pack and closure lug must respect.",
+              "expression": "offset(hx_m, -wall_thk_m)",
+              "depends_on": [
+                "case_span_m",
+                "wall_thk_m"
+              ]
+            },
+            {
+              "name": "wall_thk_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Shell wall thickness scales with the case so the pocket and lug stay printable.",
+              "expression": "max(0.0019, 0.045 * case_span_m / 2)",
+              "depends_on": [
+                "case_span_m"
+              ]
+            },
+            {
+              "name": "floor_h_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Cavity floor height; also the powder seat plane.",
+              "expression": "max(0.0022, 0.22 * case_height_m)",
+              "depends_on": [
+                "case_height_m"
+              ]
+            },
+            {
+              "name": "tray_thk_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Well tray plate thickness.",
+              "expression": "max(0.0006, 0.05 * case_height_m)",
+              "depends_on": [
+                "case_height_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "rim_seat",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "2 * rim_mid_hx_m",
+                "width": "2 * rim_mid_hy_m"
+              }
+            },
+            {
+              "name": "cavity_floor",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "length": "2 * cav_hx_m",
+                "width": "2 * cav_hy_m",
+                "seat_z": "floor_h_m"
+              }
+            },
+            {
+              "name": "front_wall",
+              "kind": "plane",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "band_lo": "front_band_lo_m",
+                "band_hi": "front_band_hi_m",
+                "thickness": "wall_thk_m"
+              }
+            },
+            {
+              "name": "rear_hinge_station",
+              "kind": "axis",
+              "role": "provider",
+              "part": "case",
+              "frame": {
+                "axis": [
+                  -1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "y": "hinge_y_m",
+                "z": "hinge_z_m",
+                "bore_radius": "bore_r_m"
+              }
+            }
+          ],
+          "notes": "hy is the apothem; boundary clearance is solved from the three edge normals so the pack never overruns a flat."
+        }
+      ]
+    },
+    {
+      "name": "lid_motion",
+      "component_type": "cover_motion_assembly",
+      "required": true,
+      "candidates": [
+        {
+          "name": "flip_hinge",
+          "record_id": "rec_picturex_0611__makeup3__002__png_4960c988351041a8a8bc5cc76140e8b6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L66-L139",
+            "model.py:L189-L206",
+            "model.py:L227-L259"
+          ],
+          "evidence": "Revolute cover on a rear hinge line with two fixed case knuckles and a central lid barrel plus a peripheral skirt.",
+          "implementation_function": "_lid_motion_flip_hinge_build",
+          "parameters": [
+            {
+              "name": "lid_open_angle_rad",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "rad",
+              "rationale": "Revolute upper limit; sources sweep 1.68 rad (002) and 1.83 rad (001).",
+              "minimum": 1.25,
+              "maximum": 1.85
+            },
+            {
+              "name": "hinge_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Puts the axis above every cover point so the whole sweep clears the rim.",
+              "expression": "case_height_m + panel_thk_m + 0.35 * hinge_r_m",
+              "depends_on": [
+                "case_height_m",
+                "panel_thk_m",
+                "hinge_r_m"
+              ]
+            },
+            {
+              "name": "hinge_y_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Puts the axis behind the cover's rear edge so knuckles never foul the panel.",
+              "expression": "hy_m + hinge_r_m + lid_over_m + 0.0009",
+              "depends_on": [
+                "hy_m",
+                "hinge_r_m",
+                "lid_over_m"
+              ]
+            },
+            {
+              "name": "skirt_drop_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Skirt depth kept above the closure hardware band.",
+              "expression": "0.26 * case_height_m",
+              "depends_on": [
+                "case_height_m"
+              ]
+            },
+            {
+              "name": "bore_r_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Real radial clearance between the case pin and the lid barrel bore.",
+              "expression": "pin_r_m + max(0.00034, 0.12 * pin_r_m)",
+              "depends_on": [
+                "pin_r_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "hinge_barrel_bore",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "lid",
+              "frame": {
+                "axis": [
+                  -1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "bore_radius": "bore_r_m",
+                "half_span": "barrel_half_m"
+              }
+            },
+            {
+              "name": "front_skirt",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "lid",
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "outer_y": "lid_front_y_m",
+                "drop": "skirt_drop_m"
+              }
+            },
+            {
+              "name": "cover_engagement",
+              "kind": "plane",
+              "role": "provider",
+              "part": "lid",
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "engage_z": "engage_z_m",
+                "outer_y": "lid_front_y_m"
+              }
+            }
+          ],
+          "notes": "Case supplies knuckles, a spanning pin and a rear ledge/tower; the skirt is clipped before the ledge so no pose intersects it."
+        },
+        {
+          "name": "guided_slide",
+          "record_id": "rec_0611_makeup3_var_insert_motion_guided_slide",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L114-L122",
+            "model.py:L198-L228",
+            "model.py:L292-L308",
+            "model.py:L350-L366",
+            "model.py:L390-L408"
+          ],
+          "evidence": "Prismatic cover on guide rails replacing the hinge barrels, with a centred lid shell and a slider engaging the rails.",
+          "implementation_function": "_lid_motion_guided_slide_build",
+          "parameters": [
+            {
+              "name": "slide_travel_ratio",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "rationale": "Prismatic upper limit as a fraction of the case Y span; the fork used ~0.39. The band reaches 0.52 so the fully open cover really exposes the powder pack rather than only the front rim.",
+              "minimum": 0.34,
+              "maximum": 0.52
+            },
+            {
+              "name": "slide_travel_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Real cover stroke; also sets the guide slot length.",
+              "expression": "slide_travel_ratio * 2 * hy_m",
+              "depends_on": [
+                "slide_travel_ratio",
+                "hy_m"
+              ]
+            },
+            {
+              "name": "slot_half_w_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Real running clearance between the guide post and the cover slot.",
+              "expression": "post_r_m + 0.00050",
+              "depends_on": [
+                "post_r_m"
+              ]
+            },
+            {
+              "name": "post_x_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Places the posts on the real rim mid-line, never over the cavity.",
+              "expression": "footprint_x_at_y(rim_mid_hx_m, rim_mid_hy_m, post_y_m)",
+              "depends_on": [
+                "case_span_m",
+                "wall_thk_m",
+                "rim_lip_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "slide_underside",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "lid",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ]
+              },
+              "dimensions": {
+                "length": "2 * rim_mid_hx_m",
+                "width": "2 * rim_mid_hy_m"
+              }
+            },
+            {
+              "name": "guide_slots",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "lid",
+              "frame": {
+                "axis": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "travel": "slide_travel_m",
+                "half_width": "slot_half_w_m"
+              }
+            },
+            {
+              "name": "cover_engagement",
+              "kind": "plane",
+              "role": "provider",
+              "part": "lid",
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "engage_z": "engage_z_m",
+                "outer_y": "lid_front_y_m"
+              }
+            }
+          ],
+          "notes": "Two case posts with retainer heads ride in real elongated cover slots; the cover sits entirely above the rim so the front closure band is free."
+        }
+      ]
+    },
+    {
+      "name": "lid_module",
+      "component_type": "cover_face_module",
+      "required": true,
+      "candidates": [
+        {
+          "name": "lacquer_inlay",
+          "record_id": "rec_picturex_0611__makeup3__001__png_d432b592bfe24d18aefa827f7ae9c15e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L75-L91",
+            "model.py:L298-L338",
+            "model.py:L354-L373"
+          ],
+          "evidence": "Recessed lacquer inlay panel on the cover inner face plus eight raised four-lobed clover ornaments on the outer face.",
+          "implementation_function": "_lid_module_lacquer_inlay_build",
+          "parameters": [
+            {
+              "name": "inlay_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Inner-face pocket depth that the inlay panel actually fills.",
+              "expression": "0.34 * panel_thk_m",
+              "depends_on": [
+                "panel_thk_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "inner_face_pocket",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "lid",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ]
+              },
+              "dimensions": {
+                "depth": "inlay_depth_m",
+                "inset": "module_inset_m"
+              }
+            }
+          ],
+          "notes": "No plaque and no mirror; the eight clover motifs give the outer face its own silhouette."
+        },
+        {
+          "name": "engraved_plaque",
+          "record_id": "rec_picturex_0611__makeup3__002__png_4960c988351041a8a8bc5cc76140e8b6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L100-L139",
+            "model.py:L142-L147",
+            "model.py:L227-L241"
+          ],
+          "evidence": "Herringbone relief field on the cover crown plus a real label recess carrying a contrasting plaque element.",
+          "implementation_function": "_lid_module_engraved_plaque_build",
+          "parameters": [
+            {
+              "name": "plaque_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Top-face pocket depth the plaque seats into.",
+              "expression": "0.32 * panel_thk_m",
+              "depends_on": [
+                "panel_thk_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "outer_face_pocket",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "lid",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "depth": "plaque_depth_m",
+                "length": "0.48 * case_span_m / 2"
+              }
+            }
+          ],
+          "notes": "The pocket is cut in the cover crown, not the inner face, so this candidate reads differently from the other two under any motion."
+        },
+        {
+          "name": "fitted_inner_mirror",
+          "record_id": "rec_0611_makeup3_var_lid_module_fitted_inner_mirror",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L162-L165",
+            "model.py:L302-L359",
+            "model.py:L541-L550"
+          ],
+          "evidence": "Fitted mirror pane on the cover inner face, retained inside a surround; the fork asserts the mirror element and material.",
+          "implementation_function": "_lid_module_fitted_inner_mirror_build",
+          "parameters": [
+            {
+              "name": "mirror_pane_thk_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Pane thickness inside the bezel so the glass never stands proud.",
+              "expression": "max(0.00045, 0.30 * inlay_depth_m)",
+              "depends_on": [
+                "panel_thk_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "inner_face_pocket",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "lid",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ]
+              },
+              "dimensions": {
+                "depth": "inlay_depth_m",
+                "inset": "module_inset_m"
+              }
+            }
+          ],
+          "notes": "A bezel ring is generated from the same pocket outline and holds the pane, so the part tree differs from the plain inlay."
+        }
+      ]
+    },
+    {
+      "name": "closure",
+      "component_type": "front_closure_mechanism",
+      "required": true,
+      "candidates": [
+        {
+          "name": "push_slide_button",
+          "record_id": "rec_picturex_0611__makeup3__002__png_4960c988351041a8a8bc5cc76140e8b6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L150-L155",
+            "model.py:L261-L281"
+          ],
+          "evidence": "Prismatic latch button pressed inward at the front wall over a short ~1.4 mm travel.",
+          "implementation_function": "_closure_push_slide_button_build",
+          "parameters": [
+            {
+              "name": "button_travel_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Prismatic limit; sources used 0.0014 (002) and 0.0015 (001).",
+              "minimum": 0.001,
+              "maximum": 0.0022
+            },
+            {
+              "name": "btn_cbore_depth_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Counterbore depth so the cap sinks flush instead of piercing the wall.",
+              "expression": "button_travel_m + 0.00055",
+              "depends_on": [
+                "button_travel_m"
+              ]
+            },
+            {
+              "name": "closure_z_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Keeps the whole button below the cover plane and above the tray.",
+              "expression": "(front_band_lo_m + front_band_hi_m) / 2",
+              "depends_on": [
+                "floor_h_m",
+                "tray_thk_m",
+                "case_height_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "pocket_axis",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "closure",
+              "frame": {
+                "axis": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "travel": "button_travel_m",
+                "stem_width": "btn_stem_w_m"
+              }
+            },
+            {
+              "name": "front_hardware",
+              "kind": "plane",
+              "role": "provider",
+              "part": "closure",
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "top_z": "front_band_hi_m",
+                "protrusion": "btn_cap_out_m"
+              }
+            }
+          ],
+          "notes": "Outer flange, stem through a real wall pocket and an inner retainer lug wider than the pocket: captured in both directions."
+        },
+        {
+          "name": "toggle_latch",
+          "record_id": "rec_0611_makeup3_var_closure_toggle_latch",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L115-L151",
+            "model.py:L211-L243",
+            "model.py:L355-L377",
+            "model.py:L469-L498"
+          ],
+          "evidence": "Revolute lever with pivot boss, bar, hook and grip on two base mounting lugs with a spanning pivot pin.",
+          "implementation_function": "_closure_toggle_latch_build",
+          "parameters": [
+            {
+              "name": "latch_lock_angle_rad",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "rad",
+              "rationale": "Revolute upper limit; the fork locked at 1.30 rad.",
+              "minimum": 1.0,
+              "maximum": 1.32
+            },
+            {
+              "name": "latch_len_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Lever length so the hook always reaches the active cover edge.",
+              "expression": "(engage_z_m - latch_pivot_z_m - latch_hook_len_m * cos(latch_lock_angle_rad)) / sin(latch_lock_angle_rad)",
+              "depends_on": [
+                "latch_lock_angle_rad",
+                "engage_z_m",
+                "latch_hook_len_m"
+              ]
+            },
+            {
+              "name": "latch_pivot_y_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Stand-off so the lever's whole sweep stays outside the cover.",
+              "expression": "lid_front_y_m - latch_gap_m + latch_len_m * cos(latch_lock_angle_rad) - latch_hook_len_m * sin(latch_lock_angle_rad)",
+              "depends_on": [
+                "lid_front_y_m",
+                "latch_len_m",
+                "latch_lock_angle_rad"
+              ]
+            },
+            {
+              "name": "latch_bore_r_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Real radial clearance between the case pivot pin and the boss bore.",
+              "expression": "latch_pin_r_m + max(0.00034, 0.12 * latch_pin_r_m)",
+              "depends_on": [
+                "case_span_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "pivot_boss_bore",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "closure",
+              "frame": {
+                "axis": [
+                  -1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "bore_radius": "latch_bore_r_m",
+                "half_span": "latch_boss_half_m"
+              }
+            },
+            {
+              "name": "front_hardware",
+              "kind": "plane",
+              "role": "provider",
+              "part": "closure",
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "top_z": "front_band_hi_m",
+                "lug_reach": "latch_lug_out_m"
+              }
+            }
+          ],
+          "notes": "The case front wall carries a real pivot recess plus two lugs and a spanning pin, mirroring origin 001's cut housing slot."
+        }
+      ]
+    },
+    {
+      "name": "powder_insert",
+      "component_type": "powder_well_subassembly",
+      "required": true,
+      "candidates": [
+        {
+          "name": "round_metal_cup",
+          "record_id": "rec_picturex_0611__makeup3__002__png_4960c988351041a8a8bc5cc76140e8b6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L46-L63",
+            "model.py:L208-L225"
+          ],
+          "evidence": "Circular metal cup (floor disc plus annular wall) with a flat pressed cake, retained as a FIXED child of the case.",
+          "implementation_function": "_powder_insert_round_metal_cup_build",
+          "parameters": [
+            {
+              "name": "well_fill_ratio",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "rationale": "Pressed cake height as a fraction of the cup wall; 002 sat at ~0.90.",
+              "minimum": 0.8,
+              "maximum": 0.94
+            },
+            {
+              "name": "well_outer_r_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Cup radius solved against the real cavity boundary for every footprint and N, replacing the fork's fixed constants.",
+              "expression": "max over grid pitch of min(cell_limit, cavity_clearance - cav_margin_m)",
+              "depends_on": [
+                "cav_hx_m",
+                "cav_hy_m",
+                "well_count",
+                "cav_margin_m"
+              ]
+            },
+            {
+              "name": "cake_r_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Cake sits inside the metal wall with real clearance.",
+              "expression": "well_outer_r_m - well_wall_thk_m - 0.00025",
+              "depends_on": [
+                "well_outer_r_m",
+                "well_wall_thk_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "cup_underside",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "powder_pan",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ]
+              },
+              "dimensions": {
+                "length": "2 * well_outer_r_m",
+                "width": "2 * well_outer_r_m"
+              }
+            },
+            {
+              "name": "well_outline",
+              "kind": "plane",
+              "role": "provider",
+              "part": "powder_pan",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "radius": "well_outer_r_m + well_open_gap_m"
+              }
+            }
+          ],
+          "notes": "Grid pack 1->1x1, 2->2x1, 3->3x1, 4->2x2 with the pitch maximised against the cavity boundary."
+        },
+        {
+          "name": "petal_pressed_pan",
+          "record_id": "rec_picturex_0611__makeup3__001__png_d432b592bfe24d18aefa827f7ae9c15e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L45",
+            "model.py:L184-L205",
+            "model.py:L220-L256"
+          ],
+          "evidence": "Spline petal profile with the narrow end at the case centre, a recessed petal well and a smaller petal pressed fill.",
+          "implementation_function": "_powder_insert_petal_pressed_pan_build",
+          "parameters": [
+            {
+              "name": "well_fill_ratio",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "rationale": "Pressed cake height as a fraction of the petal cup wall.",
+              "minimum": 0.8,
+              "maximum": 0.94
+            },
+            {
+              "name": "petal_scale_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Rosette petal size solved from the real cavity inradius; N=1 becomes one centred, enlarged petal pan.",
+              "expression": "(cavity_inradius - cav_margin_m) / (petal_mid + petal_half) if well_count > 1 else (cavity_inradius - cav_margin_m) / petal_half",
+              "depends_on": [
+                "cav_hx_m",
+                "cav_hy_m",
+                "well_count",
+                "cav_margin_m"
+              ]
+            },
+            {
+              "name": "cake_r_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "rationale": "Petal cake shrinks inside its own petal wall.",
+              "expression": "well_outer_r_m - well_wall_thk_m - 0.00025",
+              "depends_on": [
+                "well_outer_r_m",
+                "well_wall_thk_m"
+              ]
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "cup_underside",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "powder_pan",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ]
+              },
+              "dimensions": {
+                "length": "petal_bbox_x_m",
+                "width": "petal_bbox_y_m"
+              }
+            },
+            {
+              "name": "well_outline",
+              "kind": "plane",
+              "role": "provider",
+              "part": "powder_pan",
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "dimensions": {
+                "scale": "petal_scale_m * (1 + well_open_gap_m / well_outer_r_m)"
+              }
+            }
+          ],
+          "notes": "N petals at 360/N pitch, each rotated and re-centred on its own outline so the tray opening matches exactly."
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "well_count",
+      "item_slot": "powder_insert",
+      "values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "spacing_expression": "round_metal_cup: grid (cols,rows) = {1:(1,1),2:(2,1),3:(3,1),4:(2,2)} with pitch = 2 * cav_h{x,y}_m * t / {cols,rows}, t chosen to maximise min(pitch/2 - rib_gap, cavity_clearance - cav_margin_m); petal_pressed_pan: rosette pitch 360/well_count deg at radius petal_mid * petal_scale_m (well_count == 1 is centred).",
+      "host_capacity_expression": "the case tray plate is generated with exactly well_count through-openings matching each pan outline plus well_open_gap_m, so capacity == well_count and every opening keeps cav_margin_m to the cavity wall"
+    }
+  ],
+  "bindings": [
+    {
+      "binding_id": "closure_band_to_cover_skirt",
+      "provider": "closure.front_hardware",
+      "consumer": "lid_motion.front_skirt",
+      "joint_type": "host_clearance",
+      "derived": [
+        {
+          "name": "front_band_hi_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "rationale": "Keeps every closure hardware point below the closed cover skirt, so a push button and a flipping skirt never share space.",
+          "expression": "case_height_m - skirt_drop_m - 0.0009",
+          "depends_on": [
+            "case_height_m",
+            "skirt_drop_m"
+          ]
+        },
+        {
+          "name": "front_band_lo_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "rationale": "Keeps the inner retainer lug and pivot boss above the well tray.",
+          "expression": "floor_h_m + tray_thk_m + 0.0005",
+          "depends_on": [
+            "floor_h_m",
+            "tray_thk_m"
+          ]
+        }
+      ]
+    },
+    {
+      "binding_id": "cover_edge_to_closure_engagement",
+      "provider": "lid_motion.cover_engagement",
+      "consumer": "closure.pocket_axis",
+      "joint_type": "engagement_clearance",
+      "derived": [
+        {
+          "name": "engage_z_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "rationale": "The active cover edge differs per motion, so the latch lever length and the button pocket height derive from it instead of being gated.",
+          "expression": "case_height_m + 0.5 * panel_thk_m if lid_motion == 'guided_slide' else case_height_m - 0.5 * skirt_drop_m",
+          "depends_on": [
+            "case_height_m",
+            "panel_thk_m",
+            "skirt_drop_m"
+          ]
+        },
+        {
+          "name": "lid_front_y_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "rationale": "Cover front outer face that bounds the latch sweep.",
+          "expression": "-lid_hy_m",
+          "depends_on": [
+            "case_span_m"
+          ]
+        }
+      ]
+    },
+    {
+      "binding_id": "well_pack_to_case_tray",
+      "provider": "powder_insert.well_outline",
+      "consumer": "case_form.cavity_floor",
+      "joint_type": "host_opening",
+      "derived": [
+        {
+          "name": "well_open_gap_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "rationale": "Radial gap between each pan and its tray opening.",
+          "expression": "0.00045",
+          "depends_on": [
+            "well_outer_r_m"
+          ]
+        },
+        {
+          "name": "cav_margin_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "rationale": "Reserved cavity margin that also clears the closure's inward retainer lug or pivot boss.",
+          "expression": "0.0026",
+          "depends_on": [
+            "wall_thk_m"
+          ]
+        }
+      ]
+    },
+    {
+      "binding_id": "case_rim_to_sliding_cover",
+      "provider": "case_form.rim_seat",
+      "consumer": "lid_motion.slide_underside",
+      "joint_type": "prismatic",
+      "derived": [
+        {
+          "name": "post_y_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "rationale": "Guide post station on the real rim mid-line.",
+          "expression": "0.60 * rim_mid_hy_m",
+          "depends_on": [
+            "case_span_m",
+            "wall_thk_m",
+            "rim_lip_m"
+          ]
+        },
+        {
+          "name": "slide_travel_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "rationale": "Cover stroke that the slot length and the rim support overlap follow.",
+          "expression": "slide_travel_ratio * 2 * hy_m",
+          "depends_on": [
+            "slide_travel_ratio",
+            "hy_m"
+          ]
+        }
+      ]
+    },
+    {
+      "binding_id": "case_hinge_station_to_cover",
+      "provider": "case_form.rear_hinge_station",
+      "consumer": "lid_motion.hinge_barrel_bore",
+      "joint_type": "revolute",
+      "derived": [
+        {
+          "name": "barrel_half_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "rationale": "Central lid barrel span; the case knuckles start just outboard of it.",
+          "expression": "max(0.0062, 0.28 * case_span_m / 2)",
+          "depends_on": [
+            "case_span_m"
+          ]
+        },
+        {
+          "name": "knuckle_out_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "rationale": "Keeps the knuckles, tower and ledge inside the cover plan.",
+          "expression": "min(barrel_half_m + 0.0004 + max(0.0055, 0.20 * case_span_m / 2), 0.92 * lid_hx_m)",
+          "depends_on": [
+            "barrel_half_m",
+            "case_span_m"
+          ]
+        }
+      ]
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "makeup3_case_and_cover_identity",
+      "applies_to": {
+        "slot": "case_form",
+        "candidates": [
+          "round",
+          "rounded_rect",
+          "hexagonal"
+        ]
+      },
+      "required_roles": [
+        {
+          "role": "case_body",
+          "exact_count": 1
+        },
+        {
+          "role": "lid",
+          "exact_count": 1
+        },
+        {
+          "role": "closure",
+          "exact_count": 1
+        },
+        {
+          "role": "powder_pan",
+          "count_from": "well_count"
+        }
+      ],
+      "required_relations": [
+        {
+          "parent_role": "case_body",
+          "child_role": "powder_pan",
+          "joint_type": "fixed"
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: makeup compact identity",
+        "category_anchor: cover and closure mechanisms",
+        "category_anchor: every well is a metal cup plus pressed cake"
+      ]
+    },
+    {
+      "anchor_id": "makeup3_flip_cover_identity",
+      "applies_to": {
+        "slot": "lid_motion",
+        "candidates": [
+          "flip_hinge"
+        ]
+      },
+      "required_roles": [
+        {
+          "role": "case_body",
+          "exact_count": 1
+        },
+        {
+          "role": "lid",
+          "exact_count": 1
+        },
+        {
+          "role": "closure",
+          "exact_count": 1
+        },
+        {
+          "role": "powder_pan",
+          "count_from": "well_count"
+        }
+      ],
+      "required_relations": [
+        {
+          "parent_role": "case_body",
+          "child_role": "lid",
+          "joint_type": "revolute",
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "parent_role": "case_body",
+          "child_role": "powder_pan",
+          "joint_type": "fixed"
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: makeup compact identity",
+        "category_anchor: cover and closure mechanisms",
+        "category_anchor: every well is a metal cup plus pressed cake"
+      ]
+    },
+    {
+      "anchor_id": "makeup3_slide_cover_identity",
+      "applies_to": {
+        "slot": "lid_motion",
+        "candidates": [
+          "guided_slide"
+        ]
+      },
+      "required_roles": [
+        {
+          "role": "case_body",
+          "exact_count": 1
+        },
+        {
+          "role": "lid",
+          "exact_count": 1
+        },
+        {
+          "role": "closure",
+          "exact_count": 1
+        },
+        {
+          "role": "powder_pan",
+          "count_from": "well_count"
+        }
+      ],
+      "required_relations": [
+        {
+          "parent_role": "case_body",
+          "child_role": "lid",
+          "joint_type": "prismatic",
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "parent_role": "case_body",
+          "child_role": "powder_pan",
+          "joint_type": "fixed"
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: makeup compact identity",
+        "category_anchor: cover and closure mechanisms",
+        "category_anchor: every well is a metal cup plus pressed cake"
+      ]
+    },
+    {
+      "anchor_id": "makeup3_closure_identity",
+      "applies_to": {
+        "slot": "closure",
+        "candidates": [
+          "push_slide_button",
+          "toggle_latch"
+        ]
+      },
+      "required_roles": [
+        {
+          "role": "case_body",
+          "exact_count": 1
+        },
+        {
+          "role": "lid",
+          "exact_count": 1
+        },
+        {
+          "role": "closure",
+          "exact_count": 1
+        },
+        {
+          "role": "powder_pan",
+          "count_from": "well_count"
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: makeup compact identity",
+        "category_anchor: cover and closure mechanisms",
+        "category_anchor: every well is a metal cup plus pressed cake"
+      ]
+    },
+    {
+      "anchor_id": "makeup3_powder_identity",
+      "applies_to": {
+        "slot": "powder_insert",
+        "candidates": [
+          "round_metal_cup",
+          "petal_pressed_pan"
+        ]
+      },
+      "required_roles": [
+        {
+          "role": "case_body",
+          "exact_count": 1
+        },
+        {
+          "role": "lid",
+          "exact_count": 1
+        },
+        {
+          "role": "closure",
+          "exact_count": 1
+        },
+        {
+          "role": "powder_pan",
+          "count_from": "well_count"
+        }
+      ],
+      "required_relations": [
+        {
+          "parent_role": "case_body",
+          "child_role": "powder_pan",
+          "joint_type": "fixed"
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: makeup compact identity",
+        "category_anchor: cover and closure mechanisms",
+        "category_anchor: every well is a metal cup plus pressed cake"
+      ]
+    }
+  ]
+}

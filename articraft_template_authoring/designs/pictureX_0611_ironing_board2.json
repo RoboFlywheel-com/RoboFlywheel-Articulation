@@ -1,0 +1,609 @@
+{
+ "assembly_notes": "Three independent structural slots and no multiplicity: board_style has two source-backed tops, sleeve_option adds or omits the transverse hinged sleeve surface, and support_style has five mechanisms, giving 2 x 2 x 5 = 20 combinations with no compatibility gate. board_style publishes a support station line under the shell and a raised sleeve seat; support_style consumes the station line while sleeve_option consumes the sleeve seat. The board is the assembly root even for the wall bracket, whose bracket and prop arm hang off it. Fold ranges and leg lengths are derived from the sampled spread so the feet reach the support plane and a folded support stops just under the top. Candidate-aware seed ranges preserve the compact proportions of the slotted tabletop origin and the longer proportions of the tapered board. cover_style is a decorative geometry parameter, sourced from the plain cover, irregular grid and elliptical patch treatments; it does not add to core/raw diversity.",
+ "bindings": [
+  {
+   "binding_id": "board_to_support",
+   "consumer": "support_style.support_station",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "board_width_m",
+      "taper_ratio"
+     ],
+     "expression": "the bearing lugs sit at +-(half_width_at(station_x) - 0.028 + 0.013) and the hinge rod stops 0.003 inside them",
+     "maximum": 0.0,
+     "minimum": 0.0,
+     "mode": "derived",
+     "name": "station_span_m",
+     "rationale": "the lugs must follow the tapering top, not a fixed width",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "choices": [],
+     "depends_on": [
+      "board_height_m"
+     ],
+     "expression": "leg length = support_height_m + mount_z; the telescoping post adds its travel on top",
+     "maximum": 0.0,
+     "minimum": 0.0,
+     "mode": "derived",
+     "name": "support_length_m",
+     "rationale": "every support family is cut to the height it has to reach",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "revolute",
+   "provider": "board_style.support_station"
+  },
+  {
+   "binding_id": "board_to_sleeve",
+   "consumer": "sleeve_option.sleeve_seat",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "board_width_m",
+      "taper_ratio"
+     ],
+     "expression": "the sleeve hinge rides 0.016 outboard of the board edge on a bridging mount plate and raised posts at +-0.075 in x",
+     "maximum": 0.0,
+     "minimum": 0.0,
+     "mode": "derived",
+     "name": "sleeve_hinge_y_m",
+     "rationale": "the sleeve must clear the board rail it folds over",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "revolute",
+   "provider": "board_style.sleeve_seat"
+  }
+ ],
+ "category_anchors": [
+  {
+   "anchor_id": "ironing_board_identity",
+   "applies_to": {
+    "candidates": [
+     "scissor_legs",
+     "floor_x_legs",
+     "short_tabletop_legs",
+     "telescoping_posts",
+     "wall_bracket"
+    ],
+    "slot": "support_style"
+   },
+   "required_author_checks": [
+    "category_anchor: one padded ironing top",
+    "category_anchor: the board stands on its own support",
+     "category_anchor: the support carries a brace or lock",
+     "category_anchor: the support really folds or adjusts away from the board",
+     "the board keeps a source-like usable planform"
+   ],
+   "required_relations": [],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "board"
+    }
+   ]
+  },
+  {
+   "anchor_id": "sleeve_board_identity",
+   "applies_to": {
+    "candidates": [
+     "sleeve_board"
+    ],
+    "slot": "sleeve_option"
+   },
+   "required_author_checks": [
+    "category_anchor: the sleeve option matches the selected top",
+    "category_anchor: the sleeve board swings on its own hinge"
+   ],
+   "required_relations": [
+    {
+     "child_role": "sleeve_board",
+     "joint_type": "revolute",
+     "parent_role": "board"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "board"
+    },
+    {
+     "exact_count": 1,
+     "role": "sleeve_board"
+    }
+   ]
+  }
+ ],
+ "multiplicities": [],
+ "schema_version": 1,
+ "slots": [
+  {
+   "candidates": [
+    {
+     "evidence": "_capsule sweeps a rounded, tapering silhouette, _perforated_tray builds the vented underside and _cover_pattern the padded cover — the classic narrowing board.",
+     "implementation_function": "_board_style_tapered_capsule_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "mount_z": "-pad - shell - 0.017"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(+-station_x, 0, mount_z)",
+        "radial": "leg tilt"
+       },
+       "kind": "axis",
+       "name": "support_station",
+       "part": "board_style__tapered_capsule__*",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "half_width": "half_width_at(x)"
+       },
+       "frame": {
+        "axis": "(1,0,0)",
+        "point": "(hinge_x, half_width+0.016, 0.022)",
+        "radial": "(0,0,1)"
+       },
+       "kind": "axis",
+       "name": "sleeve_seat",
+       "part": "board_style__tapered_capsule__*",
+       "role": "provider"
+      }
+     ],
+     "name": "tapered_capsule",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.25,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "board_length_m",
+       "rationale": "source boards are 0.74-1.20 m long",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.46,
+       "minimum": 0.26,
+       "mode": "independent",
+       "name": "board_width_m",
+       "rationale": "source boards are 0.29-0.38 m wide at the heel",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.74,
+       "minimum": 0.34,
+       "mode": "independent",
+       "name": "taper_ratio",
+       "rationale": "source noses are 0.35-0.7 of the heel width",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [
+        "plain",
+        "grid",
+        "ellipse"
+       ],
+       "depends_on": [],
+       "expression": "",
+       "maximum": null,
+       "minimum": null,
+       "mode": "independent",
+       "name": "cover_style",
+       "rationale": "The sources show a clean padded cover, irregular line grid and elliptical patch treatment; this is decorative geometry and does not add to core/raw diversity.",
+       "unit": "ratio",
+       "value_type": "str"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "board_width_m",
+        "taper_ratio"
+       ],
+       "expression": "nose_width_m = board_width_m * taper_ratio; the half width at x follows a 1.6 power law",
+       "maximum": 0.0,
+       "minimum": 0.0,
+       "mode": "derived",
+       "name": "nose_width_m",
+       "rationale": "the tapering silhouette is a real profile, not a scale factor",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "board_length_m"
+       ],
+       "expression": "station_x_m = 0.30 * board_length_m/2; both supports hang from that line",
+       "maximum": 0.0,
+       "minimum": 0.0,
+       "mode": "derived",
+       "name": "station_x_m",
+       "rationale": "the support stations are placed from the board, not from constants",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__ironing_board2__001__png_20c3543235f84c8c9cdc02c21fc7b567",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L26-L131"
+     ]
+    },
+    {
+     "evidence": "_slot_solid plus _perforated_pan and _ellipse_patch build a straight-sided slotted pan; the top keeps a constant width instead of tapering.",
+     "implementation_function": "_board_style_rect_slotted_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "mount_z": "-pad - shell - 0.017"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(+-station_x, 0, mount_z)",
+        "radial": "leg tilt"
+       },
+       "kind": "axis",
+       "name": "support_station",
+       "part": "board_style__rect_slotted__*",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "half_width": "half_width_at(x)"
+       },
+       "frame": {
+        "axis": "(1,0,0)",
+        "point": "(hinge_x, half_width+0.016, 0.022)",
+        "radial": "(0,0,1)"
+       },
+       "kind": "axis",
+       "name": "sleeve_seat",
+       "part": "board_style__rect_slotted__*",
+       "role": "provider"
+      }
+     ],
+     "name": "rect_slotted",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.25,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "board_length_m",
+       "rationale": "The compact slotted origin remains independently scalable while seed sampling uses its source-like 0.62-0.94 m band.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.46,
+       "minimum": 0.26,
+       "mode": "independent",
+       "name": "board_width_m",
+       "rationale": "The straight pan keeps a constant-width run with rounded slot ends.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [
+        "plain",
+        "grid",
+        "ellipse"
+       ],
+       "depends_on": [],
+       "expression": "",
+       "maximum": null,
+       "minimum": null,
+       "mode": "independent",
+       "name": "cover_style",
+       "rationale": "The sources show a clean padded cover, irregular line grid and elliptical patch treatment; this is decorative geometry and does not add to core/raw diversity.",
+       "unit": "ratio",
+       "value_type": "str"
+      }
+     ],
+     "record_id": "rec_picturex_0611__ironing_board2__002__png_a42c994617f44685ada679afd555e0ef",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L29-L132"
+     ]
+    }
+   ],
+   "component_type": "ironing top",
+   "name": "board_style",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "The origin top is a single ironing surface with no second board.",
+     "implementation_function": "_sleeve_option_plain_top_build",
+     "interfaces": [],
+     "name": "plain_top",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_picturex_0611__ironing_board2__001__png_20c3543235f84c8c9cdc02c21fc7b567",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L26-L131"
+     ]
+    },
+    {
+     "evidence": "A second hinged sleeve surface on its own revolute joint stands on the retained main top.",
+     "implementation_function": "_sleeve_option_sleeve_board_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "mount_z": "-pad - shell - 0.017"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(+-station_x, 0, mount_z)",
+        "radial": "leg tilt"
+       },
+       "kind": "axis",
+       "name": "support_station",
+       "part": "sleeve_option__sleeve_board__sleeve_board",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "half_width": "half_width_at(x)"
+       },
+       "frame": {
+        "axis": "(1,0,0)",
+        "point": "(hinge_x, half_width-0.022, 0.022)",
+        "radial": "(0,0,1)"
+       },
+       "kind": "axis",
+       "name": "sleeve_seat",
+       "part": "sleeve_option__sleeve_board__sleeve_board",
+       "role": "provider"
+      }
+     ],
+     "name": "sleeve_board",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_ironing_board2_var_sleeve_board_refill",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L326-L461"
+     ]
+    }
+   ],
+   "component_type": "ironing surface set",
+   "name": "sleeve_option",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Two leg_frame_i hinge under the board (L219-L233) and each carries its own lock_brace_i hinged on the leg (L284-L298): a true scissor pair.",
+     "implementation_function": "_support_style_scissor_legs_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "rod_span": "top_span + 0.010"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,0)",
+        "radial": "(0,0,-1)"
+       },
+       "kind": "axis",
+       "name": "support_station",
+       "part": "support_style__scissor_legs__*",
+       "role": "consumer"
+      }
+     ],
+     "name": "scissor_legs",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.95,
+       "minimum": 0.6,
+       "mode": "independent",
+       "name": "board_height_m",
+       "rationale": "source working heights are 0.72-0.92 m",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.72,
+       "minimum": 0.34,
+       "mode": "independent",
+       "name": "spread_ratio",
+       "rationale": "source feet spread 0.35-0.7 of the leg length",
+       "unit": "ratio",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "board_height_m"
+       ],
+       "expression": "short tabletop legs use 0.34 of the height and the wall bracket 0.55; every other support reaches the floor",
+       "maximum": 0.0,
+       "minimum": 0.0,
+       "mode": "derived",
+       "name": "support_height_m",
+       "rationale": "each support family stands the board at its own real height",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "spread_ratio",
+        "board_height_m"
+       ],
+       "expression": "fold = clamp(pi/2 - tilt - 0.12, 0.30, 1.30); a support folds only until it lies just under the board",
+       "maximum": 0.0,
+       "minimum": 0.0,
+       "mode": "derived",
+       "name": "fold_rad",
+       "rationale": "the fold range is derived so a folded support never enters the top",
+       "unit": "rad",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__ironing_board2__001__png_20c3543235f84c8c9cdc02c21fc7b567",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L176-L323"
+     ]
+    },
+    {
+     "evidence": "Long floor-reaching crossed legs whose braces hinge on the board (L374-L388) instead of on the leg, giving a different closed loop.",
+     "implementation_function": "_support_style_floor_x_legs_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "rod_span": "top_span + 0.010"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,0)",
+        "radial": "(0,0,-1)"
+       },
+       "kind": "axis",
+       "name": "support_station",
+       "part": "support_style__floor_x_legs__*",
+       "role": "consumer"
+      }
+     ],
+     "name": "floor_x_legs",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_ironing_board2_var_x_leg_floor",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L257-L388"
+     ]
+    },
+    {
+     "evidence": "Short legs sized to stand the board on a tabletop, with board-mounted braces; the whole support is a fraction of the standing height.",
+     "implementation_function": "_support_style_short_tabletop_legs_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "rod_span": "top_span + 0.010"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,0)",
+        "radial": "(0,0,-1)"
+       },
+       "kind": "axis",
+       "name": "support_station",
+       "part": "support_style__short_tabletop_legs__*",
+       "role": "consumer"
+      }
+     ],
+     "name": "short_tabletop_legs",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_ironing_board2_var_tabletop_short_legs_refill",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L255-L365"
+     ]
+    },
+    {
+     "evidence": "Two support_post_i on PRISMATIC height joints (L290-L307) with T crossbars and lock_collar_i twist locks (L328-L345): no folding leg at all.",
+     "implementation_function": "_support_style_telescoping_posts_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "rod_span": "top_span + 0.010"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,0)",
+        "radial": "(0,0,-1)"
+       },
+       "kind": "axis",
+       "name": "support_station",
+       "part": "support_style__telescoping_posts__*",
+       "role": "consumer"
+      }
+     ],
+     "name": "telescoping_posts",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_ironing_board2_var_t_leg_height_adjust_refill",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L245-L345"
+     ]
+    },
+    {
+     "evidence": "A wall_bracket back plate carries the board on a fold-down REVOLUTE hinge (L473-L490) and a support_arm props it from the same bracket (L493-L510); the board never reaches the floor.",
+     "implementation_function": "_support_style_wall_bracket_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "rod_span": "top_span + 0.010"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,0)",
+        "radial": "(0,0,-1)"
+       },
+       "kind": "axis",
+       "name": "support_station",
+       "part": "support_style__wall_bracket__*",
+       "role": "consumer"
+      }
+     ],
+     "name": "wall_bracket",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_ironing_board2_var_wall_mount_fold_down_refill",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L233-L321",
+      "model.py:L419-L510"
+     ]
+    }
+   ],
+   "component_type": "board support",
+   "name": "support_style",
+   "required": true
+  }
+ ],
+ "slug": "pictureX_0611_ironing_board2",
+ "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_ironing_board2.md",
+ "source_map_sha256": "8179af3c8a553fc201b1d28ccf3cccbb1349b238afb5bf8db03352887ce657a6"
+}

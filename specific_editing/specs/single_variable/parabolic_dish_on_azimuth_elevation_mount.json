@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "name": "parabolic_dish_on_azimuth_elevation_mount",
+  "generator": "parabolic_dish_on_azimuth_elevation_mount",
+  "base_config": {
+    "root_style": "tripod",
+    "azimuth_stage_style": "dual_yoke",
+    "reflector_style": "portable_ribbed",
+    "auxiliary_mechanism": "none",
+    "feed_style": "dual_strut",
+    "back_frame_style": "ribbed",
+    "azimuth_joint_type": "revolute_limited",
+    "material_style": "white_telecom",
+    "feed_strut_count": 2,
+    "rear_rib_count": 8,
+    "back_ring_count": 2,
+    "support_leg_count": 3,
+    "dish_radius": 0.62,
+    "dish_depth": 0.22,
+    "azimuth_height": 0.72,
+    "elevation_lower": -0.25,
+    "elevation_upper": 1.15,
+    "name": "paper_parabolic_dish_mount"
+  },
+  "edits": [
+    {
+      "kind": "component",
+      "target": "reflector_style",
+      "label": "Reflector module",
+      "values": ["lathe_feed", "portable_ribbed", "cadquery_spoked"]
+    },
+    {
+      "kind": "count",
+      "target": "support_leg_count",
+      "label": "Tripod support-leg count",
+      "values": [3, 4]
+    },
+    {
+      "kind": "count",
+      "target": "feed_strut_count",
+      "label": "Feed-support strut count",
+      "values": [2, 3, 4]
+    },
+    {
+      "kind": "material",
+      "target": "reflector_surface",
+      "label": "Reflector surface material",
+      "values": [
+        {
+          "name": "warm white reflector",
+          "material_id": "blenderkit:802fed00-3ed7-4fa1-8d0d-c4e264e59148:2c78ac26-ff2d-47ba-9b7b-a963b0b399e7",
+          "rgba": [0.88, 0.88, 0.84, 1.0],
+          "metallic": 0.18,
+          "roughness": 0.28
+        },
+        {
+          "name": "brushed silver reflector",
+          "material_id": "blenderkit:c3ab2079-1dc6-4b6b-94d9-c56eb2339e91:3f4ded88-44d7-484c-8376-8a29ef92d331",
+          "rgba": [0.63, 0.67, 0.71, 1.0],
+          "metallic": 0.86,
+          "roughness": 0.24
+        },
+        {
+          "name": "deep blue reflector",
+          "material_id": "blenderkit:230aadd3-560d-4912-b273-7a4d17364750:6042c4c0-12d8-4d50-aa3b-66a017263c3d",
+          "rgba": [0.055, 0.11, 0.22, 1.0],
+          "metallic": 0.72,
+          "roughness": 0.26
+        }
+      ]
+    },
+    {
+      "kind": "size",
+      "target": "dish_radius",
+      "label": "Dish radius (m)",
+      "values": [0.5, 0.62, 0.78]
+    }
+  ],
+  "render": {
+    "backend": "blender",
+    "views": ["front_iso"],
+    "poses": ["closed"],
+    "image_size": [800, 560]
+  }
+}

@@ -1,0 +1,791 @@
+{
+  "assembly_notes": "Crossed scissor lift jack. One rigid lift_base root carries the frame rails, the pivot lugs and the actuator. Each of scissor_stage_count stages is a real X: arm_a is a REVOLUTE (+x) child of that stage's host (the base for stage 0, the previous lift_deck otherwise) and is the stage's only independent joint; arm_b is a REVOLUTE (+x) child of arm_a at the cross pivot with mimic multiplier -2; the stage's lift_deck is a REVOLUTE (+x) child of arm_b at arm_b's upper pin with mimic multiplier +1. Those two mimics are what make the linkage a closed scissor inside a URDF tree: the deck stays exactly level and at a fixed y while its height is 2*a*sin(theta), arm_a's upper roller slides under the deck and arm_b's lower roller slides along the host rail. The topmost deck carries the deck_fitting. Four component slots vary without touching the mechanism: arm_style (link section), frame_style (base frame section), deck_fitting (platform load interface) and drive_unit (actuator input, a REVOLUTE lever mounted outboard of the rails). deck_len_m, deck_width_m and arm_span_ratio are independent continuous parameters that derive arm length, per-stage lift, slider travel, rail spacing, plate x stations and pin lengths; palette is non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "frame_style_identity",
+      "applies_to": {
+        "candidates": [
+          "slotted_side_plate",
+          "boxed_channel",
+          "toe_channel"
+        ],
+        "slot": "frame_style"
+      },
+      "required_author_checks": [
+        "category_anchor: crossed scissor lift mechanism",
+        "category_anchor: platform rises level and parallel to the base",
+        "category_anchor: frame_style identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "lift_deck",
+          "joint_type": "revolute",
+          "parent_role": "scissor_arm"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "drive_input",
+          "joint_type": "revolute",
+          "parent_role": "lift_base"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "lift_base"
+        },
+        {
+          "count_from": "resolved.scissor_arm_count",
+          "role": "scissor_arm"
+        },
+        {
+          "count_from": "scissor_stage_count",
+          "role": "lift_deck"
+        },
+        {
+          "exact_count": 1,
+          "role": "deck_fitting"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive_input"
+        }
+      ]
+    },
+    {
+      "anchor_id": "deck_fitting_identity",
+      "applies_to": {
+        "candidates": [
+          "flat_deck",
+          "screw_riser",
+          "vee_cradle"
+        ],
+        "slot": "deck_fitting"
+      },
+      "required_author_checks": [
+        "category_anchor: crossed scissor lift mechanism",
+        "category_anchor: platform rises level and parallel to the base",
+        "category_anchor: deck_fitting identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "lift_deck",
+          "joint_type": "revolute",
+          "parent_role": "scissor_arm"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "drive_input",
+          "joint_type": "revolute",
+          "parent_role": "lift_base"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "lift_base"
+        },
+        {
+          "count_from": "resolved.scissor_arm_count",
+          "role": "scissor_arm"
+        },
+        {
+          "count_from": "scissor_stage_count",
+          "role": "lift_deck"
+        },
+        {
+          "exact_count": 1,
+          "role": "deck_fitting"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive_input"
+        }
+      ]
+    },
+    {
+      "anchor_id": "drive_unit_identity",
+      "applies_to": {
+        "candidates": [
+          "hydraulic_pump",
+          "air_over_hydraulic"
+        ],
+        "slot": "drive_unit"
+      },
+      "required_author_checks": [
+        "category_anchor: crossed scissor lift mechanism",
+        "category_anchor: platform rises level and parallel to the base",
+        "category_anchor: drive_unit identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "lift_deck",
+          "joint_type": "revolute",
+          "parent_role": "scissor_arm"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "drive_input",
+          "joint_type": "revolute",
+          "parent_role": "lift_base"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "lift_base"
+        },
+        {
+          "count_from": "resolved.scissor_arm_count",
+          "role": "scissor_arm"
+        },
+        {
+          "count_from": "scissor_stage_count",
+          "role": "lift_deck"
+        },
+        {
+          "exact_count": 1,
+          "role": "deck_fitting"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive_input"
+        }
+      ]
+    },
+    {
+      "anchor_id": "arm_style_identity",
+      "applies_to": {
+        "candidates": [
+          "slotted_plate_arm",
+          "boxed_bar_arm"
+        ],
+        "slot": "arm_style"
+      },
+      "required_author_checks": [
+        "category_anchor: crossed scissor lift mechanism",
+        "category_anchor: platform rises level and parallel to the base",
+        "category_anchor: arm_style identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "lift_deck",
+          "joint_type": "revolute",
+          "parent_role": "scissor_arm"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "drive_input",
+          "joint_type": "revolute",
+          "parent_role": "lift_base"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "lift_base"
+        },
+        {
+          "count_from": "resolved.scissor_arm_count",
+          "role": "scissor_arm"
+        },
+        {
+          "count_from": "scissor_stage_count",
+          "role": "lift_deck"
+        },
+        {
+          "exact_count": 1,
+          "role": "deck_fitting"
+        },
+        {
+          "exact_count": 1,
+          "role": "drive_input"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= scissor_stage_count <= 3; each stage needs deck_len_m >= 2*a*cos(theta_min) + 0.04",
+      "item_slot": "arm_style",
+      "name": "scissor_stage_count",
+      "spacing_expression": "stage i's fixed pivot sits on stage i-1's deck top; every stage uses the same arm length and lifts 2a*sin(theta) above its own base",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Pressed side plates carrying long lightening slots, as on the blue lab jack in 001.png.",
+          "implementation_function": "_frame_style_slotted_side_plate_build",
+          "interfaces": [],
+          "name": "slotted_side_plate",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "deck_len_m",
+              "rationale": "platform/base length; derives arm length, deck span and slider travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "deck_width_m",
+              "rationale": "platform/base width; derives rail spacing, link plate x stations and pivot pin lengths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "arm_span_ratio",
+              "rationale": "scissor arm span as a fraction of deck length; derives arm length, per-stage lift and slider travel",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack__001__png_af55d19fd79043eeaaa91f76169ade14",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L38-L59"
+          ]
+        },
+        {
+          "evidence": "Plain welded box-section base with closed side walls and a rolled top edge.",
+          "implementation_function": "_frame_style_boxed_channel_build",
+          "interfaces": [],
+          "name": "boxed_channel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "deck_len_m",
+              "rationale": "platform/base length; derives arm length, deck span and slider travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "deck_width_m",
+              "rationale": "platform/base width; derives rail spacing, link plate x stations and pivot pin lengths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "arm_span_ratio",
+              "rationale": "scissor arm span as a fraction of deck length; derives arm length, per-stage lift and slider travel",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack_fork_bottle_jack_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L114-L164"
+          ]
+        },
+        {
+          "evidence": "Channel-section base extended into a low toe rail reaching under the load edge.",
+          "implementation_function": "_frame_style_toe_channel_build",
+          "interfaces": [],
+          "name": "toe_channel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "deck_len_m",
+              "rationale": "platform/base length; derives arm length, deck span and slider travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "deck_width_m",
+              "rationale": "platform/base width; derives rail spacing, link plate x stations and pivot pin lengths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "arm_span_ratio",
+              "rationale": "scissor arm span as a fraction of deck length; derives arm length, per-stage lift and slider travel",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack_fork_toe_jack_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L75-L199"
+          ]
+        }
+      ],
+      "component_type": "base frame section",
+      "name": "frame_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Rounded flat upper deck with slotted skirts and cross tubes underneath.",
+          "implementation_function": "_deck_fitting_flat_deck_build",
+          "interfaces": [],
+          "name": "flat_deck",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "deck_len_m",
+              "rationale": "platform/base length; derives arm length, deck span and slider travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "deck_width_m",
+              "rationale": "platform/base width; derives rail spacing, link plate x stations and pivot pin lengths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "arm_span_ratio",
+              "rationale": "scissor arm span as a fraction of deck length; derives arm length, per-stage lift and slider travel",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack__001__png_af55d19fd79043eeaaa91f76169ade14",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L175-L223"
+          ]
+        },
+        {
+          "evidence": "Threaded riser column with a saddle pad turned on its own REVOLUTE joint above the platform.",
+          "implementation_function": "_deck_fitting_screw_riser_build",
+          "interfaces": [],
+          "name": "screw_riser",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "deck_len_m",
+              "rationale": "platform/base length; derives arm length, deck span and slider travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "deck_width_m",
+              "rationale": "platform/base width; derives rail spacing, link plate x stations and pivot pin lengths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "arm_span_ratio",
+              "rationale": "scissor arm span as a fraction of deck length; derives arm length, per-stage lift and slider travel",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack_fork_screw_extension_saddle_20260713",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L492-L597"
+          ]
+        },
+        {
+          "evidence": "Vee cradle saddle whose inclined cheeks meet at the groove root, with raised end lips.",
+          "implementation_function": "_deck_fitting_vee_cradle_build",
+          "interfaces": [],
+          "name": "vee_cradle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "deck_len_m",
+              "rationale": "platform/base length; derives arm length, deck span and slider travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "deck_width_m",
+              "rationale": "platform/base width; derives rail spacing, link plate x stations and pivot pin lengths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "arm_span_ratio",
+              "rationale": "scissor arm span as a fraction of deck length; derives arm length, per-stage lift and slider travel",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack_fork_transmission_cradle_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L316-L382"
+          ]
+        }
+      ],
+      "component_type": "platform load interface",
+      "name": "deck_fitting",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Hydraulic cylinder cradled on the base with a lever pump handle on a REVOLUTE pivot.",
+          "implementation_function": "_drive_unit_hydraulic_pump_build",
+          "interfaces": [],
+          "name": "hydraulic_pump",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "deck_len_m",
+              "rationale": "platform/base length; derives arm length, deck span and slider travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "deck_width_m",
+              "rationale": "platform/base width; derives rail spacing, link plate x stations and pivot pin lengths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "arm_span_ratio",
+              "rationale": "scissor arm span as a fraction of deck length; derives arm length, per-stage lift and slider travel",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack__001__png_af55d19fd79043eeaaa91f76169ade14",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L296-L367"
+          ]
+        },
+        {
+          "evidence": "Air-assist can and pneumatic module with an air valve lever on a REVOLUTE pivot in place of the long hand bar.",
+          "implementation_function": "_drive_unit_air_over_hydraulic_build",
+          "interfaces": [],
+          "name": "air_over_hydraulic",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "deck_len_m",
+              "rationale": "platform/base length; derives arm length, deck span and slider travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "deck_width_m",
+              "rationale": "platform/base width; derives rail spacing, link plate x stations and pivot pin lengths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "arm_span_ratio",
+              "rationale": "scissor arm span as a fraction of deck length; derives arm length, per-stage lift and slider travel",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hydraulic_jack_fork_air_over_hydraulic_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L449-L590"
+          ]
+        }
+      ],
+      "component_type": "lift actuator input",
+      "name": "drive_unit",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Twin pressed link plates carrying a long lightening slot, with exposed pivot heads, as on the blue lab jack.",
+          "implementation_function": "_arm_style_slotted_plate_arm_build",
+          "interfaces": [],
+          "name": "slotted_plate_arm",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "deck_len_m",
+              "rationale": "platform/base length; derives arm length, deck span and slider travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "deck_width_m",
+              "rationale": "platform/base width; derives rail spacing, link plate x stations and pivot pin lengths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "arm_span_ratio",
+              "rationale": "scissor arm span as a fraction of deck length; derives arm length, per-stage lift and slider travel",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack__001__png_af55d19fd79043eeaaa91f76169ade14",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L60-L118"
+          ]
+        },
+        {
+          "evidence": "Plain solid boxed bar links with welded end bosses and a tie spacer, as on the orange lift table.",
+          "implementation_function": "_arm_style_boxed_bar_arm_build",
+          "interfaces": [],
+          "name": "boxed_bar_arm",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.6,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "deck_len_m",
+              "rationale": "platform/base length; derives arm length, deck span and slider travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "deck_width_m",
+              "rationale": "platform/base width; derives rail spacing, link plate x stations and pivot pin lengths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "arm_span_ratio",
+              "rationale": "scissor arm span as a fraction of deck length; derives arm length, per-stage lift and slider travel",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hydraulic_jack__002__png_53523a539a204bcf896a11590eedafae",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L319-L350"
+          ]
+        }
+      ],
+      "component_type": "scissor link",
+      "name": "arm_style",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_hydraulic_jack",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_hydraulic_jack.md",
+  "source_map_sha256": "cad3b4844b5ad086e942412985bea09f4dab8a955b0ac1edad44de18406dbd3f"
+}

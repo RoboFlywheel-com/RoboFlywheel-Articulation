@@ -1,0 +1,420 @@
+{
+  "assembly_notes": "The selected body provides one normalized front dial axis, rear support plane, and right-side control plane. The front-axis pose includes the sloped_wedge face tilt and the raised centers of tall_program_case and pedestal_round; the scale, pointer, winding control, and front capture all inherit that host pose. The two source-coupled lower-body silhouettes remain integral body candidates rather than being simplified into generic supports. Body dimensions are the independent size family; dial radius and all component footprints are derived from those dimensions. The dial and pointer are invariant timer mechanisms. Support joint type is candidate-specific (fixed except folding_magnetic_stand). Every declared slot combination is buildable; host geometry adapts through the recorded cross-component derivations.",
+  "bindings": [
+    {
+      "binding_id": "body_to_scale",
+      "consumer": "scale.front_axis",
+      "derived": [
+        {
+          "depends_on": ["body_width", "body_height", "dial_ratio"],
+          "expression": "min(body_width, body_height) * 0.5 * dial_ratio",
+          "mode": "derived",
+          "name": "dial_radius",
+          "rationale": "Keeps every source-backed scale inside the selected housing face."
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "body_form.front_axis"
+    },
+    {
+      "binding_id": "body_to_winding_control",
+      "consumer": "winding_control.front_axis",
+      "derived": [],
+      "joint_type": "revolute",
+      "provider": "body_form.front_axis"
+    },
+    {
+      "binding_id": "body_to_support",
+      "consumer": "support.rear_mount",
+      "derived": [],
+      "joint_type": "candidate_specific",
+      "provider": "body_form.rear_plane"
+    },
+    {
+      "binding_id": "body_to_alert_control",
+      "consumer": "alert_control.side_mount",
+      "derived": [],
+      "joint_type": "optional_prismatic",
+      "provider": "body_form.side_plane"
+    }
+  ],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Filleted tall rectangular housing, inset front face, rear spring case and paired tabletop feet.",
+          "implementation_function": "_body_form_arched_rect_build",
+          "interfaces": [
+            {"name": "front_axis", "kind": "axis", "role": "provider", "part": "body_form__arched_rect__housing", "frame": {"axis": [0.0, -1.0, 0.0]}, "dimensions": {"radius": "dial_radius"}},
+            {"name": "rear_plane", "kind": "plane", "role": "provider", "part": "body_form__arched_rect__housing", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "body_width", "height": "body_height"}},
+            {"name": "side_plane", "kind": "plane", "role": "provider", "part": "body_form__arched_rect__housing", "frame": {"normal": [1.0, 0.0, 0.0]}, "dimensions": {"height": "body_height"}}
+          ],
+          "name": "arched_rect",
+          "notes": "",
+          "parameters": [
+            {"name": "body_scale", "mode": "independent", "minimum": 0.85, "maximum": 1.15, "rationale": "Safe source-proportion scale."},
+            {"name": "body_width", "mode": "derived", "expression": "0.150 * body_scale", "depends_on": ["body_scale"], "rationale": "Arched source nominal width."},
+            {"name": "body_height", "mode": "derived", "expression": "0.158 * body_scale", "depends_on": ["body_scale"], "rationale": "Arched source nominal height."},
+            {"name": "body_depth", "mode": "derived", "expression": "0.044 * body_scale", "depends_on": ["body_scale"], "rationale": "Arched source nominal depth."}
+          ],
+          "record_id": "rec_picturex_0611__mechanical_timer_with_rotating_dial__001__png_43707496c3dc4b4ab4ac2ae5621a570e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L208-L294"
+          ]
+        },
+        {
+          "evidence": "Rounded compact square housing with stepped rear spring case.",
+          "implementation_function": "_body_form_soft_square_build",
+          "interfaces": [
+            {"name": "front_axis", "kind": "axis", "role": "provider", "part": "body_form__soft_square__housing", "frame": {"axis": [0.0, -1.0, 0.0]}, "dimensions": {"radius": "dial_radius"}},
+            {"name": "rear_plane", "kind": "plane", "role": "provider", "part": "body_form__soft_square__housing", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "body_width", "height": "body_height"}},
+            {"name": "side_plane", "kind": "plane", "role": "provider", "part": "body_form__soft_square__housing", "frame": {"normal": [1.0, 0.0, 0.0]}, "dimensions": {"height": "body_height"}}
+          ],
+          "name": "soft_square",
+          "notes": "",
+          "parameters": [
+            {"name": "body_scale", "mode": "independent", "minimum": 0.85, "maximum": 1.15, "rationale": "Safe source-proportion scale."},
+            {"name": "body_width", "mode": "derived", "expression": "0.118 * body_scale", "depends_on": ["body_scale"], "rationale": "Soft-square source nominal width."},
+            {"name": "body_height", "mode": "derived", "expression": "0.122 * body_scale", "depends_on": ["body_scale"], "rationale": "Soft-square source nominal height."},
+            {"name": "body_depth", "mode": "derived", "expression": "0.042 * body_scale", "depends_on": ["body_scale"], "rationale": "Soft-square source nominal depth."}
+          ],
+          "record_id": "rec_picturex_0611__mechanical_timer_with_rotating_dial__004__png_1c4b1da83b464c3c8b6568f660212212",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L26-L49",
+            "model.py:L230-L280"
+          ]
+        },
+        {
+          "evidence": "Fork intent targets body_form; circular puck housing and stepped circular rear shell replace the parent outline.",
+          "implementation_function": "_body_form_round_puck_build",
+          "interfaces": [
+            {"name": "front_axis", "kind": "axis", "role": "provider", "part": "body_form__round_puck__housing", "frame": {"axis": [0.0, -1.0, 0.0]}, "dimensions": {"radius": "dial_radius"}},
+            {"name": "rear_plane", "kind": "plane", "role": "provider", "part": "body_form__round_puck__housing", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"diameter": "body_width"}},
+            {"name": "side_plane", "kind": "plane", "role": "provider", "part": "body_form__round_puck__housing", "frame": {"normal": [1.0, 0.0, 0.0]}, "dimensions": {"height": "body_height"}}
+          ],
+          "name": "round_puck",
+          "notes": "",
+          "parameters": [
+            {"name": "body_scale", "mode": "independent", "minimum": 0.85, "maximum": 1.15, "rationale": "Safe source-proportion scale."},
+            {"name": "body_width", "mode": "derived", "expression": "0.116 * body_scale", "depends_on": ["body_scale"], "rationale": "Puck source diameter."},
+            {"name": "body_height", "mode": "derived", "expression": "body_width", "depends_on": ["body_width"], "rationale": "Circular source silhouette."},
+            {"name": "body_depth", "mode": "derived", "expression": "0.040 * body_scale", "depends_on": ["body_scale"], "rationale": "Puck source nominal depth."}
+          ],
+          "record_id": "rec_0611_mechanical_timer_with_rotating_var_body_form_round_puck",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L20-L75",
+            "model.py:L240-L300"
+          ]
+        },
+        {
+          "evidence": "Fork intent targets body_form; wedge depth and inclined front plane create a freestanding sloped timer body.",
+          "implementation_function": "_body_form_sloped_wedge_build",
+          "interfaces": [
+            {"name": "front_axis", "kind": "axis", "role": "provider", "part": "body_form__sloped_wedge__housing", "frame": {"axis": [0.0, -1.0, 0.0]}, "dimensions": {"radius": "dial_radius", "mount_y": "front_mount_y", "tilt": "front_tilt"}},
+            {"name": "rear_plane", "kind": "plane", "role": "provider", "part": "body_form__sloped_wedge__housing", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "body_width", "height": "body_height"}},
+            {"name": "side_plane", "kind": "plane", "role": "provider", "part": "body_form__sloped_wedge__housing", "frame": {"normal": [1.0, 0.0, 0.0]}, "dimensions": {"height": "body_height"}}
+          ],
+          "name": "sloped_wedge",
+          "notes": "",
+          "parameters": [
+            {"name": "body_scale", "mode": "independent", "minimum": 0.85, "maximum": 1.15, "rationale": "Safe source-proportion scale."},
+            {"name": "body_width", "mode": "derived", "expression": "0.136 * body_scale", "depends_on": ["body_scale"], "rationale": "Wedge source nominal width."},
+            {"name": "body_height", "mode": "derived", "expression": "0.126 * body_scale", "depends_on": ["body_scale"], "rationale": "Wedge source nominal height."},
+            {"name": "body_depth", "mode": "derived", "expression": "0.056 * body_scale", "depends_on": ["body_scale"], "rationale": "Wedge source nominal rear depth."},
+            {"name": "front_mount_y", "mode": "derived", "expression": "-0.49 * body_depth", "depends_on": ["body_depth"], "rationale": "Center point of the inclined source front plane."},
+            {"name": "front_tilt", "mode": "derived", "expression": "atan2(0.22 * body_depth, body_height)", "depends_on": ["body_depth", "body_height"], "rationale": "Aligns every front-mounted component with the wedge face."}
+          ],
+          "record_id": "rec_0611_mechanical_timer_with_rotating_var_body_form_sloped_wedge",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L25-L90",
+            "model.py:L223-L310"
+          ]
+        },
+        {
+          "evidence": "Original 003 fuses a circular timer head to a tall rounded lower case with a recessed circular feature, three slots and a red indicator lens.",
+          "implementation_function": "_body_form_tall_program_case_build",
+          "interfaces": [
+            {"name": "front_axis", "kind": "axis", "role": "provider", "part": "body_form__tall_program_case__housing", "frame": {"axis": [0.0, -1.0, 0.0]}, "dimensions": {"radius": "dial_radius", "center_z": "dial_center_z"}},
+            {"name": "rear_plane", "kind": "plane", "role": "provider", "part": "body_form__tall_program_case__housing", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "body_width", "height": "body_height"}},
+            {"name": "side_plane", "kind": "plane", "role": "provider", "part": "body_form__tall_program_case__housing", "frame": {"normal": [1.0, 0.0, 0.0]}, "dimensions": {"height": "body_height"}}
+          ],
+          "name": "tall_program_case",
+          "notes": "Integral lower case is preserved inside the body candidate rather than split into a generic support.",
+          "parameters": [
+            {"name": "body_scale", "mode": "independent", "minimum": 0.85, "maximum": 1.15, "rationale": "Safe source-proportion scale."},
+            {"name": "body_width", "mode": "derived", "expression": "0.068 * body_scale", "depends_on": ["body_scale"], "rationale": "Original 003 overall width."},
+            {"name": "body_height", "mode": "derived", "expression": "0.125 * body_scale", "depends_on": ["body_scale"], "rationale": "Round head plus long lower body envelope."},
+            {"name": "body_depth", "mode": "derived", "expression": "0.034 * body_scale", "depends_on": ["body_scale"], "rationale": "Original molded housing depth."},
+            {"name": "dial_center_z", "mode": "derived", "expression": "0.030 * body_scale", "depends_on": ["body_scale"], "rationale": "Places the dial in the circular upper head."}
+          ],
+          "record_id": "rec_picturex_0611__mechanical_timer_with_rotating_dial__003__png_50670c8986354bcaa03f53921e9c95d9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L36-L85",
+            "model.py:L235-L265"
+          ]
+        },
+        {
+          "evidence": "Original 002 preserves the coupled round spring case, narrow pedestal, widened rounded foot and rear gusset as one characteristic freestanding silhouette.",
+          "implementation_function": "_body_form_pedestal_round_build",
+          "interfaces": [
+            {"name": "front_axis", "kind": "axis", "role": "provider", "part": "body_form__pedestal_round__housing", "frame": {"axis": [0.0, -1.0, 0.0]}, "dimensions": {"radius": "dial_radius", "center_z": "dial_center_z", "mount_y": "front_mount_y"}},
+            {"name": "rear_plane", "kind": "plane", "role": "provider", "part": "body_form__pedestal_round__housing", "frame": {"normal": [0.0, 1.0, 0.0]}, "dimensions": {"width": "body_width", "height": "body_height"}},
+            {"name": "side_plane", "kind": "plane", "role": "provider", "part": "body_form__pedestal_round__housing", "frame": {"normal": [1.0, 0.0, 0.0]}, "dimensions": {"height": "body_height"}}
+          ],
+          "name": "pedestal_round",
+          "notes": "The coupled source body is parameterized as a whole; front and rear interfaces remain composable.",
+          "parameters": [
+            {"name": "body_scale", "mode": "independent", "minimum": 0.85, "maximum": 1.15, "rationale": "Safe source-proportion scale."},
+            {"name": "body_width", "mode": "derived", "expression": "0.102 * body_scale", "depends_on": ["body_scale"], "rationale": "Circular head diameter controls the overall width."},
+            {"name": "body_height", "mode": "derived", "expression": "0.147 * body_scale", "depends_on": ["body_scale"], "rationale": "Head, pedestal and foot total height."},
+            {"name": "body_depth", "mode": "derived", "expression": "0.056 * body_scale", "depends_on": ["body_scale"], "rationale": "The widened foot sets the total depth envelope."},
+            {"name": "dial_center_z", "mode": "derived", "expression": "0.0225 * body_scale", "depends_on": ["body_scale"], "rationale": "Centered coordinate of the raised round head."},
+            {"name": "front_mount_y", "mode": "derived", "expression": "-0.014 * body_scale", "depends_on": ["body_scale"], "rationale": "Uses the circular head face instead of the deeper foot face."}
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260710_090613_155734_8b959953",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L33-L62",
+            "model.py:L138-L187"
+          ]
+        }
+      ],
+      "component_type": "enclosure",
+      "name": "body_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Sixty radial ticks plus twelve upright 5–60 minute labels use the source's true font outlines rather than block seven-segment approximations.",
+          "implementation_function": "_scale_numbered_radial_build",
+          "interfaces": [
+            {"name": "front_axis", "kind": "axis", "role": "consumer", "part": "scale__numbered_radial__dial", "frame": {"axis": [0.0, -1.0, 0.0]}, "dimensions": {"radius": "dial_radius"}}
+          ],
+          "name": "numbered_radial",
+          "notes": "",
+          "parameters": [
+            {"name": "dial_ratio", "mode": "independent", "minimum": 0.65, "maximum": 0.79, "rationale": "Sets the face footprint without changing the structural domain."},
+            {"name": "detail_scale", "mode": "independent", "minimum": 0.82, "maximum": 1.18, "rationale": "Scales source-backed numeral strokes within safe spacing."},
+            {"name": "numeral_style", "mode": "independent", "value_type": "str", "choices": ["block_seven_segment", "printed_font", "slim_instrument"], "rationale": "Samples three source-backed surface-detail styles without changing core/raw diversity."}
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260710_090613_155734_8b959953",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L74-L112",
+            "model.py:L189-L209"
+          ]
+        },
+        {
+          "evidence": "Minute ring, cardinal numerals and curved direction arrow form a distinct program-timer face.",
+          "implementation_function": "_scale_direction_ring_build",
+          "interfaces": [
+            {"name": "front_axis", "kind": "axis", "role": "consumer", "part": "scale__direction_ring__dial", "frame": {"axis": [0.0, -1.0, 0.0]}, "dimensions": {"radius": "dial_radius"}}
+          ],
+          "name": "direction_ring",
+          "notes": "",
+          "parameters": [
+            {"name": "dial_ratio", "mode": "independent", "minimum": 0.65, "maximum": 0.79, "rationale": "Sets the face footprint without changing the structural domain."},
+            {"name": "detail_scale", "mode": "independent", "minimum": 0.82, "maximum": 1.18, "rationale": "Scales source-backed cardinal labels within safe spacing."},
+            {"name": "numeral_style", "mode": "independent", "value_type": "str", "choices": ["block_seven_segment", "printed_font", "slim_instrument"], "rationale": "Samples block, printed, or slim mechanical cardinal labels as surface detail."}
+          ],
+          "record_id": "rec_picturex_0611__mechanical_timer_with_rotating_dial__003__png_50670c8986354bcaa03f53921e9c95d9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L106-L149",
+            "model.py:L331-L344"
+          ]
+        },
+        {
+          "evidence": "Fork intent targets scale; two concentric tick bands and direction markings replace the single radial scale.",
+          "implementation_function": "_scale_concentric_dual_build",
+          "interfaces": [
+            {"name": "front_axis", "kind": "axis", "role": "consumer", "part": "scale__concentric_dual__dial", "frame": {"axis": [0.0, -1.0, 0.0]}, "dimensions": {"radius": "dial_radius"}}
+          ],
+          "name": "concentric_dual",
+          "notes": "",
+          "parameters": [
+            {"name": "dial_ratio", "mode": "independent", "minimum": 0.65, "maximum": 0.79, "rationale": "Sets the face footprint without changing the structural domain."},
+            {"name": "detail_scale", "mode": "independent", "minimum": 0.82, "maximum": 1.18, "rationale": "Maintains two readable scale bands across body sizes."}
+          ],
+          "record_id": "rec_0611_mechanical_timer_with_rotating_var_scale_concentric_dual_scale",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L106-L175",
+            "model.py:L342-L372"
+          ]
+        }
+      ],
+      "component_type": "dial scale",
+      "name": "scale",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Long shaped central paddle and coaxial spindle rotate independently at the face center.",
+          "implementation_function": "_winding_control_center_paddle_build",
+          "interfaces": [
+            {"name": "front_axis", "kind": "axis", "role": "consumer", "part": "winding_control__center_paddle__control", "frame": {"axis": [0.0, -1.0, 0.0]}, "dimensions": {"clearance_radius": "dial_radius * 0.08"}}
+          ],
+          "name": "center_paddle",
+          "notes": "",
+          "parameters": [
+            {"name": "paddle_length", "mode": "derived", "expression": "dial_radius * 1.35", "depends_on": ["dial_radius"], "rationale": "Preserves the long center grip visible in source 002."},
+            {"name": "paddle_width", "mode": "derived", "expression": "dial_radius * 0.19", "depends_on": ["dial_radius"], "rationale": "Maintains graspable source proportions."}
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260710_090613_155734_8b959953",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L115-L135",
+            "model.py:L212-L239",
+            "model.py:L279-L293"
+          ]
+        },
+        {
+          "evidence": "Fork intent targets winding_control; scalloped outer grip ring and marker rotate on a bounded coaxial joint.",
+          "implementation_function": "_winding_control_outer_bezel_build",
+          "interfaces": [
+            {"name": "front_axis", "kind": "axis", "role": "consumer", "part": "winding_control__outer_bezel__control", "frame": {"axis": [0.0, -1.0, 0.0]}, "dimensions": {"inner_radius": "dial_radius * 1.03"}}
+          ],
+          "name": "outer_bezel",
+          "notes": "",
+          "parameters": [
+            {"name": "bezel_outer_radius", "mode": "derived", "expression": "dial_radius * 1.13", "depends_on": ["dial_radius"], "rationale": "Keeps the scalloped grip outside the scale face with a 1.03-radius inner clearance."},
+            {"name": "grip_depth", "mode": "derived", "expression": "dial_radius * 0.024", "depends_on": ["dial_radius"], "rationale": "Source-backed scallop depth."}
+          ],
+          "record_id": "rec_0611_mechanical_timer_with_rotating_var_winding_control_outer_rotating_bezel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L207-L234",
+            "model.py:L312-L377"
+          ]
+        }
+      ],
+      "component_type": "rotary control",
+      "name": "winding_control",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Paired rubber rear feet provide ordinary countertop support.",
+          "implementation_function": "_support_tabletop_feet_build",
+          "interfaces": [
+            {"name": "rear_mount", "kind": "plane", "role": "consumer", "part": "support__tabletop_feet__support", "frame": {"normal": [0.0, -1.0, 0.0]}, "dimensions": {"spacing": "body_width * 0.62"}}
+          ],
+          "name": "tabletop_feet",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__mechanical_timer_with_rotating_dial__001__png_43707496c3dc4b4ab4ac2ae5621a570e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L287-L294"
+          ]
+        },
+        {
+          "evidence": "Rear boss retains the source installation mode with a practical two-blade layout; the source's third blade is omitted as a realism refinement.",
+          "implementation_function": "_support_rear_plug_build",
+          "interfaces": [
+            {"name": "rear_mount", "kind": "plane", "role": "consumer", "part": "support__rear_plug__support", "frame": {"normal": [0.0, -1.0, 0.0]}, "dimensions": {"boss_radius": "dial_radius * 0.34"}}
+          ],
+          "name": "rear_plug",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__mechanical_timer_with_rotating_dial__003__png_50670c8986354bcaa03f53921e9c95d9",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L384-L418"
+          ]
+        },
+        {
+          "evidence": "Fork intent targets support; magnetic kickstand panel adds a revolute rear hinge with 0–1.05 rad travel.",
+          "implementation_function": "_support_folding_magnetic_stand_build",
+          "interfaces": [
+            {"name": "rear_mount", "kind": "axis", "role": "consumer", "part": "support__folding_magnetic_stand__support", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"stand_width": "body_width * 0.62", "stand_height": "body_height * 0.62"}}
+          ],
+          "name": "folding_magnetic_stand",
+          "notes": "",
+          "parameters": [
+            {"name": "stand_width", "mode": "derived", "expression": "body_width * 0.62", "depends_on": ["body_width"], "rationale": "Adapts the source stand to each host."},
+            {"name": "stand_height", "mode": "derived", "expression": "body_height * 0.62", "depends_on": ["body_height"], "rationale": "Keeps the deployed footprint proportional."},
+            {"name": "deploy_upper", "mode": "derived", "expression": "1.05", "depends_on": [], "rationale": "Bounded source hinge travel in radians."}
+          ],
+          "record_id": "rec_0611_mechanical_timer_with_rotating_var_support_folding_magnetic_stand",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L131-L170",
+            "model.py:L307-L385"
+          ]
+        },
+        {
+          "evidence": "Fork intent targets support; stamped bracket has twin keyholes, reinforcing ribs and a fixed rear mount.",
+          "implementation_function": "_support_wall_bracket_build",
+          "interfaces": [
+            {"name": "rear_mount", "kind": "plane", "role": "consumer", "part": "support__wall_bracket__support", "frame": {"normal": [0.0, -1.0, 0.0]}, "dimensions": {"width": "body_width * 0.42", "height": "body_height * 0.46"}}
+          ],
+          "name": "wall_bracket",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_mechanical_timer_with_rotating_var_support_wall_bracket",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L171-L213",
+            "model.py:L429-L444"
+          ]
+        }
+      ],
+      "component_type": "fixed support",
+      "name": "support",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Baseline source has only housing, dial, pointer and winding stem; no alert-control part or joint is present.",
+          "implementation_function": "_alert_control_none_build",
+          "interfaces": [],
+          "name": "none",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__mechanical_timer_with_rotating_dial__001__png_43707496c3dc4b4ab4ac2ae5621a570e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L161-L440"
+          ]
+        },
+        {
+          "evidence": "Fork intent targets alert_control; side mount and graspable lever add a Z-axis prismatic joint with 14 mm travel.",
+          "implementation_function": "_alert_control_bell_silence_lever_build",
+          "interfaces": [
+            {"name": "side_mount", "kind": "plane", "role": "consumer", "part": "alert_control__bell_silence_lever__control", "frame": {"normal": [-1.0, 0.0, 0.0]}, "dimensions": {"track_height": "body_height * 0.20"}}
+          ],
+          "name": "bell_silence_lever",
+          "notes": "",
+          "parameters": [
+            {"name": "lever_travel", "mode": "derived", "expression": "0.012 * body_scale", "depends_on": ["body_scale"], "rationale": "Scales the source 14 mm maximum conservatively with the host."}
+          ],
+          "record_id": "rec_0611_mechanical_timer_with_rotating_var_alert_control_bell_silence_lever",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L295-L300",
+            "model.py:L397-L471"
+          ]
+        }
+      ],
+      "component_type": "optional mechanism",
+      "name": "alert_control",
+      "required": true
+    }
+  ],
+  "slug": "mechanical_timer_with_rotating_dial",
+  "source_map_path": "articraft_template_authoring/source_maps/mechanical_timer_with_rotating_dial.md",
+  "source_map_sha256": "b7c17413a24310308d47c97a9d6f4d17bf67800665b7ed20fd57ea8d22e6af28"
+}

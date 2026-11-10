@@ -1,0 +1,355 @@
+{
+  "assembly_notes": "Full Cartesian assembly. Ground support provides a centered mast socket; N nested mast stages provide a top receiver; the selected mechanism adapts its fork span and cheek height to the selected head envelope. Source-family materials are semantic roles, not a global palette. All rotational axes use solved and registered AxisInterface mates.",
+  "bindings": [
+    {
+      "binding_id": "support_to_mast",
+      "provider": "ground_support.mast_socket",
+      "consumer": "mast_profile.base_socket",
+      "joint_type": "prismatic_nested",
+      "derived": [
+        {"name": "stage_outer_radius", "mode": "derived", "expression": "base_outer_radius - stage_index * radius_step", "depends_on": ["base_outer_radius", "stage_index", "radius_step"], "rationale": "Every mast stage is a genuinely smaller captured tube."},
+        {"name": "stage_travel", "mode": "derived", "expression": "min(0.14 * mast_travel_scale, 0.9 * (stage_length - insertion_overlap))", "depends_on": ["mast_travel_scale", "stage_length", "insertion_overlap"], "rationale": "Maintains deep insertion at both limits."}
+      ]
+    },
+    {
+      "binding_id": "mast_to_mechanism",
+      "provider": "mast_profile.top_receiver",
+      "consumer": "head_support_mechanism.mast_receiver",
+      "joint_type": "candidate_specific",
+      "derived": [{"name": "mechanism_height", "mode": "derived", "expression": "head_half_height + sweep_clearance", "depends_on": ["head_half_height", "sweep_clearance"], "rationale": "Allows the selected head to tilt without a universal fixed frame."}]
+    },
+    {
+      "binding_id": "mechanism_to_head",
+      "provider": "head_support_mechanism.head_tilt_axis",
+      "consumer": "lamp_head_assembly.trunnion_axis",
+      "joint_type": "revolute",
+      "derived": [
+        {"name": "fork_inside_half_span", "mode": "derived", "expression": "head_half_width + side_clearance", "depends_on": ["head_half_width", "side_clearance"], "rationale": "Adapts fork width to every source head envelope."},
+        {"name": "trunnion_length", "mode": "derived", "expression": "2 * (fork_inside_half_span + bearing_thickness)", "depends_on": ["fork_inside_half_span", "bearing_thickness"], "rationale": "Captures both bearings without arbitrary universal width."}
+      ]
+    }
+  ],
+  "multiplicities": [
+    {"name": "radial_support_count", "item_slot": "ground_support", "values": [3, 4, 5, 6, 7], "spacing_expression": "2 * pi / radial_support_count", "host_capacity_expression": "hub_circumference >= radial_support_count * attachment_width"},
+    {"name": "mast_stage_count", "item_slot": "mast_profile", "values": [1, 2, 3], "spacing_expression": "stage_length - insertion_overlap", "host_capacity_expression": "base_outer_radius - mast_stage_count * radius_step >= minimum_top_radius"}
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "",
+          "implementation_function": "_build_support_classic_hinged_tripod",
+          "interfaces": [{"name": "mast_socket", "kind": "plane", "role": "provider", "part": "base", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "base_outer_radius"}}],
+          "name": "classic_hinged_tripod",
+          "notes": "",
+          "parameters": [
+            {"name": "classic_tripod_leg_reach_m", "mode": "independent", "value_type": "float", "minimum": 0.45, "maximum": 0.54, "rationale": "Direct horizontal hinge-to-foot reach in metres; preserves the long curved source leg."}
+          ],
+          "record_id": "rec_picturex_0611__studio_lamp__001__png_8ec4826c28154fafa47cecef308a7e96",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L142-L245"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_support_radial_tube_spider",
+          "interfaces": [{"name": "mast_socket", "kind": "plane", "role": "provider", "part": "base", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "base_outer_radius"}}],
+          "name": "radial_tube_spider",
+          "notes": "",
+          "parameters": [
+            {"name": "radial_spider_leg_reach_m", "mode": "independent", "value_type": "float", "minimum": 0.53, "maximum": 0.64, "rationale": "Direct radial reach in metres for the shallow-curved source tubes."}
+          ],
+          "record_id": "rec_picturex_0611__studio_lamp__002__png_307b9e5c7dcc41b6ae3c8ad0c75c7c32",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L88-L174"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_support_folding_braced_spider",
+          "interfaces": [{"name": "mast_socket", "kind": "plane", "role": "provider", "part": "base", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "base_outer_radius"}}],
+          "name": "folding_braced_spider",
+          "notes": "",
+          "parameters": [
+            {"name": "folding_spider_leg_reach_m", "mode": "independent", "value_type": "float", "minimum": 0.53, "maximum": 0.64, "rationale": "Direct deployed reach in metres; brace anchors and foot positions follow it."}
+          ],
+          "record_id": "rec_0611_studio_lamp_var_folding_collapsible_tripod",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L98-L219"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_support_vintage_clevis_tripod",
+          "interfaces": [{"name": "mast_socket", "kind": "plane", "role": "provider", "part": "base", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "base_outer_radius"}}],
+          "name": "vintage_clevis_tripod",
+          "notes": "",
+          "parameters": [
+            {"name": "vintage_clevis_leg_reach_m", "mode": "independent", "value_type": "float", "minimum": 0.40, "maximum": 0.47, "rationale": "Direct clevis-hinge-to-foot reach in metres for the heavy vintage legs."}
+          ],
+          "record_id": "rec_picturex_0611__studio_lamp__003__png_ced1daa79fcf48e8bc507994cbf1a3a8",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L116-L256"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_support_rolling_base",
+          "interfaces": [{"name": "mast_socket", "kind": "plane", "role": "provider", "part": "base", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "base_outer_radius"}}],
+          "name": "rolling_caster_star",
+          "notes": "",
+          "parameters": [
+            {"name": "rolling_caster_arm_length_m", "mode": "independent", "value_type": "float", "minimum": 0.31, "maximum": 0.37, "rationale": "Direct hub-to-caster arm length in metres; wheel fork and axle follow this endpoint."}
+          ],
+          "record_id": "rec_0611_studio_lamp_var_support_rolling_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L178-L273"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_support_counterweighted_boom_base",
+          "interfaces": [{"name": "mast_socket", "kind": "plane", "role": "provider", "part": "base", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "base_outer_radius"}}],
+          "name": "weighted_disk",
+          "notes": "Disk radius is continuously derived from support spread; ribs and ground pads adapt to the resulting footprint.",
+          "parameters": [
+            {"name": "weighted_disk_radius_m", "mode": "independent", "value_type": "float", "minimum": 0.20, "maximum": 0.50, "rationale": "Direct counterweight disk radius in metres; integral ribs and underside pads follow this footprint."}
+          ],
+          "record_id": "rec_0611_studio_lamp_var_support_counterweighted_boom",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L161-L198"
+          ]
+        }
+      ],
+      "component_type": "ground_support",
+      "name": "ground_support",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "",
+          "implementation_function": "_build_mast_stages",
+          "interfaces": [{"name": "base_socket", "kind": "plane", "role": "consumer", "part": "mast_stage_0", "frame": {"normal": [0.0, 0.0, -1.0]}, "dimensions": {"radius": "stage_outer_radius"}}, {"name": "top_receiver", "kind": "plane", "role": "provider", "part": "mast_stage_N", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "top_outer_radius"}}],
+          "name": "classic_black_nested_tubes",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__studio_lamp__001__png_8ec4826c28154fafa47cecef308a7e96",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L247-L295"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_mast_stages",
+          "interfaces": [{"name": "base_socket", "kind": "plane", "role": "consumer", "part": "mast_stage_0", "frame": {"normal": [0.0, 0.0, -1.0]}, "dimensions": {"radius": "stage_outer_radius"}}, {"name": "top_receiver", "kind": "plane", "role": "provider", "part": "mast_stage_N", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "top_outer_radius"}}],
+          "name": "boom_heavy_riser",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__studio_lamp__002__png_307b9e5c7dcc41b6ae3c8ad0c75c7c32",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L175-L243"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_mast_stages",
+          "interfaces": [{"name": "base_socket", "kind": "plane", "role": "consumer", "part": "mast_stage_0", "frame": {"normal": [0.0, 0.0, -1.0]}, "dimensions": {"radius": "stage_outer_radius"}}, {"name": "top_receiver", "kind": "plane", "role": "provider", "part": "mast_stage_N", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"radius": "top_outer_radius"}}],
+          "name": "vintage_silver_drop_mast",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__studio_lamp__003__png_ced1daa79fcf48e8bc507994cbf1a3a8",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L257-L328"
+          ]
+        }
+      ],
+      "component_type": "mast_profile",
+      "name": "mast_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "",
+          "implementation_function": "_build_yoke",
+          "interfaces": [{"name": "mast_receiver", "kind": "plane", "role": "consumer", "part": "mechanism_mount", "frame": {"normal": [0.0, 0.0, -1.0]}, "dimensions": {"radius": "top_outer_radius"}}, {"name": "head_tilt_axis", "kind": "axis", "role": "provider", "part": "yoke", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"inside_half_span": "fork_inside_half_span"}}],
+          "name": "adaptive_direct_trunnion_yoke",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__studio_lamp__001__png_8ec4826c28154fafa47cecef308a7e96",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L297-L336"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_yoke",
+          "interfaces": [{"name": "mast_receiver", "kind": "plane", "role": "consumer", "part": "mechanism_mount", "frame": {"normal": [0.0, 0.0, -1.0]}, "dimensions": {"radius": "top_outer_radius"}}, {"name": "head_tilt_axis", "kind": "axis", "role": "provider", "part": "yoke", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"inside_half_span": "fork_inside_half_span"}}],
+          "name": "counterbalance_boom_fork",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__studio_lamp__002__png_307b9e5c7dcc41b6ae3c8ad0c75c7c32",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L244-L328"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_yoke",
+          "interfaces": [{"name": "mast_receiver", "kind": "plane", "role": "consumer", "part": "mechanism_mount", "frame": {"normal": [0.0, 0.0, -1.0]}, "dimensions": {"radius": "top_outer_radius"}}, {"name": "head_tilt_axis", "kind": "axis", "role": "provider", "part": "yoke", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"inside_half_span": "fork_inside_half_span"}}],
+          "name": "compact_round_tube_u_yoke",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__studio_lamp__003__png_ced1daa79fcf48e8bc507994cbf1a3a8",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L279-L328"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_yoke",
+          "interfaces": [{"name": "mast_receiver", "kind": "plane", "role": "consumer", "part": "mechanism_mount", "frame": {"normal": [0.0, 0.0, -1.0]}, "dimensions": {"radius": "top_outer_radius"}}, {"name": "head_tilt_axis", "kind": "axis", "role": "provider", "part": "yoke", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"inside_half_span": "fork_inside_half_span"}}],
+          "name": "dual_axis_pan_u_yoke",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_studio_lamp_var_yoke_dual_axis_yoke",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L279-L370"
+          ]
+        }
+      ],
+      "component_type": "head_support_mechanism",
+      "name": "head_support_mechanism",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "",
+          "implementation_function": "_build_head_softbox_rect",
+          "interfaces": [{"name": "trunnion_axis", "kind": "axis", "role": "consumer", "part": "lamp_head", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"half_width": "head_half_width", "half_height": "head_half_height"}}],
+          "name": "portrait_softbox",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__studio_lamp__001__png_8ec4826c28154fafa47cecef308a7e96",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L338-L430"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_head_softbox_rect",
+          "interfaces": [{"name": "trunnion_axis", "kind": "axis", "role": "consumer", "part": "lamp_head", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"half_width": "head_half_width", "half_height": "head_half_height"}}],
+          "name": "portrait_softbox_barn_doors",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_studio_lamp_var_head_module_4_barn_doors",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L346-L520"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_head_softbox_rect",
+          "interfaces": [{"name": "trunnion_axis", "kind": "axis", "role": "consumer", "part": "lamp_head", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"half_width": "head_half_width", "half_height": "head_half_height"}}],
+          "name": "landscape_softbox",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__studio_lamp__002__png_307b9e5c7dcc41b6ae3c8ad0c75c7c32",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L329-L429"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_head_softbox_rect",
+          "interfaces": [{"name": "trunnion_axis", "kind": "axis", "role": "consumer", "part": "lamp_head", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"half_width": "head_half_width", "half_height": "head_half_height"}}],
+          "name": "landscape_softbox_focus_ring",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_studio_lamp_var_head_module_focus_barrel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L360-L464"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_head_round_reflector",
+          "interfaces": [{"name": "trunnion_axis", "kind": "axis", "role": "consumer", "part": "lamp_head", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"half_width": "head_half_width", "half_height": "head_half_height"}}],
+          "name": "round_beauty_dish",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_studio_lamp_var_head_family_round_reflector",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L364-L464"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_head_led_panel",
+          "interfaces": [{"name": "trunnion_axis", "kind": "axis", "role": "consumer", "part": "lamp_head", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"half_width": "head_half_width", "half_height": "head_half_height"}}],
+          "name": "led_panel",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_studio_lamp_var_head_family_led_panel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L321-L407"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_head_fresnel_can",
+          "interfaces": [{"name": "trunnion_axis", "kind": "axis", "role": "consumer", "part": "lamp_head", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"half_width": "head_half_width", "half_height": "head_half_height"}}],
+          "name": "fresnel_can",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_studio_lamp_var_head_family_fresnel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L362-L449"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_head_spotlight_can",
+          "interfaces": [{"name": "trunnion_axis", "kind": "axis", "role": "consumer", "part": "lamp_head", "frame": {"axis": [1.0, 0.0, 0.0]}, "dimensions": {"half_width": "head_half_width", "half_height": "head_half_height"}}],
+          "name": "vintage_spotlight_can",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__studio_lamp__003__png_ced1daa79fcf48e8bc507994cbf1a3a8",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L330-L426"
+          ]
+        }
+      ],
+      "component_type": "lamp_head_assembly",
+      "name": "lamp_head_assembly",
+      "required": true
+    }
+  ],
+  "slug": "studio_lamp",
+  "source_map_path": "articraft_template_authoring/source_maps/studio_lamp.md",
+  "source_map_sha256": "120094bd3e89ba4aef9e9e4ed95343ef9c784cae09e2dab0c99464b2ad07464c"
+}

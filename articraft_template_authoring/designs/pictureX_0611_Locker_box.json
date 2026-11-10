@@ -1,0 +1,872 @@
+{
+  "assembly_notes": "Three source records (SOURCES=3) of the same lockable acrylic locker box. The host is a hollow sheet carcass (bottom/top/two sides/back + shelves) closed by compartment_count real side-hinged doors stacked in one column; 1-door-over-a-grid (001) versus N-doors (092616) is a whole-host topology change, so it is expressed as the multiplicity compartment_count rather than as a door_leaf candidate. Five independent structural slots are all directly observed: door_leaf (flat 095210 vs framed 092616), lock (rotary REVOLUTE-Y key + latch lever 001 vs static cam+padlock 092616/095210), hinge (discrete butt stations 001 vs continuous barrel 095210), carcass_front (metal mullions + screws 092616 vs flush edge strips 001/095210) and interior (plain shelves 001 vs shelves + vertical dividers 092616/095210). core_domain = 2^5 = 32, raw_domain = 128. Every combination builds: no compatibility gates. The hinge_line binding is a true cross-slot axis interface \u2014 the hinge slot owns the carcass-side knuckles/pins (provider) and the door_leaf slot owns the door-side knuckle/barrel (consumer); they are coaxial and engage axially by 0.5 mm, so the leaf is genuinely captured, the engagement is rotation invariant, and the overlap depth on the mating axis stays under the 1 mm collision tolerance. No allow_overlap anywhere, and no joint travel is clamped: every door runs 0..1.55 rad, every key +-0.55 rad and every latch lever +-0.65 rad. width_m, depth_m and cell_height_m are honest continuous parameters and do not inflate core/raw.",
+  "bindings": [
+    {
+      "binding_id": "hinge_line",
+      "consumer": "door_leaf.hinge_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "cell_height_m"
+          ],
+          "expression": "door_knuckle_len/2 + host_knuckle_len/2 - axial_engagement",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "host_knuckle_axial_offset_m",
+          "rationale": "places every carcass knuckle so it engages the door knuckle axially by exactly 0.5 mm at both ends",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "cell_height_m"
+          ],
+          "expression": "(cell_height_m - 0.008)/2 - 0.021",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "hinge_station_offset_m",
+          "rationale": "keeps both butt-hinge stations (or both piano pin stubs) inside the leaf height they support",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "hinge.hinge_axis"
+    },
+    {
+      "binding_id": "lock_station",
+      "consumer": "lock.lock_station_face",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "width_m"
+          ],
+          "expression": "0.010 + (width_m - 0.010) - 0.020",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "latch_station_x_m",
+          "rationale": "the lock station tracks the leaf free edge so cam/padlock or collar+lever stay on the leaf for every width",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "width_m"
+          ],
+          "expression": "0.010 + 0.35 * (width_m - 0.010)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_station_x_m",
+          "rationale": "rotary key station is placed proportionally so the key never reaches the latch lever sweep",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "door_leaf.lock_station_face"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "rotary_key_locker_identity",
+      "applies_to": {
+        "candidates": [
+          "rotary_key"
+        ],
+        "slot": "lock"
+      },
+      "required_author_checks": [
+        "category_anchor: hollow carcass with N hinged locker doors",
+        "category_anchor: rotary_key lock hardware"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "locker_door",
+          "joint_type": "revolute",
+          "parent_role": "carcass"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "key_knob",
+          "joint_type": "revolute",
+          "parent_role": "locker_door"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "latch_lever",
+          "joint_type": "revolute",
+          "parent_role": "locker_door"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "compartment_count",
+          "exact_count": null,
+          "role": "locker_door"
+        },
+        {
+          "count_from": "compartment_count",
+          "exact_count": null,
+          "role": "key_knob"
+        },
+        {
+          "count_from": "compartment_count",
+          "exact_count": null,
+          "role": "latch_lever"
+        }
+      ]
+    },
+    {
+      "anchor_id": "cam_padlock_locker_identity",
+      "applies_to": {
+        "candidates": [
+          "cam_padlock"
+        ],
+        "slot": "lock"
+      },
+      "required_author_checks": [
+        "category_anchor: hollow carcass with N hinged locker doors",
+        "category_anchor: cam_padlock lock hardware"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "locker_door",
+          "joint_type": "revolute",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "compartment_count",
+          "exact_count": null,
+          "role": "locker_door"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "carcass height = compartment_count * cell_height_m with compartment_count - 1 shelves; 2 <= compartment_count <= 5 stacked cells in one column",
+      "item_slot": "door_leaf",
+      "name": "compartment_count",
+      "spacing_expression": "compartment i is centred at (i + 0.5) * cell_height_m; hinge axis, shelf Z, lock station Z and keeper Z are all re-derived per compartment",
+      "values": [
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "flat single-thickness leaf moving_door_panel + number plate + 2 assembly screw cylinders; no perimeter frame",
+          "implementation_function": "_door_leaf_flat_leaf_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "axial_engagement_m": 0.0005,
+                "knuckle_radius_m": 0.0045,
+                "leaf_height_expression": "cell_height_m - 0.008"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(0, 0, 0) \u2014 leaf origin lies ON the hinge line",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "door_leaf__<candidate>__door_<i>",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "free_edge_offset_m": 0.02,
+                "station_x_expression": "0.010 + (width_m - 0.010) - 0.020",
+                "usable_height_expression": "cell_height_m - 0.008"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(latch_station_x, door_t/2, 0)",
+                "tangent_u": "(1, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "lock_station_face",
+              "part": "door_leaf__<candidate>__door_<i>",
+              "role": "provider"
+            }
+          ],
+          "name": "flat_leaf",
+          "notes": "Flat single-thickness leaf; consumes the hinge axis at its own origin and provides the lock station face at the free edge.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "carcass/opening width; source 001 CABINET_W 0.440, 095210 WIDTH 0.440",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "carcass depth; source 001 CABINET_D 0.160, 095210 DEPTH 0.180",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "cell_height_m",
+              "rationale": "compartment pitch; source CELL_H = HEIGHT/ROWS enlarged to one column",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_095210_303286_0832e6dc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L209-L226"
+          ]
+        },
+        {
+          "evidence": "door_panel + raised top_edge/bottom_edge/hinge_edge/latch_edge perimeter stiles (4 extra boxes) forming a real frame",
+          "implementation_function": "_door_leaf_framed_leaf_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "axial_engagement_m": 0.0005,
+                "knuckle_radius_m": 0.0045,
+                "leaf_height_expression": "cell_height_m - 0.008"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(0, 0, 0) \u2014 leaf origin lies ON the hinge line",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "door_leaf__<candidate>__door_<i>",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "free_edge_offset_m": 0.02,
+                "station_x_expression": "0.010 + (width_m - 0.010) - 0.020",
+                "usable_height_expression": "cell_height_m - 0.008"
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(latch_station_x, door_t/2, 0)",
+                "tangent_u": "(1, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "lock_station_face",
+              "part": "door_leaf__<candidate>__door_<i>",
+              "role": "provider"
+            }
+          ],
+          "name": "framed_leaf",
+          "notes": "Adds a real four-sided raised perimeter frame (4 extra stiles) to the same leaf host and interfaces.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "carcass/opening width; source 001 CABINET_W 0.440, 095210 WIDTH 0.440",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "carcass depth; source 001 CABINET_D 0.160, 095210 DEPTH 0.180",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "cell_height_m",
+              "rationale": "compartment pitch; source CELL_H = HEIGHT/ROWS enlarged to one column",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_092616_643603_0832e6dc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L186-L215"
+          ]
+        }
+      ],
+      "component_type": "plain hinged acrylic panel",
+      "name": "door_leaf",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "lock_plate/lock_collar on the door, child key_knob part (shaft+hub+bow) on REVOLUTE-Y door_to_key, latch_pivot + child door_latch part on REVOLUTE-Y door_to_latch, plus a fixed carcass latch_keeper (L127-L135); +2 joints per door",
+          "implementation_function": "_lock_rotary_key_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_projection_m": 0.029,
+                "required_face_height_m": 0.075,
+                "required_face_width_m": 0.032
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(latch_station_x, door_t/2, 0)",
+                "tangent_u": "(1, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "lock_station_face",
+              "part": "door_leaf__<candidate>__door_<i>",
+              "role": "consumer"
+            }
+          ],
+          "name": "rotary_key",
+          "notes": "Two extra REVOLUTE-Y children per door (key knob + latch lever), each solved with mate_axes + register_interface_mate, plus a fixed carcass latch keeper.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "carcass/opening width; source 001 CABINET_W 0.440, 095210 WIDTH 0.440",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "carcass depth; source 001 CABINET_D 0.160, 095210 DEPTH 0.180",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "cell_height_m",
+              "rationale": "compartment pitch; source CELL_H = HEIGHT/ROWS enlarged to one column",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__locker_box__001__png_530198ce33344903b0ba8c8e5a959124",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L166-L279"
+          ]
+        },
+        {
+          "evidence": "static cam_hub/cam_handle/lock_eye + padlock_body + 2 shackle_leg + shackle_bridge, all on the door part; zero extra joints; cf. 095210 _add_lock_hardware L87-L109",
+          "implementation_function": "_lock_cam_padlock_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "front_projection_m": 0.029,
+                "required_face_height_m": 0.075,
+                "required_face_width_m": 0.032
+              },
+              "frame": {
+                "normal": "(0, 1, 0)",
+                "point": "(latch_station_x, door_t/2, 0)",
+                "tangent_u": "(1, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "lock_station_face",
+              "part": "door_leaf__<candidate>__door_<i>",
+              "role": "consumer"
+            }
+          ],
+          "name": "cam_padlock",
+          "notes": "Static cam latch + molded padlock + shackle on the door part; zero extra joints, captured shackle fit is intra-part.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "carcass/opening width; source 001 CABINET_W 0.440, 095210 WIDTH 0.440",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "carcass depth; source 001 CABINET_D 0.160, 095210 DEPTH 0.180",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "cell_height_m",
+              "rationale": "compartment pitch; source CELL_H = HEIGHT/ROWS enlarged to one column",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_092616_643603_0832e6dc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L217-L264"
+          ]
+        }
+      ],
+      "component_type": "rotary key knob + pivot latch lever",
+      "name": "lock",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "two discrete stations, each carcass hinge_leaf+hinge_knuckle_{lower,upper} interleaved in Z with the door door_knuckle/door_hinge_leaf (door side L150-L164); 4 carcass knuckles + 2 door knuckles per door",
+          "implementation_function": "_hinge_knuckle_pair_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "axial_engagement_m": 0.0005,
+                "knuckle_radius_m": 0.0048,
+                "supported_height_expression": "cell_height_m - 0.008"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(-width_m/2 - 0.006, depth_m/2 + 0.008, (i + 0.5) * cell_height_m)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "knuckle_pair",
+          "notes": "Two discrete butt-hinge stations: 4 carcass knuckles interleaved in Z with 2 door knuckles per leaf.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "carcass/opening width; source 001 CABINET_W 0.440, 095210 WIDTH 0.440",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "carcass depth; source 001 CABINET_D 0.160, 095210 DEPTH 0.180",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "cell_height_m",
+              "rationale": "compartment pitch; source CELL_H = HEIGHT/ROWS enlarged to one column",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__locker_box__001__png_530198ce33344903b0ba8c8e5a959124",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L102-L125"
+          ]
+        },
+        {
+          "evidence": "carcass door_hinge_mount block + door_hinge_pin stubs against a single full-height door moving_hinge_leaf + moving_hinge_barrel; 2 carcass stubs + 1 long door barrel per door",
+          "implementation_function": "_hinge_piano_barrel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "axial_engagement_m": 0.0005,
+                "knuckle_radius_m": 0.0048,
+                "supported_height_expression": "cell_height_m - 0.008"
+              },
+              "frame": {
+                "axis": "(0, 0, 1)",
+                "point": "(-width_m/2 - 0.006, depth_m/2 + 0.008, (i + 0.5) * cell_height_m)",
+                "radial": "(1, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "piano_barrel",
+          "notes": "One continuous hinge: full-height carcass mount pad + 2 pin stubs against a single full-height door barrel.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "carcass/opening width; source 001 CABINET_W 0.440, 095210 WIDTH 0.440",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "carcass depth; source 001 CABINET_D 0.160, 095210 DEPTH 0.180",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "cell_height_m",
+              "rationale": "compartment pitch; source CELL_H = HEIGHT/ROWS enlarged to one column",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_095210_303286_0832e6dc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L200-L215"
+          ]
+        }
+      ],
+      "component_type": "discrete butt hinges",
+      "name": "hinge",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "raised metal vertical front_rail_ posts + per-compartment cross rails + rail_screw_ fastener cylinders",
+          "implementation_function": "_carcass_front_mullion_frame_build",
+          "interfaces": [],
+          "name": "mullion_frame",
+          "notes": "Raised metal posts + per-compartment cross rails + screw fastener cylinders; the carcass front derives one cross rail per compartment boundary.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "carcass/opening width; source 001 CABINET_W 0.440, 095210 WIDTH 0.440",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "carcass depth; source 001 CABINET_D 0.160, 095210 DEPTH 0.180",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "cell_height_m",
+              "rationale": "compartment pitch; source CELL_H = HEIGHT/ROWS enlarged to one column",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_092616_643603_0832e6dc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L157-L177"
+          ]
+        },
+        {
+          "evidence": "flush thin acrylic shelf_rail_ edge strips only, no fasteners; cf. 095210 shelf_edge_/divider_edge_ L171-L178",
+          "implementation_function": "_carcass_front_edge_strip_build",
+          "interfaces": [],
+          "name": "edge_strip",
+          "notes": "Flush polished acrylic edge strips only (shelf rails + corner rails), no fasteners.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "carcass/opening width; source 001 CABINET_W 0.440, 095210 WIDTH 0.440",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "carcass depth; source 001 CABINET_D 0.160, 095210 DEPTH 0.180",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "cell_height_m",
+              "rationale": "compartment pitch; source CELL_H = HEIGHT/ROWS enlarged to one column",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__locker_box__001__png_530198ce33344903b0ba8c8e5a959124",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L95-L100"
+          ]
+        }
+      ],
+      "component_type": "metal front rails + fasteners",
+      "name": "carcass_front",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "shelf_{i} full-width horizontal panels only; the compartment behind each door is one open volume",
+          "implementation_function": "_interior_open_shelf_build",
+          "interfaces": [],
+          "name": "open_shelf",
+          "notes": "Plain horizontal shelves; each compartment behind a door is one open volume.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "carcass/opening width; source 001 CABINET_W 0.440, 095210 WIDTH 0.440",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "carcass depth; source 001 CABINET_D 0.160, 095210 DEPTH 0.180",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "cell_height_m",
+              "rationale": "compartment pitch; source CELL_H = HEIGHT/ROWS enlarged to one column",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__locker_box__001__png_530198ce33344903b0ba8c8e5a959124",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L86-L100"
+          ]
+        },
+        {
+          "evidence": "shelf_{row} plus divider_{col} vertical panels splitting every compartment into cubbies; cf. 095210 horizontal_divider_/vertical_divider_ L166-L178",
+          "implementation_function": "_interior_grid_cubby_build",
+          "interfaces": [],
+          "name": "grid_cubby",
+          "notes": "Shelves plus one vertical divider per compartment, splitting every cell into cubbies.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "carcass/opening width; source 001 CABINET_W 0.440, 095210 WIDTH 0.440",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "carcass depth; source 001 CABINET_D 0.160, 095210 DEPTH 0.180",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.15,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "cell_height_m",
+              "rationale": "compartment pitch; source CELL_H = HEIGHT/ROWS enlarged to one column",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_092616_643603_0832e6dc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L131-L155"
+          ]
+        }
+      ],
+      "component_type": "plain horizontal shelves",
+      "name": "interior",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Locker_box",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Locker_box.md",
+  "source_map_sha256": "9a210683f45c141b2ede30186fa117ca34e91f64bb83a76272c1cd5da8f549fc"
+}

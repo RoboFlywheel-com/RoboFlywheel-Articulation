@@ -1,0 +1,931 @@
+{
+ "assembly_notes": "Two structural slots plus the caster multiplicity. frame_style publishes the boom pivot at the mast top, N caster stations along whatever leg run it actually built, and a ram foot bracket clear of the mast; boom_style consumes only the pivot and republishes a hook seat on whichever section carries the tip. hook_style hangs on whichever section carries the tip. All 5 x 3 x 2 = 30 combinations x 2 caster counts build with no compatibility gate. Every pin is a stub pair outboard of the eye it carries, every cylinder and boom section is a real hollow shell with a 1.6 mm sliding fit, and the telescoping chain tracks its parent's length so each stage stays engaged in the one it slides in. The swing-out outriggers are their own slot: their brackets bolt to the outer face of whichever leg run the base candidate built (outboard of braces, ballast straps, fold lugs and mast struts), so any base can carry them and the caster stations are untouched.",
+ "bindings": [
+  {
+   "binding_id": "frame_to_boom",
+   "consumer": "boom_style.boom_pivot",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "mast_height_m"
+     ],
+     "expression": "the mast stops 0.040 below the pin and its crown carries two cheeks at +-(boom/2 + 0.020) with stub pins outboard of the boom eye",
+     "maximum": 0.0,
+     "minimum": 0.0,
+     "mode": "derived",
+     "name": "pivot_clevis_m",
+     "rationale": "the pin may not run through the solid boom eye",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "choices": [],
+     "depends_on": [
+      "boom_length_m"
+     ],
+     "expression": "the boom section starts at mast/2 + 0.008 and a neck welds it to the eye",
+     "maximum": 0.0,
+     "minimum": 0.0,
+     "mode": "derived",
+     "name": "boom_neck_m",
+     "rationale": "the boom must clear the mast it pivots on",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "revolute",
+   "provider": "frame_style.boom_pivot"
+  },
+  {
+   "binding_id": "frame_to_casters",
+   "consumer": "frame_style.caster_station",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "caster_radius_m"
+     ],
+     "expression": "the fork cheeks sit at +-(0.42*caster_radius + 0.007) and the wheel axle hangs 0.014 below the crown",
+     "maximum": 0.0,
+     "minimum": 0.0,
+     "mode": "derived",
+     "name": "caster_fork_m",
+     "rationale": "the wheel must swing in a real fork, not inside it",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "continuous",
+   "provider": "frame_style.caster_station"
+  },
+  {
+   "binding_id": "frame_to_ram",
+   "consumer": "frame_style.ram_foot",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "mast_height_m"
+     ],
+     "expression": "barrel length = 0.62*(pivot_z - ram_foot_z), stroke = 0.26 of it, and the rod fills the barrel bore to a 0.8 mm running fit",
+     "maximum": 0.0,
+     "minimum": 0.0,
+     "mode": "derived",
+     "name": "ram_stroke_m",
+     "rationale": "the ram must extend without leaving its own barrel",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "revolute",
+   "provider": "frame_style.ram_foot"
+  },
+  {
+   "binding_id": "boom_to_hook",
+   "consumer": "boom_style.hook_seat",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "boom_length_m"
+     ],
+     "expression": "the hook boss seats 0.5 mm under whichever section actually carries the tip (boom, extension, last stage or jib)",
+     "maximum": 0.0,
+     "minimum": 0.0,
+     "mode": "derived",
+     "name": "hook_seat_z_m",
+     "rationale": "each boom family hands the hook a different tip section",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "continuous",
+   "provider": "boom_style.hook_seat"
+  },
+  {
+   "binding_id": "boom_to_hook_style",
+   "consumer": "hook_style.hook_seat",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "boom_length_m"
+     ],
+     "expression": "-section/2 - 0.0005 below whichever boom section carries the tip",
+     "maximum": 0.0,
+     "minimum": 0.0,
+     "mode": "derived",
+     "name": "hook_seat_z_m",
+     "rationale": "the hook hangs off the real tip section, not off a nominal boom depth",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "continuous",
+   "provider": "boom_style.hook_seat"
+  }
+ ],
+ "category_anchors": [
+  {
+   "anchor_id": "shop_crane_identity",
+   "applies_to": {
+    "candidates": [
+     "chain_hook",
+     "ball_hook"
+    ],
+    "slot": "hook_style"
+   },
+   "required_author_checks": [
+    "category_anchor: one wheeled frame carries the crane",
+    "category_anchor: a luffing boom pivots on the mast",
+    "category_anchor: a hydraulic ram and its hand pump drive the boom",
+    "category_anchor: a swivel hook hangs at the boom tip",
+    "category_anchor: luffing the boom really raises its tip",
+    "category_anchor: the boom reaches out the way its family does"
+   ],
+   "required_relations": [
+    {
+     "child_role": "boom",
+     "joint_type": "revolute",
+     "parent_role": "frame"
+    },
+    {
+     "child_role": "ram",
+     "joint_type": "revolute",
+     "parent_role": "frame"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "frame"
+    },
+    {
+     "exact_count": 1,
+     "role": "boom"
+    },
+    {
+     "exact_count": 1,
+     "role": "ram"
+    },
+    {
+     "exact_count": 1,
+     "role": "pump"
+    },
+    {
+     "exact_count": 1,
+     "role": "hook"
+    }
+   ]
+  },
+  {
+   "anchor_id": "rolling_base_identity",
+   "applies_to": {
+    "candidates": [
+     "a_frame_base",
+     "compact_shop_base",
+     "counterweight_base",
+     "foldable_shop_base"
+    ],
+    "slot": "frame_style"
+   },
+   "required_author_checks": [
+    "category_anchor: N swivel caster stations roll the base"
+   ],
+   "required_relations": [
+    {
+     "child_role": "wheel",
+     "joint_type": "continuous",
+     "parent_role": "caster"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": "caster_count",
+     "role": "caster"
+    },
+    {
+     "count_from": "caster_count",
+     "role": "wheel"
+    }
+   ]
+  },
+  {
+   "anchor_id": "swing_out_stabilizer",
+   "applies_to": {
+    "candidates": [
+     "swing_out_outriggers"
+    ],
+    "slot": "stabilizer"
+   },
+   "required_author_checks": [
+    "category_anchor: the stabilizer matches the selected stance",
+    "swinging an outrigger out really widens the footprint"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "outrigger",
+     "joint_type": "revolute",
+     "parent_role": "frame"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 2,
+     "role": "outrigger"
+    }
+   ]
+  }
+ ],
+ "multiplicities": [
+  {
+   "host_capacity_expression": "leg_length_m >= 0.24*(caster_count/2 - 1) + 0.34; the stations spread over the leg run the frame really built",
+   "item_slot": "frame_style",
+   "name": "caster_count",
+   "spacing_expression": "station i sits at 0.090 + (leg_span - 0.150) * i/(stations-1) on both rails, each station a caster plus a wheel on two joints",
+   "values": [
+    4,
+    6
+   ]
+  }
+ ],
+ "schema_version": 1,
+ "slots": [
+  {
+   "candidates": [
+    {
+     "evidence": "The long A-frame legs, the cross beam and the tall welded mast of the classic engine hoist.",
+     "implementation_function": "_frame_style_a_frame_base_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "pin_gap": "boom section + 0.040"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,pivot_z)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "boom_pivot",
+       "part": "frame_style__a_frame_base__*",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "station_z": "leg_z - 0.004"
+       },
+       "frame": {
+        "axis": "(0,0,1)",
+        "point": "(station_x, +-track/2, leg_z-0.004)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "caster_station",
+       "part": "frame_style__a_frame_base__*",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "cheek_gap": "0.084"
+       },
+       "frame": {
+        "axis": "(0,1,0)",
+        "point": "(ram_foot_x, 0, ram_foot_z)",
+        "radial": "ram pitch"
+       },
+       "kind": "axis",
+       "name": "ram_foot",
+       "part": "frame_style__a_frame_base__*",
+       "role": "provider"
+      }
+     ],
+     "name": "a_frame_base",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.15,
+       "minimum": 0.6,
+       "mode": "independent",
+       "name": "mast_height_m",
+       "rationale": "source masts stand 0.7-1.1 m above the legs",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.4,
+       "minimum": 0.7,
+       "mode": "independent",
+       "name": "leg_length_m",
+       "rationale": "source legs reach 0.9-1.3 m forward",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.9,
+       "minimum": 0.44,
+       "mode": "independent",
+       "name": "track_width_m",
+       "rationale": "source tracks are 0.5-0.8 m across",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.075,
+       "minimum": 0.036,
+       "mode": "independent",
+       "name": "caster_radius_m",
+       "rationale": "source casters are 0.08-0.13 m in diameter",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "caster_radius_m"
+       ],
+       "expression": "leg_z = 2*caster_radius_m + 0.030; pivot_z = leg_z + mast_height_m",
+       "maximum": 0.0,
+       "minimum": 0.0,
+       "mode": "derived",
+       "name": "leg_z_m",
+       "rationale": "the whole crane rides on whatever caster it is given",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "leg_length_m"
+       ],
+       "expression": "leg_length_m = max(leg_length_m, 0.24*(stations-1) + 0.34)",
+       "maximum": 0.0,
+       "minimum": 0.0,
+       "mode": "derived",
+       "name": "leg_length_capacity_m",
+       "rationale": "host capacity: every caster station needs its own run of leg",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "leg_length_m"
+       ],
+       "expression": "each frame candidate reports the leg run it actually built and the caster stations spread from 0.090 to that run minus 0.060",
+       "maximum": 0.0,
+       "minimum": 0.0,
+       "mode": "derived",
+       "name": "station_span_m",
+       "rationale": "a short base must not hang casters off the end of its legs",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "mast_height_m"
+       ],
+       "expression": "ram_foot_x = mast_section/2 + 0.032; ram_foot_z = leg_z + 0.20*mast_height_m",
+       "maximum": 0.0,
+       "minimum": 0.0,
+       "mode": "derived",
+       "name": "ram_foot_x_m",
+       "rationale": "the ram foot bracket stands clear of the mast section",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__industrial_crane_featuring_advanced_hydraulic__001__png_444a5d123e634bb9b31511c0750e8ee8",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L161-L295"
+     ]
+    },
+    {
+     "evidence": "One short welded box frame with a low mast — a compact shop crane rather than the long A-frame.",
+     "implementation_function": "_frame_style_compact_shop_base_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "pin_gap": "boom section + 0.040"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,pivot_z)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "boom_pivot",
+       "part": "frame_style__compact_shop_base__*",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "station_z": "leg_z - 0.004"
+       },
+       "frame": {
+        "axis": "(0,0,1)",
+        "point": "(station_x, +-track/2, leg_z-0.004)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "caster_station",
+       "part": "frame_style__compact_shop_base__*",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "cheek_gap": "0.084"
+       },
+       "frame": {
+        "axis": "(0,1,0)",
+        "point": "(ram_foot_x, 0, ram_foot_z)",
+        "radial": "ram pitch"
+       },
+       "kind": "axis",
+       "name": "ram_foot",
+       "part": "frame_style__compact_shop_base__*",
+       "role": "provider"
+      }
+     ],
+     "name": "compact_shop_base",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_picturex_0611__industrial_crane_featuring_advanced_hydraulic__002__png_a35c26c615b74db58b30348439b55d5d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L146-L219"
+     ]
+    },
+    {
+     "evidence": "A ballast box and a stiffened rear beam behind the mast, which no other base carries.",
+     "implementation_function": "_frame_style_counterweight_base_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "pin_gap": "boom section + 0.040"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,pivot_z)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "boom_pivot",
+       "part": "frame_style__counterweight_base__*",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "station_z": "leg_z - 0.004"
+       },
+       "frame": {
+        "axis": "(0,0,1)",
+        "point": "(station_x, +-track/2, leg_z-0.004)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "caster_station",
+       "part": "frame_style__counterweight_base__*",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "cheek_gap": "0.084"
+       },
+       "frame": {
+        "axis": "(0,1,0)",
+        "point": "(ram_foot_x, 0, ram_foot_z)",
+        "radial": "ram pitch"
+       },
+       "kind": "axis",
+       "name": "ram_foot",
+       "part": "frame_style__counterweight_base__*",
+       "role": "provider"
+      }
+     ],
+     "name": "counterweight_base",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_industrial_crane_hydraulic_var_counterweight_base_refill",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L165-L335"
+     ]
+    },
+    {
+     "evidence": "A folding shop frame: shortened stowable legs and a braced mast strut instead of the welded A-frame.",
+     "implementation_function": "_frame_style_foldable_shop_base_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "pin_gap": "boom section + 0.040"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,pivot_z)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "boom_pivot",
+       "part": "frame_style__foldable_shop_base__*",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "station_z": "leg_z - 0.004"
+       },
+       "frame": {
+        "axis": "(0,0,1)",
+        "point": "(station_x, +-track/2, leg_z-0.004)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "caster_station",
+       "part": "frame_style__foldable_shop_base__*",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "cheek_gap": "0.084"
+       },
+       "frame": {
+        "axis": "(0,1,0)",
+        "point": "(ram_foot_x, 0, ram_foot_z)",
+        "radial": "ram pitch"
+       },
+       "kind": "axis",
+       "name": "ram_foot",
+       "part": "frame_style__foldable_shop_base__*",
+       "role": "provider"
+      }
+     ],
+     "name": "foldable_shop_base",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_industrial_crane_hydraulic_var_foldable_shop",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L162-L314"
+     ]
+    }
+   ],
+   "component_type": "crane base",
+   "name": "frame_style",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "The A-frame stands on its own leg run and casters; no separate ground-bearing member exists.",
+     "implementation_function": "_stabilizer_fixed_stance_build",
+     "interfaces": [],
+     "name": "fixed_stance",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_picturex_0611__industrial_crane_featuring_advanced_hydraulic__001__png_444a5d123e634bb9b31511c0750e8ee8",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L161-L295"
+     ]
+    },
+    {
+     "evidence": "Arm beam, pivot barrel, foot leg and foot pad bolt to the frame on their own REVOLUTE swing; the base underneath is unchanged.",
+     "implementation_function": "_stabilizer_swing_out_outriggers_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "pin_gap": "boom section + 0.040"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,pivot_z)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "boom_pivot",
+       "part": "stabilizer__swing_out_outriggers__outrigger_0",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "station_z": "leg_z - 0.004"
+       },
+       "frame": {
+        "axis": "(0,0,1)",
+        "point": "(station_x, +-track/2, leg_z-0.004)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "caster_station",
+       "part": "stabilizer__swing_out_outriggers__outrigger_0",
+       "role": "provider"
+      },
+      {
+       "dimensions": {
+        "cheek_gap": "0.084"
+       },
+       "frame": {
+        "axis": "(0,1,0)",
+        "point": "(ram_foot_x, 0, ram_foot_z)",
+        "radial": "ram pitch"
+       },
+       "kind": "axis",
+       "name": "ram_foot",
+       "part": "stabilizer__swing_out_outriggers__outrigger_0",
+       "role": "provider"
+      }
+     ],
+     "name": "swing_out_outriggers",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_industrial_crane_hydraulic_var_swing_out_outriggers_gt10",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L140-L221"
+     ]
+    }
+   ],
+   "component_type": "ground-bearing stabilizer legs",
+   "name": "stabilizer",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "One boom with a single boom_extension on a PRISMATIC joint (L359-L367) and the hook swivelling at its tip.",
+     "implementation_function": "_boom_style_single_extension_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "eye_radius": "0.026"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,0)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "boom_pivot",
+       "part": "boom_style__single_extension__*",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "section": "0.070 box section"
+       },
+       "frame": {
+        "axis": "(0,0,1)",
+        "point": "(tip_x, 0, -section/2)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "hook_seat",
+       "part": "boom_style__single_extension__*",
+       "role": "provider"
+      }
+     ],
+     "name": "single_extension",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.5,
+       "minimum": 0.7,
+       "mode": "independent",
+       "name": "boom_length_m",
+       "rationale": "source booms are 0.9-1.4 m",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "boom_length_m"
+       ],
+       "expression": "boom luff = -0.24..+0.72; the extension travel is 0.42 of the extension length so it stays engaged in the boom section",
+       "maximum": 0.0,
+       "minimum": 0.0,
+       "mode": "derived",
+       "name": "boom_travel_rad",
+       "rationale": "the boom may not luff into the mast crown or slide out of its own section",
+       "unit": "rad",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__industrial_crane_featuring_advanced_hydraulic__001__png_444a5d123e634bb9b31511c0750e8ee8",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L296-L410"
+     ]
+    },
+    {
+     "evidence": "A chain of indexed boom_stage_i sections, each on its own PRISMATIC joint (L400-L410), so the boom telescopes in stages.",
+     "implementation_function": "_boom_style_telescoping_stages_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "eye_radius": "0.026"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,0)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "boom_pivot",
+       "part": "boom_style__telescoping_stages__*",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "section": "0.070 box section"
+       },
+       "frame": {
+        "axis": "(0,0,1)",
+        "point": "(tip_x, 0, -section/2)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "hook_seat",
+       "part": "boom_style__telescoping_stages__*",
+       "role": "provider"
+      }
+     ],
+     "name": "telescoping_stages",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_industrial_crane_hydraulic_var_telescoping_boom_refill",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L373-L479"
+     ]
+    },
+    {
+     "evidence": "A secondary_jib folds on a REVOLUTE knuckle (L430-L438) driven by its own jib_cylinder/jib_rod ram (L562-L593).",
+     "implementation_function": "_boom_style_knuckle_jib_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "eye_radius": "0.026"
+       },
+       "frame": {
+        "axis": "(0,-1,0)",
+        "point": "(0,0,0)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "boom_pivot",
+       "part": "boom_style__knuckle_jib__*",
+       "role": "consumer"
+      },
+      {
+       "dimensions": {
+        "section": "0.070 box section"
+       },
+       "frame": {
+        "axis": "(0,0,1)",
+        "point": "(tip_x, 0, -section/2)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "hook_seat",
+       "part": "boom_style__knuckle_jib__*",
+       "role": "provider"
+      }
+     ],
+     "name": "knuckle_jib",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_industrial_crane_hydraulic_var_knuckle_boom_refill",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L374-L593"
+     ]
+    }
+   ],
+   "component_type": "crane boom",
+   "name": "boom_style",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "A slender r=0.006 zig-zag chain run hanging 0.275 m and curling into a small hook, plus a swivel_body collar.",
+     "implementation_function": "_hook_style_chain_hook_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "drop": "0.365",
+        "swivel_radius": "0.018"
+       },
+       "frame": {
+        "axis": "(0,0,1)",
+        "point": "(tip_x, 0, -section/2 - 0.0005)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "hook_seat",
+       "part": "hook_style__chain_hook__hook",
+       "role": "consumer"
+      }
+     ],
+     "name": "chain_hook",
+     "notes": "The source is one continuous spline tube; here it is a chain of welded short links so the part stays a single connected island.",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [
+        "boom_length_m"
+       ],
+       "expression": "0.0075 with a 0.006 axial overlap between consecutive links",
+       "maximum": 0.0,
+       "minimum": 0.0,
+       "mode": "derived",
+       "name": "chain_link_radius_m",
+       "rationale": "consecutive links must overlap or the hook breaks into islands",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__industrial_crane_featuring_advanced_hydraulic__001__png_444a5d123e634bb9b31511c0750e8ee8",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L369-L400"
+     ]
+    },
+    {
+     "evidence": "A short rigid r=0.009 chain_shank, a hook_bowl Sphere swivel and three heavy r=0.012-0.015 forged bends.",
+     "implementation_function": "_hook_style_ball_hook_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "drop": "0.265",
+        "swivel_radius": "0.018"
+       },
+       "frame": {
+        "axis": "(0,0,1)",
+        "point": "(tip_x, 0, -section/2 - 0.0005)",
+        "radial": "(1,0,0)"
+       },
+       "kind": "axis",
+       "name": "hook_seat",
+       "part": "hook_style__ball_hook__hook",
+       "role": "consumer"
+      }
+     ],
+     "name": "ball_hook",
+     "notes": "The Sphere bowl is the identifying feature; the forged bends are tubes between the source's own path points.",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [
+        "boom_length_m"
+       ],
+       "expression": "0.026, seated where the shank ends so the ball fuses to both shank and forged bend",
+       "maximum": 0.0,
+       "minimum": 0.0,
+       "mode": "derived",
+       "name": "bowl_radius_m",
+       "rationale": "the ball must bridge the shank and the hook or the hook floats",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__industrial_crane_featuring_advanced_hydraulic__002__png_a35c26c615b74db58b30348439b55d5d",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L281-L296"
+     ]
+    }
+   ],
+   "component_type": "load hook",
+   "name": "hook_style",
+   "required": true
+  }
+ ],
+ "slug": "pictureX_0611_industrial_crane_featuring_advanced_hydraulic",
+ "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_industrial_crane_featuring_advanced_hydraulic.md",
+ "source_map_sha256": "e0ca5763c4d5b2e7a06e6af1bc2b30dae4c2b4e1e30e58952def86ae7f2fa6c2"
+}

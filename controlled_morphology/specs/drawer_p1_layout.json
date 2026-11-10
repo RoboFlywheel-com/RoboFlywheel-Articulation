@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "name": "drawer_cabinet_p1_layout_v1",
+  "generator": "multi_drawer_cabinet",
+  "base_config": {
+    "body_form": "rect_case",
+    "drawer_layout": "full_width_stack",
+    "drawer_front": "flat_panel",
+    "support_base": "plinth_block_feet",
+    "drawer_count": 4,
+    "carcass_width_m": 1.06,
+    "carcass_depth_m": 0.45,
+    "carcass_height_m": 1.02,
+    "rect_wall_t_m": 0.02,
+    "graduation_ratio": 1.35,
+    "divider_t_m": 0.024,
+    "base_level_ratio": 1.55,
+    "drawer_travel_ratio": 0.48,
+    "front_t_m": 0.022,
+    "plinth_h_m": 0.13,
+    "palette": 0,
+    "name": "controlled_drawer_layout_cabinet"
+  },
+  "axes": [
+    {
+      "name": "drawer_layout",
+      "levels": ["full_width_stack", "paired_grid", "pair_over_full_width"]
+    }
+  ],
+  "nuisance_blocks": [
+    {
+      "id": "canonical",
+      "overrides": {}
+    }
+  ]
+}

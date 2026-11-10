@@ -1,0 +1,645 @@
+{
+  "assembly_notes": "A laser level tripod is one shared frame host (yellow die-cast crown/hub, central plumb column, sliding spreader collar, head seat) carrying N=3 indexed leg units and one instrument head. Every leg hinges outward from a crown bracket via a registered REVOLUTE about a horizontal tangential axis (-sin a, cos a, 0); the telescoping candidate adds a PRISMATIC lower segment sliding along the leg axis. The head pans about the vertical crown axis (0,0,1): pan_disk is a bounded REVOLUTE, pan_drum is CONTINUOUS. Leg azimuths are -pi/2 + 2*pi*i/N so the three legs occupy disjoint 120-degree sectors and cannot intersect one another over the full spread range. Head seat height, leg direction, foot drop and telescope junction/travel are all derived from overall_scale and leg_spread_deploy before geometry emission. All five structural slots combine freely (core_domain = 2*2*2*2*2 = 32) with no compatibility gate; every combination is built and author-checked. center_column (plumb_hook | plumb_rod) is emitted entirely onto the shared frame host and head_mount (stud_disk | qr_platform) entirely onto the rotating head part, so their seams are intra-part and free; foot (rubber_pad | molded_boot) is emitted onto whichever part carries the leg tip -- the one-piece leg for `fixed`, the sliding lower tube for `telescoping` -- and both candidates place their lowest surface at the same leg-local offset 0.016 * overall_scale, so the grounded-neutral-pose invariant holds for all of them. N is source-anchored at 3. Cross-component derivations formerly written as bindings are recorded here because both endpoints hang off the shared non-slotted `frame` host, which is not a declared component slot: frame_to_head_pan: frame.head_seat_axis -> head.pan_axis (revolute_or_continuous); head_seat_z = crown_stack_height * overall_scale | frame_to_leg_spread: frame.hinge_axis_i -> leg_structure.spread_axis (revolute); hinge_point_i = (hinge_radius*cos(a_i), hinge_radius*sin(a_i), hinge_z); a_i = -pi/2 + 2*pi*i/leg_count | leg_upper_to_lower_telescope: leg_structure.telescope_junction -> leg_structure.lower_segment (prismatic); telescope_travel = 0.11 * overall_scale * telescope_travel_scale",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "laser_tripod_identity",
+      "applies_to": {
+        "candidates": [
+          "telescoping",
+          "fixed"
+        ],
+        "slot": "leg_structure"
+      },
+      "required_author_checks": [
+        "category_anchor: one frame carries three spreading legs and one head",
+        "category_anchor: every leg spreads on a registered tangential crown hinge"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "tripod_leg",
+          "joint_type": "revolute",
+          "parent_role": "frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "instrument_head"
+        },
+        {
+          "count_from": "resolved.leg_count",
+          "role": "tripod_leg"
+        }
+      ]
+    },
+    {
+      "anchor_id": "telescoping_leg_slide",
+      "applies_to": {
+        "candidates": [
+          "telescoping"
+        ],
+        "slot": "leg_structure"
+      },
+      "required_author_checks": [
+        "category_anchor: telescoping legs add a captured sliding lower segment"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "leg_lower_segment",
+          "joint_type": "prismatic",
+          "parent_role": "tripod_leg"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": "resolved.leg_count",
+          "role": "tripod_leg"
+        },
+        {
+          "count_from": "resolved.leg_count",
+          "role": "leg_lower_segment"
+        }
+      ]
+    },
+    {
+      "anchor_id": "disk_head_pan",
+      "applies_to": {
+        "candidates": [
+          "pan_disk"
+        ],
+        "slot": "head"
+      },
+      "required_author_checks": [
+        "category_anchor: disk head pans on a registered vertical axis"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "instrument_head",
+          "joint_type": "revolute",
+          "parent_role": "frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "instrument_head"
+        }
+      ]
+    },
+    {
+      "anchor_id": "drum_head_pan",
+      "applies_to": {
+        "candidates": [
+          "pan_drum"
+        ],
+        "slot": "head"
+      },
+      "required_author_checks": [
+        "category_anchor: drum head pans continuously on a registered vertical axis"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "instrument_head",
+          "joint_type": "continuous",
+          "parent_role": "frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "instrument_head"
+        }
+      ]
+    },
+    {
+      "anchor_id": "plumb_hook_column",
+      "applies_to": {
+        "candidates": [
+          "plumb_hook"
+        ],
+        "slot": "center_column"
+      },
+      "required_author_checks": [
+        "category_anchor: plumb_hook column hangs under the crown with a hook and cable clip"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "frame"
+        }
+      ]
+    },
+    {
+      "anchor_id": "plumb_rod_column",
+      "applies_to": {
+        "candidates": [
+          "plumb_rod"
+        ],
+        "slot": "center_column"
+      },
+      "required_author_checks": [
+        "category_anchor: plumb_rod column reaches a rubber ground foot near the floor"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "frame"
+        }
+      ]
+    },
+    {
+      "anchor_id": "stud_disk_mount",
+      "applies_to": {
+        "candidates": [
+          "stud_disk"
+        ],
+        "slot": "head_mount"
+      },
+      "required_author_checks": [
+        "category_anchor: stud_disk mount is a bare threaded stud on a laser-mount disk"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "instrument_head"
+        }
+      ]
+    },
+    {
+      "anchor_id": "qr_platform_mount",
+      "applies_to": {
+        "candidates": [
+          "qr_platform"
+        ],
+        "slot": "head_mount"
+      },
+      "required_author_checks": [
+        "category_anchor: qr_platform mount is a screwed rectangular deck with an anti-slip pad"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "instrument_head"
+        }
+      ]
+    },
+    {
+      "anchor_id": "leg_tip_foot",
+      "applies_to": {
+        "candidates": [
+          "rubber_pad",
+          "molded_boot"
+        ],
+        "slot": "foot"
+      },
+      "required_author_checks": [
+        "category_anchor: every leg tip carries the selected foot and lands on the same contact plane"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": "resolved.leg_count",
+          "role": "tripod_leg"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "leg_count == 3 (tripod); three 120-degree sectors keep legs disjoint across full spread",
+      "item_slot": "leg_structure",
+      "name": "leg_count",
+      "spacing_expression": "leg i at azimuth -pi/2 + 2*pi*i/leg_count on the crown pitch circle",
+      "values": [
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Separate upper_leg_i (L101-111) and lower_leg_i (L113-123) tubes joined by a molded leg_clamp_i / yellow_latch_i clamp collar (L137-164) at the overlap: an explicit slide/lock telescope. Spread shoulder bracket at the crown (L125-135); spreader brace (L166-180); rubber foot shell + pad (L182-201).",
+          "implementation_function": "_leg_structure_telescoping_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leg_length": "leg_length"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "spread_axis",
+              "part": "leg_structure__telescoping__leg_i",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "travel": "telescope_travel"
+              },
+              "frame": {
+                "axis": "leg_axis_unit"
+              },
+              "kind": "axis",
+              "name": "telescope_junction",
+              "part": "leg_structure__telescoping__leg_i",
+              "role": "provider"
+            },
+            {
+              "frame": {
+                "axis": "leg_axis_unit"
+              },
+              "kind": "axis",
+              "name": "lower_segment",
+              "part": "leg_structure__telescoping__lower_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "telescoping",
+          "notes": "Upper tube, clamp latch, telescoping lower tube, spreader brace and rubber foot are one coherent leg family; the clamp/latch is captured hardware, not a separate slot.",
+          "parameters": [
+            {
+              "maximum": 1.15,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "telescope_travel_scale",
+              "rationale": "Scales the telescoping prismatic half-range about the source clamp overlap.",
+              "unit": "ratio"
+            },
+            {
+              "depends_on": [
+                "overall_scale",
+                "telescope_travel_scale"
+              ],
+              "expression": "0.11 * overall_scale * telescope_travel_scale",
+              "mode": "derived",
+              "name": "telescope_travel",
+              "rationale": "Prismatic half-range keeping the lower tube captured in the upper at retract.",
+              "unit": "m"
+            },
+            {
+              "depends_on": [
+                "overall_scale",
+                "leg_spread_deploy"
+              ],
+              "expression": "hypot(leg_reach, hinge_z) * overall_scale",
+              "mode": "derived",
+              "name": "leg_length",
+              "rationale": "Source-backed long leg from crown hinge to grounded foot.",
+              "unit": "m"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_092909_380738_82e48964",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L93-L201"
+          ]
+        },
+        {
+          "evidence": "Single continuous kneed leg_tube_i (L123-127) with a molded upper_bracket_i clevis + transverse hinge_pin_i (L130-144); low leg_clamp_i / clamp_band_i / rubber_boot_i (L145-162) and a spreader brace (L173-189). No second sliding segment.",
+          "implementation_function": "_leg_structure_fixed_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leg_length": "leg_length"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "spread_axis",
+              "part": "leg_structure__fixed__leg_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "fixed",
+          "notes": "One-piece kneed leg with clevis hinge and molded boot; the clevis/pin are captured hinge hardware. No telescope joint.",
+          "parameters": [
+            {
+              "depends_on": [
+                "overall_scale",
+                "leg_spread_deploy"
+              ],
+              "expression": "hypot(leg_reach, hinge_z) * overall_scale",
+              "mode": "derived",
+              "name": "leg_length",
+              "rationale": "Source-backed one-piece leg from crown hinge to grounded foot.",
+              "unit": "m"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_095851_476796_82e48964",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L114-L189"
+          ]
+        }
+      ],
+      "component_type": "indexed spreading tripod leg (revolute hinge, optional telescope)",
+      "name": "leg_structure",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "pan_base + head_body + mounting_plate + mounting_stud + laser_mount_disk compact disk housing (L217-247) with side lock screw/knob (L271-282) and a long pan handle shaft + rubber grip (L249-270). Joint frame_to_pan_head REVOLUTE, z axis, lower/upper = -pi/+pi (L284-297).",
+          "implementation_function": "_head_pan_disk_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "base_radius": "0.049 * head_scale"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "pan_axis",
+              "part": "head__pan_disk__housing",
+              "role": "consumer"
+            }
+          ],
+          "name": "pan_disk",
+          "notes": "Compact disk instrument head; bounded pan preserves the source revolute limits. Handle and lock are captured hardware.",
+          "parameters": [
+            {
+              "maximum": 1.15,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "head_scale",
+              "rationale": "Bounded head housing proportion scale.",
+              "unit": "ratio"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_092909_380738_82e48964",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L217-L297"
+          ]
+        },
+        {
+          "evidence": "bearing_foot + pan_drum + graduated_ring + mounting_platform + anti_slip_pad + mounting_stud + 4 platform screws (L242-286); taller drum housing with graduated bearing ring; side pan lock + long handle + rubber grip + end cap (L288-325). Joint pan_rotation CONTINUOUS, z axis, unbounded (L327-335).",
+          "implementation_function": "_head_pan_drum_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "base_radius": "0.056 * head_scale"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "pan_axis",
+              "part": "head__pan_drum__housing",
+              "role": "consumer"
+            }
+          ],
+          "name": "pan_drum",
+          "notes": "Tall graduated-drum instrument head; continuous pan preserves the source unbounded rotation. Graduated ring and platform screws are captured detail.",
+          "parameters": [
+            {
+              "maximum": 1.15,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "head_scale",
+              "rationale": "Bounded head housing proportion scale.",
+              "unit": "ratio"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_095851_476796_82e48964",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L242-L335"
+          ]
+        }
+      ],
+      "component_type": "rotating instrument head on vertical pan axis",
+      "name": "head",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "center_column is r=0.013 L=0.720 centred at z=0.625, spanning 0.265-0.985 under a 1.005 m crown: the column hangs clear of the floor and terminates in the open. It carries cable_clip (L80-85) and clip_tether (L86-91) retention hardware. No ground-contacting column element exists in this record.",
+          "implementation_function": "_center_column_plumb_hook_build",
+          "interfaces": [],
+          "name": "plumb_hook",
+          "notes": "Short suspended column ending in a plumb-bob hook plus cable-retention clip and tether. Emitted onto the shared non-slotted frame host, so its internal seams are intra-part.",
+          "parameters": [
+            {
+              "depends_on": [
+                "overall_scale"
+              ],
+              "expression": "crown_z - 0.1345 * overall_scale",
+              "mode": "derived",
+              "name": "plumb_hook_bottom_z",
+              "rationale": "Bottom of the hanging hook; must stay well above the floor because this column is suspended.",
+              "unit": "m"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_092909_380738_82e48964",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L61-L91"
+          ]
+        },
+        {
+          "evidence": "center_column is r=0.014 L=1.205 centred at z=0.6825, spanning 0.080-1.285 under a 1.285 m crown, i.e. the full height of the tripod, and it lands on a rubber column_foot (L95-100, z 0.050-0.080) just clear of the floor. collar_clamp_screw (L101-106) and collar_clamp_tab (L107-112) lock the spreader collar onto the rod.",
+          "implementation_function": "_center_column_plumb_rod_build",
+          "interfaces": [],
+          "name": "plumb_rod",
+          "notes": "Full-length rod plus a rubber ground foot and collar clamp hardware: an extra ground-contacting element and a different column envelope, not a dimension change.",
+          "parameters": [
+            {
+              "depends_on": [
+                "overall_scale"
+              ],
+              "expression": "0.082 * overall_scale",
+              "mode": "derived",
+              "name": "plumb_rod_bottom_z",
+              "rationale": "Rod bottom, pressed 6 mm into the rubber ground foot so the column stack stays one solid.",
+              "unit": "m"
+            },
+            {
+              "depends_on": [
+                "overall_scale"
+              ],
+              "expression": "0.052 * overall_scale",
+              "mode": "derived",
+              "name": "column_foot_bottom_z",
+              "rationale": "Rubber ground foot clears the floor as in the source, where it stops at z=0.050.",
+              "unit": "m"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_095851_476796_82e48964",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L77-L112"
+          ]
+        }
+      ],
+      "component_type": "central plumb/elevator column under the crown hub",
+      "name": "center_column",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "mounting_plate Box(0.082,0.070,0.014) + mounting_stud Cylinder(r=0.008,L=0.018) + laser_mount_disk Cylinder(r=0.015,L=0.010). Three elements, no anti-slip pad and no fasteners: the instrument screws directly onto the exposed stud.",
+          "implementation_function": "_head_mount_stud_disk_build",
+          "interfaces": [],
+          "name": "stud_disk",
+          "notes": "Bare threaded stud on a laser-mount disk. Emitted onto the single rotating head part, so its seams are intra-part; it sits above the crown and never approaches the frame or the legs.",
+          "parameters": [
+            {
+              "depends_on": [
+                "overall_scale",
+                "head_scale"
+              ],
+              "expression": "head_deck_z + 0.037 * overall_scale * head_scale",
+              "mode": "derived",
+              "name": "stud_tip_z",
+              "rationale": "Stud must project above the laser-mount disk it is screwed into.",
+              "unit": "m"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_092909_380738_82e48964",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L230-L247"
+          ]
+        },
+        {
+          "evidence": "mounting_platform Box(0.088,0.078,0.030) + anti_slip_pad Box(0.070,0.054,0.006) + four platform_screw_* Cylinder(r=0.0032) at (+-0.032,+-0.027) + mounting_stud Cylinder(r=0.006,L=0.028). Seven elements including a fastened pad: a different mounting interface, not a resized stud.",
+          "implementation_function": "_head_mount_qr_platform_build",
+          "interfaces": [],
+          "name": "qr_platform",
+          "notes": "Rectangular quick-release deck with an anti-slip pad and four corner screws.",
+          "parameters": [
+            {
+              "depends_on": [
+                "head_scale"
+              ],
+              "expression": "0.85 * head_deck_radius",
+              "mode": "derived",
+              "name": "qr_deck_half_width",
+              "rationale": "Deck footprint derives from the housing top radius so it overhangs neither head candidate.",
+              "unit": "m"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_095851_476796_82e48964",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L261-L286"
+          ]
+        }
+      ],
+      "component_type": "instrument mounting interface on top of the pan head",
+      "name": "head_mount",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "rubber_foot_i is a tapered tube shell (radius 0.0165, running 0.377->0.402 along the leg) closed by a separate foot_pad_i Sphere(radius=0.018): a round pad foot.",
+          "implementation_function": "_foot_rubber_pad_build",
+          "interfaces": [],
+          "name": "rubber_pad",
+          "notes": "Tapered rubber shell plus a spherical contact pad. Emitted onto whichever part carries the leg tip (the one-piece leg for fixed, the sliding lower tube for telescoping), so it combines with either leg family.",
+          "parameters": [
+            {
+              "depends_on": [
+                "overall_scale"
+              ],
+              "expression": "0.016 * overall_scale",
+              "mode": "derived",
+              "name": "foot_contact_offset",
+              "rationale": "Leg-local drop from the theoretical tip to the lowest foot surface; identical across both foot candidates so the grounded neutral pose is unchanged.",
+              "unit": "m"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_092909_380738_82e48964",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L182-L201"
+          ]
+        },
+        {
+          "evidence": "rubber_boot_i is a molded Box((0.036,0.048,0.105)) (L158-162) sitting under leg_clamp_i Box (L145-150) and clamp_band_i Box (L151-156): a flat-faced boot with a band above it. No spherical pad exists anywhere in this record.",
+          "implementation_function": "_foot_molded_boot_build",
+          "interfaces": [],
+          "name": "molded_boot",
+          "notes": "Angled molded box boot with the source's low clamp band above it.",
+          "parameters": [
+            {
+              "depends_on": [
+                "overall_scale"
+              ],
+              "expression": "0.016 * overall_scale",
+              "mode": "derived",
+              "name": "foot_contact_offset",
+              "rationale": "Leg-local drop from the theoretical tip to the lowest boot face; matched to the rubber_pad candidate so both feet land on the same plane.",
+              "unit": "m"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260712_095851_476796_82e48964",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L145-L162"
+          ]
+        }
+      ],
+      "component_type": "ground-contact foot at each leg tip",
+      "name": "foot",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_laser_level_tripod",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_laser_level_tripod.md",
+  "source_map_sha256": "8ee55152d49d1a38cd796a95c89ea1ad3422025a5c0b380b91c4ae76ecbc448e"
+}

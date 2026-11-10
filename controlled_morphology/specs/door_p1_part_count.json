@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "name": "multi_door_cabinet_p1_part_count_v1",
+  "generator": "multi_door_cabinet",
+  "base_config": {
+    "body_form": "rect_box",
+    "door_kind": "flush_slab",
+    "door_mechanism": "revolute_swing",
+    "support_base": "recessed_plinth",
+    "interior_fitment": "plain_shelf",
+    "door_count": 1,
+    "shelf_count": 1,
+    "hinge_side": "left",
+    "handle_type": "bar",
+    "handle_orientation_rad": 1.5707963267948966,
+    "handle_length_m": 0.13,
+    "handle_thickness_m": 0.014,
+    "handle_clearance_m": 0.035,
+    "handle_hinge_distance_ratio": 0.77,
+    "handle_vertical_position_ratio": 0.5,
+    "carcass_width_m": 0.98,
+    "carcass_depth_m": 0.42,
+    "carcass_height_m": 1.24,
+    "rect_side_panel_t_m": 0.024,
+    "slab_t_m": 0.022,
+    "door_swing_rad": 1.7,
+    "toe_kick_h_m": 0.1,
+    "shelf_t_m": 0.02,
+    "palette": 0,
+    "name": "controlled_multi_door_cabinet"
+  },
+  "axes": [
+    {
+      "name": "door_count",
+      "levels": [1, 2, 3, 4]
+    }
+  ],
+  "nuisance_blocks": [
+    {
+      "id": "canonical",
+      "overrides": {}
+    }
+  ]
+}

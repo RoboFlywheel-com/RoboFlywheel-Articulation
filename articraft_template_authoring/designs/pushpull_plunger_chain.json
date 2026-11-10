@@ -1,0 +1,919 @@
+{
+ "assembly_notes": "One clearance ledger owns the mechanism: bore_half is the half-size of the guide opening, rod_half the half-size of what runs in it, and engage_min the rod length that must remain captured at full extension. stroke is SOLVED as guide_len - engage_min, which is the law the deleted template violated - it let every stage pull clean out of its guide. stage_count repeats the same stage module; each stage carries the guide for the next, and its stroke is re-derived from that guide's own length. The output member always adds exactly one revolute, carried either by the host or by the last plunger.",
+ "bindings": [
+  {
+   "binding_id": "stroke_from_guide_engagement",
+   "consumer": "plunger_rod.shank",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "guide_len",
+      "engage_min"
+     ],
+     "expression": "clamp(guide_len - engage_min, 0.006, guide_len * 0.62)",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "stroke",
+     "rationale": "the rod must still be held by engage_min of bore at full extension; this is the law the deleted template broke",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "provider": "guide_section.bore"
+  },
+  {
+   "binding_id": "rod_section_from_bore",
+   "consumer": "plunger_rod.shank",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "bore_half"
+     ],
+     "expression": "bore_half - running_clearance",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "rod_half",
+     "rationale": "a square bar in a round bore or a round rod in a rect bore both size off the same opening",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "provider": "guide_section.bore"
+  },
+  {
+   "binding_id": "hinge_from_output_reach",
+   "consumer": "hinge_carrier.clevis",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "stroke",
+      "output_reach"
+     ],
+     "expression": "host front + tip stand-off so the plunger tip meets the member's input face within the stroke",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "pivot_offset",
+     "rationale": "the stroke has to actually reach the member it drives",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "provider": "output_member.pivot"
+  }
+ ],
+ "category_anchors": [
+  {
+   "anchor_id": "pushpull_plunger_chain_identity",
+   "applies_to": {
+    "candidates": [
+     "horizontal_x",
+     "vertical_z"
+    ],
+    "slot": "slide_axis"
+   },
+   "required_author_checks": [
+    "category_anchor: every plunger stays captured in its guide over the whole stroke",
+    "category_anchor: the stage chain slides along one shared axis",
+    "category_anchor: the output member turns on a real hinge",
+    "category_anchor: the driving plunger reaches the output member"
+   ],
+   "required_relations": [
+    {
+     "child_role": "plunger",
+     "joint_type": "prismatic",
+     "parent_role": "support_host"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "support_host"
+    },
+    {
+     "exact_count": 1,
+     "role": "output_member"
+    }
+   ]
+  }
+ ],
+ "multiplicities": [
+  {
+   "host_capacity_expression": "total collapsed length = guide_len_0 + sum(guide_len_k) must stay inside host_len; stroke_k = guide_len_k - engage_min_k keeps every stage captured",
+   "item_slot": "stage_module",
+   "name": "stage_count",
+   "spacing_expression": "stage k slides in the guide carried by stage k-1; guide_len_k = guide_len_0 * 0.82**k and the stages nest back along -slide at collapse",
+   "values": [
+    1,
+    2,
+    3
+   ]
+  }
+ ],
+ "schema_version": 1,
+ "slots": [
+  {
+   "candidates": [
+    {
+     "evidence": "Rod slides along +X in a guide standing above a base plate.",
+     "implementation_function": "_slide_axis_horizontal_x_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "axis_h": "axis_h",
+        "bore_half": "bore_half"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "slide_axis",
+       "part": "support_host",
+       "role": "provider"
+      }
+     ],
+     "name": "horizontal_x",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_430803e65f354d08a60704dc4fcd0125",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1814-L1836"
+     ]
+    },
+    {
+     "evidence": "Upright sleeve with a clamp ring drives the rod along +Z.",
+     "implementation_function": "_slide_axis_vertical_z_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "axis_h": "axis_h",
+        "bore_half": "bore_half"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         0.0,
+         1.0
+        ]
+       },
+       "kind": "axis",
+       "name": "slide_axis",
+       "part": "support_host",
+       "role": "provider"
+      }
+     ],
+     "name": "vertical_z",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_0002",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L47-L101",
+      "model.py:L368-L385"
+     ]
+    }
+   ],
+   "component_type": "slide direction family",
+   "name": "slide_axis",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Annular tube with raised end bushings and a relieved slot.",
+     "implementation_function": "_support_host_closed_tube_bushed_build",
+     "interfaces": [],
+     "name": "closed_tube_bushed",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_14c80e5929dd4e0390be3fee2b28fa3a",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L21-L42"
+     ]
+    },
+    {
+     "evidence": "Four rails with brass bearing pads make a hollow guide.",
+     "implementation_function": "_support_host_open_rail_box_build",
+     "interfaces": [],
+     "name": "open_rail_box",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_430803e65f354d08a60704dc4fcd0125",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1718-L1753"
+     ]
+    },
+    {
+     "evidence": "Rear posts, bridges, guide rails and front cheeks over a base plate.",
+     "implementation_function": "_support_host_posted_bridge_frame_build",
+     "interfaces": [],
+     "name": "posted_bridge_frame",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_466cdbd991d048ac8d4d709fcc754454",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1872-L1882"
+     ]
+    },
+    {
+     "evidence": "Wall pad and mounting plate carrying a flanged tube and saddle.",
+     "implementation_function": "_support_host_wall_backplate_build",
+     "interfaces": [],
+     "name": "wall_backplate",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_4c614e8c02e84aaba398aff43651b593",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L2289-L2327"
+     ]
+    },
+    {
+     "evidence": "Solid housing cut by a through bore and a front recess.",
+     "implementation_function": "_support_host_bored_solid_block_build",
+     "interfaces": [],
+     "name": "bored_solid_block",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_4a6dd95067ea43b5a87d4c7e49054855",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L91-L131"
+     ]
+    },
+    {
+     "evidence": "Ground block, raised rail, saddle webs and bolted clamp rings.",
+     "implementation_function": "_support_host_ground_bed_saddles_build",
+     "interfaces": [],
+     "name": "ground_bed_saddles",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_4ffde7a9ea5f4b818056065047b79c56",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L2464-L2525"
+     ]
+    }
+   ],
+   "component_type": "grounded guide host",
+   "name": "support_host",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Annular tube plus boss: the baseline circular guide.",
+     "implementation_function": "_guide_section_round_bore_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "bore_half": "bore_half[k]",
+        "engage_min": "engage_min[k]",
+        "guide_len": "guide_len[k]"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "bore",
+       "part": "support_host",
+       "role": "provider"
+      }
+     ],
+     "name": "round_bore",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_229463b3fb60448e9812bbc218a73ff0",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1484-L1487",
+      "model.py:L1529-L1536"
+     ]
+    },
+    {
+     "evidence": "Rounded rectangular bore closed by four-bar retainer frames.",
+     "implementation_function": "_guide_section_rect_bore_retainer_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "bore_half": "bore_half[k]",
+        "engage_min": "engage_min[k]",
+        "guide_len": "guide_len[k]"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "bore",
+       "part": "support_host",
+       "role": "provider"
+      }
+     ],
+     "name": "rect_bore_retainer",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_9599a7b7ef5640718d34c6dddf4337a6",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L20-L78"
+     ]
+    },
+    {
+     "evidence": "Floor, roof, sill and brow enclose a square bore.",
+     "implementation_function": "_guide_section_four_wall_channel_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "bore_half": "bore_half[k]",
+        "engage_min": "engage_min[k]",
+        "guide_len": "guide_len[k]"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "bore",
+       "part": "support_host",
+       "role": "provider"
+      }
+     ],
+     "name": "four_wall_channel",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_8899c25feeec42889170ad08a4078f73",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L2081-L2121"
+     ]
+    }
+   ],
+   "component_type": "guide bore cross-section",
+   "name": "guide_section",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Stage shell with rear and front bushings and a stop collar.",
+     "implementation_function": "_stage_module_bushed_sleeve_stage_build",
+     "interfaces": [],
+     "name": "bushed_sleeve_stage",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_56c6c65e9d3a4585adc79fa608be3b7c",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L333-L378"
+     ]
+    },
+    {
+     "evidence": "Under bridge, collar drop and slide shoe carry the stage on the rail.",
+     "implementation_function": "_stage_module_shoe_railed_stage_build",
+     "interfaces": [],
+     "name": "shoe_railed_stage",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_64b64997d8dd44d9a8bd4b9c6751fd26",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L591-L614"
+     ]
+    },
+    {
+     "evidence": "Tube plus collar: the minimal repeatable nested unit.",
+     "implementation_function": "_stage_module_plain_tube_stage_build",
+     "interfaces": [],
+     "name": "plain_tube_stage",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_b5d3f37f8d464c189f6fa17f93eda0ee",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1-L1"
+     ]
+    }
+   ],
+   "component_type": "repeatable sliding stage",
+   "name": "stage_module",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "A single extruded circle plus a tip cylinder.",
+     "implementation_function": "_plunger_rod_plain_round_rod_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "rod_half": "rod_half[k]",
+        "rod_len": "rod_len[k]",
+        "stroke": "stroke[k]"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shank",
+       "part": "plunger_0",
+       "role": "consumer"
+      }
+     ],
+     "name": "plain_round_rod",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_1da74e7248e64c7cbbdf3dd86f0d9f7a",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L151-L156"
+     ]
+    },
+    {
+     "evidence": "Lathe profile steps the shank, a mid land and a nose.",
+     "implementation_function": "_plunger_rod_stepped_lathe_rod_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "rod_half": "rod_half[k]",
+        "rod_len": "rod_len[k]",
+        "stroke": "stroke[k]"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shank",
+       "part": "plunger_0",
+       "role": "consumer"
+      }
+     ],
+     "name": "stepped_lathe_rod",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_56c6c65e9d3a4585adc79fa608be3b7c",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L382-L403"
+     ]
+    },
+    {
+     "evidence": "Rectangular collar, stem and tip matching a square channel.",
+     "implementation_function": "_plunger_rod_square_bar_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "rod_half": "rod_half[k]",
+        "rod_len": "rod_len[k]",
+        "stroke": "stroke[k]"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shank",
+       "part": "plunger_0",
+       "role": "consumer"
+      }
+     ],
+     "name": "square_bar",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_9729f40d48624fa49d5582c5eddb975f",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1198-L1216"
+     ]
+    },
+    {
+     "evidence": "A collar rides the bore and a larger stop disc limits insertion.",
+     "implementation_function": "_plunger_rod_collared_stop_rod_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "rod_half": "rod_half[k]",
+        "rod_len": "rod_len[k]",
+        "stroke": "stroke[k]"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shank",
+       "part": "plunger_0",
+       "role": "consumer"
+      }
+     ],
+     "name": "collared_stop_rod",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_4a6dd95067ea43b5a87d4c7e49054855",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L2152-L2187"
+     ]
+    },
+    {
+     "evidence": "A flat shoe under the rod rides a pad on the host.",
+     "implementation_function": "_plunger_rod_shoe_guided_rod_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "rod_half": "rod_half[k]",
+        "rod_len": "rod_len[k]",
+        "stroke": "stroke[k]"
+       },
+       "frame": {
+        "axis": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "shank",
+       "part": "plunger_0",
+       "role": "consumer"
+      }
+     ],
+     "name": "shoe_guided_rod",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_4c614e8c02e84aaba398aff43651b593",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L2336-L2347"
+     ]
+    }
+   ],
+   "component_type": "sliding rod",
+   "name": "plunger_rod",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Oversized soft knob for a hand push.",
+     "implementation_function": "_input_end_push_knob_build",
+     "interfaces": [],
+     "name": "push_knob",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_0b3d6d8f9698437396811ee3bbc2fe06",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L642-L647"
+     ]
+    },
+    {
+     "evidence": "Rubber knob sized for pulling the plunger back.",
+     "implementation_function": "_input_end_pull_knob_build",
+     "interfaces": [],
+     "name": "pull_knob",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_14c80e5929dd4e0390be3fee2b28fa3a",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L811-L816"
+     ]
+    },
+    {
+     "evidence": "Short wide button on a narrower neck.",
+     "implementation_function": "_input_end_thumb_button_build",
+     "interfaces": [],
+     "name": "thumb_button",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_4a6dd95067ea43b5a87d4c7e49054855",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L2143-L2151"
+     ]
+    },
+    {
+     "evidence": "Plain rear collar limiting forward travel.",
+     "implementation_function": "_input_end_rear_collar_stop_build",
+     "interfaces": [],
+     "name": "rear_collar_stop",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_9599a7b7ef5640718d34c6dddf4337a6",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1078-L1083"
+     ]
+    }
+   ],
+   "component_type": "rear input feature",
+   "name": "input_end",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Hinge barrel carrying a thin plate that swings open.",
+     "implementation_function": "_output_member_hinged_tab_plate_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "out_reach": "out_reach",
+        "pivot_r": "pivot_r"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "pivot",
+       "part": "output_member",
+       "role": "provider"
+      }
+     ],
+     "name": "hinged_tab_plate",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_4a6dd95067ea43b5a87d4c7e49054855",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L2201-L2218"
+     ]
+    },
+    {
+     "evidence": "Minimal hub, arm and drive pad.",
+     "implementation_function": "_output_member_simple_lever_pad_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "out_reach": "out_reach",
+        "pivot_r": "pivot_r"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "pivot",
+       "part": "output_member",
+       "role": "provider"
+      }
+     ],
+     "name": "simple_lever_pad",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_430803e65f354d08a60704dc4fcd0125",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1794-L1812"
+     ]
+    },
+    {
+     "evidence": "Hub, angled arm, contact roller and a separate output horn.",
+     "implementation_function": "_output_member_lever_with_roller_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "out_reach": "out_reach",
+        "pivot_r": "pivot_r"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "pivot",
+       "part": "output_member",
+       "role": "provider"
+      }
+     ],
+     "name": "lever_with_roller",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_0b3d6d8f9698437396811ee3bbc2fe06",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L649-L699"
+     ]
+    },
+    {
+     "evidence": "Hooked leaf fused to a bored eye: a latching output.",
+     "implementation_function": "_output_member_nose_latch_hook_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "out_reach": "out_reach",
+        "pivot_r": "pivot_r"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "pivot",
+       "part": "output_member",
+       "role": "provider"
+      }
+     ],
+     "name": "nose_latch_hook",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_14c80e5929dd4e0390be3fee2b28fa3a",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L45-L64"
+     ]
+    },
+    {
+     "evidence": "Heel behind the pivot is struck so the paddle opens.",
+     "implementation_function": "_output_member_flap_paddle_heel_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "out_reach": "out_reach",
+        "pivot_r": "pivot_r"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "pivot",
+       "part": "output_member",
+       "role": "provider"
+      }
+     ],
+     "name": "flap_paddle_heel",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_9729f40d48624fa49d5582c5eddb975f",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1218-L1236"
+     ]
+    },
+    {
+     "evidence": "Bushed eye, long bar and a coloured output tip.",
+     "implementation_function": "_output_member_bar_lever_output_tip_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "out_reach": "out_reach",
+        "pivot_r": "pivot_r"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "pivot",
+       "part": "output_member",
+       "role": "provider"
+      }
+     ],
+     "name": "bar_lever_output_tip",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_4c614e8c02e84aaba398aff43651b593",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L32-L40",
+      "model.py:L2375-L2392"
+     ]
+    }
+   ],
+   "component_type": "hinged output member",
+   "name": "output_member",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Clevis and pin belong to the host; the plunger slides past the lever.",
+     "implementation_function": "_hinge_carrier_host_mounted_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hinge_s": "hinge_s",
+        "pivot_r": "pivot_r"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "clevis",
+       "part": "support_host",
+       "role": "consumer"
+      }
+     ],
+     "name": "host_mounted",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_430803e65f354d08a60704dc4fcd0125",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L1755-L1772"
+     ]
+    },
+    {
+     "evidence": "Fork and pin are visuals of the plunger, so the hinge translates.",
+     "implementation_function": "_hinge_carrier_plunger_carried_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "hinge_s": "hinge_s",
+        "pivot_r": "pivot_r"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "clevis",
+       "part": "support_host",
+       "role": "consumer"
+      }
+     ],
+     "name": "plunger_carried",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_pushpull_plunger_chain_14c80e5929dd4e0390be3fee2b28fa3a",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L817-L835",
+      "model.py:L855-L863"
+     ]
+    }
+   ],
+   "component_type": "body owning the output hinge",
+   "name": "hinge_carrier",
+   "required": true
+  }
+ ],
+ "slug": "pushpull_plunger_chain",
+ "source_map_path": "articraft_template_authoring/source_maps/pushpull_plunger_chain.md",
+ "source_map_sha256": "0ce051d77eb26845badb750cf5315cff33051c46d197749dbc57b8833e5019bf"
+}

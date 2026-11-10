@@ -1,0 +1,1630 @@
+{
+ "assembly_notes": "Small hand-driven demonstration generator. The grounded `frame` part carries two parallel +y shaft lines on open saddle bearings: the input line at -centre_distance/2 and the armature line at +centre_distance/2. The `input` part turns CONTINUOUS on the first and the `rotor` part turns CONTINUOUS on the second, mimic-coupled at the ratio of the two wheel radii, which are themselves derived from the shaft centre distance. drive_input varies the hand end: an offset crank web with a grip spinning on its own pin, two opposed cranks and grips, a spoked handwheel on the axis itself, or a rimmed flywheel beside the crank. transmission varies what couples the two lines: a jackshaft and flat pulley train, a meshed spur pair, a flat belt over two pulleys, that belt with a sprung idler on its own CONTINUOUS joint, rubber friction wheels with a PRISMATIC tension carrier, or a right-angle bevel transfer shaft. stator_form varies the electrical hardware around the armature: plain pole pieces, a slotted U-bridge, twin magnet posts, or a bolted gearbox side plate with a pole ring; each also lays out the coil packs on the armature and the terminal posts on the base. All rotating members are bodies of revolution about their own axis apart from the crank web and grip, which are placed outboard of the frame so their swept circle stays in free air. shaft_height_m, centre_distance_m and rotor_radius_m are the honest continuous parameters; coil_count and terminal_count are the multiplicities; palette is neither.",
+ "bindings": [
+  {
+   "binding_id": "frame_carries_input",
+   "consumer": "drive_input.input_axis",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "centre_distance_m"
+     ],
+     "expression": "-0.5 * centre_distance_m",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "input_axis_x_m",
+     "rationale": "the input line is placed from the centre distance the transmission needs",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "continuous",
+   "provider": "transmission.transfer_axis"
+  },
+  {
+   "binding_id": "transmission_drives_armature",
+   "consumer": "stator_form.armature_axis",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "centre_distance_m"
+     ],
+     "expression": "-drive_ratio",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "armature_mimic_multiplier",
+     "rationale": "the armature turns at the wheel ratio the transmission candidate built",
+     "unit": "ratio",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "continuous",
+   "provider": "transmission.transfer_axis"
+  }
+ ],
+ "category_anchors": [
+  {
+   "anchor_id": "drive_input_identity",
+   "applies_to": {
+    "candidates": [
+     "crank_handle",
+     "dual_crank",
+     "handwheel_input",
+     "flywheel_input"
+    ],
+    "slot": "drive_input"
+   },
+   "required_author_checks": [
+    "category_anchor: a hand input turns an armature on a second shaft line of a grounded frame",
+    "category_anchor: the armature turns inside the stator air gap at the wheel ratio",
+    "category_anchor: drive_input identity"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "rotor",
+     "joint_type": "continuous",
+     "parent_role": "frame"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "frame"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "input"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "rotor"
+    }
+   ]
+  },
+  {
+   "anchor_id": "transmission_identity",
+   "applies_to": {
+    "candidates": [
+     "shaft_pulley_train",
+     "spur_gear_pair",
+     "belt_two_pulley",
+     "idler_tension_pulley",
+     "friction_wheel",
+     "bevel_gear"
+    ],
+    "slot": "transmission"
+   },
+   "required_author_checks": [
+    "category_anchor: a hand input turns an armature on a second shaft line of a grounded frame",
+    "category_anchor: the armature turns inside the stator air gap at the wheel ratio",
+    "category_anchor: transmission identity"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "rotor",
+     "joint_type": "continuous",
+     "parent_role": "frame"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "frame"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "input"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "rotor"
+    }
+   ]
+  },
+  {
+   "anchor_id": "stator_form_identity",
+   "applies_to": {
+    "candidates": [
+     "open_pole_stator",
+     "slotted_stator_bridge",
+     "twin_magnet_posts",
+     "gearbox_side_plate"
+    ],
+    "slot": "stator_form"
+   },
+   "required_author_checks": [
+    "category_anchor: a hand input turns an armature on a second shaft line of a grounded frame",
+    "category_anchor: the armature turns inside the stator air gap at the wheel ratio",
+    "category_anchor: stator_form identity"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "rotor",
+     "joint_type": "continuous",
+     "parent_role": "frame"
+    }
+   ],
+   "required_roles": [
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "frame"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "input"
+    },
+    {
+     "count_from": null,
+     "exact_count": 1,
+     "role": "rotor"
+    }
+   ]
+  }
+ ],
+ "multiplicities": [
+  {
+   "host_capacity_expression": "1 <= coil_count <= 3; the pack width is derived from the coil pitch so adjacent packs keep a real gap at the smallest armature radius",
+   "item_slot": "stator_form",
+   "name": "coil_count",
+   "spacing_expression": "coil pack k sits at 2*pi*k/coil_count around the armature axis",
+   "values": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "host_capacity_expression": "2 <= terminal_count <= 4; the cap diameter is derived from the terminal pitch so adjacent posts never touch",
+   "item_slot": "stator_form",
+   "name": "terminal_count",
+   "spacing_expression": "terminal k sits at k * terminal_pitch_m along the derived base pad",
+   "values": [
+    2,
+    3,
+    4
+   ]
+  }
+ ],
+ "schema_version": 1,
+ "slots": [
+  {
+   "candidates": [
+    {
+     "evidence": "One offset crank web with a handle_grip that spins on its own CONTINUOUS pin.",
+     "implementation_function": "_drive_input_crank_handle_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "shaft_radius": "0.005",
+        "throw": "crank_radius_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "input_axis",
+       "part": "input",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "crank_handle",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.1,
+       "minimum": 0.055,
+       "mode": "independent",
+       "name": "shaft_height_m",
+       "rationale": "height of both shaft lines above the base; derives the standards, the crank radius and the stator height",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.13,
+       "minimum": 0.075,
+       "mode": "independent",
+       "name": "centre_distance_m",
+       "rationale": "distance between the input and armature shaft lines; derives the base length, both wheel radii and the whole transmission layout",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "shaft_height_m"
+       ],
+       "expression": "0.36 * shaft_height_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "crank_radius_m",
+       "rationale": "the crank throw is bounded by the shaft height so the grip always clears the base",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "wheel_span_ratio * centre_distance_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_wheel_radius_m",
+       "rationale": "the drive wheel is always sized from the shaft centre distance",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__generator__001__png_350ef02be9dc4cdc8a58c6842bafc709",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L253-L275"
+     ]
+    },
+    {
+     "evidence": "Two opposed cranks and two grips on the same main shaft so the demo can be turned from either side.",
+     "implementation_function": "_drive_input_dual_crank_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "shaft_radius": "0.005",
+        "throw": "crank_radius_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "input_axis",
+       "part": "input",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "dual_crank",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.1,
+       "minimum": 0.055,
+       "mode": "independent",
+       "name": "shaft_height_m",
+       "rationale": "height of both shaft lines above the base; derives the standards, the crank radius and the stator height",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.13,
+       "minimum": 0.075,
+       "mode": "independent",
+       "name": "centre_distance_m",
+       "rationale": "distance between the input and armature shaft lines; derives the base length, both wheel radii and the whole transmission layout",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "shaft_height_m"
+       ],
+       "expression": "0.36 * shaft_height_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "crank_radius_m",
+       "rationale": "the crank throw is bounded by the shaft height so the grip always clears the base",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "wheel_span_ratio * centre_distance_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_wheel_radius_m",
+       "rationale": "the drive wheel is always sized from the shaft centre distance",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__generator__002__png_39eb2ba17a7d498c86c917d6ce57b54e",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L246-L279"
+     ]
+    },
+    {
+     "evidence": "A spoked handwheel turning on the input axis itself instead of an offset crank pin.",
+     "implementation_function": "_drive_input_handwheel_input_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "shaft_radius": "0.005",
+        "throw": "crank_radius_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "input_axis",
+       "part": "input",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "handwheel_input",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.1,
+       "minimum": 0.055,
+       "mode": "independent",
+       "name": "shaft_height_m",
+       "rationale": "height of both shaft lines above the base; derives the standards, the crank radius and the stator height",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.13,
+       "minimum": 0.075,
+       "mode": "independent",
+       "name": "centre_distance_m",
+       "rationale": "distance between the input and armature shaft lines; derives the base length, both wheel radii and the whole transmission layout",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "shaft_height_m"
+       ],
+       "expression": "0.36 * shaft_height_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "crank_radius_m",
+       "rationale": "the crank throw is bounded by the shaft height so the grip always clears the base",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "wheel_span_ratio * centre_distance_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_wheel_radius_m",
+       "rationale": "the drive wheel is always sized from the shaft centre distance",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_generator_var_handwheel_input",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L280-L295"
+     ]
+    },
+    {
+     "evidence": "A heavy rimmed flywheel beside the crank web, so the input carries real stored inertia.",
+     "implementation_function": "_drive_input_flywheel_input_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "shaft_radius": "0.005",
+        "throw": "crank_radius_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "input_axis",
+       "part": "input",
+       "role": "consumer",
+       "surface_relation": null
+      }
+     ],
+     "name": "flywheel_input",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.1,
+       "minimum": 0.055,
+       "mode": "independent",
+       "name": "shaft_height_m",
+       "rationale": "height of both shaft lines above the base; derives the standards, the crank radius and the stator height",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.13,
+       "minimum": 0.075,
+       "mode": "independent",
+       "name": "centre_distance_m",
+       "rationale": "distance between the input and armature shaft lines; derives the base length, both wheel radii and the whole transmission layout",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "shaft_height_m"
+       ],
+       "expression": "0.36 * shaft_height_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "crank_radius_m",
+       "rationale": "the crank throw is bounded by the shaft height so the grip always clears the base",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "wheel_span_ratio * centre_distance_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_wheel_radius_m",
+       "rationale": "the drive wheel is always sized from the shaft centre distance",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_generator_var_flywheel_input",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L279-L316"
+     ]
+    }
+   ],
+   "component_type": "hand input",
+   "name": "drive_input",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "A stepped shaft and flat pulley pass the drive to the rotor through an intermediate jackshaft line.",
+     "implementation_function": "_transmission_shaft_pulley_train_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "centre_distance": "centre_distance_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "transfer_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "shaft_pulley_train",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.13,
+       "minimum": 0.075,
+       "mode": "independent",
+       "name": "centre_distance_m",
+       "rationale": "distance between the input and armature shaft lines; derives the base length, both wheel radii and the whole transmission layout",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "wheel_span_ratio * centre_distance_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_wheel_radius_m",
+       "rationale": "the drive wheel is always sized from the shaft centre distance",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "(1 - wheel_span_ratio) * centre_distance_m - wheel_gap_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "driven_wheel_radius_m",
+       "rationale": "the driven wheel takes the rest of the centre distance minus a real running gap",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "drive_wheel_radius_m / driven_wheel_radius_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_ratio",
+       "rationale": "the armature mimic ratio comes from the two wheel radii, not a fixed number",
+       "unit": "ratio",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__generator__001__png_350ef02be9dc4cdc8a58c6842bafc709",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L224-L252"
+     ]
+    },
+    {
+     "evidence": "A toothed input gear meshes straight into the transfer gear on the armature line, mimic-coupled at the tooth ratio.",
+     "implementation_function": "_transmission_spur_gear_pair_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "centre_distance": "centre_distance_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "transfer_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "spur_gear_pair",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.13,
+       "minimum": 0.075,
+       "mode": "independent",
+       "name": "centre_distance_m",
+       "rationale": "distance between the input and armature shaft lines; derives the base length, both wheel radii and the whole transmission layout",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "wheel_span_ratio * centre_distance_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_wheel_radius_m",
+       "rationale": "the drive wheel is always sized from the shaft centre distance",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "(1 - wheel_span_ratio) * centre_distance_m - wheel_gap_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "driven_wheel_radius_m",
+       "rationale": "the driven wheel takes the rest of the centre distance minus a real running gap",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "drive_wheel_radius_m / driven_wheel_radius_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_ratio",
+       "rationale": "the armature mimic ratio comes from the two wheel radii, not a fixed number",
+       "unit": "ratio",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__generator__004__png_11d3985262e14371b76e27c16f948615",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L238-L360"
+     ]
+    },
+    {
+     "evidence": "A flat drive_belt wraps a large drive pulley and a small generator pulley, with the belt itself fixed to the frame.",
+     "implementation_function": "_transmission_belt_two_pulley_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "centre_distance": "centre_distance_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "transfer_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "belt_two_pulley",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.13,
+       "minimum": 0.075,
+       "mode": "independent",
+       "name": "centre_distance_m",
+       "rationale": "distance between the input and armature shaft lines; derives the base length, both wheel radii and the whole transmission layout",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "wheel_span_ratio * centre_distance_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_wheel_radius_m",
+       "rationale": "the drive wheel is always sized from the shaft centre distance",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "(1 - wheel_span_ratio) * centre_distance_m - wheel_gap_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "driven_wheel_radius_m",
+       "rationale": "the driven wheel takes the rest of the centre distance minus a real running gap",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "drive_wheel_radius_m / driven_wheel_radius_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_ratio",
+       "rationale": "the armature mimic ratio comes from the two wheel radii, not a fixed number",
+       "unit": "ratio",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__generator__003__png_7e039f67b7a1456d8c640d8c6af56be1",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L358-L500"
+     ]
+    },
+    {
+     "evidence": "The same belt run plus a sprung idler pulley on its own CONTINUOUS joint riding the belt back.",
+     "implementation_function": "_transmission_idler_tension_pulley_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "centre_distance": "centre_distance_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "transfer_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "idler_tension_pulley",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.13,
+       "minimum": 0.075,
+       "mode": "independent",
+       "name": "centre_distance_m",
+       "rationale": "distance between the input and armature shaft lines; derives the base length, both wheel radii and the whole transmission layout",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "wheel_span_ratio * centre_distance_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_wheel_radius_m",
+       "rationale": "the drive wheel is always sized from the shaft centre distance",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "(1 - wheel_span_ratio) * centre_distance_m - wheel_gap_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "driven_wheel_radius_m",
+       "rationale": "the driven wheel takes the rest of the centre distance minus a real running gap",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "drive_wheel_radius_m / driven_wheel_radius_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_ratio",
+       "rationale": "the armature mimic ratio comes from the two wheel radii, not a fixed number",
+       "unit": "ratio",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_generator_var_idler_tension_pulley",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L400-L545"
+     ]
+    },
+    {
+     "evidence": "Rubber-tyred friction wheels replace the belt and a tension_carrier on a real PRISMATIC slide presses them together.",
+     "implementation_function": "_transmission_friction_wheel_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "centre_distance": "centre_distance_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "transfer_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "friction_wheel",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.13,
+       "minimum": 0.075,
+       "mode": "independent",
+       "name": "centre_distance_m",
+       "rationale": "distance between the input and armature shaft lines; derives the base length, both wheel radii and the whole transmission layout",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "wheel_span_ratio * centre_distance_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_wheel_radius_m",
+       "rationale": "the drive wheel is always sized from the shaft centre distance",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "(1 - wheel_span_ratio) * centre_distance_m - wheel_gap_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "driven_wheel_radius_m",
+       "rationale": "the driven wheel takes the rest of the centre distance minus a real running gap",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "drive_wheel_radius_m / driven_wheel_radius_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_ratio",
+       "rationale": "the armature mimic ratio comes from the two wheel radii, not a fixed number",
+       "unit": "ratio",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_generator_var_friction_wheel_drive",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L414-L524"
+     ]
+    },
+    {
+     "evidence": "A right-angle bevel pair on its own transfer shaft turns the drive through 90 degrees before the armature.",
+     "implementation_function": "_transmission_bevel_gear_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "centre_distance": "centre_distance_m"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "transfer_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "bevel_gear",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.13,
+       "minimum": 0.075,
+       "mode": "independent",
+       "name": "centre_distance_m",
+       "rationale": "distance between the input and armature shaft lines; derives the base length, both wheel radii and the whole transmission layout",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "wheel_span_ratio * centre_distance_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_wheel_radius_m",
+       "rationale": "the drive wheel is always sized from the shaft centre distance",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "(1 - wheel_span_ratio) * centre_distance_m - wheel_gap_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "driven_wheel_radius_m",
+       "rationale": "the driven wheel takes the rest of the centre distance minus a real running gap",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "drive_wheel_radius_m / driven_wheel_radius_m",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "drive_ratio",
+       "rationale": "the armature mimic ratio comes from the two wheel radii, not a fixed number",
+       "unit": "ratio",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_generator_var_bevel_gear_transmission",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L285-L400"
+     ]
+    }
+   ],
+   "component_type": "transmission",
+   "name": "transmission",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Plain pole pieces stand either side of the rotor on the open frame, with the terminals on the base.",
+     "implementation_function": "_stator_form_open_pole_stator_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "bore": "rotor_radius_m + 0.005"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "armature_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "open_pole_stator",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.032,
+       "minimum": 0.018,
+       "mode": "independent",
+       "name": "rotor_radius_m",
+       "rationale": "armature radius; derives the coil pitch, the pole clearance and the stator opening",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.1,
+       "minimum": 0.055,
+       "mode": "independent",
+       "name": "shaft_height_m",
+       "rationale": "height of both shaft lines above the base; derives the standards, the crank radius and the stator height",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rotor_radius_m"
+       ],
+       "expression": "rotor_radius_m + 0.005",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "pole_gap_m",
+       "rationale": "every stator candidate stands its poles one air gap off the armature it actually built",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rotor_radius_m"
+       ],
+       "expression": "2*pi / coil_count",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "coil_pitch_rad",
+       "rationale": "coil packs are spread evenly around the armature",
+       "unit": "rad",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "terminal_span_m / max(1, terminal_count - 1)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "terminal_pitch_m",
+       "rationale": "terminals are spread over the same derived base pad",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__generator__003__png_7e039f67b7a1456d8c640d8c6af56be1",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L193-L357"
+     ]
+    },
+    {
+     "evidence": "A slotted U-shaped stator_bridge arches over the armature with pole pads either side.",
+     "implementation_function": "_stator_form_slotted_stator_bridge_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "bore": "rotor_radius_m + 0.005"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "armature_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "slotted_stator_bridge",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.032,
+       "minimum": 0.018,
+       "mode": "independent",
+       "name": "rotor_radius_m",
+       "rationale": "armature radius; derives the coil pitch, the pole clearance and the stator opening",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.1,
+       "minimum": 0.055,
+       "mode": "independent",
+       "name": "shaft_height_m",
+       "rationale": "height of both shaft lines above the base; derives the standards, the crank radius and the stator height",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rotor_radius_m"
+       ],
+       "expression": "rotor_radius_m + 0.005",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "pole_gap_m",
+       "rationale": "every stator candidate stands its poles one air gap off the armature it actually built",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rotor_radius_m"
+       ],
+       "expression": "2*pi / coil_count",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "coil_pitch_rad",
+       "rationale": "coil packs are spread evenly around the armature",
+       "unit": "rad",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "terminal_span_m / max(1, terminal_count - 1)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "terminal_pitch_m",
+       "rationale": "terminals are spread over the same derived base pad",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_generator_var_slotted_stator_bridge",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L250-L454"
+     ]
+    },
+    {
+     "evidence": "Two tall magnet posts with pole pads stand either side of the armature instead of a closed stator.",
+     "implementation_function": "_stator_form_twin_magnet_posts_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "bore": "rotor_radius_m + 0.005"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "armature_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "twin_magnet_posts",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.032,
+       "minimum": 0.018,
+       "mode": "independent",
+       "name": "rotor_radius_m",
+       "rationale": "armature radius; derives the coil pitch, the pole clearance and the stator opening",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.1,
+       "minimum": 0.055,
+       "mode": "independent",
+       "name": "shaft_height_m",
+       "rationale": "height of both shaft lines above the base; derives the standards, the crank radius and the stator height",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rotor_radius_m"
+       ],
+       "expression": "rotor_radius_m + 0.005",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "pole_gap_m",
+       "rationale": "every stator candidate stands its poles one air gap off the armature it actually built",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rotor_radius_m"
+       ],
+       "expression": "2*pi / coil_count",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "coil_pitch_rad",
+       "rationale": "coil packs are spread evenly around the armature",
+       "unit": "rad",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "terminal_span_m / max(1, terminal_count - 1)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "terminal_pitch_m",
+       "rationale": "terminals are spread over the same derived base pad",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_generator_var_twin_magnet_posts",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L389-L421"
+     ]
+    },
+    {
+     "evidence": "A bolted side plate encloses the wheel plane and carries its own pole ring around the armature.",
+     "implementation_function": "_stator_form_gearbox_side_plate_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "bore": "rotor_radius_m + 0.005"
+       },
+       "frame": {
+        "axis": [
+         0.0,
+         1.0,
+         0.0
+        ],
+        "point": [
+         0.0,
+         0.0,
+         0.0
+        ],
+        "radial": [
+         1.0,
+         0.0,
+         0.0
+        ]
+       },
+       "kind": "axis",
+       "name": "armature_axis",
+       "part": "frame",
+       "role": "provider",
+       "surface_relation": null
+      }
+     ],
+     "name": "gearbox_side_plate",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.032,
+       "minimum": 0.018,
+       "mode": "independent",
+       "name": "rotor_radius_m",
+       "rationale": "armature radius; derives the coil pitch, the pole clearance and the stator opening",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.1,
+       "minimum": 0.055,
+       "mode": "independent",
+       "name": "shaft_height_m",
+       "rationale": "height of both shaft lines above the base; derives the standards, the crank radius and the stator height",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rotor_radius_m"
+       ],
+       "expression": "rotor_radius_m + 0.005",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "pole_gap_m",
+       "rationale": "every stator candidate stands its poles one air gap off the armature it actually built",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "rotor_radius_m"
+       ],
+       "expression": "2*pi / coil_count",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "coil_pitch_rad",
+       "rationale": "coil packs are spread evenly around the armature",
+       "unit": "rad",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [
+        "centre_distance_m"
+       ],
+       "expression": "terminal_span_m / max(1, terminal_count - 1)",
+       "maximum": null,
+       "minimum": null,
+       "mode": "derived",
+       "name": "terminal_pitch_m",
+       "rationale": "terminals are spread over the same derived base pad",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_generator_var_gearbox_side_plate",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L144-L296"
+     ]
+    }
+   ],
+   "component_type": "stator and electrical hardware",
+   "name": "stator_form",
+   "required": true
+  }
+ ],
+ "slug": "pictureX_0611_generator",
+ "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_generator.md",
+ "source_map_sha256": "b418abff43f6d04ed7b8740cadaed7d77017e240bd2bb6b0884d9bdd8eb2d1df"
+}

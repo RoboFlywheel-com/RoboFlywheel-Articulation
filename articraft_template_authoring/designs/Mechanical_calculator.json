@@ -1,0 +1,3207 @@
+{
+  "assembly_notes": "# Mechanical_calculator -- assembly notes\n\n## Identity\n\nA desk-scale hand-driven calculating machine: one heavy cast hull (the single root\npart), a sloped or flat key bed carrying N independently sprung keys, a raised rear\nregister whose digits sit on rotating wheels or drums, one hand drive member on a\nhull face, and a small bank of setting or clearing controls.  Exactly one root\npart; every other part is a direct child of the hull; the only legal two-level\nchain in the pool is `hull -> crank -> grip` (002 L443-L456, 003 L428-L441).  All\nthree origins assert the single-root/`len(joints) == len(parts) - 1` invariant\nthemselves (001 L517-L530, 002 L512-L524, 003 L450-L463).\n\n## Domain arithmetic\n\ncore_domain = 5 housing_form x 5 register_assembly x 5 drive_member x 3 key_form\nx 3 setting_control = 1125, every one of which must build -- `TemplateDomain` has\nno compatibility gates.  raw_domain = 1125 x 11 N values (N in [6,16]) = 12,375.\nPalette, continuous proportions, tick/mark counts and decorative density count\ntoward neither.  N is multiplicity and is excluded from core per AUTHORING\nsection 4.\n\n## Domain reduction, and the VDM / section 4 justification for each decision\n\nThe first pass declared ten slots at 5*6*5*4*3*3*6*2*2 = 259,200 core combinations\nand 41 baseline probes against a 120 s soft budget.  That is not a usable domain.\nSix slots at 1125 core and 21 baseline probes is.  Every decision below applies the\n`VISUAL_DIVERSITY_MODEL.md` test honestly -- does the candidate change the part\ntree, the joint set, or the primary silhouette on its own?\n\n- `calculator_topology` is NOT a slot.  Four of its five records are strictly local\n  (a single mesh function, a single CAD function, or two extra visuals on a part\n  that already exists) and leave the part tree IDENTICAL, so merging them into one\n  five-member family would destroy legitimate combinations the sources plainly\n  support -- a pinwheel hull with a stepped drum is buildable and historically\n  correct.  The VDM merge rule triggers only when a candidate MUST change the whole\n  host.  Each of the five therefore joins the slot that owns the subsystem it edits:\n  pinwheel and lever-adder hulls -> housing_form; stepped drum -> register_assembly;\n  rotary dial -> drive_member; comptometer cap -> key_form, and its slider deletion\n  -> setting_control = none.\n- The ONE real independence failure is the rotary dial.  As an independent slot,\n  `rotary_dial x front_reciprocating_lever` would be unbuildable by local\n  adaptation: the dial is a 0.100 m disc concentric with the drive pivot, and the\n  front lever moves that pivot to (0.105, -0.247, 0.030), where a 0.058 m-radius\n  disc would sweep 0.028 m below z=0 and through the key bed.  Relocating it is not\n  a shoulder, a transition frame or an opening -- it is a different machine.  Per\n  AUTHORING section 4 and MECHANICAL_PRIORS section 3 that is exactly the merge\n  case, so `coaxial_rotary_dial` is a CANDIDATE OF drive_member sharing the one\n  bearing-axis interface with the four crank/lever candidates.\n- MERGED: register_bank_form (6) + register_wheel_form (4) + carry_mechanism (3)\n  -> register_assembly (5).  Individually all thirteen pass the VDM test, so this\n  is the AUTHORING section 4 merge rule, not a \"they were only decoration\" merge.\n  The spin axis is set by the wheel, but the bank's window slots, divider planting\n  and readout plane are DERIVED from that axis.  Pairing a face-on pinwheel with a\n  mullion window row would run the window slot perpendicular to the digit face --\n  the shell would have to be re-authored, not locally adapted.  The pool confirms\n  the co-variance: no record mixes them; all 19 keep shell, wheel and carry train\n  together.  Nothing is lost -- all six shells, all four wheel members and all\n  three carry trains survive inside the five candidates.\n- DEMOTED to continuous parameters: `wide_overhanging_carriage_tower` and\n  `traveling_carriage_register`.  The record builds NO carriage -- no prismatic\n  joint, no rails, no cavity, only a Box resize -- and a pure proportion change is\n  not a candidate.  It becomes register_tower_width/depth/height.  A real traveling\n  carriage would have reparented all N register wheels onto a moving carriage: a\n  part-tree change with no source attestation, on the axis where the budget is\n  tightest.  Rejected; its mechanical template is recorded in the SourceMap.\n- DEMOTED to slot-local discrete parameters: `has_paper_transport` in {0,1} and\n  `function_key_count` in {0,6}, both on `tapered_wedge` only (the only lineage\n  that prints and the only one with a function block).  A two-member slot doubles\n  the whole cartesian product to buy one optional assembly appearing in 1 of 19\n  records; the function keys are the SAME mechanism as the key matrix.\n- COLLAPSED 3 -> 1: the three slider banks, into `slider_bank` with\n  `slider_count` in {2,3,4}, adopting 003's paired-rail 3-piece construction\n  (the only section 6-conformant one).\n- REJECTED: `carriage_reset_lever` adds no part and no joint; its crank-arm and\n  mechanism-floor resizes survive as continuous parameters.\n\n## Cross-slot risks, and how DERIVATION (never gating) resolves each\n\n1. Deck tilt.  `open_frame_side_cheek` is flat (003, DECK_PITCH = 0) while the\n   001 lineage is 0.271 rad and 002 is 0.218.  Every key joint, every slider joint\n   and the deck plane interface are expressed in the DECK-TILTED frame, so a key\n   candidate never learns which hull it is on: `deck_to_key_seating` derives the\n   origin and `rpy=(deck_tilt,0,0)` from one plane interface that carries the real\n   tilt.  The plane's `extent` is the real key-bed rectangle, never the hull AABB.\n2. Register spin axis.  Three candidates spin about (1,0,0) and are read edge-on;\n   two spin about (0,1,0) and are read face-on.  The readout plane, the divider\n   planting and the tower stand-off are all derived from the candidate's own axis,\n   which is why bank and wheel are ONE candidate and why the category anchors are\n   scoped per family instead of asserting one axis for all five.\n3. Drive face.  The pivot always sits ON a hull face at that face's local\n   mid-height (001 z=0.190 = REAR_DECK_Z + rear-cover rise; 002 z=0.095 = mid of a\n   0.014..0.153 profile; 003 z=0.135 = mid of a 0.055..0.195 cheek; front-lever\n   z=0.030 = mid of a 0.055 fascia).  `hull_face_to_drive_bearing` derives WHICH\n   face is bored and how large a clear disc that face must carry, so the dial's\n   0.116 m backplate and the front lever's re-derived front lip are host\n   adaptations, not excluded combinations.\n4. Setting control on a tilted deck.  003's slider seat is derived ALONG THE DECK\n   NORMAL (001 L344-L351: `y - sin(pitch)*0.00125`, `z + 0.0008 +\n   cos(pitch)*0.00125`), never authored twice, so the same carriage seats correctly\n   on a flat bed and on a 0.271 rad wedge.  The zeroing knob mounts on the register\n   cover, whose real bearing rectangle is published as `PlaneInterface.extent`: the\n   knob is 0.044 wide at x=0.145 on a cover reaching x=0.175, an 8 mm edge margin,\n   so a wider knob or narrower tower must be rejected by `mate_planes` rather than\n   hidden by a generous hull AABB.\n5. Part budget.  See \"## Multiplicity\"; enforced by derivation in `resolve_config`.\n\n## Collision budget, and the welding deviation\n\n`sdk/_core/v0/exact_collisions.py::_generate_part_collisions` (L94-L104) loops\n`for visual in part.visuals` and derives one collision solid per visual, 1:1, and\ncollision is computed only BETWEEN parts.  MECHANICAL_PRIORS section 1c makes\nintra-part embedding free, so the rebuild WELDS each key and each register wheel\ninto a single solid instead of emitting three or eleven visuals apiece.  The\n`stepped_drum_bank` candidate attests the route: the source fork unions eleven\nfeatures (drum, hub, nine teeth) into ONE solid at L54-L82.  Without the deviation\nthe worst case would emit ~120 collision solids; with it, ~68.\n\nA second, larger deviation is stated rather than hidden: 001's EIGHT independently\narticulated carry wheels (8 parts + 8 REVOLUTE joints, L403-L441) become ONE rack\npart with ONE joint carrying all 24 visuals, following the construction 002 already\nuses for the same function (`shifting_carry_rack`, L387-L414).  001's own author\ntests never check their motion, only their joint limits (L579-L598).  This changes\nHOW the carry train is emitted, not what it looks like, and it is what buys the N\nrange.\n\n## The nine allow_overlap sites, and the bore correction that removes all of them\n\n`ctx.allow_overlap` is BLOCKED for Design-backed templates (AUTHORING section 5,\n`agent/prompts/sections/sdk_base.md`), including calls made through helpers or\naliases.  Seven of the 19 records emit allowances; none appear in 001 or 003.  All\nnine sites reduce to two root causes, and both are cross-part FITS that a\n0.3-1.0 mm bore correction removes with no visible change:\n\n- Cause A (10 sites, 002 L599-L608 and inherited by five forks): drum bore\n  r = 0.0021 against a common axle r = 0.0022 -- a 0.1 mm interference.  Fix:\n  `drum_bore_r = axle_r + 0.0004` (binding register_shaft_to_wheel_bore).  The\n  record's existing `expect_contact(contact_tol=0.0002)` at L627-L634 still passes,\n  because the tangency comes from the hub shoulder, not from the bore.\n- Cause B (2 sites: folding fork L689-L698, drive journal r=0.0045 against a\n  torus hole r=0.004; front-lever fork L686-L695, an 0.011 shaft buried 0.007 m\n  inside a SOLID 0.026 boss): fix by making the bearing a real ANNULUS with\n  `bore_r = shaft_r + 0.0005..0.001` and letting the shaft's inner end plane\n  coincide with the hull face.  A third grip site (002 L669-L677, the 0.018 capsule\n  swallowing the 0.008 tube end) is fixed by giving the crank a real end pin and the\n  grip a matching bore with 0.0005 radial clearance plus a thin shoulder washer that\n  provides the tangent face contact.\n\n`ctx.allow_isolated_part(...)` is NOT blocked and remains available for a\njoint-retained member that is intentionally disconnected by a running clearance.\n\n## The key-aperture correction -- the one place the rebuild must exceed the source\n\nNO SOURCE RECORD CUTS A KEY APERTURE.  001 presses a 0.015 x 0.015 stem 0.006 m\ninto a solid hull deck; 002 presses a 0.006 square stem 0.004 m into a 0.004\n`key_plate`; 003 presses a 0.010 stem 0.007 m into a 0.018 `keyboard_bed`; the\ncomptometer fork presses 0.009 m into the same solid bed.  Static poses look fine,\nwhich is exactly the failure mode MECHANICAL_PRIORS sections 1 and 7 warn about,\nand motion QC exercises the `upper` bound of every bounded prismatic joint.\n\nRULE for the rebuild, derived from the moving member's envelope and never from a\nmagic number: cut a real aperture per key at the joint origin,\n`aperture = stem_size + 2 * 0.0005` (002's 0.006 square becomes 0.007; 003's 0.010\nround becomes 0.011), with depth >= `key_travel`.  The whole matrix is cut into the\ndeck skin as ONE `ExtrudeWithHolesGeometry` operation so the skin stays one visual,\nand the skin is carried on a real perimeter well of depth `key_travel + 0.006` so\nthe stem descends into a genuine cavity rather than into cast metal.\n\nThe seating contact is then re-derived, because with a real aperture the source's\n\"stem base plane exactly on the deck top\" no longer produces contact: the stem is\ninside the hole.  The key instead carries a RETAINER FLANGE under the skin -- the\nreal mechanical feature that stops a sprung key from leaving its bore -- whose top\nface overlaps the skin underside by 0.0002 m at rest.  That is a deliberate\npart-to-part overlap sized against `find_geometry_overlaps`'s 1e-3 tolerance and\nnot the 5 mm environment default (MECHANICAL_PRIORS section 1c: exact tangency\nbetween two parts is fragile because CadQuery may keep tangent solids separate and\ntriangulation may open the seam).  On the press stroke the flange moves DOWN, away\nfrom the skin and into the well, so the contact exists at rest and the interference\nnever does.  `expect_contact(key, hull, contact_tol=1e-4)` -- 002 L580-L595 asserts\n0.0002 and 003 L590-L595 asserts 1e-5 -- still passes.\n\n## The rest of the mating rules, all derivations\n\n- `key_joint_origin_z = deck_top_face_z` (001: `_deck_z(y)`; 002: `DECK_SURFACE_Z\n  + local_y*sin(tilt)`; 003: 0.081 = keyboard_bed top).  Every key's lowest visual\n  has its base plane at local z = 0.\n- `divider_width = wheel_pitch - drum_axial_length - 2 * 0.0005`, dividers planted\n  at the wheel midpoints with D+1 of them (001 L150-L153).  For the face-on bank the\n  equivalent is `tooth_envelope_diameter <= wheel_pitch - 0.002`.\n- Reading clearance stays a REAL GAP: 0.0005 m of air between the printed digit and\n  the pane (001 L164, L382-L387), and 003 stacks card 0.1645 / glass 0.1640 / bezel\n  0.163 in 1.5 mm steps.\n- `tower_front_y = wheel_shaft_far_end + 0.005` -- the one number the register\n  forks assert (`expect_gap(register_tower, wheel_shaft, axis='y', 0.004..0.006)`,\n  exposed-pinwheel fork L565-L573).\n- `rail_clear_span = carriage_width + 2 * 0.0005`.  003's exact-fit 0.014 span on a\n  0.014 carriage is a zero-distance contact that reads as a collision, so it is\n  opened to 0.015.  `rail_length >= travel + carriage_depth + 0.020`.\n- Effort/velocity envelope across the pool: keys 3.0-8.0 at 0.09-0.10; function\n  keys 12.0; sliders 4.0-10.0; carry rack 8.0 at 0.05; counter wheels 0.6-2.0 at\n  6.0-8.0; cranks 15.0-25.0 at 3.0-5.0; the two hand levers 35.0 at 1.8-2.5; grips\n  0.4-1.5.  The drive member always carries the largest effort in the model.\n\n## Corrections made while implementing, recorded rather than hidden\n\n- `ExtrudeWithHolesGeometry` keeps its hole profiles as inner WALLS, not voids, so\n  the key aperture is built from an explicit annular prism (matching outer and\n  hole rings joined by annular caps).  A square aperture samples its corners, and\n  a round one is inflated to the circumscribing polygon, so the modelled 0.5 mm\n  clearance is the real one and not a polygon artefact.\n- The column law also reads the cap: a plunger cap over 0.024 m cannot make ten\n  columns fit a 0.35-0.40 m hull, so that family runs the 003 lineage's five\n  columns at 0.055 x 0.045 (003 L21-L22, L248-L250).  Pitch opens up for a larger\n  cap before the deck clamps it, which is what the pool actually shows (0.015 cap\n  at a 0.020 pitch in 002, 0.034 at 0.055 in 003).\n- The selector lane sits BEHIND the key field, as 003 builds it (sliders at\n  y = +0.020 against keys at -0.155..-0.020), not beside it; the deck reserves\n  that strip so a five-column field and a slider bank both fit.\n- `find_geometry_overlaps` prefilters on the per-visual AABB intersection and only\n  calls FCL when it exceeds `overlap_tol` on all three axes.  A deliberate contact\n  is therefore made by overlapping two SMALL elements by 0.2 mm along one axis\n  (crank hub to bearing collar, wheel hub to divider, carriage flange to rail\n  tops).  Where the counterpart is a large panel -- key to deck skin, grip to\n  crank pin, face-on wheel to shaft rail, paper roll to its standards -- the fit\n  stays a REAL running clearance and the member is declared with\n  `ctx.allow_isolated_part`, which sdk_base.md keeps available for a joint-retained\n  part disconnected by clearance.  No `allow_overlap` is emitted anywhere.\n\n## Multiplicity -- key_matrix (N over key_form)\n\n`key_matrix` is multiplicity, not a component slot.  `design-init` scaffolds it as\na two-candidate slot (`keypad_layout` / `matrix_layout`), which would fold N into\n`core_domain` and assert 2250 core combinations.  That is wrong twice over:\nAUTHORING section 4 excludes N from core, and the two \"candidates\" are two\nPLACEMENT LAWS for one mechanism, selected by N itself, not two components.  The\nslot is dropped here and re-declared as a multiplicity whose `item_slot` is\n`key_form`, giving core = 5 x 5 x 5 x 3 x 3 = 1125.\n\n### The exact index-general rule, preserved verbatim\n\nBoth 002-lineage forks converge on the same code (50-key L296-L329; 90-key\nL296-L331):\n\n    KEY_COLUMNS = 10                       # constant in 002, 50-key and 90-key\n    KEY_ROWS    = ceil(N / KEY_COLUMNS)\n    row, column = divmod(key_index, KEY_COLUMNS)          # flat index\n    local_x = (column - (KEY_COLUMNS - 1) / 2) * pitch_x\n    local_y = (row    - (KEY_ROWS    - 1) / 2) * pitch_y  # matrix centred on deck\n    world_y = DECK_CENTER_Y  + local_y * cos(DECK_TILT)\n    world_z = DECK_SURFACE_Z + local_y * sin(DECK_TILT)\n    joint origin = Origin(xyz=(local_x, world_y, world_z), rpy=(DECK_TILT, 0, 0))\n    axis         = (0, 0, -1);  limits 0 -> key_travel\n    part  name   = f\"key_{row}_{column}\"\n    joint name   = f\"key_{row}_{column}_press\"\n    parent       = housing                 # flat, never chained key-to-key\n\nPitch derivation, unifying both source endpoints:\n`plate_depth = KEY_ROWS * pitch_y + 0.014` and `cover_depth = KEY_ROWS * pitch_y\n+ 0.038` (50-key fork L165-L191: 8 rows -> 0.198/0.174, 5 rows -> 0.138/0.114),\nthen `pitch_y = min(0.020, (plate_depth_max - cap_y - 2 * 0.005) / (KEY_ROWS - 1))`\n(90-key fork L299: 9 rows at 0.020 would span 8*0.020 + cap 0.015 = 0.175 against a\n0.174 plate, a 1 mm overflow, so the pitch drops to 0.0185 and the deck is left\nuntouched).  Ragged last row: when N is not a multiple of the column count the last\nrow is centred on its own occupancy, `local_x = (column - (row_occupancy - 1)/2) *\npitch_x`.  No source sample is ragged (10, 20, 50, 80, 81, 90 are all exact), so\nthis changes nothing the pool attests.\n\n### The layout switch, which is a DERIVATION of N and not a slot\n\n- `N <= 12` -> keypad_layout: 3 columns, pitch (0.050, 0.043), cap 0.028 x 0.026,\n  remainder centred on the last row.  Source 10-key fork L76-L101 and L247-L282\n  builds 1..9 as a 3x3 field with the zero centred below (`row = i//3, column =\n  i%3` for `i < 9`, then `row = 3, column = 1`), and its keys are physically\n  larger than 002's 0.015 squares.\n- `N > 12` -> matrix_layout: 10 columns for the 001/002 lineages, 5 columns at\n  pitch 0.055 x 0.045 for the 003 lineage, pitch and cap per the rule above.\n\n### Range: N in [6, 16]\n\nLOWER BOUND 6 -- GEOMETRY, not provenance.  The SourceMap's first pass proposed\n10 on the grounds that it is \"the smallest sample in the pool and a real machine\".\nThat is provenance, and AUTHORING section 3 says explicitly that source integers\nare evidence the rule holds, never the bound.  Re-examined, the real floor is the\nplacement law plus legibility: the pitch derivation contains `(KEY_ROWS - 1)` in a\ndenominator, so `KEY_ROWS >= 2` is a hard requirement of the law itself, and the\ncategory anchor requires a key MATRIX rather than a row of buttons.  Under the\nkeypad law's 3 columns, two full rows is N = 6.  So 6 is where the mechanism stops\nbeing general, and it is lowered from 10 deliberately: the 3x3-plus-centred-zero\nkeypad at N = 10 stays reachable and stays the source-attested configuration, but\nit is not the floor.  N = 6, 7, 8, 9 are ordinary ragged-last-row fields under the\nsame rule.\n\nUPPER BOUND 16 -- HOST CAPACITY AND MEASURED BUDGET, and it is a cap, said plainly.\nParsing 452 cached preflight reports under `.cache/template_check/*/preflight/*.json`,\nthe largest object this fleet has ever shipped is 33 parts / 32 joints\n(`shelving_unit_with_adjustable_shelves`), second 25/24\n(`pictureX_0611_flexible_track_lighting_system`), fleet p90 19 parts, median 8.5.\nCost is `builds x per-build cost`, not part count alone: `wrench_set` at 12 parts\nalready burns 128.5 s against a 120 s soft budget inside a 150 s watchdog, and the\nlargest observed probe count is ~103 (`studio_lamp`).  Worst host after the domain\nreduction is `1 hull + 11 register + 2 crank&grip + 4 sliders = 18` parts, so\nN = 16 lands at 34 parts / 33 joints -- AT the measured ceiling, not past it.  Best\nhost is 9, so N = 6 lands at 15 parts, just under the fleet p90.  Mandatory\nmotion-QC poses at N = 16 worst host are ~66, comparable to the shelving unit the\nfleet already runs.\n\nHOST CAPACITY is enforced by DERIVATION in `resolve_config`, never by removing a\ncombination (AUTHORING section 6 forbids the latter): `granted_function_keys` and\n`granted_paper_roll` are admitted only while `host_parts + N + extra <= 33`.  Both\noptional dressings keep an unconditional geometric effect (the deck's six function\napertures and sill; the hull's carry bed, bridge, posts and paper standards, which\nsource 001 L169-L194 builds as hull visuals anyway), so the discrete parameters\nstill respond even when the rotating part is not granted.\n\nWHAT IS GIVEN UP, stated plainly.  The source's 20-, 50-, 80-, 81- and 90-key\nrecords are OUTSIDE the declared domain -- five of the six N samples in the pool\ncannot be reproduced at full count.  The rebuild is a mechanically faithful\ncalculator whose key field is smaller than four of the six sources.  That is a real\nloss of source fidelity, accepted deliberately, because an aspirational N = 90\n(106-120 parts, 336-494 collision solids, 3.2-3.6x anything this fleet has built)\nmakes `corner` unrunnable.  The index-general rule above is preserved verbatim and\nis correct for any N, so raising the cap later is a one-line domain change.\n\nNO FAKING.  Every key in the declared range is a real independently articulated\npart with its own PRISMATIC joint and its own aperture in the deck.  Nothing is\nwelded into the deck to inflate a count, and no token subset is articulated in\nfront of a static painted-on remainder.\n",
+  "bindings": [
+    {
+      "binding_id": "deck_to_key_seating",
+      "consumer": "key_form.key_stem_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "hull_deck_seat_z_m",
+            "key_well_depth_m",
+            "deck_skin_thickness_m"
+          ],
+          "expression": "hull_deck_seat_z_m + key_well_depth_m + deck_skin_thickness_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "deck_top_face_z_m",
+          "rationale": "THE central derivation of the category: key_joint_origin_z = deck_top_face_z. 001 L255 uses _deck_z(y) directly; 002 L305-L306 uses DECK_SURFACE_Z + local_y*sin(tilt); 003 L280 uses 0.081, which is exactly the keyboard_bed's top face (0.072 + 0.018/2). The rebuild adds the well and skin the sources do not have, so the deck top face is derived from the hull seat plus both, never authored twice.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_travel_m"
+          ],
+          "expression": "key_travel_m + 0.003",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "deck_skin_thickness_m",
+          "rationale": "Thickness of the perforated key plate. Must be at least the travel so a through-cut aperture is by construction >= key_travel deep (section 7).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_travel_m"
+          ],
+          "expression": "key_travel_m + 0.006",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_well_depth_m",
+          "rationale": "Depth of the real cavity under the skin, so the stem and the retainer flange descend into air rather than into cast metal. The well perimeter rim embeds 0.002 m into the hull (intra-part, free per section 1c).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_stem_size_m"
+          ],
+          "expression": "key_stem_size_m + 2 * 0.0005",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_aperture_size_m",
+          "rationale": "MECHANICAL_PRIORS section 7: the opening is derived from the moving member's envelope plus a safety clearance, never from a fixed magic number. 002's 0.006 square stem gives a 0.007 aperture; 003's 0.010 round stem gives 0.011. NO source record cuts this opening at all.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_aperture_size_m"
+          ],
+          "expression": "key_aperture_size_m + 0.0040",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_retainer_size_m",
+          "rationale": "Retainer flange across the underside of the skin -- the feature that stops a sprung key from leaving its bore, and the rebuild's replacement for the source's stem-on-solid-plate seating.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_retainer_size_m"
+          ],
+          "expression": "0.0002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_seating_overlap_m",
+          "rationale": "Deliberate part-to-part overlap of the flange top into the skin underside at rest. Sized against find_geometry_overlaps's overlap_tol of 1e-3, not the 5 mm environment default; section 1c says exact tangency between two parts is fragile. It disappears on the press stroke because the flange travels away from the skin.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_form"
+          ],
+          "expression": "8.0 if key_form != 'stepped_box_cap' else 3.0",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_press_effort",
+          "rationale": "Pool effort envelope for key presses is 3.0 (002 L318) to 8.0 (001 L262, 003 L283), velocity 0.09-0.10.",
+          "unit": "ratio",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "housing_form.key_deck_plane"
+    },
+    {
+      "binding_id": "key_matrix_to_deck_extent",
+      "consumer": "housing_form.key_deck_plane",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "key_matrix",
+            "housing_form"
+          ],
+          "expression": "3 if key_matrix <= 12 else (5 if housing_form == 'open_frame_side_cheek' else 10)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_matrix_columns",
+          "rationale": "The keypad/matrix switch is a DERIVATION OF N, not a slot. N<=12 is the 10-key fork's 3-column pad (L247-L282); N>12 is the 002-lineage 10-column rule (L296-L329) or the 003 lineage's 5 columns (003 L22).",
+          "unit": "count",
+          "value_type": "int"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_matrix",
+            "key_matrix_columns"
+          ],
+          "expression": "ceil(key_matrix / key_matrix_columns)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_rows",
+          "rationale": "KEY_ROWS = ceil(N / KEY_COLUMNS), verbatim from 002-lineage L296-L331.",
+          "unit": "count",
+          "value_type": "int"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_matrix",
+            "housing_form"
+          ],
+          "expression": "0.050 if key_matrix <= 12 else (0.055 if housing_form == 'open_frame_side_cheek' else 0.020)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_pitch_x_m",
+          "rationale": "Pitch in X: 0.020 in 002, the 50-key fork and the 90-key fork alike -- constant, never re-derived; 0.055 in 003 (L250); 0.050 in the 10-key pad (L257).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "hull_depth_m"
+          ],
+          "expression": "hull_depth_m * 0.52",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_plate_depth_max_m",
+          "rationale": "How much of the hull depth the key bed may claim before it collides with the register shoulder. 002: plate 0.174 on a 0.340 hull = 0.512.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_pitch_y_nominal_m",
+            "key_plate_depth_max_m",
+            "key_cap_size_m",
+            "key_rows"
+          ],
+          "expression": "min(key_pitch_y_nominal_m, (key_plate_depth_max_m - key_cap_size_m - 0.010) / max(1, key_rows - 1))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_pitch_y_m",
+          "rationale": "THE unified pitch rule, reproducing BOTH source endpoints exactly. The 50-key fork shrinks the DECK to fit the matrix (L165-L191: cover 0.252x0.198 -> 0.252x0.138, plate 0.222x0.174 -> 0.222x0.114); the 90-key fork leaves the deck untouched and shrinks the PITCH instead (L299: 0.020 -> 0.0185, because 9 rows at 0.020 span 8*0.020 + cap 0.015 = 0.175 against a 0.174 plate, a 1 mm overflow). Derive the plate from the matrix, then clamp the pitch.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_matrix",
+            "housing_form"
+          ],
+          "expression": "0.043 if key_matrix <= 12 else (0.045 if housing_form == 'open_frame_side_cheek' else 0.020)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_pitch_y_nominal_m",
+          "rationale": "Nominal Y pitch before clamping: 0.043 (10-key pad L258), 0.045 (003 L248), 0.020 (002 L274).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_rows",
+            "key_pitch_y_m"
+          ],
+          "expression": "key_rows * key_pitch_y_m + 0.014",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_plate_depth_m",
+          "rationale": "50-key fork L165-L191, verified against both its own 5-row and its parent's 8-row geometry: 8 rows -> 0.174, 5 rows -> 0.114.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_rows",
+            "key_pitch_y_m"
+          ],
+          "expression": "key_rows * key_pitch_y_m + 0.038",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_cover_depth_m",
+          "rationale": "The same fork's outer cover: 8 rows -> 0.198, 5 rows -> 0.138.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_matrix_columns",
+            "key_pitch_x_m"
+          ],
+          "expression": "key_matrix_columns * key_pitch_x_m + 0.022",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_plate_width_m",
+          "rationale": "002: 10 columns at 0.020 give a 0.222 plate, i.e. a 0.0135 first-key inset per side against a 0.195 field span.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_pitch_x_m",
+            "key_pitch_y_m",
+            "key_cap_size_m"
+          ],
+          "expression": "min(key_pitch_x_m, key_pitch_y_m) - key_cap_size_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "key_cap_clearance_m",
+          "rationale": "Neighbour gap. RULE: cap <= 0.75 * min(pitch), keeping the caps apart. The 90-key fork is the tightest case in the pool at 0.0035 m (0.81 ratio) and sets the practical floor.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "register_part_count",
+            "drive_part_count",
+            "setting_part_count"
+          ],
+          "expression": "1 + register_part_count + drive_part_count + setting_part_count",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "host_part_count",
+          "rationale": "Everything except the key matrix and the two optional dressings. Worst host is 18 (railed_drum_bank at 11 + crank and grip + 4 sliders), best is 9.",
+          "unit": "count",
+          "value_type": "int"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "function_key_count",
+            "host_part_count",
+            "key_matrix"
+          ],
+          "expression": "function_key_count if host_part_count + key_matrix + function_key_count <= 33 else 0",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "granted_function_keys",
+          "rationale": "HOST CAPACITY ENFORCED BY DERIVATION, never by removing a combination. The deck still cuts the six function apertures and builds the function sill whenever function_key_count is 6, so the parameter always has a geometric effect; only the six moving parts are budgeted.",
+          "unit": "count",
+          "value_type": "int"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "has_paper_transport",
+            "host_part_count",
+            "key_matrix",
+            "granted_function_keys"
+          ],
+          "expression": "has_paper_transport if host_part_count + key_matrix + granted_function_keys + has_paper_transport <= 33 else 0",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "granted_paper_roll",
+          "rationale": "Same rule for the paper transport. The hull dressing (carry bed, bridge, two posts, two paper standards -- all HULL visuals in source 001 L169-L194) is built whenever the flag is 1; only the rotating roll is budgeted.",
+          "unit": "count",
+          "value_type": "int"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "key_form.key_stem_axis"
+    },
+    {
+      "binding_id": "register_shaft_to_wheel_bore",
+      "consumer": "register_assembly.wheel_bore_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "register_assembly"
+          ],
+          "expression": "'(0,1,0)' if register_assembly in ('bezel_pinwheel_tower', 'enclosed_window_bank') else '(1,0,0)'",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "register_spin_axis",
+          "rationale": "Set by the wheel candidate, and everything else in the bank is derived from it. (1,0,0) for counter drums on a transverse shaft (001 L394, 002 L346); (0,1,0) for the face-on stepped pinwheels read through a bezel (003 L322).",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "axle_radius_m",
+            "drum_radius_m",
+            "register_assembly"
+          ],
+          "expression": "axle_radius_m if register_assembly in ('railed_drum_bank', 'stepped_drum_bank') else drum_radius_m * 0.42",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "register_axle_radius_m",
+          "rationale": "002 L216 runs a single Cylinder(radius=0.0022, length=0.245) through all ten drums; 001 gives each wheel its own 0.007 hub journal (L377); 003's pinwheels each carry a 0.005 x 0.130 shaft (L294).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "register_axle_radius_m"
+          ],
+          "expression": "register_axle_radius_m + 0.0004",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drum_bore_radius_m",
+          "rationale": "THE fix for cause A of the pool's allow_overlap sites. Source 002 builds bore 0.0021 against axle 0.0022 -- a 0.1 mm interference and the direct cause of ten allowances at L599-L608. RULE: drum_bore_r = axle_r + 0.0003..0.0005, never <= axle_r.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "wheel_pitch_m"
+          ],
+          "expression": "wheel_pitch_m - 0.006",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drum_axial_length_m",
+          "rationale": "Pool: pitch 0.022 with a 0.014 drum (001), pitch 0.021 with 0.016 + 0.002 hub (002). Derived from the pitch so the divider rule below closes.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "wheel_pitch_m",
+            "drum_axial_length_m"
+          ],
+          "expression": "wheel_pitch_m - drum_axial_length_m - 2 * 0.0005",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "divider_width_m",
+          "rationale": "The pool's register clearance rule, measured across all three origins: 001 pitch 0.022 - drum 0.014 - 2*0.001 = 0.006 mullion (L150-L153); 002 pitch 0.021 - drum 0.018 - 2*0.0005 = 0.002 divider (L207-L214). D+1 dividers are planted at the wheel midpoints plus both ends.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "divider_width_m"
+          ],
+          "expression": "0.0002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "wheel_hub_overlap_m",
+          "rationale": "The wheel's hub is 2*(0.0005 + 0.0002) longer than the drum so it overlaps each neighbouring divider by 0.2 mm: a deliberate, rotationally symmetric part-to-part contact that survives every pose. 001 attests the construction -- its 0.017 hub protrudes 1.5 mm each side of a 0.014 drum as a real journal (L371-L381).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "register_digit_count",
+            "register_assembly"
+          ],
+          "expression": "register_digit_count + (1 if register_assembly in ('mullion_counter_bank', 'railed_drum_bank', 'stepped_drum_bank') else 0)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "register_part_count",
+          "rationale": "D wheels plus one carry rack for the counter-drum family (the face-on family's carry rack is static hull geometry in 003 L204-L216). This is where 001's eight independently articulated carry wheels become one rack part -- the deviation that buys the N range.",
+          "unit": "count",
+          "value_type": "int"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "housing_form.register_shaft_axis"
+    },
+    {
+      "binding_id": "register_tower_to_wheel_shaft",
+      "consumer": "housing_form.key_deck_plane",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "register_center_y_m",
+            "wheel_shaft_length_m"
+          ],
+          "expression": "register_center_y_m + wheel_shaft_length_m * 0.5",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "wheel_shaft_far_end_y_m",
+          "rationale": "Front end of the face-on wheel shaft. 003: shaft 0.130 long about y=0.095 ends at 0.160.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "wheel_shaft_far_end_y_m"
+          ],
+          "expression": "wheel_shaft_far_end_y_m + 0.005",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "tower_front_y_m",
+          "rationale": "THE one stand-off the register forks actually assert: exposed-pinwheel fork L565-L573 requires expect_gap(register_tower, wheel_shaft, axis='y', 0.004..0.006), and 003's geometry gives exactly 0.165 - 0.160 = 0.005.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "tower_front_y_m",
+            "register_center_y_m",
+            "drum_radius_m",
+            "register_spin_axis"
+          ],
+          "expression": "tower_front_y_m - 0.0005 if register_spin_axis == '(0,1,0)' else register_center_y_m - drum_radius_m - 0.0025",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "readout_face_y_m",
+          "rationale": "The readout plane. Face-on: card 0.1645 / glass 0.1640 / bezel 0.163 in 1.5 mm steps (003 L174-L194). Edge-on: 001 L164 and L382-L387 put the digit patch front face at 0.105 - 0.014 - 0.0025 = 0.0885 against a glass rear at 0.088, i.e. 0.0005 m of air between the printed digit and the pane -- a READING CLEARANCE that stays a real gap.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "register_digit_count",
+            "wheel_pitch_m"
+          ],
+          "expression": "register_digit_count * wheel_pitch_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "readout_extent_x_m",
+          "rationale": "Real readout width, published as PlaneInterface.extent instead of the hull AABB.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drum_radius_m"
+          ],
+          "expression": "drum_radius_m * 2.0 + 0.006",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "readout_extent_z_m",
+          "rationale": "Real readout height. 001: a 0.034-high pane against a 0.032 drum.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "hull_deck_seat_z_m",
+            "register_rise_m"
+          ],
+          "expression": "hull_deck_seat_z_m + register_rise_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "register_center_z_m",
+          "rationale": "The register sits above the rear of the deck: 001 z=0.176 above REAR_DECK_Z 0.155; 002 z=0.165; 003 z=0.155.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "register_assembly.register_readout_plane"
+    },
+    {
+      "binding_id": "hull_face_to_drive_bearing",
+      "consumer": "drive_member.drive_shaft_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "drive_member"
+          ],
+          "expression": "'(0,1,0)' if drive_member == 'front_reciprocating_lever' else ('(-1,0,0)' if drive_member == 'vertical_pull_lever' else '(1,0,0)')",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_face_normal",
+          "rationale": "The joint axis IS the outward normal of the hull face the bearing is bored into. Flank (1,0,0) for 001/002/003 and the dial; front wall (0,1,0) for the front lever (fork L515-L520); (-1,0,0) for the one-way pull lever (fork L508-L514).",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "hull_width_m",
+            "hull_depth_m",
+            "drive_face_mid_height_m",
+            "drive_pivot_y_m",
+            "drive_face_normal"
+          ],
+          "expression": "(hull_width_m * 0.5, drive_pivot_y_m, drive_face_mid_height_m) if drive_face_normal == '(1,0,0)' else (0.28 * hull_width_m, -hull_depth_m * 0.5, drive_face_mid_height_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_pivot_xyz_m",
+          "rationale": "The pivot always sits ON a hull face, never inset and never floating. 003 L396 puts it at x=0.190, exactly the side-cheek outer face; the front-lever fork at y=-0.247, on the front wall.",
+          "unit": "m",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drive_face_bottom_z_m",
+            "drive_face_top_z_m"
+          ],
+          "expression": "0.5 * (drive_face_bottom_z_m + drive_face_top_z_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_face_mid_height_m",
+          "rationale": "RULE: the pivot is at the local MID-HEIGHT of the face it is bored into, derived and never authored twice. 001 z=0.190 = REAR_DECK_Z 0.155 + the 0.035 rear-cover rise; 002 z=0.095 = mid of the 0.014..0.153 side profile; 003 z=0.135 = mid of the 0.055..0.195 cheek; the front-lever fork z=0.030 = mid of the 0.055-high fascia.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drive_shaft_radius_m"
+          ],
+          "expression": "drive_shaft_radius_m + 0.0007",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_bore_radius_m",
+          "rationale": "THE fix for cause B. The bearing must be an ANNULUS with bore_r = shaft_r + 0.0005..0.001. The folding fork runs a 0.0045 journal in a 0.004 torus hole (0.5 mm interference, allow_overlap at L689-L698) and the front-lever fork buries an 0.011 shaft 0.007 m inside a SOLID 0.026 boss (allow_overlap at L686-L695). Both disappear under this rule with no change to the visible form.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drive_bore_radius_m"
+          ],
+          "expression": "0.0002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_thrust_overlap_m",
+          "rationale": "The crank hub bears against the bearing's outer face with a deliberate 0.2 mm overlap -- rotationally symmetric, so the contact holds at every pose. This is what replaces the source's butt contact (003 L396: shaft local x0 = 0 exactly on the cheek face, asserted expect_contact(1e-5) at L602-L607) now that the bore is a real clearance.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drive_shaft_radius_m"
+          ],
+          "expression": "drive_shaft_radius_m * 0.62",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "grip_pin_radius_m",
+          "rationale": "The crank's end pin. The grip's bore is pin_r + 0.0005, and a thin shoulder washer provides the tangent face contact -- the SourceMap's fix for 002 L669-L677, where an 0.018 capsule simply swallowed the 0.008 tube end.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drive_member"
+          ],
+          "expression": "'(0,1,0)' if drive_member == 'folding_side_crank' else '(1,0,0)'",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "grip_axis_local",
+          "rationale": "The grip stub axis is parallel to the pivot axis for the crank candidates. The folding crank is the exception and the whole point of that candidate: its grip hinges about (0,1,0) from 0 to 84 degrees instead of spinning freely (fork L466-L483).",
+          "unit": "ratio",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "crank_throw_m",
+            "grip_radius_m"
+          ],
+          "expression": "crank_throw_m + grip_radius_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_sweep_radius_m",
+          "rationale": "The member's entire swept circle must lie outside the hull footprint. 001 satisfies this by placing the pivot 0.056 m behind the rear wall; 003 by placing it exactly on the cheek face so the whole 0.075 circle is outboard of x = 0.190.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "dial_radius_m",
+            "drive_bore_radius_m",
+            "drive_member"
+          ],
+          "expression": "dial_radius_m + 0.008 if drive_member == 'coaxial_rotary_dial' else drive_bore_radius_m + 0.006",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_clear_disc_radius_m",
+          "rationale": "HOST ADAPTATION: how large a flat clear disc the bored face must carry. The dial candidate grows a 0.116 backplate, a TorusGeometry(0.052, 0.0018) scale ring and ten index marks on that face (fork L292-L327); the crank candidates need only the bearing boss.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drive_member"
+          ],
+          "expression": "2 if drive_member in ('side_rotary_crank', 'folding_side_crank') else 1",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_part_count",
+          "rationale": "A second REVOLUTE grip child is optional but, when present, its origin equals the crank's handle point exactly.",
+          "unit": "count",
+          "value_type": "int"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drive_member"
+          ],
+          "expression": "35.0 if drive_member in ('front_reciprocating_lever', 'vertical_pull_lever') else 18.0",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_effort",
+          "rationale": "The drive member always carries the largest effort in the model. Cranks 15.0-25.0 at velocity 3.0-5.0; the two hand levers 35.0 at 1.8-2.5.",
+          "unit": "ratio",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "housing_form.drive_bearing_axis"
+    },
+    {
+      "binding_id": "deck_to_setting_control",
+      "consumer": "setting_control.slider_seat_plane",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "deck_top_face_z_m",
+            "register_cover_top_z_m",
+            "setting_control"
+          ],
+          "expression": "deck_top_face_z_m if setting_control == 'slider_bank' else register_cover_top_z_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "setting_seat_z_m",
+          "rationale": "The slider bank seats on the key deck (003 L356: joint origin z=0.081 = keyboard-bed top); the zeroing knob seats on the register cover (fork L360: origin z=0.240, and tower_cover Box(0.350,0.060,0.030) at z=0.225 has its top face at exactly 0.240).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "deck_center_y_m",
+            "key_plate_depth_m"
+          ],
+          "expression": "deck_center_y_m + key_plate_depth_m * 0.5 + 0.024",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "setting_seat_y_m",
+          "rationale": "The control lane sits just behind the key field, derived from the field the matrix actually occupies rather than from a fixed y.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "setting_control"
+          ],
+          "expression": "0.014",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "slider_carriage_width_m",
+          "rationale": "003 L334: Box((0.014, 0.012, 0.006)) carriage, plus a 0.0045 x 0.022 stem and a 0.014 x 0.010 x 0.012 grip -- a genuine 3-piece member, not a tab.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "slider_carriage_width_m"
+          ],
+          "expression": "slider_carriage_width_m + 2 * 0.0005",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "slider_rail_clear_span_m",
+          "rationale": "MECHANICAL_PRIORS section 6. 003's rails at x +- 0.009 leave an exact 0.014 clear span on a 0.014 carriage -- a zero-distance contact that will read as a collision, so the rebuild opens it to 0.015.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "slider_travel_m"
+          ],
+          "expression": "slider_travel_m + 0.012 + 0.020",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "slider_rail_length_m",
+          "rationale": "RULE: rail_length >= travel + carriage_depth + 0.020. 003 builds 0.060 rails for a 0.028 stroke on a 0.012-deep carriage.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "deck_tilt_rad",
+            "deck_top_face_z_m"
+          ],
+          "expression": "(x, y - sin(deck_tilt_rad) * 0.00125, deck_top_face_z_m + 0.0008 + cos(deck_tilt_rad) * 0.00125)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "slider_seat_offset_xyz_m",
+          "rationale": "The seat is derived ALONG THE DECK NORMAL, verbatim from 001 L344-L351, which is what makes one slider construction work on a flat bed and on a 0.271 rad wedge alike.",
+          "unit": "m",
+          "value_type": "str"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "key_plate_width_m",
+            "register_cover_width_m",
+            "setting_control"
+          ],
+          "expression": "key_plate_width_m if setting_control == 'slider_bank' else register_cover_width_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "setting_seat_width_m",
+          "rationale": "REAL bearing rectangle for PlaneInterface.extent. The zeroing knob is 0.044 wide at x=0.145 on a cover that only reaches x=0.175 -- an 8 mm edge margin. A wider knob, a narrower tower or a more outboard x and the knob half-overhangs, which mate_planes must reject rather than the hull AABB hide (MECHANICAL_PRIORS section 2).",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "slider_rail_length_m",
+            "register_cover_depth_m",
+            "setting_control"
+          ],
+          "expression": "slider_rail_length_m if setting_control == 'slider_bank' else register_cover_depth_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "setting_seat_depth_m",
+          "rationale": "Same rectangle, in the other tangent direction.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "setting_seat_z_m"
+          ],
+          "expression": "0.0002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "setting_seat_overlap_m",
+          "rationale": "The carriage underside and the knob base each embed 0.2 mm into their seat. The knob is rotationally symmetric and the carriage slides in-plane, so the contact holds at every pose.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "slider_count",
+            "setting_control"
+          ],
+          "expression": "slider_count if setting_control == 'slider_bank' else (1 if setting_control == 'zeroing_knob' else 0)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "setting_part_count",
+          "rationale": "2-4, 1, or 0. `none` is not an absence: 8 of 19 records carry no setting control, which makes it the pool's modal configuration.",
+          "unit": "count",
+          "value_type": "int"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "housing_form.setting_control_seat"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "mechanical_calculator_key_matrix_identity",
+      "applies_to": {
+        "candidates": [
+          "stepped_box_cap",
+          "cylindrical_plunger",
+          "concave_mushroom_cap"
+        ],
+        "slot": "key_form"
+      },
+      "required_author_checks": [
+        "category_anchor: exactly one root hull part and one joint per other part",
+        "category_anchor: every key presses along -Z in the deck-tilted joint frame",
+        "category_anchor: every key joint has lower 0 and 0.004 <= upper <= 0.009",
+        "category_anchor: keys are parented to the hull, never chained key to key",
+        "category_anchor: the deck carries a real aperture per key at least stem+0.001 across",
+        "category_anchor: the representative key seats on the deck within 0.0005 m at rest",
+        "category_anchor: the pressed key descends by at least key_travel - 0.001",
+        "category_anchor: neighbouring key caps keep a real clearance",
+        "category_anchor: no seed emits an allow_overlap allowance"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "child_role": "calculator_key",
+          "joint_type": "prismatic",
+          "parent_role": "calculator_hull"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "calculator_hull"
+        },
+        {
+          "count_from": "key_matrix",
+          "exact_count": null,
+          "role": "calculator_key"
+        }
+      ]
+    },
+    {
+      "anchor_id": "mechanical_calculator_counter_drum_register",
+      "applies_to": {
+        "candidates": [
+          "mullion_counter_bank",
+          "railed_drum_bank",
+          "stepped_drum_bank"
+        ],
+        "slot": "register_assembly"
+      },
+      "required_author_checks": [
+        "category_anchor: counter drums share one transverse spin axis and are evenly pitched",
+        "category_anchor: every register wheel is captured by the bank in the two axes normal to its spin",
+        "category_anchor: every rotating member has bore_r >= shaft_r + 0.0003",
+        "category_anchor: the carry rack travels along the register axis inside its guides"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "register_wheel",
+          "joint_type": "revolute",
+          "parent_role": "calculator_hull"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "calculator_hull"
+        },
+        {
+          "count_from": "resolved.register_digit_count",
+          "exact_count": null,
+          "role": "register_wheel"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "carry_rack"
+        }
+      ]
+    },
+    {
+      "anchor_id": "mechanical_calculator_face_on_register",
+      "applies_to": {
+        "candidates": [
+          "bezel_pinwheel_tower",
+          "enclosed_window_bank"
+        ],
+        "slot": "register_assembly"
+      },
+      "required_author_checks": [
+        "category_anchor: face-on pinwheels spin about the front-to-back axis",
+        "category_anchor: every register wheel is captured by the bank in the two axes normal to its spin",
+        "category_anchor: the tower front face stands 0.004 to 0.006 m clear of the wheel shaft",
+        "category_anchor: the register shell carries a real cut opening per digit"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "register_wheel",
+          "joint_type": "revolute",
+          "parent_role": "calculator_hull"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "calculator_hull"
+        },
+        {
+          "count_from": "resolved.register_digit_count",
+          "exact_count": null,
+          "role": "register_wheel"
+        }
+      ]
+    },
+    {
+      "anchor_id": "mechanical_calculator_flank_drive_identity",
+      "applies_to": {
+        "candidates": [
+          "side_rotary_crank",
+          "folding_side_crank",
+          "coaxial_rotary_dial"
+        ],
+        "slot": "drive_member"
+      },
+      "required_author_checks": [
+        "category_anchor: the drive pivot lies on a hull face and turns about that face normal",
+        "category_anchor: the drive member carries the largest effort in the model",
+        "category_anchor: the drive sweeps clear of the hull through a quarter turn",
+        "category_anchor: the drive bearing is a real annulus wider than its shaft"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "hand_drive_member",
+          "joint_type": "revolute",
+          "parent_role": "calculator_hull"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "calculator_hull"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_drive_member"
+        }
+      ]
+    },
+    {
+      "anchor_id": "mechanical_calculator_lever_drive_identity",
+      "applies_to": {
+        "candidates": [
+          "front_reciprocating_lever",
+          "vertical_pull_lever"
+        ],
+        "slot": "drive_member"
+      },
+      "required_author_checks": [
+        "category_anchor: the drive pivot lies on a hull face and turns about that face normal",
+        "category_anchor: the drive member carries the largest effort in the model",
+        "category_anchor: the hand lever has no free-spinning grip child",
+        "category_anchor: the drive bearing is a real annulus wider than its shaft"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "calculator_hull"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_drive_member"
+        }
+      ]
+    },
+    {
+      "anchor_id": "mechanical_calculator_grip_child_identity",
+      "applies_to": {
+        "candidates": [
+          "side_rotary_crank",
+          "folding_side_crank"
+        ],
+        "slot": "drive_member"
+      },
+      "required_author_checks": [
+        "category_anchor: the grip joint origin equals the crank handle point",
+        "category_anchor: the grip runs on a real pin with radial clearance"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "drive_grip",
+          "joint_type": "revolute",
+          "parent_role": "hand_drive_member"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_drive_member"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "drive_grip"
+        }
+      ]
+    },
+    {
+      "anchor_id": "mechanical_calculator_slider_bank_identity",
+      "applies_to": {
+        "candidates": [
+          "slider_bank"
+        ],
+        "slot": "setting_control"
+      },
+      "required_author_checks": [
+        "category_anchor: every selector carriage slides between its own paired rails",
+        "category_anchor: the slider seat is derived along the deck normal"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "setting_slider",
+          "joint_type": "prismatic",
+          "parent_role": "calculator_hull"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "calculator_hull"
+        },
+        {
+          "count_from": "resolved.slider_count",
+          "exact_count": null,
+          "role": "setting_slider"
+        }
+      ]
+    },
+    {
+      "anchor_id": "mechanical_calculator_zeroing_knob_identity",
+      "applies_to": {
+        "candidates": [
+          "zeroing_knob"
+        ],
+        "slot": "setting_control"
+      },
+      "required_author_checks": [
+        "category_anchor: at most one vertical-axis joint exists in the model",
+        "category_anchor: the zeroing knob seats inside the real cover rectangle"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "zeroing_knob",
+          "joint_type": "revolute",
+          "parent_role": "calculator_hull"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "calculator_hull"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "zeroing_knob"
+        }
+      ]
+    },
+    {
+      "anchor_id": "mechanical_calculator_direct_action_identity",
+      "applies_to": {
+        "candidates": [
+          "none"
+        ],
+        "slot": "setting_control"
+      },
+      "required_author_checks": [
+        "category_anchor: the direct-action configuration carries no setting-control part"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "calculator_hull"
+        },
+        {
+          "count_from": null,
+          "exact_count": 0,
+          "role": "setting_slider"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "key_matrix + host_part_count <= 33 and key_field_span_y_m <= key_plate_depth_m - key_cap_size_m - 0.010 and key_cap_size_m <= 0.75 * min(key_pitch_x_m, key_pitch_y_m)",
+      "item_slot": "key_form",
+      "name": "key_matrix",
+      "spacing_expression": "keypad_layout if key_matrix <= 12 else matrix_layout; columns = 3 if key_matrix <= 12 else key_matrix_columns; row, column = divmod(index, columns); local_x = (column - (row_occupancy - 1) / 2) * key_pitch_x_m; local_y = (row - (rows - 1) / 2) * key_pitch_y_m; world = deck_center + local_x * (1,0,0) + local_y * (0, cos(tilt), sin(tilt))",
+      "values": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "part frame; helpers _calculator_housing_mesh, _add_quad, _deck_z; 8-vertex wedge, DECK_PITCH 0.271 rad, 4 feet",
+          "implementation_function": "_housing_form_tapered_wedge_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "key_plate_width_m",
+                "extent_v": "key_plate_depth_m",
+                "point": "(0.0, deck_center_y_m, deck_top_face_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -sin(deck_tilt_rad), cos(deck_tilt_rad))",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "key_deck_plane",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "point": "drive_pivot_xyz_m",
+                "radius": "drive_bore_radius_m"
+              },
+              "frame": {
+                "axis": "drive_face_normal",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "drive_bearing_axis",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "setting_seat_width_m",
+                "extent_v": "setting_seat_depth_m",
+                "point": "(0.0, setting_seat_y_m, setting_seat_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -sin(deck_tilt_rad), cos(deck_tilt_rad))",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "setting_control_seat",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, register_center_y_m, register_center_z_m)",
+                "radius": "register_axle_radius_m"
+              },
+              "frame": {
+                "axis": "register_spin_axis",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "register_shaft_axis",
+              "part": "calculator_hull",
+              "role": "provider"
+            }
+          ],
+          "name": "tapered_wedge",
+          "notes": "Construction: 8-vertex closed cast wedge. The hull is the single root part and carries the key deck, the register shell, the drive bearing and the setting-control seat as visuals; only moving members become separate parts. The deck plane is published with its REAL tilt and its REAL key-bed rectangle, never the hull AABB.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.41,
+              "minimum": 0.33,
+              "mode": "independent",
+              "name": "hull_width_m",
+              "rationale": "Overall transverse width of the cast hull. Pool: 0.350 (002 L136), 0.362 (pinwheel fork L42-L61, 2 x 0.181), 0.380 (003 L89), 0.398 (traveling-carriage fork L149).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "hull_depth_m",
+              "rationale": "Overall front-to-back depth. Pool: 0.340 (002 L136), 0.360 (001 L20-L21, FRONT_Y -0.240 to REAR_Y 0.120), 0.366 (pinwheel fork outline), 0.440 (003 L89).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "deck_tilt_rad",
+              "rationale": "Slope of the key bed. Source 001 L24: DECK_PITCH = atan2(0.100, 0.360) = 0.271 rad, the steepest bed in the pool. 002 L28 builds 0.218 and 003 is flat, so the whole attested band is reachable here.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                0,
+                1
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "has_paper_transport",
+              "rationale": "Demoted from a slot (SourceMap 'Domain reduction'): a two-member {present,none} slot would double core_domain to buy one dressing assembly that appears in 1 of 19 records. Source 001 L169-L194 builds the carry bed, carry bridge, two posts and two paper standards as HULL visuals and L443-L469 adds one paper_roll part on one REVOLUTE. The hull dressing is built whenever the flag is 1; the rotating roll part is additionally subject to the derived part budget, so the flag always has a geometric effect.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [
+                0,
+                6
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "function_key_count",
+              "rationale": "Demoted from a slot: source 001 L267-L312 builds six function keys that are the SAME mechanism as the key matrix -- PRISMATIC (0,0,-1) in the deck frame, lower 0, differing only in cap size (0.020 x 0.017 x 0.008) and effort (12.0 vs 8.0). Under VISUAL_DIVERSITY_MODEL that is a parameter, not a candidate. The deck always grows the six real apertures and the function sill when the value is 6; the six key parts are additionally subject to the derived part budget.",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_picturex_0611__mechanical_calculator__001__png_3c15e16013b5410bb59e4a17fa83e3fb",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L37-L57",
+            "model.py:L97-L120",
+            "model.py:L207-L216"
+          ]
+        },
+        {
+          "evidence": "helper _calculator_housing_mesh; 20-point plan outline, fan-capped top and bottom, 20 side quads",
+          "implementation_function": "_housing_form_rounded_rear_flared_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "key_plate_width_m",
+                "extent_v": "key_plate_depth_m",
+                "point": "(0.0, deck_center_y_m, deck_top_face_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -sin(deck_tilt_rad), cos(deck_tilt_rad))",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "key_deck_plane",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "point": "drive_pivot_xyz_m",
+                "radius": "drive_bore_radius_m"
+              },
+              "frame": {
+                "axis": "drive_face_normal",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "drive_bearing_axis",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "setting_seat_width_m",
+                "extent_v": "setting_seat_depth_m",
+                "point": "(0.0, setting_seat_y_m, setting_seat_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -sin(deck_tilt_rad), cos(deck_tilt_rad))",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "setting_control_seat",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, register_center_y_m, register_center_z_m)",
+                "radius": "register_axle_radius_m"
+              },
+              "frame": {
+                "axis": "register_spin_axis",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "register_shaft_axis",
+              "part": "calculator_hull",
+              "role": "provider"
+            }
+          ],
+          "name": "rounded_rear_flared",
+          "notes": "Construction: 20-point lofted plan outline, fan-capped. The hull is the single root part and carries the key deck, the register shell, the drive bearing and the setting-control seat as visuals; only moving members become separate parts. The deck plane is published with its REAL tilt and its REAL key-bed rectangle, never the hull AABB.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.41,
+              "minimum": 0.33,
+              "mode": "independent",
+              "name": "hull_width_m",
+              "rationale": "Overall transverse width of the cast hull. Pool: 0.350 (002 L136), 0.362 (pinwheel fork L42-L61, 2 x 0.181), 0.380 (003 L89), 0.398 (traveling-carriage fork L149).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "hull_depth_m",
+              "rationale": "Overall front-to-back depth. Pool: 0.340 (002 L136), 0.360 (001 L20-L21, FRONT_Y -0.240 to REAR_Y 0.120), 0.366 (pinwheel fork outline), 0.440 (003 L89).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "deck_tilt_rad",
+              "rationale": "Same sloped deck as its 001 parent -- the pinwheel fork changes only _calculator_housing_mesh (L37-L82) and reuses _deck_z unchanged.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.76,
+              "minimum": 0.56,
+              "mode": "independent",
+              "name": "front_apron_ratio",
+              "rationale": "Front apron half-width as a fraction of the register shoulder half-width. Source pinwheel fork L42-L61: 0.116 / 0.181 = 0.641. This ratio IS the silhouette -- the record's own author test L560-L573 asserts the hull is >0.355 x >0.360 m, i.e. the flare is real and not decoration.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_mechanical_calculator_var_calculator_topology_pinwheel_calculato",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L37-L82"
+          ]
+        },
+        {
+          "evidence": "helper _calculator_housing_mesh; 4 transverse stations, drafted side walls; lofted 6-point crank_arm plate",
+          "implementation_function": "_housing_form_flared_four_station_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "key_plate_width_m",
+                "extent_v": "key_plate_depth_m",
+                "point": "(0.0, deck_center_y_m, deck_top_face_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -sin(deck_tilt_rad), cos(deck_tilt_rad))",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "key_deck_plane",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "point": "drive_pivot_xyz_m",
+                "radius": "drive_bore_radius_m"
+              },
+              "frame": {
+                "axis": "drive_face_normal",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "drive_bearing_axis",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "setting_seat_width_m",
+                "extent_v": "setting_seat_depth_m",
+                "point": "(0.0, setting_seat_y_m, setting_seat_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -sin(deck_tilt_rad), cos(deck_tilt_rad))",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "setting_control_seat",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, register_center_y_m, register_center_z_m)",
+                "radius": "register_axle_radius_m"
+              },
+              "frame": {
+                "axis": "register_spin_axis",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "register_shaft_axis",
+              "part": "calculator_hull",
+              "role": "provider"
+            }
+          ],
+          "name": "flared_four_station",
+          "notes": "Construction: four transverse stations swept into a drafted casting. The hull is the single root part and carries the key deck, the register shell, the drive bearing and the setting-control seat as visuals; only moving members become separate parts. The deck plane is published with its REAL tilt and its REAL key-bed rectangle, never the hull AABB.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.41,
+              "minimum": 0.33,
+              "mode": "independent",
+              "name": "hull_width_m",
+              "rationale": "Overall transverse width of the cast hull. Pool: 0.350 (002 L136), 0.362 (pinwheel fork L42-L61, 2 x 0.181), 0.380 (003 L89), 0.398 (traveling-carriage fork L149).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "hull_depth_m",
+              "rationale": "Overall front-to-back depth. Pool: 0.340 (002 L136), 0.360 (001 L20-L21, FRONT_Y -0.240 to REAR_Y 0.120), 0.366 (pinwheel fork outline), 0.440 (003 L89).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "deck_tilt_rad",
+              "rationale": "Sloped deck inherited from 001; the lever-adder fork changes only the hull mesh (L37-L86) and the crank-arm profile (L510-L537).",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.96,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "waist_ratio",
+              "rationale": "Keyboard-waist half-width as a fraction of the register-shoulder half-width. Source lever-adder fork L37-L86 four stations: (-0.240, 0.150), (-0.165, 0.154), (0.050, 0.166), (0.120, 0.178) -> 0.154 / 0.178 = 0.865. The pinch is what distinguishes a lever adder from a plain wedge.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_mechanical_calculator_var_calculator_topology_lever_adding_machi",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L37-L86",
+            "model.py:L510-L537"
+          ]
+        },
+        {
+          "evidence": "part housing; helper _housing_shell (CadQuery, 8-point YZ profile, fillet 0.007); two-layer deck at DECK_TILT 12.5\u00b0",
+          "implementation_function": "_housing_form_cast_side_profile_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "key_plate_width_m",
+                "extent_v": "key_plate_depth_m",
+                "point": "(0.0, deck_center_y_m, deck_top_face_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -sin(deck_tilt_rad), cos(deck_tilt_rad))",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "key_deck_plane",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "point": "drive_pivot_xyz_m",
+                "radius": "drive_bore_radius_m"
+              },
+              "frame": {
+                "axis": "drive_face_normal",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "drive_bearing_axis",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "setting_seat_width_m",
+                "extent_v": "setting_seat_depth_m",
+                "point": "(0.0, setting_seat_y_m, setting_seat_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -sin(deck_tilt_rad), cos(deck_tilt_rad))",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "setting_control_seat",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, register_center_y_m, register_center_z_m)",
+                "radius": "register_axle_radius_m"
+              },
+              "frame": {
+                "axis": "register_spin_axis",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "register_shaft_axis",
+              "part": "calculator_hull",
+              "role": "provider"
+            }
+          ],
+          "name": "cast_side_profile",
+          "notes": "Construction: CadQuery 8-point YZ side profile extruded in X. The hull is the single root part and carries the key deck, the register shell, the drive bearing and the setting-control seat as visuals; only moving members become separate parts. The deck plane is published with its REAL tilt and its REAL key-bed rectangle, never the hull AABB.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.41,
+              "minimum": 0.33,
+              "mode": "independent",
+              "name": "hull_width_m",
+              "rationale": "Overall transverse width of the cast hull. Pool: 0.350 (002 L136), 0.362 (pinwheel fork L42-L61, 2 x 0.181), 0.380 (003 L89), 0.398 (traveling-carriage fork L149).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "hull_depth_m",
+              "rationale": "Overall front-to-back depth. Pool: 0.340 (002 L136), 0.360 (001 L20-L21, FRONT_Y -0.240 to REAR_Y 0.120), 0.366 (pinwheel fork outline), 0.440 (003 L89).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.15,
+              "mode": "independent",
+              "name": "deck_tilt_rad",
+              "rationale": "Source 002 L28: DECK_TILT = radians(12.5) = 0.218. This is the only record that builds the deck as two separately tilted slabs (keyboard_cover L144-L156 and key_plate L157-L169), both at rpy=(DECK_TILT,0,0).",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.003,
+              "mode": "independent",
+              "name": "hull_fillet_m",
+              "rationale": "Radius of the cast fillet run along every |X edge of the extruded side profile. Source 002 L51: edges('|X').fillet(0.007). Without it the extruded profile reads as a folded sheet rather than a casting.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__mechanical_calculator__002__png_bfb3ab073a6b4a5a8e31a0dc5139ecbe",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L33-L51",
+            "model.py:L129-L175"
+          ]
+        },
+        {
+          "evidence": "part housing; helper _wedge_box; base floor + 2 cheeks + fascia + bed + 2 shaft rails + tower, DECK_PITCH 0",
+          "implementation_function": "_housing_form_open_frame_side_cheek_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "key_plate_width_m",
+                "extent_v": "key_plate_depth_m",
+                "point": "(0.0, deck_center_y_m, deck_top_face_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -sin(deck_tilt_rad), cos(deck_tilt_rad))",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "key_deck_plane",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "point": "drive_pivot_xyz_m",
+                "radius": "drive_bore_radius_m"
+              },
+              "frame": {
+                "axis": "drive_face_normal",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "drive_bearing_axis",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "setting_seat_width_m",
+                "extent_v": "setting_seat_depth_m",
+                "point": "(0.0, setting_seat_y_m, setting_seat_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -sin(deck_tilt_rad), cos(deck_tilt_rad))",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "setting_control_seat",
+              "part": "calculator_hull",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, register_center_y_m, register_center_z_m)",
+                "radius": "register_axle_radius_m"
+              },
+              "frame": {
+                "axis": "register_spin_axis",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "register_shaft_axis",
+              "part": "calculator_hull",
+              "role": "provider"
+            }
+          ],
+          "name": "open_frame_side_cheek",
+          "notes": "Construction: open frame: floor + two cheeks + fascia + bed + rails. The hull is the single root part and carries the key deck, the register shell, the drive bearing and the setting-control seat as visuals; only moving members become separate parts. The deck plane is published with its REAL tilt and its REAL key-bed rectangle, never the hull AABB.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.41,
+              "minimum": 0.33,
+              "mode": "independent",
+              "name": "hull_width_m",
+              "rationale": "Overall transverse width of the cast hull. Pool: 0.350 (002 L136), 0.362 (pinwheel fork L42-L61, 2 x 0.181), 0.380 (003 L89), 0.398 (traveling-carriage fork L149).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "hull_depth_m",
+              "rationale": "Overall front-to-back depth. Pool: 0.340 (002 L136), 0.360 (001 L20-L21, FRONT_Y -0.240 to REAR_Y 0.120), 0.366 (pinwheel fork outline), 0.440 (003 L89).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.036,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "cheek_thickness_m",
+              "rationale": "Thickness of each side cheek. Source 003 L96: _wedge_box(0.025, 0.410, 0.055, 0.195) at x = +-0.1775, so the cheek outer face lands at 0.190 -- which is exactly where the crank joint origin sits (L396). The cheek thickness is therefore load-bearing for the drive pivot, not cosmetic.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.028,
+              "minimum": 0.012,
+              "mode": "independent",
+              "name": "bed_thickness_m",
+              "rationale": "Keyboard-bed slab thickness. Source 003 L118-L122: Box((0.330, 0.190, 0.018)) at z=0.072, so the bed top face is 0.081 -- exactly the key joint origin z (L280). This candidate is the pool's only flat bed (DECK_PITCH = 0).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__mechanical_calculator__003__png_6c29e006127e48e78c56f9b8f384a8da",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L32-L59",
+            "model.py:L87-L158"
+          ]
+        }
+      ],
+      "component_type": "root cast hull",
+      "name": "housing_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "9 number_wheel_i parts + 9 REVOLUTE; carry train welded to 1 rack part (from 8 carry_wheel_i); 10 mullions, 9 panes",
+          "implementation_function": "_register_assembly_mullion_counter_bank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "drum_bore_radius_m"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "wheel_bore_axis",
+              "part": "register_wheel",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "extent_u": "readout_extent_x_m",
+                "extent_v": "readout_extent_z_m",
+                "point": "(0.0, readout_face_y_m, register_center_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -1.0, 0.0)",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "register_readout_plane",
+              "part": "calculator_hull",
+              "role": "provider"
+            }
+          ],
+          "name": "mullion_counter_bank",
+          "notes": "Spin axis (1,0,0). Construction: open brow/sill frame, mullions and translucent panes. Shell, digit member and carry train co-vary and are therefore ONE candidate: the bank's window slots, divider planting and readout plane are derived from the spin axis the wheel candidate sets. Each wheel is welded into a single solid so the collision count stays 1 per wheel.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.048,
+              "minimum": 0.019,
+              "mode": "independent",
+              "name": "wheel_pitch_m",
+              "rationale": "Centre-to-centre pitch of the digit members, and the parameter every other register dimension is derived from. Pool: 0.021 (002 L327), 0.022 (001 L149), 0.044 (003 L172).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                7,
+                8,
+                9,
+                10
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "register_digit_count",
+              "rationale": "Digit positions in the bank. Source 001 L149 builds 9 (wheel_xs = [(-4+i)*0.022 for i in range(9)]) with ten mullions at [-0.110] + 8 midpoints + [0.110] -- i.e. D+1 dividers for D wheels, which is the rule the rebuild generalises.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.021,
+              "minimum": 0.011,
+              "mode": "independent",
+              "name": "drum_radius_m",
+              "rationale": "Counter-wheel radius. Source 001 L371: Cylinder(radius=0.016, length=0.014) with a 0.007 hub protruding 1.5 mm each side as a real journal (L377).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__mechanical_calculator__001__png_3c15e16013b5410bb59e4a17fa83e3fb",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L122-L167",
+            "model.py:L361-L401",
+            "model.py:L403-L441"
+          ]
+        },
+        {
+          "evidence": "10 wheel_i parts + 10 REVOLUTE; 1 carry_rack + 1 PRISMATIC; helper _number_wheel; 9 dividers, common axle r 0.0022",
+          "implementation_function": "_register_assembly_railed_drum_bank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "drum_bore_radius_m"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "wheel_bore_axis",
+              "part": "register_wheel",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "extent_u": "readout_extent_x_m",
+                "extent_v": "readout_extent_z_m",
+                "point": "(0.0, readout_face_y_m, register_center_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -1.0, 0.0)",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "register_readout_plane",
+              "part": "calculator_hull",
+              "role": "provider"
+            }
+          ],
+          "name": "railed_drum_bank",
+          "notes": "Spin axis (1,0,0). Construction: railed window bank on a common axle, PRISMATIC carry rack. Shell, digit member and carry train co-vary and are therefore ONE candidate: the bank's window slots, divider planting and readout plane are derived from the spin axis the wheel candidate sets. Each wheel is welded into a single solid so the collision count stays 1 per wheel.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.048,
+              "minimum": 0.019,
+              "mode": "independent",
+              "name": "wheel_pitch_m",
+              "rationale": "Centre-to-centre pitch of the digit members, and the parameter every other register dimension is derived from. Pool: 0.021 (002 L327), 0.022 (001 L149), 0.044 (003 L172).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                8,
+                9,
+                10,
+                11
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "register_digit_count",
+              "rationale": "Source 002 L27: WHEEL_COUNT = 10, wheels at (i-4.5)*0.021 (L327) with nine dividers at (i-4)*0.021 (L207-L214).",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.014,
+              "minimum": 0.007,
+              "mode": "independent",
+              "name": "drum_radius_m",
+              "rationale": "Annular drum outer radius. Source 002 L54-L61: circle(0.010).circle(0.0021).extrude(0.016) -- a real through-bore, not a solid puck.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0016,
+              "mode": "independent",
+              "name": "axle_radius_m",
+              "rationale": "Common register shaft. Source 002 L216: Cylinder(radius=0.0022, length=0.245). The source drum bore is 0.0021 < 0.0022, a 0.1 mm interference that causes ten allow_overlap calls at L599-L608; the rebuild derives the bore from THIS value instead (binding register_shaft_to_wheel_bore).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__mechanical_calculator__002__png_bfb3ab073a6b4a5a8e31a0dc5139ecbe",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L177-L237",
+            "model.py:L325-L354",
+            "model.py:L387-L414"
+          ]
+        },
+        {
+          "evidence": "helper _number_wheel with 9 unioned teeth 3.5\u219215.5 mm at 40\u00b0 pitch; 10 wheels + rack as above; 1 visual per drum",
+          "implementation_function": "_register_assembly_stepped_drum_bank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "drum_bore_radius_m"
+              },
+              "frame": {
+                "axis": "(1,0,0)",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "wheel_bore_axis",
+              "part": "register_wheel",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "extent_u": "readout_extent_x_m",
+                "extent_v": "readout_extent_z_m",
+                "point": "(0.0, readout_face_y_m, register_center_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -1.0, 0.0)",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "register_readout_plane",
+              "part": "calculator_hull",
+              "role": "provider"
+            }
+          ],
+          "name": "stepped_drum_bank",
+          "notes": "Spin axis (1,0,0). Construction: Leibniz stepped drums welded into one solid each. Shell, digit member and carry train co-vary and are therefore ONE candidate: the bank's window slots, divider planting and readout plane are derived from the spin axis the wheel candidate sets. Each wheel is welded into a single solid so the collision count stays 1 per wheel.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.048,
+              "minimum": 0.019,
+              "mode": "independent",
+              "name": "wheel_pitch_m",
+              "rationale": "Centre-to-centre pitch of the digit members, and the parameter every other register dimension is derived from. Pool: 0.021 (002 L327), 0.022 (001 L149), 0.044 (003 L172).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                8,
+                9,
+                10,
+                11
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "register_digit_count",
+              "rationale": "Same shell and rack as railed_drum_bank; the fork changes only _number_wheel (L54-L82). WHEEL_COUNT stays 10.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [
+                7,
+                9,
+                11
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "drum_tooth_count",
+              "rationale": "Leibniz drive teeth per drum. Source stepped-drum fork L71-L81: nine rect(0.0030, 0.0042) teeth at center(0, 0.0088), each rotated i*40 degrees, all union-ed into ONE solid. Nine teeth at 40 degrees is a closed 360-degree set, which is why the count and the angular pitch are one parameter.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0023,
+              "minimum": 0.0009,
+              "mode": "independent",
+              "name": "tooth_length_step_m",
+              "rationale": "Axial growth per tooth -- the progressive engagement length IS the mechanism. Source L72: tooth_length = 0.0035 + i*0.0015, i.e. 3.5 mm to 15.5 mm. The record's test L661-L674 asserts a >=0.0175 x >=0.020 x >=0.020 envelope.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_mechanical_calculator_var_calculator_topology_stepped_drum_calcu",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L54-L82",
+            "model.py:L195-L255",
+            "model.py:L343-L432"
+          ]
+        },
+        {
+          "evidence": "helper _exposed_pinwheel_bank (7 cut bays + rear relief); 7 wheel_i + 7 REVOLUTE; BezelGeometry readout; static brass rack",
+          "implementation_function": "_register_assembly_bezel_pinwheel_tower_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "drum_bore_radius_m"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "wheel_bore_axis",
+              "part": "register_wheel",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "extent_u": "readout_extent_x_m",
+                "extent_v": "readout_extent_z_m",
+                "point": "(0.0, readout_face_y_m, register_center_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -1.0, 0.0)",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "register_readout_plane",
+              "part": "calculator_hull",
+              "role": "provider"
+            }
+          ],
+          "name": "bezel_pinwheel_tower",
+          "notes": "Spin axis (0,1,0). Construction: cut cast cage with open bays, face-on bezel readout. Shell, digit member and carry train co-vary and are therefore ONE candidate: the bank's window slots, divider planting and readout plane are derived from the spin axis the wheel candidate sets. Each wheel is welded into a single solid so the collision count stays 1 per wheel.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.048,
+              "minimum": 0.019,
+              "mode": "independent",
+              "name": "wheel_pitch_m",
+              "rationale": "Centre-to-centre pitch of the digit members, and the parameter every other register dimension is derived from. Pool: 0.021 (002 L327), 0.022 (001 L149), 0.044 (003 L172).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                5,
+                6,
+                7,
+                8
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "register_digit_count",
+              "rationale": "Source exposed-pinwheel fork L64-L91 cuts one open bay per wheel at -0.132 + 0.044*i for WHEEL_COUNT = 7 (003 L23).",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [
+                6,
+                8,
+                10
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "pinwheel_tooth_count",
+              "rationale": "Radial step teeth per wheel. Source 003 L305-L315 / fork L318-L357: eight Box teeth at r = 0.018, depth 0.012 + 0.0025*((i+wheel)%5) -- the per-wheel phase is what makes the bank read as a SET stack rather than seven copies.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.195,
+              "minimum": 0.115,
+              "mode": "independent",
+              "name": "register_tower_height_m",
+              "rationale": "Cast cage height. Source 003 L148: Box((0.350, 0.055, 0.180)); the traveling-carriage fork L149 resizes it to 0.120, and per VDM that pure proportion change is folded here instead of becoming a candidate.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_mechanical_calculator_var_register_form_exposed_pinwheel_bank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L64-L91",
+            "model.py:L198-L254",
+            "model.py:L318-L357"
+          ]
+        },
+        {
+          "evidence": "helper _enclosed_window_bank (cavity + 7 window cuts, the pool's only \u00a77 real openings); 7 wheels + 7 REVOLUTE",
+          "implementation_function": "_register_assembly_enclosed_window_bank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "drum_bore_radius_m"
+              },
+              "frame": {
+                "axis": "(0,1,0)",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "wheel_bore_axis",
+              "part": "register_wheel",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "extent_u": "readout_extent_x_m",
+                "extent_v": "readout_extent_z_m",
+                "point": "(0.0, readout_face_y_m, register_center_z_m)"
+              },
+              "frame": {
+                "normal": "(0.0, -1.0, 0.0)",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "register_readout_plane",
+              "part": "calculator_hull",
+              "role": "provider"
+            }
+          ],
+          "name": "enclosed_window_bank",
+          "notes": "Spin axis (0,1,0). Construction: hollow casing with a continuous face and cut windows. Shell, digit member and carry train co-vary and are therefore ONE candidate: the bank's window slots, divider planting and readout plane are derived from the spin axis the wheel candidate sets. Each wheel is welded into a single solid so the collision count stays 1 per wheel.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.048,
+              "minimum": 0.019,
+              "mode": "independent",
+              "name": "wheel_pitch_m",
+              "rationale": "Centre-to-centre pitch of the digit members, and the parameter every other register dimension is derived from. Pool: 0.021 (002 L327), 0.022 (001 L149), 0.044 (003 L172).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                5,
+                6,
+                7,
+                8
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "register_digit_count",
+              "rationale": "Source enclosed-window fork L64-L86 cuts one window per wheel; WHEEL_COUNT = 7.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.046,
+              "minimum": 0.022,
+              "mode": "independent",
+              "name": "window_height_m",
+              "rationale": "Height of the real cut window. Source fork L79-L83: box(0.028, 0.014, 0.034) cut on the front face at window_z = 0.058, against a 0.030-high display card -- the cut height 0.034 is the card height plus its bezel. THIS IS THE POOL'S ONLY RECORD THAT CUTS REAL OPENINGS IN A SHELL, so it is the section 7 reference for the whole category.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.195,
+              "minimum": 0.115,
+              "mode": "independent",
+              "name": "register_tower_height_m",
+              "rationale": "Casing height, same folded proportion as the pinwheel tower.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_mechanical_calculator_var_register_form_enclosed_window_bank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L64-L86",
+            "model.py:L198-L254",
+            "model.py:L318-L357"
+          ]
+        }
+      ],
+      "component_type": "register bank shell + digit member + carry train, as one structural family",
+      "name": "register_assembly",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "parts crank, crank_grip; 2 REVOLUTE; throw 0.075, effort 15.0; grip sleeve + ball + marker",
+          "implementation_function": "_drive_member_side_rotary_crank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "drive_shaft_radius_m"
+              },
+              "frame": {
+                "axis": "drive_face_normal",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "drive_shaft_axis",
+              "part": "drive_member",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "point": "grip_pin_xyz_m",
+                "radius": "grip_pin_radius_m"
+              },
+              "frame": {
+                "axis": "grip_axis_local",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "grip_pin_axis",
+              "part": "drive_member",
+              "role": "provider"
+            }
+          ],
+          "name": "side_rotary_crank",
+          "notes": "Construction: flank crank with its own REVOLUTE grip child. Carries a second REVOLUTE grip child whose origin is exactly the crank's handle point. The pivot sits ON a hull face at that face's local mid-height and the member's entire swept circle (throw + grip radius) lies outside the hull footprint. The bearing is a real annulus with bore_r = shaft_r + 0.0005..0.001, which is what removes both crank allow_overlap causes in the pool.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "Handle offset from the drive axis. Pool: 0.050 (001 L483), 0.075 (003 L378), 0.080 (folding fork L88-L100), 0.098 (front-lever fork), 0.112 (pull-lever fork L490), 0.152 (002 L79, sqrt(0.036^2 + 0.148^2)).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0095,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "drive_shaft_radius_m",
+              "rationale": "Journal radius at the hull face. Pool: 0.0045 (folding fork L73), 0.0055 (front-lever fork L476), 0.006 (001 L473), 0.008 (003 L368). The hull bore is DERIVED from this (binding hull_face_to_drive_bearing), which is what removes both of the pool's crank allow_overlap sites.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                0,
+                1
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "crank_arm_lofted",
+              "rationale": "0 = the Box arm of 003 L377 (0.010 x 0.075 x 0.012); 1 = the six-point lofted plate casting of the lever-adder fork L510-L537. The SourceMap keeps that mesh as an ALTERNATE ARM PROFILE of this candidate rather than folding it away, because it changes the arm from a box to a shaped casting -- a form-family change on one existing part.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.062,
+              "minimum": 0.024,
+              "mode": "independent",
+              "name": "grip_length_m",
+              "rationale": "Free-spinning grip sleeve length. Pool: 0.026 (001 L488), 0.032 (002 L95 CapsuleGeometry(0.009, 0.032)), 0.055 (003 L408).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__mechanical_calculator__003__png_6c29e006127e48e78c56f9b8f384a8da",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L366-L404",
+            "model.py:L406-L441"
+          ]
+        },
+        {
+          "evidence": "helper _crank_tube_mesh (CadQuery weld: shaft, hub, arm, knuckle, hinge pin); free spin becomes a bounded fold",
+          "implementation_function": "_drive_member_folding_side_crank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "drive_shaft_radius_m"
+              },
+              "frame": {
+                "axis": "drive_face_normal",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "drive_shaft_axis",
+              "part": "drive_member",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "point": "grip_pin_xyz_m",
+                "radius": "grip_pin_radius_m"
+              },
+              "frame": {
+                "axis": "grip_axis_local",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "grip_pin_axis",
+              "part": "drive_member",
+              "role": "provider"
+            }
+          ],
+          "name": "folding_side_crank",
+          "notes": "Construction: welded cast crank with a bounded folding knuckle. Carries a second REVOLUTE grip child whose origin is exactly the crank's handle point. The pivot sits ON a hull face at that face's local mid-height and the member's entire swept circle (throw + grip radius) lies outside the hull footprint. The bearing is a real annulus with bore_r = shaft_r + 0.0005..0.001, which is what removes both crank allow_overlap causes in the pool.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "Handle offset from the drive axis. Pool: 0.050 (001 L483), 0.075 (003 L378), 0.080 (folding fork L88-L100), 0.098 (front-lever fork), 0.112 (pull-lever fork L490), 0.152 (002 L79, sqrt(0.036^2 + 0.148^2)).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0095,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "drive_shaft_radius_m",
+              "rationale": "Journal radius at the hull face. Pool: 0.0045 (folding fork L73), 0.0055 (front-lever fork L476), 0.006 (001 L473), 0.008 (003 L368). The hull bore is DERIVED from this (binding hull_face_to_drive_bearing), which is what removes both of the pool's crank allow_overlap sites.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.78,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "fold_upper_rad",
+              "rationale": "The grip stops being a free-spinning handle and becomes a FOLDING one -- a joint-semantics change, not a shape change. Source folding fork L466-L483: grip_spin REVOLUTE about (0,1,0), lower 0, upper radians(84) = 1.466. Its test L787-L813 requires the folded grip to drop >=0.025 in Z and >=0.020 in X.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_mechanical_calculator_var_drive_folding_side_crank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L71-L106",
+            "model.py:L466-L483"
+          ]
+        },
+        {
+          "evidence": "part crank, 1 REVOLUTE; pivot moved to (0.105,-0.247,0.030); host front lip and trim re-derived",
+          "implementation_function": "_drive_member_front_reciprocating_lever_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "drive_shaft_radius_m"
+              },
+              "frame": {
+                "axis": "drive_face_normal",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "drive_shaft_axis",
+              "part": "drive_member",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "point": "grip_pin_xyz_m",
+                "radius": "grip_pin_radius_m"
+              },
+              "frame": {
+                "axis": "grip_axis_local",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "grip_pin_axis",
+              "part": "drive_member",
+              "role": "provider"
+            }
+          ],
+          "name": "front_reciprocating_lever",
+          "notes": "Construction: front-wall lever, bearing normal (0,1,0). No grip child: one part, one joint. The pivot sits ON a hull face at that face's local mid-height and the member's entire swept circle (throw + grip radius) lies outside the hull footprint. The bearing is a real annulus with bore_r = shaft_r + 0.0005..0.001, which is what removes both crank allow_overlap causes in the pool.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "Handle offset from the drive axis. Pool: 0.050 (001 L483), 0.075 (003 L378), 0.080 (folding fork L88-L100), 0.098 (front-lever fork), 0.112 (pull-lever fork L490), 0.152 (002 L79, sqrt(0.036^2 + 0.148^2)).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0095,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "drive_shaft_radius_m",
+              "rationale": "Journal radius at the hull face. Pool: 0.0045 (folding fork L73), 0.0055 (front-lever fork L476), 0.006 (001 L473), 0.008 (003 L368). The hull bore is DERIVED from this (binding hull_face_to_drive_bearing), which is what removes both of the pool's crank allow_overlap sites.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "lever_swing_rad",
+              "rationale": "Half-stroke of the front operating lever. Source front-lever fork L515-L520: crank_turn REVOLUTE about (0,1,0), +-0.48 rad, effort 35.0. This is the only record that moves the drive to another hull face, so the host must re-derive the bearing onto the front wall (it also thins and pushes the front lip forward, L106-L118).",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_mechanical_calculator_var_drive_front_reciprocating_lever",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L200-L208",
+            "model.py:L474-L523"
+          ]
+        },
+        {
+          "evidence": "part vertical_pull_lever, 1 REVOLUTE, no grip child; 0.112 arm hanging down, Z-axis hand column",
+          "implementation_function": "_drive_member_vertical_pull_lever_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "drive_shaft_radius_m"
+              },
+              "frame": {
+                "axis": "drive_face_normal",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "drive_shaft_axis",
+              "part": "drive_member",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "point": "grip_pin_xyz_m",
+                "radius": "grip_pin_radius_m"
+              },
+              "frame": {
+                "axis": "grip_axis_local",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "grip_pin_axis",
+              "part": "drive_member",
+              "role": "provider"
+            }
+          ],
+          "name": "vertical_pull_lever",
+          "notes": "Construction: hanging pull lever with a Z-axis hand column, no grip child. No grip child: one part, one joint. The pivot sits ON a hull face at that face's local mid-height and the member's entire swept circle (throw + grip radius) lies outside the hull footprint. The bearing is a real annulus with bore_r = shaft_r + 0.0005..0.001, which is what removes both crank allow_overlap causes in the pool.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "crank_throw_m",
+              "rationale": "Handle offset from the drive axis. Pool: 0.050 (001 L483), 0.075 (003 L378), 0.080 (folding fork L88-L100), 0.098 (front-lever fork), 0.112 (pull-lever fork L490), 0.152 (002 L79, sqrt(0.036^2 + 0.148^2)).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0095,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "drive_shaft_radius_m",
+              "rationale": "Journal radius at the hull face. Pool: 0.0045 (folding fork L73), 0.0055 (front-lever fork L476), 0.006 (001 L473), 0.008 (003 L368). The hull bore is DERIVED from this (binding hull_face_to_drive_bearing), which is what removes both of the pool's crank allow_overlap sites.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.25,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "pull_stroke_rad",
+              "rationale": "One-way pull stroke. Source pull-lever fork L508-L514: lever_pull REVOLUTE about (-1,0,0), lower 0.0, upper 0.95, effort 35.0 -- the pool's only non-symmetric drive range. Tests L678-L691 require the grip to travel >=0.070 m in -Y.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_mechanical_calculator_var_drive_vertical_pull_lever",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L197-L205",
+            "model.py:L471-L515"
+          ]
+        },
+        {
+          "evidence": "helper _rotary_selector_dial (\u23000.100, 10 finger holes); dial + hub on the crank part; host backplate, scale ring, 10 marks",
+          "implementation_function": "_drive_member_coaxial_rotary_dial_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "drive_shaft_radius_m"
+              },
+              "frame": {
+                "axis": "drive_face_normal",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "drive_shaft_axis",
+              "part": "drive_member",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "point": "grip_pin_xyz_m",
+                "radius": "grip_pin_radius_m"
+              },
+              "frame": {
+                "axis": "grip_axis_local",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "grip_pin_axis",
+              "part": "drive_member",
+              "role": "provider"
+            }
+          ],
+          "name": "coaxial_rotary_dial",
+          "notes": "Construction: entry dial welded onto the drive axis, no grip child. No grip child: one part, one joint. The pivot sits ON a hull face at that face's local mid-height and the member's entire swept circle (throw + grip radius) lies outside the hull footprint. The bearing is a real annulus with bore_r = shaft_r + 0.0005..0.001, which is what removes both crank allow_overlap causes in the pool.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0095,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "drive_shaft_radius_m",
+              "rationale": "Journal radius at the hull face. Pool: 0.0045 (folding fork L73), 0.0055 (front-lever fork L476), 0.006 (001 L473), 0.008 (003 L368). The hull bore is DERIVED from this (binding hull_face_to_drive_bearing), which is what removes both of the pool's crank allow_overlap sites.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.064,
+              "minimum": 0.036,
+              "mode": "independent",
+              "name": "dial_radius_m",
+              "rationale": "Perforated entry dial radius. Source rotary-dial fork L71-L85: circle(0.050).extrude(0.006, both=True). Its test L550-L580 requires the dial >=0.095 in Y and Z and <0.014 thick. This candidate lives INSIDE drive_member and not beside it: a 0.058 m-radius disc concentric with the front-lever pivot at z=0.030 would sweep 0.028 m below the table, which is a different machine, not a local adaptation (AUTHORING section 4).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                8,
+                10,
+                12
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "dial_hole_count",
+              "rationale": "Finger holes on the bolt circle. Source L74-L84: ten circle(0.0062) cuts on a 0.034 bolt circle, plus ten matching host index marks at r=0.052 (L316-L327).",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_0611_mechanical_calculator_var_calculator_topology_rotary_dial_calcul",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L71-L85",
+            "model.py:L292-L327",
+            "model.py:L478-L495"
+          ]
+        }
+      ],
+      "component_type": "hand drive member on one hull face",
+      "name": "drive_member",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "3 visuals per key: 0.006\u00b2 stem, 0.015\u00b2 cap, number inset; three-colour column grouping",
+          "implementation_function": "_key_form_stepped_box_cap_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "key_stem_size_m * 0.5"
+              },
+              "frame": {
+                "axis": "(0.0, 0.0, -1.0)",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "key_stem_axis",
+              "part": "calculator_key",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "extent_u": "key_retainer_size_m",
+                "extent_v": "key_retainer_size_m",
+                "point": "(0.0, 0.0, -deck_skin_thickness_m + 0.0002)"
+              },
+              "frame": {
+                "normal": "(0.0, 0.0, 1.0)",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "key_retainer_face",
+              "part": "calculator_key",
+              "role": "consumer"
+            }
+          ],
+          "name": "stepped_box_cap",
+          "notes": "Construction: square stepped plastic key with a moulded number inset. The whole key -- retainer flange, stem and cap -- is ONE welded solid and one visual, built once per seed and shared across all N keys (the comptometer fork L299-L303 already builds its cap mesh once and shares it). The deck aperture is derived from key_stem_size_m, not authored: aperture = stem + 2*0.0005, depth >= key_travel_m. No source record cuts one.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.009,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "key_travel_m",
+              "rationale": "Prismatic stroke of every key. Pool: 0.004 (002 L321), 0.006 (001 L261), 0.007 (003 L286), 0.009 (comptometer fork L339). This value drives the deck skin thickness, the aperture depth and the key-well depth (binding deck_to_key_seating), because NO source record cuts an aperture at all and motion QC exercises the upper bound of every bounded prismatic joint.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "key_cap_size_m",
+              "rationale": "Square moulded cap side. Source 002 L292-L297: Box((0.015, 0.015, 0.009)); 001 L237-L242 is the same family at 0.0125. Bounded by the neighbour-clearance rule cap <= 0.75 * min(pitch), whose tightest pool case is the 90-key fork at 0.015 cap on a 0.0185 pitch (L298-L299).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0095,
+              "minimum": 0.0045,
+              "mode": "independent",
+              "name": "key_stem_size_m",
+              "rationale": "Square stem side, and the member the deck aperture is derived from. Source 002 L286-L291: Box((0.006, 0.006, 0.004)) seated with its bottom exactly on the plate (asserted expect_contact contact_tol=0.0002 at L580-L595).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__mechanical_calculator__002__png_bfb3ab073a6b4a5a8e31a0dc5139ecbe",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L273-L323"
+          ]
+        },
+        {
+          "evidence": "3 visuals: \u23000.010\u00d70.024 stem, \u23000.034\u00d70.010 cap, \u23000.019 legend disc; brass key-guide strips between rows",
+          "implementation_function": "_key_form_cylindrical_plunger_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "key_stem_size_m * 0.5"
+              },
+              "frame": {
+                "axis": "(0.0, 0.0, -1.0)",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "key_stem_axis",
+              "part": "calculator_key",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "extent_u": "key_retainer_size_m",
+                "extent_v": "key_retainer_size_m",
+                "point": "(0.0, 0.0, -deck_skin_thickness_m + 0.0002)"
+              },
+              "frame": {
+                "normal": "(0.0, 0.0, 1.0)",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "key_retainer_face",
+              "part": "calculator_key",
+              "role": "consumer"
+            }
+          ],
+          "name": "cylindrical_plunger",
+          "notes": "Construction: round steel plunger with a coloured cap and legend disc. The whole key -- retainer flange, stem and cap -- is ONE welded solid and one visual, built once per seed and shared across all N keys (the comptometer fork L299-L303 already builds its cap mesh once and shares it). The deck aperture is derived from key_stem_size_m, not authored: aperture = stem + 2*0.0005, depth >= key_travel_m. No source record cuts one.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.009,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "key_travel_m",
+              "rationale": "Prismatic stroke of every key. Pool: 0.004 (002 L321), 0.006 (001 L261), 0.007 (003 L286), 0.009 (comptometer fork L339). This value drives the deck skin thickness, the aperture depth and the key-well depth (binding deck_to_key_seating), because NO source record cuts an aperture at all and motion QC exercises the upper bound of every bounded prismatic joint.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.024,
+              "mode": "independent",
+              "name": "key_cap_size_m",
+              "rationale": "Coloured cap DIAMETER. Source 003 L263-L268: Cylinder(radius=0.017, length=0.010) i.e. 0.034, with a 0.019 ivory legend disc on top (L269-L274).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.014,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "key_stem_size_m",
+              "rationale": "Steel stem DIAMETER. Source 003 L257-L262: Cylinder(radius=0.005, length=0.024) centred at z=0.012, so its base plane is exactly local z=0.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__mechanical_calculator__003__png_6c29e006127e48e78c56f9b8f384a8da",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L246-L288"
+          ]
+        },
+        {
+          "evidence": "helper _direct_key_cap (8-ring \u00d7 24-segment lathe, concave dish); stem \u23000.009\u00d70.030, travel 0.009; mesh built once and shared",
+          "implementation_function": "_key_form_concave_mushroom_cap_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "key_stem_size_m * 0.5"
+              },
+              "frame": {
+                "axis": "(0.0, 0.0, -1.0)",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "key_stem_axis",
+              "part": "calculator_key",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "extent_u": "key_retainer_size_m",
+                "extent_v": "key_retainer_size_m",
+                "point": "(0.0, 0.0, -deck_skin_thickness_m + 0.0002)"
+              },
+              "frame": {
+                "normal": "(0.0, 0.0, 1.0)",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "key_retainer_face",
+              "part": "calculator_key",
+              "role": "consumer"
+            }
+          ],
+          "name": "concave_mushroom_cap",
+          "notes": "Construction: 8-ring lathed concave mushroom cap, built once and shared. The whole key -- retainer flange, stem and cap -- is ONE welded solid and one visual, built once per seed and shared across all N keys (the comptometer fork L299-L303 already builds its cap mesh once and shares it). The deck aperture is derived from key_stem_size_m, not authored: aperture = stem + 2*0.0005, depth >= key_travel_m. No source record cuts one.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.009,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "key_travel_m",
+              "rationale": "Prismatic stroke of every key. Pool: 0.004 (002 L321), 0.006 (001 L261), 0.007 (003 L286), 0.009 (comptometer fork L339). This value drives the deck skin thickness, the aperture depth and the key-well depth (binding deck_to_key_seating), because NO source record cuts an aperture at all and motion QC exercises the upper bound of every bounded prismatic joint.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.038,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "key_cap_size_m",
+              "rationale": "Mushroom cap DIAMETER. Source comptometer fork L61-L65: _direct_key_cap(radius=0.016) = 0.032. Its test L612-L640 requires the cap >=0.031 in X and Y and 0.009 <= h <= 0.014.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.013,
+              "minimum": 0.007,
+              "mode": "independent",
+              "name": "key_stem_size_m",
+              "rationale": "Stem DIAMETER. Source fork L299-L306: Cylinder(radius=0.0045, length=0.030) -- the fork lengthens the stem from 0.024 to 0.030 and the travel from 0.007 to 0.009 because a direct-action Comptometer key is a guided plunger.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.92,
+              "minimum": 0.6,
+              "mode": "independent",
+              "name": "cap_dish_ratio",
+              "rationale": "Depth of the concave finger dish as a fraction of the cap height. Source fork L70-L79: the last two lathe rings fall back to 0.88h and 0.78h against a rim at 0.42h, so the dish is 0.10 h deep relative to the 0.88h shoulder; the ratio parameterises that fall-back. It IS the candidate -- without it the lathe is an ordinary domed button.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_mechanical_calculator_var_calculator_topology_direct_key_comptom",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L61-L118",
+            "model.py:L299-L344"
+          ]
+        }
+      ],
+      "component_type": "the individual sprung key",
+      "name": "key_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "slider_count \u2208 {2,3,4} parts + PRISMATIC (0,-1,0) 0\u21920.028; 2 rails per slider at x\u00b10.009; 3-piece carriage",
+          "implementation_function": "_setting_control_slider_bank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "slider_carriage_width_m",
+                "extent_v": "slider_carriage_depth_m",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "frame": {
+                "normal": "(0.0, 0.0, 1.0)",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "slider_seat_plane",
+              "part": "setting_slider",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "slider_carriage_width_m * 0.5"
+              },
+              "frame": {
+                "axis": "(0.0, -1.0, 0.0)",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "slider_slide_axis",
+              "part": "setting_slider",
+              "role": "consumer"
+            }
+          ],
+          "name": "slider_bank",
+          "notes": "Construction: N carriages on paired rails, PRISMATIC in the deck frame.",
+          "parameters": [
+            {
+              "choices": [
+                2,
+                3,
+                4
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "slider_count",
+              "rationale": "Number of selector carriages. This one candidate replaces three rejected source slots: 001's four-slider deck lane (L314-L359), 002's flank pair (L239-L246, L356-L385) and 003's three railed carriages (L227-L235, L331-L364). They differ only in count, placement and rail construction, none of which is a candidate under VISUAL_DIVERSITY_MODEL; 003's paired-rail form is adopted for all counts because it is the only one that satisfies MECHANICAL_PRIORS section 6.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.012,
+              "mode": "independent",
+              "name": "slider_travel_m",
+              "rationale": "Prismatic stroke along the deck. Pool: 0.012 (002 L379-L384, +-0.006), 0.020 (001 L353-L358, +-0.010), 0.028 (003 L358-L363, 0 -> 0.028).",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__mechanical_calculator__003__png_6c29e006127e48e78c56f9b8f384a8da",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L227-L235",
+            "model.py:L331-L364"
+          ]
+        },
+        {
+          "evidence": "part zeroing_knob + 1 REVOLUTE; KnobGeometry faceted + ribbed KnobGrip, center=False so the base seats at local z=0",
+          "implementation_function": "_setting_control_zeroing_knob_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "knob_diameter_m * 0.5"
+              },
+              "frame": {
+                "axis": "(0.0, 0.0, 1.0)",
+                "radial": "(0.0, 0.0, 1.0)"
+              },
+              "kind": "axis",
+              "name": "knob_spin_axis",
+              "part": "zeroing_knob",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "extent_u": "knob_diameter_m",
+                "extent_v": "knob_diameter_m",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "frame": {
+                "normal": "(0.0, 0.0, 1.0)",
+                "tangent_u": "(1.0, 0.0, 0.0)"
+              },
+              "kind": "plane",
+              "name": "knob_base_plane",
+              "part": "zeroing_knob",
+              "role": "consumer"
+            }
+          ],
+          "name": "zeroing_knob",
+          "notes": "Construction: the pool's only vertical-axis (0,0,1) REVOLUTE control.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.058,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "knob_diameter_m",
+              "rationale": "Faceted clearing knob. Source zeroing-knob fork L328-L336: KnobGeometry(0.044, 0.022, body_style='faceted', base 0.040, top 0.034, center=False). center=False puts the knob base at local z=0, so its seat is a tangent contact on the tower cover, asserted expect_contact(1e-4) at L616-L621.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                8,
+                12,
+                16
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "knob_rib_count",
+              "rationale": "Ribbed grip count. Source L334: KnobGrip(style='ribbed', count=12, depth=0.0012, width=0.0022).",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_0611_mechanical_calculator_var_clearing_motion_rotating_zeroing_knob",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L326-L369"
+          ]
+        },
+        {
+          "evidence": "0 parts, 0 joints; the Comptometer configuration and that of 8 of 19 records; key-guide strips and crank survive unchanged",
+          "implementation_function": "_setting_control_none_build",
+          "interfaces": [],
+          "name": "none",
+          "notes": "Construction: no setting bank at all -- 8 of 19 records, the modal configuration.",
+          "parameters": [],
+          "record_id": "rec_0611_mechanical_calculator_var_calculator_topology_direct_key_comptom",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L278-L293",
+            "model.py:L387-L396"
+          ]
+        }
+      ],
+      "component_type": "setting / clearing control bank",
+      "name": "setting_control",
+      "required": true
+    }
+  ],
+  "slug": "Mechanical_calculator",
+  "source_map_path": "articraft_template_authoring/source_maps/Mechanical_calculator.md",
+  "source_map_sha256": "950a4368909cd8160a62a74f2f2ce897521d3d08522716fa7a1bf7d3df84785a"
+}

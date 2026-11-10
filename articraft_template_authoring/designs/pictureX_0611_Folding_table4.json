@@ -1,0 +1,1210 @@
+{
+  "assembly_notes": "Round dining table with a lazy-susan turntable. One rigid tabletop root carries the round slab, its edge band, the circular apron, the radial underframe and every support mount. A single turntable_tray is a REVOLUTE (+z) child of the tabletop on a central bearing; it is continuous, so lower=-pi and upper=+pi. tray_build changes the tray plan itself (woven lattice, flush recessed pocket, raised guard rim, two-tier post or wedge sectors) and bearing_build independently changes the mechanism it turns on (flat race and plate, wide annular ring with a spoked hub, caged rollers on a tray-side track, or a pocketed detent ring indexed by a tray-mounted spring pin). Every tray plan combines with every bearing because the host derives one mount height for all of them: woven_lattice, flush_recessed (host pocket plus bearing lip), indexed_detent (host detent ring, tray spring pin), raised_guard_rim, ring_bearing (host annular race instead of a central pedestal), roller_bearing (host roller retainer), two_tier (host lower shelf) and segmented_wedge. base_build is one structural family of table bases: folding_legs hinges support_count square-tube legs off the underframe on fork-and-pin brackets, while pedestal_column and tripod_pedestal stand on a central column whose hub carries support_count feet. Every base therefore has exactly support_count members and grows with it. table_diameter_m, tray_diameter_ratio and table_height_m are the independent parameters; palette, weave density and fastener counts are non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "tray_build_identity",
+      "applies_to": {
+        "candidates": [
+          "woven_lattice",
+          "flush_recessed",
+          "raised_guard_rim",
+          "two_tier",
+          "segmented_wedge"
+        ],
+        "slot": "tray_build"
+      },
+      "required_author_checks": [
+        "category_anchor: the turntable spins on a vertical axis in the tabletop",
+        "category_anchor: the base carries the top at seating height",
+        "category_anchor: tray_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "turntable_tray",
+          "joint_type": "revolute",
+          "parent_role": "tabletop"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "tabletop"
+        },
+        {
+          "exact_count": 1,
+          "role": "turntable_tray"
+        },
+        {
+          "count_from": "support_count",
+          "role": "support_member"
+        }
+      ]
+    },
+    {
+      "anchor_id": "bearing_build_identity",
+      "applies_to": {
+        "candidates": [
+          "race_and_plate",
+          "ring_and_hub",
+          "roller_retainer",
+          "detent_index"
+        ],
+        "slot": "bearing_build"
+      },
+      "required_author_checks": [
+        "category_anchor: the turntable spins on a vertical axis in the tabletop",
+        "category_anchor: the base carries the top at seating height",
+        "category_anchor: bearing_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "turntable_tray",
+          "joint_type": "revolute",
+          "parent_role": "tabletop"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "tabletop"
+        },
+        {
+          "exact_count": 1,
+          "role": "turntable_tray"
+        },
+        {
+          "count_from": "support_count",
+          "role": "support_member"
+        }
+      ]
+    },
+    {
+      "anchor_id": "base_build_identity",
+      "applies_to": {
+        "candidates": [
+          "folding_legs",
+          "pedestal_column",
+          "tripod_pedestal"
+        ],
+        "slot": "base_build"
+      },
+      "required_author_checks": [
+        "category_anchor: the turntable spins on a vertical axis in the tabletop",
+        "category_anchor: the base carries the top at seating height",
+        "category_anchor: base_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "turntable_tray",
+          "joint_type": "revolute",
+          "parent_role": "tabletop"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "tabletop"
+        },
+        {
+          "exact_count": 1,
+          "role": "turntable_tray"
+        },
+        {
+          "count_from": "support_count",
+          "role": "support_member"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "3 <= support_count <= 6; angular pitch keeps adjacent members at least 90 mm apart on the hinge circle",
+      "item_slot": "base_build",
+      "name": "support_count",
+      "spacing_expression": "support members are pitched evenly around the hinge circle at 360/support_count",
+      "values": [
+        3,
+        4,
+        6
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Flat grey tray with a dark perimeter seam, crossed woven slats and a warm-metal centre cap.",
+          "implementation_function": "_tray_build_woven_lattice_build",
+          "interfaces": [],
+          "name": "woven_lattice",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table4__001__png_f4ee4e14e6ee4f2db24e0794cea1976e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L189-L253"
+          ]
+        },
+        {
+          "evidence": "Tray dropped into a machined pocket with its own bearing lip so it reads flush with the top.",
+          "implementation_function": "_tray_build_flush_recessed_build",
+          "interfaces": [],
+          "name": "flush_recessed",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table4_var_flush_recessed_tray",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L125-L145"
+          ]
+        },
+        {
+          "evidence": "Tall retaining rim with an inlay band standing above the tray surface.",
+          "implementation_function": "_tray_build_raised_guard_rim_build",
+          "interfaces": [],
+          "name": "raised_guard_rim",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table4_var_raised_guard_rim",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L240-L262"
+          ]
+        },
+        {
+          "evidence": "Fixed lower shelf with its own edge band beneath the rotating tray.",
+          "implementation_function": "_tray_build_two_tier_build",
+          "interfaces": [],
+          "name": "two_tier",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table4_var_two_tier_turntable",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L186-L210"
+          ]
+        },
+        {
+          "evidence": "Tray built from separate wedge sectors with radial seams rather than one disc.",
+          "implementation_function": "_tray_build_segmented_wedge_build",
+          "interfaces": [],
+          "name": "segmented_wedge",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table4_var_segmented_lazy_susan_n6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L37-L67"
+          ]
+        }
+      ],
+      "component_type": "turntable tray",
+      "name": "tray_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Central pedestal closed by one flat race that the tray's bearing plate rides on directly, with no ring, cage or index.",
+          "implementation_function": "_bearing_build_race_and_plate_build",
+          "interfaces": [],
+          "name": "race_and_plate",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table4__001__png_f4ee4e14e6ee4f2db24e0794cea1976e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L112-L130",
+            "model.py:L200-L212"
+          ]
+        },
+        {
+          "evidence": "The pedestal is replaced by a short column carrying a wide annular race at 0.62 of the tray radius, met by a spoked hub plate under the tray.",
+          "implementation_function": "_bearing_build_ring_and_hub_build",
+          "interfaces": [],
+          "name": "ring_and_hub",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table4_var_ring_bearing_tray",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L118-L136",
+            "model.py:L215-L228"
+          ]
+        },
+        {
+          "evidence": "A cage ring holds discrete rollers between the race and a tray-side track, so the tray runs on rolling elements instead of a flat plate.",
+          "implementation_function": "_bearing_build_roller_retainer_build",
+          "interfaces": [],
+          "name": "roller_retainer",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table4_var_roller_bearing_n12",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L131-L165"
+          ]
+        },
+        {
+          "evidence": "A pocketed detent ring on the host is indexed by a spring pin housing, tip and set screw carried on the tray, so rotation stops at discrete stations.",
+          "implementation_function": "_bearing_build_detent_index_build",
+          "interfaces": [],
+          "name": "detent_index",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table4_var_indexed_detent_tray",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L137-L162",
+            "model.py:L260-L278"
+          ]
+        }
+      ],
+      "component_type": "turntable bearing",
+      "name": "bearing_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Square-tube legs on fork-and-pin hinge brackets, each folding inward and upward under the top.",
+          "implementation_function": "_base_build_folding_legs_build",
+          "interfaces": [],
+          "name": "folding_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table4__001__png_f4ee4e14e6ee4f2db24e0794cea1976e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L254-L310"
+          ]
+        },
+        {
+          "evidence": "Turned pedestal column with top plate, upper collar and a lobed base hub on a lower ring.",
+          "implementation_function": "_base_build_pedestal_column_build",
+          "interfaces": [],
+          "name": "pedestal_column",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table4_var_pedestal_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L140-L200"
+          ]
+        },
+        {
+          "evidence": "Central column on a mounting plate and collar standing on a hub with radiating cast feet.",
+          "implementation_function": "_base_build_tripod_pedestal_build",
+          "interfaces": [],
+          "name": "tripod_pedestal",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "table_diameter_m",
+              "rationale": "round tabletop diameter; derives apron radius, frame rails, hinge radius and tray size",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "tray_diameter_ratio",
+              "rationale": "turntable diameter as a fraction of the tabletop; derives tray radius, bearing radius and rim",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "top surface height; derives leg length, hinge height, pedestal column height and foot drop",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m",
+                "tray_diameter_ratio"
+              ],
+              "expression": "table_diameter_m * tray_diameter_ratio / 2",
+              "mode": "derived",
+              "name": "tray_radius_m",
+              "rationale": "rotating tray radius",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_diameter_m"
+              ],
+              "expression": "table_diameter_m * 0.5 - hinge_inset",
+              "mode": "derived",
+              "name": "hinge_radius_m",
+              "rationale": "radius at which every support member meets the underframe",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - frame_depth",
+              "mode": "derived",
+              "name": "support_drop_m",
+              "rationale": "vertical drop from the support mount down to the floor",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table4_var_tripod_pedestal_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L62-L97"
+          ]
+        }
+      ],
+      "component_type": "table base",
+      "name": "base_build",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Folding_table4",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Folding_table4.md",
+  "source_map_sha256": "0ea142d512f51caab16d338550ec4d951e03039484aed6bf0d01f3ada893ca30"
+}

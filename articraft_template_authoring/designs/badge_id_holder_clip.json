@@ -1,0 +1,1767 @@
+{
+  "assembly_notes": "Wearable badge/ID holder clip standing up and facing -Y. The rigid clip_body is the root; X is the clip width, Z the clip length (mouth at +Z, swivel tail at -Z) and the badge plane is the world XZ plane. clamp_build is one structural family: alligator_yoke, ear_hinge_thumb and bulldog_lever all hang a sprung jaw on a real hinge pin (REVOLUTE about X, barrel tube on the pin with a 0.4 mm running clearance, so the jaw is captured at every angle), while magnet_backer drops the hinge entirely and slides a magnet backer along two headed guide pins (PRISMATIC about Y, travel bounded by the sleeve/pin engagement). grip_build re-dresses whichever pair of clamping faces the active clamp presents; swivel_build changes the mount on the body and the matching hub on the connector; connector_build changes what hangs from the swivel. All four slots combine freely: the clamp publishes its real front envelope, grip station and face gap, and the swivel derives its stand-off from that envelope so the badge plane always clears the clamp at every swivel angle. clamp_stage_count is the number of clamping-force stations across the clip: torsion coil stations on the hinge pin with the jaw barrel split into N+1 segments between them, or magnet pole stations on the backer. clip_length_m, clip_width_m, jaw_open_rad and connector_drop_m are the independent parameters; palette and stamped decoration are non-core.",
+  "bindings": [
+    {
+      "binding_id": "clamp_face_to_grip",
+      "consumer": "grip_build.clamp_face",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "clip_width_m"
+          ],
+          "expression": "(clamping_face_gap - 0.0008) / 2",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "grip_height_m",
+          "rationale": "the grip rows are sized from the clamp candidate's real face gap, so the hinged mouth and the magnetic sandwich both keep a 0.8 mm bite gap",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "clip_length_m"
+          ],
+          "expression": "clamp candidate's gripping line",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "grip_station_z_m",
+          "rationale": "the grip rows sit on whichever line the active clamp actually pinches",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "clamp_build.clamp_face"
+    },
+    {
+      "binding_id": "clamp_envelope_to_swivel",
+      "consumer": "swivel_build.swivel_station",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "clip_width_m",
+            "clip_length_m"
+          ],
+          "expression": "front_envelope_m + 0.0022",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "swivel_post_len_m",
+          "rationale": "the mount stands the swivel off far enough that the badge plane clears the clamp: a slim post for the alligator, a tall bridge for the bulldog levers",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "clamp_build.hinge_pin_axis"
+    },
+    {
+      "binding_id": "swivel_axis_to_connector",
+      "consumer": "connector_build.button_bore",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "connector_drop_m"
+          ],
+          "expression": "max(clamp(0.82 * body_width_m, 0.016, 0.032), 2 * boss_radius_m + 0.0090)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "connector_width_m",
+          "rationale": "the badge panel is about as wide as the clip it hangs from, as in both source straps (002: 24 mm strap on a 30 mm body; 001: 20 mm strap on an 18 mm body), and never narrower than the snap ring bore plus its flange",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "continuous",
+      "provider": "swivel_build.swivel_boss_axis"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "hinged_clamp_identity",
+      "applies_to": {
+        "candidates": [
+          "alligator_yoke",
+          "ear_hinge_thumb",
+          "bulldog_lever"
+        ],
+        "slot": "clamp_build"
+      },
+      "required_author_checks": [
+        "category_anchor: one clip body carries the clamp member and the badge connector",
+        "category_anchor: the clamp opens its two gripping faces apart",
+        "category_anchor: the badge connector swivels in the badge plane",
+        "category_anchor: the badge connector plane clears the whole clamp envelope",
+        "category_anchor: clamp_build identity",
+        "category_anchor: clamping stations match clamp_stage_count"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "clamp_jaw",
+          "joint_type": "revolute",
+          "parent_role": "clip_body"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "badge_connector",
+          "joint_type": "continuous",
+          "parent_role": "clip_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "clip_body"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "clamp_jaw"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "badge_connector"
+        }
+      ]
+    },
+    {
+      "anchor_id": "magnetic_clamp_identity",
+      "applies_to": {
+        "candidates": [
+          "magnet_backer"
+        ],
+        "slot": "clamp_build"
+      },
+      "required_author_checks": [
+        "category_anchor: one clip body carries the clamp member and the badge connector",
+        "category_anchor: the clamp opens its two gripping faces apart",
+        "category_anchor: the badge connector swivels in the badge plane",
+        "category_anchor: the badge connector plane clears the whole clamp envelope",
+        "category_anchor: clamp_build identity",
+        "category_anchor: clamping stations match clamp_stage_count"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "clamp_jaw",
+          "joint_type": "prismatic",
+          "parent_role": "clip_body"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "badge_connector",
+          "joint_type": "continuous",
+          "parent_role": "clip_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "clip_body"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "clamp_jaw"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "badge_connector"
+        }
+      ]
+    },
+    {
+      "anchor_id": "grip_face_identity",
+      "applies_to": {
+        "candidates": [
+          "serrated_bar",
+          "discrete_teeth"
+        ],
+        "slot": "grip_build"
+      },
+      "required_author_checks": [
+        "category_anchor: one clip body carries the clamp member and the badge connector",
+        "category_anchor: the clamp opens its two gripping faces apart",
+        "category_anchor: the badge connector swivels in the badge plane",
+        "category_anchor: the badge connector plane clears the whole clamp envelope",
+        "category_anchor: grip_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "clamp_jaw",
+          "joint_type": "revolute",
+          "parent_role": "clip_body"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "badge_connector",
+          "joint_type": "continuous",
+          "parent_role": "clip_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "clip_body"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "clamp_jaw"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "badge_connector"
+        }
+      ]
+    },
+    {
+      "anchor_id": "swivel_mount_identity",
+      "applies_to": {
+        "candidates": [
+          "post_boss",
+          "bridge_mount"
+        ],
+        "slot": "swivel_build"
+      },
+      "required_author_checks": [
+        "category_anchor: one clip body carries the clamp member and the badge connector",
+        "category_anchor: the clamp opens its two gripping faces apart",
+        "category_anchor: the badge connector swivels in the badge plane",
+        "category_anchor: the badge connector plane clears the whole clamp envelope",
+        "category_anchor: swivel_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "clamp_jaw",
+          "joint_type": "revolute",
+          "parent_role": "clip_body"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "badge_connector",
+          "joint_type": "continuous",
+          "parent_role": "clip_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "clip_body"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "clamp_jaw"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "badge_connector"
+        }
+      ]
+    },
+    {
+      "anchor_id": "badge_connector_identity",
+      "applies_to": {
+        "candidates": [
+          "perforated_strap",
+          "slotted_strap",
+          "card_frame",
+          "ring_loop"
+        ],
+        "slot": "connector_build"
+      },
+      "required_author_checks": [
+        "category_anchor: one clip body carries the clamp member and the badge connector",
+        "category_anchor: the clamp opens its two gripping faces apart",
+        "category_anchor: the badge connector swivels in the badge plane",
+        "category_anchor: the badge connector plane clears the whole clamp envelope",
+        "category_anchor: connector_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "clamp_jaw",
+          "joint_type": "revolute",
+          "parent_role": "clip_body"
+        },
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "badge_connector",
+          "joint_type": "continuous",
+          "parent_role": "clip_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "clip_body"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "clamp_jaw"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "badge_connector"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= clamp_stage_count <= 3; every station needs 2 * stage_tube + 0.0006 m of pin and every barrel segment between them must stay above 0.0007 m, which the narrowest 0.018 m clip still satisfies at N=3",
+      "item_slot": "clamp_build",
+      "name": "clamp_stage_count",
+      "spacing_expression": "stations are evenly spaced across the usable pin span, pitch = pin_span_m / (clamp_stage_count + 1); the jaw barrel is split into clamp_stage_count + 1 tube segments in the gaps between them",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Long slender stamped leaf with two folded side cheeks carrying a through hinge pin and a torsion coil; the sprung jaw's barrel wraps that pin and its front end is folded into a blade over the mouth.",
+          "implementation_function": "_clamp_build_alligator_yoke_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "barrel bore 0.0022 m on a 0.0018 m pin"
+              },
+              "frame": {
+                "axis": "(1, 0, 0)",
+                "point": "(0, -hinge_front_m, 0)",
+                "radial": "(0, 0, 1)"
+              },
+              "kind": "axis",
+              "name": "hinge_pin_axis",
+              "part": "clip_body",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "2 * grip_half_span_m by 0.0030 m"
+              },
+              "frame": {
+                "normal": "clamping direction",
+                "point": "(0, body_face_y, grip_station_z_m)"
+              },
+              "kind": "plane",
+              "name": "clamp_face",
+              "part": "clip_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "alligator_yoke",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "clip_length_m",
+              "rationale": "nominal clip length along Z; drives body length, mouth/tail and swivel stations",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "clip_width_m",
+              "rationale": "nominal clip width across X; drives body width, pin span, boss and grip span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.5,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "jaw_open_rad",
+              "rationale": "how far the clamp opens; hinge upper limit, and the magnet backer travel",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m"
+              ],
+              "expression": "clip_width_m * width_factor(clamp_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "body_width_m",
+              "rationale": "candidate footprint: the bulldog leaf is wider and the magnet carrier broader",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_length_m"
+              ],
+              "expression": "clip_length_m * length_factor(clamp_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "body_length_m",
+              "rationale": "candidate footprint: the bulldog leaf is short, the alligator leaf long",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_length_m",
+                "clip_width_m"
+              ],
+              "expression": "clamp(tail_z_m + max(0.0090, 0.20 * body_length_m), tail_z_m + boss_radius_m + 0.0014, -(barrel_outer + 0.0008) - boss_radius_m - 0.0018)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "swivel_z_m",
+              "rationale": "swivel station: down the tail but always clear of the hinge barrel envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clamp_build"
+              ],
+              "expression": "hinge_front + (lever_reach + 0.0022 if bulldog else 0.0050); 0.0026 for the magnet carrier",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "front_envelope_m",
+              "rationale": "most forward point of the whole clamp; the badge plane is derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "jaw_open_rad"
+              ],
+              "expression": "0.0026 + 0.0034 * (jaw_open_rad - 0.26) / 0.24",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "clamp_travel_m",
+              "rationale": "magnet backer travel, bounded by the guide pin engagement, not by a free constant",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m",
+                "clamp_stage_count"
+              ],
+              "expression": "pin_span_m / (clamp_stage_count + 1)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "stage_pitch_m",
+              "rationale": "spacing of the clamping stations across the clip",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_workspace__badge_id_holder_clip__002_png_3aa298bf627743c88a2d15ec0e880c1d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L154-L276",
+            "model.py:L312-L329"
+          ]
+        },
+        {
+          "evidence": "The same hinge duty built from different parts: folded side rails stiffen the lower jaw, two upright riveted ears carry the pin, separate spring coils flank the barrel, and the moving jaw carries a riveted thumb pad instead of a folded blade.",
+          "implementation_function": "_clamp_build_ear_hinge_thumb_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "barrel bore 0.0022 m on a 0.0018 m pin"
+              },
+              "frame": {
+                "axis": "(1, 0, 0)",
+                "point": "(0, -hinge_front_m, 0)",
+                "radial": "(0, 0, 1)"
+              },
+              "kind": "axis",
+              "name": "hinge_pin_axis",
+              "part": "clip_body",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "2 * grip_half_span_m by 0.0030 m"
+              },
+              "frame": {
+                "normal": "clamping direction",
+                "point": "(0, body_face_y, grip_station_z_m)"
+              },
+              "kind": "plane",
+              "name": "clamp_face",
+              "part": "clip_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "ear_hinge_thumb",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "clip_length_m",
+              "rationale": "nominal clip length along Z; drives body length, mouth/tail and swivel stations",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "clip_width_m",
+              "rationale": "nominal clip width across X; drives body width, pin span, boss and grip span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.5,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "jaw_open_rad",
+              "rationale": "how far the clamp opens; hinge upper limit, and the magnet backer travel",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m"
+              ],
+              "expression": "clip_width_m * width_factor(clamp_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "body_width_m",
+              "rationale": "candidate footprint: the bulldog leaf is wider and the magnet carrier broader",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_length_m"
+              ],
+              "expression": "clip_length_m * length_factor(clamp_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "body_length_m",
+              "rationale": "candidate footprint: the bulldog leaf is short, the alligator leaf long",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_length_m",
+                "clip_width_m"
+              ],
+              "expression": "clamp(tail_z_m + max(0.0090, 0.20 * body_length_m), tail_z_m + boss_radius_m + 0.0014, -(barrel_outer + 0.0008) - boss_radius_m - 0.0018)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "swivel_z_m",
+              "rationale": "swivel station: down the tail but always clear of the hinge barrel envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clamp_build"
+              ],
+              "expression": "hinge_front + (lever_reach + 0.0022 if bulldog else 0.0050); 0.0026 for the magnet carrier",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "front_envelope_m",
+              "rationale": "most forward point of the whole clamp; the badge plane is derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "jaw_open_rad"
+              ],
+              "expression": "0.0026 + 0.0034 * (jaw_open_rad - 0.26) / 0.24",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "clamp_travel_m",
+              "rationale": "magnet backer travel, bounded by the guide pin engagement, not by a free constant",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m",
+                "clamp_stage_count"
+              ],
+              "expression": "pin_span_m / (clamp_stage_count + 1)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "stage_pitch_m",
+              "rationale": "spacing of the clamping stations across the clip",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_workspace__badge_id_holder_clip__001_png_7dc48dbbc5dd43d0b06f6c79d8d3f735",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L73-L220"
+          ]
+        },
+        {
+          "evidence": "Short wide bulldog clamp whose moving leaf grows two bent sheet-metal finger levers behind the hinge, so the tail carries a lever pair the slender readings do not have.",
+          "implementation_function": "_clamp_build_bulldog_lever_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "barrel bore 0.0022 m on a 0.0018 m pin"
+              },
+              "frame": {
+                "axis": "(1, 0, 0)",
+                "point": "(0, -hinge_front_m, 0)",
+                "radial": "(0, 0, 1)"
+              },
+              "kind": "axis",
+              "name": "hinge_pin_axis",
+              "part": "clip_body",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "2 * grip_half_span_m by 0.0030 m"
+              },
+              "frame": {
+                "normal": "clamping direction",
+                "point": "(0, body_face_y, grip_station_z_m)"
+              },
+              "kind": "plane",
+              "name": "clamp_face",
+              "part": "clip_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "bulldog_lever",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "clip_length_m",
+              "rationale": "nominal clip length along Z; drives body length, mouth/tail and swivel stations",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "clip_width_m",
+              "rationale": "nominal clip width across X; drives body width, pin span, boss and grip span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.5,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "jaw_open_rad",
+              "rationale": "how far the clamp opens; hinge upper limit, and the magnet backer travel",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m"
+              ],
+              "expression": "clip_width_m * width_factor(clamp_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "body_width_m",
+              "rationale": "candidate footprint: the bulldog leaf is wider and the magnet carrier broader",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_length_m"
+              ],
+              "expression": "clip_length_m * length_factor(clamp_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "body_length_m",
+              "rationale": "candidate footprint: the bulldog leaf is short, the alligator leaf long",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_length_m",
+                "clip_width_m"
+              ],
+              "expression": "clamp(tail_z_m + max(0.0090, 0.20 * body_length_m), tail_z_m + boss_radius_m + 0.0014, -(barrel_outer + 0.0008) - boss_radius_m - 0.0018)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "swivel_z_m",
+              "rationale": "swivel station: down the tail but always clear of the hinge barrel envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clamp_build"
+              ],
+              "expression": "hinge_front + (lever_reach + 0.0022 if bulldog else 0.0050); 0.0026 for the magnet carrier",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "front_envelope_m",
+              "rationale": "most forward point of the whole clamp; the badge plane is derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "jaw_open_rad"
+              ],
+              "expression": "0.0026 + 0.0034 * (jaw_open_rad - 0.26) / 0.24",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "clamp_travel_m",
+              "rationale": "magnet backer travel, bounded by the guide pin engagement, not by a free constant",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m",
+                "clamp_stage_count"
+              ],
+              "expression": "pin_span_m / (clamp_stage_count + 1)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "stage_pitch_m",
+              "rationale": "spacing of the clamping stations across the clip",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_badge_id_holder_clip_var_bulldog",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L113-L146",
+            "model.py:L196-L371"
+          ]
+        },
+        {
+          "evidence": "No hinge at all: a flat carrier plate and a separate rear magnet backer with cylindrical poles, joined by a linear clamp joint instead of a revolute one.",
+          "implementation_function": "_clamp_build_magnet_backer_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "barrel bore 0.0022 m on a 0.0018 m pin"
+              },
+              "frame": {
+                "axis": "(1, 0, 0)",
+                "point": "(0, -hinge_front_m, 0)",
+                "radial": "(0, 0, 1)"
+              },
+              "kind": "axis",
+              "name": "hinge_pin_axis",
+              "part": "clip_body",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent": "2 * grip_half_span_m by 0.0030 m"
+              },
+              "frame": {
+                "normal": "clamping direction",
+                "point": "(0, body_face_y, grip_station_z_m)"
+              },
+              "kind": "plane",
+              "name": "clamp_face",
+              "part": "clip_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "magnet_backer",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "clip_length_m",
+              "rationale": "nominal clip length along Z; drives body length, mouth/tail and swivel stations",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "clip_width_m",
+              "rationale": "nominal clip width across X; drives body width, pin span, boss and grip span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.5,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "jaw_open_rad",
+              "rationale": "how far the clamp opens; hinge upper limit, and the magnet backer travel",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m"
+              ],
+              "expression": "clip_width_m * width_factor(clamp_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "body_width_m",
+              "rationale": "candidate footprint: the bulldog leaf is wider and the magnet carrier broader",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_length_m"
+              ],
+              "expression": "clip_length_m * length_factor(clamp_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "body_length_m",
+              "rationale": "candidate footprint: the bulldog leaf is short, the alligator leaf long",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_length_m",
+                "clip_width_m"
+              ],
+              "expression": "clamp(tail_z_m + max(0.0090, 0.20 * body_length_m), tail_z_m + boss_radius_m + 0.0014, -(barrel_outer + 0.0008) - boss_radius_m - 0.0018)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "swivel_z_m",
+              "rationale": "swivel station: down the tail but always clear of the hinge barrel envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clamp_build"
+              ],
+              "expression": "hinge_front + (lever_reach + 0.0022 if bulldog else 0.0050); 0.0026 for the magnet carrier",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "front_envelope_m",
+              "rationale": "most forward point of the whole clamp; the badge plane is derived from it",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "jaw_open_rad"
+              ],
+              "expression": "0.0026 + 0.0034 * (jaw_open_rad - 0.26) / 0.24",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "clamp_travel_m",
+              "rationale": "magnet backer travel, bounded by the guide pin engagement, not by a free constant",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m",
+                "clamp_stage_count"
+              ],
+              "expression": "pin_span_m / (clamp_stage_count + 1)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "stage_pitch_m",
+              "rationale": "spacing of the clamping stations across the clip",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_badge_id_holder_clip_var_magnetic_clamp",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L102-L175",
+            "model.py:L216-L244"
+          ]
+        }
+      ],
+      "component_type": "clamp mechanism",
+      "name": "clamp_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Each gripping face is one connected serrated bar: a thin backing strip with rectangular teeth extruded out of it, welded into a single solid.",
+          "implementation_function": "_grip_build_serrated_bar_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "2 * grip_half_span_m by 0.0030 m"
+              },
+              "frame": {
+                "normal": "clamping direction",
+                "point": "(0, face_y, grip_station_z_m)"
+              },
+              "kind": "plane",
+              "name": "clamp_face",
+              "part": "clip_body",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "serrated_bar",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "clip_length_m",
+              "rationale": "nominal clip length along Z; drives body length, mouth/tail and swivel stations",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "clip_width_m",
+              "rationale": "nominal clip width across X; drives body width, pin span, boss and grip span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_length_m"
+              ],
+              "expression": "mouth_z_m - 0.0045 for hinged clamps; 0.30 * body_length_m for the magnet carrier",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "grip_station_z_m",
+              "rationale": "where the two gripping faces meet",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m"
+              ],
+              "expression": "min(body_width_m / 2 - 0.0045, 0.40 * body_width_m - 0.0028 when magnetic)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "grip_half_span_m",
+              "rationale": "gripping row half span, kept inside both clamping faces",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m"
+              ],
+              "expression": "(clamping_face_gap - 0.0008) / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "grip_height_m",
+              "rationale": "tooth height so the closed faces keep a real 0.8 mm bite gap",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_workspace__badge_id_holder_clip__002_png_3aa298bf627743c88a2d15ec0e880c1d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L118-L138",
+            "model.py:L176-L181",
+            "model.py:L271-L276"
+          ]
+        },
+        {
+          "evidence": "The same duty as separate stamped teeth standing behind a rolled front lip instead of one welded bar, so the mouth reads as a folded lip with individual points.",
+          "implementation_function": "_grip_build_discrete_teeth_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "2 * grip_half_span_m by 0.0030 m"
+              },
+              "frame": {
+                "normal": "clamping direction",
+                "point": "(0, face_y, grip_station_z_m)"
+              },
+              "kind": "plane",
+              "name": "clamp_face",
+              "part": "clip_body",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "discrete_teeth",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "clip_length_m",
+              "rationale": "nominal clip length along Z; drives body length, mouth/tail and swivel stations",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "clip_width_m",
+              "rationale": "nominal clip width across X; drives body width, pin span, boss and grip span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_length_m"
+              ],
+              "expression": "mouth_z_m - 0.0045 for hinged clamps; 0.30 * body_length_m for the magnet carrier",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "grip_station_z_m",
+              "rationale": "where the two gripping faces meet",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m"
+              ],
+              "expression": "min(body_width_m / 2 - 0.0045, 0.40 * body_width_m - 0.0028 when magnetic)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "grip_half_span_m",
+              "rationale": "gripping row half span, kept inside both clamping faces",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m"
+              ],
+              "expression": "(clamping_face_gap - 0.0008) / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "grip_height_m",
+              "rationale": "tooth height so the closed faces keep a real 0.8 mm bite gap",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_workspace__badge_id_holder_clip__001_png_7dc48dbbc5dd43d0b06f6c79d8d3f735",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L102-L115",
+            "model.py:L208-L220"
+          ]
+        }
+      ],
+      "component_type": "grip face",
+      "name": "grip_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A slim round post standing off the tail of the body with a wide crimped boss flange at its tip, and a button ring on the connector closing over that flange.",
+          "implementation_function": "_swivel_build_post_boss_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "3.0 * boss_radius_m square mount footprint"
+              },
+              "frame": {
+                "normal": "(0, -1, 0)",
+                "point": "(0, 0, swivel_z_m)"
+              },
+              "kind": "plane",
+              "name": "swivel_station",
+              "part": "clip_body",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "boss_radius_m + 0.0028 hub bore"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(0, swivel_point_y_m, swivel_z_m)",
+                "radial": "(0, 0, -1)"
+              },
+              "kind": "axis",
+              "name": "swivel_boss_axis",
+              "part": "clip_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "post_boss",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "clip_length_m",
+              "rationale": "nominal clip length along Z; drives body length, mouth/tail and swivel stations",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "clip_width_m",
+              "rationale": "nominal clip width across X; drives body width, pin span, boss and grip span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m"
+              ],
+              "expression": "clamp(0.15 * body_width_m, 0.0042, 0.0055)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "boss_radius_m",
+              "rationale": "swivel boss/receiver radius, and the hub bore the connector closes around",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m",
+                "clip_length_m"
+              ],
+              "expression": "front_envelope_m + 0.0022",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "swivel_post_len_m",
+              "rationale": "how far the mount must stand off the plate to carry the badge plane clear",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m",
+                "clip_length_m"
+              ],
+              "expression": "-(swivel_post_len_m + boss_thickness)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "swivel_point_y_m",
+              "rationale": "the swivel axis point: the boss front face the connector hub sits on",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_workspace__badge_id_holder_clip__002_png_3aa298bf627743c88a2d15ec0e880c1d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L212-L223",
+            "model.py:L299-L310"
+          ]
+        },
+        {
+          "evidence": "A raised rectangular rear bridge carrying a flat mount plate and a low disc receiver, with a reinforcement plate, pivot stem and capped button on the connector instead of a bare ring.",
+          "implementation_function": "_swivel_build_bridge_mount_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "3.0 * boss_radius_m square mount footprint"
+              },
+              "frame": {
+                "normal": "(0, -1, 0)",
+                "point": "(0, 0, swivel_z_m)"
+              },
+              "kind": "plane",
+              "name": "swivel_station",
+              "part": "clip_body",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "radius": "boss_radius_m + 0.0028 hub bore"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(0, swivel_point_y_m, swivel_z_m)",
+                "radial": "(0, 0, -1)"
+              },
+              "kind": "axis",
+              "name": "swivel_boss_axis",
+              "part": "clip_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "bridge_mount",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.086,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "clip_length_m",
+              "rationale": "nominal clip length along Z; drives body length, mouth/tail and swivel stations",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "clip_width_m",
+              "rationale": "nominal clip width across X; drives body width, pin span, boss and grip span",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m"
+              ],
+              "expression": "clamp(0.15 * body_width_m, 0.0042, 0.0055)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "boss_radius_m",
+              "rationale": "swivel boss/receiver radius, and the hub bore the connector closes around",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m",
+                "clip_length_m"
+              ],
+              "expression": "front_envelope_m + 0.0022",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "swivel_post_len_m",
+              "rationale": "how far the mount must stand off the plate to carry the badge plane clear",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "clip_width_m",
+                "clip_length_m"
+              ],
+              "expression": "-(swivel_post_len_m + boss_thickness)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "swivel_point_y_m",
+              "rationale": "the swivel axis point: the boss front face the connector hub sits on",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_workspace__badge_id_holder_clip__001_png_7dc48dbbc5dd43d0b06f6c79d8d3f735",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L147-L170",
+            "model.py:L243-L282"
+          ]
+        }
+      ],
+      "component_type": "swivel mount",
+      "name": "swivel_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Long clear vinyl strap punched with a swivel eye, a long oblong badge slot and a rectangular grid of ventilation holes.",
+          "implementation_function": "_connector_build_perforated_strap_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "boss_radius_m + 0.0005 running clearance"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(0, 0, 0)",
+                "radial": "(0, 0, -1)"
+              },
+              "kind": "axis",
+              "name": "button_bore",
+              "part": "badge_connector",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "perforated_strap",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.118,
+              "minimum": 0.058,
+              "mode": "independent",
+              "name": "connector_drop_m",
+              "rationale": "how far the badge connector reaches below the swivel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "connector_drop_m"
+              ],
+              "expression": "connector_drop_m * connector_factor(connector_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "connector_len_m",
+              "rationale": "reach of this connector family below the swivel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "connector_drop_m"
+              ],
+              "expression": "max(clamp(0.62 * body_width_m, 0.016, 0.032), 2 * boss_radius_m + 0.0090)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "connector_width_m",
+              "rationale": "panel width, never narrower than the swivel hub it has to carry",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_workspace__badge_id_holder_clip__002_png_3aa298bf627743c88a2d15ec0e880c1d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L278-L298"
+          ]
+        },
+        {
+          "evidence": "Shorter clear tab with one oblong key-ring slot and two raised stiffening edge rails running its whole length, a different plate profile and rib topology from the perforated strap.",
+          "implementation_function": "_connector_build_slotted_strap_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "boss_radius_m + 0.0005 running clearance"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(0, 0, 0)",
+                "radial": "(0, 0, -1)"
+              },
+              "kind": "axis",
+              "name": "button_bore",
+              "part": "badge_connector",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "slotted_strap",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.118,
+              "minimum": 0.058,
+              "mode": "independent",
+              "name": "connector_drop_m",
+              "rationale": "how far the badge connector reaches below the swivel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "connector_drop_m"
+              ],
+              "expression": "connector_drop_m * connector_factor(connector_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "connector_len_m",
+              "rationale": "reach of this connector family below the swivel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "connector_drop_m"
+              ],
+              "expression": "max(clamp(0.62 * body_width_m, 0.016, 0.032), 2 * boss_radius_m + 0.0090)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "connector_width_m",
+              "rationale": "panel width, never narrower than the swivel hub it has to carry",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_workspace__badge_id_holder_clip__001_png_7dc48dbbc5dd43d0b06f6c79d8d3f735",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L43-L56",
+            "model.py:L222-L242"
+          ]
+        },
+        {
+          "evidence": "Rigid moulded card holder: a thin back panel with raised left, right and bottom border rails and a deliberately open top edge so a portrait card can be slid in.",
+          "implementation_function": "_connector_build_card_frame_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "boss_radius_m + 0.0005 running clearance"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(0, 0, 0)",
+                "radial": "(0, 0, -1)"
+              },
+              "kind": "axis",
+              "name": "button_bore",
+              "part": "badge_connector",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "card_frame",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.118,
+              "minimum": 0.058,
+              "mode": "independent",
+              "name": "connector_drop_m",
+              "rationale": "how far the badge connector reaches below the swivel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "connector_drop_m"
+              ],
+              "expression": "connector_drop_m * connector_factor(connector_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "connector_len_m",
+              "rationale": "reach of this connector family below the swivel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "connector_drop_m"
+              ],
+              "expression": "max(clamp(0.62 * body_width_m, 0.016, 0.032), 2 * boss_radius_m + 0.0090)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "connector_width_m",
+              "rationale": "panel width, never narrower than the swivel hub it has to carry",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_badge_id_holder_clip_var_card_frame",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L118-L157",
+            "model.py:L321-L327"
+          ]
+        },
+        {
+          "evidence": "Hardware instead of a panel: a short neck shank rising from the swivel hub into a standing torus ring for a lanyard.",
+          "implementation_function": "_connector_build_ring_loop_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "boss_radius_m + 0.0005 running clearance"
+              },
+              "frame": {
+                "axis": "(0, -1, 0)",
+                "point": "(0, 0, 0)",
+                "radial": "(0, 0, -1)"
+              },
+              "kind": "axis",
+              "name": "button_bore",
+              "part": "badge_connector",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "ring_loop",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.118,
+              "minimum": 0.058,
+              "mode": "independent",
+              "name": "connector_drop_m",
+              "rationale": "how far the badge connector reaches below the swivel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "connector_drop_m"
+              ],
+              "expression": "connector_drop_m * connector_factor(connector_build)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "connector_len_m",
+              "rationale": "reach of this connector family below the swivel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "connector_drop_m"
+              ],
+              "expression": "max(clamp(0.62 * body_width_m, 0.016, 0.032), 2 * boss_radius_m + 0.0090)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "connector_width_m",
+              "rationale": "panel width, never narrower than the swivel hub it has to carry",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_badge_id_holder_clip_var_ring_loop",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L278-L308"
+          ]
+        }
+      ],
+      "component_type": "badge connector",
+      "name": "connector_build",
+      "required": true
+    }
+  ],
+  "slug": "badge_id_holder_clip",
+  "source_map_path": "articraft_template_authoring/source_maps/badge_id_holder_clip.md",
+  "source_map_sha256": "c1e613805e47f38318fd91afc0acbbc38c3934b5a791965db44aaa48964c2105"
+}

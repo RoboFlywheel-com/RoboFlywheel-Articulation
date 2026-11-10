@@ -1,0 +1,870 @@
+{
+  "assembly_notes": "Single source (SOURCES=1): an expandable hanging-file organizer, decomposed into four independent structural axes instead of one monolithic family slot. leaf_top owns the leaf's top hardware, gusset_style the per-gap connective fold, cover_build the rigid end cover construction and closure the moving-end closure hardware (0 or 1 revolute DOF). All 3x3x3x3 = 81 combinations build: the accordion host, the leaf/cover panels and the retention tapes (source _add_side_attachment, model.py:L94-L114) are shared and re-derived from one parameter DAG, so no compatibility gate is needed. Interior leaves are parented to the fixed end board as a mimic star (leaf i mimics the driver with multiplier i+1) so the source's uniform accordion expansion is preserved while every file_leaf shares one end_board->file_leaf prismatic relation; the moving cover rides the same star as gap N+1. divider_count is a structural multiplicity applied to leaf_top: each N adds one file_leaf part, one accordion gap joint, one fold set and one retention tape pair, and re-derives the accordion origins, the gusset band and the moving cover placement. Bindings are left empty because the accordion provider is the shared fixed end-cover host rather than a per-candidate interface; the derivations are recorded here instead: the gusset band is derived as [-pitch + prev_thickness/2 + trim_bulge + clear, -own_thickness/2 + anchor] and the retention tape reach as gap_travel_m + 4 mm, so every candidate stays in support contact at the compressed pose and never interpenetrates at any pose. depth_m, leaf_height_m, compressed_pitch_m and gap_travel_m are honest continuous parameters and do not inflate core/raw.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "hanging_rail_crossbar_identity",
+      "applies_to": {
+        "candidates": [
+          "hanging_rail_crossbar"
+        ],
+        "slot": "leaf_top"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: leaf_top hanging_rail_crossbar identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "staggered_index_tab_identity",
+      "applies_to": {
+        "candidates": [
+          "staggered_index_tab"
+        ],
+        "slot": "leaf_top"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: leaf_top staggered_index_tab identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "reinforced_bound_edge_identity",
+      "applies_to": {
+        "candidates": [
+          "reinforced_bound_edge"
+        ],
+        "slot": "leaf_top"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: leaf_top reinforced_bound_edge identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "v_fold_bellows_identity",
+      "applies_to": {
+        "candidates": [
+          "v_fold_bellows"
+        ],
+        "slot": "gusset_style"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: gusset_style v_fold_bellows identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pleated_multifold_identity",
+      "applies_to": {
+        "candidates": [
+          "pleated_multifold"
+        ],
+        "slot": "gusset_style"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: gusset_style pleated_multifold identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "floor_web_gusset_identity",
+      "applies_to": {
+        "candidates": [
+          "floor_web_gusset"
+        ],
+        "slot": "gusset_style"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: gusset_style floor_web_gusset identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "bound_board_identity",
+      "applies_to": {
+        "candidates": [
+          "bound_board"
+        ],
+        "slot": "cover_build"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: cover_build bound_board identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "framed_board_identity",
+      "applies_to": {
+        "candidates": [
+          "framed_board"
+        ],
+        "slot": "cover_build"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: cover_build framed_board identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "wrap_lip_shell_identity",
+      "applies_to": {
+        "candidates": [
+          "wrap_lip_shell"
+        ],
+        "slot": "cover_build"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: cover_build wrap_lip_shell identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "open_top_identity",
+      "applies_to": {
+        "candidates": [
+          "open_top"
+        ],
+        "slot": "closure"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: closure open_top identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        },
+        {
+          "exact_count": 0,
+          "role": "closure"
+        }
+      ]
+    },
+    {
+      "anchor_id": "fold_over_flap_identity",
+      "applies_to": {
+        "candidates": [
+          "fold_over_flap"
+        ],
+        "slot": "closure"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: closure fold_over_flap identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "closure",
+          "joint_type": "revolute",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        },
+        {
+          "exact_count": 1,
+          "role": "closure"
+        }
+      ]
+    },
+    {
+      "anchor_id": "turn_button_clasp_identity",
+      "applies_to": {
+        "candidates": [
+          "turn_button_clasp"
+        ],
+        "slot": "closure"
+      },
+      "required_author_checks": [
+        "category_anchor: two end covers enclose N leaves",
+        "category_anchor: uniform prismatic accordion expansion",
+        "category_anchor: closure turn_button_clasp identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "file_leaf",
+          "joint_type": "prismatic",
+          "parent_role": "end_board"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "closure",
+          "joint_type": "revolute",
+          "parent_role": "end_board"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "end_board"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "file_leaf"
+        },
+        {
+          "exact_count": 1,
+          "role": "closure"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "6 <= divider_count <= 16 interior leaves chained between two end covers",
+      "item_slot": "leaf_top",
+      "name": "divider_count",
+      "spacing_expression": "leaf i sits at (i+1)*compressed_pitch_m along +X and expands to (i+1)*(compressed_pitch_m+gap_travel_m); accordion origins, gusset bands and tape reach re-derived per N",
+      "values": [
+        6,
+        9,
+        12,
+        16
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Source anchor: ivory top_crossbar seated into the leaf top edge plus the two projecting near/far hanging-rail tabs that overhang the depth edges (model.py:L152-L171).",
+          "implementation_function": "_leaf_top_hanging_rail_crossbar_build",
+          "interfaces": [],
+          "name": "hanging_rail_crossbar",
+          "notes": "Source-anchored. Adds an outboard suspension interface: the tabs project beyond the folder depth so the leaf hangs on a rail.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source folder depth DEPTH=0.310 (model.py:L20)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "leaf_height_m",
+              "rationale": "source pocket/end height 0.220-0.245 (model.py:L21-L24)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.024,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "compressed_pitch_m",
+              "rationale": "source COMPRESSED_PITCH=0.018 (model.py:L27)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "gap_travel_m",
+              "rationale": "source GAP_TRAVEL=0.009 (model.py:L28)",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L143-L171"
+          ]
+        },
+        {
+          "evidence": "Controlled form-family extrapolation from the same shared profile 'reinforced top edge band + one locator projecting above the leaf top' (source crossbar/tab, model.py:L152-L171): the projecting locator becomes a single raised index tab whose depth position cycles across four slots by leaf index.",
+          "implementation_function": "_leaf_top_staggered_index_tab_build",
+          "interfaces": [],
+          "name": "staggered_index_tab",
+          "notes": "Extrapolated. Replaces the continuous crossbar with a bound top edge and one per-leaf staggered tab; the tab position is re-derived from depth_m and leaf index.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L152-L171"
+          ]
+        },
+        {
+          "evidence": "Source-anchored structure transposed onto the leaf host: the end panel's woven top binding and its two vertical near/far edge bindings (model.py:L125-L140) applied as the leaf's edge reinforcement.",
+          "implementation_function": "_leaf_top_reinforced_bound_edge_build",
+          "interfaces": [],
+          "name": "reinforced_bound_edge",
+          "notes": "Source structure, different host. No projecting hardware; the leaf gains a bound perimeter (top + two vertical bindings).",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L125-L140"
+          ]
+        }
+      ],
+      "component_type": "file_leaf_top_hardware",
+      "name": "leaf_top",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Source anchor: _add_gussets builds paired near/far V-folds, each two thin yawed fabric leaves meeting at a crease outset beyond the depth edge (_add_vertical_leaf, model.py:L42-L55; fold layout, model.py:L58-L91).",
+          "implementation_function": "_gusset_style_v_fold_bellows_build",
+          "interfaces": [],
+          "name": "v_fold_bellows",
+          "notes": "Source-anchored. Four fold segments per gap; crease outset derived from the gap band span.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source folder depth DEPTH=0.310 (model.py:L20)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "leaf_height_m",
+              "rationale": "source pocket/end height 0.220-0.245 (model.py:L21-L24)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.024,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "compressed_pitch_m",
+              "rationale": "source COMPRESSED_PITCH=0.018 (model.py:L27)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "gap_travel_m",
+              "rationale": "source GAP_TRAVEL=0.009 (model.py:L28)",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L42-L91"
+          ]
+        },
+        {
+          "evidence": "Controlled extrapolation driving the identical crease generator (_add_vertical_leaf chain, model.py:L42-L91) to three creases per side instead of one; the outset is re-derived (0.35*span) so the pleat pack still fits the same compressed gap band.",
+          "implementation_function": "_gusset_style_pleated_multifold_build",
+          "interfaces": [],
+          "name": "pleated_multifold",
+          "notes": "Extrapolated from the shared crease-generator profile. Eight fold segments per gap.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L42-L91"
+          ]
+        },
+        {
+          "evidence": "Controlled extrapolation using the same straight-leaf generator with zero creases (model.py:L42-L55) plus a horizontal floor web closing the bottom of the bay; a boxed-bottom expanding file rather than an open V-fold bellows.",
+          "implementation_function": "_gusset_style_floor_web_gusset_build",
+          "interfaces": [],
+          "name": "floor_web_gusset",
+          "notes": "Extrapolated. Three segments per gap and a different topology (a horizontal element spanning the depth).",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L42-L55"
+          ]
+        }
+      ],
+      "component_type": "per_gap_connective_fold",
+      "name": "gusset_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Source anchor: _add_end_panel = a flat board plus a woven top binding and two vertical near/far edge bindings (model.py:L117-L140).",
+          "implementation_function": "_cover_build_bound_board_build",
+          "interfaces": [],
+          "name": "bound_board",
+          "notes": "Source-anchored. Four elements, flat outer faces.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source folder depth DEPTH=0.310 (model.py:L20)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "leaf_height_m",
+              "rationale": "source pocket/end height 0.220-0.245 (model.py:L21-L24)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.024,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "compressed_pitch_m",
+              "rationale": "source COMPRESSED_PITCH=0.018 (model.py:L27)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "gap_travel_m",
+              "rationale": "source GAP_TRAVEL=0.009 (model.py:L28)",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L117-L140"
+          ]
+        },
+        {
+          "evidence": "Controlled extrapolation inside the shared cover profile 'panel of thickness t over depth x height with an edge-reinforcement set': the reinforcement becomes a closed four-rail perimeter frame and the panel is recessed to 0.6 t inside it.",
+          "implementation_function": "_cover_build_framed_board_build",
+          "interfaces": [],
+          "name": "framed_board",
+          "notes": "Extrapolated. Five elements, different part tree (recessed panel + two stiles + top/bottom rails) and a visibly framed silhouette.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L117-L140"
+          ]
+        },
+        {
+          "evidence": "Controlled extrapolation of the same cover profile with the edge reinforcement turned into a wrapped rim that returns over the OUTWARD face (top, bottom and both depth edges); the return direction is derived per cover so it never intrudes into the accordion interior.",
+          "implementation_function": "_cover_build_wrap_lip_shell_build",
+          "interfaces": [],
+          "name": "wrap_lip_shell",
+          "notes": "Extrapolated. Five elements; the outward-facing L-section rim changes the cover's outer envelope.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L117-L140"
+          ]
+        }
+      ],
+      "component_type": "rigid_end_cover",
+      "name": "cover_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Source anchor: the source assembly terminates in a bare moving end board with no closure part and no second DOF (model.py:L240-L267).",
+          "implementation_function": "_closure_open_top_build",
+          "interfaces": [],
+          "name": "open_top",
+          "notes": "Source-anchored. Zero closure parts; the accordion prismatic DOF is the only mechanism.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source folder depth DEPTH=0.310 (model.py:L20)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.3,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "leaf_height_m",
+              "rationale": "source pocket/end height 0.220-0.245 (model.py:L21-L24)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.024,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "compressed_pitch_m",
+              "rationale": "source COMPRESSED_PITCH=0.018 (model.py:L27)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "gap_travel_m",
+              "rationale": "source GAP_TRAVEL=0.009 (model.py:L28)",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L182-L267"
+          ]
+        },
+        {
+          "evidence": "Controlled extrapolation on the source moving end board host (model.py:L240-L265): one revolute fold-over flap hinged on a knuckle boss growing out of the cover's outer face, built from an AxisInterface pair via mate_axes + register_interface_mate.",
+          "implementation_function": "_closure_fold_over_flap_build",
+          "interfaces": [],
+          "name": "fold_over_flap",
+          "notes": "Extrapolated. Adds one part and one revolute DOF about +Y, 0..135 deg, hinged entirely in the outer half-space.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L240-L265"
+          ]
+        },
+        {
+          "evidence": "Controlled extrapolation on the same host: one revolute turn-button clasp rotating about the accordion axis (+X) on a thin knuckle boss, sweeping in the depth/height plane.",
+          "implementation_function": "_closure_turn_button_clasp_build",
+          "interfaces": [],
+          "name": "turn_button_clasp",
+          "notes": "Extrapolated. Adds one part and one revolute DOF about +X, 0..150 deg; a different joint axis, interface frame and part tree from the flap.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__folders__001__png__airflex_batch_20260710_44a51551668f45fbacaa1b09d219161b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L240-L265"
+          ]
+        }
+      ],
+      "component_type": "moving_end_closure",
+      "name": "closure",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_folders",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_folders.md",
+  "source_map_sha256": "46bda44197b4545394733213d43445411d6d25ba543fba973f6d104bdfe92e8b"
+}

@@ -1,0 +1,1741 @@
+{
+  "assembly_notes": "Identity: one radio enclosure whose front face carries a speaker grille field and a tuning dial, plus a control deck, an optional carry bail and an optional telescoping antenna on the top bay.\n\ncore_domain = 4 cabinet_form x 3 grille_style x 2 speaker_layout x 3 control_deck x 3 carry_handle x 3 antenna_module = 648. raw_domain = 648 x 6 control_count values = 3888. Palette, continuous dimensions, rib/bar/hole counts and dial graduations count toward neither.\n\nThe previous build of this template failed random-16 with adjacent buttons interpenetrating (button_0/button_1, penetration 6.2 mm) because the keycap row used a fixed x-list that did not grow with the cap size. The rebuild derives control_pitch_m from the selected cap footprint plus 0.006 m of guaranteed air, derives deck_width_m from control_count x control_pitch_m, and then derives cabinet_width_m from deck_width_m. The multiplicity is NOT capped to hide the failure: control_count reaches 8 for every control candidate, including 8 of the largest 0.056 m knobs.\n\nTwo host-adaptation rules make every one of the 648 combinations buildable:\n(a) top bay. push_button_row mounts on the cabinet top, which the tombstone does not naturally have. The tombstone therefore truncates its arch into a flat crown whose width is exactly the top bay requirement, and its arch rise is re-derived so the front stack still fits under the shoulder. The boombox top bay is cabinet_width_m minus twice its plan corner radius.\n(b) front stack. cabinet height drives the speaker field height, not the other way round, so a front-mounted control deck simply pushes the dial and the grille up and the cabinet grows if it must.\n\nNo allowance is needed anywhere. Controls pass through real openings cut in the deck plate (ExtrudeWithHoles), the telescoping rod slides inside a real annular bore, and the antenna knuckle is coaxial with its own hinge so raking it sweeps no new volume. ctx.allow_overlap is never called; ctx.allow_isolated_part is never needed because every member touches its host within the 1 mm support band.\n\nGrilles, dial graduations and cabinet trim are welded into single merged meshes so a 40-bar grille costs one collision body, not forty.",
+  "bindings": [
+    {
+      "binding_id": "cabinet_hosts_control_deck",
+      "consumer": "control_deck.deck_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "control_deck",
+            "control_count"
+          ],
+          "expression": "selected control cap footprint along the row + 0.006 m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "control_pitch_m",
+          "rationale": "Neighbouring caps can only touch if the pitch ignores the cap size, so the pitch is derived from the cap and never from a constant.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "control_deck",
+            "control_count"
+          ],
+          "expression": "control_count * control_pitch_m + 0.020 (+ two knob wells for transport_key_deck)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "deck_width_m",
+          "rationale": "The deck footprint is exactly the row it must carry.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "cabinet_form",
+            "control_deck",
+            "control_count"
+          ],
+          "expression": "max(form nominal width, deck_width_m + 2*front_inset_m + 0.010, top bay requirement)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "cabinet_width_m",
+          "rationale": "The host grows for the deck instead of the deck being clipped.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "cabinet_form",
+            "control_deck"
+          ],
+          "expression": "max(form nominal depth, deck_height_m + 0.060 for a top bay, 0.098)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "cabinet_depth_m",
+          "rationale": "A top-mounted deck must clear the handle saddle band in Y.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "control_deck"
+          ],
+          "expression": "max(control_recess_m + control_travel_m, 0.0015) + 0.0015 + 0.0008",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "deck_plate_thickness_m",
+          "rationale": "A fully pressed cap must stop inside its own opening rather than diving into the cabinet shell.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "cabinet_form.control_bay"
+    },
+    {
+      "binding_id": "speaker_field_drives_grille",
+      "consumer": "grille_style.panel_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "speaker_layout",
+            "cabinet_form"
+          ],
+          "expression": "single: min(cabinet_width_m - 2*front_inset_m, cabinet_width_m * single_field_width_ratio); dual: (usable width - stereo_field_gap_m)/2",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "field_width_m",
+          "rationale": "The grille fill must be sized by the opening it fills.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "cabinet_form",
+            "control_deck"
+          ],
+          "expression": "clamp(usable_height - fixed front stack, 0.055, 0.300)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "field_height_m",
+          "rationale": "The field takes the height the cabinet leaves after the dial and the front control bay.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "grille_style",
+            "speaker_layout"
+          ],
+          "expression": "ribs: field_height_m / rib_pitch_m; bars: field_width_m / bar_pitch_m; perforations: field footprint / mesh_hole_pitch_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "grille_element_count",
+          "rationale": "Every grille candidate scales its element count with the field it was given rather than reusing a source constant.",
+          "unit": "count",
+          "value_type": "int"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "speaker_layout.field_extent"
+    },
+    {
+      "binding_id": "cabinet_hosts_carry_handle",
+      "consumer": "carry_handle.seat_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "cabinet_form"
+          ],
+          "expression": "cabinet_width_m for the flat-top forms, cabinet_width_m - 2*corner radius for the boombox plan, the flat crown width for the tombstone",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "top_bay_width_m",
+          "rationale": "Only the genuinely flat part of the top can seat a handle.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "cabinet_form",
+            "control_deck",
+            "control_count"
+          ],
+          "expression": "top_bay_width_m - 0.150",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "handle_span_m",
+          "rationale": "The saddles stay inboard of the antenna socket on every top bay.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "cabinet_form"
+          ],
+          "expression": "cabinet_depth_m/2 - 0.027",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "handle_seat_y_m",
+          "rationale": "The rear band is reserved for the handle so a top-mounted control deck never shares it.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "cabinet_form.handle_seat"
+    },
+    {
+      "binding_id": "cabinet_hosts_antenna",
+      "consumer": "antenna_module.socket_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "cabinet_form",
+            "control_deck",
+            "control_count"
+          ],
+          "expression": "top_bay_width_m/2 - 0.024",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "antenna_x_m",
+          "rationale": "The socket rides the right edge of whatever flat top the form provides, outboard of the handle saddles.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "cabinet_form"
+          ],
+          "expression": "cabinet_height_m + 0.0135",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "antenna_socket_z_m",
+          "rationale": "The swivel centre sits one knuckle radius above the boss top so the coaxial knuckle only grazes it.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "antenna_module"
+          ],
+          "expression": "max(declared mast length, 0.018 + travel + 0.010)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "antenna_mast_length_m",
+          "rationale": "The sliding rod must still be captured by the bore at full retraction, whatever stroke was sampled.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "cabinet_form.antenna_socket"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "audio_device_enclosure",
+      "applies_to": {
+        "candidates": [
+          "landscape_cabinet",
+          "portable_slab",
+          "tombstone_upright",
+          "boombox_slab"
+        ],
+        "slot": "cabinet_form"
+      },
+      "required_author_checks": [
+        "category_anchor: cabinet carries a front speaker grille field"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "cabinet_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "audio_device_speaker_field",
+      "applies_to": {
+        "candidates": [
+          "single_field",
+          "dual_stereo"
+        ],
+        "slot": "speaker_layout"
+      },
+      "required_author_checks": [
+        "category_anchor: cabinet carries a front speaker grille field"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "cabinet_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "audio_device_grille_face",
+      "applies_to": {
+        "candidates": [
+          "horizontal_ribbed",
+          "perforated_mesh",
+          "vertical_bar"
+        ],
+        "slot": "grille_style"
+      },
+      "required_author_checks": [
+        "category_anchor: cabinet carries a front speaker grille field"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "cabinet_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "audio_device_rotary_bank",
+      "applies_to": {
+        "candidates": [
+          "rotary_knob_bank"
+        ],
+        "slot": "control_deck"
+      },
+      "required_author_checks": [
+        "category_anchor: every deck control stays inside its opening and proud of the deck",
+        "category_anchor: every rotary knob turns about its own front-facing axis"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotary_knob",
+          "joint_type": "continuous",
+          "parent_role": "control_deck"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "control_deck"
+        },
+        {
+          "count_from": "resolved.control_count",
+          "exact_count": null,
+          "role": "rotary_knob"
+        }
+      ]
+    },
+    {
+      "anchor_id": "audio_device_press_row",
+      "applies_to": {
+        "candidates": [
+          "push_button_row"
+        ],
+        "slot": "control_deck"
+      },
+      "required_author_checks": [
+        "category_anchor: every deck control stays inside its opening and proud of the deck",
+        "category_anchor: every press control has independent inward travel"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "child_role": "press_button",
+          "joint_type": "prismatic",
+          "parent_role": "control_deck"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "control_deck"
+        },
+        {
+          "count_from": "resolved.control_count",
+          "exact_count": null,
+          "role": "press_button"
+        }
+      ]
+    },
+    {
+      "anchor_id": "audio_device_transport_deck",
+      "applies_to": {
+        "candidates": [
+          "transport_key_deck"
+        ],
+        "slot": "control_deck"
+      },
+      "required_author_checks": [
+        "category_anchor: every deck control stays inside its opening and proud of the deck",
+        "category_anchor: every rotary knob turns about its own front-facing axis",
+        "category_anchor: every press control has independent inward travel"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "child_role": "press_button",
+          "joint_type": "prismatic",
+          "parent_role": "control_deck"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "rotary_knob",
+          "joint_type": "continuous",
+          "parent_role": "control_deck"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "control_deck"
+        },
+        {
+          "count_from": "resolved.control_count",
+          "exact_count": null,
+          "role": "press_button"
+        },
+        {
+          "count_from": null,
+          "exact_count": 2,
+          "role": "rotary_knob"
+        }
+      ]
+    },
+    {
+      "anchor_id": "audio_device_integrated_carry",
+      "applies_to": {
+        "candidates": [
+          "molded_top_lip"
+        ],
+        "slot": "carry_handle"
+      },
+      "required_author_checks": [
+        "category_anchor: cabinet top provides a carry feature"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "cabinet_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "audio_device_carry_bail",
+      "applies_to": {
+        "candidates": [
+          "fixed_bail",
+          "folding_bail"
+        ],
+        "slot": "carry_handle"
+      },
+      "required_author_checks": [
+        "category_anchor: cabinet top provides a carry feature"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "carry_handle"
+        }
+      ]
+    },
+    {
+      "anchor_id": "audio_device_folding_carry_bail",
+      "applies_to": {
+        "candidates": [
+          "folding_bail"
+        ],
+        "slot": "carry_handle"
+      },
+      "required_author_checks": [
+        "category_anchor: cabinet top provides a carry feature"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "carry_handle",
+          "joint_type": "revolute",
+          "parent_role": "cabinet_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "carry_handle"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "cabinet_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "audio_device_no_antenna",
+      "applies_to": {
+        "candidates": [
+          "no_antenna"
+        ],
+        "slot": "antenna_module"
+      },
+      "required_author_checks": [
+        "category_anchor: antenna module matches its cabinet mounting"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "cabinet_body"
+        },
+        {
+          "count_from": null,
+          "exact_count": 0,
+          "role": "antenna_base"
+        }
+      ]
+    },
+    {
+      "anchor_id": "audio_device_side_whip",
+      "applies_to": {
+        "candidates": [
+          "side_swivel_whip"
+        ],
+        "slot": "antenna_module"
+      },
+      "required_author_checks": [
+        "category_anchor: antenna module matches its cabinet mounting"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "antenna_base",
+          "joint_type": "revolute",
+          "parent_role": "cabinet_body"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "antenna_rod",
+          "joint_type": "prismatic",
+          "parent_role": "antenna_base"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "antenna_base"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "antenna_rod"
+        }
+      ]
+    },
+    {
+      "anchor_id": "audio_device_rear_mast",
+      "applies_to": {
+        "candidates": [
+          "rear_telescoping_mast"
+        ],
+        "slot": "antenna_module"
+      },
+      "required_author_checks": [
+        "category_anchor: antenna module matches its cabinet mounting"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "antenna_base",
+          "joint_type": "revolute",
+          "parent_role": "cabinet_body"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "antenna_rod",
+          "joint_type": "prismatic",
+          "parent_role": "antenna_base"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "antenna_base"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "antenna_rod"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "deck_width_m = N * control_pitch_m + 0.020 m (plus two flanking knob wells for transport_key_deck); the cabinet then grows so that deck_width_m + 2 * front_inset_m + 0.010 <= cabinet_width_m for a front bay, and deck_width_m + 0.050 <= top_bay_width_m for a top bay",
+      "item_slot": "control_deck",
+      "name": "control_count",
+      "spacing_expression": "control_pitch_m = selected cap footprint along the row + 0.006 m of guaranteed air; positions are (i - (N-1)/2) * control_pitch_m",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        8
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Wide softly radiused rectangular cabinet whose front face is set back behind a framed recess and whose top is a finished flat deck.",
+          "implementation_function": "_cabinet_form_landscape_cabinet_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "front: (cabinet_width_m - 2*front_inset_m, deck_height_m + 0.02); top: (top_bay_width_m - 0.02, deck_height_m + 0.02)"
+              },
+              "frame": {
+                "normal": "-Y or +Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "control_bay",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent": "(top_bay_width_m - 0.018, 0.038)"
+              },
+              "frame": {
+                "normal": "+Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "handle_seat",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin": "(0, handle_seat_y_m, cabinet_height_m + 0.016)",
+                "radius": 0.012
+              },
+              "frame": {
+                "axis": "+X",
+                "radial": "+Z"
+              },
+              "kind": "axis",
+              "name": "handle_hinge",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin": "(antenna_x_m, antenna_y_m, cabinet_height_m + 0.0135)",
+                "radius": 0.01
+              },
+              "frame": {
+                "axis": "+Y for the side whip, -X for the rear mast",
+                "radial": "+Z"
+              },
+              "kind": "axis",
+              "name": "antenna_socket",
+              "part": "cabinet",
+              "role": "provider"
+            }
+          ],
+          "name": "landscape_cabinet",
+          "notes": "One enclosure part is the structural root; the front stack (control bay, tuning dial, speaker field) and the top bay (control bay, handle seat, antenna socket) are derived from what the other slots need.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "landscape_width_m",
+              "rationale": "Wide tabletop cabinet width; the reviewed span builds a 0.56 m cabinet.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.44,
+              "mode": "independent",
+              "name": "landscape_height_ratio",
+              "rationale": "Height over width of the tabletop cabinet; the source is 0.29/0.56 = 0.52.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-wooden-retro-tabletop-radio-a-horizontal-recta_20260624_122658_140987_c610b240",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L32-L40",
+            "model.py:L72-L97"
+          ]
+        },
+        {
+          "evidence": "Small all-round filleted slab with a shallow raised control ledge on the top face, proportioned for one-hand carry rather than a shelf.",
+          "implementation_function": "_cabinet_form_portable_slab_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "front: (cabinet_width_m - 2*front_inset_m, deck_height_m + 0.02); top: (top_bay_width_m - 0.02, deck_height_m + 0.02)"
+              },
+              "frame": {
+                "normal": "-Y or +Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "control_bay",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent": "(top_bay_width_m - 0.018, 0.038)"
+              },
+              "frame": {
+                "normal": "+Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "handle_seat",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin": "(0, handle_seat_y_m, cabinet_height_m + 0.016)",
+                "radius": 0.012
+              },
+              "frame": {
+                "axis": "+X",
+                "radial": "+Z"
+              },
+              "kind": "axis",
+              "name": "handle_hinge",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin": "(antenna_x_m, antenna_y_m, cabinet_height_m + 0.0135)",
+                "radius": 0.01
+              },
+              "frame": {
+                "axis": "+Y for the side whip, -X for the rear mast",
+                "radial": "+Z"
+              },
+              "kind": "axis",
+              "name": "antenna_socket",
+              "part": "cabinet",
+              "role": "provider"
+            }
+          ],
+          "name": "portable_slab",
+          "notes": "One enclosure part is the structural root; the front stack (control bay, tuning dial, speaker field) and the top bay (control bay, handle seat, antenna socket) are derived from what the other slots need.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "portable_width_m",
+              "rationale": "Portable slab width; the reviewed span builds a 0.32 m case.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "portable_corner_radius_m",
+              "rationale": "All-round silhouette fillet; the source fillets every edge at 0.018 m.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-tan-beige-minimalist-retro-portable-radio-a-re_20260624_122658_140174_25291653",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L32-L54",
+            "model.py:L96-L103"
+          ]
+        },
+        {
+          "evidence": "A rectangle capped by a semicircular arch is extruded along the depth axis, giving a cabinet taller than it is wide with a curved crown.",
+          "implementation_function": "_cabinet_form_tombstone_upright_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "front: (cabinet_width_m - 2*front_inset_m, deck_height_m + 0.02); top: (top_bay_width_m - 0.02, deck_height_m + 0.02)"
+              },
+              "frame": {
+                "normal": "-Y or +Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "control_bay",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent": "(top_bay_width_m - 0.018, 0.038)"
+              },
+              "frame": {
+                "normal": "+Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "handle_seat",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin": "(0, handle_seat_y_m, cabinet_height_m + 0.016)",
+                "radius": 0.012
+              },
+              "frame": {
+                "axis": "+X",
+                "radial": "+Z"
+              },
+              "kind": "axis",
+              "name": "handle_hinge",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin": "(antenna_x_m, antenna_y_m, cabinet_height_m + 0.0135)",
+                "radius": 0.01
+              },
+              "frame": {
+                "axis": "+Y for the side whip, -X for the rear mast",
+                "radial": "+Z"
+              },
+              "kind": "axis",
+              "name": "antenna_socket",
+              "part": "cabinet",
+              "role": "provider"
+            }
+          ],
+          "name": "tombstone_upright",
+          "notes": "One enclosure part is the structural root; the front stack (control bay, tuning dial, speaker field) and the top bay (control bay, handle seat, antenna socket) are derived from what the other slots need.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "tombstone_width_m",
+              "rationale": "Upright cabinet width; the reviewed span builds a 0.36 m cabinet.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.55,
+              "minimum": 1.2,
+              "mode": "independent",
+              "name": "tombstone_height_ratio",
+              "rationale": "Height over width; the source is 0.48/0.36 = 1.33 and must stay > 1.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_audio_device_var_tombstone_body",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L26-L61",
+            "model.py:L95-L101"
+          ]
+        },
+        {
+          "evidence": "Plan-view rounded-square prism with heavily filleted vertical corners, a flat top deck, and four rubber feet lifting it off the ground.",
+          "implementation_function": "_cabinet_form_boombox_slab_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "front: (cabinet_width_m - 2*front_inset_m, deck_height_m + 0.02); top: (top_bay_width_m - 0.02, deck_height_m + 0.02)"
+              },
+              "frame": {
+                "normal": "-Y or +Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "control_bay",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent": "(top_bay_width_m - 0.018, 0.038)"
+              },
+              "frame": {
+                "normal": "+Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "handle_seat",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin": "(0, handle_seat_y_m, cabinet_height_m + 0.016)",
+                "radius": 0.012
+              },
+              "frame": {
+                "axis": "+X",
+                "radial": "+Z"
+              },
+              "kind": "axis",
+              "name": "handle_hinge",
+              "part": "cabinet",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "origin": "(antenna_x_m, antenna_y_m, cabinet_height_m + 0.0135)",
+                "radius": 0.01
+              },
+              "frame": {
+                "axis": "+Y for the side whip, -X for the rear mast",
+                "radial": "+Z"
+              },
+              "kind": "axis",
+              "name": "antenna_socket",
+              "part": "cabinet",
+              "role": "provider"
+            }
+          ],
+          "name": "boombox_slab",
+          "notes": "One enclosure part is the structural root; the front stack (control bay, tuning dial, speaker field) and the top bay (control bay, handle seat, antenna socket) are derived from what the other slots need.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "boombox_width_m",
+              "rationale": "Rounded-square slab width; the reviewed span builds a 0.30 m body.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.046,
+              "minimum": 0.022,
+              "mode": "independent",
+              "name": "boombox_corner_radius_m",
+              "rationale": "Plan-view corner fillet; the source uses 0.032 m vertical corner rounding.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_silver-portable-cd-radio-boombox-oval-body-with-_20260605_173820_379190_c648725c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L119-L154",
+            "model.py:L185-L199"
+          ]
+        }
+      ],
+      "component_type": "wide tabletop enclosure",
+      "name": "cabinet_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Perimeter rails enclose a stack of evenly pitched horizontal ribs whose count follows the field height.",
+          "implementation_function": "_grille_style_horizontal_ribbed_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "(field_width_m, field_height_m) taken from speaker_layout"
+              },
+              "frame": {
+                "normal": "+Y",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "panel_mount",
+              "part": "cabinet",
+              "role": "consumer"
+            }
+          ],
+          "name": "horizontal_ribbed",
+          "notes": "Emits one welded mesh per speaker field so a dense grille costs one collision body instead of dozens.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.013,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "rib_pitch_m",
+              "rationale": "Vertical spacing of the cloth ribs; the source stacks 15 ribs at 0.0074 m.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-wooden-retro-tabletop-radio-a-horizontal-recta_20260624_122658_140987_c610b240",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L140-L178"
+          ]
+        },
+        {
+          "evidence": "A dark backing plate, a rounded-rect bezel and a genuinely perforated panel with staggered holes replace the rib stack.",
+          "implementation_function": "_grille_style_perforated_mesh_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "(field_width_m, field_height_m) taken from speaker_layout"
+              },
+              "frame": {
+                "normal": "+Y",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "panel_mount",
+              "part": "cabinet",
+              "role": "consumer"
+            }
+          ],
+          "name": "perforated_mesh",
+          "notes": "Emits one welded mesh per speaker field so a dense grille costs one collision body instead of dozens.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.014,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "mesh_hole_pitch_m",
+              "rationale": "Perforation pitch; the source panel uses a 0.010 x 0.0086 m staggered grid.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-tan-beige-minimalist-retro-portable-radio-a-re_20260624_122658_140174_25291653",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L56-L94"
+          ]
+        },
+        {
+          "evidence": "The same opening is filled by evenly pitched vertical bars running top to bottom, with the bar count derived from the field width.",
+          "implementation_function": "_grille_style_vertical_bar_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "(field_width_m, field_height_m) taken from speaker_layout"
+              },
+              "frame": {
+                "normal": "+Y",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "panel_mount",
+              "part": "cabinet",
+              "role": "consumer"
+            }
+          ],
+          "name": "vertical_bar",
+          "notes": "Emits one welded mesh per speaker field so a dense grille costs one collision body instead of dozens.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.018,
+              "minimum": 0.009,
+              "mode": "independent",
+              "name": "bar_pitch_m",
+              "rationale": "Vertical slat pitch; the source variant emits 30 bars at 0.013 m.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_audio_device_var_vertical_bar_grille",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L140-L182"
+          ]
+        }
+      ],
+      "component_type": "ribbed cloth grille field",
+      "name": "grille_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "One circular cone shadow sits behind one wide grille opening that spans most of the front face.",
+          "implementation_function": "_speaker_layout_single_field_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "count": "1 for single_field, 2 for dual_stereo",
+                "extent": "(field_width_m, field_height_m) per emitted field"
+              },
+              "frame": {
+                "normal": "-Y",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "field_extent",
+              "part": "cabinet",
+              "role": "provider"
+            }
+          ],
+          "name": "single_field",
+          "notes": "Owns how many acoustic fields the front face carries and where they sit; the grille slot only fills them.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.86,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "single_field_width_ratio",
+              "rationale": "Share of the cabinet width taken by the one opening; the source is 0.424/0.56.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-wooden-retro-tabletop-radio-a-horizontal-recta_20260624_122658_140987_c610b240",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L132-L164"
+          ]
+        },
+        {
+          "evidence": "Two mirrored speaker bores, baskets, surrounds and bezels are emitted at symmetric offsets, halving each opening and freeing the centre.",
+          "implementation_function": "_speaker_layout_dual_stereo_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "count": "1 for single_field, 2 for dual_stereo",
+                "extent": "(field_width_m, field_height_m) per emitted field"
+              },
+              "frame": {
+                "normal": "-Y",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "field_extent",
+              "part": "cabinet",
+              "role": "provider"
+            }
+          ],
+          "name": "dual_stereo",
+          "notes": "Owns how many acoustic fields the front face carries and where they sit; the grille slot only fills them.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.07,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "stereo_field_gap_m",
+              "rationale": "Clear centre span between the two openings; the source leaves 0.088 m between bore centres.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_audio_device_var_dual_stereo_speaker",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L201-L232"
+          ]
+        }
+      ],
+      "component_type": "one full-width speaker field",
+      "name": "speaker_layout",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Fluted skirted knob caps seat on the lower control strip and each turns about its own front-facing rotation axis.",
+          "implementation_function": "_control_deck_rotary_knob_bank_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "(deck_width_m, deck_height_m)",
+                "footprint": "control_count x (knob skirt diameter + 0.006) plus 0.010 margins"
+              },
+              "frame": {
+                "normal": "+Y (front bay) or -Z (top bay)",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "deck_mount",
+              "part": "control_deck",
+              "role": "consumer",
+              "surface_relation": {
+                "motion_expression": "rotation about the deck normal keeps the knob inside the same opening; there is no travel along the normal",
+                "normal_band_expression": "the knob body spans -knob_recess (0.0015 m) to knob_height - knob_recess along the outward deck normal, so its skirt is seated but its cap is proud",
+                "opening_expression": "the deck plate is cut with one round opening of knob skirt diameter + 2 x 0.0008 m per knob, and the knob footprint must stay inside it",
+                "required_author_check": "category_anchor: every deck control stays inside its opening and proud of the deck",
+                "subject_role": "rotary_knob"
+              }
+            }
+          ],
+          "name": "rotary_knob_bank",
+          "notes": "A separate deck part is plane-mated onto the cabinet and carries a real opening per control, so no control ever intersects its host.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.056,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "knob_diameter_m",
+              "rationale": "Knob body diameter; the source knob is 0.054 m with a 0.062 m skirt.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-wooden-retro-tabletop-radio-a-horizontal-recta_20260624_122658_140987_c610b240",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L244-L288"
+          ]
+        },
+        {
+          "evidence": "A darker control strip carries an index-general loop of rounded keycaps, each its own part on a short prismatic press joint.",
+          "implementation_function": "_control_deck_push_button_row_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "(deck_width_m, deck_height_m)",
+                "footprint": "control_count x (button_width_m + 0.006) plus 0.010 margins"
+              },
+              "frame": {
+                "normal": "-Z (top bay)",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "deck_mount",
+              "part": "control_deck",
+              "role": "consumer",
+              "surface_relation": {
+                "motion_expression": "0.009 - button_recess - button_travel_m >= 0.0008 m of cap body still protrudes at full press, and the cap never reaches the cabinet shell because the plate is button_recess + button_travel_m + 0.0015 m thick",
+                "normal_band_expression": "the cap spans -button_recess (0.0020 m) to 0.009 - button_recess along the outward deck normal",
+                "opening_expression": "the deck plate is cut with one rounded-rect opening of (button_width_m + 0.0016, cap_v + 0.0016) per key; the cap footprint must stay inside it at rest and at full press",
+                "required_author_check": "category_anchor: every deck control stays inside its opening and proud of the deck",
+                "subject_role": "press_button"
+              }
+            }
+          ],
+          "name": "push_button_row",
+          "notes": "A separate deck part is plane-mated onto the cabinet and carries a real opening per control, so no control ever intersects its host.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "button_width_m",
+              "rationale": "Keycap width along the row; the source cap is 0.026 x 0.018 m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0042,
+              "minimum": 0.002,
+              "mode": "independent",
+              "name": "button_travel_m",
+              "rationale": "Press stroke; the source prismatic limit is 0.005 m of down travel.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_audio_device_var_button_count_high",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L96-L103",
+            "model.py:L171-L191"
+          ]
+        },
+        {
+          "evidence": "Small playback keys press inward from the floor of a recessed tray, flanked by continuously spinning knobs on the same deck.",
+          "implementation_function": "_control_deck_transport_key_deck_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "(deck_width_m, deck_height_m)",
+                "footprint": "control_count x (transport_key_width_m + 0.006) plus two flanking knob openings and 0.010 margins"
+              },
+              "frame": {
+                "normal": "+Y (front bay)",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "deck_mount",
+              "part": "control_deck",
+              "role": "consumer",
+              "surface_relation": {
+                "motion_expression": "0.008 - key_recess - transport_key_travel_m >= 0.0008 m of key body is still visible at full press and the key stays in the same opening",
+                "normal_band_expression": "the key spans -key_recess (0.0025 m) to 0.008 - key_recess along the outward deck normal, which is what makes the tray read as recessed",
+                "opening_expression": "the recessed deck plate is cut with one rounded-rect opening of (transport_key_width_m + 0.0016, cap_v + 0.0016) per key plus two round knob openings; every key footprint must stay inside its own opening",
+                "required_author_check": "category_anchor: every deck control stays inside its opening and proud of the deck",
+                "subject_role": "press_button"
+              }
+            }
+          ],
+          "name": "transport_key_deck",
+          "notes": "A separate deck part is plane-mated onto the cabinet and carries a real opening per control, so no control ever intersects its host.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.011,
+              "mode": "independent",
+              "name": "transport_key_width_m",
+              "rationale": "Playback key width; the source key is 0.011-0.013 m square.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0035,
+              "minimum": 0.0018,
+              "mode": "independent",
+              "name": "transport_key_travel_m",
+              "rationale": "Key stroke; the source transport joint travels 0.0016 m inward.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_silver-portable-cd-radio-boombox-oval-body-with-_20260605_173820_379190_c648725c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L299-L327",
+            "model.py:L362-L390"
+          ]
+        }
+      ],
+      "component_type": "rotary control bank",
+      "name": "control_deck",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The cabinet top is a finished decorated deck with raised trim strips and carries no separate handle link.",
+          "implementation_function": "_carry_handle_molded_top_lip_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "(top_bay_width_m - 0.040, 0.016)"
+              },
+              "frame": {
+                "normal": "-Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "seat_mount",
+              "part": "cabinet",
+              "role": "consumer"
+            }
+          ],
+          "name": "molded_top_lip",
+          "notes": "The top bay reserves the rear band for the handle and derives the saddle span from the top bay width.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "top_lip_height_m",
+              "rationale": "Height of the moulded top trim standing in for a bail; the source strips are 0.0012-0.003 m.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-wooden-retro-tabletop-radio-a-horizontal-recta_20260624_122658_140987_c610b240",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L80-L88"
+          ]
+        },
+        {
+          "evidence": "Two saddles on the top face carry a swept rounded-rect arch as one separate rigidly mounted link.",
+          "implementation_function": "_carry_handle_fixed_bail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "(0.028, 0.026) saddle foot seated at uv = (-handle_span_m/2, 0) on the handle seat"
+              },
+              "frame": {
+                "normal": "-Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "seat_mount",
+              "part": "carry_handle",
+              "role": "consumer"
+            }
+          ],
+          "name": "fixed_bail",
+          "notes": "The top bay reserves the rear band for the handle and derives the saddle span from the top bay width.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.115,
+              "minimum": 0.055,
+              "mode": "independent",
+              "name": "fixed_bail_rise_m",
+              "rationale": "Arch height above the cabinet top; the source strap peaks 0.134-0.037 m above the case.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-tan-beige-minimalist-retro-portable-radio-a-re_20260624_122658_140174_25291653",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L136-L169"
+          ]
+        },
+        {
+          "evidence": "The swept bail has real pivot knuckles seated on two top bosses and swings about a horizontal cabinet-width axis.",
+          "implementation_function": "_carry_handle_folding_bail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "(0.028, 0.026) knuckle foot on the handle seat"
+              },
+              "frame": {
+                "normal": "-Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "seat_mount",
+              "part": "carry_handle",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "origin": "knuckle centres at +/- handle_span_m / 2",
+                "radius": 0.01
+              },
+              "frame": {
+                "axis": "+X",
+                "radial": "+Z"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "carry_handle",
+              "role": "consumer"
+            }
+          ],
+          "name": "folding_bail",
+          "notes": "The top bay reserves the rear band for the handle and derives the saddle span from the top bay width.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.1,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "folding_bail_rise_m",
+              "rationale": "Arch height above the pivot line; the source bail rises 0.052 m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.57,
+              "minimum": 1.05,
+              "mode": "independent",
+              "name": "folding_bail_angle_rad",
+              "rationale": "Fold-back range; the source revolute limit is pi/2.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_retro-vintage-portable-transistor-radio-bronze-a_20260605_173810_150349_43796658",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L190-L243",
+            "model.py:L403-L419"
+          ]
+        }
+      ],
+      "component_type": "integrated top trim, no bail",
+      "name": "carry_handle",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The cabinet carries only trim on its shell; no socket, mast or moving antenna link exists.",
+          "implementation_function": "_antenna_module_no_antenna_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent": "(blank_badge_width_m, 0.016)"
+              },
+              "frame": {
+                "normal": "-Z",
+                "tangent_u": "+X"
+              },
+              "kind": "plane",
+              "name": "socket_blank",
+              "part": "cabinet",
+              "role": "consumer"
+            }
+          ],
+          "name": "no_antenna",
+          "notes": "The swivel knuckle is coaxial with its own hinge, so raking the antenna sweeps no new volume into the cabinet boss.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.05,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "blank_badge_width_m",
+              "rationale": "Width of the blanking badge that replaces the socket on antenna-less cabinets.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_audio_device_var_tombstone_body",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L103-L123"
+          ]
+        },
+        {
+          "evidence": "A brass boss carries a knuckle that rakes sideways about the depth axis and a thin rod that telescopes inside the sleeve.",
+          "implementation_function": "_antenna_module_side_swivel_whip_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin": "knuckle centre on the swivel axis",
+                "radius": 0.008
+              },
+              "frame": {
+                "axis": "+Y",
+                "radial": "+Z"
+              },
+              "kind": "axis",
+              "name": "socket_mount",
+              "part": "antenna_base",
+              "role": "consumer"
+            }
+          ],
+          "name": "side_swivel_whip",
+          "notes": "The swivel knuckle is coaxial with its own hinge, so raking the antenna sweeps no new volume into the cabinet boss.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "whip_mast_length_m",
+              "rationale": "Guide sleeve length; the source outer sleeve is 0.090 m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.075,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "whip_travel_m",
+              "rationale": "Telescoping stroke; the source slide is 0.070 m.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_a-tan-beige-minimalist-retro-portable-radio-a-re_20260624_122658_140174_25291653",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L105-L116",
+            "model.py:L193-L253"
+          ]
+        },
+        {
+          "evidence": "A socket block on the rear of the top deck carries a thick lower tube raking about the cabinet-width axis and a thinner upper segment sliding inside it.",
+          "implementation_function": "_antenna_module_rear_telescoping_mast_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "origin": "knuckle centre on the swivel axis",
+                "radius": 0.008
+              },
+              "frame": {
+                "axis": "-X",
+                "radial": "+Z"
+              },
+              "kind": "axis",
+              "name": "socket_mount",
+              "part": "antenna_base",
+              "role": "consumer"
+            }
+          ],
+          "name": "rear_telescoping_mast",
+          "notes": "The swivel knuckle is coaxial with its own hinge, so raking the antenna sweeps no new volume into the cabinet boss.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "mast_length_m",
+              "rationale": "Lower tube length; the source lower segment is 0.130 m.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.085,
+              "minimum": 0.035,
+              "mode": "independent",
+              "name": "mast_travel_m",
+              "rationale": "Telescoping stroke; the source prismatic limit is 0.090 m.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_retro-vintage-portable-transistor-radio-bronze-a_20260605_173810_150349_43796658",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L246-L269",
+            "model.py:L421-L455"
+          ]
+        }
+      ],
+      "component_type": "blank antenna position",
+      "name": "antenna_module",
+      "required": true
+    }
+  ],
+  "slug": "Technology_Audio_Device",
+  "source_map_path": "articraft_template_authoring/source_maps/Technology_Audio_Device.md",
+  "source_map_sha256": "297f49292f7d8c14c0248f2ef44bd45689bdf40a0a5dd1d1d9d48a6a9b964d99"
+}

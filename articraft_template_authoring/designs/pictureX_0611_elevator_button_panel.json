@@ -1,0 +1,719 @@
+{
+  "assembly_notes": "Three honest structural slots. Ten source-backed panel families each publish N local selector stations plus an adaptive auxiliary band; four button styles consume every station and five auxiliary styles consume the band. All 10 x 4 x 5 = 200 core combinations build without a compatibility gate. floor_count is N, not core: 6/8/12/18/30 each add one complete numbered selector while the selected host re-derives rows, dimensions, inset capacity and information-module position. The three mechanical selector candidates add a bezel, guide, moving cap and prismatic joint; glass_touch_numbered adds one fixed indexed illuminated cell, preserving its inspected topology. Auxiliary controls use explicit vertical staggering, and destination action wells occupy a separate upper sub-band so controls do not visually overlap neighboring pieces. numeral_style samples six real geometric constructions and never inflates core/raw.",
+  "bindings": [
+    {
+      "binding_id": "panel_to_floor_buttons",
+      "provider": "panel_family.button_face",
+      "consumer": "button_style.button_station",
+      "joint_type": "candidate_specific",
+      "derived": [
+        {
+          "name": "button_pitch_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "depends_on": ["pitch_m", "button_size_m"],
+          "expression": "max(pitch_m, 1.55 * button_size_m + 0.010)",
+          "rationale": "Every family reserves enough station pitch for the widest tactile footprint so all four selector candidates remain freely crossable."
+        },
+        {
+          "name": "button_face_exposure_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "depends_on": ["press_travel_m"],
+          "expression": "0.0096 - press_travel_m",
+          "rationale": "Mechanical caps retain at least 5.5 mm of visible body at maximum travel; fixed glass cells occupy the same enlarged visible station band without claiming a press joint."
+        }
+      ]
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "numbered_car_operating_panel",
+      "applies_to": {
+        "slot": "panel_family",
+        "candidates": ["compact_pair", "service_pair", "single_column", "three_column", "split_zone", "horizontal_console", "corner_wrap", "destination_matrix", "glass_inlay", "protected_service_bay"]
+      },
+      "required_roles": [
+        {"role": "panel", "exact_count": 1},
+        {"role": "button", "count_from": "floor_count"}
+      ],
+      "required_relations": [],
+      "required_author_checks": [
+        "category_anchor: one operating panel carries the station",
+        "category_anchor: N floor selectors are present",
+        "category_anchor: every floor button carries its visible floor number",
+        "category_anchor: every floor selector remains exposed in its opening"
+      ]
+    },
+    {
+      "anchor_id": "mechanical_numbered_selectors",
+      "applies_to": {
+        "slot": "button_style",
+        "candidates": ["round_numbered", "square_numbered", "wide_tactile_numbered"]
+      },
+      "required_roles": [{"role": "button", "count_from": "floor_count"}],
+      "required_relations": [
+        {"parent_role": "panel", "child_role": "button", "joint_type": "prismatic"}
+      ],
+      "required_author_checks": [
+        "category_anchor: mechanical floor selectors use real prismatic joints",
+        "category_anchor: every floor selector remains exposed in its opening"
+      ]
+    },
+    {
+      "anchor_id": "fixed_glass_touch_selectors",
+      "applies_to": {
+        "slot": "button_style",
+        "candidates": ["glass_touch_numbered"]
+      },
+      "required_roles": [{"role": "button", "count_from": "floor_count"}],
+      "required_relations": [
+        {"parent_role": "panel", "child_role": "button", "joint_type": "fixed"}
+      ],
+      "required_author_checks": [
+        "category_anchor: glass touch floor selectors remain fixed",
+        "category_anchor: every floor selector remains exposed in its opening"
+      ]
+    },
+    {
+      "anchor_id": "single_auxiliary_module",
+      "applies_to": {
+        "slot": "aux_style",
+        "candidates": ["key_switch", "fire_service_cover"]
+      },
+      "required_roles": [{"role": "aux_control", "exact_count": 1}],
+      "required_relations": [
+        {"parent_role": "panel", "child_role": "aux_control", "joint_type": "revolute"}
+      ],
+      "required_author_checks": ["category_anchor: the panel carries its auxiliary module"]
+    },
+    {
+      "anchor_id": "accessible_auxiliary_module",
+      "applies_to": {
+        "slot": "aux_style",
+        "candidates": ["accessibility_paddles"]
+      },
+      "required_roles": [{"role": "aux_control", "exact_count": 3}],
+      "required_relations": [
+        {"parent_role": "panel", "child_role": "aux_control", "joint_type": "prismatic"}
+      ],
+      "required_author_checks": [
+        "category_anchor: the panel carries its auxiliary module",
+        "category_anchor: accessibility paddles remain exposed at full travel"
+      ]
+    },
+    {
+      "anchor_id": "door_alarm_auxiliary_module",
+      "applies_to": {
+        "slot": "aux_style",
+        "candidates": ["door_alarm_cluster"]
+      },
+      "required_roles": [{"role": "aux_control", "exact_count": 3}],
+      "required_relations": [
+        {"parent_role": "panel", "child_role": "aux_control", "joint_type": "prismatic"}
+      ],
+      "required_author_checks": ["category_anchor: the panel carries its auxiliary module"]
+    },
+    {
+      "anchor_id": "emergency_intercom_auxiliary_module",
+      "applies_to": {
+        "slot": "aux_style",
+        "candidates": ["emergency_intercom"]
+      },
+      "required_roles": [{"role": "aux_control", "exact_count": 2}],
+      "required_relations": [],
+      "required_author_checks": ["category_anchor: the panel carries its auxiliary module"]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "floor_count",
+      "item_slot": "panel_family",
+      "values": [6, 8, 12, 18, 30],
+      "spacing_expression": "Each family maps index i to its source-backed column/bank/face rule using button_pitch_m; horizontal uses six columns, corner balances both local planes, destination_matrix retains its separate action rail, and glass_inlay sizes its framed inset around the complete station field.",
+      "host_capacity_expression": "Host width/height, field rows, service band, information-module position, inset, protected bay and corner-face allocation are derived after floor_count and button_pitch_m; all mechanical selectors share one honest repeated-joint QC group while fixed glass cells add no fake articulation."
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "A compact filleted faceplate over a recessed tray with a two-column field; the source also puts a real one- or two-digit legend on every moving floor cap.",
+          "implementation_function": "_panel_family_compact_pair_build",
+          "interfaces": [
+            {
+              "name": "button_face",
+              "kind": "plane",
+              "role": "provider",
+              "part": "panel_family__compact_pair__panel",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"extent": "derived compact faceplate", "stations": "floor_count"},
+              "surface_relation": {
+                "subject_role": "button",
+                "opening_expression": "each numbered cap footprint plus 1.0 mm radial clearance remains inside its own bezel aperture",
+                "normal_band_expression": "the cap occupies the visible band in front of its local panel plane",
+                "motion_expression": "at full press, 0.0096 - press_travel_m leaves at least 5.5 mm of the cap proud of the face",
+                "required_author_check": "category_anchor: every floor selector remains exposed in its opening"
+              }
+            }
+          ],
+          "name": "compact_pair",
+          "notes": "",
+          "parameters": [
+            {"name": "panel_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.022, "maximum": 0.040, "choices": [], "depends_on": [], "expression": "", "rationale": "Source recess and console-shell depth range."},
+            {"name": "pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.048, "maximum": 0.066, "choices": [], "depends_on": [], "expression": "", "rationale": "Source-derived row spacing expanded to preserve clear separation around the enlarged selectors."}
+          ],
+          "record_id": "rec_picturex_0611__elevator_button_panel__001__png__airflex_batch_20260710_5af95b11f6ac4c81a8fbe8dc79222d40",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L60-L156",
+            "model.py:L260-L444"
+          ]
+        },
+        {
+          "evidence": "A tall narrow service console carries display, message lens, grille and screws around a two-column floor field.",
+          "implementation_function": "_panel_family_service_pair_build",
+          "interfaces": [
+            {
+              "name": "button_face",
+              "kind": "plane",
+              "role": "provider",
+              "part": "panel_family__service_pair__panel",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"extent": "derived service console face", "stations": "floor_count"},
+              "surface_relation": {
+                "subject_role": "button",
+                "opening_expression": "each numbered cap footprint plus 1.0 mm radial clearance remains inside its own bezel aperture",
+                "normal_band_expression": "the cap occupies the visible band in front of its local panel plane",
+                "motion_expression": "at full press, 0.0096 - press_travel_m leaves at least 5.5 mm of the cap proud of the face",
+                "required_author_check": "category_anchor: every floor selector remains exposed in its opening"
+              }
+            }
+          ],
+          "name": "service_pair",
+          "notes": "",
+          "parameters": [
+            {"name": "panel_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.022, "maximum": 0.040, "choices": [], "depends_on": [], "expression": "", "rationale": "Source recess and console-shell depth range."},
+            {"name": "pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.048, "maximum": 0.066, "choices": [], "depends_on": [], "expression": "", "rationale": "Source-derived row spacing expanded to preserve clear separation around the enlarged selectors."}
+          ],
+          "record_id": "rec_picturex_0611__elevator_button_panel__002__png__airflex_batch_20260710_e78767714b92403da1268cdbe3f5a877",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L78-L459"
+          ]
+        },
+        {
+          "evidence": "One centered column of individually numbered prismatic floor buttons; the host height follows the row count.",
+          "implementation_function": "_panel_family_single_column_build",
+          "interfaces": [
+            {
+              "name": "button_face",
+              "kind": "plane",
+              "role": "provider",
+              "part": "panel_family__single_column__panel",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"extent": "derived single-column face", "stations": "floor_count"},
+              "surface_relation": {
+                "subject_role": "button",
+                "opening_expression": "each numbered cap footprint plus 1.0 mm radial clearance remains inside its own bezel aperture",
+                "normal_band_expression": "the cap occupies the visible band in front of its local panel plane",
+                "motion_expression": "at full press, 0.0096 - press_travel_m leaves at least 5.5 mm of the cap proud of the face",
+                "required_author_check": "category_anchor: every floor selector remains exposed in its opening"
+              }
+            }
+          ],
+          "name": "single_column",
+          "notes": "",
+          "parameters": [
+            {"name": "panel_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.022, "maximum": 0.040, "choices": [], "depends_on": [], "expression": "", "rationale": "Source recess and console-shell depth range."},
+            {"name": "pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.048, "maximum": 0.066, "choices": [], "depends_on": [], "expression": "", "rationale": "Source-derived row spacing expanded to preserve clear separation around the enlarged selectors."}
+          ],
+          "record_id": "rec_elevator_panel_var_single_column_8",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L53-L223",
+            "model.py:L410-L465"
+          ]
+        },
+        {
+          "evidence": "Three columns support the source's full thirty-floor field, proving the high-N host capacity and repeat rule.",
+          "implementation_function": "_panel_family_three_column_build",
+          "interfaces": [
+            {
+              "name": "button_face",
+              "kind": "plane",
+              "role": "provider",
+              "part": "panel_family__three_column__panel",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"extent": "derived three-column face", "stations": "floor_count"},
+              "surface_relation": {
+                "subject_role": "button",
+                "opening_expression": "each numbered cap footprint plus 1.0 mm radial clearance remains inside its own bezel aperture",
+                "normal_band_expression": "the cap occupies the visible band in front of its local panel plane",
+                "motion_expression": "at full press, 0.0096 - press_travel_m leaves at least 5.5 mm of the cap proud of the face",
+                "required_author_check": "category_anchor: every floor selector remains exposed in its opening"
+              }
+            }
+          ],
+          "name": "three_column",
+          "notes": "",
+          "parameters": [
+            {"name": "panel_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.022, "maximum": 0.040, "choices": [], "depends_on": [], "expression": "", "rationale": "Source recess and console-shell depth range."},
+            {"name": "pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.048, "maximum": 0.066, "choices": [], "depends_on": [], "expression": "", "rationale": "Source-derived row spacing expanded to preserve clear separation around the enlarged selectors."}
+          ],
+          "record_id": "rec_elevator_panel_var_floor_n30_three_column_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L23-L45",
+            "model.py:L84-L467"
+          ]
+        },
+        {
+          "evidence": "Two numbered banks have separate frames, a visible separator and an internal divider rather than a continuous undifferentiated grid.",
+          "implementation_function": "_panel_family_split_zone_build",
+          "interfaces": [
+            {
+              "name": "button_face",
+              "kind": "plane",
+              "role": "provider",
+              "part": "panel_family__split_zone__panel",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"extent": "derived split-zone face", "stations": "floor_count"},
+              "surface_relation": {
+                "subject_role": "button",
+                "opening_expression": "each numbered cap footprint plus 1.0 mm radial clearance remains inside its own framed bank aperture",
+                "normal_band_expression": "the cap occupies the visible band in front of its local panel plane",
+                "motion_expression": "at full press, 0.0096 - press_travel_m leaves at least 5.5 mm of the cap proud of the face",
+                "required_author_check": "category_anchor: every floor selector remains exposed in its opening"
+              }
+            }
+          ],
+          "name": "split_zone",
+          "notes": "",
+          "parameters": [
+            {"name": "panel_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.022, "maximum": 0.040, "choices": [], "depends_on": [], "expression": "", "rationale": "Source recess and console-shell depth range."},
+            {"name": "pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.048, "maximum": 0.066, "choices": [], "depends_on": [], "expression": "", "rationale": "Source-derived row spacing expanded to preserve clear separation around the enlarged selectors."}
+          ],
+          "record_id": "rec_elevator_panel_var_split_zone_banks",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L23-L66",
+            "model.py:L96-L539"
+          ]
+        },
+        {
+          "evidence": "A low wide console reflows N floor selectors across six columns and relocates display, message lens and grille into a landscape shell.",
+          "implementation_function": "_panel_family_horizontal_console_build",
+          "interfaces": [
+            {
+              "name": "button_face",
+              "kind": "plane",
+              "role": "provider",
+              "part": "panel_family__horizontal_console__panel",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"extent": "derived horizontal console face", "stations": "floor_count"},
+              "surface_relation": {
+                "subject_role": "button",
+                "opening_expression": "each numbered cap footprint plus 1.0 mm radial clearance remains inside its own bezel aperture",
+                "normal_band_expression": "the cap occupies the visible band in front of its local panel plane",
+                "motion_expression": "at full press, 0.0096 - press_travel_m leaves at least 5.5 mm of the cap proud of the face",
+                "required_author_check": "category_anchor: every floor selector remains exposed in its opening"
+              }
+            }
+          ],
+          "name": "horizontal_console",
+          "notes": "",
+          "parameters": [
+            {"name": "panel_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.022, "maximum": 0.040, "choices": [], "depends_on": [], "expression": "", "rationale": "Source recess and console-shell depth range."},
+            {"name": "pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.048, "maximum": 0.066, "choices": [], "depends_on": [], "expression": "", "rationale": "Source-derived row spacing expanded to preserve clear separation around the enlarged selectors."}
+          ],
+          "record_id": "rec_elevator_panel_var_horizontal_console",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L28-L69",
+            "model.py:L100-L496"
+          ]
+        },
+        {
+          "evidence": "Two tilted faces meet at a spine and divide the floor selectors between their local planes; this is a different mounting topology, not a decorative wing.",
+          "implementation_function": "_panel_family_corner_wrap_build",
+          "interfaces": [
+            {
+              "name": "button_face",
+              "kind": "plane",
+              "role": "provider",
+              "part": "panel_family__corner_wrap__panel",
+              "frame": {"normal": "station-local outward normal on either tilted face", "tangent_u": "station-local horizontal tangent"},
+              "dimensions": {"extent": "two derived local faces", "stations": "floor_count"},
+              "surface_relation": {
+                "subject_role": "button",
+                "opening_expression": "each numbered cap footprint plus 1.0 mm radial clearance remains inside its own local-face bezel aperture",
+                "normal_band_expression": "the cap occupies the visible band in front of the station's tilted panel plane",
+                "motion_expression": "at full press, 0.0096 - press_travel_m leaves at least 5.5 mm proud along the station-local normal",
+                "required_author_check": "category_anchor: every floor selector remains exposed in its opening"
+              }
+            }
+          ],
+          "name": "corner_wrap",
+          "notes": "",
+          "parameters": [
+            {"name": "panel_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.022, "maximum": 0.040, "choices": [], "depends_on": [], "expression": "", "rationale": "Source recess and console-shell depth range."},
+            {"name": "pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.048, "maximum": 0.066, "choices": [], "depends_on": [], "expression": "", "rationale": "Source-derived row spacing expanded to preserve clear separation around the enlarged selectors."}
+          ],
+          "record_id": "rec_elevator_panel_var_corner_wrap_console_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L25-L100",
+            "model.py:L123-L532"
+          ]
+        },
+        {
+          "evidence": "A three-column matrix is separated from a two-control action rail by a real crossbar; the host rule grows the matrix by complete rows while retaining the source's distinct action zone.",
+          "implementation_function": "_panel_family_destination_matrix_build",
+          "interfaces": [
+            {
+              "name": "button_face",
+              "kind": "plane",
+              "role": "provider",
+              "part": "panel_family__destination_matrix__panel",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"extent": "derived three-column matrix plus separate action rail", "stations": "floor_count"},
+              "surface_relation": {
+                "subject_role": "button",
+                "opening_expression": "each numbered selector footprint remains inside its matrix cell frame",
+                "normal_band_expression": "the selector occupies the visible band in front of its local panel plane",
+                "motion_expression": "mechanical selectors remain proud at full press; fixed glass selectors remain in their surface band",
+                "required_author_check": "category_anchor: every floor selector remains exposed in its opening"
+              }
+            }
+          ],
+          "name": "destination_matrix",
+          "notes": "Only the inspected matrix/action-zone host topology is reused; every generated selector remains floor-labelled. The two action wells are raised into an upper auxiliary sub-band, leaving clear vertical separation from the staggered auxiliary controls.",
+          "parameters": [
+            {"name": "panel_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.022, "maximum": 0.040, "choices": [], "depends_on": [], "expression": "", "rationale": "Source recessed matrix faceplate depth range."},
+            {"name": "pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.048, "maximum": 0.066, "choices": [], "depends_on": [], "expression": "", "rationale": "Three-column keypad spacing expanded over floor_count to preserve separation around enlarged selectors."}
+          ],
+          "record_id": "rec_elevator_panel_var_destination_keypad",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L23-L100", "model.py:L342-L535"]
+        },
+        {
+          "evidence": "A tall stainless shell contains a framed black-glass inset and separate information apertures; N stations are allocated inside the inset rather than directly in bare metal.",
+          "implementation_function": "_panel_family_glass_inlay_build",
+          "interfaces": [
+            {
+              "name": "button_face",
+              "kind": "plane",
+              "role": "provider",
+              "part": "panel_family__glass_inlay__panel",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"extent": "derived black-glass inset inside stainless shell", "stations": "floor_count"},
+              "surface_relation": {
+                "subject_role": "button",
+                "opening_expression": "each numbered selector footprint remains inside the framed glass inset",
+                "normal_band_expression": "the selector occupies the visible band over the glass plane",
+                "motion_expression": "mechanical selectors remain proud at full press; fixed glass selectors remain in their surface band",
+                "required_author_check": "category_anchor: every floor selector remains exposed in its opening"
+              }
+            }
+          ],
+          "name": "glass_inlay",
+          "notes": "",
+          "parameters": [
+            {"name": "panel_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.022, "maximum": 0.040, "choices": [], "depends_on": [], "expression": "", "rationale": "Source touch-hybrid shell and inset backing depth range."},
+            {"name": "pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.048, "maximum": 0.066, "choices": [], "depends_on": [], "expression": "", "rationale": "Controls the enlarged indexed cell field and its clear spacing inside the framed glass inset."}
+          ],
+          "record_id": "rec_elevator_panel_var_glass_touch_hybrid",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L141-L178", "model.py:L423-L470"]
+        },
+        {
+          "evidence": "The lower control zone is a recessed protected bay with a lintel and exposed hinge barrels, giving the auxiliary module a different host interface from an unbroken faceplate.",
+          "implementation_function": "_panel_family_protected_service_bay_build",
+          "interfaces": [
+            {
+              "name": "button_face",
+              "kind": "plane",
+              "role": "provider",
+              "part": "panel_family__protected_service_bay__panel",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"extent": "derived face above a recessed protected auxiliary bay", "stations": "floor_count"},
+              "surface_relation": {
+                "subject_role": "button",
+                "opening_expression": "each numbered selector footprint remains inside its own upper-field opening",
+                "normal_band_expression": "the selector occupies the visible band in front of its local panel plane",
+                "motion_expression": "mechanical selectors remain proud at full press; fixed glass selectors remain in their surface band",
+                "required_author_check": "category_anchor: every floor selector remains exposed in its opening"
+              }
+            }
+          ],
+          "name": "protected_service_bay",
+          "notes": "The bay footprint adapts to all five auxiliary candidates; its hinge barrels remain structural host evidence rather than a second moving cover.",
+          "parameters": [
+            {"name": "panel_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.022, "maximum": 0.040, "choices": [], "depends_on": [], "expression": "", "rationale": "Controls faceplate recess and protected service-bay depth."},
+            {"name": "pitch_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.048, "maximum": 0.066, "choices": [], "depends_on": [], "expression": "", "rationale": "Controls the enlarged two-column numbered field and its clear spacing above the protected bay."}
+          ],
+          "record_id": "rec_elevator_panel_var_fire_service_cover_20260714",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L311-L370", "model.py:L492-L539"]
+        }
+      ],
+      "component_type": "panel + N layout",
+      "name": "panel_family",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Round carrier and illuminated lens in an annular bezel, with the floor number built on the moving lens itself.",
+          "implementation_function": "_button_style_round_numbered_build",
+          "interfaces": [
+            {
+              "name": "button_station",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "button_style__round_numbered__button_0",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"footprint": "circular carrier of diameter button_size_m"}
+            }
+          ],
+          "name": "round_numbered",
+          "notes": "",
+          "parameters": [
+            {"name": "button_size_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.023, "maximum": 0.031, "choices": [], "depends_on": [], "expression": "", "rationale": "Source round lens/carrier proportions enlarged to a more readable 23–31 mm selector diameter."},
+            {"name": "press_travel_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.0018, "maximum": 0.0035, "choices": [], "depends_on": [], "expression": "", "rationale": "Source bounded plunger travel while retaining visible cap exposure."},
+            {"name": "numeral_style", "mode": "independent", "value_type": "str", "unit": "ratio", "minimum": null, "maximum": null, "choices": ["seven_segment", "cut_stroke", "continuous_stroke", "dot_matrix", "stencil", "braille_companion"], "depends_on": [], "expression": "", "rationale": "Samples six visibly distinct geometric numeral constructions on the selector surface; surface detail does not count toward core/raw."}
+          ],
+          "record_id": "rec_picturex_0611__elevator_button_panel__001__png__airflex_batch_20260710_5af95b11f6ac4c81a8fbe8dc79222d40",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L100-L156",
+            "model.py:L389-L444"
+          ]
+        },
+        {
+          "evidence": "Square tactile carrier, square guide and square bezel, still carrying the numeric legend and the same bounded press joint.",
+          "implementation_function": "_button_style_square_numbered_build",
+          "interfaces": [
+            {
+              "name": "button_station",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "button_style__square_numbered__button_0",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"footprint": "square tactile carrier of side button_size_m"}
+            }
+          ],
+          "name": "square_numbered",
+          "notes": "",
+          "parameters": [
+            {"name": "button_size_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.023, "maximum": 0.031, "choices": [], "depends_on": [], "expression": "", "rationale": "Source square cap and guide-well proportions enlarged to a more readable 23–31 mm selector size."},
+            {"name": "press_travel_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.0018, "maximum": 0.0035, "choices": [], "depends_on": [], "expression": "", "rationale": "Source bounded plunger travel while retaining visible cap exposure."},
+            {"name": "numeral_style", "mode": "independent", "value_type": "str", "unit": "ratio", "minimum": null, "maximum": null, "choices": ["seven_segment", "cut_stroke", "continuous_stroke", "dot_matrix", "stencil", "braille_companion"], "depends_on": [], "expression": "", "rationale": "Samples six visibly distinct geometric numeral constructions on the selector surface; surface detail does not count toward core/raw."}
+          ],
+          "record_id": "rec_elevator_panel_var_square_buttons",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L44-L56",
+            "model.py:L129-L207",
+            "model.py:L453-L502"
+          ]
+        },
+        {
+          "evidence": "A wide filleted rectangular cap, matching rectangular guide and tactile ridge form a genuinely different prismatic selector footprint; the floor number remains on the moving cap.",
+          "implementation_function": "_button_style_wide_tactile_numbered_build",
+          "interfaces": [
+            {
+              "name": "button_station",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "button_style__wide_tactile_numbered__button_0",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"footprint": "wide rectangular tactile cap of width 1.55 * button_size_m and height button_size_m"}
+            }
+          ],
+          "name": "wide_tactile_numbered",
+          "notes": "",
+          "parameters": [
+            {"name": "button_size_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.023, "maximum": 0.031, "choices": [], "depends_on": [], "expression": "", "rationale": "Controls the enlarged source paddle-derived cap height and guide footprint while preserving its wide proportion."},
+            {"name": "press_travel_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.0018, "maximum": 0.0035, "choices": [], "depends_on": [], "expression": "", "rationale": "Source bounded paddle travel while retaining visible cap exposure."},
+            {"name": "numeral_style", "mode": "independent", "value_type": "str", "unit": "ratio", "minimum": null, "maximum": null, "choices": ["seven_segment", "cut_stroke", "continuous_stroke", "dot_matrix", "stencil", "braille_companion"], "depends_on": [], "expression": "", "rationale": "Samples six visibly distinct geometric numeral constructions on the moving tactile cap."}
+          ],
+          "record_id": "rec_elevator_panel_var_accessibility_paddles_20260714",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L142-L205", "model.py:L502-L594"]
+        },
+        {
+          "evidence": "Each floor selector is an individually indexed illuminated cell on a connected black-glass backing. It is fixed by design and therefore does not pretend to have a mechanical press joint.",
+          "implementation_function": "_button_style_glass_touch_numbered_build",
+          "interfaces": [
+            {
+              "name": "button_station",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "button_style__glass_touch_numbered__button_0",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"footprint": "fixed square glass cell of side button_size_m"}
+            }
+          ],
+          "name": "glass_touch_numbered",
+          "notes": "This candidate is fixed; it contributes no floor-button press joint.",
+          "parameters": [
+            {"name": "button_size_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.023, "maximum": 0.031, "choices": [], "depends_on": [], "expression": "", "rationale": "Controls each enlarged indexed illuminated touch-cell footprint for clearer floor-number reading."},
+            {"name": "numeral_style", "mode": "independent", "value_type": "str", "unit": "ratio", "minimum": null, "maximum": null, "choices": ["seven_segment", "cut_stroke", "continuous_stroke", "dot_matrix", "stencil", "braille_companion"], "depends_on": [], "expression": "", "rationale": "Samples six visibly distinct geometric numeral constructions on the fixed glass surface."}
+          ],
+          "record_id": "rec_elevator_panel_var_glass_touch_hybrid",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L423-L470"]
+        }
+      ],
+      "component_type": "numbered floor selector",
+      "name": "button_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A barrel key switch turns on a REVOLUTE joint about the panel normal.",
+          "implementation_function": "_aux_style_key_switch_build",
+          "interfaces": [
+            {
+              "name": "aux_mount",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "aux_style__key_switch__control",
+              "frame": {"axis": "(0,1,0)", "radial": "(0,0,1)"},
+              "dimensions": {"radius": "0.009"}
+            }
+          ],
+          "name": "key_switch",
+          "notes": "",
+          "parameters": [
+            {"name": "aux_scale_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.054, "maximum": 0.080, "choices": [], "depends_on": [], "expression": "", "rationale": "Controls source key escutcheon and service-band footprint."}
+          ],
+          "record_id": "rec_picturex_0611__elevator_button_panel__001__png__airflex_batch_20260710_5af95b11f6ac4c81a8fbe8dc79222d40",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L333-L387"
+          ]
+        },
+        {
+          "evidence": "A real cover plate and knuckle swing on a horizontal REVOLUTE hinge over the fire-service recess.",
+          "implementation_function": "_aux_style_fire_service_cover_build",
+          "interfaces": [
+            {
+              "name": "aux_mount",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "aux_style__fire_service_cover__control",
+              "frame": {"axis": "(1,0,0)", "radial": "(0,0,1)"},
+              "dimensions": {"radius": "0.0035"}
+            }
+          ],
+          "name": "fire_service_cover",
+          "notes": "",
+          "parameters": [
+            {"name": "aux_scale_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.054, "maximum": 0.080, "choices": [], "depends_on": [], "expression": "", "rationale": "Controls the real cover pane, knuckles and fire-service recess."}
+          ],
+          "record_id": "rec_elevator_panel_var_fire_service_cover_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L118-L153",
+            "model.py:L494-L539"
+          ]
+        },
+        {
+          "evidence": "Three oversized rectangular accessibility paddles have distinct caps, guide wells, tactile bars and individual PRISMATIC plungers.",
+          "implementation_function": "_aux_style_accessibility_paddles_build",
+          "interfaces": [
+            {
+              "name": "aux_mount",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "aux_style__accessibility_paddles__control_0",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"footprint": "three derived rectangular paddle openings"},
+              "surface_relation": {
+                "subject_role": "aux_control",
+                "opening_expression": "each paddle cap remains within its rectangular guide opening",
+                "normal_band_expression": "each paddle stays visibly proud of the service band",
+                "motion_expression": "at full press the paddle body retains at least 3.0 mm protrusion",
+                "required_author_check": "category_anchor: accessibility paddles remain exposed at full travel"
+              }
+            }
+          ],
+          "name": "accessibility_paddles",
+          "notes": "The three paddles are vertically staggered within the auxiliary band so their guide wells and caps remain visually distinct.",
+          "parameters": [
+            {"name": "aux_scale_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.054, "maximum": 0.080, "choices": [], "depends_on": [], "expression": "", "rationale": "Controls the three source paddle caps, tactile bars and guide wells."}
+          ],
+          "record_id": "rec_elevator_panel_var_accessibility_paddles_20260714",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L142-L205",
+            "model.py:L501-L607"
+          ]
+        },
+        {
+          "evidence": "Door-open, door-close and alarm are three separately iconed illuminated controls with independent prismatic plungers rather than one generic auxiliary block.",
+          "implementation_function": "_aux_style_door_alarm_cluster_build",
+          "interfaces": [
+            {
+              "name": "aux_mount",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "aux_style__door_alarm_cluster__control_0",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"footprint": "three compact iconed control openings"}
+            }
+          ],
+          "name": "door_alarm_cluster",
+          "notes": "The three compact door/alarm controls remain on one horizontal centerline; neighboring action pieces are separated vertically into the upper auxiliary sub-band.",
+          "parameters": [
+            {"name": "aux_scale_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.054, "maximum": 0.080, "choices": [], "depends_on": [], "expression": "", "rationale": "Controls the iconed door/alarm cap, guide and cluster spacing."}
+          ],
+          "record_id": "rec_picturex_0611__elevator_button_panel__001__png__airflex_batch_20260710_5af95b11f6ac4c81a8fbe8dc79222d40",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L155-L205", "model.py:L388-L445"]
+        },
+        {
+          "evidence": "One red alarm plunger is paired with a separately mounted perforated speaker/intercom grille, changing both part tree and functional topology.",
+          "implementation_function": "_aux_style_emergency_intercom_build",
+          "interfaces": [
+            {
+              "name": "aux_mount",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "aux_style__emergency_intercom__control_0",
+              "frame": {"normal": "(0,-1,0)", "tangent_u": "(1,0,0)"},
+              "dimensions": {"footprint": "one alarm opening beside a perforated intercom grille"}
+            }
+          ],
+          "name": "emergency_intercom",
+          "notes": "The alarm is prismatic and the speaker grille is fixed; the two are vertically offset to keep their footprints visually separate.",
+          "parameters": [
+            {"name": "aux_scale_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.054, "maximum": 0.080, "choices": [], "depends_on": [], "expression": "", "rationale": "Controls alarm cap and perforated intercom module footprint."}
+          ],
+          "record_id": "rec_picturex_0611__elevator_button_panel__002__png__airflex_batch_20260710_e78767714b92403da1268cdbe3f5a877",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L327-L420"]
+        }
+      ],
+      "component_type": "auxiliary control",
+      "name": "aux_style",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_elevator_button_panel",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_elevator_button_panel.md",
+  "source_map_sha256": "83107137cc78b1e6d38a6a626cf7f922ee37aec0146511d2ecab1d44441c3461"
+}

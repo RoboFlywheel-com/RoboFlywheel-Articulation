@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "name": "monitor_mount",
+  "generator": "monitor_mount",
+  "base_config": {
+    "arm_style": "counterbalance_spring",
+    "head_style": "vesa_yoke",
+    "wall_style": "wall_plate_lugs",
+    "palette_theme": "anodized_aluminum",
+    "arm_segment_count": 5,
+    "arm_span": 1.10,
+    "link_width": 0.064,
+    "wall_plate_height": 0.52,
+    "wall_plate_width": 0.36,
+    "display_width": 0.42,
+    "display_height": 0.27,
+    "name": "paper_monitor_mount"
+  },
+  "edits": [
+    {
+      "kind": "component",
+      "target": "wall_style",
+      "label": "Wall-mount module",
+      "values": ["wall_plate_compact", "wall_plate_long"]
+    },
+    {
+      "kind": "count",
+      "target": "arm_segment_count",
+      "label": "Arm-segment count",
+      "values": [2, 5, 20]
+    },
+    {
+      "kind": "material",
+      "target": "arm_links",
+      "label": "Arm-link material",
+      "values": [
+        {
+          "name": "red enamel links",
+          "material_id": "blenderkit:940ca40e-25bd-4eab-8645-f11e37cf26a6:423ad6b6-81d2-46a0-a031-4bd57e10a13a",
+          "rgba": [0.82, 0.15, 0.10, 1.0],
+          "metallic": 0.05,
+          "roughness": 0.30
+        },
+        {
+          "name": "warm white powder coat links",
+          "material_id": "blenderkit:802fed00-3ed7-4fa1-8d0d-c4e264e59148:2c78ac26-ff2d-47ba-9b7b-a963b0b399e7",
+          "rgba": [0.88, 0.88, 0.84, 1.0],
+          "metallic": 0.12,
+          "roughness": 0.30
+        },
+        {
+          "name": "black anodized links",
+          "material_id": "blenderkit:f70e3613-d4d0-418f-894d-3d2e79556ab7:2d017450-f344-46dd-8f74-f1cbdaa2c2cc",
+          "rgba": [0.08, 0.09, 0.10, 1.0],
+          "metallic": 0.88,
+          "roughness": 0.30
+        }
+      ]
+    },
+    {
+      "kind": "size",
+      "target": "arm_span",
+      "label": "Nominal arm span (m)",
+      "values": [0.86, 1.34]
+    }
+  ],
+  "render": {
+    "backend": "blender",
+    "frame_scope": "edit_group",
+    "compact_comparison_kinds": ["count"],
+    "views": ["front_iso"],
+    "poses": ["closed"],
+    "image_size": [800, 560]
+  }
+}

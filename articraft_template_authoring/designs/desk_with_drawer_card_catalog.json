@@ -1,0 +1,460 @@
+{
+  "assembly_notes": "One rigid desk frame carries a broad rectangular work surface, a support structure (open-knee side panel, four-leg apron, or trestle ends), and one open-front card-catalog bank. The bank derives a regular rows by columns opening grid from the selected multiplicities. Every cell owns a fixed rail pair and one independently moving hollow drawer (open tray or boxed lip-front) with matching moving runners, label holder and one of four pull treatments. Drawer width, height, depth, rail placement and travel derive from the host cavity, so all grid and slot combinations build without compatibility gates or overlap allowances.",
+  "bindings": [
+    {
+      "binding_id": "grid_opening_to_drawer",
+      "provider": "desk_frame.drawer_grid",
+      "consumer": "drawer_module.tray_mount",
+      "joint_type": "prismatic",
+      "derived": [
+        {
+          "name": "opening_width_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "(bank_inner_width - (drawer_columns - 1) * divider_t) / drawer_columns",
+          "depends_on": [
+            "scale",
+            "drawer_columns",
+            "desk_frame"
+          ],
+          "rationale": "Every column divides the real open-front bank width."
+        },
+        {
+          "name": "opening_height_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "(bank_inner_height - (drawer_rows - 1) * divider_t) / drawer_rows",
+          "depends_on": [
+            "scale",
+            "drawer_rows"
+          ],
+          "rationale": "Every row divides the real open-front bank height."
+        },
+        {
+          "name": "drawer_depth_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "bank cavity depth - rear clearance",
+          "depends_on": [
+            "scale"
+          ],
+          "rationale": "The hollow tray remains inside the rear panel at rest."
+        },
+        {
+          "name": "drawer_travel_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "drawer_depth_m * drawer_travel_ratio",
+          "depends_on": [
+            "drawer_depth_m",
+            "drawer_travel_ratio"
+          ],
+          "rationale": "Every drawer stays engaged with its rail pair at full travel."
+        },
+        {
+          "name": "drawer_count",
+          "mode": "derived",
+          "value_type": "int",
+          "unit": "count",
+          "expression": "drawer_columns * drawer_rows",
+          "depends_on": [
+            "drawer_columns",
+            "drawer_rows"
+          ],
+          "rationale": "The grid emits one independent drawer and slide per cell."
+        }
+      ]
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "card_catalog_desk_identity",
+      "applies_to": {
+        "slot": "drawer_module",
+        "candidates": [
+          "open_tray_guided",
+          "boxed_full_front"
+        ]
+      },
+      "required_roles": [
+        {
+          "role": "desk_frame",
+          "exact_count": 1
+        },
+        {
+          "role": "catalog_drawer",
+          "count_from": "resolved.drawer_count"
+        }
+      ],
+      "required_relations": [
+        {
+          "parent_role": "desk_frame",
+          "child_role": "catalog_drawer",
+          "joint_type": "prismatic",
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ]
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: one load-bearing desk frame",
+        "category_anchor: catalog drawer grid count matches rows times columns",
+        "category_anchor: every catalog drawer is a moving child of desk frame",
+        "category_anchor: catalog drawers are hollow guided trays",
+        "every catalog drawer carries its configured pull",
+        "category_anchor: drawers pull out along -Y"
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "drawer_columns",
+      "item_slot": "drawer_module",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "spacing_expression": "bank inner width / drawer_columns with one divider between adjacent columns",
+      "host_capacity_expression": "opening width remains at least 0.115 m at maximum scale-normalized divider stock"
+    },
+    {
+      "name": "drawer_rows",
+      "item_slot": "drawer_module",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "spacing_expression": "bank inner height / drawer_rows with one shelf between adjacent rows",
+      "host_capacity_expression": "opening height remains at least 0.090 m at maximum scale-normalized divider stock"
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "name": "desk_frame",
+      "component_type": "load-carrying desk frame and open-front drawer-bank host",
+      "required": true,
+      "candidates": [
+        {
+          "name": "single_bank_open_knee",
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__003__png__airflex_batch_20260710_e8f92b30f5d64469bc7be694c4008080",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L44-L225"
+          ],
+          "evidence": "Broad worktop, open knee bay, supported side bank, paired fixed rails, and full-depth carcass walls establish the desk rather than dresser identity.",
+          "implementation_function": "_desk_frame_single_bank_open_knee_build",
+          "notes": "A right-side grid bank supports the worktop while a left panel and shallow rear modesty panel preserve usable knee space.",
+          "parameters": [
+            {
+              "name": "scale",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": 0.92,
+              "maximum": 1.08,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Conservative source-backed variation of the complete desk proportions."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "drawer_grid",
+              "kind": "plane",
+              "role": "provider",
+              "part": "desk_frame__single_bank_open_knee__frame",
+              "frame": {
+                "point": "center of each opening front",
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "width": "opening_width_m",
+                "height": "opening_height_m",
+                "depth": "drawer_depth_m"
+              }
+            }
+          ]
+        },
+        {
+          "name": "four_leg_apron_bank",
+          "record_id": "rec_0611_table_with_drawers_no_door_var_drawer_layout_full_apron_bank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L38-L326"
+          ],
+          "evidence": "Corner legs carry a full-width apron bank directly under the worktop, moving the grid to the desk center.",
+          "implementation_function": "_desk_frame_four_leg_apron_bank_build",
+          "notes": "Four corner legs support the full-width apron bank; the grid is centered and both knee bays stay open.",
+          "parameters": [
+            {
+              "name": "scale",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": 0.92,
+              "maximum": 1.08,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Conservative source-backed variation of the complete desk proportions."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "drawer_grid",
+              "kind": "plane",
+              "role": "provider",
+              "part": "desk_frame__four_leg_apron_bank__frame",
+              "frame": {
+                "point": "center of each opening front",
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "width": "opening_width_m",
+                "height": "opening_height_m",
+                "depth": "drawer_depth_m"
+              }
+            }
+          ]
+        },
+        {
+          "name": "trestle_open_bay",
+          "record_id": "rec_0611_table_with_drawers_no_door_var_support_trestle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L27-L157"
+          ],
+          "evidence": "Two end trestles with feet, posts, and top cleats joined by a stretcher support a centered bank with open knee bays on both sides.",
+          "implementation_function": "_desk_frame_trestle_open_bay_build",
+          "notes": "End trestles and a low stretcher carry a centered grid bank.",
+          "parameters": [
+            {
+              "name": "scale",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": 0.92,
+              "maximum": 1.08,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Conservative source-backed variation of the complete desk proportions."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "drawer_grid",
+              "kind": "plane",
+              "role": "provider",
+              "part": "desk_frame__trestle_open_bay__frame",
+              "frame": {
+                "point": "center of each opening front",
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "width": "opening_width_m",
+                "height": "opening_height_m",
+                "depth": "drawer_depth_m"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "drawer_module",
+      "component_type": "hollow moving drawer with paired runner strips and attached pull",
+      "required": true,
+      "candidates": [
+        {
+          "name": "open_tray_guided",
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__005__png__airflex_batch_20260710_69a514c4d7e942d49d0a196cbfa9012b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L134"
+          ],
+          "evidence": "Each drawer is a distinct open-topped tray whose front, side walls, bottom, back, moving rails, and pull share one prismatic motion.",
+          "implementation_function": "_drawer_module_open_tray_guided_build",
+          "notes": "A four-piece label holder keeps the small drawers recognizable as card-index drawers.",
+          "parameters": [
+            {
+              "name": "drawer_travel_ratio",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": 0.38,
+              "maximum": 0.62,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Useful extraction while retaining at least 38 percent runner engagement."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "tray_mount",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "drawer_module__open_tray_guided__drawer",
+              "frame": {
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "normal": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "width": "drawer face width",
+                "height": "drawer face height",
+                "depth": "tray depth"
+              }
+            }
+          ]
+        },
+        {
+          "name": "boxed_full_front",
+          "record_id": "rec_0611_table_with_drawers_no_door_var_drawer_count_2_wide",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L57-L360"
+          ],
+          "evidence": "Drawer fronts extend past the opening and overlap the dividers as a lip, with boxed carcass sides and bottom behind.",
+          "implementation_function": "_drawer_module_boxed_full_front_build",
+          "notes": "Tall overlay front lip reads as a boxed catalog drawer; runners remain hidden below the tray.",
+          "parameters": [
+            {
+              "name": "drawer_travel_ratio",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": 0.38,
+              "maximum": 0.62,
+              "choices": [],
+              "expression": "",
+              "depends_on": [],
+              "rationale": "Useful extraction while retaining at least 38 percent runner engagement."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "tray_mount",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "drawer_module__boxed_full_front__drawer",
+              "frame": {
+                "point": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "normal": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "dimensions": {
+                "width": "drawer face width",
+                "height": "drawer face height",
+                "depth": "tray depth"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pull_style",
+      "component_type": "drawer front pull hardware treatment",
+      "required": true,
+      "candidates": [
+        {
+          "name": "bar_pull",
+          "record_id": "rec_picturex_0611__desk_with_drawers_no_door__005__png__airflex_batch_20260710_69a514c4d7e942d49d0a196cbfa9012b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L134"
+          ],
+          "evidence": "Lower bail pull built from two posts and a cross bar on each drawer front.",
+          "implementation_function": "_pull_build",
+          "notes": "Twin posts plus a horizontal bar.",
+          "parameters": [],
+          "interfaces": []
+        },
+        {
+          "name": "knob_pair",
+          "record_id": "rec_0611_manual_coffee_grinder_var_catch_pull_out_drawer",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L139-L167"
+          ],
+          "evidence": "Turned knob hardware with base disc and stem suits small drawer fronts.",
+          "implementation_function": "_pull_build",
+          "notes": "Two turned knobs with base discs.",
+          "parameters": [],
+          "interfaces": []
+        },
+        {
+          "name": "finger_slot",
+          "record_id": "rec_0611_table_with_drawers_no_door_var_drawer_count_5_narrow",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L93-L139"
+          ],
+          "evidence": "Narrow cell fronts use a dark recessed finger slot instead of applied hardware.",
+          "implementation_function": "_pull_build",
+          "notes": "Dark inset slot in the front.",
+          "parameters": [],
+          "interfaces": []
+        },
+        {
+          "name": "recessed_oval",
+          "record_id": "rec_0611_manual_coffee_grinder_var_catch_pull_out_drawer",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L139-L167"
+          ],
+          "evidence": "Recessed oval cup with dark inset reads as flush card-catalog hardware.",
+          "implementation_function": "_pull_build",
+          "notes": "Flush oval cup with dark inset.",
+          "parameters": [],
+          "interfaces": []
+        }
+      ]
+    }
+  ],
+  "slug": "desk_with_drawer_card_catalog",
+  "source_map_path": "articraft_template_authoring/source_maps/desk_with_drawer_card_catalog.md",
+  "source_map_sha256": "05bae216157c237537fa916571828caf9f683f45eb1a7cb02bfa46fd71cba122"
+}

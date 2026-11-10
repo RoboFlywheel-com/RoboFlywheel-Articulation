@@ -1,0 +1,4180 @@
+{
+  "assembly_notes": "The root is always `frame`, a single welded CadQuery solid. It is built in three passes:\n(1) union the family's plates, base structure, bosses, bracket and \u2014 when web_relief is\nenclosed_guard_shell \u2014 the shroud; (2) cut the family's own openings (bolt slots, web\nwindows, the guard fairlead); (3) cut every rotating member's swept envelope out of it.\nPass 3 is not a safety net, it is the design: it produces the drum bore, the reduction-gear\nwindow, the guard's spindle relief and the annular pawl slot as real geometry, and it is the\nreason `allow_overlap` is never called anywhere in this template.\n\nEvery rotating member is authored in its own local frame with its rotation axis on local +X\nthrough the local origin, and is placed by `mate_axes(provider, consumer)` +\n`register_interface_mate`, so the frame family can put that axis on world +X (horizontal\ncheek families) or world +Z (vertical_capstan_deck) without any member being re-authored.\nThe only non-axis articulation is removable_spindle_socket's withdrawal prismatic, whose\nparent is the drum rather than the frame.\n\nCross-slot sizing runs one way, host last: line_takeup and ratchet_pawl fix the drum's radial\nenvelope, drive_coupling adds either nothing (direct/removable) or an offset pinion that\nreaches further toward the mounting plane than the drum does, and only then does\nframe_family derive `axis_lift_m` (or `pedestal_h_m` for the capstan), `plate_reach_m` and the\ntwo plate stations. The axial stack runs the same way: the drum's disc list fixes\n`drum_u_min_m`/`drum_u_max_m`, the plates go outboard of those, and the crank plane goes\noutboard of the plates, which is how a full-circle crank sweep can never reach the frame.\n\nContacts are real fits, not interpenetrations: every bore is `shaft + bore_clearance_m` with\n`bore_clearance_m <= 0.0012`, so it stays inside the 1 mm gap the baseline QC counts as\nsupport; the gear mesh is a tangent pair separated by `gear_backlash_m` and asserted with the\nsource's own `expect_contact` tolerance; and the pawl nose reaches half a tooth depth inside\nthe tip circle at its engaged pose.\n",
+  "bindings": [
+    {
+      "binding_id": "drive_and_pawl_size_the_frame",
+      "consumer": "frame_family.drum_bearing_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "flange_radius_m",
+            "ratchet_tip_r_m",
+            "takeup_outer_r_m",
+            "drum_gear_tip_r_m"
+          ],
+          "expression": "max(flange_radius_m, ratchet_tip_r_m, takeup_outer_r_m, drum_gear_tip_r_m if reduction else 0.0)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "max_drum_radius_m",
+          "rationale": "The drum's largest rotating radius depends on the active ratchet_pawl, line_takeup and drive_coupling choices, so the host cannot size itself from its own parameters.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "max_drum_radius_m",
+            "pinion_low_reach_m"
+          ],
+          "expression": "max(max_drum_radius_m, pinion_low_reach_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "rotating_reach_m",
+          "rationale": "Adding the offset pinion's downward reach is the specific correction this rebuild makes: without it a reduction seed puts the pinion under the base plate.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "base_plate_h_m",
+            "base_clearance_m",
+            "rotating_reach_m"
+          ],
+          "expression": "base_plate_h_m + base_clearance_m + rotating_reach_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "axis_lift_m",
+          "rationale": "Horizontal families lift the drum axis; the capstan spends the same clearance axially through pedestal_h_m.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "base_clearance_m",
+            "plate_thickness_m",
+            "ratchet_thickness_m",
+            "plate_gap_m"
+          ],
+          "expression": "base_clearance_m + plate_thickness_m + max(0.0, ratchet_thickness_m + plate_gap_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "pedestal_h_m",
+          "rationale": "vertical_capstan_deck only: how high the pedestal must raise the capstan so the lowest rotating disc clears the deck top. This is the fix for the source capstan's ratchet gear being buried in its deck disc.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "plate_reach_ratio",
+            "rotating_reach_m",
+            "pawl_ring_r_m",
+            "pawl_boss_r_m",
+            "gear_center_distance_m",
+            "pinion_bore_boss_r_m"
+          ],
+          "expression": "max(plate_reach_ratio * rotating_reach_m, pawl_ring_r_m + pawl_boss_r_m + 0.004, gear_center_distance_m + pinion_bore_boss_r_m + 0.004)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "plate_reach_m",
+          "rationale": "The plate has to be big enough to carry the pawl bracket and, when a reduction is active, the offset pinion bore.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "continuous",
+      "provider": "line_takeup.drum_envelope"
+    },
+    {
+      "binding_id": "takeup_and_drive_set_the_drum_axial_stack",
+      "consumer": "drive_coupling.crank_station",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "drum_width_m",
+            "flange_thickness_m",
+            "plate_gap_m",
+            "ratchet_thickness_m"
+          ],
+          "expression": "drum_width_m / 2 + flange_thickness_m + plate_gap_m + ratchet_thickness_m / 2",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "ratchet_u_m",
+          "rationale": "The ratchet ring sits just outboard of the +u flange, matching 002's ratchet-outboard-of-the-cheek stack and 003's gear-beside-the-flange stack.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "ratchet_u_m",
+            "ratchet_thickness_m",
+            "plate_gap_m",
+            "gear_thickness_m",
+            "stage_gap_m"
+          ],
+          "expression": "ratchet_u_m + ratchet_thickness_m / 2 + (0.0 if not reduction else plate_gap_m + gear_thickness_m + (stage_gap_m + gear_thickness_m if two_speed else 0.0))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drum_u_max_m",
+          "rationale": "The most +u rotating disc, which decides where the far bearing plate goes and therefore where the crank plane can be.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drum_width_m",
+            "flange_thickness_m",
+            "plate_gap_m",
+            "crown_thickness_m"
+          ],
+          "expression": "-(drum_width_m / 2 + flange_thickness_m + (plate_gap_m + crown_thickness_m if self_tailing else 0.0))",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drum_u_min_m",
+          "rationale": "The self-tailing crown extends the drum on the -u side, which is why the source fork narrows the spool widths to make room.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "plate_u_far_m",
+            "plate_thickness_m",
+            "crank_gap_m",
+            "drum_u_max_m"
+          ],
+          "expression": "plate_u_far_m + plate_thickness_m / 2 + crank_gap_m for horizontal families; drum_u_max_m + crank_gap_m + coupler_len_m for vertical_capstan_deck",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "crank_u_m",
+          "rationale": "The crank arm plane is always axially outboard of every frame face, which is how the sources keep a full-circle crank sweep from ever touching the frame (003: crank arm at x=0.073 against a cheek that ends at 0.065).",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "continuous",
+      "provider": "line_takeup.drum_axial_stack"
+    },
+    {
+      "binding_id": "rotating_envelopes_cut_the_frame",
+      "consumer": "frame_family.web_solid",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "running_clearance_m",
+            "bore_clearance_m",
+            "pawl_outer_reach_m",
+            "pawl_bore_r_m"
+          ],
+          "expression": "one cylinder per rotating band: barrel, both flanges, ratchet ring, each reduction gear, the crown or the wound spool, the spindle, each pinion and its shaft, plus one annulus per pawl",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "envelope_cut_list",
+          "rationale": "Every rotating member's swept volume is boolean-subtracted from the frame solid after it is welded, so the bore, the gear window and the pawl slot are real openings. MECHANICAL_PRIORS 4 and 7 require exactly this, and it is what makes enclosed_guard_shell combinable with every drive coupling instead of excluded.",
+          "unit": "count",
+          "value_type": "int"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "pawl_outer_reach_m",
+            "running_clearance_m"
+          ],
+          "expression": "pawl_outer_reach_m + running_clearance_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "pawl_slot_outer_r_m",
+          "rationale": "Outer radius of the annular slot cut for each pawl's full swing; the long release lever needs a much bigger one than the compact lobe.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "pawl_bore_r_m"
+          ],
+          "expression": "pawl_bore_r_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "pawl_slot_inner_r_m",
+          "rationale": "Inner radius of that slot, so the pivot pin itself survives the cut and still carries the pawl.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "ratchet_pawl.swept_envelope"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "winch_horizontal_axis_identity",
+      "applies_to": {
+        "candidates": [
+          "folded_twin_cheek",
+          "cantilever_front_cheek",
+          "bridged_side_plates"
+        ],
+        "slot": "frame_family"
+      },
+      "required_author_checks": [
+        "manual winch core part set",
+        "drum turns about its bearing axis",
+        "every pawl engages the ratchet ring",
+        "no rotating member reaches the mounting structure"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "line_drum",
+          "joint_type": "continuous",
+          "parent_role": "winch_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "ratchet_pawl",
+          "joint_type": "revolute",
+          "parent_role": "winch_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "winch_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "line_drum"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_crank"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "crank_grip"
+        },
+        {
+          "count_from": "pawl_count",
+          "exact_count": null,
+          "role": "ratchet_pawl"
+        }
+      ]
+    },
+    {
+      "anchor_id": "winch_vertical_axis_identity",
+      "applies_to": {
+        "candidates": [
+          "vertical_capstan_deck"
+        ],
+        "slot": "frame_family"
+      },
+      "required_author_checks": [
+        "manual winch core part set",
+        "drum turns about its bearing axis",
+        "every pawl engages the ratchet ring",
+        "no rotating member reaches the mounting structure"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "line_drum",
+          "joint_type": "continuous",
+          "parent_role": "winch_frame"
+        },
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "ratchet_pawl",
+          "joint_type": "revolute",
+          "parent_role": "winch_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "winch_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "line_drum"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_crank"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "crank_grip"
+        },
+        {
+          "count_from": "pawl_count",
+          "exact_count": null,
+          "role": "ratchet_pawl"
+        }
+      ]
+    },
+    {
+      "anchor_id": "winch_web_relief_identity",
+      "applies_to": {
+        "candidates": [
+          "solid_web",
+          "windowed_web",
+          "enclosed_guard_shell"
+        ],
+        "slot": "web_relief"
+      },
+      "required_author_checks": [
+        "manual winch core part set",
+        "drum turns about its bearing axis",
+        "every pawl engages the ratchet ring",
+        "no rotating member reaches the mounting structure"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "line_drum",
+          "joint_type": "continuous",
+          "parent_role": "winch_frame"
+        },
+        {
+          "axis": null,
+          "child_role": "ratchet_pawl",
+          "joint_type": "revolute",
+          "parent_role": "winch_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "winch_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "line_drum"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_crank"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "crank_grip"
+        },
+        {
+          "count_from": "pawl_count",
+          "exact_count": null,
+          "role": "ratchet_pawl"
+        }
+      ]
+    },
+    {
+      "anchor_id": "winch_bearing_mounted_crank",
+      "applies_to": {
+        "candidates": [
+          "direct_socket_drive",
+          "single_reduction",
+          "two_speed_reduction"
+        ],
+        "slot": "drive_coupling"
+      },
+      "required_author_checks": [
+        "manual winch core part set",
+        "drum turns about its bearing axis",
+        "every pawl engages the ratchet ring",
+        "no rotating member reaches the mounting structure",
+        "crank is carried outboard of the frame"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "hand_crank",
+          "joint_type": "continuous",
+          "parent_role": "winch_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "winch_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "line_drum"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_crank"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "crank_grip"
+        },
+        {
+          "count_from": "pawl_count",
+          "exact_count": null,
+          "role": "ratchet_pawl"
+        }
+      ]
+    },
+    {
+      "anchor_id": "winch_removable_crank",
+      "applies_to": {
+        "candidates": [
+          "removable_spindle_socket"
+        ],
+        "slot": "drive_coupling"
+      },
+      "required_author_checks": [
+        "manual winch core part set",
+        "drum turns about its bearing axis",
+        "every pawl engages the ratchet ring",
+        "no rotating member reaches the mounting structure",
+        "removable crank keeps guided socket engagement"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "hand_crank",
+          "joint_type": "prismatic",
+          "parent_role": "line_drum"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "winch_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "line_drum"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_crank"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "crank_grip"
+        },
+        {
+          "count_from": "pawl_count",
+          "exact_count": null,
+          "role": "ratchet_pawl"
+        }
+      ]
+    },
+    {
+      "anchor_id": "winch_spinning_grip",
+      "applies_to": {
+        "candidates": [
+          "spinning_sleeve_grip",
+          "ratcheting_lever_head"
+        ],
+        "slot": "handle_head"
+      },
+      "required_author_checks": [
+        "manual winch core part set",
+        "drum turns about its bearing axis",
+        "every pawl engages the ratchet ring",
+        "no rotating member reaches the mounting structure"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "crank_grip",
+          "joint_type": "continuous",
+          "parent_role": "hand_crank"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "winch_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "line_drum"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_crank"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "crank_grip"
+        },
+        {
+          "count_from": "pawl_count",
+          "exact_count": null,
+          "role": "ratchet_pawl"
+        }
+      ]
+    },
+    {
+      "anchor_id": "winch_folding_grip",
+      "applies_to": {
+        "candidates": [
+          "folding_double_grip"
+        ],
+        "slot": "handle_head"
+      },
+      "required_author_checks": [
+        "manual winch core part set",
+        "drum turns about its bearing axis",
+        "every pawl engages the ratchet ring",
+        "no rotating member reaches the mounting structure"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "crank_grip",
+          "joint_type": "revolute",
+          "parent_role": "hand_crank"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "winch_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "line_drum"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_crank"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "crank_grip"
+        },
+        {
+          "count_from": "pawl_count",
+          "exact_count": null,
+          "role": "ratchet_pawl"
+        }
+      ]
+    },
+    {
+      "anchor_id": "winch_captured_spool",
+      "applies_to": {
+        "candidates": [
+          "coaxial_strap_spool"
+        ],
+        "slot": "line_takeup"
+      },
+      "required_author_checks": [
+        "manual winch core part set",
+        "drum turns about its bearing axis",
+        "every pawl engages the ratchet ring",
+        "no rotating member reaches the mounting structure",
+        "captured spool follows the drum one to one"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "line_spool",
+          "joint_type": "revolute",
+          "parent_role": "winch_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "winch_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "line_drum"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_crank"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "crank_grip"
+        },
+        {
+          "count_from": "pawl_count",
+          "exact_count": null,
+          "role": "ratchet_pawl"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "line_spool"
+        }
+      ]
+    },
+    {
+      "anchor_id": "winch_drum_only_takeup",
+      "applies_to": {
+        "candidates": [
+          "grooved_barrel",
+          "self_tailing_crown"
+        ],
+        "slot": "line_takeup"
+      },
+      "required_author_checks": [
+        "manual winch core part set",
+        "drum turns about its bearing axis",
+        "every pawl engages the ratchet ring",
+        "no rotating member reaches the mounting structure"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "line_drum",
+          "joint_type": "continuous",
+          "parent_role": "winch_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "winch_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "line_drum"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_crank"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "crank_grip"
+        },
+        {
+          "count_from": "pawl_count",
+          "exact_count": null,
+          "role": "ratchet_pawl"
+        },
+        {
+          "count_from": null,
+          "exact_count": 0,
+          "role": "line_spool"
+        }
+      ]
+    },
+    {
+      "anchor_id": "winch_pawl_body_identity",
+      "applies_to": {
+        "candidates": [
+          "hooked_lobe_pawl",
+          "long_release_lever_pawl"
+        ],
+        "slot": "ratchet_pawl"
+      },
+      "required_author_checks": [
+        "manual winch core part set",
+        "drum turns about its bearing axis",
+        "every pawl engages the ratchet ring",
+        "no rotating member reaches the mounting structure",
+        "pawl swing stays inside its frame slot"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "ratchet_pawl",
+          "joint_type": "revolute",
+          "parent_role": "winch_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "winch_frame"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "line_drum"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "hand_crank"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "crank_grip"
+        },
+        {
+          "count_from": "pawl_count",
+          "exact_count": null,
+          "role": "ratchet_pawl"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "pawl_half_w_m is derived as clamp(0.40 * pawl_ring_r_m * pawl_pitch_rad, 0.0045, 0.014), so adjacent pawl bodies keep at least a fifth of the pivot pitch between them at every N and the frame's pawl slot is one merged annulus rather than N separate pockets. N is capped at 3 because a fourth pivot at the same span would push pawl_half_w_m under 4.5 mm, thinner than the 0.0030-0.0048 pivot pin it has to carry; the pool's own upper bound is also 3. Every value is source-backed: 1 (pawl_count_single_pawl), 2 (pawl_count_dual_pawl), 3 (pawl_count_triple_pawl).",
+      "item_slot": "ratchet_pawl",
+      "name": "pawl_count",
+      "spacing_expression": "pivot i sits on the ring at angle pi/2 + (i - (N-1)/2) * pawl_pitch_rad measured in the (r1, r2) radial plane, i.e. regular steps centred on the top of the ratchet, which is 001's triple fork (_pawl_layout: PAWL_RING_ANGLES = 125 deg + 20 deg * i on one ring) generalised and recentred; 002's dual fork is the same rule at N=2.",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Horizontal drum axis carried in a symmetric clevis: one base flange plus two cheeks extruded from a seven-point triangular side profile, joined by a transverse tie into one welded solid, with both shaft passages cut as true clearance bores, four elongated bolt slots in the flange and the pawl spindle unioned into the right cheek. Bearing collars and bolt heads are separate hardware visuals at the cheek stations.",
+          "implementation_function": "_frame_family_folded_twin_cheek_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore": "cut as a true clearance, 003 L100-L107",
+                "point": "(0.0, 0.0, axis_lift_m)",
+                "radius": "spindle_radius_m + bore_clearance_m",
+                "stations": "u = plate_u_near_m and u = plate_u_far_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, axis_lift_m)"
+              },
+              "kind": "axis",
+              "name": "drum_bearing_axis",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent_u": "2.0 * plate_reach_m",
+                "extent_v": "2.0 * plate_reach_m"
+              },
+              "frame": {
+                "normal": "axis_dir",
+                "point": "(plate_u_near_m, 0.0, 0.0) and (plate_u_far_m, 0.0, 0.0) in the drum frame"
+              },
+              "kind": "plane",
+              "name": "web_solid",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "folded_twin_cheek",
+          "notes": "Two identical cheeks extruded from one tapered silhouette, standing on a base flange and tied together by a transverse cylinder, all unioned into one welded solid before the rotating envelopes are cut. Intra-part welds are free (collision is only computed between parts), so this stays one visual.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.022,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "base_plate_h_m",
+              "rationale": "Thickness of the grounded mounting structure the frame stands on. Pool: 0.004 (003 L58 base_t), 0.020 (002 L241 mounting_foot), 0.016 (001 L231 base_bridge), 0.008 (capstan L56 base_t). Its top face is the plane every rotating envelope has to clear.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "base_clearance_m",
+              "rationale": "Radial (horizontal families) or axial (capstan) gap left between the lowest rotating element and the top of the mounting structure. Pool: 002 leaves 9 mm (flange bottom 0.033 vs foot top 0.024), 003 leaves 46 mm (gear bottom 0.050 vs flange top 0.004). Directly feeds axis_lift_m, which is the derivation the legacy template did not have.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "plate_thickness_m",
+              "rationale": "Thickness of one bearing plate / cheek / deck. Pool: 0.004 (003 L59 side_t), 0.008 (002 L54 front cheek extrude), 0.0045 (001 L186 side plate), 0.008 (capstan L56 deck).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.38,
+              "minimum": 1.02,
+              "mode": "independent",
+              "name": "plate_reach_ratio",
+              "rationale": "Bearing-plate silhouette radius as a multiple of rotating_reach_m, before the cross-slot floors in binding drive_and_pawl_size_the_frame apply. Pool: 003's cheek profile peaks 0.062 above a 0.048 gear tip (1.29); 002's cheek peaks 0.058 above a 0.057 ratchet tip (1.02).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0045,
+              "minimum": 0.0018,
+              "mode": "independent",
+              "name": "flange_clearance_m",
+              "rationale": "Axial gap between a drum disc face and the neighbouring frame plate face. Source 002 L564-L573 asserts exactly this as expect_gap(front_flange, front_cheek, min_gap=0.001, max_gap=0.004).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0025,
+              "minimum": 0.0008,
+              "mode": "independent",
+              "name": "running_clearance_m",
+              "rationale": "Radial and axial margin added to every rotating member's swept envelope before it is boolean-cut out of the frame solid. This is what turns 'the gear must not touch the plate' into real geometry; source 001 achieves the same result by narrowing the base bridge until the 74 mm toothed flange runs outboard of it (L228-L235).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0008,
+              "minimum": 0.0006,
+              "mode": "independent",
+              "name": "bore_clearance_m",
+              "rationale": "Radial clearance of a frame bore around the shaft that passes through it. Source 003 L100-L107 cuts both shaft passages as 'true clearances, not hidden intersections'; 002 L56-L62 cuts a 0.0165 shaft clearance for a 0.008 spindle. Kept well under 1 mm so the bore still counts as support under the baseline QC gap rule, and floored at 0.6 mm so the fit survives tessellation on both sides (the template meshes at a 0.18 mm sagitta, so a bore and its shaft together can lose about 0.36 mm of clearance to chords).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "cheek_taper_ratio",
+              "rationale": "Half-width of the cheek silhouette at its crown as a fraction of plate_reach_m, which is what gives 003 its triangular profile. Source 003 L65-L73: the profile is 0.166 long at the base and 0.060 wide at the top, i.e. about 0.36.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0062,
+              "minimum": 0.0032,
+              "mode": "independent",
+              "name": "tie_radius_m",
+              "rationale": "Radius of the transverse tie cylinder that makes the two cheeks one load path. Source 003 L91-L97: 0.0045 over a 0.122 span.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "max_drum_radius_m",
+                "pinion_low_reach_m"
+              ],
+              "expression": "max(max_drum_radius_m, pinion_low_reach_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotating_reach_m",
+              "rationale": "The single largest distance any rotating member reaches away from the drum axis toward the mounting plane, taking the active drive coupling into account.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_plate_h_m",
+                "base_clearance_m",
+                "rotating_reach_m"
+              ],
+              "expression": "base_plate_h_m + base_clearance_m + rotating_reach_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axis_lift_m",
+              "rationale": "Height of the drum axis above the mounting plane for the three horizontal families. Deriving it from rotating_reach_m rather than from the drum flange alone is what keeps the ratchet ring, the drum gear and the offset pinion out of the base plate at every seed.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "plate_reach_ratio",
+                "rotating_reach_m",
+                "pawl_ring_r_m",
+                "pawl_boss_r_m",
+                "gear_center_distance_m",
+                "pinion_bore_boss_r_m"
+              ],
+              "expression": "max(plate_reach_ratio * rotating_reach_m, pawl_ring_r_m + pawl_boss_r_m + 0.004, gear_center_distance_m + pinion_bore_boss_r_m + 0.004 if reduction else 0.0)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_reach_m",
+              "rationale": "Bearing-plate silhouette radius. Floored so the plate actually reaches the pawl pivot ring and, when a reduction is active, the offset pinion bore.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_u_min_m",
+                "plate_gap_m",
+                "plate_thickness_m"
+              ],
+              "expression": "drum_u_min_m - plate_gap_m - plate_thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_u_near_m",
+              "rationale": "Axial station of the near bearing plate: outboard of the most -u drum disc, so no plate ever shares an axial band with a rotating disc.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_u_max_m",
+                "plate_gap_m",
+                "plate_thickness_m"
+              ],
+              "expression": "drum_u_max_m + plate_gap_m + plate_thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_u_far_m",
+              "rationale": "Axial station of the far bearing plate / pedestal, outboard of the most +u drum disc (the ratchet ring, or the outermost reduction gear).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flange_clearance_m",
+                "running_clearance_m"
+              ],
+              "expression": "max(flange_clearance_m, running_clearance_m + 0.0008)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_gap_m",
+              "rationale": "The plate stand-off must exceed the envelope clearance, otherwise cutting the rotating bands out of the frame would eat into the bearing plates themselves.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__sailboat_winch_with_pawl_and_handle__003__png_8e642a4b246e4f8bbe68ce130afb5c2b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L26",
+            "model.py:L55-L125",
+            "model.py:L210-L253"
+          ]
+        },
+        {
+          "evidence": "The same horizontal duty as a cantilever: one arched front cheek (arc-blended outline, bored shaft clearance, integral pawl pivot boss) at one end of a solid mounting-foot box, and a rear pedestal \u2014 annular bearing ring on a stem web \u2014 at the other, with a bright bushing at each station. Asymmetric part profile, one plate instead of two, and the drum overhangs the front plate instead of sitting between two identical cheeks.",
+          "implementation_function": "_frame_family_cantilever_front_cheek_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, axis_lift_m)",
+                "radius": "spindle_radius_m + bore_clearance_m",
+                "stations": "u = plate_u_near_m (arched cheek) and u = plate_u_far_m (pedestal ring)"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, axis_lift_m)"
+              },
+              "kind": "axis",
+              "name": "drum_bearing_axis",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent_u": "2.0 * plate_reach_m",
+                "extent_v": "2.0 * plate_reach_m"
+              },
+              "frame": {
+                "normal": "axis_dir",
+                "point": "(plate_u_near_m, 0.0, 0.0) and (plate_u_far_m, 0.0, 0.0) in the drum frame"
+              },
+              "kind": "plane",
+              "name": "web_solid",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "cantilever_front_cheek",
+          "notes": "Asymmetric: a full arched cheek at the near station and a pedestal ring on a stem web at the far station, both standing on one solid mounting-foot box. The drum overhangs the near plate instead of sitting between twins.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.022,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "base_plate_h_m",
+              "rationale": "Thickness of the grounded mounting structure the frame stands on. Pool: 0.004 (003 L58 base_t), 0.020 (002 L241 mounting_foot), 0.016 (001 L231 base_bridge), 0.008 (capstan L56 base_t). Its top face is the plane every rotating envelope has to clear.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "base_clearance_m",
+              "rationale": "Radial (horizontal families) or axial (capstan) gap left between the lowest rotating element and the top of the mounting structure. Pool: 002 leaves 9 mm (flange bottom 0.033 vs foot top 0.024), 003 leaves 46 mm (gear bottom 0.050 vs flange top 0.004). Directly feeds axis_lift_m, which is the derivation the legacy template did not have.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "plate_thickness_m",
+              "rationale": "Thickness of one bearing plate / cheek / deck. Pool: 0.004 (003 L59 side_t), 0.008 (002 L54 front cheek extrude), 0.0045 (001 L186 side plate), 0.008 (capstan L56 deck).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.38,
+              "minimum": 1.02,
+              "mode": "independent",
+              "name": "plate_reach_ratio",
+              "rationale": "Bearing-plate silhouette radius as a multiple of rotating_reach_m, before the cross-slot floors in binding drive_and_pawl_size_the_frame apply. Pool: 003's cheek profile peaks 0.062 above a 0.048 gear tip (1.29); 002's cheek peaks 0.058 above a 0.057 ratchet tip (1.02).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0045,
+              "minimum": 0.0018,
+              "mode": "independent",
+              "name": "flange_clearance_m",
+              "rationale": "Axial gap between a drum disc face and the neighbouring frame plate face. Source 002 L564-L573 asserts exactly this as expect_gap(front_flange, front_cheek, min_gap=0.001, max_gap=0.004).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0025,
+              "minimum": 0.0008,
+              "mode": "independent",
+              "name": "running_clearance_m",
+              "rationale": "Radial and axial margin added to every rotating member's swept envelope before it is boolean-cut out of the frame solid. This is what turns 'the gear must not touch the plate' into real geometry; source 001 achieves the same result by narrowing the base bridge until the 74 mm toothed flange runs outboard of it (L228-L235).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0008,
+              "minimum": 0.0006,
+              "mode": "independent",
+              "name": "bore_clearance_m",
+              "rationale": "Radial clearance of a frame bore around the shaft that passes through it. Source 003 L100-L107 cuts both shaft passages as 'true clearances, not hidden intersections'; 002 L56-L62 cuts a 0.0165 shaft clearance for a 0.008 spindle. Kept well under 1 mm so the bore still counts as support under the baseline QC gap rule, and floored at 0.6 mm so the fit survives tessellation on both sides (the template meshes at a 0.18 mm sagitta, so a bore and its shaft together can lose about 0.36 mm of clearance to chords).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.0,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "pedestal_ring_ratio",
+              "rationale": "Outer radius of the far pedestal bearing ring as a fraction of plate_reach_m. Source 002 L75-L83: ring radius 0.050 against a 0.058 cheek reach, i.e. 0.86; the enclosed fork widens it to 0.061 (L76).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.0,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "foot_width_ratio",
+              "rationale": "Half-width of the mounting-foot box across the radial axis as a fraction of plate_reach_m. Source 002 L241: the foot is 0.082 wide against a 0.118 cheek span, i.e. about 0.70.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "max_drum_radius_m",
+                "pinion_low_reach_m"
+              ],
+              "expression": "max(max_drum_radius_m, pinion_low_reach_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotating_reach_m",
+              "rationale": "The single largest distance any rotating member reaches away from the drum axis toward the mounting plane, taking the active drive coupling into account.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_plate_h_m",
+                "base_clearance_m",
+                "rotating_reach_m"
+              ],
+              "expression": "base_plate_h_m + base_clearance_m + rotating_reach_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axis_lift_m",
+              "rationale": "Height of the drum axis above the mounting plane for the three horizontal families. Deriving it from rotating_reach_m rather than from the drum flange alone is what keeps the ratchet ring, the drum gear and the offset pinion out of the base plate at every seed.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "plate_reach_ratio",
+                "rotating_reach_m",
+                "pawl_ring_r_m",
+                "pawl_boss_r_m",
+                "gear_center_distance_m",
+                "pinion_bore_boss_r_m"
+              ],
+              "expression": "max(plate_reach_ratio * rotating_reach_m, pawl_ring_r_m + pawl_boss_r_m + 0.004, gear_center_distance_m + pinion_bore_boss_r_m + 0.004 if reduction else 0.0)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_reach_m",
+              "rationale": "Bearing-plate silhouette radius. Floored so the plate actually reaches the pawl pivot ring and, when a reduction is active, the offset pinion bore.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_u_min_m",
+                "plate_gap_m",
+                "plate_thickness_m"
+              ],
+              "expression": "drum_u_min_m - plate_gap_m - plate_thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_u_near_m",
+              "rationale": "Axial station of the near bearing plate: outboard of the most -u drum disc, so no plate ever shares an axial band with a rotating disc.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_u_max_m",
+                "plate_gap_m",
+                "plate_thickness_m"
+              ],
+              "expression": "drum_u_max_m + plate_gap_m + plate_thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_u_far_m",
+              "rationale": "Axial station of the far bearing plate / pedestal, outboard of the most +u drum disc (the ratchet ring, or the outermost reduction gear).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flange_clearance_m",
+                "running_clearance_m"
+              ],
+              "expression": "max(flange_clearance_m, running_clearance_m + 0.0008)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_gap_m",
+              "rationale": "The plate stand-off must exceed the envelope clearance, otherwise cutting the rotating bands out of the frame would eat into the bearing plates themselves.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__sailboat_winch_with_pawl_and_handle__002__png_c4d5af90f90240ac9ff42989781e53d6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L25",
+            "model.py:L42-L85",
+            "model.py:L241-L298"
+          ]
+        },
+        {
+          "evidence": "Horizontal axis in a sheet-metal clevis of a third shape: two identical eight-point profile plates, each bored for the drum and capped by an annular bearing collar, standing on a lower base bridge that is deliberately narrow in the axial direction so the large toothed drum flange sweeps outboard of it, plus two transverse cylindrical spacers that make the pair one load path.",
+          "implementation_function": "_frame_family_bridged_side_plates_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, axis_lift_m)",
+                "radius": "spindle_radius_m + bore_clearance_m",
+                "stations": "u = plate_u_near_m and u = plate_u_far_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, axis_lift_m)"
+              },
+              "kind": "axis",
+              "name": "drum_bearing_axis",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent_u": "2.0 * plate_reach_m",
+                "extent_v": "2.0 * plate_reach_m"
+              },
+              "frame": {
+                "normal": "axis_dir",
+                "point": "(plate_u_near_m, 0.0, 0.0) and (plate_u_far_m, 0.0, 0.0) in the drum frame"
+              },
+              "kind": "plane",
+              "name": "web_solid",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "bridged_side_plates",
+          "notes": "Two identical eight-point profile plates on a lower base bridge whose axial span is a fraction of the plate spacing, plus transverse spacer cylinders. The bridge is exactly where source 001 had to keep the toothed flange out of the way, and here the derived axis_lift_m plus the envelope cut do that job.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.022,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "base_plate_h_m",
+              "rationale": "Thickness of the grounded mounting structure the frame stands on. Pool: 0.004 (003 L58 base_t), 0.020 (002 L241 mounting_foot), 0.016 (001 L231 base_bridge), 0.008 (capstan L56 base_t). Its top face is the plane every rotating envelope has to clear.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "base_clearance_m",
+              "rationale": "Radial (horizontal families) or axial (capstan) gap left between the lowest rotating element and the top of the mounting structure. Pool: 002 leaves 9 mm (flange bottom 0.033 vs foot top 0.024), 003 leaves 46 mm (gear bottom 0.050 vs flange top 0.004). Directly feeds axis_lift_m, which is the derivation the legacy template did not have.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "plate_thickness_m",
+              "rationale": "Thickness of one bearing plate / cheek / deck. Pool: 0.004 (003 L59 side_t), 0.008 (002 L54 front cheek extrude), 0.0045 (001 L186 side plate), 0.008 (capstan L56 deck).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.38,
+              "minimum": 1.02,
+              "mode": "independent",
+              "name": "plate_reach_ratio",
+              "rationale": "Bearing-plate silhouette radius as a multiple of rotating_reach_m, before the cross-slot floors in binding drive_and_pawl_size_the_frame apply. Pool: 003's cheek profile peaks 0.062 above a 0.048 gear tip (1.29); 002's cheek peaks 0.058 above a 0.057 ratchet tip (1.02).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0045,
+              "minimum": 0.0018,
+              "mode": "independent",
+              "name": "flange_clearance_m",
+              "rationale": "Axial gap between a drum disc face and the neighbouring frame plate face. Source 002 L564-L573 asserts exactly this as expect_gap(front_flange, front_cheek, min_gap=0.001, max_gap=0.004).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0025,
+              "minimum": 0.0008,
+              "mode": "independent",
+              "name": "running_clearance_m",
+              "rationale": "Radial and axial margin added to every rotating member's swept envelope before it is boolean-cut out of the frame solid. This is what turns 'the gear must not touch the plate' into real geometry; source 001 achieves the same result by narrowing the base bridge until the 74 mm toothed flange runs outboard of it (L228-L235).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0008,
+              "minimum": 0.0006,
+              "mode": "independent",
+              "name": "bore_clearance_m",
+              "rationale": "Radial clearance of a frame bore around the shaft that passes through it. Source 003 L100-L107 cuts both shaft passages as 'true clearances, not hidden intersections'; 002 L56-L62 cuts a 0.0165 shaft clearance for a 0.008 spindle. Kept well under 1 mm so the bore still counts as support under the baseline QC gap rule, and floored at 0.6 mm so the fit survives tessellation on both sides (the template meshes at a 0.18 mm sagitta, so a bore and its shaft together can lose about 0.36 mm of clearance to chords).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.95,
+              "minimum": 0.45,
+              "mode": "independent",
+              "name": "bridge_span_ratio",
+              "rationale": "Axial length of the lower base bridge as a fraction of the plate spacing. Source 001 L232: the bridge is 0.105 long across a 0.082 plate spacing but is narrowed in the drum-axis direction so the 74 mm toothed flange sweeps outboard of it.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                2,
+                3
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "spacer_count",
+              "rationale": "Transverse spacer cylinders tying the two plates together. Source 001 L236-L244 uses 2 at distinct radial stations.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "max_drum_radius_m",
+                "pinion_low_reach_m"
+              ],
+              "expression": "max(max_drum_radius_m, pinion_low_reach_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotating_reach_m",
+              "rationale": "The single largest distance any rotating member reaches away from the drum axis toward the mounting plane, taking the active drive coupling into account.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_plate_h_m",
+                "base_clearance_m",
+                "rotating_reach_m"
+              ],
+              "expression": "base_plate_h_m + base_clearance_m + rotating_reach_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axis_lift_m",
+              "rationale": "Height of the drum axis above the mounting plane for the three horizontal families. Deriving it from rotating_reach_m rather than from the drum flange alone is what keeps the ratchet ring, the drum gear and the offset pinion out of the base plate at every seed.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "plate_reach_ratio",
+                "rotating_reach_m",
+                "pawl_ring_r_m",
+                "pawl_boss_r_m",
+                "gear_center_distance_m",
+                "pinion_bore_boss_r_m"
+              ],
+              "expression": "max(plate_reach_ratio * rotating_reach_m, pawl_ring_r_m + pawl_boss_r_m + 0.004, gear_center_distance_m + pinion_bore_boss_r_m + 0.004 if reduction else 0.0)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_reach_m",
+              "rationale": "Bearing-plate silhouette radius. Floored so the plate actually reaches the pawl pivot ring and, when a reduction is active, the offset pinion bore.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_u_min_m",
+                "plate_gap_m",
+                "plate_thickness_m"
+              ],
+              "expression": "drum_u_min_m - plate_gap_m - plate_thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_u_near_m",
+              "rationale": "Axial station of the near bearing plate: outboard of the most -u drum disc, so no plate ever shares an axial band with a rotating disc.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_u_max_m",
+                "plate_gap_m",
+                "plate_thickness_m"
+              ],
+              "expression": "drum_u_max_m + plate_gap_m + plate_thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_u_far_m",
+              "rationale": "Axial station of the far bearing plate / pedestal, outboard of the most +u drum disc (the ratchet ring, or the outermost reduction gear).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flange_clearance_m",
+                "running_clearance_m"
+              ],
+              "expression": "max(flange_clearance_m, running_clearance_m + 0.0008)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_gap_m",
+              "rationale": "The plate stand-off must exceed the envelope clearance, otherwise cutting the rotating bands out of the frame would eat into the bearing plates themselves.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__sailboat_winch_with_pawl_and_handle__001__png_c33f82e11c604776b2a2110808781683",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L28-L49",
+            "model.py:L175-L244"
+          ]
+        },
+        {
+          "evidence": "Vertical drum axis on a deck: a circular flange with four rotated elongated fastener slots, an annular pedestal that carries the bearing while leaving the centre open for the drive socket, and a pawl boss plus bridge growing out of the same casting to hold a vertical pivot spindle. Rotating the drum axis rotates the pawl axis and the crank sweep plane with it, so this is a frame-family candidate rather than an independent slot.",
+          "implementation_function": "_frame_family_vertical_capstan_deck_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, base_plate_h_m + pedestal_h_m)",
+                "radius": "spindle_radius_m + bore_clearance_m",
+                "stations": "one annular pedestal only; the capstan is cantilevered on it exactly as capstan L179-L196 does"
+              },
+              "frame": {
+                "axis": "(0.0, 0.0, 1.0)",
+                "point": "(0.0, 0.0, base_plate_h_m + pedestal_h_m)"
+              },
+              "kind": "axis",
+              "name": "drum_bearing_axis",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "extent_u": "2.0 * plate_reach_m",
+                "extent_v": "2.0 * plate_reach_m"
+              },
+              "frame": {
+                "normal": "axis_dir",
+                "point": "(plate_u_near_m, 0.0, 0.0) and (plate_u_far_m, 0.0, 0.0) in the drum frame"
+              },
+              "kind": "plane",
+              "name": "web_solid",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "vertical_capstan_deck",
+          "notes": "The whole machine rotates onto a vertical axis: a circular deck flange with four rotated fastener slots, one annular pedestal that is the single bearing station, and a pawl post rising from the same casting. Here base_clearance_m is spent axially (pedestal height) instead of radially, and the crank sits above the capstan crown rather than outboard of a cheek.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.022,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "base_plate_h_m",
+              "rationale": "Thickness of the grounded mounting structure the frame stands on. Pool: 0.004 (003 L58 base_t), 0.020 (002 L241 mounting_foot), 0.016 (001 L231 base_bridge), 0.008 (capstan L56 base_t). Its top face is the plane every rotating envelope has to clear.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "base_clearance_m",
+              "rationale": "Radial (horizontal families) or axial (capstan) gap left between the lowest rotating element and the top of the mounting structure. Pool: 002 leaves 9 mm (flange bottom 0.033 vs foot top 0.024), 003 leaves 46 mm (gear bottom 0.050 vs flange top 0.004). Directly feeds axis_lift_m, which is the derivation the legacy template did not have.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "plate_thickness_m",
+              "rationale": "Thickness of one bearing plate / cheek / deck. Pool: 0.004 (003 L59 side_t), 0.008 (002 L54 front cheek extrude), 0.0045 (001 L186 side plate), 0.008 (capstan L56 deck).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.38,
+              "minimum": 1.02,
+              "mode": "independent",
+              "name": "plate_reach_ratio",
+              "rationale": "Bearing-plate silhouette radius as a multiple of rotating_reach_m, before the cross-slot floors in binding drive_and_pawl_size_the_frame apply. Pool: 003's cheek profile peaks 0.062 above a 0.048 gear tip (1.29); 002's cheek peaks 0.058 above a 0.057 ratchet tip (1.02).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0045,
+              "minimum": 0.0018,
+              "mode": "independent",
+              "name": "flange_clearance_m",
+              "rationale": "Axial gap between a drum disc face and the neighbouring frame plate face. Source 002 L564-L573 asserts exactly this as expect_gap(front_flange, front_cheek, min_gap=0.001, max_gap=0.004).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0025,
+              "minimum": 0.0008,
+              "mode": "independent",
+              "name": "running_clearance_m",
+              "rationale": "Radial and axial margin added to every rotating member's swept envelope before it is boolean-cut out of the frame solid. This is what turns 'the gear must not touch the plate' into real geometry; source 001 achieves the same result by narrowing the base bridge until the 74 mm toothed flange runs outboard of it (L228-L235).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0008,
+              "minimum": 0.0006,
+              "mode": "independent",
+              "name": "bore_clearance_m",
+              "rationale": "Radial clearance of a frame bore around the shaft that passes through it. Source 003 L100-L107 cuts both shaft passages as 'true clearances, not hidden intersections'; 002 L56-L62 cuts a 0.0165 shaft clearance for a 0.008 spindle. Kept well under 1 mm so the bore still counts as support under the baseline QC gap rule, and floored at 0.6 mm so the fit survives tessellation on both sides (the template meshes at a 0.18 mm sagitta, so a bore and its shaft together can lose about 0.36 mm of clearance to chords).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.0,
+              "minimum": 1.3,
+              "mode": "independent",
+              "name": "deck_radius_ratio",
+              "rationale": "Deck flange radius as a fraction of rotating_reach_m. Source capstan L57: 0.090 disc against a 0.052 capstan crown, i.e. 1.73.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.5,
+              "mode": "independent",
+              "name": "pedestal_ratio",
+              "rationale": "Outer radius of the annular pedestal bearing as a fraction of rotating_reach_m. Source capstan L60-L65: 0.036 outer / 0.025 inner against the same 0.052, i.e. 0.69; the open centre is what lets the drive socket pass.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "max_drum_radius_m",
+                "pinion_low_reach_m"
+              ],
+              "expression": "max(max_drum_radius_m, pinion_low_reach_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rotating_reach_m",
+              "rationale": "The single largest distance any rotating member reaches away from the drum axis toward the mounting plane, taking the active drive coupling into account.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_plate_h_m",
+                "base_clearance_m",
+                "rotating_reach_m"
+              ],
+              "expression": "base_plate_h_m + base_clearance_m + rotating_reach_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "axis_lift_m",
+              "rationale": "Height of the drum axis above the mounting plane for the three horizontal families. Deriving it from rotating_reach_m rather than from the drum flange alone is what keeps the ratchet ring, the drum gear and the offset pinion out of the base plate at every seed.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "plate_reach_ratio",
+                "rotating_reach_m",
+                "pawl_ring_r_m",
+                "pawl_boss_r_m",
+                "gear_center_distance_m",
+                "pinion_bore_boss_r_m"
+              ],
+              "expression": "max(plate_reach_ratio * rotating_reach_m, pawl_ring_r_m + pawl_boss_r_m + 0.004, gear_center_distance_m + pinion_bore_boss_r_m + 0.004 if reduction else 0.0)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_reach_m",
+              "rationale": "Bearing-plate silhouette radius. Floored so the plate actually reaches the pawl pivot ring and, when a reduction is active, the offset pinion bore.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_u_min_m",
+                "plate_gap_m",
+                "plate_thickness_m"
+              ],
+              "expression": "drum_u_min_m - plate_gap_m - plate_thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_u_near_m",
+              "rationale": "Axial station of the near bearing plate: outboard of the most -u drum disc, so no plate ever shares an axial band with a rotating disc.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_u_max_m",
+                "plate_gap_m",
+                "plate_thickness_m"
+              ],
+              "expression": "drum_u_max_m + plate_gap_m + plate_thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_u_far_m",
+              "rationale": "Axial station of the far bearing plate / pedestal, outboard of the most +u drum disc (the ratchet ring, or the outermost reduction gear).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "flange_clearance_m",
+                "running_clearance_m"
+              ],
+              "expression": "max(flange_clearance_m, running_clearance_m + 0.0008)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "plate_gap_m",
+              "rationale": "The plate stand-off must exceed the envelope clearance, otherwise cutting the rotating bands out of the frame would eat into the bearing plates themselves.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_sailboat_winch_with_pawl_and_h_var_winch_topology_vertical_capstan_deck_w",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L26",
+            "model.py:L55-L91",
+            "model.py:L179-L225"
+          ]
+        }
+      ],
+      "component_type": "support frame and drum axis",
+      "name": "frame_family",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The load-bearing web is left continuous: the only openings in the plate are the functional ones (the drum shaft clearance) and the pivot boss is added rather than cut.",
+          "implementation_function": "_web_relief_solid_web_build",
+          "interfaces": [],
+          "name": "solid_web",
+          "notes": "The web is left continuous; only the functional bores exist, and the bearing station gains a raised boss/collar around its bore instead of a cut.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.4,
+              "minimum": 1.35,
+              "mode": "independent",
+              "name": "web_boss_ratio",
+              "rationale": "Outer radius of the raised bearing boss as a multiple of the bore radius. Pool: 002 L252-L260 front bushing 0.0167 outer on a 0.0085 bore (1.96); 001 L210-L215 bearing collar 0.025 outer on a 0.0183 bore (1.37).",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__sailboat_winch_with_pawl_and_handle__002__png_c4d5af90f90240ac9ff42989781e53d6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L42-L72"
+          ]
+        },
+        {
+          "evidence": "Five circular lightening windows cut clean through the web while a continuous perimeter, the bearing web and diagonal load paths around both shafts are retained, so the frame reads as an open-cheek reel with the drum visible through it.",
+          "implementation_function": "_web_relief_windowed_web_build",
+          "interfaces": [],
+          "name": "windowed_web",
+          "notes": "Circular lightening windows cut clean through the web on a ring between the bore boss and the silhouette edge, leaving a continuous perimeter.",
+          "parameters": [
+            {
+              "choices": [
+                3,
+                4,
+                5,
+                6
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "window_count",
+              "rationale": "Number of windows cut through each web. Source open_cheek_reel L92-L107 cuts five.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "window_radius_ratio",
+              "rationale": "Window radius as a fraction of plate_reach_m. Source open_cheek_reel L93-L97 uses 0.014-0.019 radii on a 0.062-reach cheek, i.e. 0.23-0.31 of the reach; scaled down here because plate_reach_m is measured from the axis.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_sailboat_winch_with_pawl_and_h_var_winch_topology_open_cheek_reel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L92-L107"
+          ]
+        },
+        {
+          "evidence": "The opposite treatment: a curved guard shell is unioned around the drum between the bearing stations, with a broad side fairlead window cut out so the line can leave, a widened bearing ring under it and a spindle clearance re-cut through the ring after the union \u2014 so the winch reads as an enclosed reel with the drum hidden behind a shroud.",
+          "implementation_function": "_web_relief_enclosed_guard_shell_build",
+          "interfaces": [],
+          "name": "enclosed_guard_shell",
+          "notes": "A curved shroud is unioned around the drum between the bearing stations, with one angular fairlead window cut out for the line. The shell is then re-cut by every rotating envelope, which is exactly the correction the enclosed source fork makes when it re-cuts its spindle clearance after unioning the ring (L108-L112).",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0105,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "guard_thickness_m",
+              "rationale": "Wall thickness of the guard shell. Source enclosed fork L100-L103: 0.066 - 0.0585 = 0.0075.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.75,
+              "minimum": 0.65,
+              "mode": "independent",
+              "name": "guard_window_span_rad",
+              "rationale": "Angular span of the fairlead window cut out of the shroud so the line can leave. Source enclosed fork L105-L111 cuts a 0.052 x 0.046 box out of a 0.066 shell, which subtends roughly 0.9 rad.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_sailboat_winch_with_pawl_and_h_var_winch_topology_enclosed_horizontal_ree",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L75-L112",
+            "model.py:L282-L286"
+          ]
+        }
+      ],
+      "component_type": "frame web relief",
+      "name": "web_relief",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "No gears: a bored coupling sleeve plus a solid outboard stub captures the projecting drum spindle and the crank turns coaxially with the drum, so the crank joint origin sits on the main shaft and every crank station moves outboard by the coupler length.",
+          "implementation_function": "_drive_coupling_direct_socket_drive_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "host": "frame.drum_bearing_axis",
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "coupler_bore_r_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "crank.direct_socket_axis",
+              "part": "crank",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "crank_plane": "crank_u_m, always outboard of the frame's outermost face",
+                "offset": "(crank_axis_v_m, crank_axis_w_m) in the radial plane",
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "crank_reach_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "crank_station",
+              "part": "crank",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "direct_socket_drive",
+          "notes": "No gears at all: a bored coupling sleeve plus a solid outboard stub captures the projecting drum spindle, so the crank's rotation axis IS the drum axis and pinion_low_reach_m is zero. Joint: continuous, parent frame, coaxial with the drum axis.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.125,
+              "minimum": 0.055,
+              "mode": "independent",
+              "name": "crank_reach_m",
+              "rationale": "Radial distance from the drive axis to the grip axle. Pool: 0.059 (003 L322-L348, hypot(0.031, 0.052)), 0.117 (002 L24-L25 HANDLE_END), 0.123 (001 L338-L345 crank outline tip), 0.120 (capstan L280-L294).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.009,
+              "mode": "independent",
+              "name": "crank_arm_width_m",
+              "rationale": "Width of the crank arm across the sweep plane. Pool: 0.017 (003 L324 Box), 0.009 (002 L133-L149 arm half-width 0.0045 doubled), 0.018 (capstan L281).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "crank_gap_m",
+              "rationale": "Axial gap from the outermost frame face to the crank arm plane, i.e. how far outboard the sweeping crank is kept. Pool: 003 puts the crank arm at x=0.073 with the cheek ending at 0.065 (0.008); the direct-drive fork moves it to 0.084 (0.019).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.024,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "coupler_len_m",
+              "rationale": "Axial length of the bored coupling sleeve that grips the drum spindle. Source direct_drive fork L296-L300: a 0.0053 tube plus a 0.012 stub.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0075,
+              "minimum": 0.003,
+              "mode": "independent",
+              "name": "coupler_wall_m",
+              "rationale": "Wall thickness of that sleeve. Source direct_drive fork L296-L299: 0.010 - 0.003 = 0.007 outer wall over the spindle.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pinion_low_reach_m",
+              "rationale": "No offset shaft, so the drum's own envelope is the only thing axis_lift_m has to clear.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "spindle_radius_m",
+                "bore_clearance_m"
+              ],
+              "expression": "spindle_radius_m + bore_clearance_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "coupler_bore_r_m",
+              "rationale": "The sleeve is bored to a running fit on the spindle rather than interpenetrating it; under 1 mm it still counts as support.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_sailboat_winch_with_pawl_and_h_var_gear_stages_direct_drive",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L292-L316",
+            "model.py:L386-L395"
+          ]
+        },
+        {
+          "evidence": "One matched 3:1 spur pair emitted from an indexed stage loop \u2014 a 30-tooth gear on the drum and a 10-tooth pinion on a second shaft offset from the drum axis \u2014 with the crank on the pinion shaft and the mesh asserted by a contact check rather than a volumetric overlap.",
+          "implementation_function": "_drive_coupling_single_reduction_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "drum_axis + gear_center_distance_m * (cos(pinion_angle_rad)*r1 + sin(pinion_angle_rad)*r2)",
+                "radius": "pinion_shaft_r_m + bore_clearance_m"
+              },
+              "frame": {
+                "axis": "axis_dir",
+                "point": "drum_axis + gear_center_distance_m * (cos(pinion_angle_rad)*r1 + sin(pinion_angle_rad)*r2)"
+              },
+              "kind": "axis",
+              "name": "frame.pinion_bearing_axis",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "pinion_shaft_r_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "crank.pinion_shaft_axis",
+              "part": "crank",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "crank_plane": "crank_u_m, always outboard of the frame's outermost face",
+                "offset": "(crank_axis_v_m, crank_axis_w_m) in the radial plane",
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "crank_reach_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "crank_station",
+              "part": "crank",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "single_reduction",
+          "notes": "One matched spur pair: a drum gear beside the ratchet ring and a pinion on an offset shaft borne in the same frame plates. Both gears are polyline tooth rings rather than involute SpurGear meshes \u2014 002 and 001 build their tooth rings the same way, and 003's involute pair is the pool's slowest geometry. Joint: continuous, parent frame, on an offset shaft at gear_center_distance_m.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.125,
+              "minimum": 0.055,
+              "mode": "independent",
+              "name": "crank_reach_m",
+              "rationale": "Radial distance from the drive axis to the grip axle. Pool: 0.059 (003 L322-L348, hypot(0.031, 0.052)), 0.117 (002 L24-L25 HANDLE_END), 0.123 (001 L338-L345 crank outline tip), 0.120 (capstan L280-L294).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.009,
+              "mode": "independent",
+              "name": "crank_arm_width_m",
+              "rationale": "Width of the crank arm across the sweep plane. Pool: 0.017 (003 L324 Box), 0.009 (002 L133-L149 arm half-width 0.0045 doubled), 0.018 (capstan L281).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "crank_gap_m",
+              "rationale": "Axial gap from the outermost frame face to the crank arm plane, i.e. how far outboard the sweeping crank is kept. Pool: 003 puts the crank arm at x=0.073 with the cheek ending at 0.065 (0.008); the direct-drive fork moves it to 0.084 (0.019).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                10,
+                12,
+                14
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "pinion_teeth",
+              "rationale": "Tooth count of the driving pinion. Pool: 10 (003 L296-L303), 12 (two-speed low stage).",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [
+                28,
+                32,
+                36
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "drum_gear_teeth",
+              "rationale": "Tooth count of the driven gear on the drum. Pool: 30 (003 L262-L269), 44 (two-speed low stage).",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": -0.42,
+              "minimum": -1.05,
+              "mode": "independent",
+              "name": "pinion_angle_rad",
+              "rationale": "Angle of the offset pinion axis measured in the radial plane from the +r1 direction, negative meaning below the drum axis. Source 003 L21-L24: the drive shaft sits at dy=+0.048, dz=-0.043 from the main shaft, i.e. -0.73 rad.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0016,
+              "minimum": 0.0006,
+              "mode": "independent",
+              "name": "gear_backlash_m",
+              "rationale": "Gap left between the two tip circles. Sized against the contact tolerance the source itself asserts the mesh with (0.0012 in 003 L547-L554, 0.0020 in the two-speed fork).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.01,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "gear_thickness_m",
+              "rationale": "Axial thickness of a gear ring. Pool: 0.009 (003 SpurGear width 9 mm), 0.007 (two-speed fork width 7 mm).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ratchet_tip_r_m",
+                "drum_gear_teeth"
+              ],
+              "expression": "2.0 * ratchet_tip_r_m / drum_gear_teeth",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_module_m",
+              "rationale": "Module chosen so the drum gear comes out the same size as the ratchet ring it sits beside, which is the relation source 003 has (48 mm gear tip against a 46 mm flange).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_gear_teeth",
+                "gear_module_m"
+              ],
+              "expression": "0.5 * drum_gear_teeth * gear_module_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "drum_gear_tip_r_m",
+              "rationale": "Standard tip radius m*(n/2 + 1), as source 003's SpurGear(module=3, teeth=30) gives 0.048.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pinion_teeth",
+                "gear_module_m"
+              ],
+              "expression": "0.5 * pinion_teeth * gear_module_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pinion_tip_r_m",
+              "rationale": "Same law for the pinion; source 003's 10-tooth module-3 pinion gives 0.018.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_gear_tip_r_m",
+                "pinion_tip_r_m",
+                "gear_backlash_m"
+              ],
+              "expression": "drum_gear_tip_r_m + pinion_tip_r_m + gear_backlash_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_center_distance_m",
+              "rationale": "Tip circles are separated by a positive backlash instead of interleaved. Source 003 L547-L554 asserts the mesh as expect_contact(contact_tol=0.0012) named 'reduction gears are closely meshed WITHOUT overlap', and the two-speed fork widens that tolerance to 2 mm; a tangent mesh satisfies the same assertion and, unlike an interleaved one, cannot be broken by motion QC turning the two independent continuous joints to different angles.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pinion_tip_r_m",
+                "gear_center_distance_m",
+                "pinion_angle_rad"
+              ],
+              "expression": "pinion_tip_r_m + gear_center_distance_m * abs(sin(pinion_angle_rad))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pinion_low_reach_m",
+              "rationale": "How far below the drum axis the offset pinion reaches. This term is the reason axis_lift_m cannot be derived from the drum alone: in source 003 it is 0.061 against a 0.048 gear tip.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pinion_shaft_r_m",
+                "bore_clearance_m"
+              ],
+              "expression": "2.0 * (pinion_shaft_r_m + bore_clearance_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pinion_bore_boss_r_m",
+              "rationale": "Boss radius the frame plate needs around the pinion bore; feeds the plate_reach_m floor.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pinion_tip_r_m"
+              ],
+              "expression": "max(0.004, 0.45 * pinion_tip_r_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pinion_shaft_r_m",
+              "rationale": "Source 003 L291 runs a 0.0046 shaft under an 0.018 pinion.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_sailboat_winch_with_pawl_and_h_var_gear_stages_single_reduction",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L184-L206",
+            "model.py:L295-L329",
+            "model.py:L577-L586"
+          ]
+        },
+        {
+          "evidence": "Two meshes on the same shaft pair at one constant module: a 44:12 low-speed pair and a 38:18 high-speed pair at different axial planes, so the drum carries two gears and the crank shaft two pinions, each mesh contact-checked separately. Adds two gear bodies and a second axial gear plane the host must keep clear.",
+          "implementation_function": "_drive_coupling_two_speed_reduction_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "drum_axis + gear_center_distance_m * (cos(pinion_angle_rad)*r1 + sin(pinion_angle_rad)*r2)",
+                "radius": "pinion_shaft_r_m + bore_clearance_m"
+              },
+              "frame": {
+                "axis": "axis_dir",
+                "point": "drum_axis + gear_center_distance_m * (cos(pinion_angle_rad)*r1 + sin(pinion_angle_rad)*r2)"
+              },
+              "kind": "axis",
+              "name": "frame.pinion_bearing_axis",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "pinion_shaft_r_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "crank.pinion_shaft_axis",
+              "part": "crank",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "crank_plane": "crank_u_m, always outboard of the frame's outermost face",
+                "offset": "(crank_axis_v_m, crank_axis_w_m) in the radial plane",
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "crank_reach_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "crank_station",
+              "part": "crank",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "two_speed_reduction",
+          "notes": "Two meshes on one shaft pair at one constant module and one constant centre distance, exactly as the two-speed fork does: the second stage is a tooth-count split, not a second shaft. The drum therefore carries two gears and the crank shaft two pinions, on two axial planes the host must keep clear. Joint: continuous, parent frame, on an offset shaft at gear_center_distance_m.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.125,
+              "minimum": 0.055,
+              "mode": "independent",
+              "name": "crank_reach_m",
+              "rationale": "Radial distance from the drive axis to the grip axle. Pool: 0.059 (003 L322-L348, hypot(0.031, 0.052)), 0.117 (002 L24-L25 HANDLE_END), 0.123 (001 L338-L345 crank outline tip), 0.120 (capstan L280-L294).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.009,
+              "mode": "independent",
+              "name": "crank_arm_width_m",
+              "rationale": "Width of the crank arm across the sweep plane. Pool: 0.017 (003 L324 Box), 0.009 (002 L133-L149 arm half-width 0.0045 doubled), 0.018 (capstan L281).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "crank_gap_m",
+              "rationale": "Axial gap from the outermost frame face to the crank arm plane, i.e. how far outboard the sweeping crank is kept. Pool: 003 puts the crank arm at x=0.073 with the cheek ending at 0.065 (0.008); the direct-drive fork moves it to 0.084 (0.019).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                10,
+                12,
+                14
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "pinion_teeth",
+              "rationale": "Low-speed pinion tooth count. Source two-speed fork L320-L327: 12.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [
+                28,
+                32,
+                36
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "drum_gear_teeth",
+              "rationale": "Low-speed drum gear tooth count. Source two-speed fork L266-L273: 44.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [
+                16,
+                18,
+                20
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "high_speed_pinion_teeth",
+              "rationale": "High-speed pinion tooth count; its mating drum gear is derived so the pair shares the same centre distance. Source two-speed fork L340-L347: 18 against a 38-tooth gear.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": -0.42,
+              "minimum": -1.05,
+              "mode": "independent",
+              "name": "pinion_angle_rad",
+              "rationale": "Offset shaft angle in the radial plane, negative below the drum axis. Source 003 L21-L24 gives -0.73 rad and the two-speed fork keeps it.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0016,
+              "minimum": 0.0006,
+              "mode": "independent",
+              "name": "gear_backlash_m",
+              "rationale": "Tip-circle gap for both stages. The two-speed fork asserts both meshes at contact_tol=0.0020 (L610-L628).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.01,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "gear_thickness_m",
+              "rationale": "Axial thickness of each gear ring. Source two-speed fork uses width 7 mm on all four bodies.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.01,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "stage_gap_m",
+              "rationale": "Axial gap between the two gear planes. Source two-speed fork: 0.039 vs 0.027, i.e. 0.012 centre-to-centre on 0.007-thick gears, so a 5 mm face gap.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ratchet_tip_r_m",
+                "drum_gear_teeth"
+              ],
+              "expression": "2.0 * ratchet_tip_r_m / drum_gear_teeth",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_module_m",
+              "rationale": "Module chosen so the drum gear comes out the same size as the ratchet ring it sits beside, which is the relation source 003 has (48 mm gear tip against a 46 mm flange).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_gear_teeth",
+                "gear_module_m"
+              ],
+              "expression": "0.5 * drum_gear_teeth * gear_module_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "drum_gear_tip_r_m",
+              "rationale": "Standard tip radius m*(n/2 + 1), as source 003's SpurGear(module=3, teeth=30) gives 0.048.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pinion_teeth",
+                "gear_module_m"
+              ],
+              "expression": "0.5 * pinion_teeth * gear_module_m + gear_module_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pinion_tip_r_m",
+              "rationale": "Same law for the pinion; source 003's 10-tooth module-3 pinion gives 0.018.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_gear_tip_r_m",
+                "pinion_tip_r_m",
+                "gear_backlash_m"
+              ],
+              "expression": "drum_gear_tip_r_m + pinion_tip_r_m + gear_backlash_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "gear_center_distance_m",
+              "rationale": "Tip circles are separated by a positive backlash instead of interleaved. Source 003 L547-L554 asserts the mesh as expect_contact(contact_tol=0.0012) named 'reduction gears are closely meshed WITHOUT overlap', and the two-speed fork widens that tolerance to 2 mm; a tangent mesh satisfies the same assertion and, unlike an interleaved one, cannot be broken by motion QC turning the two independent continuous joints to different angles.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pinion_tip_r_m",
+                "gear_center_distance_m",
+                "pinion_angle_rad"
+              ],
+              "expression": "pinion_tip_r_m + gear_center_distance_m * abs(sin(pinion_angle_rad))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pinion_low_reach_m",
+              "rationale": "How far below the drum axis the offset pinion reaches. This term is the reason axis_lift_m cannot be derived from the drum alone: in source 003 it is 0.061 against a 0.048 gear tip.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "gear_center_distance_m",
+                "gear_backlash_m",
+                "gear_module_m",
+                "high_speed_pinion_teeth"
+              ],
+              "expression": "max(18, round((gear_center_distance_m - gear_backlash_m) / gear_module_m - high_speed_pinion_teeth - 2))",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "high_speed_drum_gear_teeth",
+              "rationale": "The second stage must reach the SAME centre distance at the same module, so its gear tooth count is solved rather than authored. Source two-speed fork does this by hand: 44+12 and 38+18 both sum to 56 teeth at module 2.16.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pinion_tip_r_m"
+              ],
+              "expression": "max(0.004, 0.45 * pinion_tip_r_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pinion_shaft_r_m",
+              "rationale": "Same shaft rule as the single stage.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pinion_shaft_r_m",
+                "bore_clearance_m"
+              ],
+              "expression": "2.0 * (pinion_shaft_r_m + bore_clearance_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pinion_bore_boss_r_m",
+              "rationale": "Plate boss radius around the pinion bore.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_sailboat_winch_with_pawl_and_h_var_gear_stages_two_speed_reduction",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L266-L312",
+            "model.py:L320-L362",
+            "model.py:L610-L628"
+          ]
+        },
+        {
+          "evidence": "The crank is not permanently mounted: a square male stem plugs into the drum's square-bored spindle socket and the joint becomes a PRISMATIC withdrawal parented to the drum, with a deep guided engagement retained at full travel and a nut plus cap washer at the head. Different joint type, different parent and no crank bearing station on the frame.",
+          "implementation_function": "_drive_coupling_removable_spindle_socket_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(drum_u_max_m, 0.0, 0.0)",
+                "radius": "socket_bore_r_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(drum_u_max_m, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "drum.spindle_socket_axis",
+              "part": "drum",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "crank_plane": "crank_u_m, always outboard of the frame's outermost face",
+                "offset": "(crank_axis_v_m, crank_axis_w_m) in the radial plane",
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "crank_reach_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "crank_station",
+              "part": "crank",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "removable_spindle_socket",
+          "notes": "The crank is not bearing-mounted at all: a square male stem slides in the drum's square-bored spindle socket and the articulation becomes a withdrawal prismatic parented to the drum, so the frame carries no crank bearing station. The stem keeps a guided engagement at full travel. Joint: prismatic, parent drum, along the drum axis.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.125,
+              "minimum": 0.055,
+              "mode": "independent",
+              "name": "crank_reach_m",
+              "rationale": "Radial distance from the drive axis to the grip axle. Pool: 0.059 (003 L322-L348, hypot(0.031, 0.052)), 0.117 (002 L24-L25 HANDLE_END), 0.123 (001 L338-L345 crank outline tip), 0.120 (capstan L280-L294).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.009,
+              "mode": "independent",
+              "name": "crank_arm_width_m",
+              "rationale": "Width of the crank arm across the sweep plane. Pool: 0.017 (003 L324 Box), 0.009 (002 L133-L149 arm half-width 0.0045 doubled), 0.018 (capstan L281).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.006,
+              "mode": "independent",
+              "name": "crank_gap_m",
+              "rationale": "Axial gap from the outermost frame face to the crank arm plane, i.e. how far outboard the sweeping crank is kept. Pool: 003 puts the crank arm at x=0.073 with the cheek ending at 0.065 (0.008); the direct-drive fork moves it to 0.084 (0.019).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.012,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "stem_across_m",
+              "rationale": "Across-flats size of the square drive stem. Pool: 0.0085 (002 L356-L367), 0.0095 (removable_socket fork L369-L378, which also calls it a '9.5 mm square stem').",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.034,
+              "minimum": 0.02,
+              "mode": "independent",
+              "name": "socket_depth_m",
+              "rationale": "Depth of the square bore in the drum spindle. Pool: 0.026 (002 L120-L130), 0.0245 stem length in the removable fork.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.018,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "withdraw_travel_m",
+              "rationale": "Prismatic travel of the removable crank. Pool: 0.014 (002 L419-L429), 0.012 (folding fork L469-L479).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pinion_low_reach_m",
+              "rationale": "No offset shaft.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "stem_across_m",
+                "bore_clearance_m"
+              ],
+              "expression": "0.5 * stem_across_m * sqrt(2.0) + bore_clearance_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "socket_bore_r_m",
+              "rationale": "The socket is bored round to clear the stem's diagonal, so the guided fit is a sub-millimetre clearance rather than an interpenetration. Source 002 L583-L591 checks it as expect_within(margin=0.0) plus expect_overlap 0.018.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "socket_depth_m",
+                "withdraw_travel_m"
+              ],
+              "expression": "socket_depth_m - withdraw_travel_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "retained_engagement_m",
+              "rationale": "Engagement left at full withdrawal. Source 002 L683-L691 requires at least 0.007, so the range floors give 0.020 - 0.018 = 0.002 ... which is why socket_depth_m's minimum is set at 0.020 against a 0.018 travel maximum and the template additionally floors the travel at socket_depth_m - 0.008.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_sailboat_winch_with_pawl_and_h_var_handle_removable_socket_handle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L120-L130",
+            "model.py:L357-L397",
+            "model.py:L432-L445"
+          ]
+        }
+      ],
+      "component_type": "crank-to-drum coupling",
+      "name": "drive_coupling",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A grip axle and a retaining disc at the crank tip carry a separate open-ended tube sleeve with an end cap on a CONTINUOUS joint, so the sleeve free-spins about the crank-tip pin while the arm sweeps.",
+          "implementation_function": "_handle_head_spinning_sleeve_grip_build",
+          "interfaces": [],
+          "name": "spinning_sleeve_grip",
+          "notes": "A grip axle and a retaining disc at the crank tip carry an open-ended tube sleeve with an end cap; the sleeve free-spins. Joint: continuous about the grip pin.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.085,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "grip_length_m",
+              "rationale": "Length of the hand grip sleeve. Pool: 0.072 (003 L166-L180), 0.065 (002 L209-L214), 0.073 (001 L381-L389).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0145,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "grip_radius_m",
+              "rationale": "Outer radius of the grip sleeve. Pool: 0.0115 (003 L168), 0.012 (002 L210, 001 L382).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0055,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "grip_pin_radius_m",
+              "rationale": "Radius of the steel pin the grip rides. Pool: 0.0045 (003 L342, 001 L373), 0.004 (002 L375), 0.0047 (ratcheting fork L397).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.38,
+              "minimum": 1.04,
+              "mode": "independent",
+              "name": "retainer_radius_ratio",
+              "rationale": "Radius of the retaining disc as a multiple of grip_radius_m. Pool: 003 L351 0.013 against a 0.0115 grip (1.13); 002 L390 0.013 against 0.012 (1.08).",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__sailboat_winch_with_pawl_and_handle__003__png_8e642a4b246e4f8bbe68ce130afb5c2b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L166-L180",
+            "model.py:L341-L358",
+            "model.py:L411-L420"
+          ]
+        },
+        {
+          "evidence": "The crank bar becomes double-ended with a second eye at the mirrored end carrying its own pin and fixed grip shell, and the outer grip becomes a bounded REVOLUTE about the in-plane axis perpendicular to the arm, with a knuckle barrel on the grip, so it folds 0\u2026\u03c0/2 against the arm instead of spinning.",
+          "implementation_function": "_handle_head_folding_double_grip_build",
+          "interfaces": [],
+          "name": "folding_double_grip",
+          "notes": "The crank bar becomes double-ended: the mirrored eye carries its own pin and a fixed grip shell as crank visuals, and the outer grip folds 0..fold_upper_rad about the axis perpendicular to the arm instead of spinning. Joint: revolute about the in-plane axis perpendicular to the crank arm.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.085,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "grip_length_m",
+              "rationale": "Length of the hand grip sleeve. Pool: 0.072 (003 L166-L180), 0.065 (002 L209-L214), 0.073 (001 L381-L389).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0145,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "grip_radius_m",
+              "rationale": "Outer radius of the grip sleeve. Pool: 0.0115 (003 L168), 0.012 (002 L210, 001 L382).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0055,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "grip_pin_radius_m",
+              "rationale": "Radius of the steel pin the grip rides. Pool: 0.0045 (003 L342, 001 L373), 0.004 (002 L375), 0.0047 (ratcheting fork L397).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.0,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "second_arm_ratio",
+              "rationale": "Reach of the mirrored eye as a fraction of crank_reach_m. Source folding fork L26-L27 mirrors HANDLE_END exactly (1.0), but a shorter counter-arm is the common real variant, so the range spans both.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.62,
+              "minimum": 1.15,
+              "mode": "independent",
+              "name": "fold_upper_rad",
+              "rationale": "Upper limit of the fold. Source folding fork L484-L490: pi/2.",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_sailboat_winch_with_pawl_and_h_var_handle_folding_double_grip_crank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L142-L196",
+            "model.py:L373-L441",
+            "model.py:L480-L498"
+          ]
+        },
+        {
+          "evidence": "A forged lever profile instead of a flat strap: the arm tapers from a broad neck at a large round ratchet head (circle unioned with the square drive) down to the grip eye, the nut is replaced by a selector cap of cover disc, hex boss and arc-topped paddle, and the grip pin lengthens with the grip pushed outboard to clear the thicker eye.",
+          "implementation_function": "_handle_head_ratcheting_lever_head_build",
+          "interfaces": [],
+          "name": "ratcheting_lever_head",
+          "notes": "A forged lever profile: the arm tapers from a broad neck at a large round ratchet head down to the grip eye, the nut is replaced by a selector cap of cover disc plus hex boss plus arc-topped paddle, and the grip is pushed outboard to clear the thicker eye. Joint: continuous about the grip pin.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.085,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "grip_length_m",
+              "rationale": "Length of the hand grip sleeve. Pool: 0.072 (003 L166-L180), 0.065 (002 L209-L214), 0.073 (001 L381-L389).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0145,
+              "minimum": 0.01,
+              "mode": "independent",
+              "name": "grip_radius_m",
+              "rationale": "Outer radius of the grip sleeve. Pool: 0.0115 (003 L168), 0.012 (002 L210, 001 L382).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0055,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "grip_pin_radius_m",
+              "rationale": "Radius of the steel pin the grip rides. Pool: 0.0045 (003 L342, 001 L373), 0.004 (002 L375), 0.0047 (ratcheting fork L397).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.025,
+              "minimum": 0.013,
+              "mode": "independent",
+              "name": "head_radius_m",
+              "rationale": "Radius of the round ratchet head at the drive end. Source ratcheting fork L153-L158: 0.018 against the parent's 0.012 hub.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.85,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "lever_taper_ratio",
+              "rationale": "Half-width of the arm at the grip eye as a fraction of its half-width at the head. Source ratcheting fork L135-L145: 0.0065 against 0.010, i.e. 0.65.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.017,
+              "minimum": 0.007,
+              "mode": "independent",
+              "name": "selector_paddle_h_m",
+              "rationale": "Height of the arc-topped selector paddle above the cover disc. Source ratcheting fork L170-L188: the paddle spans z 0.004..0.014, i.e. 0.010.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_sailboat_winch_with_pawl_and_h_var_handle_ratcheting_handle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L133-L189",
+            "model.py:L366-L407",
+            "model.py:L456-L470"
+          ]
+        }
+      ],
+      "component_type": "crank hand interface",
+      "name": "handle_head",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The line rides directly on the drum: seven circumferential grooves are boolean-CUT out of the barrel core between two large end flanges, and a small rope anchor pin stands on the barrel. No extra part and no extra joint.",
+          "implementation_function": "_line_takeup_grooved_barrel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "clearance": "running_clearance_m",
+                "outer_radius": "max(flange_radius_m, ratchet_tip_r_m, takeup_outer_r_m, drum_gear_tip_r_m)",
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "max_drum_radius_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "drum_envelope",
+              "part": "drum",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "spindle_radius_m",
+                "ratchet_plane": "ratchet_u_m",
+                "u_max": "drum_u_max_m",
+                "u_min": "drum_u_min_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "drum_axial_stack",
+              "part": "drum",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "grooved_barrel",
+          "notes": "The line rides the drum directly: circumferential grooves are boolean-CUT out of the barrel (002's construction, not 003's applied ribs, so the barrel's outer radius stays exactly drum_radius_m and the swept envelope is exact) and a small rope anchor pin stands on it. No extra part, no extra joint.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.046,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "drum_radius_m",
+              "rationale": "Radius of the working barrel the line rides. Pool: 0.0305 (003 L130), 0.039 (002 L89), 0.040 (001 spool core L319), 0.044-0.054 (capstan waist L96-L104).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.78,
+              "minimum": 1.24,
+              "mode": "independent",
+              "name": "flange_radius_ratio",
+              "rationale": "End flange radius as a multiple of drum_radius_m. Pool: 0.046/0.0305 = 1.51 (003), 0.052/0.039 = 1.33 (002), 0.066/0.040 = 1.65 (001).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.1,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "drum_width_m",
+              "rationale": "Axial length of the barrel between the flanges. Pool: 0.074 (003 L130), 0.060 (002 L89), 0.064 (001 spool L319), 0.056 (self-tailing fork, narrowed for the crown).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.011,
+              "minimum": 0.005,
+              "mode": "independent",
+              "name": "spindle_radius_m",
+              "rationale": "Radius of the drum spindle that runs through both bearing stations. Pool: 0.0050 (003 L129), 0.008 (002 L121), 0.0106 (001 L307).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.01,
+              "minimum": 0.0045,
+              "mode": "independent",
+              "name": "flange_thickness_m",
+              "rationale": "Thickness of one end flange. Pool: 0.006 (003 L131-L132), 0.007/0.008 (002 L314-L322), 0.006 (001 L285-L294).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "groove_count",
+              "rationale": "Rope grooves cut across the barrel. Source 002 L90 and 003 L137 both use 7.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0034,
+              "minimum": 0.0015,
+              "mode": "independent",
+              "name": "groove_depth_m",
+              "rationale": "Radial depth of one groove. Source 002 L90-L93: 0.041 - 0.0358 = 0.0052 on the cutter pair, i.e. about 0.003 into a 0.039 core.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_radius_m"
+              ],
+              "expression": "drum_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "takeup_outer_r_m",
+              "rationale": "Grooves are cut inward, so the line-takeup body never exceeds the barrel radius.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__sailboat_winch_with_pawl_and_handle__002__png_c4d5af90f90240ac9ff42989781e53d6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L88-L94",
+            "model.py:L300-L341"
+          ]
+        },
+        {
+          "evidence": "The line rides a separate captured part: a spool shell plus a wound-strap layer, both open tubes, seated on the drum's drive hub between the flanges on its own revolute that mimics the drum 1:1. Adds a part and an articulation the barrel reading does not have.",
+          "implementation_function": "_line_takeup_coaxial_strap_spool_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "hub_radius_ratio * drum_radius_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "drum.spool_hub_axis",
+              "part": "drum",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "spool_bore_r_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "line_spool.bore_axis",
+              "part": "line_spool",
+              "role": "consumer",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "clearance": "running_clearance_m",
+                "outer_radius": "max(flange_radius_m, ratchet_tip_r_m, takeup_outer_r_m, drum_gear_tip_r_m)",
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "max_drum_radius_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "drum_envelope",
+              "part": "drum",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "spindle_radius_m",
+                "ratchet_plane": "ratchet_u_m",
+                "u_max": "drum_u_max_m",
+                "u_min": "drum_u_min_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "drum_axial_stack",
+              "part": "drum",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "coaxial_strap_spool",
+          "notes": "A separate captured part: a spool shell plus a wound-strap layer, both open tubes, seated on the drum's drive hub between the flanges on its own revolute that mimics the drum 1:1.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.046,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "drum_radius_m",
+              "rationale": "Radius of the working barrel the line rides. Pool: 0.0305 (003 L130), 0.039 (002 L89), 0.040 (001 spool core L319), 0.044-0.054 (capstan waist L96-L104).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.78,
+              "minimum": 1.24,
+              "mode": "independent",
+              "name": "flange_radius_ratio",
+              "rationale": "End flange radius as a multiple of drum_radius_m. Pool: 0.046/0.0305 = 1.51 (003), 0.052/0.039 = 1.33 (002), 0.066/0.040 = 1.65 (001).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.1,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "drum_width_m",
+              "rationale": "Axial length of the barrel between the flanges. Pool: 0.074 (003 L130), 0.060 (002 L89), 0.064 (001 spool L319), 0.056 (self-tailing fork, narrowed for the crown).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.011,
+              "minimum": 0.005,
+              "mode": "independent",
+              "name": "spindle_radius_m",
+              "rationale": "Radius of the drum spindle that runs through both bearing stations. Pool: 0.0050 (003 L129), 0.008 (002 L121), 0.0106 (001 L307).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.01,
+              "minimum": 0.0045,
+              "mode": "independent",
+              "name": "flange_thickness_m",
+              "rationale": "Thickness of one end flange. Pool: 0.006 (003 L131-L132), 0.007/0.008 (002 L314-L322), 0.006 (001 L285-L294).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.94,
+              "minimum": 0.66,
+              "mode": "independent",
+              "name": "spool_outer_ratio",
+              "rationale": "Outer radius of the wound-strap layer as a fraction of the flange radius. Source 001 L327-L336: 0.047 against a 0.066 flange, i.e. 0.71.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.9,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "spool_width_ratio",
+              "rationale": "Axial width of the spool as a fraction of drum_width_m. Source 001 L319: 0.064 spool in a 0.093 hub (0.69); the self-tailing fork narrows it to 0.056 (L372).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.66,
+              "minimum": 0.4,
+              "mode": "independent",
+              "name": "hub_radius_ratio",
+              "rationale": "Radius of the drive hub the spool bore rides, as a fraction of drum_radius_m. Source 001 L296-L305: hub 0.0185 against a 0.040 spool core bore, i.e. 0.46.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "hub_radius_ratio",
+                "drum_radius_m",
+                "bore_clearance_m"
+              ],
+              "expression": "hub_radius_ratio * drum_radius_m + bore_clearance_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "spool_bore_r_m",
+              "rationale": "The spool bore is a running fit on the hub, not an interpenetration; source 001 needed an allow_overlap here (L689-L698) and this template removes the need for it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "spool_outer_ratio",
+                "flange_radius_m"
+              ],
+              "expression": "spool_outer_ratio * flange_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "takeup_outer_r_m",
+              "rationale": "The wound layer, not the barrel, is the outermost line-takeup radius here.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__sailboat_winch_with_pawl_and_handle__001__png_c33f82e11c604776b2a2110808781683",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L91-L102",
+            "model.py:L316-L336",
+            "model.py:L488-L500"
+          ]
+        },
+        {
+          "evidence": "A 40-tooth self-tailing crown ring is added outboard on the drum and the frame grows a fixed polished stripper bridge \u2014 a profile plate on a mounting pin \u2014 that clears the rotating crown and guides the line out of the groove; the spool/barrel width shrinks to make axial room for the crown.",
+          "implementation_function": "_line_takeup_self_tailing_crown_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "2.2 * crown_tip_ratio * flange_radius_m",
+                "extent_v": "0.35 * plate_reach_m"
+              },
+              "frame": {
+                "normal": "axis_dir",
+                "point": "(plate_u_near_m + plate_thickness_m / 2, 0.0, 0.0) in drum frame"
+              },
+              "kind": "plane",
+              "name": "frame.stripper_seat",
+              "part": "frame",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "clearance": "running_clearance_m",
+                "outer_radius": "max(flange_radius_m, ratchet_tip_r_m, takeup_outer_r_m, drum_gear_tip_r_m)",
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "max_drum_radius_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "drum_envelope",
+              "part": "drum",
+              "role": "provider",
+              "surface_relation": null
+            },
+            {
+              "dimensions": {
+                "point": "(0.0, 0.0, 0.0)",
+                "radius": "spindle_radius_m",
+                "ratchet_plane": "ratchet_u_m",
+                "u_max": "drum_u_max_m",
+                "u_min": "drum_u_min_m"
+              },
+              "frame": {
+                "axis": "(1.0, 0.0, 0.0)",
+                "point": "(0.0, 0.0, 0.0)"
+              },
+              "kind": "axis",
+              "name": "drum_axial_stack",
+              "part": "drum",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "self_tailing_crown",
+          "notes": "A toothed self-tailing crown ring is added outboard on the -u side of the drum and the frame grows a fixed polished stripper bridge that clears the rotating crown and guides the line out of the groove; the barrel narrows to make axial room for the crown exactly as the source fork does.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.046,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "drum_radius_m",
+              "rationale": "Radius of the working barrel the line rides. Pool: 0.0305 (003 L130), 0.039 (002 L89), 0.040 (001 spool core L319), 0.044-0.054 (capstan waist L96-L104).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.78,
+              "minimum": 1.24,
+              "mode": "independent",
+              "name": "flange_radius_ratio",
+              "rationale": "End flange radius as a multiple of drum_radius_m. Pool: 0.046/0.0305 = 1.51 (003), 0.052/0.039 = 1.33 (002), 0.066/0.040 = 1.65 (001).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.1,
+              "minimum": 0.052,
+              "mode": "independent",
+              "name": "drum_width_m",
+              "rationale": "Axial length of the barrel between the flanges. Pool: 0.074 (003 L130), 0.060 (002 L89), 0.064 (001 spool L319), 0.056 (self-tailing fork, narrowed for the crown).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.011,
+              "minimum": 0.005,
+              "mode": "independent",
+              "name": "spindle_radius_m",
+              "rationale": "Radius of the drum spindle that runs through both bearing stations. Pool: 0.0050 (003 L129), 0.008 (002 L121), 0.0106 (001 L307).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.01,
+              "minimum": 0.0045,
+              "mode": "independent",
+              "name": "flange_thickness_m",
+              "rationale": "Thickness of one end flange. Pool: 0.006 (003 L131-L132), 0.007/0.008 (002 L314-L322), 0.006 (001 L285-L294).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [
+                28,
+                34,
+                40,
+                46
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "crown_teeth",
+              "rationale": "Teeth in the self-tailing crown. Source self-tailing fork L334-L341: 40.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.02,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "crown_tip_ratio",
+              "rationale": "Crown tip radius as a fraction of the flange radius. Source self-tailing fork L335-L336: 0.058 against a 0.066 flange, i.e. 0.879.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0065,
+              "minimum": 0.0035,
+              "mode": "independent",
+              "name": "stripper_thickness_m",
+              "rationale": "Thickness of the fixed stripper bridge plate. Source self-tailing fork L286-L295: _profile_plate(..., 0.004).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "crown_tip_ratio",
+                "flange_radius_m"
+              ],
+              "expression": "crown_tip_ratio * flange_radius_m * 0.90",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "crown_root_r_m",
+              "rationale": "Source self-tailing fork L334-L336: root 0.052 against tip 0.058, i.e. 0.897.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "drum_radius_m"
+              ],
+              "expression": "drum_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "takeup_outer_r_m",
+              "rationale": "The crown is inside the flange radius, so it does not set the outer envelope; the flange still does.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "running_clearance_m"
+              ],
+              "expression": "running_clearance_m + 0.0015",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "stripper_standoff_m",
+              "rationale": "Radial gap the fixed stripper keeps outside the crown tip circle so the crown can turn under it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_sailboat_winch_with_pawl_and_h_var_winch_topology_self_tailing_deck_winch",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L268-L301",
+            "model.py:L331-L348"
+          ]
+        }
+      ],
+      "component_type": "drum line-handling body",
+      "name": "line_takeup",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A compact stop: a round pivot lobe unioned with a short seven-point hooked tooth and a bored pivot hole, so the whole body sits close inside its own pivot ring and only the hook reaches the tooth circle.",
+          "implementation_function": "_ratchet_pawl_hooked_lobe_pawl_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "band": "[ratchet_u_m - pawl_width_m/2, ratchet_u_m + pawl_width_m/2]",
+                "inner_radius": "pawl_bore_r_m",
+                "point": "pawl_ring_r_m * (cos(theta_i)*r1 + sin(theta_i)*r2) at u = ratchet_u_m",
+                "radius": "pawl_outer_reach_m"
+              },
+              "frame": {
+                "axis": "axis_dir",
+                "point": "pawl_ring_r_m * (cos(theta_i)*r1 + sin(theta_i)*r2) at u = ratchet_u_m"
+              },
+              "kind": "axis",
+              "name": "swept_envelope",
+              "part": "pawl",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "hooked_lobe_pawl",
+          "notes": "A compact stop: a round pivot lobe unioned with a short hooked tooth and a bored pivot hole, so the whole body stays close inside its pivot ring and only the hook reaches the tooth circle.",
+          "parameters": [
+            {
+              "choices": [
+                18,
+                22,
+                26,
+                30
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "ratchet_teeth",
+              "rationale": "Teeth on the ratchet ring the pawl engages. Pool: 22 (002 L97), 32 (001 L268-L276), 30 (003 L262-L269).",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 1.02,
+              "mode": "independent",
+              "name": "ratchet_tip_ratio",
+              "rationale": "Ratchet tip radius as a multiple of the flange radius. Pool: 0.057/0.052 = 1.096 (002), 0.074/0.066 = 1.121 (001), 0.048/0.046 = 1.043 (003).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.92,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "ratchet_root_ratio",
+              "rationale": "Ratchet root radius as a fraction of its tip radius, i.e. tooth depth. Pool: 0.046/0.057 = 0.807 (002), 0.066/0.074 = 0.892 (001).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.01,
+              "minimum": 0.005,
+              "mode": "independent",
+              "name": "ratchet_thickness_m",
+              "rationale": "Axial thickness of the ratchet ring. Pool: 0.008 (002 L115), 0.006 (001 L275), 0.009 (003 gear width).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.007,
+              "mode": "independent",
+              "name": "pawl_ring_gap_m",
+              "rationale": "Radial distance from the ratchet tip circle out to the pawl pivot ring. Pool: 0.0153 (002 dual fork, pivot 0.0723 against a 0.057 tip), 0.004 (001 triple fork, 0.078 against 0.074), 0.0152 (001 origin, 0.0892 against 0.074).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.01,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "pawl_width_m",
+              "rationale": "Axial thickness of one pawl body. Pool: 0.009 (002 L175-L199), 0.004 (001 L409-L419), 0.006 (003 L156).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.5,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "pawl_arc_span_rad",
+              "rationale": "Total angular span across which the N pawl pivots are spread on their ring, centred on the +r2 (top) direction. Pool: 002's dual fork puts its two pivots about 1.22 rad apart; 001's triple fork uses regular 0.349 rad steps, i.e. 0.70 rad for three.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0048,
+              "minimum": 0.003,
+              "mode": "independent",
+              "name": "pawl_pin_radius_m",
+              "rationale": "Radius of the pawl pivot pin. Pool: 0.0038 (002 L281-L289), 0.0045 (001 L245-L253), 0.0043 (003 L117-L123).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.95,
+              "minimum": 0.5,
+              "mode": "independent",
+              "name": "lobe_radius_ratio",
+              "rationale": "Radius of the round pivot lobe as a fraction of pawl_ring_gap_m. Source 002 L176-L181: a 0.009 lobe against a 0.0153 ring gap, i.e. 0.59.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ratchet_tip_r_m",
+                "pawl_ring_gap_m"
+              ],
+              "expression": "ratchet_tip_r_m + pawl_ring_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_ring_r_m",
+              "rationale": "Radius of the pivot ring every pawl sits on, stated generally by 001's triple fork as PAWL_RING_RADIUS.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pawl_arc_span_rad",
+                "pawl_count"
+              ],
+              "expression": "pawl_arc_span_rad / max(1, pawl_count - 1)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_pitch_rad",
+              "rationale": "Regular angular step between adjacent pivots; 001's triple fork uses a constant 20 deg step from 125 deg.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pawl_ring_r_m",
+                "pawl_pitch_rad",
+                "pawl_count"
+              ],
+              "expression": "clamp(0.40 * pawl_ring_r_m * pawl_pitch_rad, 0.0045, 0.014) if pawl_count > 1 else 0.010",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_half_w_m",
+              "rationale": "Tangential half-width of a pawl body, derived from the pivot pitch so adjacent pawls cannot touch at any N. This is the host-capacity rule for the multiplicity.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pawl_pin_radius_m",
+                "bore_clearance_m"
+              ],
+              "expression": "pawl_pin_radius_m + bore_clearance_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_bore_r_m",
+              "rationale": "The pawl bore is a running clearance on the pin, so the pin and the pawl never share material; sources 002 and 003 both needed allow_overlap here and this removes it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pawl_pin_radius_m"
+              ],
+              "expression": "2.1 * pawl_pin_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_boss_r_m",
+              "rationale": "Radius of the frame's pivot boss/bracket around the pin. Source 002 L65-L71: a 0.009 boss on a 0.0038 pin; 001 L254-L259: a 0.022 x 0.034 bracket on a 0.0045 pin.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ratchet_tip_r_m",
+                "ratchet_root_r_m"
+              ],
+              "expression": "ratchet_tip_r_m - 0.5 * (ratchet_tip_r_m - ratchet_root_r_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_engaged_tip_r_m",
+              "rationale": "Radius the pawl nose tip reaches at the engaged pose: half a tooth depth inside the tip circle, so the tip sits in a tooth valley as 002 L627-L634 asserts.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "lobe_radius_ratio",
+                "pawl_ring_gap_m"
+              ],
+              "expression": "lobe_radius_ratio * pawl_ring_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_outer_reach_m",
+              "rationale": "How far the body reaches outward from the pivot; sets the outer radius of the swept envelope cut out of the frame.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__sailboat_winch_with_pawl_and_handle__002__png_c4d5af90f90240ac9ff42989781e53d6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L175-L206",
+            "model.py:L343-L348"
+          ]
+        },
+        {
+          "evidence": "A nine-point plate profile that runs from a short hooked tooth at the ratchet all the way out to a long release lever ending in a rubber thumb cap, with the pivot bore cut through the middle, so the pawl reads as a hand-releasable lever and sweeps a much larger envelope than the lobe.",
+          "implementation_function": "_ratchet_pawl_long_release_lever_pawl_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "band": "[ratchet_u_m - pawl_width_m/2, ratchet_u_m + pawl_width_m/2]",
+                "inner_radius": "pawl_bore_r_m",
+                "point": "pawl_ring_r_m * (cos(theta_i)*r1 + sin(theta_i)*r2) at u = ratchet_u_m",
+                "radius": "pawl_outer_reach_m"
+              },
+              "frame": {
+                "axis": "axis_dir",
+                "point": "pawl_ring_r_m * (cos(theta_i)*r1 + sin(theta_i)*r2) at u = ratchet_u_m"
+              },
+              "kind": "axis",
+              "name": "swept_envelope",
+              "part": "pawl",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "long_release_lever_pawl",
+          "notes": "A plate profile that runs from the hooked tooth at the ratchet all the way out to a hand release lever ending in a rubber thumb cap, with the pivot bore cut through the middle. It sweeps a much larger envelope than the lobe, so the frame has to give it a correspondingly larger slot.",
+          "parameters": [
+            {
+              "choices": [
+                18,
+                22,
+                26,
+                30
+              ],
+              "depends_on": [],
+              "expression": "",
+              "maximum": null,
+              "minimum": null,
+              "mode": "independent",
+              "name": "ratchet_teeth",
+              "rationale": "Teeth on the ratchet ring the pawl engages. Pool: 22 (002 L97), 32 (001 L268-L276), 30 (003 L262-L269).",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 1.02,
+              "mode": "independent",
+              "name": "ratchet_tip_ratio",
+              "rationale": "Ratchet tip radius as a multiple of the flange radius. Pool: 0.057/0.052 = 1.096 (002), 0.074/0.066 = 1.121 (001), 0.048/0.046 = 1.043 (003).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.92,
+              "minimum": 0.8,
+              "mode": "independent",
+              "name": "ratchet_root_ratio",
+              "rationale": "Ratchet root radius as a fraction of its tip radius, i.e. tooth depth. Pool: 0.046/0.057 = 0.807 (002), 0.066/0.074 = 0.892 (001).",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.01,
+              "minimum": 0.005,
+              "mode": "independent",
+              "name": "ratchet_thickness_m",
+              "rationale": "Axial thickness of the ratchet ring. Pool: 0.008 (002 L115), 0.006 (001 L275), 0.009 (003 gear width).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.007,
+              "mode": "independent",
+              "name": "pawl_ring_gap_m",
+              "rationale": "Radial distance from the ratchet tip circle out to the pawl pivot ring. Pool: 0.0153 (002 dual fork, pivot 0.0723 against a 0.057 tip), 0.004 (001 triple fork, 0.078 against 0.074), 0.0152 (001 origin, 0.0892 against 0.074).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.01,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "pawl_width_m",
+              "rationale": "Axial thickness of one pawl body. Pool: 0.009 (002 L175-L199), 0.004 (001 L409-L419), 0.006 (003 L156).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.5,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "pawl_arc_span_rad",
+              "rationale": "Total angular span across which the N pawl pivots are spread on their ring, centred on the +r2 (top) direction. Pool: 002's dual fork puts its two pivots about 1.22 rad apart; 001's triple fork uses regular 0.349 rad steps, i.e. 0.70 rad for three.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0048,
+              "minimum": 0.003,
+              "mode": "independent",
+              "name": "pawl_pin_radius_m",
+              "rationale": "Radius of the pawl pivot pin. Pool: 0.0038 (002 L281-L289), 0.0045 (001 L245-L253), 0.0043 (003 L117-L123).",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 3.2,
+              "minimum": 1.5,
+              "mode": "independent",
+              "name": "lever_reach_ratio",
+              "rationale": "Length of the release lever outward from the pivot as a multiple of pawl_ring_gap_m. Source 003 L142-L163: the profile runs from -0.011 to +0.064 about a pivot that sits 0.0152-class outside the tip circle.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.012,
+              "mode": "independent",
+              "name": "thumb_cap_len_m",
+              "rationale": "Length of the rubber thumb cap at the lever tip. Source 003 L366-L371: a 0.024-long blue Box.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ratchet_tip_r_m",
+                "pawl_ring_gap_m"
+              ],
+              "expression": "ratchet_tip_r_m + pawl_ring_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_ring_r_m",
+              "rationale": "Radius of the pivot ring every pawl sits on, stated generally by 001's triple fork as PAWL_RING_RADIUS.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pawl_arc_span_rad",
+                "pawl_count"
+              ],
+              "expression": "pawl_arc_span_rad / max(1, pawl_count - 1)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_pitch_rad",
+              "rationale": "Regular angular step between adjacent pivots; 001's triple fork uses a constant 20 deg step from 125 deg.",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pawl_ring_r_m",
+                "pawl_pitch_rad",
+                "pawl_count"
+              ],
+              "expression": "clamp(0.40 * pawl_ring_r_m * pawl_pitch_rad, 0.0045, 0.014) if pawl_count > 1 else 0.010",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_half_w_m",
+              "rationale": "Tangential half-width of a pawl body, derived from the pivot pitch so adjacent pawls cannot touch at any N. This is the host-capacity rule for the multiplicity.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pawl_pin_radius_m",
+                "bore_clearance_m"
+              ],
+              "expression": "pawl_pin_radius_m + bore_clearance_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_bore_r_m",
+              "rationale": "The pawl bore is a running clearance on the pin, so the pin and the pawl never share material; sources 002 and 003 both needed allow_overlap here and this removes it.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pawl_pin_radius_m"
+              ],
+              "expression": "2.1 * pawl_pin_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_boss_r_m",
+              "rationale": "Radius of the frame's pivot boss/bracket around the pin. Source 002 L65-L71: a 0.009 boss on a 0.0038 pin; 001 L254-L259: a 0.022 x 0.034 bracket on a 0.0045 pin.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "ratchet_tip_r_m",
+                "ratchet_root_r_m"
+              ],
+              "expression": "ratchet_tip_r_m - 0.5 * (ratchet_tip_r_m - ratchet_root_r_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_engaged_tip_r_m",
+              "rationale": "Radius the pawl nose tip reaches at the engaged pose: half a tooth depth inside the tip circle, so the tip sits in a tooth valley as 002 L627-L634 asserts.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "lever_reach_ratio",
+                "pawl_ring_gap_m",
+                "thumb_cap_len_m"
+              ],
+              "expression": "lever_reach_ratio * pawl_ring_gap_m + thumb_cap_len_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pawl_outer_reach_m",
+              "rationale": "The release lever plus its cap set the outer radius of the swept envelope; the frame slot follows it.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__sailboat_winch_with_pawl_and_handle__003__png_8e642a4b246e4f8bbe68ce130afb5c2b",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L142-L163",
+            "model.py:L360-L371"
+          ]
+        }
+      ],
+      "component_type": "ratchet pawl body",
+      "name": "ratchet_pawl",
+      "required": true
+    }
+  ],
+  "slug": "sailboat_winch_with_pawl_and_handle",
+  "source_map_path": "articraft_template_authoring/source_maps/sailboat_winch_with_pawl_and_handle.md",
+  "source_map_sha256": "14f2137b9ed3fa2d989a597302e151693caa90593cfc2681bf3ccc269a1120c4"
+}

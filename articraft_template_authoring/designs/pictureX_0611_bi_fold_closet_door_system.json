@@ -1,0 +1,926 @@
+{
+  "assembly_notes": "Bi-fold closet door system. The grounded `opening_frame` part lines the opening: two side jambs, a sill, a header and a CadQuery U-track whose web and two downward lips leave a real open channel, plus one mullion post per extra pair. Each of bifold_pair_count bays carries a `pivot_leaf` on a REVOLUTE (+z) jamb or mullion pivot followed by fold_set's remaining leaves on REVOLUTE (+z) centre hinges. Every centre hinge MIMICS the bay's own jamb joint, alternating -2.0 and +2.0 down the chain, so a pair folds face to face and a trifold folds as a real accordion; either way the bay keeps one honest degree of freedom and can never be posed into an impossible fold. The knuckle stand-off flips side at each centre hinge, which is what lets successive leaves swing apart instead of closing onto each other. The roller or guide pin that rides the header channel is carried by the handle leaf itself. leaf_face changes only what the leaf field is made of - a plain slab, a framed reflective insert, pitched louver slats, raised centre fields or a framed glass lite - and every candidate keeps the same stile, rail and hinge edges. hardware_set changes how the inner leaf is carried: a floor pivot pin with a track roller, knuckled butt hinges on the jamb face, a top-hung carrier with a slim floor locating pin, a dual-track set whose second guide runs in the sill under a floor roller, or full-height heavy pivots that carry the whole leaf on stout corner plates with no roller at all. opening_width_m, opening_height_m and closet_depth_m are honest continuous parameters that derive bay width, leaf span and height, track length, hinge spacing and the fold envelope; palette, slat count and panel bevels are non-core.  The leaves that swing each way have to cancel, or the free edge would walk out of the header channel as the set folds: a pair does that with two equal halves, and the accordion needs its middle leaf as wide as the two outer ones together, so trifold bays are proportioned narrow-wide-narrow.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "leaf_face_identity",
+      "applies_to": {
+        "candidates": [
+          "plain_slab",
+          "mirrored",
+          "louvered",
+          "raised_panel",
+          "glass_lite"
+        ],
+        "slot": "leaf_face"
+      },
+      "required_author_checks": [
+        "category_anchor: lined opening with a jamb-pivoted fold pair per bay",
+        "category_anchor: the outer leaf folds back at twice the inner leaf angle",
+        "category_anchor: leaf_face identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "pivot_leaf",
+          "joint_type": "revolute",
+          "parent_role": "opening_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "opening_frame"
+        },
+        {
+          "count_from": "bifold_pair_count",
+          "role": "pivot_leaf"
+        },
+        {
+          "count_from": "bifold_pair_count",
+          "role": "handle_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "hardware_set_identity",
+      "applies_to": {
+        "candidates": [
+          "jamb_pivot",
+          "butt_hinge",
+          "top_hung",
+          "dual_track",
+          "heavy_pivot"
+        ],
+        "slot": "hardware_set"
+      },
+      "required_author_checks": [
+        "category_anchor: lined opening with a jamb-pivoted fold pair per bay",
+        "category_anchor: the outer leaf folds back at twice the inner leaf angle",
+        "category_anchor: hardware_set identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "pivot_leaf",
+          "joint_type": "revolute",
+          "parent_role": "opening_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "opening_frame"
+        },
+        {
+          "count_from": "bifold_pair_count",
+          "role": "pivot_leaf"
+        },
+        {
+          "count_from": "bifold_pair_count",
+          "role": "handle_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "fold_set_identity",
+      "applies_to": {
+        "candidates": [
+          "pair_fold",
+          "trifold_fold"
+        ],
+        "slot": "fold_set"
+      },
+      "required_author_checks": [
+        "category_anchor: lined opening with a jamb-pivoted fold pair per bay",
+        "category_anchor: the outer leaf folds back at twice the inner leaf angle",
+        "category_anchor: fold_set identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "pivot_leaf",
+          "joint_type": "revolute",
+          "parent_role": "opening_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "opening_frame"
+        },
+        {
+          "count_from": "bifold_pair_count",
+          "role": "pivot_leaf"
+        },
+        {
+          "count_from": "bifold_pair_count",
+          "role": "handle_leaf"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= bifold_pair_count <= 3; each bay stays at least 0.36 m wide so a leaf keeps a real span",
+      "item_slot": "leaf_face",
+      "name": "bifold_pair_count",
+      "spacing_expression": "pair i occupies the bay [-W/2 + i*W/N, -W/2 + (i+1)*W/N] and pivots on its own left jamb or mullion",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Each bay closes with one jamb leaf and one handle leaf folding on a single centre hinge.",
+          "implementation_function": "_build_fold_chain",
+          "interfaces": [],
+          "name": "pair_fold",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_width_m",
+                "bifold_pair_count"
+              ],
+              "expression": "(opening_width_m / bifold_pair_count) / 2 - leaf_gap",
+              "mode": "derived",
+              "name": "leaf_span_m",
+              "rationale": "each pair halves its own bay, so a leaf never depends on another pair",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__bi_fold_closet_door_system__001__png__airflex_batch_20260710_d5115d15e5854d6ba411c6bd534b3258",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L241-L266"
+          ]
+        },
+        {
+          "evidence": "A mid leaf sits between the jamb and handle leaves, and the accordion alternates fold direction at each centre hinge.",
+          "implementation_function": "_build_fold_chain",
+          "interfaces": [],
+          "name": "trifold_fold",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_width_m",
+                "bifold_pair_count"
+              ],
+              "expression": "(opening_width_m / bifold_pair_count) / 2 - leaf_gap",
+              "mode": "derived",
+              "name": "leaf_span_m",
+              "rationale": "each pair halves its own bay, so a leaf never depends on another pair",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bi_fold_closet_door_system_var_trifold_leaf",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L576-L622"
+          ]
+        }
+      ],
+      "component_type": "fold set",
+      "name": "fold_set",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A connected core with near and far stiles and top and bottom rails and no applied face field.",
+          "implementation_function": "_leaf_face_plain_slab_build",
+          "interfaces": [],
+          "name": "plain_slab",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_width_m",
+                "bifold_pair_count"
+              ],
+              "expression": "(opening_width_m / bifold_pair_count) / 2 - leaf_gap",
+              "mode": "derived",
+              "name": "leaf_span_m",
+              "rationale": "each pair halves its own bay, so a leaf never depends on another pair",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bi_fold_closet_door_system_var_plain_frame",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L58-L238"
+          ]
+        },
+        {
+          "evidence": "A thin reflective field is set inside the stile and rail frame, standing proud of the core face.",
+          "implementation_function": "_leaf_face_mirrored_build",
+          "interfaces": [],
+          "name": "mirrored",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_width_m",
+                "bifold_pair_count"
+              ],
+              "expression": "(opening_width_m / bifold_pair_count) / 2 - leaf_gap",
+              "mode": "derived",
+              "name": "leaf_span_m",
+              "rationale": "each pair halves its own bay, so a leaf never depends on another pair",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bi_fold_closet_door_system_var_mirrored",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L71-L251"
+          ]
+        },
+        {
+          "evidence": "Angled slats are evenly pitched between the rails, each embedded into the core as if mortised into the stiles.",
+          "implementation_function": "_leaf_face_louvered_build",
+          "interfaces": [],
+          "name": "louvered",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_width_m",
+                "bifold_pair_count"
+              ],
+              "expression": "(opening_width_m / bifold_pair_count) / 2 - leaf_gap",
+              "mode": "derived",
+              "name": "leaf_span_m",
+              "rationale": "each pair halves its own bay, so a leaf never depends on another pair",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bi_fold_closet_door_system_var_louvered",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L91-L275"
+          ]
+        },
+        {
+          "evidence": "A stile-and-rail frame surrounds raised centre fields with bevelled edges.",
+          "implementation_function": "_leaf_face_raised_panel_build",
+          "interfaces": [],
+          "name": "raised_panel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_width_m",
+                "bifold_pair_count"
+              ],
+              "expression": "(opening_width_m / bifold_pair_count) / 2 - leaf_gap",
+              "mode": "derived",
+              "name": "leaf_span_m",
+              "rationale": "each pair halves its own bay, so a leaf never depends on another pair",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bi_fold_closet_door_system_var_raised_panel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L82-L331"
+          ]
+        },
+        {
+          "evidence": "A perimeter frame captures a rebated translucent field instead of a solid door core.",
+          "implementation_function": "_leaf_face_glass_lite_build",
+          "interfaces": [],
+          "name": "glass_lite",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_width_m",
+                "bifold_pair_count"
+              ],
+              "expression": "(opening_width_m / bifold_pair_count) / 2 - leaf_gap",
+              "mode": "derived",
+              "name": "leaf_span_m",
+              "rationale": "each pair halves its own bay, so a leaf never depends on another pair",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bi_fold_closet_door_system_var_glass_lite",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L82-L117"
+          ]
+        }
+      ],
+      "component_type": "plain stile-and-rail slab",
+      "name": "leaf_face",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Corner blocks carry a floor pivot pin and a top roller inset from the free edge so it stays captured in the track.",
+          "implementation_function": "_hardware_on_pivot_leaf",
+          "interfaces": [],
+          "name": "jamb_pivot",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_height_m"
+              ],
+              "expression": "0.028 (pin and hinge centres stand this far inside the jamb face)",
+              "mode": "derived",
+              "name": "pivot_inset_m",
+              "rationale": "every hardware family puts its pivot on the same line so the fold geometry is shared",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__bi_fold_closet_door_system__001__png__airflex_batch_20260710_d5115d15e5854d6ba411c6bd534b3258",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L241-L266"
+          ]
+        },
+        {
+          "evidence": "Knuckled butt-hinge leaves at the jamb face replace the pivot pin and its floor socket.",
+          "implementation_function": "_hardware_on_pivot_leaf",
+          "interfaces": [],
+          "name": "butt_hinge",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_height_m"
+              ],
+              "expression": "0.028 (pin and hinge centres stand this far inside the jamb face)",
+              "mode": "derived",
+              "name": "pivot_inset_m",
+              "rationale": "every hardware family puts its pivot on the same line so the fold geometry is shared",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bi_fold_closet_door_system_var_jamb_hinged",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L253-L267"
+          ]
+        },
+        {
+          "evidence": "A carrier bracket hangs the leaf from the header track and the bottom keeps only a slim locating pin.",
+          "implementation_function": "_hardware_on_pivot_leaf",
+          "interfaces": [],
+          "name": "top_hung",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_height_m"
+              ],
+              "expression": "0.028 (pin and hinge centres stand this far inside the jamb face)",
+              "mode": "derived",
+              "name": "pivot_inset_m",
+              "rationale": "every hardware family puts its pivot on the same line so the fold geometry is shared",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bi_fold_closet_door_system_var_top_hung",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L139-L257"
+          ]
+        },
+        {
+          "evidence": "A second guide track is let into the sill and a floor roller under the leaf runs in it.",
+          "implementation_function": "_hardware_on_pivot_leaf",
+          "interfaces": [],
+          "name": "dual_track",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_height_m"
+              ],
+              "expression": "0.028 (pin and hinge centres stand this far inside the jamb face)",
+              "mode": "derived",
+              "name": "pivot_inset_m",
+              "rationale": "every hardware family puts its pivot on the same line so the fold geometry is shared",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bi_fold_closet_door_system_var_dual_track",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L281-L296"
+          ]
+        },
+        {
+          "evidence": "Stout top and bottom corner plates and thicker pins carry the entire leaf, replacing the captured track roller.",
+          "implementation_function": "_hardware_on_pivot_leaf",
+          "interfaces": [],
+          "name": "heavy_pivot",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.6,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "opening_width_m",
+              "rationale": "clear opening width; derives bay width, leaf span, track length and fold travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.45,
+              "minimum": 1.9,
+              "mode": "independent",
+              "name": "opening_height_m",
+              "rationale": "clear opening height; derives leaf height, header depth and hinge spacing",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.7,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "closet_depth_m",
+              "rationale": "closet depth; derives jamb return, sill depth and the free fold envelope",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "opening_height_m"
+              ],
+              "expression": "0.028 (pin and hinge centres stand this far inside the jamb face)",
+              "mode": "derived",
+              "name": "pivot_inset_m",
+              "rationale": "every hardware family puts its pivot on the same line so the fold geometry is shared",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bi_fold_closet_door_system_var_pivot_only",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L137-L170"
+          ]
+        }
+      ],
+      "component_type": "pin pivot and track roller",
+      "name": "hardware_set",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_bi_fold_closet_door_system",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_bi_fold_closet_door_system.md",
+  "source_map_sha256": "ad4b45bb37f4191132f7877c4042edfefce008c41b9346ae9b2d8b35264a0dd3"
+}

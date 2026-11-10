@@ -1,0 +1,1629 @@
+{
+  "assembly_notes": "Wooden drop-leaf folding dining table. One rigid table_center root carries the tabletop centre strip, its apron and every centre-side bracket. Two drop_leaf parts are REVOLUTE children of the centre on an alternating butt hinge whose axis sits HINGE_DROP under the tabletop plane; q=0 is deployed and coplanar, q=pi/2 is folded straight down. top_profile only changes the plan outline the centre strip and both leaves are cut from (circle, ellipse, racetrack, or rectangular spine plus half-round D leaves); the seam, hinge line and apron rectangle are identical across all four. support_system is one structural family of collapsible leg systems: corner_fold_legs and center_pedestal hinge off the centre, while the four trestle candidates hinge off a leaf underside and MIMIC that leaf so a stored trestle folds flat along its leaf instead of sweeping under the table. leaf_stay is an independent per-leaf folding bracket carried on the leaf itself: prop_arm swings on a pivot across the leaf, scissor_link unfolds a crossed link pair, and slide_rail runs out on a real PRISMATIC guide. Every stay reaches toward the seam but stops STAY_INBOARD outboard of it, so nothing a leaf carries can swing in over the centre at any leaf angle. stay_per_leaf multiplies the stay units on each leaf, always symmetric, so the model carries 2 * stay_per_leaf stay parts; stations are pitched along the seam, clamped to the leaf's real half-width at that station and kept clear of the trestle station. The corner legs sit below the apron and clear of the band a folded leaf's stays occupy. top_length_m, top_width_m, center_width_ratio and table_height_m are the independent parameters; palette and decorative fastener counts are non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "top_profile_identity",
+      "applies_to": {
+        "candidates": [
+          "round_arc",
+          "ellipse_oval",
+          "racetrack",
+          "d_leaf_rect"
+        ],
+        "slot": "top_profile"
+      },
+      "required_author_checks": [
+        "category_anchor: both drop leaves fold on real hinges",
+        "category_anchor: the support system stands the table on the floor",
+        "category_anchor: top_profile identity"
+      ],
+      "required_relations": [
+        {
+          "child_role": "drop_leaf",
+          "joint_type": "revolute",
+          "parent_role": "table_center"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "table_center"
+        },
+        {
+          "exact_count": 2,
+          "role": "drop_leaf"
+        },
+        {
+          "count_from": "resolved.support_member_count",
+          "role": "support_member"
+        },
+        {
+          "count_from": "resolved.stay_unit_total",
+          "role": "leaf_stay_unit"
+        }
+      ]
+    },
+    {
+      "anchor_id": "support_system_identity",
+      "applies_to": {
+        "candidates": [
+          "corner_fold_legs",
+          "narrow_u_trestle",
+          "broad_end_trestle",
+          "x_braced_trestle",
+          "splayed_aframe",
+          "center_pedestal"
+        ],
+        "slot": "support_system"
+      },
+      "required_author_checks": [
+        "category_anchor: both drop leaves fold on real hinges",
+        "category_anchor: the support system stands the table on the floor",
+        "category_anchor: support_system identity"
+      ],
+      "required_relations": [
+        {
+          "child_role": "drop_leaf",
+          "joint_type": "revolute",
+          "parent_role": "table_center"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "table_center"
+        },
+        {
+          "exact_count": 2,
+          "role": "drop_leaf"
+        },
+        {
+          "count_from": "resolved.support_member_count",
+          "role": "support_member"
+        },
+        {
+          "count_from": "resolved.stay_unit_total",
+          "role": "leaf_stay_unit"
+        }
+      ]
+    },
+    {
+      "anchor_id": "leaf_stay_identity",
+      "applies_to": {
+        "candidates": [
+          "prop_arm",
+          "slide_rail",
+          "scissor_link"
+        ],
+        "slot": "leaf_stay"
+      },
+      "required_author_checks": [
+        "category_anchor: both drop leaves fold on real hinges",
+        "category_anchor: the support system stands the table on the floor",
+        "category_anchor: leaf_stay identity"
+      ],
+      "required_relations": [
+        {
+          "child_role": "drop_leaf",
+          "joint_type": "revolute",
+          "parent_role": "table_center"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "table_center"
+        },
+        {
+          "exact_count": 2,
+          "role": "drop_leaf"
+        },
+        {
+          "count_from": "resolved.support_member_count",
+          "role": "support_member"
+        },
+        {
+          "count_from": "resolved.stay_unit_total",
+          "role": "leaf_stay_unit"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= stay_per_leaf <= 3; stay pitch >= stay width + 40 mm across top_length_m, and stay stations stay clear of the support frame stations",
+      "item_slot": "leaf_stay",
+      "name": "stay_per_leaf",
+      "spacing_expression": "stay units are pitched evenly along the hinge line on each leaf, mirrored on both leaves",
+      "values": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Circular plan: centre strip clipped out of a full circle, leaves are the two remaining circular segments.",
+          "implementation_function": "_top_profile_round_arc_build",
+          "interfaces": [],
+          "name": "round_arc",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table3__001__png_27f22d79ac0b41399c93ce8a594e2746",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L31-L71"
+          ]
+        },
+        {
+          "evidence": "Elliptical plan with independent long/short axes, cut into centre strip and two leaf halves.",
+          "implementation_function": "_top_profile_ellipse_oval_build",
+          "interfaces": [],
+          "name": "ellipse_oval",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table3__002__png_1d2b460cfb1f4c52b963597c7ee88e86",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L55-L76"
+          ]
+        },
+        {
+          "evidence": "Stadium plan: straight long sides closed by semicircular end caps, giving a flat-sided leaf edge.",
+          "implementation_function": "_top_profile_racetrack_build",
+          "interfaces": [],
+          "name": "racetrack",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table3_var_racetrack_leaf_profile",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L55-L94"
+          ]
+        },
+        {
+          "evidence": "Narrow rectangular centre spine with two half-round D leaves whose straight edge is the hinge seam.",
+          "implementation_function": "_top_profile_d_leaf_rect_build",
+          "interfaces": [],
+          "name": "d_leaf_rect",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table3_var_d_leaf_rect_spine",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L33-L54"
+          ]
+        }
+      ],
+      "component_type": "tabletop outline",
+      "name": "top_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Four independent tapered oak legs, each on its own tangential revolute pivot in an apron bearing, folding inward under the top.",
+          "implementation_function": "_support_system_corner_fold_legs_build",
+          "interfaces": [],
+          "name": "corner_fold_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table3__001__png_27f22d79ac0b41399c93ce8a594e2746",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L300-L377"
+          ]
+        },
+        {
+          "evidence": "Narrow splayed round-tube U trestle hinged off the leaf underside, with lower stretcher, cross feet, rubber caps and a swinging locking brace on a pin boss.",
+          "implementation_function": "_support_system_narrow_u_trestle_build",
+          "interfaces": [],
+          "name": "narrow_u_trestle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_table3__002__png_1d2b460cfb1f4c52b963597c7ee88e86",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L79-L146"
+          ]
+        },
+        {
+          "evidence": "Wide end trestle with a full-span hinge crossbar and two straight vertical legs instead of the narrow splayed U.",
+          "implementation_function": "_support_system_broad_end_trestle_build",
+          "interfaces": [],
+          "name": "broad_end_trestle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table3_var_folding_end_trestle_frames",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L80-L150"
+          ]
+        },
+        {
+          "evidence": "Two diagonal legs crossing in an X on a real through pivot pin with caps, plus a stretcher below the crossing.",
+          "implementation_function": "_support_system_x_braced_trestle_build",
+          "interfaces": [],
+          "name": "x_braced_trestle",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table3_var_x_trestle_braces",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L79-L197"
+          ]
+        },
+        {
+          "evidence": "Legs converging to a narrow apex crossbar and splaying wide at the floor, with hinge sockets, mid stretcher and diagonal triangulation.",
+          "implementation_function": "_support_system_splayed_aframe_build",
+          "interfaces": [],
+          "name": "splayed_aframe",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table3_var_splayed_aframe_legs",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L79-L174"
+          ]
+        },
+        {
+          "evidence": "Lathed central pedestal column with a mount plate and hub hinge brackets carrying radial folding feet instead of perimeter legs.",
+          "implementation_function": "_support_system_center_pedestal_build",
+          "interfaces": [],
+          "name": "center_pedestal",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table3_var_center_pedestal_fold_feet",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L177-L406"
+          ]
+        }
+      ],
+      "component_type": "folding leg set",
+      "name": "support_system",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Steel prop arm swinging up from an apron pivot with a captured pin and a contact pad meeting the leaf underside.",
+          "implementation_function": "_leaf_stay_prop_arm_build",
+          "interfaces": [],
+          "name": "prop_arm",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table3_var_dual_prop_arms",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L334-L396"
+          ]
+        },
+        {
+          "evidence": "Prismatic wooden rail sliding out of an apron guide, with an outer stop block and fastener heads, instead of a swinging arm.",
+          "implementation_function": "_leaf_stay_slide_rail_build",
+          "interfaces": [],
+          "name": "slide_rail",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table3_var_slide_out_leaf_supports",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L335-L392"
+          ]
+        },
+        {
+          "evidence": "Crossed scissor arm pair on a through pivot pin with washers and four end brackets that folds flat under the leaf.",
+          "implementation_function": "_leaf_stay_scissor_link_build",
+          "interfaces": [],
+          "name": "scissor_link",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.82,
+              "mode": "independent",
+              "name": "top_length_m",
+              "rationale": "tabletop extent along the hinge line; derives leaf length, frame span, stay pitch and apron length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.32,
+              "minimum": 0.98,
+              "mode": "independent",
+              "name": "top_width_m",
+              "rationale": "deployed tabletop extent across the leaves; derives leaf reach, stay reach and support footprint",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.4,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "center_width_ratio",
+              "rationale": "fixed centre strip width as a fraction of top_width_m; derives hinge_x, apron width and leaf reach",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "table_height_m",
+              "rationale": "deployed top surface height; derives leg drop, pivot heights and stay heights",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * center_width_ratio / 2",
+              "mode": "derived",
+              "name": "hinge_x_m",
+              "rationale": "hinge seam offset from the table centre line",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "top_width_m * (1 - center_width_ratio) / 2",
+              "mode": "derived",
+              "name": "leaf_reach_m",
+              "rationale": "horizontal reach of one drop leaf from its hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "table_height_m"
+              ],
+              "expression": "table_height_m - top_thickness - apron_depth",
+              "mode": "derived",
+              "name": "leg_drop_m",
+              "rationale": "vertical drop from a support pivot down to the floor pad",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "top_width_m",
+                "center_width_ratio"
+              ],
+              "expression": "0.55 * leaf_reach_m",
+              "mode": "derived",
+              "name": "stay_reach_m",
+              "rationale": "how far a deployed leaf stay reaches out under the leaf underside",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_table3_var_scissor_link_supports",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L240-L300"
+          ]
+        }
+      ],
+      "component_type": "leaf support stay",
+      "name": "leaf_stay",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Folding_table3",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Folding_table3.md",
+  "source_map_sha256": "0f915cb22e8d6541cd4cecfb8fbb1cc45d950b5c6c6815d3afd8316bdddc94d5"
+}

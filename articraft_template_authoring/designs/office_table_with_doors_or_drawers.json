@@ -1,0 +1,2295 @@
+{
+  "assembly_notes": "Five independent component slots give 432 complete structural combinations, times five drawer-count values for the raw domain. One fixed root part `desk_carcass` carries the worktop slab, the grounded storage volumes, the plinths, every runner channel, every closure track and every hinge knuckle. Moving parts are N hollow drawer trays (prismatic, axis (0,-1,0), lower=closed), 1/2/4 closure leaves (revolute vertical hinge, revolute horizontal drop-front hinge, prismatic bypass sliders, or a prismatic slat curtain) and at most one secondary mechanism (prismatic keyboard tray or revolute cable hatch). Host adaptation: the worktop footprint derives 0/1/2 return underlayers plus the matching grounded return-end panels; the carcass family derives the closure opening width/height and count, the drawer opening width and the interior depth; the closure candidate derives its own leaf count, groove pitch, fascia split and hinge setback from that opening; N re-derives front height, level pitch, N-1 dividers, N bumpers and 2N runner channels; a keyboard tray without a knee bay reserves a zone that shortens the drawer bay. All clearances are real geometry, so no overlap allowance is emitted.",
+  "bindings": [
+    {
+      "binding_id": "worktop_footprint_to_carcass",
+      "consumer": "storage_topology.carcass_top_bearing",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "main_span_m",
+            "carcass_edge_inset_m"
+          ],
+          "expression": "main_span_m - 2 * carcass_edge_inset_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "carcass_span_m",
+          "rationale": "Grounded storage volumes sit inside the worktop outline.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "main_depth_m",
+            "carcass_front_inset_m"
+          ],
+          "expression": "main_depth_m - 2 * carcass_front_inset_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "carcass_depth_m",
+          "rationale": "Carcass front and rear planes are inset under the slab overhang.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "worktop_form"
+          ],
+          "expression": "0 if worktop_form == 'straight' else (1 if worktop_form == 'compact_corner' else 2)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "return_end_panel_count",
+          "rationale": "Each cantilevered rear wing gets one grounded return-end support panel.",
+          "unit": "count",
+          "value_type": "int"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "main_depth_m",
+            "return_depth_m",
+            "return_end_panel_t_m"
+          ],
+          "expression": "main_depth_m / 2 + return_depth_m - return_end_panel_t_m / 2",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "return_support_y_m",
+          "rationale": "The return-end panel stands under the far edge of the rear wing.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "host_support",
+      "provider": "worktop_form.support_footprint"
+    },
+    {
+      "binding_id": "carcass_bay_to_closure",
+      "consumer": "closure.leaf_mount",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "pedestal_width_m",
+            "wall_t_m",
+            "mullion_t_m",
+            "credenza_closure_w_m",
+            "storage_topology"
+          ],
+          "expression": "(pedestal_width_m * 1.45 - 2 * wall_t_m - mullion_t_m) / 2 if storage_topology == 'paired_door_pedestal' else (credenza_closure_w_m if storage_topology == 'drawer_and_door_credenza' else pedestal_width_m - 2 * wall_t_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "closure_opening_w_m",
+          "rationale": "Every closure candidate sizes its leaves from the real opening width.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bay_top_z_m",
+            "bay_floor_z_m",
+            "storage_topology"
+          ],
+          "expression": "(bay_top_z_m - bay_floor_z_m) * 0.55 if storage_topology == 'open_equipment_bay' else bay_top_z_m - bay_floor_z_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "closure_opening_h_m",
+          "rationale": "The open equipment cubby shortens the closure opening it leaves behind.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "storage_topology"
+          ],
+          "expression": "2 if storage_topology == 'paired_door_pedestal' else 1",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "closure_bay_count",
+          "rationale": "The paired topology provides two independent openings.",
+          "unit": "count",
+          "value_type": "int"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "closure_bay_count",
+            "closure"
+          ],
+          "expression": "closure_bay_count * (2 if closure == 'sliding_bypass_doors' else 1)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "closure_leaf_count",
+          "rationale": "Bypass sliding gives two leaves per opening; the others give one.",
+          "unit": "count",
+          "value_type": "int"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "closure_opening_w_m",
+            "hinge_setback_m",
+            "closure"
+          ],
+          "expression": "closure_opening_w_m / 2 + 0.008 if closure == 'sliding_bypass_doors' else closure_opening_w_m - hinge_setback_m - 0.004",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "closure_leaf_w_m",
+          "rationale": "Leaf width derives from the opening and the selected mechanism.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "closure_opening_h_m",
+            "closure"
+          ],
+          "expression": "(closure_opening_h_m - 0.014) / 2 if closure == 'tambour' else closure_opening_h_m - 0.008",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "closure_leaf_h_m",
+          "rationale": "The tambour splits its opening into a curtain zone and an equal garage.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "closure_panel_thickness_m"
+          ],
+          "expression": "closure_panel_thickness_m * 0.42 + 0.001",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "hinge_barrel_r_m",
+          "rationale": "The barrel radius follows the leaf thickness so the knuckle stays proud.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "hinge_barrel_r_m"
+          ],
+          "expression": "hinge_barrel_r_m + 0.002",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "hinge_setback_m",
+          "rationale": "The leaf is set back from the hinge line so the barrel never intersects it.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "host_opening",
+      "provider": "storage_topology.closure_bay_opening"
+    },
+    {
+      "binding_id": "carcass_cavity_to_drawer",
+      "consumer": "drawer_style.tray_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "credenza_drawer_w_m",
+            "pedestal_width_m",
+            "wall_t_m",
+            "storage_topology"
+          ],
+          "expression": "credenza_drawer_w_m if storage_topology == 'drawer_and_door_credenza' else pedestal_width_m - 2 * wall_t_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drawer_opening_w_m",
+          "rationale": "The drawer opening comes from the selected carcass family.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "bay_top_z_m",
+            "bay_floor_z_m",
+            "tray_zone_h_m"
+          ],
+          "expression": "bay_top_z_m - bay_floor_z_m - tray_zone_h_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drawer_bay_h_m",
+          "rationale": "A keyboard tray without a knee bay reserves the top of the drawer bay.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drawer_bay_h_m",
+            "drawer_count",
+            "drawer_gap_m"
+          ],
+          "expression": "min(0.34, (drawer_bay_h_m - (drawer_count - 1) * drawer_gap_m) / drawer_count)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drawer_front_h_m",
+          "rationale": "Source pitch rule; capped so low N still reads as a real drawer front.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drawer_opening_w_m",
+            "runner_channel_t_m"
+          ],
+          "expression": "drawer_opening_w_m - 2 * runner_channel_t_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "runner_gauge_m",
+          "rationale": "Distance between the two carcass runner channel mouths.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drawer_opening_w_m",
+            "runner_channel_t_m",
+            "runner_clearance_m"
+          ],
+          "expression": "drawer_opening_w_m - 2 * (runner_channel_t_m + runner_clearance_m)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drawer_box_w_m",
+          "rationale": "Tray outer width clears both runner channels.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_interior_depth_m",
+            "drawer_rear_clearance_m"
+          ],
+          "expression": "carcass_interior_depth_m - drawer_rear_clearance_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drawer_box_d_m",
+          "rationale": "Tray depth fills the cavity while clearing the back panel.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drawer_box_d_m"
+          ],
+          "expression": "min(drawer_box_d_m * 0.72, drawer_box_d_m - 0.080)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drawer_travel_m",
+          "rationale": "Full extension keeps at least 80 mm of the tray retained in the cavity.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "storage_topology.drawer_cavity"
+    },
+    {
+      "binding_id": "closure_and_drawer_front_alignment",
+      "consumer": "drawer_style.front_plane",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "bumper_t_m"
+          ],
+          "expression": "bumper_t_m + 0.0006",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "front_reveal_m",
+          "rationale": "Every moving front rests on the carcass soft-close bumpers, not inside them.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drawer_opening_w_m",
+            "wall_t_m"
+          ],
+          "expression": "drawer_opening_w_m + 2 * wall_t_m - 2 * 0.004",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drawer_front_w_m",
+          "rationale": "Overlay drawer fronts cover the side walls and leave a 4 mm reveal.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "coplanar_fronts",
+      "provider": "closure.front_plane"
+    },
+    {
+      "binding_id": "carcass_to_secondary_mechanism",
+      "consumer": "secondary_motion.mount_pad",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "knee_span_m",
+            "drawer_opening_w_m",
+            "has_knee_bay"
+          ],
+          "expression": "knee_span_m - 0.060 if has_knee_bay else drawer_opening_w_m - 0.060",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "secondary_mount_span_m",
+          "rationale": "The tray hangs in the knee bay, or over the drawer bay when there is none.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "secondary_motion",
+            "has_knee_bay"
+          ],
+          "expression": "0.0 if (secondary_motion != 'keyboard_tray' or has_knee_bay) else 0.062",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "tray_zone_h_m",
+          "rationale": "Reserving the zone keeps the tray clear of the topmost drawer front.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "hatch_width_m",
+            "closure_opening_w_m"
+          ],
+          "expression": "min(hatch_width_m, closure_opening_w_m - 0.040)",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "hatch_opening_w_m",
+          "rationale": "The back-panel opening must fit inside the closure volume's rear frame.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "host_mount",
+      "provider": "storage_topology.secondary_mount"
+    },
+    {
+      "binding_id": "worktop_underside_to_secondary_mechanism",
+      "consumer": "secondary_motion.mount_pad",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "worktop_height_m",
+            "top_slab_t_m",
+            "under_slab_t_m",
+            "bay_top_z_m",
+            "has_knee_bay"
+          ],
+          "expression": "worktop_height_m - top_slab_t_m - under_slab_t_m if has_knee_bay else bay_top_z_m",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "secondary_mount_z_m",
+          "rationale": "Tray rails hang from the under-slab layer, or from the credenza cap.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "host_mount",
+      "provider": "worktop_form.underside"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "office_table_carcass_identity",
+      "applies_to": {
+        "candidates": [
+          "drawer_and_door_credenza",
+          "drawer_pedestal",
+          "paired_door_pedestal",
+          "open_equipment_bay"
+        ],
+        "slot": "storage_topology"
+      },
+      "required_author_checks": [
+        "category_anchor: raised worktop carried by a grounded storage carcass",
+        "category_anchor: hollow drawer trays ride real side runners in a derived cavity",
+        "category_anchor: closure leaves fill the storage bay openings"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "storage_drawer",
+          "joint_type": "prismatic",
+          "parent_role": "desk_carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "desk_carcass"
+        },
+        {
+          "count_from": "drawer_count",
+          "exact_count": null,
+          "role": "storage_drawer"
+        },
+        {
+          "count_from": "resolved.closure_leaf_count",
+          "exact_count": null,
+          "role": "closure_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "office_table_closure_identity",
+      "applies_to": {
+        "candidates": [
+          "hinged_door",
+          "sliding_bypass_doors",
+          "drop_front",
+          "tambour"
+        ],
+        "slot": "closure"
+      },
+      "required_author_checks": [
+        "category_anchor: raised worktop carried by a grounded storage carcass",
+        "category_anchor: closure leaves fill the storage bay openings",
+        "category_anchor: closure mechanism uses its real guide or hinge line"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "storage_drawer",
+          "joint_type": "prismatic",
+          "parent_role": "desk_carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "desk_carcass"
+        },
+        {
+          "count_from": "drawer_count",
+          "exact_count": null,
+          "role": "storage_drawer"
+        },
+        {
+          "count_from": "resolved.closure_leaf_count",
+          "exact_count": null,
+          "role": "closure_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "office_table_drawer_identity",
+      "applies_to": {
+        "candidates": [
+          "runner_tray",
+          "rounded_pull_bar_tray",
+          "flush_grip_tray"
+        ],
+        "slot": "drawer_style"
+      },
+      "required_author_checks": [
+        "category_anchor: raised worktop carried by a grounded storage carcass",
+        "category_anchor: hollow drawer trays ride real side runners in a derived cavity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "storage_drawer",
+          "joint_type": "prismatic",
+          "parent_role": "desk_carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "desk_carcass"
+        },
+        {
+          "count_from": "drawer_count",
+          "exact_count": null,
+          "role": "storage_drawer"
+        }
+      ]
+    },
+    {
+      "anchor_id": "office_table_worktop_identity",
+      "applies_to": {
+        "candidates": [
+          "straight",
+          "compact_corner",
+          "u_return"
+        ],
+        "slot": "worktop_form"
+      },
+      "required_author_checks": [
+        "category_anchor: raised worktop carried by a grounded storage carcass",
+        "category_anchor: hollow drawer trays ride real side runners in a derived cavity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "storage_drawer",
+          "joint_type": "prismatic",
+          "parent_role": "desk_carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "desk_carcass"
+        },
+        {
+          "count_from": "drawer_count",
+          "exact_count": null,
+          "role": "storage_drawer"
+        }
+      ]
+    },
+    {
+      "anchor_id": "office_table_secondary_motion_identity",
+      "applies_to": {
+        "candidates": [
+          "none",
+          "keyboard_tray",
+          "cable_access_hatch"
+        ],
+        "slot": "secondary_motion"
+      },
+      "required_author_checks": [
+        "category_anchor: raised worktop carried by a grounded storage carcass",
+        "category_anchor: closure leaves fill the storage bay openings"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "storage_drawer",
+          "joint_type": "prismatic",
+          "parent_role": "desk_carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "desk_carcass"
+        },
+        {
+          "count_from": "drawer_count",
+          "exact_count": null,
+          "role": "storage_drawer"
+        },
+        {
+          "count_from": "resolved.closure_leaf_count",
+          "exact_count": null,
+          "role": "closure_leaf"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "floor((drawer_bay_h_m + drawer_gap_m) / (0.070 + drawer_gap_m))",
+      "item_slot": "drawer_style",
+      "name": "drawer_count",
+      "spacing_expression": "drawer_front_h_m = min(0.34, (drawer_bay_h_m - (drawer_count - 1) * drawer_gap_m) / drawer_count); level_z(i) = drawer_stack_z0_m + i * (drawer_front_h_m + drawer_gap_m)",
+      "values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "One rectangular full-thickness slab with square corners, a straight-edge laminate field bounded by four perimeter reveal strips and one front edge band. No return wing, so the top is carried only by the two grounded storage volumes; no return-end support panel is derived",
+          "implementation_function": "_worktop_form_straight_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "main_span_m",
+                "width": "main_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "support_footprint",
+              "part": "desk_carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "height": "worktop_height_m - top_slab_t_m - under_slab_t_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "underside",
+              "part": "desk_carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "straight",
+          "notes": "One rectangular filleted slab, no rear wing; the top is carried only by the grounded storage volumes so no return-end panel is derived.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.95,
+              "minimum": 1.66,
+              "mode": "independent",
+              "name": "main_span_m",
+              "rationale": "Worktop X extent; sets carcass width, pedestal centres and knee span.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "main_depth_m",
+              "rationale": "Worktop Y extent; sets the carcass front/rear planes and drawer box depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worktop_form"
+              ],
+              "expression": "0 if worktop_form == 'straight' else (1 if worktop_form == 'compact_corner' else 2)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "return_end_panel_count",
+              "rationale": "Each cantilevered rear wing needs one grounded return-end support panel.",
+              "unit": "count",
+              "value_type": "int"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_worktop_form_straight",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L45-L100",
+            "model.py:L356-L386"
+          ]
+        },
+        {
+          "evidence": "A single L-shaped polyline slab: a wide main wing plus one shorter rear wing meeting at a 90° inner corner, vertical edges filleted. One cantilevered rear wing forces one derived return underlayer plus one grounded return-end support panel",
+          "implementation_function": "_worktop_form_compact_corner_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "main_span_m",
+                "width": "main_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "support_footprint",
+              "part": "desk_carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "height": "worktop_height_m - top_slab_t_m - under_slab_t_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "underside",
+              "part": "desk_carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "compact_corner",
+          "notes": "Single L polyline slab with one cantilevered rear wing; the host derives one return underlayer and one grounded return-end panel.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.95,
+              "minimum": 1.66,
+              "mode": "independent",
+              "name": "main_span_m",
+              "rationale": "Worktop X extent; sets carcass width, pedestal centres and knee span.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.66,
+              "minimum": 0.48,
+              "mode": "independent",
+              "name": "return_depth_m",
+              "rationale": "Rear wing depth; drives the return underlayer footprint and the grounded return-end panel.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worktop_form"
+              ],
+              "expression": "0 if worktop_form == 'straight' else (1 if worktop_form == 'compact_corner' else 2)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "return_end_panel_count",
+              "rationale": "Each cantilevered rear wing needs one grounded return-end support panel.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pedestal_width_m"
+              ],
+              "expression": "pedestal_width_m + 0.05",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "return_wing_width_m",
+              "rationale": "Rear wing plan width follows the storage volume it lands on.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_worktop_form_compact_corner",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L51-L74",
+            "model.py:L168-L180"
+          ]
+        },
+        {
+          "evidence": "Main slab unioned with two symmetric rear wings and two cable pass-through cuts; the host answers with two return underlayers and two grounded return-end panels (return_underlayer_0/1, return_end_panel_0/1)",
+          "implementation_function": "_worktop_form_u_return_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "main_span_m",
+                "width": "main_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "support_footprint",
+              "part": "desk_carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "height": "worktop_height_m - top_slab_t_m - under_slab_t_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "underside",
+              "part": "desk_carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "u_return",
+          "notes": "Main slab plus two symmetric rear wings and two cable cuts; the host derives two return underlayers and two grounded return-end panels.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "main_depth_m",
+              "rationale": "Worktop Y extent; sets the carcass front/rear planes and drawer box depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.66,
+              "minimum": 0.48,
+              "mode": "independent",
+              "name": "return_depth_m",
+              "rationale": "Rear wing depth; drives the return underlayer footprint and the grounded return-end panel.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worktop_form"
+              ],
+              "expression": "0 if worktop_form == 'straight' else (1 if worktop_form == 'compact_corner' else 2)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "return_end_panel_count",
+              "rationale": "Each cantilevered rear wing needs one grounded return-end support panel.",
+              "unit": "count",
+              "value_type": "int"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "pedestal_width_m"
+              ],
+              "expression": "pedestal_width_m + 0.05",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "return_wing_width_m",
+              "rationale": "Rear wing plan width follows the storage volume it lands on.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_worktop_form_u_return",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L30-L56",
+            "model.py:L180-L207"
+          ]
+        }
+      ],
+      "component_type": "raised work surface",
+      "name": "worktop_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "One continuous full-width credenza: bottom deck, two outer side panels, one internal partition, top deck, back panel, recessed illuminated fascia reveal, and a low brushed-metal sled plinth with four feet. No knee bay; the wide drawer bay and the closure bay share one carcass and one partition",
+          "implementation_function": "_storage_topology_drawer_and_door_credenza_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "carcass_span_m",
+                "width": "carcass_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "carcass_top_bearing",
+              "part": "desk_carcass",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "length": "closure_opening_w_m",
+                "width": "closure_opening_h_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "closure_bay_opening",
+              "part": "desk_carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "length": "drawer_opening_w_m",
+                "width": "carcass_interior_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "drawer_cavity",
+              "part": "desk_carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "length": "secondary_mount_span_m",
+                "width": "carcass_interior_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "secondary_mount",
+              "part": "desk_carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "drawer_and_door_credenza",
+          "notes": "One continuous full-width credenza with an internal partition, recessed fascia reveal and a metal sled plinth; no knee bay, so a keyboard tray must reserve a zone at the top of the drawer bay.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "pedestal_width_m",
+              "rationale": "Storage volume width; sets drawer/closure opening widths and runner gauge.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worktop_height_m",
+                "top_slab_t_m",
+                "under_slab_t_m",
+                "cap_t_m"
+              ],
+              "expression": "worktop_height_m - top_slab_t_m - under_slab_t_m - cap_t_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bay_top_z_m",
+              "rationale": "Top of every storage bay derives from the worktop height and the slab stack.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__office_table_with_doors_or_drawers__001__png_57bac13add2c40b7addfb86887d0da4c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L51-L96",
+            "model.py:L124-L153",
+            "model.py:L184-L209"
+          ]
+        },
+        {
+          "evidence": "Two separate grounded pedestals with an open knee bay between them: plinth, floor, inner wall, back, cap and a rounded outer end cheek per pedestal, plus per-level drawer guide rails, a vent-slit stack on the outer face, and the closure hinge leaves carried by the pedestal rather than the top",
+          "implementation_function": "_storage_topology_drawer_pedestal_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "carcass_span_m",
+                "width": "carcass_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "carcass_top_bearing",
+              "part": "desk_carcass",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "length": "closure_opening_w_m",
+                "width": "closure_opening_h_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "closure_bay_opening",
+              "part": "desk_carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "length": "drawer_opening_w_m",
+                "width": "carcass_interior_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "drawer_cavity",
+              "part": "desk_carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "length": "secondary_mount_span_m",
+                "width": "carcass_interior_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "secondary_mount",
+              "part": "desk_carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "drawer_pedestal",
+          "notes": "Two grounded pedestals with rounded outer end cheeks and an open knee bay carrying a modesty panel and a fixed knee shelf.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "pedestal_width_m",
+              "rationale": "Storage volume width; sets drawer/closure opening widths and runner gauge.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.78,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "worktop_height_m",
+              "rationale": "Work-surface height; sets the whole vertical stack and every bay height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worktop_height_m",
+                "top_slab_t_m",
+                "under_slab_t_m",
+                "cap_t_m"
+              ],
+              "expression": "worktop_height_m - top_slab_t_m - under_slab_t_m - cap_t_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bay_top_z_m",
+              "rationale": "Top of every storage bay derives from the worktop height and the slab stack.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_storage_topology_drawer_pedestal",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L105-L205",
+            "model.py:L246-L306"
+          ]
+        },
+        {
+          "evidence": "The closure pedestal is widened and split into two independent half-width openings; two hinge-leaf pairs sit at the two opposite hinge edges (hinge_edge_specs), giving two closure leaves with mirrored vertical hinge axes and one extra revolute joint",
+          "implementation_function": "_storage_topology_paired_door_pedestal_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "carcass_span_m",
+                "width": "carcass_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "carcass_top_bearing",
+              "part": "desk_carcass",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "length": "closure_opening_w_m",
+                "width": "closure_opening_h_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "closure_bay_opening",
+              "part": "desk_carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "length": "drawer_opening_w_m",
+                "width": "carcass_interior_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "drawer_cavity",
+              "part": "desk_carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "length": "secondary_mount_span_m",
+                "width": "carcass_interior_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "secondary_mount",
+              "part": "desk_carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "paired_door_pedestal",
+          "notes": "The closure volume is widened and split by a real central mullion into two independent openings, doubling the closure leaf count.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "pedestal_width_m",
+              "rationale": "Storage volume width; sets drawer/closure opening widths and runner gauge.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worktop_height_m",
+                "top_slab_t_m",
+                "under_slab_t_m",
+                "cap_t_m"
+              ],
+              "expression": "worktop_height_m - top_slab_t_m - under_slab_t_m - cap_t_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bay_top_z_m",
+              "rationale": "Top of every storage bay derives from the worktop height and the slab stack.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_storage_topology_paired_door_pedestal",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L145-L161",
+            "model.py:L196-L242"
+          ]
+        },
+        {
+          "evidence": "The tall pedestal volume becomes an open equipment cubby: two fixed open shelves, a real rear cable grommet bore for a tower/peripheral, and the vented outer face; the closure bay shrinks to the lower part of the same pedestal, so opening height must re-derive",
+          "implementation_function": "_storage_topology_open_equipment_bay_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "carcass_span_m",
+                "width": "carcass_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "carcass_top_bearing",
+              "part": "desk_carcass",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "length": "closure_opening_w_m",
+                "width": "closure_opening_h_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "closure_bay_opening",
+              "part": "desk_carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "length": "drawer_opening_w_m",
+                "width": "carcass_interior_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "drawer_cavity",
+              "part": "desk_carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "length": "secondary_mount_span_m",
+                "width": "carcass_interior_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "secondary_mount",
+              "part": "desk_carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "open_equipment_bay",
+          "notes": "The upper part of the closure volume becomes an open equipment cubby with two shelves and a real rear cable grommet bore; the closure opening shrinks to the lower part and its height re-derives.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.34,
+              "mode": "independent",
+              "name": "pedestal_width_m",
+              "rationale": "Storage volume width; sets drawer/closure opening widths and runner gauge.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "worktop_height_m",
+                "top_slab_t_m",
+                "under_slab_t_m",
+                "cap_t_m"
+              ],
+              "expression": "worktop_height_m - top_slab_t_m - under_slab_t_m - cap_t_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "bay_top_z_m",
+              "rationale": "Top of every storage bay derives from the worktop height and the slab stack.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_storage_topology_open_equipment_bay",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L135-L184",
+            "model.py:L186-L246"
+          ]
+        }
+      ],
+      "component_type": "grounded storage carcass",
+      "name": "storage_topology",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Carcass-fixed hinge knuckles plus a leaf carrying two hinge barrels and two straps; revolute joint on a vertical hinge line, axis (0,0,±1), 0 → ~1.72 rad, swinging outward toward the user. Same mechanism in 003 model.py:L142-L149 and L186-L221",
+          "implementation_function": "_closure_hinged_door_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "closure_leaf_w_m",
+                "width": "closure_leaf_h_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "leaf_mount",
+              "part": "closure_leaf",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "radius": "hinge_barrel_r_m"
+              },
+              "frame": {
+                "axis": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "radial": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "axis",
+              "name": "hinge_line",
+              "part": "closure_leaf",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "reveal": "front_reveal_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "front_plane",
+              "part": "closure_leaf",
+              "role": "provider"
+            }
+          ],
+          "name": "hinged_door",
+          "notes": "Revolute leaf on a vertical hinge line at the opening's outer edge; interleaved barrel and carcass knuckle segments share the axis at disjoint heights.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.026,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "closure_panel_thickness_m",
+              "rationale": "Closure leaf thickness; re-derives hinge axis offset, groove pitch and fascia clearance.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__office_table_with_doors_or_drawers__002__png_a048366dd19d4c2cb5c7499522bfee15",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L219-L230",
+            "model.py:L276-L324"
+          ]
+        },
+        {
+          "evidence": "Carcass-fixed top and bottom slide tracks plus two bypass tracks offset in Y; the hinges are gone and each leaf becomes a prismatic panel with a recessed grip, sliding along (±1,0,0); two leaves per opening ride separate grooves so one passes behind the other",
+          "implementation_function": "_closure_sliding_bypass_doors_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "closure_leaf_w_m",
+                "width": "closure_leaf_h_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "leaf_mount",
+              "part": "closure_leaf",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "reveal": "front_reveal_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "front_plane",
+              "part": "closure_leaf",
+              "role": "provider"
+            }
+          ],
+          "name": "sliding_bypass_doors",
+          "notes": "Two prismatic bypass leaves per opening riding two real grooves offset in Y between three carcass fins at the top and bottom of the opening.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.026,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "closure_panel_thickness_m",
+              "rationale": "Closure leaf thickness; re-derives hinge axis offset, groove pitch and fascia clearance.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_closure_sliding_door",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L211-L235",
+            "model.py:L279-L316",
+            "model.py:L318-L353"
+          ]
+        },
+        {
+          "evidence": "The hinge line moves to the bottom of the opening: a horizontal X hinge barrel with a full-width hinge leaf, rest bumpers relocated to the top of the opening, and revolute joints on axis (±1,0,0) from 0 to 1.50 rad, dropping the panel forward and down",
+          "implementation_function": "_closure_drop_front_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "closure_leaf_w_m",
+                "width": "closure_leaf_h_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "leaf_mount",
+              "part": "closure_leaf",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "radius": "hinge_barrel_r_m"
+              },
+              "frame": {
+                "axis": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "radial": [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              "kind": "axis",
+              "name": "hinge_line",
+              "part": "closure_leaf",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "reveal": "front_reveal_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "front_plane",
+              "part": "closure_leaf",
+              "role": "provider"
+            }
+          ],
+          "name": "drop_front",
+          "notes": "Revolute leaf on a horizontal X hinge line at the bottom of the opening; the panel is set back from the axis so the barrel and knuckle stay clear.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.026,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "closure_panel_thickness_m",
+              "rationale": "Closure leaf thickness; re-derives hinge axis offset, groove pitch and fascia clearance.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_closure_drop_front",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L194-L213",
+            "model.py:L249-L328",
+            "model.py:L341-L367"
+          ]
+        },
+        {
+          "evidence": "A real guided rolling shutter: a vertical track channel cut into the pedestal side panel, two vertical metal track rails at the opening edges, a garage housing (back, fascia, floor) above the opening, and a slat curtain (ten slats + one flexible backing strip + bottom pull rail + grip) on a vertical prismatic joint (0,0,1)",
+          "implementation_function": "_closure_tambour_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "closure_leaf_w_m",
+                "width": "closure_leaf_h_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "leaf_mount",
+              "part": "closure_leaf",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "reveal": "front_reveal_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "front_plane",
+              "part": "closure_leaf",
+              "role": "provider"
+            }
+          ],
+          "name": "tambour",
+          "notes": "The opening is split into a curtain zone and an equal-height garage pocket behind a fixed fascia; the slat curtain runs in two real vertical C-tracks.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.026,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "closure_panel_thickness_m",
+              "rationale": "Closure leaf thickness; re-derives hinge axis offset, groove pitch and fascia clearance.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_closure_tambour",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L20-L37",
+            "model.py:L232-L241",
+            "model.py:L287-L347"
+          ]
+        }
+      ],
+      "component_type": "storage bay closure",
+      "name": "closure",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Hollow tray (flat front + floor + two sides + back) with two drawer-mounted metal runner members (moving_rail_0/1) matched to per-level carcass-mounted runner halves (fixed_rail_{row}_{side}), plus a small inset rectangular pull; prismatic pull on (0,-1,0)",
+          "implementation_function": "_drawer_style_runner_tray_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "drawer_box_w_m",
+                "width": "drawer_box_d_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "storage_drawer",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "gauge": "runner_gauge_m",
+                "travel": "drawer_travel_m"
+              },
+              "frame": {
+                "normal": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "runner_engagement",
+              "part": "storage_drawer",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "reveal": "front_reveal_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "front_plane",
+              "part": "storage_drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "runner_tray",
+          "notes": "Flat front, hollow tray, drawer-mounted metal runner members, inset pull.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "drawer_wall_m",
+              "rationale": "Tray wall thickness; re-derives the tray interior volume and the runner attachment face.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__office_table_with_doors_or_drawers__002__png_a048366dd19d4c2cb5c7499522bfee15",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L60-L139",
+            "model.py:L206-L217"
+          ]
+        },
+        {
+          "evidence": "Wide front panel whose vertical edges are filleted by _rounded_panel, over a hollow tray built as one connected floor + two sides + back solid (_drawer_box_shape), finished with a full-width aluminium pull bar spanning the front. Same construction in 001 model.py:L211-L243",
+          "implementation_function": "_drawer_style_rounded_pull_bar_tray_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "drawer_box_w_m",
+                "width": "drawer_box_d_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "storage_drawer",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "gauge": "runner_gauge_m",
+                "travel": "drawer_travel_m"
+              },
+              "frame": {
+                "normal": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "runner_engagement",
+              "part": "storage_drawer",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "reveal": "front_reveal_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "front_plane",
+              "part": "storage_drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "rounded_pull_bar_tray",
+          "notes": "Filleted-edge front panel, hollow tray, full-width aluminium pull bar.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "drawer_wall_m",
+              "rationale": "Tray wall thickness; re-derives the tray interior volume and the runner attachment face.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_drawer_count_5",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L119-L140",
+            "model.py:L269-L307"
+          ]
+        },
+        {
+          "evidence": "Flat handleless front with a compact vertical finger grip; hollow tray (front + bottom + two sides + back) carried by paired carcass-side guide rails (outer_drawer_rail_ / inner_drawer_rail_) rather than drawer-mounted runner members",
+          "implementation_function": "_drawer_style_flush_grip_tray_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "drawer_box_w_m",
+                "width": "drawer_box_d_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "storage_drawer",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "gauge": "runner_gauge_m",
+                "travel": "drawer_travel_m"
+              },
+              "frame": {
+                "normal": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  0.0,
+                  1.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "runner_engagement",
+              "part": "storage_drawer",
+              "role": "consumer"
+            },
+            {
+              "dimensions": {
+                "reveal": "front_reveal_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "front_plane",
+              "part": "storage_drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "flush_grip_tray",
+          "notes": "Handleless front with a compact vertical grip, hollow tray with rear nylon glide blocks riding the carcass channels.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.02,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "drawer_wall_m",
+              "rationale": "Tray wall thickness; re-derives the tray interior volume and the runner attachment face.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__office_table_with_doors_or_drawers__003__png_b4b10d9eca3648049dbe8a4bf3ea11e6",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L151-L164",
+            "model.py:L225-L282"
+          ]
+        }
+      ],
+      "component_type": "prismatic drawer tray",
+      "name": "drawer_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The baseline carcass has no secondary mechanism: the knee bay carries only a fixed knee shelf with two dividers and a modesty panel, and the only non-fixed joints are the drawers and the closure leaf",
+          "implementation_function": "_secondary_motion_none_build",
+          "interfaces": [],
+          "name": "none",
+          "notes": "Baseline: no secondary mechanism, only the fixed knee shelf / fascia.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__office_table_with_doors_or_drawers__002__png_a048366dd19d4c2cb5c7499522bfee15",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L163-L241"
+          ]
+        },
+        {
+          "evidence": "Adds one part and one joint: two carcass-mounted slide rail tracks under the top panel plus a pull-out tray (platform, three raised lips, front pull, front lip, two slide engagement tabs riding inside the rails) on a prismatic joint (0,-1,0), 0 → 0.250 m",
+          "implementation_function": "_secondary_motion_keyboard_tray_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "secondary_mount_span_m",
+                "width": "tray_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "mount_pad",
+              "part": "secondary_mechanism",
+              "role": "consumer"
+            }
+          ],
+          "name": "keyboard_tray",
+          "notes": "Adds one prismatic pull-out tray with three raised lips and two slide tabs riding real carcass C-rails; without a knee bay it reserves a tray zone at the top of the drawer bay.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.34,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "tray_depth_m",
+              "rationale": "Keyboard tray platform depth; drives rail length and tray travel.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_secondary_motion_keyboard_tray",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L99-L126",
+            "model.py:L214-L282"
+          ]
+        },
+        {
+          "evidence": "Contributes the compact slotted access panel: a filleted panel with a real horizontal cable pass-through cut (_cable_access_panel, panel.cut(slot)), a small hinge barrel plus leaf, and a deliberately short revolute travel of 1.05 rad at reduced effort",
+          "implementation_function": "_secondary_motion_cable_access_hatch_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "length": "secondary_mount_span_m",
+                "width": "tray_depth_m"
+              },
+              "frame": {
+                "normal": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "tangent_u": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "kind": "plane",
+              "name": "mount_pad",
+              "part": "secondary_mechanism",
+              "role": "consumer"
+            }
+          ],
+          "name": "cable_access_hatch",
+          "notes": "Adds one revolute hatch with a real horizontal cable pass-through cut over a real opening framed into the closure volume's back panel.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "hatch_width_m",
+              "rationale": "Cable hatch width; drives the real back-panel opening and the hatch panel.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_office_table_with_doors_or_dra_var_secondary_motion_cable_access_door",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L51-L69",
+            "model.py:L265-L345",
+            "model.py:L355-L381"
+          ]
+        }
+      ],
+      "component_type": "secondary desk mechanism",
+      "name": "secondary_motion",
+      "required": true
+    }
+  ],
+  "slug": "office_table_with_doors_or_drawers",
+  "source_map_path": "articraft_template_authoring/source_maps/office_table_with_doors_or_drawers.md",
+  "source_map_sha256": "7f5a8325030f676bbb3367c76555b0c10d637d589e13a3424eda00da8cb9c5cb"
+}

@@ -1,0 +1,358 @@
+{
+  "assembly_notes": "The case owns the pendulum pivot, inset scale and accessory mounting planes. tempo_weight_count is applied to tempo_module: every declared N emits N bored slider bodies with N prismatic joints on the visible upper pendulum rod. Case dimensions, scale endpoints, slider positions, slider travel and all accessory mounts derive from pendulum_length_m and the selected continuous case silhouette.",
+  "bindings": [],
+  "multiplicities": [
+    {
+      "name": "tempo_weight_count",
+      "item_slot": "tempo_module",
+      "values": [
+        1,
+        2
+      ],
+      "spacing_expression": "slider_travel_m / (tempo_weight_count + 1)",
+      "host_capacity_expression": "slider_travel_m"
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "",
+          "implementation_function": "_case_form_pyramid_case_build",
+          "interfaces": [],
+          "name": "pyramid_case",
+          "notes": "Tapered body panels and broad plinth preserve the classic source silhouette.",
+          "parameters": [
+            {
+              "name": "pendulum_length_m",
+              "mode": "independent",
+              "unit": "m",
+              "minimum": 0.26,
+              "maximum": 0.36,
+              "rationale": "Derives case height, pivot height, scale length and bob position."
+            },
+            {
+              "name": "swing_limit_rad",
+              "mode": "independent",
+              "unit": "rad",
+              "minimum": 0.28,
+              "maximum": 0.50,
+              "rationale": "Controls the real pendulum joint range."
+            }
+          ],
+          "record_id": "rec_0611_mechanical_metronome_with_pend_var_case_form_pyramid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L79",
+            "model.py:L82-L453"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_case_form_rectangular_case_build",
+          "interfaces": [],
+          "name": "rectangular_case",
+          "notes": "Straight cabinet walls replace the tapered pyramid structure.",
+          "parameters": [
+            {
+              "name": "pendulum_length_m",
+              "mode": "independent",
+              "unit": "m",
+              "minimum": 0.26,
+              "maximum": 0.36,
+              "rationale": "Derives cabinet, scale and pendulum geometry."
+            },
+            {
+              "name": "swing_limit_rad",
+              "mode": "independent",
+              "unit": "rad",
+              "minimum": 0.28,
+              "maximum": 0.50,
+              "rationale": "Controls the real pendulum joint range."
+            }
+          ],
+          "record_id": "rec_0611_mechanical_metronome_with_pend_var_case_form_rectangular",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L46",
+            "model.py:L49-L392"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_case_form_arched_case_build",
+          "interfaces": [],
+          "name": "arched_case",
+          "notes": "Segmented crown and side walls create an arched cabinet topology.",
+          "parameters": [
+            {
+              "name": "pendulum_length_m",
+              "mode": "independent",
+              "unit": "m",
+              "minimum": 0.26,
+              "maximum": 0.36,
+              "rationale": "Derives cabinet, scale and pendulum geometry."
+            },
+            {
+              "name": "swing_limit_rad",
+              "mode": "independent",
+              "unit": "rad",
+              "minimum": 0.28,
+              "maximum": 0.50,
+              "rationale": "Controls the real pendulum joint range."
+            }
+          ],
+          "record_id": "rec_0611_mechanical_metronome_with_pend_var_case_form_arched",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L46",
+            "model.py:L49-L417"
+          ]
+        }
+      ],
+      "component_type": "case_form",
+      "name": "case_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "",
+          "implementation_function": "_front_closure_open_scale_build",
+          "interfaces": [],
+          "name": "open_scale",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__mechanical_metronome_with_pendulum__001__png_93052d21a09e44f59a0309e028d26892",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L49-L402"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_front_closure_hinged_cover_build",
+          "interfaces": [],
+          "name": "hinged_cover",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_mechanical_metronome_with_pend_var_front_closure_hinged_cover",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L49-L421"
+          ]
+        }
+      ],
+      "component_type": "front_closure",
+      "name": "front_closure",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "",
+          "implementation_function": "_build_tempo_weights",
+          "interfaces": [],
+          "name": "plain_slider",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__mechanical_metronome_with_pendulum__001__png_93052d21a09e44f59a0309e028d26892",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L49-L402"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_build_tempo_weights",
+          "interfaces": [],
+          "name": "bell_beat_slider",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_mechanical_metronome_with_pend_var_tempo_module_bell_beat_slider",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L49-L430"
+          ]
+        }
+      ],
+      "component_type": "tempo_module",
+      "name": "tempo_module",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "",
+          "implementation_function": "_winding_system_fixed_side_key_build",
+          "interfaces": [],
+          "name": "fixed_side_key",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__mechanical_metronome_with_pendulum__001__png_93052d21a09e44f59a0309e028d26892",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L49-L402"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_winding_system_folding_side_key_build",
+          "interfaces": [],
+          "name": "folding_side_key",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_mechanical_metronome_with_pend_var_winding_folding_side_key",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L49-L433"
+          ]
+        }
+      ],
+      "component_type": "winding_system",
+      "name": "winding_system",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "",
+          "implementation_function": "_carry_handle_no_handle_build",
+          "interfaces": [],
+          "name": "no_handle",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__mechanical_metronome_with_pendulum__001__png_93052d21a09e44f59a0309e028d26892",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L49-L402"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_carry_handle_swing_handle_build",
+          "interfaces": [],
+          "name": "swing_handle",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_mechanical_metronome_with_pend_var_handle_swing_carry_handle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L49-L497"
+          ]
+        }
+      ],
+      "component_type": "carry_handle",
+      "name": "carry_handle",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "",
+          "implementation_function": "_base_support_flat_plinth_build",
+          "interfaces": [],
+          "name": "flat_plinth",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__mechanical_metronome_with_pendulum__001__png_93052d21a09e44f59a0309e028d26892",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L49-L402"
+          ]
+        },
+        {
+          "evidence": "",
+          "implementation_function": "_base_support_leveling_feet_build",
+          "interfaces": [],
+          "name": "leveling_feet",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_mechanical_metronome_with_pend_var_base_leveling_foot",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L49-L454"
+          ]
+        }
+      ],
+      "component_type": "base_support",
+      "name": "base_support",
+      "required": true
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "pyramid_case_metronome_identity",
+      "applies_to": {
+        "slot": "case_form",
+        "candidates": ["pyramid_case"]
+      },
+      "required_roles": [
+        {"role": "case_body", "exact_count": 1},
+        {"role": "pendulum", "exact_count": 1},
+        {"role": "tempo_weight", "count_from": "tempo_weight_count"},
+        {"role": "winding_key", "exact_count": 1}
+      ],
+      "required_relations": [
+        {"parent_role": "case_body", "child_role": "pendulum", "joint_type": "revolute", "axis": [0.0, 1.0, 0.0]},
+        {"parent_role": "pendulum", "child_role": "tempo_weight", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]},
+        {"parent_role": "case_body", "child_role": "winding_key", "joint_type": "continuous", "axis": [1.0, 0.0, 0.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: mechanical metronome identity",
+        "category_anchor: source-like tempo scale and pendulum",
+        "category_anchor: pyramid_case identity"
+      ]
+    },
+    {
+      "anchor_id": "rectangular_case_metronome_identity",
+      "applies_to": {
+        "slot": "case_form",
+        "candidates": ["rectangular_case"]
+      },
+      "required_roles": [
+        {"role": "case_body", "exact_count": 1},
+        {"role": "pendulum", "exact_count": 1},
+        {"role": "tempo_weight", "count_from": "tempo_weight_count"},
+        {"role": "winding_key", "exact_count": 1}
+      ],
+      "required_relations": [
+        {"parent_role": "case_body", "child_role": "pendulum", "joint_type": "revolute", "axis": [0.0, 1.0, 0.0]},
+        {"parent_role": "pendulum", "child_role": "tempo_weight", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]},
+        {"parent_role": "case_body", "child_role": "winding_key", "joint_type": "continuous", "axis": [1.0, 0.0, 0.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: mechanical metronome identity",
+        "category_anchor: source-like tempo scale and pendulum",
+        "category_anchor: rectangular_case identity"
+      ]
+    },
+    {
+      "anchor_id": "arched_case_metronome_identity",
+      "applies_to": {
+        "slot": "case_form",
+        "candidates": ["arched_case"]
+      },
+      "required_roles": [
+        {"role": "case_body", "exact_count": 1},
+        {"role": "pendulum", "exact_count": 1},
+        {"role": "tempo_weight", "count_from": "tempo_weight_count"},
+        {"role": "winding_key", "exact_count": 1}
+      ],
+      "required_relations": [
+        {"parent_role": "case_body", "child_role": "pendulum", "joint_type": "revolute", "axis": [0.0, 1.0, 0.0]},
+        {"parent_role": "pendulum", "child_role": "tempo_weight", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]},
+        {"parent_role": "case_body", "child_role": "winding_key", "joint_type": "continuous", "axis": [1.0, 0.0, 0.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: mechanical metronome identity",
+        "category_anchor: source-like tempo scale and pendulum",
+        "category_anchor: arched_case identity"
+      ]
+    }
+  ],
+  "slug": "mechanical_metronome_with_pendulum",
+  "source_map_path": "articraft_template_authoring/source_maps/mechanical_metronome_with_pendulum.md",
+  "source_map_sha256": "437fd004ce9b99e9ce1c389b3a16fd005b0b59c4b5b2558d285a92d36e01df92"
+}

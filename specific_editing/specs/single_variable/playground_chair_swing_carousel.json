@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "name": "playground_chair_swing_carousel",
+  "generator": "playground_chair_swing_carousel",
+  "base_config": {
+    "base_form_module": "square_slab_base",
+    "arm_structure_module": "spline_tube_lattice",
+    "seat_type_module": "flat_platform_seat",
+    "seat_count": 6,
+    "palette_style": "rust_red_cream",
+    "seat_radius_scale": 1.0,
+    "column_height_scale": 1.0,
+    "arm_thickness_scale": 1.0,
+    "swing_limit_rad": 0.524
+  },
+  "edits": [
+    {
+      "kind": "component",
+      "target": "seat_type_module",
+      "label": "Chair module",
+      "values": ["slatted_bucket_rail", "deep_bucket_seat"]
+    },
+    {
+      "kind": "count",
+      "target": "seat_count",
+      "label": "Chair count",
+      "values": [2, 4, 8]
+    },
+    {
+      "kind": "material",
+      "target": "seat_surfaces",
+      "label": "Chair surface material",
+      "values": [
+        {
+          "name": "red enamel chair surfaces",
+          "material_id": "blenderkit:940ca40e-25bd-4eab-8645-f11e37cf26a6:423ad6b6-81d2-46a0-a031-4bd57e10a13a",
+          "rgba": [0.82, 0.15, 0.10, 1.0],
+          "metallic": 0.05,
+          "roughness": 0.30
+        },
+        {
+          "name": "warm white polymer chair surfaces",
+          "material_id": "blenderkit:df65d4a6-6d67-4cda-818d-0698b42042b3:4da03638-efb2-4b35-94c5-1d693adf288d",
+          "rgba": [0.88, 0.86, 0.79, 1.0],
+          "metallic": 0.0,
+          "roughness": 0.34
+        },
+        {
+          "name": "brushed silver chair surfaces",
+          "material_id": "blenderkit:c3ab2079-1dc6-4b6b-94d9-c56eb2339e91:3f4ded88-44d7-484c-8376-8a29ef92d331",
+          "rgba": [0.63, 0.67, 0.71, 1.0],
+          "metallic": 0.86,
+          "roughness": 0.24
+        }
+      ]
+    },
+    {
+      "kind": "size",
+      "target": "seat_radius_scale",
+      "label": "Chair-ring radius scale",
+      "values": [0.85, 1.20]
+    }
+  ],
+  "render": {
+    "backend": "blender",
+    "views": ["front_iso"],
+    "poses": ["closed"],
+    "image_size": [1600, 1120],
+    "supersample": 1,
+    "shadow_strength": 0.6
+  }
+}

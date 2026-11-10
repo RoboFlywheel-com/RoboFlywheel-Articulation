@@ -1,0 +1,1322 @@
+{
+  "assembly_notes": "One carcass part carries the case shell, the support base, the runner rails and the centre divider; every drawer is a separate moving hollow tray. The host publishes a plan profile and a clear opening, so each drawer front is struck from the host's own front curve over its own x-range and each level derives its width, graduated height, depth and travel from the cavity and from N. Runners stay engaged with their rails through the full stroke, so no combination is excluded and no overlap allowance is emitted.",
+  "bindings": [
+    {
+      "binding_id": "opening_to_tray",
+      "consumer": "drawer_front.tray_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_width_m",
+            "drawer_count"
+          ],
+          "expression": "clear opening width / columns - divider share - side clearance",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drawer_width_m",
+          "rationale": "Tray width follows the host opening and the layout, never a source constant.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_height_m",
+            "drawer_count"
+          ],
+          "expression": "level pitch * graduation weight - level reveal",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "front_height_m",
+          "rationale": "Front heights are graduated over the real cavity height.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_depth_m"
+          ],
+          "expression": "cavity depth - rear clearance",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "box_depth_m",
+          "rationale": "Tray depth follows the host cavity.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_depth_m"
+          ],
+          "expression": "box_depth_m * drawer_travel_ratio",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "travel_m",
+          "rationale": "Travel keeps the side runners engaged with their rails at full extension.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "body_form.drawer_opening"
+    },
+    {
+      "binding_id": "profile_to_front",
+      "consumer": "drawer_front.tray_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_width_m",
+            "carcass_depth_m"
+          ],
+          "expression": "host front y(x) sampled over the drawer x-range",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "front_curve_points",
+          "rationale": "A bombe, bow or oval case gives curved fronts; a rect or tapered case gives flat ones.",
+          "unit": null,
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "body_form.plan_profile"
+    },
+    {
+      "binding_id": "layout_to_rails",
+      "consumer": "drawer_front.tray_seat",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "drawer_count"
+          ],
+          "expression": "level floor height for each drawer",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "rail_z_m",
+          "rationale": "Each level owns its own rail pair and its own slide.",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "drawer_count"
+          ],
+          "expression": "cavity height covered by the centre divider",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "divider_span_m",
+          "rationale": "Paired layouts derive a real divider that carries the inner rails.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "drawer_layout.runner_rail"
+    },
+    {
+      "binding_id": "body_to_support",
+      "consumer": "support_base.body_underside",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "carcass_height_m"
+          ],
+          "expression": "support candidate height",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "body_bottom_z_m",
+          "rationale": "Cavity floor, level pitch and rail heights start from the resolved body bottom.",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "body_form.drawer_opening"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "full_width_stack_drawer_chest_identity",
+      "applies_to": {
+        "candidates": [
+          "full_width_stack"
+        ],
+        "slot": "drawer_layout"
+      },
+      "required_author_checks": [
+        "category_anchor: one load-bearing carcass",
+        "category_anchor: every drawer is a moving child of the carcass",
+        "category_anchor: drawer trays are hollow boxes",
+        "category_anchor: drawer pulls out along -Y"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "drawer_count",
+          "role": "drawer"
+        }
+      ]
+    },
+    {
+      "anchor_id": "paired_grid_drawer_chest_identity",
+      "applies_to": {
+        "candidates": [
+          "paired_grid"
+        ],
+        "slot": "drawer_layout"
+      },
+      "required_author_checks": [
+        "category_anchor: one load-bearing carcass",
+        "category_anchor: every drawer is a moving child of the carcass",
+        "category_anchor: drawer trays are hollow boxes",
+        "category_anchor: drawer pulls out along -Y"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "drawer_count",
+          "role": "drawer"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pair_over_full_width_drawer_chest_identity",
+      "applies_to": {
+        "candidates": [
+          "pair_over_full_width"
+        ],
+        "slot": "drawer_layout"
+      },
+      "required_author_checks": [
+        "category_anchor: one load-bearing carcass",
+        "category_anchor: every drawer is a moving child of the carcass",
+        "category_anchor: drawer trays are hollow boxes",
+        "category_anchor: drawer pulls out along -Y"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "count_from": "drawer_count",
+          "role": "drawer"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "cavity height >= levels * (minimum front height + level reveal) and, for paired layouts, clear width >= 2 * minimum drawer width + divider thickness",
+      "item_slot": "drawer_front",
+      "name": "drawer_count",
+      "spacing_expression": "levels = N for full_width_stack, ceil(N/2) for paired_grid, and ceil((N-1)/2)+1 for pair_over_full_width; level pitch = cavity height / total graduated weight, so the lower drawers are deeper exactly as in the origins",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Straight side/back panels, top slab and a framed front with square drawer openings.",
+          "implementation_function": "_body_form_rect_case_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "clear cavity depth",
+                "height": "clear cavity height",
+                "width": "clear width between the side walls"
+              },
+              "frame": {
+                "normal": "-Y",
+                "point": "front face of the case at each level"
+              },
+              "kind": "plane",
+              "name": "drawer_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "front_offset": "y(x) of the front face, straight or bowed"
+              },
+              "frame": {
+                "point": "front curve of the case in plan"
+              },
+              "kind": "plane",
+              "name": "plan_profile",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "rect_case",
+          "notes": "Hosts the runner rails, the divider and the support base.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.42,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "Origin 003/004/005 chest widths.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.54,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "Origin 003/005 chest depths.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.34,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "Low chest through tall chest of drawers.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.03,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "rect_wall_t_m",
+              "rationale": "Origin 003 panel stock thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__003__png__airflex_batch_20260710_26b9fe0822b64bcb80964e503e2567b2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L226-L300"
+          ]
+        },
+        {
+          "evidence": "Swelling double-curved case whose front and sides bulge, carrying curved drawer fronts.",
+          "implementation_function": "_body_form_bombe_serpentine_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "clear cavity depth",
+                "height": "clear cavity height",
+                "width": "clear width between the side walls"
+              },
+              "frame": {
+                "normal": "-Y",
+                "point": "front face of the case at each level"
+              },
+              "kind": "plane",
+              "name": "drawer_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "front_offset": "y(x) of the front face, straight or bowed"
+              },
+              "frame": {
+                "point": "front curve of the case in plan"
+              },
+              "kind": "plane",
+              "name": "plan_profile",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "bombe_serpentine",
+          "notes": "Hosts the runner rails, the divider and the support base.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.1,
+              "minimum": 0.68,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "Origin 001 bombe chest width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "Origin 001 chest depth at the swell.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.76,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "Origin 001 chest height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.055,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "bombe_bulge_m",
+              "rationale": "Origin 001 front/side swell amplitude.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__001__png__airflex_batch_20260710_0739738ec7c94c7a8fd90660717f6585",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L26-L61",
+            "model.py:L278-L340"
+          ]
+        },
+        {
+          "evidence": "Oval-ended rounded prism shell with matching curved drawer fronts.",
+          "implementation_function": "_body_form_oval_rounded_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "clear cavity depth",
+                "height": "clear cavity height",
+                "width": "clear width between the side walls"
+              },
+              "frame": {
+                "normal": "-Y",
+                "point": "front face of the case at each level"
+              },
+              "kind": "plane",
+              "name": "drawer_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "front_offset": "y(x) of the front face, straight or bowed"
+              },
+              "frame": {
+                "point": "front curve of the case in plan"
+              },
+              "kind": "plane",
+              "name": "plan_profile",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "oval_rounded",
+          "notes": "Hosts the runner rails, the divider and the support base.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.06,
+              "minimum": 0.66,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "Origin 002 oval chest width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.5,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "Origin 002 chest depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.2,
+              "minimum": 0.74,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "Origin 002 chest height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.95,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "oval_end_ratio",
+              "rationale": "Origin 002 end radius / half depth.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__002__png__airflex_batch_20260710_7ff0d3b16d3f45a98e6d3f14ce3c21dd",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L36-L52",
+            "model.py:L127-L149"
+          ]
+        },
+        {
+          "evidence": "Convex front with straight sides; only the front face bows forward.",
+          "implementation_function": "_body_form_bow_front_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "clear cavity depth",
+                "height": "clear cavity height",
+                "width": "clear width between the side walls"
+              },
+              "frame": {
+                "normal": "-Y",
+                "point": "front face of the case at each level"
+              },
+              "kind": "plane",
+              "name": "drawer_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "front_offset": "y(x) of the front face, straight or bowed"
+              },
+              "frame": {
+                "point": "front curve of the case in plan"
+              },
+              "kind": "plane",
+              "name": "plan_profile",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "bow_front",
+          "notes": "Hosts the runner rails, the divider and the support base.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "var_bowfront chest width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "var_bowfront chest depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.26,
+              "minimum": 0.74,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "var_bowfront chest height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.048,
+              "minimum": 0.012,
+              "mode": "independent",
+              "name": "bow_depth_m",
+              "rationale": "var_bowfront front bow amplitude.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_drawers_var_bowfront",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L31-L119"
+          ]
+        },
+        {
+          "evidence": "Canted case whose side panels lean inward with height.",
+          "implementation_function": "_body_form_tapered_case_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "clear cavity depth",
+                "height": "clear cavity height",
+                "width": "clear width between the side walls"
+              },
+              "frame": {
+                "normal": "-Y",
+                "point": "front face of the case at each level"
+              },
+              "kind": "plane",
+              "name": "drawer_opening",
+              "part": "carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "front_offset": "y(x) of the front face, straight or bowed"
+              },
+              "frame": {
+                "point": "front curve of the case in plan"
+              },
+              "kind": "plane",
+              "name": "plan_profile",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "tapered_case",
+          "notes": "Hosts the runner rails, the divider and the support base.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.7,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "var_tapered chest width.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "var_tapered chest depth.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.74,
+              "mode": "independent",
+              "name": "carcass_height_m",
+              "rationale": "var_tapered chest height.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.96,
+              "minimum": 0.72,
+              "mode": "independent",
+              "name": "case_taper_ratio",
+              "rationale": "var_tapered top width / base width.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_drawers_var_tapered",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L30-L58"
+          ]
+        }
+      ],
+      "component_type": "rectilinear panel carcass",
+      "name": "body_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "One full-width drawer per level with graduated front heights.",
+          "implementation_function": "_drawer_layout_full_width_stack_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "rail height",
+                "length": "cavity depth"
+              },
+              "frame": {
+                "normal": "+X or -X"
+              },
+              "kind": "plane",
+              "name": "runner_rail",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "full_width_stack",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.85,
+              "minimum": 1.0,
+              "mode": "independent",
+              "name": "graduation_ratio",
+              "rationale": "Origin 003 bottom / top drawer height ratio.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "drawer_travel_ratio",
+              "rationale": "Open stroke as a fraction of the real box depth; the side runners stay engaged with their rails at full extension.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__003__png__airflex_batch_20260710_26b9fe0822b64bcb80964e503e2567b2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L81-L225"
+          ]
+        },
+        {
+          "evidence": "A centre divider splits every level into two side-by-side drawers.",
+          "implementation_function": "_drawer_layout_paired_grid_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "rail height",
+                "length": "cavity depth"
+              },
+              "frame": {
+                "normal": "+X or -X"
+              },
+              "kind": "plane",
+              "name": "runner_rail",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "paired_grid",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.036,
+              "minimum": 0.014,
+              "mode": "independent",
+              "name": "divider_t_m",
+              "rationale": "Origin 004 centre divider thickness.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "drawer_travel_ratio",
+              "rationale": "Open stroke as a fraction of the real box depth; the side runners stay engaged with their rails at full extension.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__004__png__airflex_batch_20260710_9e2d698894684622a88e1b1d3dbcf16d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L61-L167"
+          ]
+        },
+        {
+          "evidence": "Paired upper levels over one full-width deep bottom drawer.",
+          "implementation_function": "_drawer_layout_pair_over_full_width_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "rail height",
+                "length": "cavity depth"
+              },
+              "frame": {
+                "normal": "+X or -X"
+              },
+              "kind": "plane",
+              "name": "runner_rail",
+              "part": "carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "pair_over_full_width",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.15,
+              "mode": "independent",
+              "name": "base_level_ratio",
+              "rationale": "Origin 005 bottom drawer height / paired level height.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.36,
+              "mode": "independent",
+              "name": "drawer_travel_ratio",
+              "rationale": "Open stroke as a fraction of the real box depth; the side runners stay engaged with their rails at full extension.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__005__png__airflex_batch_20260710_9d0d00f317a34743a1733e46730a4a6d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L139-L202"
+          ]
+        }
+      ],
+      "component_type": "graduated full-width stack",
+      "name": "drawer_layout",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Plain graduated slab front with a small round pull.",
+          "implementation_function": "_drawer_front_flat_panel_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived front height",
+                "width": "derived drawer width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "flat_panel",
+          "notes": "Front treatment only; the front curve comes from the host plan profile.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.016,
+              "mode": "independent",
+              "name": "front_t_m",
+              "rationale": "var_n4 drawer front stock thickness.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_drawers_var_n4",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L52-L90"
+          ]
+        },
+        {
+          "evidence": "Woven cane field inside a moulded front frame.",
+          "implementation_function": "_drawer_front_framed_cane_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived front height",
+                "width": "derived drawer width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "framed_cane",
+          "notes": "Front treatment only; the front curve comes from the host plan profile.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.062,
+              "minimum": 0.03,
+              "mode": "independent",
+              "name": "cane_frame_w_m",
+              "rationale": "Origin 004 front frame width.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__004__png__airflex_batch_20260710_9e2d698894684622a88e1b1d3dbcf16d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L61-L167"
+          ]
+        },
+        {
+          "evidence": "Pointed-arch tracery applied to the drawer face.",
+          "implementation_function": "_drawer_front_gothic_arch_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived front height",
+                "width": "derived drawer width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "gothic_arch",
+          "notes": "Front treatment only; the front curve comes from the host plan profile.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "arch_rise_ratio",
+              "rationale": "Origin 003 arch rise / front height.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__003__png__airflex_batch_20260710_26b9fe0822b64bcb80964e503e2567b2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L31-L64"
+          ]
+        },
+        {
+          "evidence": "Moulded front with a brass crest and corner scrollwork.",
+          "implementation_function": "_drawer_front_applique_moulded_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "height": "derived front height",
+                "width": "derived drawer width"
+              },
+              "frame": {
+                "normal": "+Y"
+              },
+              "kind": "plane",
+              "name": "tray_seat",
+              "part": "drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "applique_moulded",
+          "notes": "Front treatment only; the front curve comes from the host plan profile.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.014,
+              "minimum": 0.004,
+              "mode": "independent",
+              "name": "applique_relief_m",
+              "rationale": "Origin 001 appliqué relief depth.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__001__png__airflex_batch_20260710_0739738ec7c94c7a8fd90660717f6585",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L91-L152"
+          ]
+        }
+      ],
+      "component_type": "plain slab front",
+      "name": "drawer_front",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Swept cabriole posts continuing into a shaped front apron.",
+          "implementation_function": "_support_base_cabriole_apron_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "cabriole_apron",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.11,
+              "mode": "independent",
+              "name": "cabriole_h_m",
+              "rationale": "Origin 001 leg height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__001__png__airflex_batch_20260710_0739738ec7c94c7a8fd90660717f6585",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L278-L340"
+          ]
+        },
+        {
+          "evidence": "Four slender brass cylindrical legs with turned feet.",
+          "implementation_function": "_support_base_fine_metal_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "fine_metal_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.12,
+              "mode": "independent",
+              "name": "metal_leg_h_m",
+              "rationale": "Origin 002 leg height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__002__png__airflex_batch_20260710_7ff0d3b16d3f45a98e6d3f14ce3c21dd",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L150-L230"
+          ]
+        },
+        {
+          "evidence": "Moulded base plinth carried on square block feet.",
+          "implementation_function": "_support_base_plinth_block_feet_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "plinth_block_feet",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.19,
+              "minimum": 0.07,
+              "mode": "independent",
+              "name": "plinth_h_m",
+              "rationale": "Origin 003 plinth height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__003__png__airflex_batch_20260710_26b9fe0822b64bcb80964e503e2567b2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L226-L300"
+          ]
+        },
+        {
+          "evidence": "Splayed tapered legs with brass mounting shoes.",
+          "implementation_function": "_support_base_splayed_tapered_legs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "splayed_tapered_legs",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "splayed_leg_h_m",
+              "rationale": "Origin 004 leg height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__004__png__airflex_batch_20260710_9e2d698894684622a88e1b1d3dbcf16d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L50-L60"
+          ]
+        },
+        {
+          "evidence": "Tapered legs under a scalloped apron skirt.",
+          "implementation_function": "_support_base_tapered_legs_apron_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "tapered_legs_apron",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.33,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "apron_leg_h_m",
+              "rationale": "Origin 005 leg height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__cabinet_with_drawers__005__png__airflex_batch_20260710_9d0d00f317a34743a1733e46730a4a6d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L40-L80"
+          ]
+        },
+        {
+          "evidence": "Continuous recessed toe-kick plinth flush to the floor.",
+          "implementation_function": "_support_base_toe_kick_plinth_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "depth": "carcass footprint depth",
+                "width": "carcass footprint width"
+              },
+              "frame": {
+                "normal": "+Z"
+              },
+              "kind": "plane",
+              "name": "body_underside",
+              "part": "carcass",
+              "role": "consumer"
+            }
+          ],
+          "name": "toe_kick_plinth",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.13,
+              "minimum": 0.05,
+              "mode": "independent",
+              "name": "toe_kick_h_m",
+              "rationale": "var_toekick plinth height.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_cabinet_with_drawers_var_toekick",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L40-L120"
+          ]
+        }
+      ],
+      "component_type": "cabriole legs with a scalloped apron",
+      "name": "support_base",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Cabinet_with_drawers",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Cabinet_with_drawers.md",
+  "source_map_sha256": "4a8a71e5b02fe8619e5f9161898afe86f35e71cc5196961176bd296bb8af33fa"
+}

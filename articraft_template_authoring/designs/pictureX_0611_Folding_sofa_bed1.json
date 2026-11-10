@@ -1,0 +1,831 @@
+{
+  "assembly_notes": "Pull-out (sleeper) sofa bed. One rigid sofa_frame root carries the upholstered carcass, the fixed arms, the apron and the carriage guides; a fixed seat_deck is the rear bed section. The backrest is a REVOLUTE (+x) child of the frame. The pullout_deck is a PRISMATIC (+y) child of the frame running in the guides. Two mattress_leaf panels ride the carriage: leaf 0 is a REVOLUTE (-x) child of the deck and leaf 1 a REVOLUTE (-x) child of leaf 0, so they fold up and back over the carriage rather than down through the seat. bed_leg_count fold-down bed_leg supports are REVOLUTE (+x) children of leaf 1. Every leaf plane sits a clearance above the seat cushion top, so a leaf laid flat while the carriage is retracted passes over the seat instead of into it, and every single-joint pose is genuinely clear. Four component slots vary without touching the mechanism: back_style, deck_frame, mattress_build and bed_leg. width_m, seat_depth_m and bed_height_m are independent continuous parameters deriving leaf length, carriage travel, hinge heights, leg length and rail spacing; palette and tufting counts are non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "back_style_identity",
+      "applies_to": {
+        "candidates": [
+          "plain_pad",
+          "clickclack_ratchet",
+          "slatted_fold_back"
+        ],
+        "slot": "back_style"
+      },
+      "required_author_checks": [
+        "category_anchor: guided pull-out sleeper carriage",
+        "category_anchor: folding mattress leaves on the carriage",
+        "category_anchor: fold-down bed legs reach the floor",
+        "category_anchor: back_style identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "backrest",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "pullout_deck",
+          "joint_type": "prismatic",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "child_role": "seat_deck",
+          "joint_type": "fixed",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "seat_deck"
+        },
+        {
+          "exact_count": 1,
+          "role": "backrest"
+        },
+        {
+          "exact_count": 1,
+          "role": "pullout_deck"
+        },
+        {
+          "exact_count": 2,
+          "role": "mattress_leaf"
+        },
+        {
+          "count_from": "bed_leg_count",
+          "role": "bed_leg"
+        }
+      ]
+    },
+    {
+      "anchor_id": "deck_frame_identity",
+      "applies_to": {
+        "candidates": [
+          "sleeve_rail",
+          "nested_rail",
+          "slatted_frame"
+        ],
+        "slot": "deck_frame"
+      },
+      "required_author_checks": [
+        "category_anchor: guided pull-out sleeper carriage",
+        "category_anchor: folding mattress leaves on the carriage",
+        "category_anchor: fold-down bed legs reach the floor",
+        "category_anchor: deck_frame identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "backrest",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "pullout_deck",
+          "joint_type": "prismatic",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "child_role": "seat_deck",
+          "joint_type": "fixed",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "seat_deck"
+        },
+        {
+          "exact_count": 1,
+          "role": "backrest"
+        },
+        {
+          "exact_count": 1,
+          "role": "pullout_deck"
+        },
+        {
+          "exact_count": 2,
+          "role": "mattress_leaf"
+        },
+        {
+          "count_from": "bed_leg_count",
+          "role": "bed_leg"
+        }
+      ]
+    },
+    {
+      "anchor_id": "mattress_build_identity",
+      "applies_to": {
+        "candidates": [
+          "slatted_panel",
+          "tufted_panel"
+        ],
+        "slot": "mattress_build"
+      },
+      "required_author_checks": [
+        "category_anchor: guided pull-out sleeper carriage",
+        "category_anchor: folding mattress leaves on the carriage",
+        "category_anchor: fold-down bed legs reach the floor",
+        "category_anchor: mattress_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "backrest",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "pullout_deck",
+          "joint_type": "prismatic",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "child_role": "seat_deck",
+          "joint_type": "fixed",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "seat_deck"
+        },
+        {
+          "exact_count": 1,
+          "role": "backrest"
+        },
+        {
+          "exact_count": 1,
+          "role": "pullout_deck"
+        },
+        {
+          "exact_count": 2,
+          "role": "mattress_leaf"
+        },
+        {
+          "count_from": "bed_leg_count",
+          "role": "bed_leg"
+        }
+      ]
+    },
+    {
+      "anchor_id": "bed_leg_identity",
+      "applies_to": {
+        "candidates": [
+          "u_leg",
+          "twin_post"
+        ],
+        "slot": "bed_leg"
+      },
+      "required_author_checks": [
+        "category_anchor: guided pull-out sleeper carriage",
+        "category_anchor: folding mattress leaves on the carriage",
+        "category_anchor: fold-down bed legs reach the floor",
+        "category_anchor: bed_leg identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "backrest",
+          "joint_type": "revolute",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "pullout_deck",
+          "joint_type": "prismatic",
+          "parent_role": "sofa_frame"
+        },
+        {
+          "child_role": "seat_deck",
+          "joint_type": "fixed",
+          "parent_role": "sofa_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "sofa_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "seat_deck"
+        },
+        {
+          "exact_count": 1,
+          "role": "backrest"
+        },
+        {
+          "exact_count": 1,
+          "role": "pullout_deck"
+        },
+        {
+          "exact_count": 2,
+          "role": "mattress_leaf"
+        },
+        {
+          "count_from": "bed_leg_count",
+          "role": "bed_leg"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2 <= bed_leg_count <= 4; leg pitch >= leg width + 60 mm across width_m",
+      "item_slot": "bed_leg",
+      "name": "bed_leg_count",
+      "spacing_expression": "legs are spread evenly across the front leaf width, each on its own hinge bracket",
+      "values": [
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Plain upholstered back pad on a hinge tube, no exposed hardware.",
+          "implementation_function": "_back_style_plain_pad_build",
+          "interfaces": [],
+          "name": "plain_pad",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa width; derives carcass, seat, leaf, rail and leg station widths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "carcass seat depth; derives leaf length, carriage travel and backrest length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height; derives seat top, hinge heights and bed-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_sofa_bed1__002__png_f3a7fcc7d38c4e7d8d79ea405442889c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L178-L207"
+          ]
+        },
+        {
+          "evidence": "Click-clack back with exposed side ratchet plates and stepped notches at the hinge.",
+          "implementation_function": "_back_style_clickclack_ratchet_build",
+          "interfaces": [],
+          "name": "clickclack_ratchet",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa width; derives carcass, seat, leaf, rail and leg station widths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "carcass seat depth; derives leaf length, carriage travel and backrest length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height; derives seat top, hinge heights and bed-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_sofa_bed1_clickclack_back",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L368-L440"
+          ]
+        },
+        {
+          "evidence": "Folding back built as a slatted frame with an upholstered face and exposed rails.",
+          "implementation_function": "_back_style_slatted_fold_back_build",
+          "interfaces": [],
+          "name": "slatted_fold_back",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa width; derives carcass, seat, leaf, rail and leg station widths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "carcass seat depth; derives leaf length, carriage travel and backrest length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height; derives seat top, hinge heights and bed-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260710_133744_517392_1fd605e7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L266-L315"
+          ]
+        }
+      ],
+      "component_type": "backrest",
+      "name": "back_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Carriage running on square guide sleeves let into the front apron.",
+          "implementation_function": "_deck_frame_sleeve_rail_build",
+          "interfaces": [],
+          "name": "sleeve_rail",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa width; derives carcass, seat, leaf, rail and leg station widths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "carcass seat depth; derives leaf length, carriage travel and backrest length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height; derives seat top, hinge heights and bed-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_sofa_bed1__002__png_f3a7fcc7d38c4e7d8d79ea405442889c",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L221-L265"
+          ]
+        },
+        {
+          "evidence": "Carriage on nested telescoping support rails with visible inner and outer sections.",
+          "implementation_function": "_deck_frame_nested_rail_build",
+          "interfaces": [],
+          "name": "nested_rail",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa width; derives carcass, seat, leaf, rail and leg station widths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "carcass seat depth; derives leaf length, carriage travel and backrest length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height; derives seat top, hinge heights and bed-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_sofa_bed1_pullout_deck",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L303-L374"
+          ]
+        },
+        {
+          "evidence": "Carriage built as an open slatted platform with transverse slats across side rails.",
+          "implementation_function": "_deck_frame_slatted_frame_build",
+          "interfaces": [],
+          "name": "slatted_frame",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa width; derives carcass, seat, leaf, rail and leg station widths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "carcass seat depth; derives leaf length, carriage travel and backrest length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height; derives seat top, hinge heights and bed-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260710_133744_517392_1fd605e7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L192-L236"
+          ]
+        }
+      ],
+      "component_type": "carriage frame",
+      "name": "deck_frame",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Leaf built as a steel frame with a regular rhythm of transverse slats under a mattress pad.",
+          "implementation_function": "_mattress_build_slatted_panel_build",
+          "interfaces": [],
+          "name": "slatted_panel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa width; derives carcass, seat, leaf, rail and leg station widths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "carcass seat depth; derives leaf length, carriage travel and backrest length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height; derives seat top, hinge heights and bed-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_sofa_bed1__003__png_rerun_ef2699b37030410e922caf5507d1190e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L78-L161"
+          ]
+        },
+        {
+          "evidence": "Leaf built as an upholstered cushion panel with seams and buttons instead of exposed slats.",
+          "implementation_function": "_mattress_build_tufted_panel_build",
+          "interfaces": [],
+          "name": "tufted_panel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa width; derives carcass, seat, leaf, rail and leg station widths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "carcass seat depth; derives leaf length, carriage travel and backrest length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height; derives seat top, hinge heights and bed-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_sofa_bed1_trifold_panels",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L334-L379"
+          ]
+        }
+      ],
+      "component_type": "mattress leaf",
+      "name": "mattress_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "U-shaped tube leg with foot pads, hinged under the mattress leaf.",
+          "implementation_function": "_bed_leg_u_leg_build",
+          "interfaces": [],
+          "name": "u_leg",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa width; derives carcass, seat, leaf, rail and leg station widths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "carcass seat depth; derives leaf length, carriage travel and backrest length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height; derives seat top, hinge heights and bed-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_sofa_bed1__003__png_rerun_ef2699b37030410e922caf5507d1190e",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L415-L438"
+          ]
+        },
+        {
+          "evidence": "Paired square posts on a visible hinge bracket with a tie bar between them.",
+          "implementation_function": "_bed_leg_twin_post_build",
+          "interfaces": [],
+          "name": "twin_post",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "overall sofa width; derives carcass, seat, leaf, rail and leg station widths",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.68,
+              "minimum": 0.52,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "carcass seat depth; derives leaf length, carriage travel and backrest length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.38,
+              "mode": "independent",
+              "name": "bed_height_m",
+              "rationale": "deployed bed-surface height; derives seat top, hinge heights and bed-leg length",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_folding_sofa_bed1_foldout_support_legs",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L179-L258"
+          ]
+        }
+      ],
+      "component_type": "fold-down bed leg",
+      "name": "bed_leg",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Folding_sofa_bed1",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Folding_sofa_bed1.md",
+  "source_map_sha256": "5a0178bbdfa84806833a81e6cd66be806fcaeb36038bceaa7ce15ca880e08266"
+}

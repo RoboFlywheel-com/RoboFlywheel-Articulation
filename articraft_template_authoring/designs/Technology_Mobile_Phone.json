@@ -1,0 +1,408 @@
+{
+  "assembly_notes": "Build one topology-defining host, derive a supported front bay from the selected front-module footprint, then mount either the integrated antenna treatment or a guided telescoping mast at a host-local upper corner. Slider, swivel, and clamshell candidates own only their host motion; numeric, QWERTY, touch, and senior deltas own only their front construction.",
+  "bindings": [
+    {
+      "binding_id": "host_to_front_module",
+      "provider": "host_mechanism.front_bay",
+      "consumer": "front_module.host_mount",
+      "joint_type": "fixed",
+      "derived": [
+        {
+          "name": "host_width_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "depends_on": ["host_mechanism", "front_module"],
+          "expression": "max(source host width, front-module footprint width plus side support margins)",
+          "rationale": "QWERTY and senior layouts widen the local host bay without changing the selected host topology."
+        },
+        {
+          "name": "front_bay_height_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "depends_on": ["host_mechanism", "front_module"],
+          "expression": "front-module screen and control stack height plus molded top and bottom margins",
+          "rationale": "Every front candidate remains fully supported and readable on every host."
+        }
+      ]
+    },
+    {
+      "binding_id": "host_to_antenna_module",
+      "provider": "host_mechanism.antenna_socket",
+      "consumer": "antenna_module.host_socket",
+      "joint_type": "fixed",
+      "derived": [
+        {
+          "name": "antenna_mount_xyz_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "minimum": null,
+          "maximum": null,
+          "choices": [],
+          "depends_on": ["host_mechanism", "front_module", "antenna_module"],
+          "expression": "selected host upper-right perimeter point offset outside the front-module footprint and moving carrier envelope",
+          "rationale": "The mast socket remains seated on the root shell and clear of slider, swivel, and lid motion."
+        }
+      ]
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "mobile_phone_identity",
+      "applies_to": {
+        "slot": "host_mechanism",
+        "candidates": ["curved_monoblock", "vertical_slider", "corner_swivel", "senior_clamshell"]
+      },
+      "required_roles": [
+        {"role": "handset_body", "exact_count": 1},
+        {"role": "display_panel", "exact_count": 1},
+        {"role": "input_surface", "exact_count": 1}
+      ],
+      "required_relations": [],
+      "required_author_checks": [
+        "category_anchor: handheld body carries one display and one input surface"
+      ]
+    },
+    {
+      "anchor_id": "slider_mechanism",
+      "applies_to": {"slot": "host_mechanism", "candidates": ["vertical_slider"]},
+      "required_roles": [
+        {"role": "handset_body", "exact_count": 1},
+        {"role": "display_panel", "exact_count": 1}
+      ],
+      "required_relations": [
+        {"parent_role": "handset_body", "child_role": "display_panel", "joint_type": "prismatic", "axis": [0.0, 1.0, 0.0]}
+      ],
+      "required_author_checks": ["category_anchor: slider display exposes the supported front bay"]
+    },
+    {
+      "anchor_id": "swivel_mechanism",
+      "applies_to": {"slot": "host_mechanism", "candidates": ["corner_swivel"]},
+      "required_roles": [
+        {"role": "handset_body", "exact_count": 1},
+        {"role": "display_panel", "exact_count": 1}
+      ],
+      "required_relations": [
+        {"parent_role": "handset_body", "child_role": "display_panel", "joint_type": "revolute", "axis": [0.0, 0.0, 1.0]}
+      ],
+      "required_author_checks": ["category_anchor: swivel display rotates about the visible corner post"]
+    },
+    {
+      "anchor_id": "clamshell_mechanism",
+      "applies_to": {"slot": "host_mechanism", "candidates": ["senior_clamshell"]},
+      "required_roles": [
+        {"role": "handset_body", "exact_count": 1},
+        {"role": "display_panel", "exact_count": 1}
+      ],
+      "required_relations": [
+        {"parent_role": "handset_body", "child_role": "display_panel", "joint_type": "revolute", "axis": [1.0, 0.0, 0.0]}
+      ],
+      "required_author_checks": ["category_anchor: clamshell lid closes over the front module"]
+    },
+    {
+      "anchor_id": "hardware_front_controls",
+      "applies_to": {
+        "slot": "front_module",
+        "candidates": ["classic_function_numeric", "numeric_only_12", "qwerty_40", "senior_large_keypad"]
+      },
+      "required_roles": [
+        {"role": "input_surface", "exact_count": 1},
+        {"role": "key_press", "count_from": "resolved.key_count"}
+      ],
+      "required_relations": [
+        {"parent_role": "input_surface", "child_role": "key_press", "joint_type": "prismatic", "axis": [0.0, 0.0, -1.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: every hardware key is repeated and presses inward",
+        "category_anchor: every hardware key remains exposed inside its front opening"
+      ]
+    },
+    {
+      "anchor_id": "touch_front_controls",
+      "applies_to": {"slot": "front_module", "candidates": ["full_touch"]},
+      "required_roles": [
+        {"role": "input_surface", "exact_count": 1},
+        {"role": "key_press", "exact_count": 4}
+      ],
+      "required_relations": [],
+      "required_author_checks": ["category_anchor: touch front preserves broad glass and four physical controls"]
+    },
+    {
+      "anchor_id": "external_antenna",
+      "applies_to": {"slot": "antenna_module", "candidates": ["telescoping_mast"]},
+      "required_roles": [
+        {"role": "antenna_mast", "exact_count": 1}
+      ],
+      "required_relations": [
+        {"parent_role": "handset_body", "child_role": "antenna_mast", "joint_type": "prismatic", "axis": [0.0, 1.0, 0.0]}
+      ],
+      "required_author_checks": ["category_anchor: telescoping mast remains guided while extending"]
+    }
+  ],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Boolean-unioned rounded shell sections form the parent monoblock; front-module pockets remain a derived host adaptation instead of additional host candidates.",
+          "implementation_function": "_host_mechanism_curved_monoblock_build",
+          "interfaces": [
+            {"name": "front_bay", "kind": "plane", "role": "provider", "part": "handset_body", "frame": {"normal": "+Z"}, "dimensions": {"extent": "derived front footprint"}},
+            {"name": "antenna_socket", "kind": "axis", "role": "provider", "part": "handset_body", "frame": {"axis": "+Y"}, "dimensions": {"radius": 0.0035}}
+          ],
+          "name": "curved_monoblock",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_nokia-3310-candybar-mobile-phone-dark-blue-with-_20260605_174005_164763_8c6bf79a",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L267-L318"
+          ]
+        },
+        {
+          "evidence": "Separate lower and upper rounded slabs retain a flush slide face and a +Y prismatic carrier; unchanged keypad construction is intentionally excluded from this candidate.",
+          "implementation_function": "_host_mechanism_vertical_slider_build",
+          "interfaces": [
+            {"name": "front_bay", "kind": "plane", "role": "provider", "part": "handset_body", "frame": {"normal": "+Z", "carrier": "lower deck"}, "dimensions": {"extent": "derived front footprint"}},
+            {"name": "antenna_socket", "kind": "axis", "role": "provider", "part": "handset_body", "frame": {"axis": "+Y"}, "dimensions": {"radius": 0.0035}}
+          ],
+          "name": "vertical_slider",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_mobile_phone_var_slider",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L256-L321",
+            "model.py:L375-L491"
+          ]
+        },
+        {
+          "evidence": "Lower and upper shells, visible corner post/hub and face-normal revolute joint are the topology-changing delta; inherited controls are excluded.",
+          "implementation_function": "_host_mechanism_corner_swivel_build",
+          "interfaces": [
+            {"name": "front_bay", "kind": "plane", "role": "provider", "part": "handset_body", "frame": {"normal": "+Z", "carrier": "lower deck"}, "dimensions": {"extent": "derived front footprint"}},
+            {"name": "antenna_socket", "kind": "axis", "role": "provider", "part": "handset_body", "frame": {"axis": "+Y"}, "dimensions": {"radius": 0.0035}}
+          ],
+          "name": "corner_swivel",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_mobile_phone_var_swivel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L102-L154",
+            "model.py:L375-L505"
+          ]
+        },
+        {
+          "evidence": "Thick lower shell, split body knuckles, bridged display lid and horizontal hinge necessarily form one structural family because the whole host topology changes.",
+          "implementation_function": "_host_mechanism_senior_clamshell_build",
+          "interfaces": [
+            {"name": "front_bay", "kind": "plane", "role": "provider", "part": "handset_body", "frame": {"normal": "+Z", "carrier": "lower half"}, "dimensions": {"extent": "derived front footprint"}},
+            {"name": "antenna_socket", "kind": "axis", "role": "provider", "part": "handset_body", "frame": {"axis": "+Y"}, "dimensions": {"radius": 0.0035}}
+          ],
+          "name": "senior_clamshell",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_black-clamshell-flip-phone-for-seniors-with-a-hi_20260605_174014_810624_7ec9acc7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L570-L750"
+          ]
+        }
+      ],
+      "component_type": "curved single-piece handset host",
+      "name": "host_mechanism",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Parent front module combines a small inset LCD, three shaped function controls and twelve numeric press parts.",
+          "implementation_function": "_front_module_classic_function_numeric_build",
+          "interfaces": [
+            {
+              "name": "host_mount",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "front_deck",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"footprint": "classic LCD plus 15-key field"},
+              "surface_relation": {
+                "subject_role": "key_press",
+                "opening_expression": "each key footprint plus local XY clearance remains inside its keyed front opening",
+                "normal_band_expression": "key cap spans from the front recess to a visible crown above the host face",
+                "motion_expression": "key_height - recess_depth - full_press_travel >= 0.85 mm while the cap remains inside the same opening",
+                "required_author_check": "category_anchor: every hardware key remains exposed inside its front opening"
+              }
+            }
+          ],
+          "name": "classic_function_numeric",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_nokia-3310-candybar-mobile-phone-dark-blue-with-_20260605_174005_164763_8c6bf79a",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L319-L534"
+          ]
+        },
+        {
+          "evidence": "Variant-only delta removes the function well and emits exactly twelve numeric press parts by the inherited grid rule.",
+          "implementation_function": "_front_module_numeric_only_12_build",
+          "interfaces": [
+            {
+              "name": "host_mount",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "front_deck",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"footprint": "12-key grid"},
+              "surface_relation": {
+                "subject_role": "key_press",
+                "opening_expression": "each key footprint plus local XY clearance remains inside its keyed front opening",
+                "normal_band_expression": "key cap spans from the front recess to a visible crown above the host face",
+                "motion_expression": "key_height - recess_depth - full_press_travel >= 0.85 mm while the cap remains inside the same opening",
+                "required_author_check": "category_anchor: every hardware key remains exposed inside its front opening"
+              }
+            }
+          ],
+          "name": "numeric_only_12",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_mobile_phone_var_numeric_only",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L255-L264",
+            "model.py:L377-L425"
+          ]
+        },
+        {
+          "evidence": "Variant-only delta changes the front opening and emits forty small square press parts; its larger footprint is a host-capacity input.",
+          "implementation_function": "_front_module_qwerty_40_build",
+          "interfaces": [
+            {
+              "name": "host_mount",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "front_deck",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"footprint": "4 by 10 QWERTY grid"},
+              "surface_relation": {
+                "subject_role": "key_press",
+                "opening_expression": "each key footprint plus local XY clearance remains inside its keyed front opening",
+                "normal_band_expression": "key cap spans from the front recess to a visible crown above the host face",
+                "motion_expression": "key_height - recess_depth - full_press_travel >= 0.85 mm while the cap remains inside the same opening",
+                "required_author_check": "category_anchor: every hardware key remains exposed inside its front opening"
+              }
+            }
+          ],
+          "name": "qwerty_40",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_mobile_phone_var_qwerty",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L209-L231",
+            "model.py:L336-L393"
+          ]
+        },
+        {
+          "evidence": "Variant-only delta replaces the keypad front with edge-to-edge glass, narrow bezel, earpiece/camera details, and four looped prismatic controls.",
+          "implementation_function": "_front_module_full_touch_build",
+          "interfaces": [
+            {"name": "host_mount", "kind": "plane", "role": "consumer", "part": "front_deck", "frame": {"normal": "-Z"}, "dimensions": {"footprint": "broad touch glass"}}
+          ],
+          "name": "full_touch",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_mobile_phone_var_touch_slab",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L128-L235"
+          ]
+        },
+        {
+          "evidence": "Independent parent front module has nine navigation/function controls plus twelve large numeric keys and a recessed supporting tray.",
+          "implementation_function": "_front_module_senior_large_keypad_build",
+          "interfaces": [
+            {
+              "name": "host_mount",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "front_deck",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"footprint": "large 21-key field"},
+              "surface_relation": {
+                "subject_role": "key_press",
+                "opening_expression": "each key footprint plus local XY clearance remains inside its keyed front opening",
+                "normal_band_expression": "key cap spans from the front recess to a visible crown above the host face",
+                "motion_expression": "key_height - recess_depth - full_press_travel >= 0.85 mm while the cap remains inside the same opening",
+                "required_author_check": "category_anchor: every hardware key remains exposed inside its front opening"
+              }
+            }
+          ],
+          "name": "senior_large_keypad",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_black-clamshell-flip-phone-for-seniors-with-a-hi_20260605_174014_810624_7ec9acc7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L753-L833"
+          ]
+        }
+      ],
+      "component_type": "classic LCD, function cluster and numeric keypad",
+      "name": "front_module",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Parent host terminates at its molded shell and hinge without a separate external antenna, providing the de-duplicated baseline.",
+          "implementation_function": "_antenna_module_integrated_internal_build",
+          "interfaces": [
+            {"name": "host_socket", "kind": "axis", "role": "consumer", "part": "handset_body", "frame": {"axis": "+Y"}, "dimensions": {"radius": 0.003}}
+          ],
+          "name": "integrated_internal",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_black-clamshell-flip-phone-for-seniors-with-a-hi_20260605_174014_810624_7ec9acc7",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L602-L668"
+          ]
+        },
+        {
+          "evidence": "Variant-only delta adds a seated boss/sleeve and one cylindrical mast-plus-tip child on an extending prismatic axis.",
+          "implementation_function": "_antenna_module_telescoping_mast_build",
+          "interfaces": [
+            {"name": "host_socket", "kind": "axis", "role": "consumer", "part": "antenna_mast", "frame": {"axis": "+Y"}, "dimensions": {"radius": 0.0018}}
+          ],
+          "name": "telescoping_mast",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_mobile_phone_var_telescoping_antenna",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L681-L699",
+            "model.py:L790-L832"
+          ]
+        }
+      ],
+      "component_type": "handset without an external mast",
+      "name": "antenna_module",
+      "required": true
+    }
+  ],
+  "slug": "Technology_Mobile_Phone",
+  "source_map_path": "articraft_template_authoring/source_maps/Technology_Mobile_Phone.md",
+  "source_map_sha256": "c5a9678c3957b468330f5d14af591f3323741319d14dcae9deabd45378f17a86"
+}

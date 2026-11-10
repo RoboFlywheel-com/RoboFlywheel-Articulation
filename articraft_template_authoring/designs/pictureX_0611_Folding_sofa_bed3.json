@@ -1,0 +1,840 @@
+{
+ "assembly_notes": "Lift-and-pull convertible sofa bed. One rigid sofa_frame root carries the carcass, the fixed arms, the REAR seat band and the carriage guides. back_panel_count back_panel parts are REVOLUTE (+x) children of the frame. The pullout_carriage is a PRISMATIC (+y) child of the frame; the deck_lift_stage is a PRISMATIC (+z) child of the carriage; the bed_deck is FIXED on that lift stage. The seat is cushioned only over its REAR band and the deck's retracted footprint lies entirely forward of it, so raising the deck while the carriage is still in never drives it into the seat -- deck up + carriage in is the sofa, deck up + carriage out is the bed, and deck down is the stowed platform. Every single-joint boundary pose is therefore clear. Four component slots vary without touching the mechanism: back_build, deck_build, lift_frame and carriage_style. width_m, seat_depth_m and bed_height_m are independent continuous parameters deriving panel pitch, deck length, carriage travel, lift travel and hinge heights; palette and tufting counts are non-core. The arm build is its own slot: the fixed surround is one full-height upholstered block, while the fold-down arm shortens that block to a base and hinges the upper panel on its outer top edge so the panel rolls outward and up into a bed extension instead of sweeping down through the base.",
+ "bindings": [],
+ "category_anchors": [
+  {
+   "anchor_id": "back_build_identity",
+   "applies_to": {
+    "candidates": [
+     "tufted_panel",
+     "ratchet_back",
+     "split_panel"
+    ],
+    "slot": "back_build"
+   },
+   "required_author_checks": [
+    "category_anchor: carriage slides out and the lift raises the deck",
+    "category_anchor: deck reaches bed height and clears the seat band",
+    "category_anchor: back_build identity"
+   ],
+   "required_relations": [
+    {
+     "child_role": "back_panel",
+     "joint_type": "revolute",
+     "parent_role": "sofa_frame"
+    },
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "pullout_carriage",
+     "joint_type": "prismatic",
+     "parent_role": "sofa_frame"
+    },
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "deck_lift_stage",
+     "joint_type": "prismatic",
+     "parent_role": "pullout_carriage"
+    },
+    {
+     "child_role": "bed_deck",
+     "joint_type": "fixed",
+     "parent_role": "deck_lift_stage"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "sofa_frame"
+    },
+    {
+     "count_from": "back_panel_count",
+     "role": "back_panel"
+    },
+    {
+     "exact_count": 1,
+     "role": "pullout_carriage"
+    },
+    {
+     "exact_count": 1,
+     "role": "deck_lift_stage"
+    },
+    {
+     "exact_count": 1,
+     "role": "bed_deck"
+    }
+   ]
+  },
+  {
+   "anchor_id": "deck_build_identity",
+   "applies_to": {
+    "candidates": [
+     "slab_deck",
+     "trifold_deck"
+    ],
+    "slot": "deck_build"
+   },
+   "required_author_checks": [
+    "category_anchor: carriage slides out and the lift raises the deck",
+    "category_anchor: deck reaches bed height and clears the seat band",
+    "category_anchor: deck_build identity"
+   ],
+   "required_relations": [
+    {
+     "child_role": "back_panel",
+     "joint_type": "revolute",
+     "parent_role": "sofa_frame"
+    },
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "pullout_carriage",
+     "joint_type": "prismatic",
+     "parent_role": "sofa_frame"
+    },
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "deck_lift_stage",
+     "joint_type": "prismatic",
+     "parent_role": "pullout_carriage"
+    },
+    {
+     "child_role": "bed_deck",
+     "joint_type": "fixed",
+     "parent_role": "deck_lift_stage"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "sofa_frame"
+    },
+    {
+     "count_from": "back_panel_count",
+     "role": "back_panel"
+    },
+    {
+     "exact_count": 1,
+     "role": "pullout_carriage"
+    },
+    {
+     "exact_count": 1,
+     "role": "deck_lift_stage"
+    },
+    {
+     "exact_count": 1,
+     "role": "bed_deck"
+    }
+   ]
+  },
+  {
+   "anchor_id": "lift_frame_identity",
+   "applies_to": {
+    "candidates": [
+     "post_lift",
+     "scissor_underframe"
+    ],
+    "slot": "lift_frame"
+   },
+   "required_author_checks": [
+    "category_anchor: carriage slides out and the lift raises the deck",
+    "category_anchor: deck reaches bed height and clears the seat band",
+    "category_anchor: lift_frame identity"
+   ],
+   "required_relations": [
+    {
+     "child_role": "back_panel",
+     "joint_type": "revolute",
+     "parent_role": "sofa_frame"
+    },
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "pullout_carriage",
+     "joint_type": "prismatic",
+     "parent_role": "sofa_frame"
+    },
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "deck_lift_stage",
+     "joint_type": "prismatic",
+     "parent_role": "pullout_carriage"
+    },
+    {
+     "child_role": "bed_deck",
+     "joint_type": "fixed",
+     "parent_role": "deck_lift_stage"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "sofa_frame"
+    },
+    {
+     "count_from": "back_panel_count",
+     "role": "back_panel"
+    },
+    {
+     "exact_count": 1,
+     "role": "pullout_carriage"
+    },
+    {
+     "exact_count": 1,
+     "role": "deck_lift_stage"
+    },
+    {
+     "exact_count": 1,
+     "role": "bed_deck"
+    }
+   ]
+  },
+  {
+   "anchor_id": "carriage_style_identity",
+   "applies_to": {
+    "candidates": [
+     "rail_carriage",
+     "roller_carriage"
+    ],
+    "slot": "carriage_style"
+   },
+   "required_author_checks": [
+    "category_anchor: carriage slides out and the lift raises the deck",
+    "category_anchor: deck reaches bed height and clears the seat band",
+    "category_anchor: carriage_style identity"
+   ],
+   "required_relations": [
+    {
+     "child_role": "back_panel",
+     "joint_type": "revolute",
+     "parent_role": "sofa_frame"
+    },
+    {
+     "axis": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "child_role": "pullout_carriage",
+     "joint_type": "prismatic",
+     "parent_role": "sofa_frame"
+    },
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "deck_lift_stage",
+     "joint_type": "prismatic",
+     "parent_role": "pullout_carriage"
+    },
+    {
+     "child_role": "bed_deck",
+     "joint_type": "fixed",
+     "parent_role": "deck_lift_stage"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "sofa_frame"
+    },
+    {
+     "count_from": "back_panel_count",
+     "role": "back_panel"
+    },
+    {
+     "exact_count": 1,
+     "role": "pullout_carriage"
+    },
+    {
+     "exact_count": 1,
+     "role": "deck_lift_stage"
+    },
+    {
+     "exact_count": 1,
+     "role": "bed_deck"
+    }
+   ]
+  },
+  {
+   "anchor_id": "fold_down_arm_extension",
+   "applies_to": {
+    "candidates": [
+     "fold_down_arm"
+    ],
+    "slot": "arm_build"
+   },
+   "required_author_checks": [
+    "category_anchor: the arm build matches the selected surround",
+    "folding an arm really extends the sleeping surface outward"
+   ],
+   "required_relations": [
+    {
+     "child_role": "fold_down_arm",
+     "joint_type": "revolute",
+     "parent_role": "sofa_frame"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 2,
+     "role": "fold_down_arm"
+    }
+   ]
+  }
+ ],
+ "multiplicities": [
+  {
+   "host_capacity_expression": "1 <= back_panel_count <= 3; panel pitch >= panel width + 30 mm across width_m",
+   "item_slot": "back_build",
+   "name": "back_panel_count",
+   "spacing_expression": "back panels are pitched evenly across the seat width, each on its own hinge",
+   "values": [
+    1,
+    2,
+    3
+   ]
+  }
+ ],
+ "schema_version": 1,
+ "slots": [
+  {
+   "candidates": [
+    {
+     "evidence": "Hinged upholstered back panel with button tufting and a piped top edge.",
+     "implementation_function": "_back_build_tufted_panel_build",
+     "interfaces": [],
+     "name": "tufted_panel",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 2.05,
+       "minimum": 1.55,
+       "mode": "independent",
+       "name": "width_m",
+       "rationale": "overall sofa width; derives carcass, back panel pitch, carriage and deck widths",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.68,
+       "minimum": 0.52,
+       "mode": "independent",
+       "name": "seat_depth_m",
+       "rationale": "carcass depth; derives seat band, deck length, carriage travel and back length",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.46,
+       "minimum": 0.38,
+       "mode": "independent",
+       "name": "bed_height_m",
+       "rationale": "bed/seat surface height; derives plinth height, lift travel and hinge heights",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__folding_sofa_bed3__001__png_681510f392e64b02aa2e69f4fa42da4b",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L202-L243"
+     ]
+    },
+    {
+     "evidence": "Back panel carrying exposed side ratchet plates with stepped recline notches.",
+     "implementation_function": "_back_build_ratchet_back_build",
+     "interfaces": [],
+     "name": "ratchet_back",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 2.05,
+       "minimum": 1.55,
+       "mode": "independent",
+       "name": "width_m",
+       "rationale": "overall sofa width; derives carcass, back panel pitch, carriage and deck widths",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.68,
+       "minimum": 0.52,
+       "mode": "independent",
+       "name": "seat_depth_m",
+       "rationale": "carcass depth; derives seat band, deck length, carriage travel and back length",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.46,
+       "minimum": 0.38,
+       "mode": "independent",
+       "name": "bed_height_m",
+       "rationale": "bed/seat surface height; derives plinth height, lift travel and hinge heights",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_folding_sofa_bed3_ratchet_back",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L241-L312"
+     ]
+    },
+    {
+     "evidence": "Back split into two stacked pads over a shared upholstered base rail.",
+     "implementation_function": "_back_build_split_panel_build",
+     "interfaces": [],
+     "name": "split_panel",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 2.05,
+       "minimum": 1.55,
+       "mode": "independent",
+       "name": "width_m",
+       "rationale": "overall sofa width; derives carcass, back panel pitch, carriage and deck widths",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.68,
+       "minimum": 0.52,
+       "mode": "independent",
+       "name": "seat_depth_m",
+       "rationale": "carcass depth; derives seat band, deck length, carriage travel and back length",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.46,
+       "minimum": 0.38,
+       "mode": "independent",
+       "name": "bed_height_m",
+       "rationale": "bed/seat surface height; derives plinth height, lift travel and hinge heights",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_folding_sofa_bed3_split_back_panels",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L217-L276"
+     ]
+    }
+   ],
+   "component_type": "back panel",
+   "name": "back_build",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "One slab mattress deck with a welted edge over a closed platform.",
+     "implementation_function": "_deck_build_slab_deck_build",
+     "interfaces": [],
+     "name": "slab_deck",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 2.05,
+       "minimum": 1.55,
+       "mode": "independent",
+       "name": "width_m",
+       "rationale": "overall sofa width; derives carcass, back panel pitch, carriage and deck widths",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.68,
+       "minimum": 0.52,
+       "mode": "independent",
+       "name": "seat_depth_m",
+       "rationale": "carcass depth; derives seat band, deck length, carriage travel and back length",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.46,
+       "minimum": 0.38,
+       "mode": "independent",
+       "name": "bed_height_m",
+       "rationale": "bed/seat surface height; derives plinth height, lift travel and hinge heights",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__folding_sofa_bed3__001__png_681510f392e64b02aa2e69f4fa42da4b",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L309-L360"
+     ]
+    },
+    {
+     "evidence": "Deck built as separate upholstered mattress pads with seam beads between them.",
+     "implementation_function": "_deck_build_trifold_deck_build",
+     "interfaces": [],
+     "name": "trifold_deck",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 2.05,
+       "minimum": 1.55,
+       "mode": "independent",
+       "name": "width_m",
+       "rationale": "overall sofa width; derives carcass, back panel pitch, carriage and deck widths",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.68,
+       "minimum": 0.52,
+       "mode": "independent",
+       "name": "seat_depth_m",
+       "rationale": "carcass depth; derives seat band, deck length, carriage travel and back length",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.46,
+       "minimum": 0.38,
+       "mode": "independent",
+       "name": "bed_height_m",
+       "rationale": "bed/seat surface height; derives plinth height, lift travel and hinge heights",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_folding_sofa_bed3_trifold_mattress_deck",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L309-L360"
+     ]
+    }
+   ],
+   "component_type": "bed deck",
+   "name": "deck_build",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Straight telescoping lift posts in sockets on the carriage.",
+     "implementation_function": "_lift_frame_post_lift_build",
+     "interfaces": [],
+     "name": "post_lift",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 2.05,
+       "minimum": 1.55,
+       "mode": "independent",
+       "name": "width_m",
+       "rationale": "overall sofa width; derives carcass, back panel pitch, carriage and deck widths",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.68,
+       "minimum": 0.52,
+       "mode": "independent",
+       "name": "seat_depth_m",
+       "rationale": "carcass depth; derives seat band, deck length, carriage travel and back length",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.46,
+       "minimum": 0.38,
+       "mode": "independent",
+       "name": "bed_height_m",
+       "rationale": "bed/seat surface height; derives plinth height, lift travel and hinge heights",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__folding_sofa_bed3__001__png_681510f392e64b02aa2e69f4fa42da4b",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L295-L308"
+     ]
+    },
+    {
+     "evidence": "Crossed scissor links under the deck instead of straight posts.",
+     "implementation_function": "_lift_frame_scissor_underframe_build",
+     "interfaces": [],
+     "name": "scissor_underframe",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 2.05,
+       "minimum": 1.55,
+       "mode": "independent",
+       "name": "width_m",
+       "rationale": "overall sofa width; derives carcass, back panel pitch, carriage and deck widths",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.68,
+       "minimum": 0.52,
+       "mode": "independent",
+       "name": "seat_depth_m",
+       "rationale": "carcass depth; derives seat band, deck length, carriage travel and back length",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.46,
+       "minimum": 0.38,
+       "mode": "independent",
+       "name": "bed_height_m",
+       "rationale": "bed/seat surface height; derives plinth height, lift travel and hinge heights",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_folding_sofa_bed3_scissor_underframe",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L242-L256"
+     ]
+    }
+   ],
+   "component_type": "deck lift frame",
+   "name": "lift_frame",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Carriage running on side rails let into the carcass with a boxed front rail.",
+     "implementation_function": "_carriage_style_rail_carriage_build",
+     "interfaces": [],
+     "name": "rail_carriage",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 2.05,
+       "minimum": 1.55,
+       "mode": "independent",
+       "name": "width_m",
+       "rationale": "overall sofa width; derives carcass, back panel pitch, carriage and deck widths",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.68,
+       "minimum": 0.52,
+       "mode": "independent",
+       "name": "seat_depth_m",
+       "rationale": "carcass depth; derives seat band, deck length, carriage travel and back length",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.46,
+       "minimum": 0.38,
+       "mode": "independent",
+       "name": "bed_height_m",
+       "rationale": "bed/seat surface height; derives plinth height, lift travel and hinge heights",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__folding_sofa_bed3__001__png_681510f392e64b02aa2e69f4fa42da4b",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L244-L294"
+     ]
+    },
+    {
+     "evidence": "Carriage carried on roll-out feet with visible roller housings under its front rail.",
+     "implementation_function": "_carriage_style_roller_carriage_build",
+     "interfaces": [],
+     "name": "roller_carriage",
+     "notes": "",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 2.05,
+       "minimum": 1.55,
+       "mode": "independent",
+       "name": "width_m",
+       "rationale": "overall sofa width; derives carcass, back panel pitch, carriage and deck widths",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.68,
+       "minimum": 0.52,
+       "mode": "independent",
+       "name": "seat_depth_m",
+       "rationale": "carcass depth; derives seat band, deck length, carriage travel and back length",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.46,
+       "minimum": 0.38,
+       "mode": "independent",
+       "name": "bed_height_m",
+       "rationale": "bed/seat surface height; derives plinth height, lift travel and hinge heights",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex0611_folding_sofa_bed3_rollout_legs",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L362-L420"
+     ]
+    }
+   ],
+   "component_type": "carriage frame",
+   "name": "carriage_style",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "One fixed upholstered arm surround runs the full carcass height on each side.",
+     "implementation_function": "_arm_build_fixed_arm_build",
+     "interfaces": [],
+     "name": "fixed_arm",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_picturex_0611__folding_sofa_bed3__001__png_681510f392e64b02aa2e69f4fa42da4b",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L202-L243"
+     ]
+    },
+    {
+     "evidence": "A hinged arm panel over a shortened arm base swings out on its own revolute joint to extend the sleeping surface.",
+     "implementation_function": "_arm_build_fold_down_arm_build",
+     "interfaces": [],
+     "name": "fold_down_arm",
+     "notes": "",
+     "parameters": [],
+     "record_id": "rec_picturex0611_folding_sofa_bed3_fold_down_arms",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L121-L143",
+      "model.py:L428-L480"
+     ]
+    }
+   ],
+   "component_type": "carcass arm",
+   "name": "arm_build",
+   "required": true
+  }
+ ],
+ "slug": "pictureX_0611_Folding_sofa_bed3",
+ "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Folding_sofa_bed3.md",
+ "source_map_sha256": "091d134acb3a6896d9aaaf53b35ba7b256eba778775b70fcd6f6c8e30395e755"
+}

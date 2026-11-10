@@ -1,0 +1,1500 @@
+{
+  "assembly_notes": "One-handed garden pruner. A small rigid pivot_frame root carries the main pivot boss, its bolt head and captive nut. The cutting_half and the counter_half are both REVOLUTE children of that frame on the same main axis, opening symmetrically by open_angle_rad each; q=0 is fully closed. head_build changes the jaw pair only (bypass_blade, hooked_beak, long_bypass, anvil_insert) and handle_build changes how both handles are built behind the pivot (sculpted_grip, plate_frame); the two are independent because the jaw and the handle meet at a fixed tang section at the pivot. return_build is the spring that reopens the jaws: coil_seat runs on a PRISMATIC seat between the handles, torsion_coil wraps the pivot on its own revolute leg, and leaf_spring bows between them. spring_stage_count stacks that spring along its own axis. catch_build is the locking hardware on the counter handle: swing_latch, thumb_slider (prismatic), ratchet_pawl, stop_screw (prismatic) and rotating_sleeve. Every catch mounts at the same station on the counter handle and stays within the handle envelope at every pose, so all combinations build. tool_length_m, jaw_ratio and open_angle_rad are the independent parameters; palette and grip ribbing are non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "head_build_identity",
+      "applies_to": {
+        "candidates": [
+          "bypass_blade",
+          "hooked_beak",
+          "long_bypass",
+          "anvil_insert"
+        ],
+        "slot": "head_build"
+      },
+      "required_author_checks": [
+        "category_anchor: both halves turn on the one main pivot",
+        "category_anchor: the jaws close and the spring reopens them",
+        "category_anchor: head_build identity"
+      ],
+      "required_relations": [
+        {
+          "child_role": "cutting_half",
+          "joint_type": "revolute",
+          "parent_role": "pivot_frame"
+        },
+        {
+          "child_role": "counter_half",
+          "joint_type": "revolute",
+          "parent_role": "pivot_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "pivot_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "cutting_half"
+        },
+        {
+          "exact_count": 1,
+          "role": "counter_half"
+        },
+        {
+          "count_from": "spring_stage_count",
+          "role": "return_spring"
+        },
+        {
+          "exact_count": 1,
+          "role": "locking_catch"
+        }
+      ]
+    },
+    {
+      "anchor_id": "return_build_identity",
+      "applies_to": {
+        "candidates": [
+          "coil_seat",
+          "torsion_coil",
+          "leaf_spring"
+        ],
+        "slot": "return_build"
+      },
+      "required_author_checks": [
+        "category_anchor: both halves turn on the one main pivot",
+        "category_anchor: the jaws close and the spring reopens them",
+        "category_anchor: return_build identity"
+      ],
+      "required_relations": [
+        {
+          "child_role": "cutting_half",
+          "joint_type": "revolute",
+          "parent_role": "pivot_frame"
+        },
+        {
+          "child_role": "counter_half",
+          "joint_type": "revolute",
+          "parent_role": "pivot_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "pivot_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "cutting_half"
+        },
+        {
+          "exact_count": 1,
+          "role": "counter_half"
+        },
+        {
+          "count_from": "spring_stage_count",
+          "role": "return_spring"
+        },
+        {
+          "exact_count": 1,
+          "role": "locking_catch"
+        }
+      ]
+    },
+    {
+      "anchor_id": "catch_build_identity",
+      "applies_to": {
+        "candidates": [
+          "swing_latch",
+          "thumb_slider",
+          "ratchet_pawl",
+          "stop_screw",
+          "rotating_sleeve"
+        ],
+        "slot": "catch_build"
+      },
+      "required_author_checks": [
+        "category_anchor: both halves turn on the one main pivot",
+        "category_anchor: the jaws close and the spring reopens them",
+        "category_anchor: catch_build identity"
+      ],
+      "required_relations": [
+        {
+          "child_role": "cutting_half",
+          "joint_type": "revolute",
+          "parent_role": "pivot_frame"
+        },
+        {
+          "child_role": "counter_half",
+          "joint_type": "revolute",
+          "parent_role": "pivot_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "pivot_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "cutting_half"
+        },
+        {
+          "exact_count": 1,
+          "role": "counter_half"
+        },
+        {
+          "count_from": "spring_stage_count",
+          "role": "return_spring"
+        },
+        {
+          "exact_count": 1,
+          "role": "locking_catch"
+        }
+      ]
+    },
+    {
+      "anchor_id": "handle_build_identity",
+      "applies_to": {
+        "candidates": [
+          "sculpted_grip",
+          "plate_frame"
+        ],
+        "slot": "handle_build"
+      },
+      "required_author_checks": [
+        "category_anchor: both halves turn on the one main pivot",
+        "category_anchor: the jaws close and the spring reopens them",
+        "category_anchor: handle_build identity"
+      ],
+      "required_relations": [
+        {
+          "child_role": "cutting_half",
+          "joint_type": "revolute",
+          "parent_role": "pivot_frame"
+        },
+        {
+          "child_role": "counter_half",
+          "joint_type": "revolute",
+          "parent_role": "pivot_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "pivot_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "cutting_half"
+        },
+        {
+          "exact_count": 1,
+          "role": "counter_half"
+        },
+        {
+          "count_from": "spring_stage_count",
+          "role": "return_spring"
+        },
+        {
+          "exact_count": 1,
+          "role": "locking_catch"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= spring_stage_count <= 2; stacked stages must still fit between the handles at full close",
+      "item_slot": "return_build",
+      "name": "spring_stage_count",
+      "spacing_expression": "spring stages are stacked along the spring axis, each one stage pitch apart",
+      "values": [
+        1,
+        2
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Curved bypass blade sweeping past a matching counter jaw, both sculpted from the same pivot boss.",
+          "implementation_function": "_head_build_bypass_blade_build",
+          "interfaces": [],
+          "name": "bypass_blade",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garden_pruner__002__png_a4fac9c0f0654977b6ccc47b55874c50",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L133-L335"
+          ]
+        },
+        {
+          "evidence": "Parrot-beak pair: a hooked counter jaw that traps the stem against the cutting half.",
+          "implementation_function": "_head_build_hooked_beak_build",
+          "interfaces": [],
+          "name": "hooked_beak",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garden_pruner__003__png_6cb54782a7e4491aa10f109d158e4131",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L204-L346"
+          ]
+        },
+        {
+          "evidence": "Long slender bypass jaw with a separate cutting-edge solid along its whole length.",
+          "implementation_function": "_head_build_long_bypass_build",
+          "interfaces": [],
+          "name": "long_bypass",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garden_pruner_var_long_bypass_blade",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L92-L167"
+          ]
+        },
+        {
+          "evidence": "Flat counter jaw carrying a seated, replaceable anvil insert the blade closes onto.",
+          "implementation_function": "_head_build_anvil_insert_build",
+          "interfaces": [],
+          "name": "anvil_insert",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garden_pruner_var_replaceable_anvil_insert",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L163-L284"
+          ]
+        }
+      ],
+      "component_type": "cutting head",
+      "name": "head_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Coil spring on a prismatic seat between the handles, compressing as they close.",
+          "implementation_function": "_return_build_coil_seat_build",
+          "interfaces": [],
+          "name": "coil_seat",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garden_pruner__002__png_a4fac9c0f0654977b6ccc47b55874c50",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L415-L457"
+          ]
+        },
+        {
+          "evidence": "Torsion spring wrapped around the pivot with its own articulated leg bearing on a handle.",
+          "implementation_function": "_return_build_torsion_coil_build",
+          "interfaces": [],
+          "name": "torsion_coil",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garden_pruner_var_pivot_torsion_spring",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L383-L423"
+          ]
+        },
+        {
+          "evidence": "Curved leaf spring bearing between the handles instead of a coil.",
+          "implementation_function": "_return_build_leaf_spring_build",
+          "interfaces": [],
+          "name": "leaf_spring",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garden_pruner_var_leaf_spring_return",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L143-L277"
+          ]
+        }
+      ],
+      "component_type": "return spring",
+      "name": "return_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Swinging hook latch on the handle that drops over the other half to hold the jaws shut.",
+          "implementation_function": "_catch_build_swing_latch_build",
+          "interfaces": [],
+          "name": "swing_latch",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garden_pruner__002__png_a4fac9c0f0654977b6ccc47b55874c50",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L371-L414"
+          ]
+        },
+        {
+          "evidence": "Prismatic thumb slider shooting a bolt across the handles instead of a swinging hook.",
+          "implementation_function": "_catch_build_thumb_slider_build",
+          "interfaces": [],
+          "name": "thumb_slider",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garden_pruner_var_sliding_thumb_lock",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L152-L180"
+          ]
+        },
+        {
+          "evidence": "Pivoting pawl riding a toothed sector so the jaws close in ratcheted steps.",
+          "implementation_function": "_catch_build_ratchet_pawl_build",
+          "interfaces": [],
+          "name": "ratchet_pawl",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garden_pruner_var_ratchet_lock",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L62"
+          ]
+        },
+        {
+          "evidence": "Prismatic stop screw in the frame that limits how far the handles open.",
+          "implementation_function": "_catch_build_stop_screw_build",
+          "interfaces": [],
+          "name": "stop_screw",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garden_pruner_var_adjustable_stop_screw",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L24-L62"
+          ]
+        },
+        {
+          "evidence": "Rotating grip sleeve on the lower handle turning about the handle axis.",
+          "implementation_function": "_catch_build_rotating_sleeve_build",
+          "interfaces": [],
+          "name": "rotating_sleeve",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_garden_pruner_var_rotating_lower_handle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L23-L91"
+          ]
+        }
+      ],
+      "component_type": "locking catch",
+      "name": "catch_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Bezier-sculpted handle halves with swelling palm bellies and a soft return curve.",
+          "implementation_function": "_handle_build_sculpted_grip_build",
+          "interfaces": [],
+          "name": "sculpted_grip",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garden_pruner__001__png_1fb3fdfcc83c425f8d55bf2dec1bbb57",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L142-L348"
+          ]
+        },
+        {
+          "evidence": "Plate-built handle cores with a separate moulded grip shell wrapped over each.",
+          "implementation_function": "_handle_build_plate_frame_build",
+          "interfaces": [],
+          "name": "plate_frame",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.18,
+              "mode": "independent",
+              "name": "tool_length_m",
+              "rationale": "overall closed length; derives handle length, jaw length and spring station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.38,
+              "minimum": 0.24,
+              "mode": "independent",
+              "name": "jaw_ratio",
+              "rationale": "jaw length as a fraction of tool length; derives blade reach and pivot position",
+              "value_type": "ratio"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.72,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "open_angle_rad",
+              "rationale": "half angle each handle swings from closed to fully open; derives spring travel and catch throw",
+              "unit": "rad",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * (1 - jaw_ratio)",
+              "mode": "derived",
+              "name": "handle_length_m",
+              "rationale": "handle length behind the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio"
+              ],
+              "expression": "tool_length_m * jaw_ratio",
+              "mode": "derived",
+              "name": "jaw_length_m",
+              "rationale": "jaw length ahead of the pivot",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tool_length_m",
+                "jaw_ratio",
+                "open_angle_rad"
+              ],
+              "expression": "2 * spring_station * sin(open_angle_rad)",
+              "mode": "derived",
+              "name": "spring_travel_m",
+              "rationale": "how far the return spring is compressed between fully open and closed",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__garden_pruner__004__png_6897c48ac959415388b3b05470fb9720",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L39-L91"
+          ]
+        }
+      ],
+      "component_type": "handle pair",
+      "name": "handle_build",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Garden_pruner",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Garden_pruner.md",
+  "source_map_sha256": "dde8ce8e9eac8769b57cd2a3a4c0a798d7777747111f0ea57d07198252c85a92"
+}

@@ -1,0 +1,229 @@
+{
+  "assembly_notes": "",
+  "bindings": [],
+  "category_anchors": [],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "clear selector body, reservoir and grinder bridge",
+          "implementation_function": "_body_form_white_clear_selector_body_build",
+          "interfaces": [],
+          "name": "white_clear_selector_body",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__pepper_mill_with_rotating_grinder_mechanism__001__png_05147042d0f6482383d51f7b7fb9f35a",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L699"
+          ]
+        },
+        {
+          "evidence": "waisted shell and flared foot",
+          "implementation_function": "_body_form_waisted_wood_body_build",
+          "interfaces": [],
+          "name": "waisted_wood_body",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_pepper_mill_with_rotating_grin_var_body_form_waisted_wood",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L723"
+          ]
+        },
+        {
+          "evidence": "clear cylindrical reservoir",
+          "implementation_function": "_body_form_straight_glass_body_build",
+          "interfaces": [],
+          "name": "straight_glass_body",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_pepper_mill_with_rotating_grin_var_body_form_straight_glass",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L700"
+          ]
+        },
+        {
+          "evidence": "polygonal metal reservoir",
+          "implementation_function": "_body_form_faceted_metal_body_build",
+          "interfaces": [],
+          "name": "faceted_metal_body",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_pepper_mill_with_rotating_grin_var_body_form_faceted_metal",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L731"
+          ]
+        }
+      ],
+      "component_type": "body_form",
+      "name": "body_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "top cap on vertical rotor",
+          "implementation_function": "_drive_top_twist_cap_build",
+          "interfaces": [],
+          "name": "top_twist_cap",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__pepper_mill_with_rotating_grinder_mechanism__001__png_05147042d0f6482383d51f7b7fb9f35a",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L699"
+          ]
+        },
+        {
+          "evidence": "offset crank and grip",
+          "implementation_function": "_drive_top_crank_build",
+          "interfaces": [],
+          "name": "top_crank",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_pepper_mill_with_rotating_grin_var_drive_top_crank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L734"
+          ]
+        },
+        {
+          "evidence": "lateral crank on vertical shaft",
+          "implementation_function": "_drive_side_crank_build",
+          "interfaces": [],
+          "name": "side_crank",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_pepper_mill_with_rotating_grin_var_drive_side_crank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L844"
+          ]
+        }
+      ],
+      "component_type": "drive",
+      "name": "drive",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "adjustment nut and ring",
+          "implementation_function": "_adjustment_top_nut_build",
+          "interfaces": [],
+          "name": "top_nut",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_pepper_mill_with_rotating_grin_var_adjustment_top_nut",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L679"
+          ]
+        },
+        {
+          "evidence": "base collar with index marks",
+          "implementation_function": "_adjustment_indexed_base_collar_build",
+          "interfaces": [],
+          "name": "indexed_base_collar",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_pepper_mill_with_rotating_grin_var_adjustment_indexed_base_collar",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L784"
+          ]
+        },
+        {
+          "evidence": "coarse/fine side selector",
+          "implementation_function": "_adjustment_coarse_fine_slide_build",
+          "interfaces": [],
+          "name": "coarse_fine_slide",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_pepper_mill_with_rotating_grin_var_selector_coarse_fine_slide",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L706"
+          ]
+        }
+      ],
+      "component_type": "adjustment",
+      "name": "adjustment",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "one enclosed chamber",
+          "implementation_function": "_reservoir_single_chamber_build",
+          "interfaces": [],
+          "name": "single_chamber",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__pepper_mill_with_rotating_grinder_mechanism__001__png_05147042d0f6482383d51f7b7fb9f35a",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L699"
+          ]
+        },
+        {
+          "evidence": "connected divider and second chamber",
+          "implementation_function": "_reservoir_dual_chamber_build",
+          "interfaces": [],
+          "name": "dual_chamber",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_pepper_mill_with_rotating_grin_var_reservoir_count_dual_chamber",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L826"
+          ]
+        }
+      ],
+      "component_type": "reservoir",
+      "name": "reservoir",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "open top shoulder",
+          "implementation_function": "_closure_open_top_build",
+          "interfaces": [],
+          "name": "open_top",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__pepper_mill_with_rotating_grinder_mechanism__001__png_05147042d0f6482383d51f7b7fb9f35a",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L699"
+          ]
+        },
+        {
+          "evidence": "hinged cap carried by shoulder",
+          "implementation_function": "_closure_hinged_dust_cap_build",
+          "interfaces": [],
+          "name": "hinged_dust_cap",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_0611_pepper_mill_with_rotating_grin_var_closure_hinged_dust_cap",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L1-L718"
+          ]
+        }
+      ],
+      "component_type": "closure",
+      "name": "closure",
+      "required": true
+    }
+  ],
+  "slug": "pepper_mill_with_rotating_grinder_mechanism",
+  "source_map_path": "articraft_template_authoring/source_maps/pepper_mill_with_rotating_grinder_mechanism.md",
+  "source_map_sha256": "fb94c8e1245276aa9c19df0293a608e51849da52f050b8ddc04cd180001991d1"
+}

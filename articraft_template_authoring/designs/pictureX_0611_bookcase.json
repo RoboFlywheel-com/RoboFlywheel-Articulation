@@ -1,0 +1,1586 @@
+{
+  "assembly_notes": "Five independent structural slots over one grounded carcass part. carcass_form owns the load-bearing case family and exports the front-aperture interface (front plane y, aperture half-width and centre, an upper band and a lower band in z) plus the per-row shelf bays. front_treatment consumes only that aperture, so all 8x6x2x3x3 = 864 combinations build without a compatibility gate: the barrister exports its section stack, the corner its right wing, the ladder its vertical base box, grid_hutch/cube_grid their widest cell, two_tier_hutch its tier split and legged_highboy its lifted floor. Every revolute door and flip-up flap is solved by mate_axes on the real hinge line and registered with register_interface_mate; adjustable shelves are placed by mate_planes against the declared shelf-bay extent. Support paths are real geometry rather than allowances: door barrels are captured 3 mm inside their carcass hinge leaves, drawer sides 2 mm inside their runners, and adjustable shelf ends 2 mm inside their pilaster standards over the whole travel. width_m, depth_m, height_m and shelf_thickness_m are honest continuous parameters and do not inflate core/raw; height_m is derived upward when shelf_count would otherwise crush the bays below 0.135 m of clear height.",
+  "bindings": [
+    {
+      "binding_id": "carcass_to_front",
+      "consumer": "front_treatment.front_aperture",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "width_m"
+          ],
+          "expression": "aperture_half_x - door_gap/2 - hinge_out",
+          "mode": "derived",
+          "name": "leaf_width_m",
+          "rationale": "each leaf covers half the aperture with a centre seam",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "width_m",
+            "depth_m"
+          ],
+          "expression": "aperture edge +/- hinge_out; hinge y = front_y + door_proud + door_t/2",
+          "mode": "derived",
+          "name": "hinge_axis_x_m",
+          "rationale": "the hinge axis rides the aperture edge",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "depth_m"
+          ],
+          "expression": "clamp(0.46*depth_m, 0.09, box_depth-0.06)",
+          "mode": "derived",
+          "name": "drawer_travel_m",
+          "rationale": "the tray stays captured by its runners at full extension",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "carcass_form.front_aperture"
+    },
+    {
+      "binding_id": "carcass_to_shelves",
+      "consumer": "shelf_mechanism.shelf_bay",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "shelf_thickness_m",
+            "height_m"
+          ],
+          "expression": "min(0.055, max(0.012, 0.35*(shelf_pitch_m - shelf_thickness_m)))",
+          "mode": "derived",
+          "name": "shelf_travel_m",
+          "rationale": "the shelf may never reach its neighbour bay",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "shelf_thickness_m"
+          ],
+          "expression": "0.002 constant engagement over 2*shelf_travel_m + shelf_thickness_m + 0.060 of standard",
+          "mode": "derived",
+          "name": "pilaster_engage_m",
+          "rationale": "the moving shelf keeps a real support path at every pose",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "carcass_form.shelf_bay"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "bookcase_shelf_stack_identity",
+      "applies_to": {
+        "candidates": [
+          "fixed_shelves",
+          "adjustable_shelves"
+        ],
+        "slot": "shelf_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: one grounded case body carries the shelf stack",
+        "category_anchor: two vertical side supports",
+        "category_anchor: N horizontal shelf boards span the side supports",
+        "category_anchor: the case has at least one real non-fixed joint"
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "case_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "adjustable_shelf_prismatic_identity",
+      "applies_to": {
+        "candidates": [
+          "adjustable_shelves"
+        ],
+        "slot": "shelf_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: N horizontal shelf boards span the side supports",
+        "category_anchor: the case has at least one real non-fixed joint"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "shelf",
+          "joint_type": "prismatic",
+          "parent_role": "case_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "case_body"
+        },
+        {
+          "count_from": "shelf_count",
+          "role": "shelf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "full_glass_doors_identity",
+      "applies_to": {
+        "candidates": [
+          "full_glass_doors"
+        ],
+        "slot": "front_treatment"
+      },
+      "required_author_checks": [
+        "category_anchor: one grounded case body carries the shelf stack",
+        "category_anchor: the case has at least one real non-fixed joint"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "door",
+          "joint_type": "revolute",
+          "parent_role": "case_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "case_body"
+        },
+        {
+          "exact_count": 2,
+          "role": "door"
+        }
+      ]
+    },
+    {
+      "anchor_id": "upper_glass_base_drawers_identity",
+      "applies_to": {
+        "candidates": [
+          "upper_glass_base_drawers"
+        ],
+        "slot": "front_treatment"
+      },
+      "required_author_checks": [
+        "category_anchor: one grounded case body carries the shelf stack",
+        "category_anchor: the case has at least one real non-fixed joint"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "door",
+          "joint_type": "revolute",
+          "parent_role": "case_body"
+        },
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "case_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "case_body"
+        },
+        {
+          "exact_count": 2,
+          "role": "door"
+        },
+        {
+          "exact_count": 2,
+          "role": "drawer"
+        }
+      ]
+    },
+    {
+      "anchor_id": "glass_top_panel_base_doors_identity",
+      "applies_to": {
+        "candidates": [
+          "glass_top_panel_base_doors"
+        ],
+        "slot": "front_treatment"
+      },
+      "required_author_checks": [
+        "category_anchor: one grounded case body carries the shelf stack",
+        "category_anchor: the case has at least one real non-fixed joint"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "door",
+          "joint_type": "revolute",
+          "parent_role": "case_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "case_body"
+        },
+        {
+          "exact_count": 4,
+          "role": "door"
+        }
+      ]
+    },
+    {
+      "anchor_id": "base_cabinet_doors_identity",
+      "applies_to": {
+        "candidates": [
+          "base_cabinet_doors"
+        ],
+        "slot": "front_treatment"
+      },
+      "required_author_checks": [
+        "category_anchor: one grounded case body carries the shelf stack",
+        "category_anchor: the case has at least one real non-fixed joint"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "door",
+          "joint_type": "revolute",
+          "parent_role": "case_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "case_body"
+        },
+        {
+          "exact_count": 2,
+          "role": "door"
+        }
+      ]
+    },
+    {
+      "anchor_id": "flip_up_glass_identity",
+      "applies_to": {
+        "candidates": [
+          "flip_up_glass"
+        ],
+        "slot": "front_treatment"
+      },
+      "required_author_checks": [
+        "category_anchor: one grounded case body carries the shelf stack",
+        "category_anchor: the case has at least one real non-fixed joint"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "door",
+          "joint_type": "revolute",
+          "parent_role": "case_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "case_body"
+        },
+        {
+          "exact_count": 2,
+          "role": "door"
+        }
+      ]
+    },
+    {
+      "anchor_id": "open_shelving_identity",
+      "applies_to": {
+        "candidates": [
+          "open_shelving"
+        ],
+        "slot": "front_treatment"
+      },
+      "required_author_checks": [
+        "category_anchor: one grounded case body carries the shelf stack",
+        "category_anchor: the case has at least one real non-fixed joint"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "drawer",
+          "joint_type": "prismatic",
+          "parent_role": "case_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "case_body"
+        },
+        {
+          "exact_count": 1,
+          "role": "drawer"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2 <= shelf_count <= 8; the case height is derived upward so every bay keeps >= 0.135 m clear over the shelf board",
+      "item_slot": "shelf_mechanism",
+      "name": "shelf_count",
+      "spacing_expression": "shelf i sits at body_z0 + (i+1)*shelf_pitch_m with shelf_pitch_m = (body_z1-body_z0)/(shelf_count+1); the aperture bands, drawer heights and adjustable-shelf travel are re-derived per N",
+      "values": [
+        2,
+        3,
+        5,
+        8
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "carcass side_panel_0/1, back_panel, top_cap, display_shelf_i",
+          "implementation_function": "_carcass_form_rectangular_upright_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "aperture_half_x": "derived per form",
+                "lower_band": "z band",
+                "upper_band": "z band"
+              },
+              "frame": {
+                "normal": "(0,1,0)",
+                "point": "(aperture_x_center, front_y, band_mid_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "carcass_form__rectangular_upright__carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "2*row.half_width",
+                "extent_v": "row.depth"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(row.x_center, row.y_center, row.z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "shelf_bay",
+              "part": "carcass_form__rectangular_upright__carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "rectangular_upright",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.6,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "source case widths 0.70-1.55 m (005 L287, 006 L392-L542)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source case depths 0.36-0.45 m (005 L243-L299)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.3,
+              "minimum": 1.2,
+              "mode": "independent",
+              "name": "height_m",
+              "rationale": "source case heights 1.72-2.10 m (005 L237, 004 L269-L477)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "shelf_thickness_m",
+              "rationale": "source shelf boards 0.024 m (005 L292-L299)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_style",
+                "carcass_form",
+                "height_m"
+              ],
+              "expression": "base lift per base_style, +0.15 m for legged_highboy, clamped to 0.30*height_m",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "base_lift_m",
+              "rationale": "the case meets the floor through its base candidate",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shelf_count",
+                "shelf_thickness_m",
+                "base_lift_m",
+                "height_m"
+              ],
+              "expression": "height_m grows to base_lift_m + top_cap + reserved_lower_m + (shelf_count+1)*(shelf_thickness_m+0.060); shelf_pitch_m = (body_z1 - shelf_zone_lo)/(shelf_count+1)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "shelf_pitch_m",
+              "rationale": "host capacity: a bay must fit the board plus its adjustable travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "width_m",
+                "depth_m"
+              ],
+              "expression": "interior_half_x_m = width_m/2 - panel_t; interior_depth_m = depth_m - back_t",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "interior_half_x_m",
+              "rationale": "shelf span and aperture half-width",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__bookcase__005__png__airflex_batch_20260710_0cd3f4059b0b427ca0e827e61b6ac299",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L240-L324"
+          ]
+        },
+        {
+          "evidence": "carcass mid_divider, upper/lower openings",
+          "implementation_function": "_carcass_form_two_tier_hutch_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "aperture_half_x": "derived per form",
+                "lower_band": "z band",
+                "upper_band": "z band"
+              },
+              "frame": {
+                "normal": "(0,1,0)",
+                "point": "(aperture_x_center, front_y, band_mid_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "carcass_form__two_tier_hutch__carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "2*row.half_width",
+                "extent_v": "row.depth"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(row.x_center, row.y_center, row.z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "shelf_bay",
+              "part": "carcass_form__two_tier_hutch__carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "two_tier_hutch",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__bookcase__003__png__airflex_batch_20260710_9b1b91d9bff944029cc5e17122776e99",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L194-L297"
+          ]
+        },
+        {
+          "evidence": "carcass leg_i (Cylinder), crown_band",
+          "implementation_function": "_carcass_form_legged_highboy_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "aperture_half_x": "derived per form",
+                "lower_band": "z band",
+                "upper_band": "z band"
+              },
+              "frame": {
+                "normal": "(0,1,0)",
+                "point": "(aperture_x_center, front_y, band_mid_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "carcass_form__legged_highboy__carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "2*row.half_width",
+                "extent_v": "row.depth"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(row.x_center, row.y_center, row.z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "shelf_bay",
+              "part": "carcass_form__legged_highboy__carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "legged_highboy",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__bookcase__004__png__airflex_batch_20260710_70016f2ca9054566885bb677d66ede1a",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L269-L477"
+          ]
+        },
+        {
+          "evidence": "carcass partition_i, per-bay shelf runs",
+          "implementation_function": "_carcass_form_grid_hutch_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "aperture_half_x": "derived per form",
+                "lower_band": "z band",
+                "upper_band": "z band"
+              },
+              "frame": {
+                "normal": "(0,1,0)",
+                "point": "(aperture_x_center, front_y, band_mid_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "carcass_form__grid_hutch__carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "2*row.half_width",
+                "extent_v": "row.depth"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(row.x_center, row.y_center, row.z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "shelf_bay",
+              "part": "carcass_form__grid_hutch__carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "grid_hutch",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__bookcase__006__png__airflex_batch_20260710_ef98d8962cc245f8a0ae664ac6b94981",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L392-L542"
+          ]
+        },
+        {
+          "evidence": "carcass raked stile loft, tapered shelves",
+          "implementation_function": "_carcass_form_ladder_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "aperture_half_x": "derived per form",
+                "lower_band": "z band",
+                "upper_band": "z band"
+              },
+              "frame": {
+                "normal": "(0,1,0)",
+                "point": "(aperture_x_center, front_y, band_mid_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "carcass_form__ladder__carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "2*row.half_width",
+                "extent_v": "row.depth"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(row.x_center, row.y_center, row.z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "shelf_bay",
+              "part": "carcass_form__ladder__carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "ladder",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookcase_var_ladder",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L64-L105",
+            "model.py:L169-L295"
+          ]
+        },
+        {
+          "evidence": "carcass pentagon shelf slabs, wing side panels",
+          "implementation_function": "_carcass_form_corner_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "aperture_half_x": "derived per form",
+                "lower_band": "z band",
+                "upper_band": "z band"
+              },
+              "frame": {
+                "normal": "(0,1,0)",
+                "point": "(aperture_x_center, front_y, band_mid_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "carcass_form__corner__carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "2*row.half_width",
+                "extent_v": "row.depth"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(row.x_center, row.y_center, row.z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "shelf_bay",
+              "part": "carcass_form__corner__carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "corner",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookcase_var_corner",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L175-L185",
+            "model.py:L206-L360"
+          ]
+        },
+        {
+          "evidence": "carcass cell dividers",
+          "implementation_function": "_carcass_form_cube_grid_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "aperture_half_x": "derived per form",
+                "lower_band": "z band",
+                "upper_band": "z band"
+              },
+              "frame": {
+                "normal": "(0,1,0)",
+                "point": "(aperture_x_center, front_y, band_mid_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "carcass_form__cube_grid__carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "2*row.half_width",
+                "extent_v": "row.depth"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(row.x_center, row.y_center, row.z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "shelf_bay",
+              "part": "carcass_form__cube_grid__carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "cube_grid",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookcase_var_cube_grid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L210-L246",
+            "model.py:L247-L363"
+          ]
+        },
+        {
+          "evidence": "carcass section frames, plinth plate",
+          "implementation_function": "_carcass_form_barrister_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "aperture_half_x": "derived per form",
+                "lower_band": "z band",
+                "upper_band": "z band"
+              },
+              "frame": {
+                "normal": "(0,1,0)",
+                "point": "(aperture_x_center, front_y, band_mid_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "carcass_form__barrister__carcass",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_u": "2*row.half_width",
+                "extent_v": "row.depth"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(row.x_center, row.y_center, row.z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "shelf_bay",
+              "part": "carcass_form__barrister__carcass",
+              "role": "provider"
+            }
+          ],
+          "name": "barrister",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookcase_var_barrister",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L59-L126",
+            "model.py:L142-L229"
+          ]
+        }
+      ],
+      "component_type": "carcass_form",
+      "name": "carcass_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "door_i stile/rail/glass, carcass_to_door_i",
+          "implementation_function": "_front_treatment_full_glass_doors_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leaf_height": "band height",
+                "leaf_width": "aperture_half_x - door_gap/2 - hinge_out"
+              },
+              "frame": {
+                "normal": "(0,-1,0)",
+                "point": "(0,0,0) on the hinge line or drawer front",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "front_treatment__full_glass_doors__leaf_or_drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "full_glass_doors",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.6,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "source case widths 0.70-1.55 m (005 L287, 006 L392-L542)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source case depths 0.36-0.45 m (005 L243-L299)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.3,
+              "minimum": 1.2,
+              "mode": "independent",
+              "name": "height_m",
+              "rationale": "source case heights 1.72-2.10 m (005 L237, 004 L269-L477)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "shelf_thickness_m",
+              "rationale": "source shelf boards 0.024 m (005 L292-L299)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_style",
+                "carcass_form",
+                "height_m"
+              ],
+              "expression": "base lift per base_style, +0.15 m for legged_highboy, clamped to 0.30*height_m",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "base_lift_m",
+              "rationale": "the case meets the floor through its base candidate",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shelf_count",
+                "shelf_thickness_m",
+                "base_lift_m",
+                "height_m"
+              ],
+              "expression": "height_m grows to base_lift_m + top_cap + reserved_lower_m + (shelf_count+1)*(shelf_thickness_m+0.060); shelf_pitch_m = (body_z1 - shelf_zone_lo)/(shelf_count+1)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "shelf_pitch_m",
+              "rationale": "host capacity: a bay must fit the board plus its adjustable travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "width_m",
+                "depth_m"
+              ],
+              "expression": "interior_half_x_m = width_m/2 - panel_t; interior_depth_m = depth_m - back_t",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "interior_half_x_m",
+              "rationale": "shelf span and aperture half-width",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__bookcase__001__png__airflex_batch_20260710_9a0ee60395414b908c36814fa8c3e19a",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L64-L111",
+            "model.py:L370-L459"
+          ]
+        },
+        {
+          "evidence": "door_i, drawer_i hollow tray + side runners",
+          "implementation_function": "_front_treatment_upper_glass_base_drawers_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leaf_height": "band height",
+                "leaf_width": "aperture_half_x - door_gap/2 - hinge_out"
+              },
+              "frame": {
+                "normal": "(0,-1,0)",
+                "point": "(0,0,0) on the hinge line or drawer front",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "front_treatment__upper_glass_base_drawers__leaf_or_drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "upper_glass_base_drawers",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__bookcase__005__png__airflex_batch_20260710_0cd3f4059b0b427ca0e827e61b6ac299",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L46-L118",
+            "model.py:L326-L398"
+          ]
+        },
+        {
+          "evidence": "upper_door_i, lower_door_i",
+          "implementation_function": "_front_treatment_glass_top_panel_base_doors_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leaf_height": "band height",
+                "leaf_width": "aperture_half_x - door_gap/2 - hinge_out"
+              },
+              "frame": {
+                "normal": "(0,-1,0)",
+                "point": "(0,0,0) on the hinge line or drawer front",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "front_treatment__glass_top_panel_base_doors__leaf_or_drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "glass_top_panel_base_doors",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__bookcase__003__png__airflex_batch_20260710_9b1b91d9bff944029cc5e17122776e99",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L52-L140",
+            "model.py:L298-L367"
+          ]
+        },
+        {
+          "evidence": "drawer_0 tray, carcass_to_drawer_0",
+          "implementation_function": "_front_treatment_open_shelving_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leaf_height": "band height",
+                "leaf_width": "aperture_half_x - door_gap/2 - hinge_out"
+              },
+              "frame": {
+                "normal": "(0,-1,0)",
+                "point": "(0,0,0) on the hinge line or drawer front",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "front_treatment__open_shelving__leaf_or_drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "open_shelving",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookcase_var_open_shelving",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L25-L93",
+            "model.py:L154-L170"
+          ]
+        },
+        {
+          "evidence": "base_door_0/1",
+          "implementation_function": "_front_treatment_base_cabinet_doors_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leaf_height": "band height",
+                "leaf_width": "aperture_half_x - door_gap/2 - hinge_out"
+              },
+              "frame": {
+                "normal": "(0,-1,0)",
+                "point": "(0,0,0) on the hinge line or drawer front",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "front_treatment__base_cabinet_doors__leaf_or_drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "base_cabinet_doors",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookcase_var_base_cabinet_doors",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L25-L106",
+            "model.py:L177-L232"
+          ]
+        },
+        {
+          "evidence": "door_i, hinge axis (1,0,0)",
+          "implementation_function": "_front_treatment_flip_up_glass_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "leaf_height": "band height",
+                "leaf_width": "aperture_half_x - door_gap/2 - hinge_out"
+              },
+              "frame": {
+                "normal": "(0,-1,0)",
+                "point": "(0,0,0) on the hinge line or drawer front",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "front_aperture",
+              "part": "front_treatment__flip_up_glass__leaf_or_drawer",
+              "role": "consumer"
+            }
+          ],
+          "name": "flip_up_glass",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookcase_var_flip_up_glass",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L65-L112",
+            "model.py:L370-L460"
+          ]
+        }
+      ],
+      "component_type": "front_treatment",
+      "name": "front_treatment",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "carcass display_shelf_i",
+          "implementation_function": "_shelf_mechanism_fixed_shelves_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "2*row.half_width",
+                "extent_v": "row.depth"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0,0,0)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "shelf_bay",
+              "part": "shelf_mechanism__fixed_shelves__shelf_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "fixed_shelves",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.6,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "source case widths 0.70-1.55 m (005 L287, 006 L392-L542)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source case depths 0.36-0.45 m (005 L243-L299)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.3,
+              "minimum": 1.2,
+              "mode": "independent",
+              "name": "height_m",
+              "rationale": "source case heights 1.72-2.10 m (005 L237, 004 L269-L477)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "shelf_thickness_m",
+              "rationale": "source shelf boards 0.024 m (005 L292-L299)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_style",
+                "carcass_form",
+                "height_m"
+              ],
+              "expression": "base lift per base_style, +0.15 m for legged_highboy, clamped to 0.30*height_m",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "base_lift_m",
+              "rationale": "the case meets the floor through its base candidate",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shelf_count",
+                "shelf_thickness_m",
+                "base_lift_m",
+                "height_m"
+              ],
+              "expression": "height_m grows to base_lift_m + top_cap + reserved_lower_m + (shelf_count+1)*(shelf_thickness_m+0.060); shelf_pitch_m = (body_z1 - shelf_zone_lo)/(shelf_count+1)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "shelf_pitch_m",
+              "rationale": "host capacity: a bay must fit the board plus its adjustable travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "width_m",
+                "depth_m"
+              ],
+              "expression": "interior_half_x_m = width_m/2 - panel_t; interior_depth_m = depth_m - back_t",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "interior_half_x_m",
+              "rationale": "shelf span and aperture half-width",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__bookcase__005__png__airflex_batch_20260710_0cd3f4059b0b427ca0e827e61b6ac299",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L291-L299"
+          ]
+        },
+        {
+          "evidence": "display_shelf_i part + carcass_to_display_shelf_i",
+          "implementation_function": "_shelf_mechanism_adjustable_shelves_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "2*row.half_width",
+                "extent_v": "row.depth"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0,0,0)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "shelf_bay",
+              "part": "shelf_mechanism__adjustable_shelves__shelf_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "adjustable_shelves",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookcase_var_adjustable_shelves",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L316-L383"
+          ]
+        }
+      ],
+      "component_type": "shelf_mechanism",
+      "name": "shelf_mechanism",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "carcass plinth box",
+          "implementation_function": "_base_style_plinth_build",
+          "interfaces": [],
+          "name": "plinth",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.6,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "source case widths 0.70-1.55 m (005 L287, 006 L392-L542)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source case depths 0.36-0.45 m (005 L243-L299)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.3,
+              "minimum": 1.2,
+              "mode": "independent",
+              "name": "height_m",
+              "rationale": "source case heights 1.72-2.10 m (005 L237, 004 L269-L477)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "shelf_thickness_m",
+              "rationale": "source shelf boards 0.024 m (005 L292-L299)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_style",
+                "carcass_form",
+                "height_m"
+              ],
+              "expression": "base lift per base_style, +0.15 m for legged_highboy, clamped to 0.30*height_m",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "base_lift_m",
+              "rationale": "the case meets the floor through its base candidate",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shelf_count",
+                "shelf_thickness_m",
+                "base_lift_m",
+                "height_m"
+              ],
+              "expression": "height_m grows to base_lift_m + top_cap + reserved_lower_m + (shelf_count+1)*(shelf_thickness_m+0.060); shelf_pitch_m = (body_z1 - shelf_zone_lo)/(shelf_count+1)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "shelf_pitch_m",
+              "rationale": "host capacity: a bay must fit the board plus its adjustable travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "width_m",
+                "depth_m"
+              ],
+              "expression": "interior_half_x_m = width_m/2 - panel_t; interior_depth_m = depth_m - back_t",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "interior_half_x_m",
+              "rationale": "shelf span and aperture half-width",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bookcase_var_plinth_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L242-L330"
+          ]
+        },
+        {
+          "evidence": "carcass leg_i",
+          "implementation_function": "_base_style_legs_build",
+          "interfaces": [],
+          "name": "legs",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__bookcase__004__png__airflex_batch_20260710_70016f2ca9054566885bb677d66ede1a",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L269-L340"
+          ]
+        },
+        {
+          "evidence": "carcass toe_kick apron",
+          "implementation_function": "_base_style_toe_kick_build",
+          "interfaces": [],
+          "name": "toe_kick",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookcase_var_toe_kick_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L152-L229"
+          ]
+        }
+      ],
+      "component_type": "base_style",
+      "name": "base_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "carcass back_panel",
+          "implementation_function": "_back_panel_solid_back_build",
+          "interfaces": [],
+          "name": "solid_back",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.6,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "source case widths 0.70-1.55 m (005 L287, 006 L392-L542)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.58,
+              "minimum": 0.26,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source case depths 0.36-0.45 m (005 L243-L299)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.3,
+              "minimum": 1.2,
+              "mode": "independent",
+              "name": "height_m",
+              "rationale": "source case heights 1.72-2.10 m (005 L237, 004 L269-L477)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.032,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "shelf_thickness_m",
+              "rationale": "source shelf boards 0.024 m (005 L292-L299)",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_style",
+                "carcass_form",
+                "height_m"
+              ],
+              "expression": "base lift per base_style, +0.15 m for legged_highboy, clamped to 0.30*height_m",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "base_lift_m",
+              "rationale": "the case meets the floor through its base candidate",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "shelf_count",
+                "shelf_thickness_m",
+                "base_lift_m",
+                "height_m"
+              ],
+              "expression": "height_m grows to base_lift_m + top_cap + reserved_lower_m + (shelf_count+1)*(shelf_thickness_m+0.060); shelf_pitch_m = (body_z1 - shelf_zone_lo)/(shelf_count+1)",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "shelf_pitch_m",
+              "rationale": "host capacity: a bay must fit the board plus its adjustable travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "width_m",
+                "depth_m"
+              ],
+              "expression": "interior_half_x_m = width_m/2 - panel_t; interior_depth_m = depth_m - back_t",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "interior_half_x_m",
+              "rationale": "shelf span and aperture half-width",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__bookcase__005__png__airflex_batch_20260710_0cd3f4059b0b427ca0e827e61b6ac299",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L243-L243"
+          ]
+        },
+        {
+          "evidence": "carcass (no back_panel)",
+          "implementation_function": "_back_panel_open_back_build",
+          "interfaces": [],
+          "name": "open_back",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookcase_var_ladder",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L84-L105"
+          ]
+        },
+        {
+          "evidence": "carcass batten_i",
+          "implementation_function": "_back_panel_beadboard_back_build",
+          "interfaces": [],
+          "name": "beadboard_back",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__bookcase__006__png__airflex_batch_20260710_ef98d8962cc245f8a0ae664ac6b94981",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L48-L91"
+          ]
+        }
+      ],
+      "component_type": "back_panel",
+      "name": "back_panel",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_bookcase",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_bookcase.md",
+  "source_map_sha256": "80cf9ddd45b1fde145b118a8dda068fb7618e1224cb7eb3339797eb8f228752b"
+}

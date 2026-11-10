@@ -1,0 +1,551 @@
+# SPDX-License-Identifier: Apache-2.0
+
+from __future__ import annotations
+
+import asyncio
+from pathlib import Path
+
+from agent.compiler import load_model_globals
+from agent.tools.probe_model import ProbeModelTool
+from agent.tools.probe_model.helpers import ProbeSession
+
+
+def _write_probe_fixture(script_path: Path, *, include_object_model: bool = True) -> None:
+    lines = [
+        "from __future__ import annotations",
+        "",
+        "from pathlib import Path",
+        "",
+        "from sdk import (",
+        "    ArticulatedObject,",
+        "    ArticulationType,",
+        "    Box,",
+        "    Cylinder,",
+        "    MotionLimits,",
+        "    Origin,",
+        "    TestContext,",
+        ")",
+        "",
+        "HERE = Path(__file__).resolve().parent",
+        "model = ArticulatedObject(name='probe_fixture')",
+        "panel = model.part('panel')",
+        "panel.visual(Box((1.0, 0.6, 0.08)), origin=Origin(xyz=(0.0, 0.0, 0.04)), name='panel_body')",
+        "panel.visual(Cylinder(radius=0.06, length=0.04), origin=Origin(xyz=(0.0, 0.0, 0.10)), name='knob')",
+        "keys = model.part('keys')",
+        "keys.visual(Box((0.10, 0.20, 0.04)), origin=Origin(xyz=(-0.24, 0.0, 0.02)), name='key_1')",
+        "keys.visual(Box((0.10, 0.20, 0.04)), origin=Origin(xyz=(0.00, 0.0, 0.02)), name='key_2')",
+        "keys.visual(Box((0.10, 0.20, 0.04)), origin=Origin(xyz=(0.24, 0.0, 0.02)), name='key_3')",
+        "arm = model.part('arm')",
+        "arm.visual(Box((0.30, 0.08, 0.08)), origin=Origin(xyz=(0.15, 0.0, 0.04)), name='arm_body')",
+        "model.articulation(",
+        "    'panel_to_keys',",
+        "    ArticulationType.FIXED,",
+        "    parent=panel,",
+        "    child=keys,",
+        "    origin=Origin(xyz=(0.0, 0.0, 0.08)),",
+        ")",
+        "model.articulation(",
+        "    'panel_to_arm',",
+        "    ArticulationType.REVOLUTE,",
+        "    parent=panel,",
+        "    child=arm,",
+        "    origin=Origin(xyz=(0.45, 0.0, 0.08)),",
+        "    axis=(0.0, 0.0, 1.0),",
+        "    motion_limits=MotionLimits(lower=-0.5, upper=0.5, effort=2.0, velocity=1.0),",
+        ")",
+        "",
+    ]
+    if include_object_model:
+        lines.extend(
+            [
+                "object_model = model",
+                "",
+            ]
+        )
+    lines.extend(
+        [
+            "def run_tests():",
+            "    ctx = TestContext(object_model, asset_root=HERE)",
+            "    return ctx.report()",
+        ]
+    )
+    script_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def _write_nested_joint_probe_fixture(script_path: Path) -> None:
+    lines = [
+        "from __future__ import annotations",
+        "",
+        "from pathlib import Path",
+        "",
+        "from sdk import ArticulatedObject, ArticulationType, Box, Origin, TestContext",
+        "",
+        "HERE = Path(__file__).resolve().parent",
+        "model = ArticulatedObject(name='nested_probe_fixture')",
+        "base = model.part('base')",
+        "base.visual(Box((1.0, 1.0, 1.0)), origin=Origin(xyz=(0.0, 0.0, 0.5)), name='base_body')",
+        "arm = model.part('arm')",
+        "arm.visual(Box((1.0, 0.2, 0.2)), origin=Origin(xyz=(0.5, 0.0, 0.1)), name='arm_body')",
+        "forearm = model.part('forearm')",
+        "forearm.visual(Box((1.0, 0.2, 0.2)), origin=Origin(xyz=(0.5, 0.0, 0.1)), name='forearm_body')",
+        "model.articulation(",
+        "    'base_to_arm',",
+        "    ArticulationType.REVOLUTE,",
+        "    parent=base,",
+        "    child=arm,",
+        "    origin=Origin(xyz=(1.0, 0.0, 1.0)),",
+        "    axis=(0.0, 0.0, 1.0),",
+        ")",
+        "model.articulation(",
+        "    'arm_to_forearm',",
+        "    ArticulationType.FIXED,",
+        "    parent=arm,",
+        "    child=forearm,",
+        "    origin=Origin(xyz=(1.0, 0.0, 0.0)),",
+        ")",
+        "object_model = model",
+        "",
+        "def run_tests():",
+        "    ctx = TestContext(object_model, asset_root=HERE)",
+        "    return ctx.report()",
+    ]
+    script_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def _write_rotated_cylinder_probe_fixture(script_path: Path) -> None:
+    lines = [
+        "from __future__ import annotations",
+        "",
+        "from pathlib import Path",
+        "import math",
+        "",
+        "from sdk import ArticulatedObject, Cylinder, Origin, TestContext",
+        "",
+        "HERE = Path(__file__).resolve().parent",
+        "model = ArticulatedObject(name='rotated_cylinder_probe_fixture')",
+        "body = model.part('body')",
+        "body.visual(",
+        "    Cylinder(radius=0.1, length=0.6),",
+        "    origin=Origin(rpy=(math.pi / 4.0, math.pi / 4.0, 0.0)),",
+        "    name='angled_cylinder',",
+        ")",
+        "object_model = model",
+        "",
+        "def run_tests():",
+        "    ctx = TestContext(object_model, asset_root=HERE)",
+        "    return ctx.report()",
+    ]
+    script_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+async def _run_probe(
+    script_path: Path,
+    code: str,
+    *,
+    timeout_ms: int = 5000,
+    include_stdout: bool = False,
+) -> dict[str, object]:
+    tool = ProbeModelTool(sdk_package="sdk")
+    invocation = await tool.build(
+        {
+            "file_path": str(script_path),
+            "code": code,
+            "timeout_ms": timeout_ms,
+            "include_stdout": include_stdout,
+        }
+    )
+    result = await invocation.execute()
+    assert result.error is None
+    assert isinstance(result.output, dict)
+    return result.output
+
+
+def test_probe_model_returns_structured_measurements(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+
+    output = asyncio.run(
+        _run_probe(
+            script_path,
+            "\n".join(
+                [
+                    "panel = part('panel')",
+                    "knob = visual('panel', 'knob')",
+                    "emit({",
+                    "    'part_names': [name(item) for item in parts()],",
+                    "    'knob_mount': mount_report(knob, panel),",
+                    "})",
+                ]
+            ),
+        )
+    )
+
+    assert output["ok"] is True
+    assert "elapsed_ms" not in output
+    result = output["result"]
+    assert isinstance(result, dict)
+    assert result["part_names"] == ["panel", "keys", "arm"]
+    knob_mount = result["knob_mount"]
+    assert knob_mount["metric_kind"] == "mount_review"
+    assert knob_mount["child"] == {"part": "panel", "visual": "knob"}
+    assert knob_mount["parent"] == {"part": "panel"}
+
+
+def test_probe_model_captures_stdout_when_requested(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+
+    output = asyncio.run(
+        _run_probe(
+            script_path,
+            "print('debug line'); emit({'ok': True})",
+            include_stdout=True,
+        )
+    )
+
+    assert output["ok"] is True
+    assert "elapsed_ms" not in output
+    assert "debug line" in output["stdout"]
+
+
+def test_probe_model_missing_emit_fails_clearly(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+
+    output = asyncio.run(_run_probe(script_path, "part('panel')"))
+
+    assert output["ok"] is False
+    assert output["error"]["type"] == "emit_contract"
+    assert "emit(value) was not called" in output["error"]["message"]
+
+
+def test_probe_model_double_emit_fails_clearly(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+
+    output = asyncio.run(_run_probe(script_path, "emit(1)\nemit(2)"))
+
+    assert output["ok"] is False
+    assert output["error"]["type"] == "emit_contract"
+    assert "exactly once" in output["error"]["message"]
+
+
+def test_probe_model_snippet_exception_fails_clearly(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+
+    output = asyncio.run(_run_probe(script_path, "raise RuntimeError('boom')"))
+
+    assert output["ok"] is False
+    assert output["error"]["type"] == "snippet_exception"
+    assert "boom" in output["error"]["message"]
+
+
+def test_probe_model_timeout_fails_clearly(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+
+    output = asyncio.run(
+        _run_probe(
+            script_path,
+            "import time\ntime.sleep(0.5)\nemit({'done': True})",
+            timeout_ms=100,
+        )
+    )
+
+    assert output["ok"] is False
+    assert output["error"]["type"] == "timeout"
+
+
+def test_probe_model_runner_crash_returns_structured_error(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+
+    output = asyncio.run(_run_probe(script_path, "import os\nos._exit(7)"))
+
+    assert output["ok"] is False
+    assert output["error"]["type"] == "runner_process_error"
+    assert "code 7" in output["error"]["message"]
+
+
+def test_probe_model_missing_object_model_fails_clearly(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path, include_object_model=False)
+
+    output = asyncio.run(_run_probe(script_path, "emit({'ok': True})"))
+
+    assert output["ok"] is False
+    assert output["error"]["type"] == "load_failure"
+    assert "`object_model`" in output["error"]["message"]
+
+
+def test_probe_model_lookup_failure_is_clear(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+
+    output = asyncio.run(_run_probe(script_path, "emit(summary(part('missing')))"))
+
+    assert output["ok"] is False
+    assert output["error"]["type"] == "lookup_failure"
+    assert "Unknown part" in output["error"]["message"]
+
+
+def test_probe_model_non_serializable_result_is_clear(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+
+    output = asyncio.run(_run_probe(script_path, "emit({'bad': {1, 2, 3}})"))
+
+    assert output["ok"] is False
+    assert output["error"]["type"] == "non_serializable_result"
+
+
+def test_probe_model_supports_layout_and_pose_sampling(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+
+    output = asyncio.run(
+        _run_probe(
+            script_path,
+            "\n".join(
+                [
+                    "keys = [visual('keys', name) for name in ('key_1', 'key_2', 'key_3')]",
+                    "emit({",
+                    "    'layout': layout_report(keys, axis='x'),",
+                    "    'poses': sample_poses(max_samples=4, seed=1),",
+                    "})",
+                ]
+            ),
+        )
+    )
+
+    assert output["ok"] is True
+    result = output["result"]
+    layout = result["layout"]
+    assert layout["metric_kind"] == "layout_review"
+    assert layout["count"] == 3
+    assert len(layout["pitches"]) == 2
+    poses = result["poses"]
+    assert poses
+    assert isinstance(poses, list)
+
+
+def test_probe_model_joint_position_is_world_space(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_nested_joint_probe_fixture(script_path)
+
+    output = asyncio.run(
+        _run_probe(
+            script_path,
+            "\n".join(
+                [
+                    "with pose(base_to_arm=1.57079632679):",
+                    "    emit({",
+                    "        'joint_pos': position(joint('arm_to_forearm')),",
+                    "        'child_pos': position(part('forearm')),",
+                    "    })",
+                ]
+            ),
+        )
+    )
+
+    assert output["ok"] is True
+    result = output["result"]
+    assert isinstance(result, dict)
+    joint_pos = result["joint_pos"]
+    child_pos = result["child_pos"]
+    assert isinstance(joint_pos, list)
+    assert isinstance(child_pos, list)
+    assert len(joint_pos) == 3
+    assert len(child_pos) == 3
+    for joint_value, child_value in zip(joint_pos, child_pos, strict=False):
+        assert abs(float(joint_value) - float(child_value)) < 1e-6
+    assert abs(float(joint_pos[0]) - 1.0) < 1e-6
+    assert abs(float(joint_pos[1]) - 1.0) < 1e-6
+    assert abs(float(joint_pos[2]) - 1.0) < 1e-6
+
+
+def test_probe_model_non_aabb_measurements_use_exact_geometry(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_rotated_cylinder_probe_fixture(script_path)
+
+    output = asyncio.run(
+        _run_probe(
+            script_path,
+            "\n".join(
+                [
+                    "target = visual('body', 'angled_cylinder')",
+                    "emit({",
+                    "    'dims': dims(target),",
+                    "    'center': center(target),",
+                    "    'position': position(target),",
+                    "    'projection': projection(target, 'xyz'),",
+                    "})",
+                ]
+            ),
+        )
+    )
+
+    assert output["ok"] is True
+    result = output["result"]
+    dims = result["dims"]
+    center = result["center"]
+    position = result["position"]
+    intervals = result["projection"]["intervals"]
+
+    expected_dims = [float(intervals[axis][1]) - float(intervals[axis][0]) for axis in "xyz"]
+    expected_center = [
+        0.5 * (float(intervals[axis][0]) + float(intervals[axis][1])) for axis in "xyz"
+    ]
+
+    assert isinstance(dims, list)
+    assert isinstance(center, list)
+    assert isinstance(position, list)
+    for observed, expected in zip(dims, expected_dims, strict=False):
+        assert abs(float(observed) - float(expected)) < 1e-6
+    for observed, expected in zip(center, expected_center, strict=False):
+        assert abs(float(observed) - float(expected)) < 1e-6
+    for observed, expected in zip(position, expected_center, strict=False):
+        assert abs(float(observed) - float(expected)) < 1e-6
+
+
+def test_probe_contact_report_defaults_to_half_mm(tmp_path: Path) -> None:
+    from sdk import TestContext
+
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+    globals_dict = load_model_globals(script_path, sdk_package="sdk")
+    object_model = globals_dict["object_model"]
+    ctx = TestContext(object_model, asset_root=tmp_path)
+    session = ProbeSession(object_model, ctx)
+
+    report = session.contact_report("panel", "keys")
+
+    assert report["contact_tol"] == 0.0005
+
+
+def test_probe_session_reuses_projection_interval_cache(tmp_path: Path) -> None:
+    from sdk import TestContext
+
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+    globals_dict = load_model_globals(script_path, sdk_package="sdk")
+    object_model = globals_dict["object_model"]
+    ctx = TestContext(object_model, asset_root=tmp_path)
+    session = ProbeSession(object_model, ctx)
+    target = session.visual("panel", "knob")
+
+    calls: list[tuple[int, str]] = []
+    original = ctx._element_projection_interval
+
+    def counting_projection_interval(element: object, *, axis: str) -> tuple[float, float]:
+        calls.append((id(element), axis))
+        min_value, max_value = original(element, axis=axis)
+        return float(min_value), float(max_value)
+
+    ctx._element_projection_interval = counting_projection_interval  # type: ignore[method-assign]
+
+    session.center(target)
+    session.dims(target)
+    session.projection(target, "xyz")
+    assert len(calls) == 3
+    element_id = calls[0][0]
+    assert calls == [(element_id, "x"), (element_id, "y"), (element_id, "z")]
+
+    session.center(target)
+    session.dims(target)
+    session.projection(target, "xyz")
+    assert len(calls) == 3
+
+
+def _write_floating_probe_fixture(script_path: Path) -> None:
+    lines = [
+        "from __future__ import annotations",
+        "",
+        "from pathlib import Path",
+        "",
+        "from sdk import ArticulatedObject, ArticulationType, Box, Origin, TestContext",
+        "",
+        "HERE = Path(__file__).resolve().parent",
+        "model = ArticulatedObject(name='floating_probe_fixture')",
+        "base = model.part('base')",
+        "base.visual(Box((0.4, 0.4, 0.2)), origin=Origin(xyz=(0.0, 0.0, 0.1)), name='base_body')",
+        "payload = model.part('payload')",
+        "payload.visual(Box((0.2, 0.2, 0.2)), origin=Origin(xyz=(0.0, 0.0, 0.1)), name='payload_body')",
+        "model.articulation(",
+        "    'base_to_payload',",
+        "    ArticulationType.FLOATING,",
+        "    parent=base,",
+        "    child=payload,",
+        "    origin=Origin(xyz=(0.3, 0.0, 0.0)),",
+        "    meta={'qc_samples': [Origin(xyz=(0.1, 0.0, 0.0))]},",
+        ")",
+        "object_model = model",
+        "",
+        "def run_tests():",
+        "    ctx = TestContext(object_model, asset_root=HERE)",
+        "    return ctx.report()",
+    ]
+    script_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def test_probe_model_supports_floating_origin_pose_values(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_floating_probe_fixture(script_path)
+
+    output = asyncio.run(
+        _run_probe(
+            script_path,
+            "\n".join(
+                [
+                    "joint_obj = joint('base_to_payload')",
+                    "before = position(part('payload'))",
+                    "with pose(base_to_payload=Origin(xyz=(0.1, 0.2, 0.3))):",
+                    "    after = position(part('payload'))",
+                    "emit({'summary': summary(joint_obj), 'before': before, 'after': after})",
+                ]
+            ),
+        )
+    )
+
+    assert output["ok"] is True
+    result = output["result"]
+    assert result["summary"]["type"] == "floating"
+    assert result["summary"]["motion"] == "rigid_6dof"
+    assert result["summary"]["pose_value_kind"] == "origin"
+    assert result["before"] == [0.3, 0.0, 0.0]
+    assert result["after"] == [0.4, 0.2, 0.3]
+
+
+def test_probe_model_omits_null_placeholders_and_duplicate_mount_offsets(tmp_path: Path) -> None:
+    script_path = tmp_path / "model.py"
+    _write_probe_fixture(script_path)
+
+    output = asyncio.run(
+        _run_probe(
+            script_path,
+            "\n".join(
+                [
+                    "panel = part('panel')",
+                    "knob = visual('panel', 'knob')",
+                    "emit({",
+                    "    'part_summary': summary(panel),",
+                    "    'visual_summary': summary(knob),",
+                    "    'mount': mount_report(knob, panel),",
+                    "})",
+                ]
+            ),
+        )
+    )
+
+    assert output["ok"] is True
+    result = output["result"]
+    part_summary = result["part_summary"]
+    visual_summary = result["visual_summary"]
+    mount = result["mount"]
+
+    assert "parent_part" not in part_summary
+    assert part_summary["visual_names"] == ["panel_body", "knob"]
+    assert visual_summary["parent_part"] == "panel"
+    assert "visual_names" not in visual_summary
+    assert "center_offset_xy" not in mount

@@ -1,0 +1,1151 @@
+{
+  "assembly_notes": "A carpenter's folding rule generalised from the source two-blade angle ruler. Four orthogonal, freely composable structural slots: hinge_style (pivot hardware at every joint), end_profile (segment pivot-end mesh), blade_section (slat cross-section family) and tip_treatment (the two free chain ends). segment_count (N) is the multiplicity, item_slot=end_profile: N graduated segments joined by N-1 out-of-plane (Z-axis) revolute hinges. The chain is serial (segment_0 is the supported root, hinge_i parents segment_i to segment_{i+1}). Rotation is about Z only, so each segment keeps a fixed stacked Z level (i*level_pitch_m) at every fold angle and bodies never intersect; the per-joint through-rivet hub captures the child near lug with a 0.3 mm retention seat (no overlap allowance). blade_section and tip_treatment share ONE section descriptor (section_rise_m, section_drop_m, section_flat_x0_m, section_feature_width_m): it drives the blade mesh, level_pitch_m = thickness_m + section_rise_m + section_drop_m + style_gap_m, hence the hub seat child_lug_top_z_m and the hub axle length, and the graduation land (band_center_x_m / band_width_m). Every raised feature is confined to the mid-span window outside the pivot-hub keepout (DIAL_FACE_R + 0.005), so no cross-section relief can reach under a hub. core_domain = 2 x 2 x 3 x 3 = 36, raw_domain = 180.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "angle_dial_identity",
+      "applies_to": {
+        "candidates": [
+          "angle_dial"
+        ],
+        "slot": "hinge_style"
+      },
+      "required_author_checks": [
+        "category_anchor: serial folding-rule chain",
+        "category_anchor: out-of-plane pivot hinges",
+        "category_anchor: angle_dial reading boss"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": "segment_count",
+          "role": "rule_segment"
+        }
+      ]
+    },
+    {
+      "anchor_id": "flush_rivet_identity",
+      "applies_to": {
+        "candidates": [
+          "flush_rivet"
+        ],
+        "slot": "hinge_style"
+      },
+      "required_author_checks": [
+        "category_anchor: serial folding-rule chain",
+        "category_anchor: out-of-plane pivot hinges",
+        "category_anchor: flush_rivet pivot hardware"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": "segment_count",
+          "role": "rule_segment"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pivot_end_profile_identity",
+      "applies_to": {
+        "candidates": [
+          "round_lug",
+          "square_paddle"
+        ],
+        "slot": "end_profile"
+      },
+      "required_author_checks": [
+        "category_anchor: serial folding-rule chain",
+        "category_anchor: out-of-plane pivot hinges",
+        "category_anchor: pivot end profile"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": "segment_count",
+          "role": "rule_segment"
+        }
+      ]
+    },
+    {
+      "anchor_id": "blade_section_identity",
+      "applies_to": {
+        "candidates": [
+          "flat_slat",
+          "ridged_spine",
+          "edge_rail"
+        ],
+        "slot": "blade_section"
+      },
+      "required_author_checks": [
+        "category_anchor: serial folding-rule chain",
+        "category_anchor: out-of-plane pivot hinges",
+        "category_anchor: blade cross-section family"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": "segment_count",
+          "role": "rule_segment"
+        }
+      ]
+    },
+    {
+      "anchor_id": "free_end_tip_identity",
+      "applies_to": {
+        "candidates": [
+          "plain_tip",
+          "brass_shoe",
+          "hook_tang"
+        ],
+        "slot": "tip_treatment"
+      },
+      "required_author_checks": [
+        "category_anchor: serial folding-rule chain",
+        "category_anchor: out-of-plane pivot hinges",
+        "category_anchor: free-end tip treatment"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": "segment_count",
+          "role": "rule_segment"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2 <= segment_count <= 10; N segments joined by N-1 out-of-plane revolute hinges",
+      "item_slot": "end_profile",
+      "name": "segment_count",
+      "spacing_expression": "each interior segment hosts the outgoing hub on its far lug and is captured by the previous hub on its near lug; segment i sits on stacked Z level i*level_pitch",
+      "values": [
+        2,
+        4,
+        6,
+        8,
+        10
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "frosted dial face disc (dial_face r=0.0215), torus reading rim (dial_rim), 24 radial graduation ticks, through axle + rivet cap; the child lug is captured under the dial and pivots as an angle reader.",
+          "implementation_function": "_hinge_style_angle_dial_hub",
+          "interfaces": [],
+          "name": "angle_dial",
+          "notes": "Source-faithful graduated through-rivet dial hub at every joint.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "segment_length_m",
+              "rationale": "pivot-to-pivot slat length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "segment_width_m",
+              "rationale": "slat width, source BLADE_WIDTH=0.034",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_ruler__001__png_4fff479c986c41c196c2458f36c551ad",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L124-L187",
+            "model.py:L227-L251"
+          ]
+        },
+        {
+          "evidence": "strips the dial to the source axle + rivet cap + rear washer + recess; the classic carpenter's zig-zag rule joint with the same axle, hole, and lug capture.",
+          "implementation_function": "_hinge_style_flush_rivet_hub",
+          "interfaces": [],
+          "name": "flush_rivet",
+          "notes": "World-knowledge extrapolation: plain riveted folding-rule pivot.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "segment_length_m",
+              "rationale": "pivot-to-pivot slat length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "segment_width_m",
+              "rationale": "slat width, source BLADE_WIDTH=0.034",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_ruler__001__png_4fff479c986c41c196c2458f36c551ad",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L150-L167"
+          ]
+        }
+      ],
+      "component_type": "per_joint_pivot_hardware",
+      "name": "hinge_style",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "_blade_shape unions a flat rectangular body with a round pivot lug (PIVOT_LUG_RADIUS=0.013) and cuts a PIVOT_HOLE_RADIUS=0.0033 axle hole.",
+          "implementation_function": "_end_profile_round_lug_shape",
+          "interfaces": [],
+          "name": "round_lug",
+          "notes": "Source-faithful rounded circular pivot lug at each segment end.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "segment_length_m",
+              "rationale": "pivot-to-pivot slat length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "segment_width_m",
+              "rationale": "slat width, source BLADE_WIDTH=0.034",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_ruler__001__png_4fff479c986c41c196c2458f36c551ad",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L45"
+          ]
+        },
+        {
+          "evidence": "traditional boxwood folding rules use a filleted rectangular paddle end instead of a round lug; same centred pivot hole and pivot axis, different silhouette/mesh.",
+          "implementation_function": "_end_profile_square_paddle_shape",
+          "interfaces": [],
+          "name": "square_paddle",
+          "notes": "World-knowledge extrapolation: squared brass-tip paddle end.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "segment_length_m",
+              "rationale": "pivot-to-pivot slat length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "segment_width_m",
+              "rationale": "slat width, source BLADE_WIDTH=0.034",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_ruler__001__png_4fff479c986c41c196c2458f36c551ad",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L45"
+          ]
+        }
+      ],
+      "component_type": "segment_end_profile",
+      "name": "end_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "the source blade is a plain flat slat of uniform 1.8 mm section: body = rect(BLADE_WIDTH, BLADE_LENGTH).extrude(BLADE_THICKNESS) with BLADE_THICKNESS=0.0018; rise = drop = 0 reproduces it exactly.",
+          "implementation_function": "_blade_section_flat_slat_feature",
+          "interfaces": [],
+          "name": "flat_slat",
+          "notes": "Source-faithful. Baseline of the shared section descriptor (section_rise_m = section_drop_m = 0), so level_pitch_m keeps its source value.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "segment_length_m",
+              "rationale": "pivot-to-pivot slat length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "segment_width_m",
+              "rationale": "slat width, source BLADE_WIDTH=0.034",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_rise_m",
+              "rationale": "shared cross-section descriptor: relief above the slat top face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_drop_m",
+              "rationale": "shared cross-section descriptor: relief below the slat bottom face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_flat_x0_m",
+              "rationale": "inner X bound of the flat graduation land",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_flat_x0_m"
+              ],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_feature_width_m",
+              "rationale": "width of the section rib",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_flat_x0_m"
+              ],
+              "expression": "(section_flat_x0_m + 0.0012 + band_hi) / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "band_center_x_m",
+              "rationale": "scale band centre derived from the flat land the section leaves free",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "band_center_x_m"
+              ],
+              "expression": "clamp((band_hi - band_lo) * 0.6, 0.0030, 0.012)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "band_width_m",
+              "rationale": "scale band width derived from the same flat land",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_rise_m",
+                "section_drop_m"
+              ],
+              "expression": "thickness_m + section_rise_m + section_drop_m + style_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "level_pitch_m",
+              "rationale": "stacked Z pitch between neighbouring segment levels; the shared section descriptor widens it so every cross-section relief keeps real body/body clearance",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "level_pitch_m"
+              ],
+              "expression": "level_pitch_m + thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "child_lug_top_z_m",
+              "rationale": "hub seat: the capturing dial face / rivet cap bottom sits 0.3 mm into this plane",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_ruler__001__png_4fff479c986c41c196c2458f36c551ad",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L22-L36",
+            "model.py:L29-L45"
+          ]
+        },
+        {
+          "evidence": "T-section rib on the ungraduated centre seam that the source keeps free for its sparser inner scale (inner_tick_i, model.py:L83-L94); shares the source slat body and pivot lug (model.py:L29-L45).",
+          "implementation_function": "_blade_section_ridged_spine_feature",
+          "interfaces": [],
+          "name": "ridged_spine",
+          "notes": "Controlled form-family extrapolation on the shared section descriptor: rise=0.0013 re-derives level_pitch_m, child_lug_top_z_m and the hub axle length, and section_flat_x0_m pushes the scale band outboard of the rib.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "segment_length_m",
+              "rationale": "pivot-to-pivot slat length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "segment_width_m",
+              "rationale": "slat width, source BLADE_WIDTH=0.034",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0013",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_rise_m",
+              "rationale": "shared cross-section descriptor: relief above the slat top face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_drop_m",
+              "rationale": "shared cross-section descriptor: relief below the slat bottom face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "max(0.0060, segment_width_m * 0.30) / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_flat_x0_m",
+              "rationale": "inner X bound of the flat graduation land",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_flat_x0_m"
+              ],
+              "expression": "max(0.0060, segment_width_m * 0.30)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_feature_width_m",
+              "rationale": "width of the section rib",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_flat_x0_m"
+              ],
+              "expression": "(section_flat_x0_m + 0.0012 + band_hi) / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "band_center_x_m",
+              "rationale": "scale band centre derived from the flat land the section leaves free",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "band_center_x_m"
+              ],
+              "expression": "clamp((band_hi - band_lo) * 0.6, 0.0030, 0.012)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "band_width_m",
+              "rationale": "scale band width derived from the same flat land",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_rise_m",
+                "section_drop_m"
+              ],
+              "expression": "thickness_m + section_rise_m + section_drop_m + style_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "level_pitch_m",
+              "rationale": "stacked Z pitch between neighbouring segment levels; the shared section descriptor widens it so every cross-section relief keeps real body/body clearance",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "level_pitch_m"
+              ],
+              "expression": "level_pitch_m + thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "child_lug_top_z_m",
+              "rationale": "hub seat: the capturing dial face / rivet cap bottom sits 0.3 mm into this plane",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_ruler__001__png_4fff479c986c41c196c2458f36c551ad",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L45",
+            "model.py:L83-L94"
+          ]
+        },
+        {
+          "evidence": "the source graduates only the outer +X edge (x = side * (BLADE_WIDTH - tick_length/2), model.py:L75), leaving the opposite edge blank; a bevel/rolled-edge steel rule thickens exactly that blank edge.",
+          "implementation_function": "_blade_section_edge_rail_feature",
+          "interfaces": [],
+          "name": "edge_rail",
+          "notes": "Controlled form-family extrapolation. The only candidate with a non-zero section_drop_m, so it re-derives the stack pitch downward as well as upward.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "segment_length_m",
+              "rationale": "pivot-to-pivot slat length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "segment_width_m",
+              "rationale": "slat width, source BLADE_WIDTH=0.034",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0009",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_rise_m",
+              "rationale": "shared cross-section descriptor: relief above the slat top face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0009",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_drop_m",
+              "rationale": "shared cross-section descriptor: relief below the slat bottom face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_flat_x0_m",
+              "rationale": "inner X bound of the flat graduation land",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_flat_x0_m"
+              ],
+              "expression": "max(0.0045, segment_width_m * 0.16)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_feature_width_m",
+              "rationale": "width of the section rib",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_flat_x0_m"
+              ],
+              "expression": "(section_flat_x0_m + 0.0012 + band_hi) / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "band_center_x_m",
+              "rationale": "scale band centre derived from the flat land the section leaves free",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "band_center_x_m"
+              ],
+              "expression": "clamp((band_hi - band_lo) * 0.6, 0.0030, 0.012)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "band_width_m",
+              "rationale": "scale band width derived from the same flat land",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_rise_m",
+                "section_drop_m"
+              ],
+              "expression": "thickness_m + section_rise_m + section_drop_m + style_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "level_pitch_m",
+              "rationale": "stacked Z pitch between neighbouring segment levels; the shared section descriptor widens it so every cross-section relief keeps real body/body clearance",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "level_pitch_m"
+              ],
+              "expression": "level_pitch_m + thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "child_lug_top_z_m",
+              "rationale": "hub seat: the capturing dial face / rivet cap bottom sits 0.3 mm into this plane",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_ruler__001__png_4fff479c986c41c196c2458f36c551ad",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L36",
+            "model.py:L60-L81"
+          ]
+        }
+      ],
+      "component_type": "slat_cross_section_family",
+      "name": "blade_section",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "the source blade's far end is the bare extruded slat end; no tip hardware is modelled anywhere in _blade_shape.",
+          "implementation_function": "_tip_treatment_plain_tip",
+          "interfaces": [],
+          "name": "plain_tip",
+          "notes": "Source-faithful. tip_rise = tip_drop = tip_extent = 0.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "segment_length_m",
+              "rationale": "pivot-to-pivot slat length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "segment_width_m",
+              "rationale": "slat width, source BLADE_WIDTH=0.034",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tip_rise_m",
+              "rationale": "free-end relief above the slat top face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tip_drop_m",
+              "rationale": "free-end relief below the slat bottom face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tip_extent_m",
+              "rationale": "outward reach of the treated free end past the pivot centre",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tip_rise_m"
+              ],
+              "expression": "max(blade_section_rise, tip_rise_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_rise_m",
+              "rationale": "the tip feeds the same shared section descriptor as blade_section",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tip_drop_m"
+              ],
+              "expression": "max(blade_section_drop, tip_drop_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_drop_m",
+              "rationale": "the tip feeds the same shared section descriptor as blade_section",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_rise_m",
+                "section_drop_m"
+              ],
+              "expression": "thickness_m + section_rise_m + section_drop_m + style_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "level_pitch_m",
+              "rationale": "stacked Z pitch between neighbouring segment levels; the shared section descriptor widens it so every cross-section relief keeps real body/body clearance",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "level_pitch_m"
+              ],
+              "expression": "level_pitch_m + thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "child_lug_top_z_m",
+              "rationale": "hub seat: the capturing dial face / rivet cap bottom sits 0.3 mm into this plane",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_ruler__001__png_4fff479c986c41c196c2458f36c551ad",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L45"
+          ]
+        },
+        {
+          "evidence": "the source already carries a discrete steel hardware family sitting proud of the slat faces (rivet_steel material, rear_washer, rivet_cap, rivet_recess); the end shoe reuses that language at the free end.",
+          "implementation_function": "_tip_treatment_brass_shoe",
+          "interfaces": [],
+          "name": "brass_shoe",
+          "notes": "Controlled form-family extrapolation. Adds 0.6 mm relief on both faces, which re-derives level_pitch_m through the shared section descriptor.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "segment_length_m",
+              "rationale": "pivot-to-pivot slat length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "segment_width_m",
+              "rationale": "slat width, source BLADE_WIDTH=0.034",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0006",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tip_rise_m",
+              "rationale": "free-end relief above the slat top face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0006",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tip_drop_m",
+              "rationale": "free-end relief below the slat bottom face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0140",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tip_extent_m",
+              "rationale": "outward reach of the treated free end past the pivot centre",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tip_rise_m"
+              ],
+              "expression": "max(blade_section_rise, tip_rise_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_rise_m",
+              "rationale": "the tip feeds the same shared section descriptor as blade_section",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tip_drop_m"
+              ],
+              "expression": "max(blade_section_drop, tip_drop_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_drop_m",
+              "rationale": "the tip feeds the same shared section descriptor as blade_section",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_rise_m",
+                "section_drop_m"
+              ],
+              "expression": "thickness_m + section_rise_m + section_drop_m + style_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "level_pitch_m",
+              "rationale": "stacked Z pitch between neighbouring segment levels; the shared section descriptor widens it so every cross-section relief keeps real body/body clearance",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "level_pitch_m"
+              ],
+              "expression": "level_pitch_m + thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "child_lug_top_z_m",
+              "rationale": "hub seat: the capturing dial face / rivet cap bottom sits 0.3 mm into this plane",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_ruler__001__png_4fff479c986c41c196c2458f36c551ad",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L121",
+            "model.py:L150-L167"
+          ]
+        },
+        {
+          "evidence": "the tang runs off the graduated +X edge that the source establishes as the measuring datum (model.py:L75), so the hook registers the zero of the same scale.",
+          "implementation_function": "_tip_treatment_hook_tang",
+          "interfaces": [],
+          "name": "hook_tang",
+          "notes": "Controlled form-family extrapolation. Purely in-plane (rise = drop = 0), so it never enters a neighbouring segment's Z level; only tip_extent_m changes.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.22,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "segment_length_m",
+              "rationale": "pivot-to-pivot slat length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.04,
+              "minimum": 0.026,
+              "mode": "independent",
+              "name": "segment_width_m",
+              "rationale": "slat width, source BLADE_WIDTH=0.034",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tip_rise_m",
+              "rationale": "free-end relief above the slat top face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tip_drop_m",
+              "rationale": "free-end relief below the slat bottom face",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "0.0220",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "tip_extent_m",
+              "rationale": "outward reach of the treated free end past the pivot centre",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tip_rise_m"
+              ],
+              "expression": "max(blade_section_rise, tip_rise_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_rise_m",
+              "rationale": "the tip feeds the same shared section descriptor as blade_section",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "tip_drop_m"
+              ],
+              "expression": "max(blade_section_drop, tip_drop_m)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "section_drop_m",
+              "rationale": "the tip feeds the same shared section descriptor as blade_section",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "section_rise_m",
+                "section_drop_m"
+              ],
+              "expression": "thickness_m + section_rise_m + section_drop_m + style_gap_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "level_pitch_m",
+              "rationale": "stacked Z pitch between neighbouring segment levels; the shared section descriptor widens it so every cross-section relief keeps real body/body clearance",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "level_pitch_m"
+              ],
+              "expression": "level_pitch_m + thickness_m / 2",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "child_lug_top_z_m",
+              "rationale": "hub seat: the capturing dial face / rivet cap bottom sits 0.3 mm into this plane",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__folding_ruler__001__png_4fff479c986c41c196c2458f36c551ad",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L29-L45",
+            "model.py:L75"
+          ]
+        }
+      ],
+      "component_type": "free_chain_end_treatment",
+      "name": "tip_treatment",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Folding_ruler",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Folding_ruler.md",
+  "source_map_sha256": "9c897ba8f05717da4eace8b31f9dc9a9ff44d71b9691d76d940326e6af904afc"
+}

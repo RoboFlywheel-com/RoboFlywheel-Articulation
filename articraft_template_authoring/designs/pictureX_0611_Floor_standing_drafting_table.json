@@ -1,0 +1,191 @@
+{
+  "assembly_notes": "Floor-standing drafting table. Every stand_base candidate builds its floor legs up to ONE shared four-corner sleeve interface; the prismatic lift_carriage and the revolute tilting drawing_board plus two revolute lock_control knobs mate identically to every base. angle_lock hardware and tray_count drawer faces are under-board host visuals the tilting board clears. board_width_scale, board_depth_scale, lift_travel_m are independent; hinge span, tube/sleeve overlap, tray cell width and tilt/lift ranges derive from them.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "floor_standing_drafting_table_identity",
+      "applies_to": {
+        "slot": "stand_base",
+        "candidates": ["splayed_aframe", "xbrace_splayed", "four_post", "trestle_pair"]
+      },
+      "required_roles": [
+        {"role": "floor_stand", "exact_count": 1},
+        {"role": "lift_carriage", "exact_count": 1},
+        {"role": "drawing_board", "exact_count": 1},
+        {"role": "lock_control", "exact_count": 2}
+      ],
+      "required_relations": [
+        {"parent_role": "floor_stand", "child_role": "lift_carriage", "joint_type": "prismatic", "axis": [0.0, 0.0, 1.0]},
+        {"parent_role": "lift_carriage", "child_role": "drawing_board", "joint_type": "revolute", "axis": [1.0, 0.0, 0.0]},
+        {"parent_role": "lift_carriage", "child_role": "lock_control", "joint_type": "revolute", "axis": [1.0, 0.0, 0.0]}
+      ],
+      "required_author_checks": [
+        "category_anchor: floor-standing tilting drawing board",
+        "category_anchor: prismatic height lift",
+        "category_anchor: two rotary lock controls"
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "tray_count",
+      "item_slot": "stand_base",
+      "values": [1, 2, 3],
+      "spacing_expression": "tray cells evenly divide the under-board front apron width derived from board_width_scale",
+      "host_capacity_expression": "1 <= tray_count <= 3 supply/tool drawer faces fit the stand front apron zone under the drawing board"
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Source splayed oak side rails with LEG_SPLAY, end-grain square feet and integral leg style.",
+          "implementation_function": "_stand_base_splayed_aframe_build",
+          "interfaces": [],
+          "name": "splayed_aframe",
+          "notes": "Source-derived splayed side-rail A-frame; presents the four-corner sleeve interface.",
+          "parameters": [
+            {"name": "board_width_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.92, "maximum": 1.1, "choices": [], "expression": "", "depends_on": [], "rationale": "board width and derived hinge span / track"},
+            {"name": "board_depth_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.95, "maximum": 1.08, "choices": [], "expression": "", "depends_on": [], "rationale": "board depth and lip/channel reach"},
+            {"name": "lift_travel_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.1, "maximum": 0.2, "choices": [], "expression": "", "depends_on": [], "rationale": "prismatic lift range and tube/sleeve overlap"}
+          ],
+          "record_id": "rec_picturex_0611__floor_standing_drafting_table__001__png_385aa10c9a924b5f984d263495556b92",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L38-L75"]
+        },
+        {
+          "evidence": "Splayed source legs with added floor runners and diagonal X side bracing.",
+          "implementation_function": "_stand_base_xbrace_splayed_build",
+          "interfaces": [],
+          "name": "xbrace_splayed",
+          "notes": "World-knowledge fork of the splayed source frame with X braces.",
+          "parameters": [
+            {"name": "board_width_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.92, "maximum": 1.1, "choices": [], "expression": "", "depends_on": [], "rationale": "board width and derived hinge span / track"},
+            {"name": "board_depth_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.95, "maximum": 1.08, "choices": [], "expression": "", "depends_on": [], "rationale": "board depth and lip/channel reach"},
+            {"name": "lift_travel_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.1, "maximum": 0.2, "choices": [], "expression": "", "depends_on": [], "rationale": "prismatic lift range and tube/sleeve overlap"}
+          ],
+          "record_id": "rec_picturex_0611__floor_standing_drafting_table__001__png_385aa10c9a924b5f984d263495556b92",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L38-L75"]
+        },
+        {
+          "evidence": "Vertical corner posts replacing the splay; standard floor drafting-stand leg topology.",
+          "implementation_function": "_stand_base_four_post_build",
+          "interfaces": [],
+          "name": "four_post",
+          "notes": "World-knowledge four-post floor stand.",
+          "parameters": [
+            {"name": "board_width_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.92, "maximum": 1.1, "choices": [], "expression": "", "depends_on": [], "rationale": "board width and derived hinge span / track"},
+            {"name": "board_depth_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.95, "maximum": 1.08, "choices": [], "expression": "", "depends_on": [], "rationale": "board depth and lip/channel reach"},
+            {"name": "lift_travel_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.1, "maximum": 0.2, "choices": [], "expression": "", "depends_on": [], "rationale": "prismatic lift range and tube/sleeve overlap"}
+          ],
+          "record_id": "rec_picturex_0611__floor_standing_drafting_table__001__png_385aa10c9a924b5f984d263495556b92",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L38-L75"]
+        },
+        {
+          "evidence": "Two end trestles tied by lengthwise stretchers; classic drawing-table stand.",
+          "implementation_function": "_stand_base_trestle_pair_build",
+          "interfaces": [],
+          "name": "trestle_pair",
+          "notes": "World-knowledge paired A-frame trestle stand.",
+          "parameters": [
+            {"name": "board_width_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.92, "maximum": 1.1, "choices": [], "expression": "", "depends_on": [], "rationale": "board width and derived hinge span / track"},
+            {"name": "board_depth_scale", "mode": "independent", "value_type": "float", "unit": "ratio", "minimum": 0.95, "maximum": 1.08, "choices": [], "expression": "", "depends_on": [], "rationale": "board depth and lip/channel reach"},
+            {"name": "lift_travel_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.1, "maximum": 0.2, "choices": [], "expression": "", "depends_on": [], "rationale": "prismatic lift range and tube/sleeve overlap"}
+          ],
+          "record_id": "rec_picturex_0611__floor_standing_drafting_table__001__png_385aa10c9a924b5f984d263495556b92",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L38-L75"]
+        }
+      ],
+      "component_type": "grounded floor-stand leg family",
+      "name": "stand_base",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Source side strap / prop is a friction-held stance stop; plain hinge cheeks host visual.",
+          "implementation_function": "_angle_lock_friction_cheeks_build",
+          "interfaces": [],
+          "name": "friction_cheeks",
+          "notes": "Plain friction cheeks near the tilt hinge.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__floor_standing_drafting_table__001__png_385aa10c9a924b5f984d263495556b92",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L229-L260"]
+        },
+        {
+          "evidence": "Ratchet racks are the common toothed variant of the prop travel-stop.",
+          "implementation_function": "_angle_lock_toothed_ratchet_build",
+          "interfaces": [],
+          "name": "toothed_ratchet",
+          "notes": "Two toothed racks under the board near the hinge.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__floor_standing_drafting_table__001__png_385aa10c9a924b5f984d263495556b92",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L229-L260"]
+        },
+        {
+          "evidence": "Curved quadrant on the +X tilt axis; standard drafting-board angle plate.",
+          "implementation_function": "_angle_lock_curved_quadrant_build",
+          "interfaces": [],
+          "name": "curved_quadrant",
+          "notes": "Annular toothed quadrant plate about the tilt axis.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__floor_standing_drafting_table__001__png_385aa10c9a924b5f984d263495556b92",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L229-L260"]
+        }
+      ],
+      "component_type": "under-board tilt angle-hold hardware family",
+      "name": "angle_lock",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Source spreader is a real side revolute control; two symmetric knob disks.",
+          "implementation_function": "_control_form_paired_disk_knobs_build",
+          "interfaces": [],
+          "name": "paired_disk_knobs",
+          "notes": "Two symmetric ribbed lock disks.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__floor_standing_drafting_table__001__png_385aa10c9a924b5f984d263495556b92",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L309-L330"]
+        },
+        {
+          "evidence": "Lobed hand-knob variant of the side lock control.",
+          "implementation_function": "_control_form_lobed_knobs_build",
+          "interfaces": [],
+          "name": "lobed_knobs",
+          "notes": "Two lobed grip knobs.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__floor_standing_drafting_table__001__png_385aa10c9a924b5f984d263495556b92",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L309-L330"]
+        },
+        {
+          "evidence": "Crank-winder variant of the side lock control.",
+          "implementation_function": "_control_form_crank_winders_build",
+          "interfaces": [],
+          "name": "crank_winders",
+          "notes": "Two crank / winder handles.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__floor_standing_drafting_table__001__png_385aa10c9a924b5f984d263495556b92",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L309-L330"]
+        }
+      ],
+      "component_type": "side tilt-lock rotary control family",
+      "name": "control_form",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Floor_standing_drafting_table",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Floor_standing_drafting_table.md",
+  "source_map_sha256": "1edd723150b6aa7813a1a6c3551835f35c02fbb161ea050a9550d7348bedfd48"
+}

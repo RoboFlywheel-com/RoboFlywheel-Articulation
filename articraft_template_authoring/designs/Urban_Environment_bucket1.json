@@ -1,0 +1,644 @@
+{
+  "assembly_notes": "Four independent structural slots form the complete bucket domain: body profile, mouth-edge construction, swing-bail silhouette and riveted-ear form. The body remains the grounded root and owns the hollow shell, selected rim and paired ears; one swing-bail child always rotates about the real horizontal ear diameter. Mouth size, wall profile, floor/apex closure, rim scale, ear reach, pivot height, wire size and bail rise are derived together for every cross-slot combination. The template emits no bracket, wall plate, cradle, outer support ring, hook mount, full-height structural body hoop, lid, side-grip replacement or separate texture-mark geometry. Finish style and colorway remain non-structural semantic materials.",
+  "bindings": [
+    {
+      "binding_id": "body_to_bail_axis",
+      "consumer": "bail_profile.bail_pivot_axis",
+      "derived": [],
+      "joint_type": "revolute",
+      "provider": "body_profile.bail_pivot_axis"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "open_sheet_metal_bucket_identity",
+      "applies_to": {
+        "candidates": [
+          "tapered_pail",
+          "straight_pail",
+          "rounded_bowl",
+          "pointed_fire_bucket"
+        ],
+        "slot": "body_profile"
+      },
+      "required_author_checks": [
+        "bucket is an open hollow revolved shell",
+        "swing bail pivots on the opposed ear diameter",
+        "no external rack or cradle structure is emitted"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "swing_bail",
+          "joint_type": "revolute",
+          "parent_role": "bucket_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "bucket_body"
+        },
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "swing_bail"
+        }
+      ]
+    },
+    {
+      "anchor_id": "standing_bucket_profiles",
+      "applies_to": {
+        "candidates": [
+          "tapered_pail",
+          "straight_pail",
+          "rounded_bowl"
+        ],
+        "slot": "body_profile"
+      },
+      "required_author_checks": [
+        "standing profile has a real floor or standing pad"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "bucket_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "pointed_fire_bucket_profile",
+      "applies_to": {
+        "candidates": [
+          "pointed_fire_bucket"
+        ],
+        "slot": "body_profile"
+      },
+      "required_author_checks": [
+        "pointed profile closes at its apex without a support frame"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "bucket_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "mouth_edge_construction",
+      "applies_to": {
+        "candidates": [
+          "rolled_wire",
+          "flared_fold",
+          "double_bead"
+        ],
+        "slot": "rim_profile"
+      },
+      "required_author_checks": [
+        "selected rim profile finishes the open mouth"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "bucket_body"
+        }
+      ]
+    },
+    {
+      "anchor_id": "swing_bail_silhouette",
+      "applies_to": {
+        "candidates": [
+          "round_arch",
+          "shouldered_arch"
+        ],
+        "slot": "bail_profile"
+      },
+      "required_author_checks": [
+        "selected bail profile changes the carry silhouette",
+        "swing bail pivots on the opposed ear diameter"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "swing_bail",
+          "joint_type": "revolute",
+          "parent_role": "bucket_body"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "swing_bail"
+        }
+      ]
+    },
+    {
+      "anchor_id": "paired_riveted_ears",
+      "applies_to": {
+        "candidates": [
+          "riveted_strap",
+          "round_stamped_lug"
+        ],
+        "slot": "ear_style"
+      },
+      "required_author_checks": [
+        "selected paired ear style supports the bail pivot"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "count_from": null,
+          "exact_count": 1,
+          "role": "bucket_body"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "_revolved_shell_mesh uses a wider mouth and narrower flat base, offsets an inner cavity by the sheet thickness and leaves a solid floor; the same root owns the rolled rim and the opposed riveted ears.",
+          "implementation_function": "_body_profile_tapered_pail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "ear_inside_span": "2 * pivot_radius_m",
+                "pivot_radius": "pivot_radius_m",
+                "wire_radius": "bail_wire_radius_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(0, 0, pivot_z_m)"
+              },
+              "kind": "axis",
+              "name": "bail_pivot_axis",
+              "part": "bucket_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "tapered_pail",
+          "notes": "Linear standing pail; taper changes the main silhouette while the floor, rim and ear datum remain derived from the active profile.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.18,
+              "minimum": 0.105,
+              "mode": "independent",
+              "name": "mouth_radius_m",
+              "rationale": "Open-mouth radius shared by the shell termination, rolled rim, ear reach and bail span.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.42,
+              "minimum": 0.22,
+              "mode": "independent",
+              "name": "body_height_m",
+              "rationale": "Overall shell depth; also drives pivot height and the bail clearance envelope.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.88,
+              "minimum": 0.58,
+              "mode": "independent",
+              "name": "taper_ratio",
+              "rationale": "Standing base radius divided by mouth radius for the linearly tapered family.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "mouth_radius_m"
+              ],
+              "expression": "clamp(0.012 * mouth_radius_m, 0.0012, 0.0022)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "wall_m",
+              "rationale": "Thin sheet wall offset used by every outer/inner profile pair.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wall_m"
+              ],
+              "expression": "clamp(2.5 * wall_m, 0.0030, 0.0060)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "floor_m",
+              "rationale": "Solid standing floor for flat-base profiles.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "mouth_radius_m"
+              ],
+              "expression": "clamp(0.040 * mouth_radius_m, 0.0040, 0.0070)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "rim_tube_m",
+              "rationale": "Rolled sheet edge sized from the active mouth rather than a fixed hoop.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_red-painted-sheet-metal-fire-bucket-a-tapered-cy_20260608_164512_348759_c25e8986",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L35-L87",
+            "model.py:L96-L137"
+          ]
+        },
+        {
+          "evidence": "TOP_R == BOT_R makes the entire outer and inner wall vertical while retaining the solid flat floor; this changes the primary silhouette rather than only scaling it.",
+          "implementation_function": "_body_profile_straight_pail_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "ear_inside_span": "2 * pivot_radius_m",
+                "pivot_radius": "pivot_radius_m",
+                "wire_radius": "bail_wire_radius_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(0, 0, pivot_z_m)"
+              },
+              "kind": "axis",
+              "name": "bail_pivot_axis",
+              "part": "bucket_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "straight_pail",
+          "notes": "Vertical untapered wall with a flat standing floor.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [
+                "body_height_m",
+                "rim_tube_m"
+              ],
+              "expression": "body_height_m - max(2.2 * rim_tube_m, 0.014)",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pivot_z_m",
+              "rationale": "Ear axis follows the active mouth height while remaining below the rolled rim.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bucket1_var_body_straight_pail",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L35-L88",
+            "model.py:L97-L138"
+          ]
+        },
+        {
+          "evidence": "_bowl_outer_profile and _bowl_inner_profile derive nonlinear quarter-circle outer/inner walls and a small flat standing pad, yielding a rounded silhouette distinct from all linear profiles.",
+          "implementation_function": "_body_profile_rounded_bowl_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "ear_inside_span": "2 * pivot_radius_m",
+                "pivot_radius": "pivot_radius_m",
+                "wire_radius": "bail_wire_radius_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(0, 0, pivot_z_m)"
+              },
+              "kind": "axis",
+              "name": "bail_pivot_axis",
+              "part": "bucket_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "rounded_bowl",
+          "notes": "Curved standing bowl; depth and pad size vary independently while the inner profile preserves the sheet offset and solid floor.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.18,
+              "minimum": 0.78,
+              "mode": "independent",
+              "name": "bowl_depth_ratio",
+              "rationale": "Rounded-body depth divided by mouth radius; changes the curvature and silhouette.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.24,
+              "minimum": 0.1,
+              "mode": "independent",
+              "name": "standing_pad_ratio",
+              "rationale": "Small flat standing pad radius divided by mouth radius.",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_bucket1_var_body_hemispherical",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L37-L120",
+            "model.py:L129-L169"
+          ]
+        },
+        {
+          "evidence": "_conical_shell_mesh closes the hollow linear wall into a small apex instead of a standing floor; the original reference image shows this pointed bucket beside the flat-base pail.",
+          "implementation_function": "_body_profile_pointed_fire_bucket_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "ear_inside_span": "2 * pivot_radius_m",
+                "pivot_radius": "pivot_radius_m",
+                "wire_radius": "bail_wire_radius_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(0, 0, pivot_z_m)"
+              },
+              "kind": "axis",
+              "name": "bail_pivot_axis",
+              "part": "bucket_body",
+              "role": "provider",
+              "surface_relation": null
+            }
+          ],
+          "name": "pointed_fire_bucket",
+          "notes": "Hanging apex-down fire bucket. Aspect and tip closure are parameterized, but there is never an external rack or cradle.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.65,
+              "minimum": 1.55,
+              "mode": "independent",
+              "name": "pointed_aspect_ratio",
+              "rationale": "Pointed shell height divided by mouth radius; includes the tall narrow reference fork as a continuous boundary.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.06,
+              "minimum": 0.018,
+              "mode": "independent",
+              "name": "point_radius_ratio",
+              "rationale": "Closed tip radius divided by mouth radius; avoids a degenerate razor point while retaining the pointed silhouette.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.55,
+              "minimum": 1.15,
+              "mode": "independent",
+              "name": "bail_rise_ratio",
+              "rationale": "Upright bail rise divided by mouth radius.",
+              "unit": "ratio",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.0042,
+              "minimum": 0.0022,
+              "mode": "independent",
+              "name": "bail_wire_radius_m",
+              "rationale": "Wire radius drives the ear bore, pivot stand-off and swept clearance.",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "mouth_radius_m",
+                "rim_tube_m",
+                "bail_wire_radius_m"
+              ],
+              "expression": "mouth_radius_m + rim_tube_m + 2.2 * bail_wire_radius_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "pivot_radius_m",
+              "rationale": "Opposed ear axis is pushed outside the active rim and wire envelope.",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_red-painted-sheet-metal-conical-fire-bucket-with_20260608_164532_434098_8f71e941",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L39-L81",
+            "model.py:L90-L126"
+          ]
+        }
+      ],
+      "component_type": "open sheet-metal pail shell",
+      "name": "body_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A single toroidal wire roll follows the open shell termination and produces the compact rounded mouth silhouette shown by the parent asset.",
+          "implementation_function": "_rim_profile_rolled_wire_build",
+          "interfaces": [],
+          "name": "rolled_wire",
+          "notes": "Compact circular rolled edge; the torus embeds into the active shell mouth.",
+          "parameters": [],
+          "record_id": "rec_red-painted-sheet-metal-fire-bucket-a-tapered-cy_20260608_164512_348759_c25e8986",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L41-L43",
+            "model.py:L102-L106"
+          ]
+        },
+        {
+          "evidence": "The source's revolved thin-sheet profile construction and finished top edge support a locally widened folded lip; the derived candidate changes the mouth cross-section without adding a body hoop.",
+          "implementation_function": "_rim_profile_flared_fold_build",
+          "interfaces": [],
+          "name": "flared_fold",
+          "notes": "A closed revolved fold projects outward from the mouth and remains embedded in the shell termination.",
+          "parameters": [],
+          "record_id": "rec_red-painted-sheet-metal-fire-bucket-a-tapered-cy_20260608_164512_348759_c25e8986",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L58-L87",
+            "model.py:L96-L106"
+          ]
+        },
+        {
+          "evidence": "_band_mesh demonstrates repeated toroidal sheet reinforcement following a local circular radius. Restricting two smaller beads to the immediate mouth edge yields a distinct reinforced rim without retaining the rejected full-height hoops.",
+          "implementation_function": "_rim_profile_double_bead_build",
+          "interfaces": [],
+          "name": "double_bead",
+          "notes": "Two compact overlapping beads reinforce only the immediate mouth edge; no body-height hoop is emitted.",
+          "parameters": [],
+          "record_id": "rec_bucket1_var_bands_two",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L57-L84",
+            "model.py:L125-L135"
+          ]
+        }
+      ],
+      "component_type": "structural sheet-metal mouth edge",
+      "name": "rim_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The source bail is a smooth symmetric spline from both pivot lugs to a centered crown and rotates about the real opposed-ear diameter.",
+          "implementation_function": "_bail_profile_round_arch_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "pin_radius_m + RUN_CLEARANCE",
+                "wire_radius": "bail_wire_radius_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(0, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "bail_pivot_axis",
+              "part": "swing_bail",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "round_arch",
+          "notes": "Smooth semicircular crown with continuously changing shoulders.",
+          "parameters": [],
+          "record_id": "rec_red-painted-sheet-metal-fire-bucket-a-tapered-cy_20260608_164512_348759_c25e8986",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L139-L183"
+          ]
+        },
+        {
+          "evidence": "_make_dloop_grip_mesh supplies a source-inspectable shouldered wire path. The derived candidate mirrors that bend language across the bucket while retaining the same single-bail REVOLUTE axis.",
+          "implementation_function": "_bail_profile_shouldered_arch_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "bore_radius": "pin_radius_m + RUN_CLEARANCE",
+                "wire_radius": "bail_wire_radius_m"
+              },
+              "frame": {
+                "axis": "(0, 1, 0)",
+                "point": "(0, 0, 0)"
+              },
+              "kind": "axis",
+              "name": "bail_pivot_axis",
+              "part": "swing_bail",
+              "role": "consumer",
+              "surface_relation": null
+            }
+          ],
+          "name": "shouldered_arch",
+          "notes": "Steeper side legs, pronounced shoulders and a flatter crown create a clearly different carry silhouette.",
+          "parameters": [],
+          "record_id": "rec_bucket1_var_handle_fixed_grips",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L91-L118",
+            "model.py:L202-L210"
+          ]
+        }
+      ],
+      "component_type": "single spanning swing bail",
+      "name": "bail_profile",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Each long rectangular tab bridges from the shell to the pivot pin and is visibly capped by a rivet head.",
+          "implementation_function": "_ear_style_riveted_strap_build",
+          "interfaces": [],
+          "name": "riveted_strap",
+          "notes": "Long rectangular bridge plate between the shell and pivot pin.",
+          "parameters": [],
+          "record_id": "rec_red-painted-sheet-metal-fire-bucket-a-tapered-cy_20260608_164512_348759_c25e8986",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L108-L131"
+          ]
+        },
+        {
+          "evidence": "The source side-grip assembly demonstrates compact paired wall tabs and circular rivet heads; the derived single-bail version uses a short neck and round stamped head around the same pivot datum.",
+          "implementation_function": "_ear_style_round_stamped_lug_build",
+          "interfaces": [],
+          "name": "round_stamped_lug",
+          "notes": "Short wall neck flows into a circular stamped plate around the pivot pin.",
+          "parameters": [],
+          "record_id": "rec_bucket1_var_handle_fixed_grips",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L150-L177"
+          ]
+        }
+      ],
+      "component_type": "paired riveted pivot ears",
+      "name": "ear_style",
+      "required": true
+    }
+  ],
+  "slug": "Urban_Environment_bucket1",
+  "source_map_path": "articraft_template_authoring/source_maps/Urban_Environment_bucket1.md",
+  "source_map_sha256": "409493a63bbc161ace23a59f54b1a0f90e9e6e683d51a6d6cdf2d6561d82b39a"
+}

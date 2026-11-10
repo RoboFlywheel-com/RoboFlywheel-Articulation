@@ -1,0 +1,189 @@
+{
+  "assembly_notes": "One open-front hollow sheet-metal carcass carries shelves, the top handle, jamb knuckles, optional lower drawer openings and bilateral fixed rails. One or two door leaves mate to the actual jamb axes; a drawer fitment derives its lower zone, indexed hollow trays, openings, rail pitch and +Y travel from the host cavity. All 2 x 2 x 3 slot combinations build without compatibility gates or overlap allowances.",
+  "bindings": [
+    {
+      "binding_id": "carcass_to_door_group",
+      "provider": "interior_fitment.front_opening",
+      "consumer": "door_group.jamb_axis",
+      "joint_type": "revolute",
+      "derived": [
+        {"name": "leaf_width_m", "mode": "derived", "value_type": "float", "unit": "m", "minimum": null, "maximum": null, "choices": [], "depends_on": ["door_group", "body_width_m"], "expression": "usable front width / leaf count - reveals", "rationale": "Each leaf spans its host-derived share of the opening."},
+        {"name": "leaf_height_m", "mode": "derived", "value_type": "float", "unit": "m", "minimum": null, "maximum": null, "choices": [], "depends_on": ["interior_fitment", "body_height_m"], "expression": "upper door zone height - reveals", "rationale": "Drawer fitments reserve a lower exposed drawer zone; open shelves use the full opening."}
+      ]
+    },
+    {
+      "binding_id": "door_group_to_panel",
+      "provider": "door_group.leaf_frame",
+      "consumer": "door_panel.leaf_envelope",
+      "joint_type": "fixed",
+      "derived": [
+        {"name": "window_size_m", "mode": "derived", "value_type": "float", "unit": "m", "minimum": null, "maximum": null, "choices": [], "depends_on": ["leaf_width_m", "leaf_height_m"], "expression": "leaf envelope minus structural border", "rationale": "Glazing and solid panels fit the same source-backed leaf envelope."}
+      ]
+    },
+    {
+      "binding_id": "fitment_to_drawers",
+      "provider": "interior_fitment.drawer_opening",
+      "consumer": "interior_fitment.drawer_tray",
+      "joint_type": "prismatic",
+      "derived": [
+        {"name": "drawer_slot_height_m", "mode": "derived", "value_type": "float", "unit": "m", "minimum": null, "maximum": null, "choices": [], "depends_on": ["interior_fitment", "bank_drawer_count", "body_height_m"], "expression": "lower drawer zone height / derived drawer count", "rationale": "Openings, hollow trays and bilateral rails share one indexed pitch."},
+        {"name": "drawer_travel_m", "mode": "derived", "value_type": "float", "unit": "m", "minimum": null, "maximum": null, "choices": [], "depends_on": ["body_depth_m"], "expression": "0.58 * clear drawer depth", "rationale": "The tray remains engaged on both rails at full extension."}
+      ]
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "first_aid_cabinet_identity",
+      "applies_to": {"slot": "door_group", "candidates": ["single_leaf", "double_leaf"]},
+      "required_roles": [{"role": "carcass", "exact_count": 1}, {"role": "door_leaf", "count_from": "resolved.door_leaf_count"}],
+      "required_relations": [{"parent_role": "carcass", "child_role": "door_leaf", "joint_type": "revolute", "axis": [0.0, 0.0, 1.0]}],
+      "required_author_checks": ["category_anchor: one hollow wall cabinet carcass", "category_anchor: every door leaf hinges from a jamb", "category_anchor: first aid cross is present", "category_anchor: door free edges swing forward"]
+    },
+    {
+      "anchor_id": "drawer_fitment_identity",
+      "applies_to": {"slot": "interior_fitment", "candidates": ["base_drawer", "drawer_bank"]},
+      "required_roles": [{"role": "carcass", "exact_count": 1}, {"role": "drawer", "count_from": "resolved.drawer_count"}],
+      "required_relations": [{"parent_role": "carcass", "child_role": "drawer", "joint_type": "prismatic", "axis": [0.0, 1.0, 0.0]}],
+      "required_author_checks": ["category_anchor: every drawer is an independent moving child", "category_anchor: drawer trays are hollow", "category_anchor: drawers extend forward on bilateral rails"]
+    }
+  ],
+  "multiplicities": [
+    {"name": "shelf_count", "item_slot": "interior_fitment", "values": [1, 2, 3], "spacing_expression": "shelves are equispaced over the upper usable cavity and indexed from bottom to top", "host_capacity_expression": "usable shelf zone height >= (N + 1) * 0.055 m + N * shelf thickness"}
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "A single revolute child spans the front opening and carries frame/glass, cross, banner, knob and hinge knuckles.",
+          "implementation_function": "_door_group_single_leaf_build",
+          "interfaces": [{"name": "jamb_axis", "kind": "axis", "role": "consumer", "part": "door_leaf", "frame": {"axis": "+Z", "point": "local hinge line"}, "dimensions": {"radius": "hinge knuckle bore radius"}}, {"name": "leaf_frame", "kind": "plane", "role": "provider", "part": "door_leaf", "frame": {"normal": "+Y"}, "dimensions": {"width": "host-derived full leaf width", "height": "host-derived upper opening height"}}],
+          "name": "single_leaf",
+          "notes": "One full-width leaf hinged from the left jamb.",
+          "parameters": [
+            {"name": "body_width_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.30, "maximum": 0.42, "choices": [], "depends_on": [], "expression": "", "rationale": "Source cabinet width with modest sheet-metal product variation."},
+            {"name": "body_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.12, "maximum": 0.18, "choices": [], "depends_on": [], "expression": "", "rationale": "Shallow wall-cabinet depth range."},
+            {"name": "body_height_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.36, "maximum": 0.52, "choices": [], "depends_on": [], "expression": "", "rationale": "Source cabinet height with capacity variation."}
+          ],
+          "record_id": "rec_build-a-realistic-articulated-3d-model-of-a-firs_20260609_183625_780787_99727092",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L145-L227",
+            "model.py:L336-L401"
+          ]
+        },
+        {
+          "evidence": "Left and right leaves have separate joints and opposite Z axes, meeting at cabinet center.",
+          "implementation_function": "_door_group_double_leaf_build",
+          "interfaces": [{"name": "jamb_axis", "kind": "axis", "role": "consumer", "part": "door_leaf", "frame": {"axis": "opposed +/-Z", "point": "each local hinge line"}, "dimensions": {"radius": "hinge knuckle bore radius"}}, {"name": "leaf_frame", "kind": "plane", "role": "provider", "part": "door_leaf", "frame": {"normal": "+Y"}, "dimensions": {"width": "half the host opening minus centre reveal", "height": "host-derived upper opening height"}}],
+          "name": "double_leaf",
+          "notes": "Two opposed half-width leaves meet at the centre reveal.",
+          "parameters": [
+            {"name": "body_width_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.30, "maximum": 0.42, "choices": [], "depends_on": [], "expression": "", "rationale": "Source cabinet width with modest sheet-metal product variation."},
+            {"name": "body_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.12, "maximum": 0.18, "choices": [], "depends_on": [], "expression": "", "rationale": "Shallow wall-cabinet depth range."},
+            {"name": "body_height_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.36, "maximum": 0.52, "choices": [], "depends_on": [], "expression": "", "rationale": "Source cabinet height with capacity variation."}
+          ],
+          "record_id": "rec_first_aid_cabinet_var_double_doors",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L140-L231",
+            "model.py:L316-L389"
+          ]
+        }
+      ],
+      "component_type": "articulated component",
+      "name": "door_group",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The panel has a real window opening, separate glass volume, emblem and upper banner.",
+          "implementation_function": "_door_panel_glazed_window_build",
+          "interfaces": [{"name": "leaf_envelope", "kind": "plane", "role": "consumer", "part": "door_leaf", "frame": {"normal": "-Y"}, "dimensions": {"width": "leaf width", "height": "leaf height"}}],
+          "name": "glazed_window",
+          "notes": "Real cut frame and captured glazing; cross and banner remain separate homogeneous visuals.",
+          "parameters": [],
+          "record_id": "rec_build-a-realistic-articulated-3d-model-of-a-firs_20260609_183625_780787_99727092",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L145-L211"
+          ]
+        },
+        {
+          "evidence": "The solid door omits glass and places emblem/banner on the metal face.",
+          "implementation_function": "_door_panel_solid_panel_build",
+          "interfaces": [{"name": "leaf_envelope", "kind": "plane", "role": "consumer", "part": "door_leaf", "frame": {"normal": "-Y"}, "dimensions": {"width": "leaf width", "height": "leaf height"}}],
+          "name": "solid_panel",
+          "notes": "Uncut metal panel with separate cross and banner face layers.",
+          "parameters": [],
+          "record_id": "rec_first_aid_cabinet_var_solid_door",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L131-L174"
+          ]
+        }
+      ],
+      "component_type": "structural component",
+      "name": "door_panel",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Open-front hollow shell carries welded shelves and visible supply blocks.",
+          "implementation_function": "_interior_fitment_open_shelves_build",
+          "interfaces": [{"name": "front_opening", "kind": "plane", "role": "provider", "part": "carcass", "frame": {"normal": "+Y", "point": "front rim"}, "dimensions": {"width": "inner cabinet width", "height": "inner cabinet height"}}, {"name": "shelf_seat", "kind": "plane", "role": "provider", "part": "carcass", "frame": {"normal": "+Z"}, "dimensions": {"span": "inner cabinet width", "depth": "clear cabinet depth"}}],
+          "name": "open_shelves",
+          "notes": "Full-height shelf zone with shelves embedded into side and back walls.",
+          "parameters": [],
+          "record_id": "rec_build-a-realistic-articulated-3d-model-of-a-firs_20260609_183625_780787_99727092",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L77-L142",
+            "model.py:L254-L335"
+          ]
+        },
+        {
+          "evidence": "Cut lower opening, open-top hollow tray, side rails and one +Y prismatic joint.",
+          "implementation_function": "_interior_fitment_base_drawer_build",
+          "interfaces": [{"name": "front_opening", "kind": "plane", "role": "provider", "part": "carcass", "frame": {"normal": "+Y", "point": "upper front rim"}, "dimensions": {"width": "inner cabinet width", "height": "upper door zone height"}}, {"name": "drawer_opening", "kind": "plane", "role": "provider", "part": "carcass", "frame": {"normal": "+Y", "point": "lower front panel"}, "dimensions": {"width": "inner width minus reveals", "height": "single lower drawer opening"}}, {"name": "drawer_tray", "kind": "plane", "role": "consumer", "part": "drawer", "frame": {"normal": "-Y"}, "dimensions": {"width": "opening width minus side clearance", "height": "opening height minus reveal"}}],
+          "name": "base_drawer",
+          "notes": "One exposed lower drawer under the shortened door zone.",
+          "parameters": [],
+          "record_id": "rec_first_aid_cabinet_var_drawer_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L115-L347",
+            "model.py:L350-L576"
+          ]
+        },
+        {
+          "evidence": "Lower front is divided into indexed openings with one hollow tray and +Y slide per level.",
+          "implementation_function": "_interior_fitment_drawer_bank_build",
+          "interfaces": [{"name": "front_opening", "kind": "plane", "role": "provider", "part": "carcass", "frame": {"normal": "+Y", "point": "upper front rim"}, "dimensions": {"width": "inner cabinet width", "height": "upper door zone height"}}, {"name": "drawer_opening", "kind": "plane", "role": "provider", "part": "carcass", "frame": {"normal": "+Y", "point": "indexed lower front opening"}, "dimensions": {"width": "inner width minus reveals", "height": "lower zone / bank_drawer_count"}}, {"name": "drawer_tray", "kind": "plane", "role": "consumer", "part": "drawer", "frame": {"normal": "-Y"}, "dimensions": {"width": "opening width minus side clearance", "height": "opening height minus reveal"}}],
+          "name": "drawer_bank",
+          "notes": "Indexed lower drawer bank; every level has its own hollow tray, bilateral rails and +Y slide.",
+          "parameters": [
+            {"name": "body_width_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.30, "maximum": 0.42, "choices": [], "depends_on": [], "expression": "", "rationale": "Source cabinet width with modest sheet-metal product variation."},
+            {"name": "body_depth_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.12, "maximum": 0.18, "choices": [], "depends_on": [], "expression": "", "rationale": "Shallow wall-cabinet depth range."},
+            {"name": "body_height_m", "mode": "independent", "value_type": "float", "unit": "m", "minimum": 0.36, "maximum": 0.52, "choices": [], "depends_on": [], "expression": "", "rationale": "Source cabinet height with capacity variation."},
+            {"name": "bank_drawer_count", "mode": "independent", "value_type": "int", "unit": "count", "minimum": 2, "maximum": 4, "choices": [], "depends_on": [], "expression": "", "rationale": "The source bank has three indexed drawers; the same loop-supported construction is valid from two through four levels."}
+          ],
+          "record_id": "rec_first_aid_cabinet_var_drawer_stack",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L80-L265",
+            "model.py:L350-L518"
+          ]
+        }
+      ],
+      "component_type": "fixed component",
+      "name": "interior_fitment",
+      "required": true
+    }
+  ],
+  "slug": "Science_First_aid_cabinet",
+  "source_map_path": "articraft_template_authoring/source_maps/Science_First_aid_cabinet.md",
+  "source_map_sha256": "6d2c4a2cd949df6011f7a7dcce6c982dcb7f3bd4d19b906d0c7902f842052a52"
+}

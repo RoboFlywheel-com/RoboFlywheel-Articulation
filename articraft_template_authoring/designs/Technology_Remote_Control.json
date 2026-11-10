@@ -1,0 +1,787 @@
+{
+  "schema_version": 1,
+  "slug": "Technology_Remote_Control",
+  "source_map_path": "articraft_template_authoring/source_maps/Technology_Remote_Control.md",
+  "source_map_sha256": "f6f39ad13c0cf69a58d15ec7642f4e02f17eb62d3681710df9899d31adaf45fe",
+  "assembly_notes": "Build one shaped handheld enclosure, attach one source-backed primary control through a carrier on the upper control face, attach one repeated press-button bed below it, and independently add an open, hinged, or rail-guided protective cover. The body remains the common host; body length, mounting regions, axis bosses, cover width, rail spacing, and control clearances are locally derived from the selected components and button count.",
+  "slots": [
+    {
+      "name": "enclosure_family",
+      "component_type": "handheld remote enclosure",
+      "required": true,
+      "candidates": [
+        {
+          "name": "rounded_thermostat",
+          "implementation_function": "_enclosure_family_rounded_thermostat_build",
+          "evidence": "Rounded, filleted slab carries an inset LCD/bezel and a recessed circular control well on one planar front face.",
+          "record_id": "rec_a-black-handheld-thermostat-style-remote-control_20260624_124939_052056_fdc967f6",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L188-L330"],
+          "notes": "Preserve the rounded consumer-plastic slab, inset display stack, and broad lower control area.",
+          "parameters": [
+            {
+              "name": "thermostat_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.062,
+              "maximum": 0.072,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source thermostat shell width family."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "primary_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived primary-control footprint"}
+            },
+            {
+              "name": "button_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived repeated-button footprint"}
+            },
+            {
+              "name": "cover_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived cover footprint"}
+            }
+          ]
+        },
+        {
+          "name": "ergonomic_waisted",
+          "implementation_function": "_enclosure_family_ergonomic_waisted_build",
+          "evidence": "Closed spline narrows at the waist and flares around the LCD and directional-pad ends without changing the control plane.",
+          "record_id": "rec_remote_control_var_ergonomic_contour",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L26-L85", "model.py:L254-L259"],
+          "notes": "Only the enclosure perimeter changes; controls and mounting plane remain independently composable.",
+          "parameters": [
+            {
+              "name": "waist_ratio",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": 0.72,
+              "maximum": 0.84,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source waist pinch relative to the flared ends."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "primary_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived primary-control footprint"}
+            },
+            {
+              "name": "button_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived repeated-button footprint"}
+            },
+            {
+              "name": "cover_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived cover footprint"}
+            }
+          ]
+        },
+        {
+          "name": "slim_wand",
+          "implementation_function": "_enclosure_family_slim_wand_build",
+          "evidence": "Long, narrow CadQuery shell with softened edges and carved front-face wells establishes the soundbar-remote wand.",
+          "record_id": "rec_black-sony-soundbar-remote-control-a-slim-rectan_20260605_173757_125686_b2c6bc8a",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L51-L129", "model.py:L355-L366"],
+          "notes": "Preserve the narrow wand aspect ratio and layered front-face wells.",
+          "parameters": [
+            {
+              "name": "wand_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.050,
+              "maximum": 0.060,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source slim-wand width family."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "primary_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived primary-control footprint"}
+            },
+            {
+              "name": "button_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived repeated-button footprint"}
+            },
+            {
+              "name": "cover_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived cover footprint"}
+            }
+          ]
+        },
+        {
+          "name": "tapered_wand",
+          "implementation_function": "_enclosure_family_tapered_wand_build",
+          "evidence": "Hull of unequal end circles produces a smoothly tapered body, wider at the control end than the logo end.",
+          "record_id": "rec_remote_control_var_tapered_wedge",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L54-L87", "model.py:L382-L394"],
+          "notes": "Only the enclosure footprint changes; local mounting regions adapt to the narrower lower end.",
+          "parameters": [
+            {
+              "name": "taper_ratio",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "ratio",
+              "minimum": 0.68,
+              "maximum": 0.82,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Narrow-end width relative to the control-end width."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "primary_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived primary-control footprint"}
+            },
+            {
+              "name": "button_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived repeated-button footprint"}
+            },
+            {
+              "name": "cover_mount",
+              "kind": "plane",
+              "part": "remote_body",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"extent": "derived cover footprint"}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "primary_control",
+      "component_type": "front-face directional or volume control",
+      "required": true,
+      "candidates": [
+        {
+          "name": "directional_pad",
+          "implementation_function": "_primary_control_directional_pad_build",
+          "evidence": "Four annular-sector buttons surround a round MODE button; every visible control is a separate short-travel prismatic child.",
+          "record_id": "rec_a-black-handheld-thermostat-style-remote-control_20260624_124939_052056_fdc967f6",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L323-L431"],
+          "notes": "A fixed carrier holds five independently pressable children.",
+          "parameters": [
+            {
+              "name": "dpad_diameter_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.038,
+              "maximum": 0.048,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source circular directional-pad diameter."
+            },
+            {
+              "name": "dpad_travel_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.0010,
+              "maximum": 0.0018,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Short independent press travel of each sector and center button."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "mount_plane",
+              "kind": "plane",
+              "part": "primary_carrier",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"extent": "dpad_diameter_m plus rim"}
+            }
+          ]
+        },
+        {
+          "name": "volume_rocker",
+          "implementation_function": "_primary_control_volume_rocker_build",
+          "evidence": "Large disc and shallow dome tilt about a real Y-axis at the center of the recessed well.",
+          "record_id": "rec_black-sony-soundbar-remote-control-a-slim-rectan_20260605_173757_125686_b2c6bc8a",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L472-L504"],
+          "notes": "A raised carrier boss exposes the solved widthwise rocker axis.",
+          "parameters": [
+            {
+              "name": "rocker_diameter_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.026,
+              "maximum": 0.034,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source central rocker diameter."
+            },
+            {
+              "name": "rocker_angle_rad",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "rad",
+              "minimum": 0.14,
+              "maximum": 0.22,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source tactile tilt range about the widthwise axis."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "mount_plane",
+              "kind": "plane",
+              "part": "primary_carrier",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"extent": "rocker_diameter_m plus boss rim"}
+            },
+            {
+              "name": "rotation_axis",
+              "kind": "axis",
+              "part": "volume_rocker",
+              "role": "consumer",
+              "frame": {"axis": "+X"},
+              "dimensions": {"radius": "rocker axle radius"}
+            }
+          ]
+        },
+        {
+          "name": "jog_wheel",
+          "implementation_function": "_primary_control_jog_wheel_build",
+          "evidence": "Thin circular disc, raised hub, and radial knurl ribs rotate continuously around the front-face +Z axis.",
+          "record_id": "rec_remote_control_var_jog_wheel",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L474-L518"],
+          "notes": "A fixed carrier boss exposes the solved front-normal spin axis.",
+          "parameters": [
+            {
+              "name": "jog_diameter_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.028,
+              "maximum": 0.036,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source knurled jog-wheel diameter."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "mount_plane",
+              "kind": "plane",
+              "part": "primary_carrier",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"extent": "jog_diameter_m plus boss rim"}
+            },
+            {
+              "name": "rotation_axis",
+              "kind": "axis",
+              "part": "jog_wheel",
+              "role": "consumer",
+              "frame": {"axis": "+Z"},
+              "dimensions": {"radius": "jog hub radius"}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "button_array",
+      "component_type": "repeated independently pressable button array",
+      "required": true,
+      "candidates": [
+        {
+          "name": "media_round_grid",
+          "implementation_function": "_button_array_media_round_grid_build",
+          "evidence": "Four-button source retains shared loop construction and one prismatic joint per circular cap.",
+          "record_id": "rec_remote_control_var_minimal_cluster",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L333-L354", "model.py:L368-L456"],
+          "notes": "N progressively fills a three-column media grid using circular domed caps.",
+          "parameters": [
+            {
+              "name": "media_button_diameter_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.009,
+              "maximum": 0.012,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source round rubber-button diameter."
+            },
+            {
+              "name": "media_button_travel_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.0008,
+              "maximum": 0.0014,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Short media-button press travel."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "mount_plane",
+              "kind": "plane",
+              "part": "button_bed",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"extent": "derived from N and button pitch"}
+            }
+          ]
+        },
+        {
+          "name": "numeric_square_grid",
+          "implementation_function": "_button_array_numeric_square_grid_build",
+          "evidence": "Twelve-key source uses one helper inside a regular three-column by four-row nested loop, with a visible mounting recess.",
+          "record_id": "rec_remote_control_var_numeric_keypad",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L428-L501"],
+          "notes": "N progressively fills a three-column numeric grid using rounded-square labeled caps.",
+          "parameters": [
+            {
+              "name": "numeric_key_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.009,
+              "maximum": 0.012,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source numeric keypad cap width."
+            },
+            {
+              "name": "numeric_key_travel_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.0008,
+              "maximum": 0.0014,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Short numeric-key press travel."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "mount_plane",
+              "kind": "plane",
+              "part": "button_bed",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"extent": "derived from N and button pitch"}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cover_module",
+      "component_type": "front-control protection treatment",
+      "required": true,
+      "candidates": [
+        {
+          "name": "open_face",
+          "implementation_function": "_cover_module_open_face_build",
+          "evidence": "Baseline control field is directly exposed on the recessed face with no additional moving cover.",
+          "record_id": "rec_a-black-handheld-thermostat-style-remote-control_20260624_124939_052056_fdc967f6",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L323-L431"],
+          "notes": "A fixed trim carrier leaves the buttons visible and preserves a structural response for this candidate.",
+          "parameters": [],
+          "interfaces": [
+            {
+              "name": "mount_plane",
+              "kind": "plane",
+              "part": "cover_mount",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"extent": "derived button-field footprint"}
+            }
+          ]
+        },
+        {
+          "name": "flip_cover",
+          "implementation_function": "_cover_module_flip_cover_build",
+          "evidence": "Visible hinge boss and barrel support a thin rounded cover on a widthwise revolute joint.",
+          "record_id": "rec_remote_control_var_flip_cover",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L328-L368", "model.py:L463-L491"],
+          "notes": "A fixed hinge carrier adapts locally to body width; the cover opens away from the button field.",
+          "parameters": [
+            {
+              "name": "flip_cover_angle_rad",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "rad",
+              "minimum": 1.55,
+              "maximum": 1.85,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source flip-cover opening range around ninety to one hundred six degrees."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "mount_plane",
+              "kind": "plane",
+              "part": "cover_mount",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"extent": "derived cover footprint"}
+            },
+            {
+              "name": "hinge_axis",
+              "kind": "axis",
+              "part": "protective_cover",
+              "role": "consumer",
+              "frame": {"axis": "+X"},
+              "dimensions": {"radius": "visible knuckle radius"}
+            }
+          ]
+        },
+        {
+          "name": "slide_cover",
+          "implementation_function": "_cover_module_slide_cover_build",
+          "evidence": "Two raised longitudinal rails carry a thin grip-equipped cover on a long-axis prismatic joint.",
+          "record_id": "rec_remote_control_var_slide_cover",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L153-L174", "model.py:L397-L404", "model.py:L544-L575"],
+          "notes": "A fixed rail carrier adapts locally to body width and button-field length.",
+          "parameters": [
+            {
+              "name": "slide_cover_travel_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.050,
+              "maximum": 0.070,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source rail travel needed to uncover the repeated button field."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "mount_plane",
+              "kind": "plane",
+              "part": "cover_mount",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"extent": "derived rail footprint"}
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "button_count",
+      "item_slot": "button_array",
+      "values": [4, 8, 12],
+      "spacing_expression": "N progressively fills a regular three-column grid from the top row downward using one candidate-specific cap helper and one independent prismatic joint per key.",
+      "host_capacity_expression": "Body length, button-bed length, row pitch, protective-cover length, and rail travel clearance derive from N so all candidate combinations remain inside the front face."
+    }
+  ],
+  "bindings": [
+    {
+      "binding_id": "enclosure_to_primary_carrier",
+      "provider": "enclosure_family.primary_mount",
+      "consumer": "primary_control.mount_plane",
+      "joint_type": "fixed",
+      "derived": [
+        {
+          "name": "primary_center_y_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["enclosure_family", "primary_control"],
+          "expression": "upper front-face center shifted below the display region and inset from the shaped enclosure boundary",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "Every primary control retains its source-recognizable footprint on all enclosure outlines."
+        },
+        {
+          "name": "primary_boss_radius_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["primary_control", "dpad_diameter_m", "rocker_diameter_m", "jog_diameter_m"],
+          "expression": "half selected control diameter plus a local support rim",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "The enclosure gains a real local well or axis boss sized to the selected mechanism."
+        }
+      ]
+    },
+    {
+      "binding_id": "enclosure_to_button_bed",
+      "provider": "enclosure_family.button_mount",
+      "consumer": "button_array.mount_plane",
+      "joint_type": "fixed",
+      "derived": [
+        {
+          "name": "button_bed_length_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["button_count", "button_array", "media_button_diameter_m", "numeric_key_width_m"],
+          "expression": "number of occupied three-column rows times candidate cap pitch plus end borders",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "The mounting recess grows with N instead of leaving keys unsupported."
+        },
+        {
+          "name": "body_length_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["button_count", "button_bed_length_m", "primary_control"],
+          "expression": "display/header allowance plus primary-control envelope plus button-bed length and end margins",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "All repeated keys fit on every source-backed enclosure family."
+        }
+      ]
+    },
+    {
+      "binding_id": "enclosure_to_cover_mount",
+      "provider": "enclosure_family.cover_mount",
+      "consumer": "cover_module.mount_plane",
+      "joint_type": "fixed",
+      "derived": [
+        {
+          "name": "cover_width_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["enclosure_family", "primary_control", "button_array"],
+          "expression": "minimum shaped-body width across the protected region minus side clearance",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "Hinged and sliding covers remain supported without overhanging narrow or waisted hosts."
+        },
+        {
+          "name": "cover_length_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["button_bed_length_m", "button_count", "primary_control"],
+          "expression": "button-bed length plus lower portion of the selected primary-control envelope and hinge/rail margins",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "The cover protects the actual selected control field."
+        },
+        {
+          "name": "rail_spacing_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["cover_width_m"],
+          "expression": "cover half-width minus the rail capture inset",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "Slide rails adapt locally to every enclosure width."
+        }
+      ]
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "handheld_remote_identity",
+      "applies_to": {
+        "slot": "button_array",
+        "candidates": ["media_round_grid", "numeric_square_grid"]
+      },
+      "required_roles": [
+        {"role": "remote_body", "exact_count": 1},
+        {"role": "button_bed", "exact_count": 1},
+        {"role": "press_button", "count_from": "button_count"}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "button_bed",
+          "child_role": "press_button",
+          "joint_type": "prismatic",
+          "axis": [0.0, 0.0, -1.0]
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: remote body is handheld and front-faced",
+        "category_anchor: repeated button count matches multiplicity",
+        "category_anchor: every visible button has independent press travel"
+      ]
+    },
+    {
+      "anchor_id": "directional_pad_identity",
+      "applies_to": {"slot": "primary_control", "candidates": ["directional_pad"]},
+      "required_roles": [
+        {"role": "primary_carrier", "exact_count": 1},
+        {"role": "directional_button", "exact_count": 5}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "primary_carrier",
+          "child_role": "directional_button",
+          "joint_type": "prismatic",
+          "axis": [0.0, 0.0, -1.0]
+        }
+      ],
+      "required_author_checks": ["category_anchor: directional pad has four sectors and center mode key"]
+    },
+    {
+      "anchor_id": "rocker_identity",
+      "applies_to": {"slot": "primary_control", "candidates": ["volume_rocker"]},
+      "required_roles": [
+        {"role": "primary_carrier", "exact_count": 1},
+        {"role": "volume_rocker", "exact_count": 1}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "primary_carrier",
+          "child_role": "volume_rocker",
+          "joint_type": "revolute",
+          "axis": [1.0, 0.0, 0.0]
+        }
+      ],
+      "required_author_checks": ["category_anchor: volume rocker tilts on its visible boss"]
+    },
+    {
+      "anchor_id": "jog_wheel_identity",
+      "applies_to": {"slot": "primary_control", "candidates": ["jog_wheel"]},
+      "required_roles": [
+        {"role": "primary_carrier", "exact_count": 1},
+        {"role": "jog_wheel", "exact_count": 1}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "primary_carrier",
+          "child_role": "jog_wheel",
+          "joint_type": "continuous",
+          "axis": [0.0, 0.0, 1.0]
+        }
+      ],
+      "required_author_checks": ["category_anchor: jog wheel spins about the front-face normal"]
+    },
+    {
+      "anchor_id": "flip_cover_identity",
+      "applies_to": {"slot": "cover_module", "candidates": ["flip_cover"]},
+      "required_roles": [
+        {"role": "cover_mount", "exact_count": 1},
+        {"role": "protective_cover", "exact_count": 1}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "cover_mount",
+          "child_role": "protective_cover",
+          "joint_type": "revolute",
+          "axis": [1.0, 0.0, 0.0]
+        }
+      ],
+      "required_author_checks": ["category_anchor: flip cover opens away from the button field"]
+    },
+    {
+      "anchor_id": "slide_cover_identity",
+      "applies_to": {"slot": "cover_module", "candidates": ["slide_cover"]},
+      "required_roles": [
+        {"role": "cover_mount", "exact_count": 1},
+        {"role": "protective_cover", "exact_count": 1}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "cover_mount",
+          "child_role": "protective_cover",
+          "joint_type": "prismatic",
+          "axis": [0.0, 1.0, 0.0]
+        }
+      ],
+      "required_author_checks": ["category_anchor: slide cover travels on visible longitudinal rails"]
+    }
+  ]
+}

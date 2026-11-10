@@ -1,0 +1,1425 @@
+{
+  "assembly_notes": "Four-wheel golf cart. One rigid chassis root carries the body, floor, roof posts, canopy, battery bay and both axles. Each front wheel spins CONTINUOUS on its own steer_knuckle, and each knuckle turns REVOLUTE (+z) on the chassis; the rear wheels spin CONTINUOUS straight off the chassis, so the steered-front / driven-rear layout is fixed. screen_build changes the folding windshield (split_fold, center_fold, full_width) and reports how many leaves it hangs, while canopy_build independently changes what holds the canopy's front edge: vertical posts off the cowl behind the screen, or raked A-posts with a crossbar ahead of it. The A-posts stand outboard of every screen leaf, so both canopies combine with all three screens. seat_build changes the cushions over the battery bay (bench, bucket_pair, rear_facing, rear_deck_row, the last riding on its own raised deck and step board), each hinged on the chassis, and row_count repeats the whole row once more behind it. steer_build is the driver control that turns both knuckles: a dished wheel on a raked column, or an upright tiller on its own steering link. bed_build closes the cargo deck with a hinged tailgate or leaves it an open flatbed with side rails; its length is derived from row_count so a second row always fits. wheelbase_m, track_width_m and wheel_radius_m are the independent parameters; palette, badges and tread grooves are non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "screen_build_identity",
+      "applies_to": {
+        "candidates": [
+          "split_fold",
+          "center_fold",
+          "full_width"
+        ],
+        "slot": "screen_build"
+      },
+      "required_author_checks": [
+        "category_anchor: four road wheels spin and the front pair steers",
+        "category_anchor: the seat hinges over the bay and the screen folds",
+        "category_anchor: screen_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "steer_knuckle",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "chassis"
+        },
+        {
+          "exact_count": 4,
+          "role": "road_wheel"
+        },
+        {
+          "exact_count": 2,
+          "role": "steer_knuckle"
+        },
+        {
+          "count_from": "resolved.seat_total",
+          "role": "seat_cushion"
+        },
+        {
+          "count_from": "resolved.screen_leaf_count",
+          "role": "windshield_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "seat_build_identity",
+      "applies_to": {
+        "candidates": [
+          "bench",
+          "bucket_pair",
+          "rear_facing",
+          "rear_deck_row"
+        ],
+        "slot": "seat_build"
+      },
+      "required_author_checks": [
+        "category_anchor: four road wheels spin and the front pair steers",
+        "category_anchor: the seat hinges over the bay and the screen folds",
+        "category_anchor: seat_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "steer_knuckle",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "chassis"
+        },
+        {
+          "exact_count": 4,
+          "role": "road_wheel"
+        },
+        {
+          "exact_count": 2,
+          "role": "steer_knuckle"
+        },
+        {
+          "count_from": "resolved.seat_total",
+          "role": "seat_cushion"
+        },
+        {
+          "count_from": "resolved.screen_leaf_count",
+          "role": "windshield_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "steer_build_identity",
+      "applies_to": {
+        "candidates": [
+          "wheel_column",
+          "tiller"
+        ],
+        "slot": "steer_build"
+      },
+      "required_author_checks": [
+        "category_anchor: four road wheels spin and the front pair steers",
+        "category_anchor: the seat hinges over the bay and the screen folds",
+        "category_anchor: steer_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "steer_knuckle",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "chassis"
+        },
+        {
+          "exact_count": 4,
+          "role": "road_wheel"
+        },
+        {
+          "exact_count": 2,
+          "role": "steer_knuckle"
+        },
+        {
+          "count_from": "resolved.seat_total",
+          "role": "seat_cushion"
+        },
+        {
+          "count_from": "resolved.screen_leaf_count",
+          "role": "windshield_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "bed_build_identity",
+      "applies_to": {
+        "candidates": [
+          "tailgate",
+          "flatbed"
+        ],
+        "slot": "bed_build"
+      },
+      "required_author_checks": [
+        "category_anchor: four road wheels spin and the front pair steers",
+        "category_anchor: the seat hinges over the bay and the screen folds",
+        "category_anchor: bed_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "steer_knuckle",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "chassis"
+        },
+        {
+          "exact_count": 4,
+          "role": "road_wheel"
+        },
+        {
+          "exact_count": 2,
+          "role": "steer_knuckle"
+        },
+        {
+          "count_from": "resolved.seat_total",
+          "role": "seat_cushion"
+        },
+        {
+          "count_from": "resolved.screen_leaf_count",
+          "role": "windshield_leaf"
+        }
+      ]
+    },
+    {
+      "anchor_id": "canopy_build_identity",
+      "applies_to": {
+        "candidates": [
+          "cowl_post_canopy",
+          "a_post_canopy"
+        ],
+        "slot": "canopy_build"
+      },
+      "required_author_checks": [
+        "category_anchor: four road wheels spin and the front pair steers",
+        "category_anchor: the seat hinges over the bay and the screen folds",
+        "category_anchor: canopy_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "steer_knuckle",
+          "joint_type": "revolute",
+          "parent_role": "chassis"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "chassis"
+        },
+        {
+          "exact_count": 4,
+          "role": "road_wheel"
+        },
+        {
+          "exact_count": 2,
+          "role": "steer_knuckle"
+        },
+        {
+          "count_from": "resolved.seat_total",
+          "role": "seat_cushion"
+        },
+        {
+          "count_from": "resolved.screen_leaf_count",
+          "role": "windshield_leaf"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= row_count <= 2; the bed shortens by one seat pitch for the second row",
+      "item_slot": "seat_build",
+      "name": "row_count",
+      "spacing_expression": "rows are pitched behind one another along the chassis at one seat pitch",
+      "values": [
+        1,
+        2
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Two-piece screen: a fixed lower leaf on a mount and an upper leaf that folds over it.",
+          "implementation_function": "_screen_build_split_fold_build",
+          "interfaces": [],
+          "name": "split_fold",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__golf_cart__001__png_3fe1ea57bef642a1a1a0a145a7230265",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L60-L200"
+          ]
+        },
+        {
+          "evidence": "Screen split down the middle into left and right panels folding toward each other.",
+          "implementation_function": "_screen_build_center_fold_build",
+          "interfaces": [],
+          "name": "center_fold",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_golf_cart_var_center_fold_windshield",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L60-L200"
+          ]
+        },
+        {
+          "evidence": "One full-width screen on a single hinge with no upper leaf.",
+          "implementation_function": "_screen_build_full_width_build",
+          "interfaces": [],
+          "name": "full_width",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_golf_cart_var_full_width_windshield",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L60-L200"
+          ]
+        }
+      ],
+      "component_type": "windshield",
+      "name": "screen_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The canopy's front edge stands on a pair of vertical posts rising off the cowl behind the windshield.",
+          "implementation_function": "_canopy_build_cowl_post_canopy_build",
+          "interfaces": [],
+          "name": "cowl_post_canopy",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__golf_cart__001__png_3fe1ea57bef642a1a1a0a145a7230265",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L150-L205"
+          ]
+        },
+        {
+          "evidence": "The vertical front posts are replaced by raked A-posts ahead of the windshield, tied together by a crossbar under the canopy's front edge.",
+          "implementation_function": "_canopy_build_a_post_canopy_build",
+          "interfaces": [],
+          "name": "a_post_canopy",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_golf_cart_var_a_post_canopy",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L150-L215"
+          ]
+        }
+      ],
+      "component_type": "canopy support",
+      "name": "canopy_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "One full-width hinged bench cushion over the battery bay.",
+          "implementation_function": "_seat_build_bench_build",
+          "interfaces": [],
+          "name": "bench",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__golf_cart__001__png_3fe1ea57bef642a1a1a0a145a7230265",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L200-L340"
+          ]
+        },
+        {
+          "evidence": "Two separately hinged bucket cushions with a console gap between them.",
+          "implementation_function": "_seat_build_bucket_pair_build",
+          "interfaces": [],
+          "name": "bucket_pair",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_golf_cart_var_bucket_seat_pair",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L200-L360"
+          ]
+        },
+        {
+          "evidence": "Bench turned to face the rear over the bed, with its backrest at the front edge.",
+          "implementation_function": "_seat_build_rear_facing_build",
+          "interfaces": [],
+          "name": "rear_facing",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_golf_cart_var_rear_facing_bench",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L200-L340"
+          ]
+        },
+        {
+          "evidence": "The cushion sits on its own raised rear deck with a step board at its front instead of directly on the chassis bay, so the whole row rides higher.",
+          "implementation_function": "_seat_build_rear_deck_row_build",
+          "interfaces": [],
+          "name": "rear_deck_row",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_golf_cart_var_rear_passenger_bench",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L120-L190"
+          ]
+        }
+      ],
+      "component_type": "seat",
+      "name": "seat_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Dished steering wheel on a raked column driving both knuckles.",
+          "implementation_function": "_steer_build_wheel_column_build",
+          "interfaces": [],
+          "name": "wheel_column",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__golf_cart__001__png_3fe1ea57bef642a1a1a0a145a7230265",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L340-L470"
+          ]
+        },
+        {
+          "evidence": "Upright tiller with a separate steering link that drives the knuckles.",
+          "implementation_function": "_steer_build_tiller_build",
+          "interfaces": [],
+          "name": "tiller",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_golf_cart_var_tiller_steering",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L340-L500"
+          ]
+        }
+      ],
+      "component_type": "steering",
+      "name": "steer_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Boxed cargo bed closed by a hinged drop tailgate.",
+          "implementation_function": "_bed_build_tailgate_build",
+          "interfaces": [],
+          "name": "tailgate",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__golf_cart__001__png_3fe1ea57bef642a1a1a0a145a7230265",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L470-L560"
+          ]
+        },
+        {
+          "evidence": "Open flatbed deck with side rails instead of a tailgate box.",
+          "implementation_function": "_bed_build_flatbed_build",
+          "interfaces": [],
+          "name": "flatbed",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 2.1,
+              "minimum": 1.6,
+              "mode": "independent",
+              "name": "wheelbase_m",
+              "rationale": "axle-to-axle length; derives chassis length, seat station and bed length",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.16,
+              "minimum": 0.86,
+              "mode": "independent",
+              "name": "track_width_m",
+              "rationale": "wheel track; derives body width, seat width and screen width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.27,
+              "minimum": 0.19,
+              "mode": "independent",
+              "name": "wheel_radius_m",
+              "rationale": "wheel radius; derives ride height, floor height and knuckle station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheel_radius_m"
+              ],
+              "expression": "wheel_radius_m + floor_clearance",
+              "mode": "derived",
+              "name": "floor_height_m",
+              "rationale": "cabin floor height above the ground",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * 0.22",
+              "mode": "derived",
+              "name": "seat_station_m",
+              "rationale": "longitudinal station of the driver seat hinge",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "wheelbase_m"
+              ],
+              "expression": "wheelbase_m * (0.46 - 0.18 * (row_count - 1))",
+              "mode": "derived",
+              "name": "bed_length_m",
+              "rationale": "cargo bed length behind the last seat row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_golf_cart_var_flatbed_side_rails",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L470-L560"
+          ]
+        }
+      ],
+      "component_type": "cargo bed",
+      "name": "bed_build",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Golf_cart",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Golf_cart.md",
+  "source_map_sha256": "a7c692ee26042ea19639a209bede6a1711d972e1c4688ad8a061bc6a615639e8"
+}

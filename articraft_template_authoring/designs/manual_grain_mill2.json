@@ -1,0 +1,1218 @@
+{
+  "schema_version": 1,
+  "slug": "manual_grain_mill2",
+  "source_map_path": "articraft_template_authoring/source_maps/manual_grain_mill2.md",
+  "source_map_sha256": "a9d905116b55775a3f92c0469b69211396fc9403d38e81316d84d231bca2b782",
+  "assembly_notes": "Six independent component slots form 192 complete structural combinations. The selected grinding radius and profile derive the central trough relief, grinding bed opening, feed throat, bearing span, cheek bore height and outlet path. The body remains a long wooden trough in every combination. The three-joint chain is mill_body -> adjustable_bearing (Z prismatic) -> grinding_shaft (Y continuous) -> hand_grip (Y continuous), with all joints solved and registered from AxisInterface mates. Real bores and radial/axial clearances replace all overlap allowances.",
+  "slots": [
+    {
+      "name": "trough_body",
+      "component_type": "load_bearing_trough",
+      "required": true,
+      "candidates": [
+        {
+          "name": "open_straight_rails",
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260723_082608_013360_b2c00c51",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L25-L127",
+            "model.py:L214-L233"
+          ],
+          "evidence": "Long source trough with straight rails and central grinding relief.",
+          "implementation_function": "_trough_body_open_straight_rails_build",
+          "parameters": [
+            {
+              "name": "trough_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.52,
+              "maximum": 0.66,
+              "rationale": "Preserves the source's long shallow trough while changing usable feed and outlet runs."
+            },
+            {
+              "name": "trough_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.16,
+              "maximum": 0.2,
+              "rationale": "Controls the real rail span and bearing support separation."
+            },
+            {
+              "name": "inner_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "expression": "trough_width_m - 2 * rail_thickness_m",
+              "depends_on": [
+                "trough_width_m",
+                "rail_thickness_m"
+              ],
+              "rationale": "Keeps the open trough and wheel clearance tied to rail thickness."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "grinding_relief",
+              "kind": "plane",
+              "role": "provider",
+              "part": "mill_body",
+              "frame": {
+                "normal": [0.0, 0.0, 1.0]
+              },
+              "dimensions": {
+                "length": "2 * relief_half_length_m",
+                "width": "relief_width_m"
+              }
+            },
+            {
+              "name": "bearing_mount",
+              "kind": "axis",
+              "role": "provider",
+              "part": "mill_body",
+              "frame": {
+                "axis": [0.0, 0.0, 1.0]
+              },
+              "dimensions": {
+                "travel": "adjustment_travel_m"
+              }
+            }
+          ],
+          "notes": "Straight rails, end wall, floor and open meal path remain source-like."
+        },
+        {
+          "name": "tapered_chamfered_rails",
+          "record_id": "rec_0611_manual_grain_mill2_var_trough_side_rails",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L178",
+            "model.py:L266-L293"
+          ],
+          "evidence": "Shared longitudinal station profile creates tapered chamfered rail silhouettes.",
+          "implementation_function": "_trough_body_tapered_chamfered_rails_build",
+          "parameters": [
+            {
+              "name": "trough_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.52,
+              "maximum": 0.66,
+              "rationale": "Scales rail stations without changing the centered shaft datum."
+            },
+            {
+              "name": "trough_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.16,
+              "maximum": 0.2,
+              "rationale": "Controls the real rail span and bearing support separation."
+            },
+            {
+              "name": "inner_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "expression": "trough_width_m - 2 * rail_thickness_m",
+              "depends_on": [
+                "trough_width_m",
+                "rail_thickness_m"
+              ],
+              "rationale": "Keeps tapered rails outside the grinding envelope."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "grinding_relief",
+              "kind": "plane",
+              "role": "provider",
+              "part": "mill_body",
+              "frame": {
+                "normal": [0.0, 0.0, 1.0]
+              },
+              "dimensions": {
+                "length": "2 * relief_half_length_m",
+                "width": "relief_width_m"
+              }
+            },
+            {
+              "name": "bearing_mount",
+              "kind": "axis",
+              "role": "provider",
+              "part": "mill_body",
+              "frame": {
+                "axis": [0.0, 0.0, 1.0]
+              },
+              "dimensions": {
+                "travel": "adjustment_travel_m"
+              }
+            }
+          ],
+          "notes": "Rail top stations also drive the feed-end wall and ramp shoulder."
+        },
+        {
+          "name": "tapered_hopper_trough",
+          "record_id": "rec_0611_manual_grain_mill_var_hopper_form_tapered",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L273",
+            "model.py:L330-L403"
+          ],
+          "evidence": "Hollow tapered wooden inlet with broad rim and open throat above the source shaft line.",
+          "implementation_function": "_trough_body_tapered_hopper_trough_build",
+          "parameters": [
+            {
+              "name": "trough_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.52,
+              "maximum": 0.66,
+              "rationale": "The hopper is added to, rather than substituted for, the long source trough."
+            },
+            {
+              "name": "trough_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.16,
+              "maximum": 0.2,
+              "rationale": "Derives hopper mouth depth, rail span and support cheeks."
+            },
+            {
+              "name": "inner_width_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "expression": "trough_width_m - 2 * rail_thickness_m",
+              "depends_on": [
+                "trough_width_m",
+                "rail_thickness_m"
+              ],
+              "rationale": "Constrains the hopper throat and feed path to the open trough."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "grinding_relief",
+              "kind": "plane",
+              "role": "provider",
+              "part": "mill_body",
+              "frame": {
+                "normal": [0.0, 0.0, 1.0]
+              },
+              "dimensions": {
+                "length": "2 * relief_half_length_m",
+                "width": "relief_width_m"
+              }
+            },
+            {
+              "name": "bearing_mount",
+              "kind": "axis",
+              "role": "provider",
+              "part": "mill_body",
+              "frame": {
+                "axis": [0.0, 0.0, 1.0]
+              },
+              "dimensions": {
+                "travel": "adjustment_travel_m"
+              }
+            }
+          ],
+          "notes": "Hopper throat height and opening derive from the selected grinding envelope and feed candidate."
+        }
+      ]
+    },
+    {
+      "name": "feed_path",
+      "component_type": "grain_feed_interface",
+      "required": true,
+      "candidates": [
+        {
+          "name": "shallow_plain_ramp",
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260723_082608_013360_b2c00c51",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L50-L63",
+            "model.py:L116-L127"
+          ],
+          "evidence": "Source low triangular feed ramp.",
+          "implementation_function": "_feed_path_shallow_plain_ramp_build",
+          "parameters": [],
+          "interfaces": [
+            {
+              "name": "grinding_inlet",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "mill_body",
+              "frame": {
+                "normal": [1.0, 0.0, 0.0]
+              },
+              "dimensions": {
+                "throat_x": "feed_throat_x_m",
+                "width": "feed_throat_width_m"
+              }
+            }
+          ],
+          "notes": "Open ramp terminates before the full grinding envelope."
+        },
+        {
+          "name": "narrowing_lipped_tray",
+          "record_id": "rec_0611_manual_grain_mill2_var_feed_ramp_lipped",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L47-L211",
+            "model.py:L298-L329"
+          ],
+          "evidence": "Sloped open tray with two low lips and narrowed throat.",
+          "implementation_function": "_feed_path_narrowing_lipped_tray_build",
+          "parameters": [],
+          "interfaces": [
+            {
+              "name": "grinding_inlet",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "mill_body",
+              "frame": {
+                "normal": [1.0, 0.0, 0.0]
+              },
+              "dimensions": {
+                "throat_x": "feed_throat_x_m",
+                "width": "feed_throat_width_m"
+              }
+            }
+          ],
+          "notes": "Floor, lips and throat transition share one derived plan and slope."
+        }
+      ]
+    },
+    {
+      "name": "outlet",
+      "component_type": "meal_discharge_interface",
+      "required": true,
+      "candidates": [
+        {
+          "name": "open_end_discharge",
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260723_082608_013360_b2c00c51",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L25-L127",
+            "model.py:L226-L233"
+          ],
+          "evidence": "Open trough end and supported grinding-bed discharge.",
+          "implementation_function": "_outlet_open_end_discharge_build",
+          "parameters": [],
+          "interfaces": [
+            {
+              "name": "grinding_discharge",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "mill_body",
+              "frame": {
+                "normal": [1.0, 0.0, 0.0]
+              },
+              "dimensions": {
+                "opening": "discharge_opening_m"
+              }
+            }
+          ],
+          "notes": "A shallow open meal ramp preserves the photographed trough outlet."
+        },
+        {
+          "name": "side_spout_tray",
+          "record_id": "rec_0611_manual_grain_mill_var_outlet_side_spout",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L319",
+            "model.py:L414-L445"
+          ],
+          "evidence": "Connected flanged side channel, braces and open catch tray.",
+          "implementation_function": "_outlet_side_spout_tray_build",
+          "parameters": [],
+          "interfaces": [
+            {
+              "name": "grinding_discharge",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "mill_body",
+              "frame": {
+                "normal": [0.0, 1.0, 0.0]
+              },
+              "dimensions": {
+                "opening": "discharge_opening_m"
+              }
+            }
+          ],
+          "notes": "The +Y outlet stays opposite the drive and outside its sweep."
+        }
+      ]
+    },
+    {
+      "name": "grinding_element",
+      "component_type": "centered_grinding_assembly",
+      "required": true,
+      "candidates": [
+        {
+          "name": "plain_vertical_stone",
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260723_082608_013360_b2c00c51",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L20-L22",
+            "model.py:L155-L164",
+            "model.py:L248-L277"
+          ],
+          "evidence": "Thick chamfered source stone on horizontal axle.",
+          "implementation_function": "_grinding_element_plain_vertical_stone_build",
+          "parameters": [
+            {
+              "name": "grinding_radius_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.118,
+              "maximum": 0.145,
+              "rationale": "Controls the true wheel envelope and every host opening."
+            },
+            {
+              "name": "relief_half_length_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "expression": "grinding_radius_m + radial_clearance_m",
+              "depends_on": [
+                "grinding_radius_m",
+                "radial_clearance_m"
+              ],
+              "rationale": "Keeps the wheel inside a real trough slot at all sizes."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "shaft_axis",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "grinding_shaft",
+              "frame": {
+                "axis": [0.0, 1.0, 0.0]
+              },
+              "dimensions": {
+                "radius": "axle_radius_m"
+              }
+            },
+            {
+              "name": "envelope",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "grinding_shaft",
+              "frame": {
+                "normal": [0.0, 0.0, 1.0]
+              },
+              "dimensions": {
+                "radius": "grinding_radius_m",
+                "thickness": "grinding_thickness_m"
+              }
+            },
+            {
+              "name": "feed_throat",
+              "kind": "plane",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {
+                "normal": [-1.0, 0.0, 0.0]
+              },
+              "dimensions": {
+                "radius": "grinding_radius_m"
+              }
+            },
+            {
+              "name": "discharge",
+              "kind": "plane",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {
+                "normal": [1.0, 0.0, 0.0]
+              },
+              "dimensions": {
+                "radius": "grinding_radius_m"
+              }
+            },
+            {
+              "name": "drive_axis",
+              "kind": "axis",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {
+                "axis": [0.0, 1.0, 0.0]
+              },
+              "dimensions": {
+                "radius": "grip_pin_radius_m"
+              }
+            }
+          ],
+          "notes": "One continuous stone/hub/axle solid with real bearing clearances."
+        },
+        {
+          "name": "dished_wooden_wheel",
+          "record_id": "rec_0611_manual_grain_mill2_var_wheel_profile_dished",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L20-L43",
+            "model.py:L172-L221",
+            "model.py:L303-L332"
+          ],
+          "evidence": "Revolved dish, raised rim and hub seat.",
+          "implementation_function": "_grinding_element_dished_wooden_wheel_build",
+          "parameters": [
+            {
+              "name": "grinding_radius_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.118,
+              "maximum": 0.145,
+              "rationale": "Scales all radial face stations and host clearances."
+            },
+            {
+              "name": "relief_half_length_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "expression": "grinding_radius_m + radial_clearance_m",
+              "depends_on": [
+                "grinding_radius_m",
+                "radial_clearance_m"
+              ],
+              "rationale": "Drives the real central trough slot."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "shaft_axis",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "grinding_shaft",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"radius": "axle_radius_m"}
+            },
+            {
+              "name": "envelope",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "grinding_shaft",
+              "frame": {"normal": [0.0, 0.0, 1.0]},
+              "dimensions": {"radius": "grinding_radius_m", "thickness": "grinding_thickness_m"}
+            },
+            {
+              "name": "feed_throat",
+              "kind": "plane",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"normal": [-1.0, 0.0, 0.0]},
+              "dimensions": {"radius": "grinding_radius_m"}
+            },
+            {
+              "name": "discharge",
+              "kind": "plane",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"normal": [1.0, 0.0, 0.0]},
+              "dimensions": {"radius": "grinding_radius_m"}
+            },
+            {
+              "name": "drive_axis",
+              "kind": "axis",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"radius": "grip_pin_radius_m"}
+            }
+          ],
+          "notes": "Dished profile remains one connected rotating solid."
+        },
+        {
+          "name": "sloped_dished_wheel",
+          "record_id": "rec_0611_manual_grain_mill2_var_wheel_profile_dished",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L20-L43",
+            "model.py:L172-L221",
+            "model.py:L303-L332"
+          ],
+          "evidence": "Source-derived continuous conical runner: a smaller circular end transitions through one uninterrupted sloped wall to a larger circular grinding face while the vertical runner stays on the horizontal axle.",
+          "implementation_function": "_grinding_element_sloped_dished_wheel_build",
+          "parameters": [
+            {
+              "name": "grinding_radius_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.118,
+              "maximum": 0.145,
+              "rationale": "Scales the sloped wheel envelope and all host clearances."
+            },
+            {
+              "name": "relief_half_length_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "expression": "grinding_radius_m + radial_clearance_m",
+              "depends_on": [
+                "grinding_radius_m",
+                "radial_clearance_m"
+              ],
+              "rationale": "Keeps the continuous conical runner inside a real central trough slot."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "shaft_axis",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "grinding_shaft",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"radius": "axle_radius_m"}
+            },
+            {
+              "name": "envelope",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "grinding_shaft",
+              "frame": {"normal": [0.0, 0.0, 1.0]},
+              "dimensions": {"radius": "grinding_radius_m", "thickness": "grinding_thickness_m"}
+            },
+            {
+              "name": "feed_throat",
+              "kind": "plane",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"normal": [-1.0, 0.0, 0.0]},
+              "dimensions": {"radius": "grinding_radius_m"}
+            },
+            {
+              "name": "discharge",
+              "kind": "plane",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"normal": [1.0, 0.0, 0.0]},
+              "dimensions": {"radius": "grinding_radius_m"}
+            },
+            {
+              "name": "drive_axis",
+              "kind": "axis",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"radius": "grip_pin_radius_m"}
+            }
+          ],
+          "notes": "A single connected conical runner, hub and axle remains centered between the paired cheeks; its smaller circular end transitions continuously to the larger circular grinding face."
+        },
+        {
+          "name": "segmented_vertical_stone",
+          "record_id": "rec_0611_manual_grain_mill2_var_segmented_vertical_wheel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L20-L23",
+            "model.py:L156-L194",
+            "model.py:L278-L310"
+          ],
+          "evidence": "Twelve shallow radial joints on a continuous wheel core.",
+          "implementation_function": "_grinding_element_segmented_vertical_stone_build",
+          "parameters": [
+            {
+              "name": "grinding_radius_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.118,
+              "maximum": 0.145,
+              "rationale": "Scales the wheel and radial segment joints."
+            },
+            {
+              "name": "relief_half_length_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "expression": "grinding_radius_m + radial_clearance_m",
+              "depends_on": [
+                "grinding_radius_m",
+                "radial_clearance_m"
+              ],
+              "rationale": "Drives the real central trough slot."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "shaft_axis",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "grinding_shaft",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"radius": "axle_radius_m"}
+            },
+            {
+              "name": "envelope",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "grinding_shaft",
+              "frame": {"normal": [0.0, 0.0, 1.0]},
+              "dimensions": {"radius": "grinding_radius_m", "thickness": "grinding_thickness_m"}
+            },
+            {
+              "name": "feed_throat",
+              "kind": "plane",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"normal": [-1.0, 0.0, 0.0]},
+              "dimensions": {"radius": "grinding_radius_m"}
+            },
+            {
+              "name": "discharge",
+              "kind": "plane",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"normal": [1.0, 0.0, 0.0]},
+              "dimensions": {"radius": "grinding_radius_m"}
+            },
+            {
+              "name": "drive_axis",
+              "kind": "axis",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"radius": "grip_pin_radius_m"}
+            }
+          ],
+          "notes": "Face grooves never split the load-bearing core."
+        },
+        {
+          "name": "conical_burr_pair",
+          "record_id": "rec_0611_manual_grain_mill_var_grinding_element_conical_burr_pair",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L16-L327",
+            "model.py:L346-L509"
+          ],
+          "evidence": "Coaxial male rotor and female stator with descriptor-derived clearance and bed opening.",
+          "implementation_function": "_grinding_element_conical_burr_pair_build",
+          "parameters": [
+            {
+              "name": "grinding_radius_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.118,
+              "maximum": 0.145,
+              "rationale": "Controls the conical rotor wide radius and enclosing stator."
+            },
+            {
+              "name": "relief_half_length_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "expression": "grinding_radius_m + burr_radial_gap_m + stator_wall_m + radial_clearance_m",
+              "depends_on": [
+                "grinding_radius_m",
+                "burr_radial_gap_m",
+                "stator_wall_m",
+                "radial_clearance_m"
+              ],
+              "rationale": "The trough opening conforms to the complete stationary burr envelope."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "shaft_axis",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "grinding_shaft",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"radius": "axle_radius_m"}
+            },
+            {
+              "name": "envelope",
+              "kind": "plane",
+              "role": "consumer",
+              "part": "grinding_shaft",
+              "frame": {"normal": [0.0, 0.0, 1.0]},
+              "dimensions": {"radius": "grinding_radius_m + burr_radial_gap_m + stator_wall_m", "thickness": "grinding_thickness_m"}
+            },
+            {
+              "name": "feed_throat",
+              "kind": "plane",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"normal": [-1.0, 0.0, 0.0]},
+              "dimensions": {"radius": "grinding_radius_m"}
+            },
+            {
+              "name": "discharge",
+              "kind": "plane",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"normal": [1.0, 0.0, 0.0]},
+              "dimensions": {"radius": "grinding_radius_m"}
+            },
+            {
+              "name": "drive_axis",
+              "kind": "axis",
+              "role": "provider",
+              "part": "grinding_shaft",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"radius": "grip_pin_radius_m"}
+            }
+          ],
+          "notes": "The stator is rigidly carried by the adjustable bearing; the rotor remains on the moving shaft."
+        }
+      ]
+    },
+    {
+      "name": "bearing_cheeks",
+      "component_type": "paired_shaft_supports",
+      "required": true,
+      "candidates": [
+        {
+          "name": "straight_slotted_cheeks",
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260723_082608_013360_b2c00c51",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L65-L152",
+            "model.py:L235-L246"
+          ],
+          "evidence": "Straight bored front cheek and open rear carriage guide.",
+          "implementation_function": "_bearing_cheeks_straight_slotted_cheeks_build",
+          "parameters": [
+            {
+              "name": "adjustment_travel_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.004,
+              "maximum": 0.008,
+              "rationale": "Controls the actual vertical carriage joint and guide opening."
+            },
+            {
+              "name": "guide_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "expression": "bearing_block_height_m + adjustment_travel_m + 2 * guide_clearance_m",
+              "depends_on": [
+                "bearing_block_height_m",
+                "adjustment_travel_m",
+                "guide_clearance_m"
+              ],
+              "rationale": "Keeps the carriage captured without collision at both limits."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "carriage_guide",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "adjustable_bearing",
+              "frame": {"axis": [0.0, 0.0, 1.0]},
+              "dimensions": {"travel": "adjustment_travel_m"}
+            },
+            {
+              "name": "shaft_support",
+              "kind": "axis",
+              "role": "provider",
+              "part": "adjustable_bearing",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"bore_radius": "bearing_bore_radius_m"}
+            }
+          ],
+          "notes": "Both support planes and the rear guide derive from grinding thickness and adjustment travel."
+        },
+        {
+          "name": "arched_paired_cheeks",
+          "record_id": "rec_0611_manual_grain_mill2_var_arched_bearing_cheeks",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L214",
+            "model.py:L246-L279"
+          ],
+          "evidence": "Paired arched crowns, broad feet and a rear guide share one cheek descriptor.",
+          "implementation_function": "_bearing_cheeks_arched_paired_cheeks_build",
+          "parameters": [
+            {
+              "name": "adjustment_travel_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.004,
+              "maximum": 0.008,
+              "rationale": "Controls the actual vertical carriage joint and arched guide opening."
+            },
+            {
+              "name": "guide_height_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "expression": "bearing_block_height_m + adjustment_travel_m + 2 * guide_clearance_m",
+              "depends_on": [
+                "bearing_block_height_m",
+                "adjustment_travel_m",
+                "guide_clearance_m"
+              ],
+              "rationale": "Keeps the carriage captured without collision at both limits."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "carriage_guide",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "adjustable_bearing",
+              "frame": {"axis": [0.0, 0.0, 1.0]},
+              "dimensions": {"travel": "adjustment_travel_m"}
+            },
+            {
+              "name": "shaft_support",
+              "kind": "axis",
+              "role": "provider",
+              "part": "adjustable_bearing",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"bore_radius": "bearing_bore_radius_m"}
+            }
+          ],
+          "notes": "Arched silhouette does not alter shaft datum or bearing span."
+        }
+      ]
+    },
+    {
+      "name": "drive",
+      "component_type": "manual_hand_drive",
+      "required": true,
+      "candidates": [
+        {
+          "name": "straight_axial_grip",
+          "record_id": "rec_use-the-attached-reference-image-as-the-primary-_20260723_082608_013360_b2c00c51",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L167-L182",
+            "model.py:L279-L331"
+          ],
+          "evidence": "Tapered bored wooden dowel on the protruding shaft pin.",
+          "implementation_function": "_drive_straight_axial_grip_build",
+          "parameters": [
+            {
+              "name": "grip_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.12,
+              "maximum": 0.17,
+              "rationale": "Changes the real tapered hand surface and pin insertion depth."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "grip_axis",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "hand_grip",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"bore_radius": "grip_bore_radius_m"}
+            }
+          ],
+          "notes": "The bored grip is separated from the pin by radial clearance, not an allowance."
+        },
+        {
+          "name": "offset_side_crank",
+          "record_id": "rec_0611_manual_grain_mill_var_drive_side_crank",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L167-L198",
+            "model.py:L289-L371"
+          ],
+          "evidence": "Rounded arm, side hub, offset pin and tapered bored grip.",
+          "implementation_function": "_drive_offset_side_crank_build",
+          "parameters": [
+            {
+              "name": "grip_length_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.12,
+              "maximum": 0.17,
+              "rationale": "Changes the real tapered hand surface and pin insertion depth."
+            },
+            {
+              "name": "crank_throw_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.085,
+              "maximum": 0.115,
+              "rationale": "Controls the visible arm length and complete swept orbit."
+            },
+            {
+              "name": "crank_sweep_radius_m",
+              "mode": "derived",
+              "value_type": "float",
+              "unit": "m",
+              "expression": "crank_throw_m + grip_outer_radius_m",
+              "depends_on": [
+                "crank_throw_m",
+                "grip_outer_radius_m"
+              ],
+              "rationale": "Drives rail/cheek axial clearance for the full rotation."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "grip_axis",
+              "kind": "axis",
+              "role": "consumer",
+              "part": "hand_grip",
+              "frame": {"axis": [0.0, 1.0, 0.0]},
+              "dimensions": {"bore_radius": "grip_bore_radius_m"}
+            }
+          ],
+          "notes": "The complete arm remains outside the front cheek plane for all shaft angles."
+        }
+      ]
+    }
+  ],
+  "multiplicities": [],
+  "bindings": [
+    {
+      "binding_id": "grinding_envelope_to_trough_relief",
+      "provider": "trough_body.grinding_relief",
+      "consumer": "grinding_element.envelope",
+      "joint_type": "host_opening",
+      "derived": [
+        {
+          "name": "relief_half_length_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "grinding_radius_m + radial_clearance_m + stator_allowance_m",
+          "depends_on": [
+            "grinding_radius_m",
+            "radial_clearance_m",
+            "stator_allowance_m"
+          ],
+          "rationale": "Cuts a real wheel/burr slot through the trough floor."
+        },
+        {
+          "name": "relief_width_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "grinding_thickness_m + 2 * axial_clearance_m",
+          "depends_on": [
+            "grinding_thickness_m",
+            "axial_clearance_m"
+          ],
+          "rationale": "Keeps both faces clear of the trough floor and feed structure."
+        }
+      ]
+    },
+    {
+      "binding_id": "grinding_element_to_feed",
+      "provider": "grinding_element.feed_throat",
+      "consumer": "feed_path.grinding_inlet",
+      "joint_type": "feed_clearance",
+      "derived": [
+        {
+          "name": "feed_throat_x_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "-grinding_radius_m - radial_clearance_m",
+          "depends_on": [
+            "grinding_radius_m",
+            "radial_clearance_m"
+          ],
+          "rationale": "Stops either feed candidate before the complete rotating envelope."
+        },
+        {
+          "name": "feed_throat_width_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "min(inner_width_m - 2 * feed_side_clearance_m, 0.09)",
+          "depends_on": [
+            "inner_width_m",
+            "feed_side_clearance_m"
+          ],
+          "rationale": "Fits the feed throat between every rail pair."
+        }
+      ]
+    },
+    {
+      "binding_id": "grinding_element_to_outlet",
+      "provider": "grinding_element.discharge",
+      "consumer": "outlet.grinding_discharge",
+      "joint_type": "discharge_clearance",
+      "derived": [
+        {
+          "name": "discharge_opening_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "max(0.045, 0.42 * grinding_radius_m)",
+          "depends_on": [
+            "grinding_radius_m"
+          ],
+          "rationale": "Sizes the open meal ramp or side throat from the selected grinding element."
+        }
+      ]
+    },
+    {
+      "binding_id": "trough_to_adjustable_bearing",
+      "provider": "trough_body.bearing_mount",
+      "consumer": "bearing_cheeks.carriage_guide",
+      "joint_type": "prismatic",
+      "derived": [
+        {
+          "name": "bearing_axis_height_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "grinding_radius_m + floor_top_m - bed_engagement_m",
+          "depends_on": [
+            "grinding_radius_m",
+            "floor_top_m",
+            "bed_engagement_m"
+          ],
+          "rationale": "Keeps the vertical grinding element centered in the trough slot."
+        }
+      ]
+    },
+    {
+      "binding_id": "bearing_to_grinding_shaft",
+      "provider": "bearing_cheeks.shaft_support",
+      "consumer": "grinding_element.shaft_axis",
+      "joint_type": "continuous",
+      "derived": [
+        {
+          "name": "bearing_span_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "grinding_thickness_m + 2 * face_clearance_m + 2 * cheek_thickness_m",
+          "depends_on": [
+            "grinding_thickness_m",
+            "face_clearance_m",
+            "cheek_thickness_m"
+          ],
+          "rationale": "Places the two cheeks beyond the wheel/stator faces while retaining both axle bores."
+        }
+      ]
+    },
+    {
+      "binding_id": "shaft_to_hand_grip",
+      "provider": "grinding_element.drive_axis",
+      "consumer": "drive.grip_axis",
+      "joint_type": "continuous",
+      "derived": [
+        {
+          "name": "grip_mount_y_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "expression": "-bearing_span_m / 2 - drive_axial_clearance_m",
+          "depends_on": [
+            "bearing_span_m",
+            "drive_axial_clearance_m"
+          ],
+          "rationale": "Keeps either hand drive outside the front support plane."
+        }
+      ]
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "manual_grain_mill2_trough_identity",
+      "applies_to": {
+        "slot": "trough_body",
+        "candidates": [
+          "open_straight_rails",
+          "tapered_chamfered_rails",
+          "tapered_hopper_trough"
+        ]
+      },
+      "required_roles": [
+        {"role": "mill_body", "exact_count": 1},
+        {"role": "adjustable_bearing", "exact_count": 1},
+        {"role": "grinding_shaft", "exact_count": 1},
+        {"role": "hand_grip", "exact_count": 1}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "mill_body",
+          "child_role": "adjustable_bearing",
+          "joint_type": "prismatic",
+          "axis": [0.0, 0.0, 1.0]
+        },
+        {
+          "parent_role": "adjustable_bearing",
+          "child_role": "grinding_shaft",
+          "joint_type": "continuous",
+          "axis": [0.0, 1.0, 0.0]
+        },
+        {
+          "parent_role": "grinding_shaft",
+          "child_role": "hand_grip",
+          "joint_type": "continuous",
+          "axis": [0.0, 1.0, 0.0]
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: manual grain mill 2 identity",
+        "category_anchor: source-like long trough geometry",
+        "category_anchor: centered supported grinding mechanism"
+      ]
+    },
+    {
+      "anchor_id": "manual_grain_mill2_grinding_identity",
+      "applies_to": {
+        "slot": "grinding_element",
+        "candidates": [
+          "plain_vertical_stone",
+          "dished_wooden_wheel",
+          "sloped_dished_wheel",
+          "segmented_vertical_stone",
+          "conical_burr_pair"
+        ]
+      },
+      "required_roles": [
+        {"role": "mill_body", "exact_count": 1},
+        {"role": "adjustable_bearing", "exact_count": 1},
+        {"role": "grinding_shaft", "exact_count": 1},
+        {"role": "hand_grip", "exact_count": 1}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "mill_body",
+          "child_role": "adjustable_bearing",
+          "joint_type": "prismatic",
+          "axis": [0.0, 0.0, 1.0]
+        },
+        {
+          "parent_role": "adjustable_bearing",
+          "child_role": "grinding_shaft",
+          "joint_type": "continuous",
+          "axis": [0.0, 1.0, 0.0]
+        },
+        {
+          "parent_role": "grinding_shaft",
+          "child_role": "hand_grip",
+          "joint_type": "continuous",
+          "axis": [0.0, 1.0, 0.0]
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: manual grain mill 2 identity",
+        "category_anchor: source-like long trough geometry",
+        "category_anchor: centered supported grinding mechanism"
+      ]
+    }
+  ]
+}

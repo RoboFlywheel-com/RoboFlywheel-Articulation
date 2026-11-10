@@ -1,0 +1,929 @@
+{
+  "assembly_notes": "Entryway hall tree with a flip-top bench. One rigid carcass root carries both side cheeks, the cabinet bottom, the rear seat ledgers and the tall tower back between the cheeks. The bench slab is a separate part hinged REVOLUTE about +x along its rear edge on two knuckle pairs that sit on the ledgers, so the flip is the fixed category motion. lower_build fills the carcass under the seat: drawer_bank cuts a face frame into bay_count bays and puts one PRISMATIC drawer in each; door_cabinet closes the whole opening with one overlay door on a vertical REVOLUTE axis over a fixed interior shelf; seat_bin walls the opening into a well with no independent moving storage. upper_build treats the tower above the seat: open_cubbies adds a cubby floor, top and bay_count-1 dividers; mirror_panel closes the field with glass in an applied surround divided by bay_count-1 muntins; hook_rail crosses the field with a rail carrying bay_count hooks; framed_board applies a stile-and-rail frame with bay_count recessed fields. case_dress is how the case meets the floor and the ceiling: stepped_plinth_crown steps a broad plinth out on all four sides under a two-piece crown, toe_kick_rail recesses a front-only kick board under the case and finishes with one thin flush crown rail plus applied front stiles, flush_base_crown keeps the base flush with the carcass under a single broad deep crown. Every case_dress bridges the cheek bottoms to the floor and the cheek tops to the tower back, so all three combine with every lower_build and upper_build. bay_count is the multiplicity and is read by both builds on the same pitch. carcass_width_m, carcass_depth_m, seat_height_m and tower_height_m are the independent parameters; paint palette, pull profile and moulding depth are non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "lower_build_identity",
+      "applies_to": {
+        "candidates": [
+          "drawer_bank",
+          "door_cabinet",
+          "seat_bin"
+        ],
+        "slot": "lower_build"
+      },
+      "required_author_checks": [
+        "category_anchor: the bench top flips on its rear edge",
+        "category_anchor: the tower stands on the carcass above the seat",
+        "category_anchor: lower_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "flip_seat",
+          "joint_type": "revolute",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "exact_count": 1,
+          "role": "flip_seat"
+        },
+        {
+          "count_from": "resolved.drawer_count",
+          "role": "storage_drawer"
+        },
+        {
+          "count_from": "resolved.door_count",
+          "role": "cabinet_door"
+        }
+      ]
+    },
+    {
+      "anchor_id": "upper_build_identity",
+      "applies_to": {
+        "candidates": [
+          "open_cubbies",
+          "mirror_panel",
+          "hook_rail",
+          "framed_board"
+        ],
+        "slot": "upper_build"
+      },
+      "required_author_checks": [
+        "category_anchor: the bench top flips on its rear edge",
+        "category_anchor: the tower stands on the carcass above the seat",
+        "category_anchor: upper_build identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "flip_seat",
+          "joint_type": "revolute",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "exact_count": 1,
+          "role": "flip_seat"
+        },
+        {
+          "count_from": "resolved.drawer_count",
+          "role": "storage_drawer"
+        },
+        {
+          "count_from": "resolved.door_count",
+          "role": "cabinet_door"
+        }
+      ]
+    },
+    {
+      "anchor_id": "case_dress_identity",
+      "applies_to": {
+        "candidates": [
+          "stepped_plinth_crown",
+          "toe_kick_rail",
+          "flush_base_crown"
+        ],
+        "slot": "case_dress"
+      },
+      "required_author_checks": [
+        "category_anchor: the bench top flips on its rear edge",
+        "category_anchor: the tower stands on the carcass above the seat",
+        "category_anchor: case_dress identity"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "flip_seat",
+          "joint_type": "revolute",
+          "parent_role": "carcass"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "carcass"
+        },
+        {
+          "exact_count": 1,
+          "role": "flip_seat"
+        },
+        {
+          "count_from": "resolved.drawer_count",
+          "role": "storage_drawer"
+        },
+        {
+          "count_from": "resolved.door_count",
+          "role": "cabinet_door"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "bay_count <= (carcass_width_m - 2 * SIDE_T) / 0.090",
+      "item_slot": "lower_build",
+      "name": "bay_count",
+      "spacing_expression": "bay_pitch_m = (carcass_width_m - 2 * SIDE_T) / bay_count",
+      "values": [
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "Face-frame dividers with a prismatic drawer per bay: shaker front, open tray box and a bar pull, sliding out of the carcass on runners.",
+          "implementation_function": "_lower_build_drawer_bank_build",
+          "interfaces": [],
+          "name": "drawer_bank",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "overall carcass width; derives bay width, seat width and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "front-to-back depth; derives seat depth, drawer travel and cubby depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "floor to seat top; derives plinth height and the lower storage opening",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "tower_height_m",
+              "rationale": "seat top to crown; derives the tower bay height and hook rail station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carcass_width_m"
+              ],
+              "expression": "(carcass_width_m - 2 * SIDE_T) / bay_count",
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "one bay of the face frame and of the tower; both are divided on the same pitch",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hall_tree_with_flip_top_seat__001__png_6ebe988b7462418e94a01da45437d165",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L127-L215"
+          ]
+        },
+        {
+          "evidence": "A single overlay barn door on strap-hinge knuckles swinging on a vertical axis, closing one tall cavity with a fixed interior shelf, instead of drawer boxes.",
+          "implementation_function": "_lower_build_door_cabinet_build",
+          "interfaces": [],
+          "name": "door_cabinet",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "overall carcass width; derives bay width, seat width and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "front-to-back depth; derives seat depth, drawer travel and cubby depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "floor to seat top; derives plinth height and the lower storage opening",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "tower_height_m",
+              "rationale": "seat top to crown; derives the tower bay height and hook rail station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carcass_width_m"
+              ],
+              "expression": "(carcass_width_m - 2 * SIDE_T) / bay_count",
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "one bay of the face frame and of the tower; both are divided on the same pitch",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hall_tree_with_flip_top_seat__003__png_0907115181d64307bf5265cba86c4e24",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L87-L120",
+            "model.py:L227-L300"
+          ]
+        },
+        {
+          "evidence": "A walled well (floor, front/rear/side walls) directly under the seat with no independent moving storage — the flip seat itself is the only access.",
+          "implementation_function": "_lower_build_seat_bin_build",
+          "interfaces": [],
+          "name": "seat_bin",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "overall carcass width; derives bay width, seat width and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "front-to-back depth; derives seat depth, drawer travel and cubby depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "floor to seat top; derives plinth height and the lower storage opening",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "tower_height_m",
+              "rationale": "seat top to crown; derives the tower bay height and hook rail station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carcass_width_m"
+              ],
+              "expression": "(carcass_width_m - 2 * SIDE_T) / bay_count",
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "one bay of the face frame and of the tower; both are divided on the same pitch",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hall_tree_var_true_flip_seat",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L161-L234"
+          ]
+        }
+      ],
+      "component_type": "under-seat storage",
+      "name": "lower_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Cubby floor and top boards closed by vertical dividers on a derived equal-width rule, leaving open pigeonholes across the tower.",
+          "implementation_function": "_upper_build_open_cubbies_build",
+          "interfaces": [],
+          "name": "open_cubbies",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "overall carcass width; derives bay width, seat width and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "front-to-back depth; derives seat depth, drawer travel and cubby depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "floor to seat top; derives plinth height and the lower storage opening",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "tower_height_m",
+              "rationale": "seat top to crown; derives the tower bay height and hook rail station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carcass_width_m"
+              ],
+              "expression": "(carcass_width_m - 2 * SIDE_T) / bay_count",
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "one bay of the face frame and of the tower; both are divided on the same pitch",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hall_tree_var_three_cubbies",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L278-L300"
+          ]
+        },
+        {
+          "evidence": "The bay is closed by a glass panel held in an applied surround, with hook rails moved to the flanks.",
+          "implementation_function": "_upper_build_mirror_panel_build",
+          "interfaces": [],
+          "name": "mirror_panel",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "overall carcass width; derives bay width, seat width and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "front-to-back depth; derives seat depth, drawer travel and cubby depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "floor to seat top; derives plinth height and the lower storage opening",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "tower_height_m",
+              "rationale": "seat top to crown; derives the tower bay height and hook rail station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carcass_width_m"
+              ],
+              "expression": "(carcass_width_m - 2 * SIDE_T) / bay_count",
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "one bay of the face frame and of the tower; both are divided on the same pitch",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hall_tree_var_closed_mirror_panel",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L172-L246"
+          ]
+        },
+        {
+          "evidence": "A dedicated horizontal rail across the lower tower carrying double-prong J hooks on an even inset spacing, with the bay left fully open.",
+          "implementation_function": "_upper_build_hook_rail_build",
+          "interfaces": [],
+          "name": "hook_rail",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "overall carcass width; derives bay width, seat width and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "front-to-back depth; derives seat depth, drawer travel and cubby depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "floor to seat top; derives plinth height and the lower storage opening",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "tower_height_m",
+              "rationale": "seat top to crown; derives the tower bay height and hook rail station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carcass_width_m"
+              ],
+              "expression": "(carcass_width_m - 2 * SIDE_T) / bay_count",
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "one bay of the face frame and of the tower; both are divided on the same pitch",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hall_tree_var_six_hooks",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L70-L100",
+            "model.py:L177-L200"
+          ]
+        },
+        {
+          "evidence": "A plain tall back closed by an applied stile-and-rail board frame with a recessed centre field and no shelf, mirror or hook hardware.",
+          "implementation_function": "_upper_build_framed_board_build",
+          "interfaces": [],
+          "name": "framed_board",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "overall carcass width; derives bay width, seat width and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "front-to-back depth; derives seat depth, drawer travel and cubby depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "floor to seat top; derives plinth height and the lower storage opening",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "tower_height_m",
+              "rationale": "seat top to crown; derives the tower bay height and hook rail station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carcass_width_m"
+              ],
+              "expression": "(carcass_width_m - 2 * SIDE_T) / bay_count",
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "one bay of the face frame and of the tower; both are divided on the same pitch",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hall_tree_with_flip_top_seat__002__png_c51775fc3eee486f828d6ebce6a354b4",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L91-L164"
+          ]
+        }
+      ],
+      "component_type": "tower treatment",
+      "name": "upper_build",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Broad base plinth stepping out past the carcass on all four sides, closed at the top by a crown board with a wider cap over it.",
+          "implementation_function": "_case_dress_stepped_plinth_crown_build",
+          "interfaces": [],
+          "name": "stepped_plinth_crown",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "overall carcass width; derives bay width, seat width and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "front-to-back depth; derives seat depth, drawer travel and cubby depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "floor to seat top; derives plinth height and the lower storage opening",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "tower_height_m",
+              "rationale": "seat top to crown; derives the tower bay height and hook rail station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carcass_width_m"
+              ],
+              "expression": "(carcass_width_m - 2 * SIDE_T) / bay_count",
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "one bay of the face frame and of the tower; both are divided on the same pitch",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hall_tree_with_flip_top_seat__003__png_0907115181d64307bf5265cba86c4e24",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L175-L195",
+            "model.py:L290-L306"
+          ]
+        },
+        {
+          "evidence": "Front-only plinth board set back under the carcass as a recessed toe kick, applied stiles on the front edges, and one thin crown rail flush with the sides.",
+          "implementation_function": "_case_dress_toe_kick_rail_build",
+          "interfaces": [],
+          "name": "toe_kick_rail",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "overall carcass width; derives bay width, seat width and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "front-to-back depth; derives seat depth, drawer travel and cubby depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "floor to seat top; derives plinth height and the lower storage opening",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "tower_height_m",
+              "rationale": "seat top to crown; derives the tower bay height and hook rail station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carcass_width_m"
+              ],
+              "expression": "(carcass_width_m - 2 * SIDE_T) / bay_count",
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "one bay of the face frame and of the tower; both are divided on the same pitch",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hall_tree_with_flip_top_seat__002__png_c51775fc3eee486f828d6ebce6a354b4",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L66-L107"
+          ]
+        },
+        {
+          "evidence": "Base flush with the carcass face and no step, under a single broad deep crown board with applied stiles running up the tall sides.",
+          "implementation_function": "_case_dress_flush_base_crown_build",
+          "interfaces": [],
+          "name": "flush_base_crown",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.62,
+              "mode": "independent",
+              "name": "carcass_width_m",
+              "rationale": "overall carcass width; derives bay width, seat width and tower width",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.44,
+              "minimum": 0.32,
+              "mode": "independent",
+              "name": "carcass_depth_m",
+              "rationale": "front-to-back depth; derives seat depth, drawer travel and cubby depth",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "floor to seat top; derives plinth height and the lower storage opening",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.3,
+              "minimum": 0.9,
+              "mode": "independent",
+              "name": "tower_height_m",
+              "rationale": "seat top to crown; derives the tower bay height and hook rail station",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "carcass_width_m"
+              ],
+              "expression": "(carcass_width_m - 2 * SIDE_T) / bay_count",
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "one bay of the face frame and of the tower; both are divided on the same pitch",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hall_tree_with_flip_top_seat__001__png_6ebe988b7462418e94a01da45437d165",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L117-L140"
+          ]
+        }
+      ],
+      "component_type": "case base and crown",
+      "name": "case_dress",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Hall_tree_with_flip_top_seat",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Hall_tree_with_flip_top_seat.md",
+  "source_map_sha256": "3d4afca53fa5103a8fd2bf82fd6fcf5ace046663071cd578678d6577bfca7d1d"
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "name": "cabinet_p1_hinge_axis_v1",
+  "generator": "kitchen_cabinet_access",
+  "base_config": {
+    "cabinet_body": "base_cabinet",
+    "access_module": "hinged_doors",
+    "door_face": "flat_panel",
+    "top_treatment": "laminate_worktop",
+    "support_base": "adjustable_legs",
+    "access_count": 1,
+    "shelf_count": 1,
+    "carcass_width_m": 0.62,
+    "carcass_depth_m": 0.56,
+    "carcass_height_m": 0.72,
+    "door_swing_rad": 1.4,
+    "lift_flap_rad": 1.4,
+    "panel_t_m": 0.02,
+    "worktop_t_m": 0.03,
+    "plinth_leg_h_m": 0.12,
+    "handle_type": "bar",
+    "handle_orientation_rad": 0.0,
+    "handle_length_m": 0.16,
+    "handle_thickness_m": 0.014,
+    "handle_clearance_m": 0.025,
+    "handle_horizontal_position_ratio": 0.5,
+    "handle_vertical_position_ratio": 0.72,
+    "palette": 0,
+    "name": "controlled_kitchen_cabinet_access"
+  },
+  "axes": [
+    {
+      "name": "access_module",
+      "levels": ["hinged_doors", "lift_up_flap"]
+    }
+  ],
+  "nuisance_blocks": [
+    {
+      "id": "canonical",
+      "overrides": {}
+    }
+  ]
+}

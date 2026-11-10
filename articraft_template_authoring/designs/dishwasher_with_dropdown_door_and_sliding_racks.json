@@ -1,0 +1,168 @@
+{
+  "assembly_notes": "The selected front_family owns the cabinet proportions, hollow tub, layered door, bottom-front X hinge and control placement. It exposes a normalized open-front rack bay, indexed horizontal rack support planes and lower/upper vertical spray axes. Rack width, depth, tier spacing, guide spacing, slide travel, spray span and door dimensions are derived from the selected host. The door is authored open at q=0 and closes at its lower limit, so independent rack endpoint checks remain mechanically meaningful. Every front, rack, accessory, wash-arm and rack-count combination is buildable without a gate.",
+  "bindings": [
+    {
+      "binding_id": "front_to_door",
+      "provider": "front_family.door_hinge_axis",
+      "consumer": "front_family.door_axis",
+      "joint_type": "revolute",
+      "derived": [
+        {"name": "door_width", "mode": "derived", "expression": "body_width - 0.008 * scale", "depends_on": ["body_width", "scale"], "rationale": "Leaves a narrow reveal inside the front stiles."},
+        {"name": "door_height", "mode": "derived", "expression": "body_height - sill_z - 0.010 * scale", "depends_on": ["body_height", "sill_z", "scale"], "rationale": "Closes the full opening without striking the floor."}
+      ]
+    },
+    {
+      "binding_id": "front_to_racks",
+      "provider": "front_family.rack_support_indexed",
+      "consumer": "rack_geometry.bottom_support",
+      "joint_type": "prismatic_indexed",
+      "derived": [
+        {"name": "rack_width", "mode": "derived", "expression": "tub_width - 0.044 * scale", "depends_on": ["tub_width", "scale"], "rationale": "Preserves two runner/side-wall clearances."},
+        {"name": "rack_depth", "mode": "derived", "expression": "tub_depth - 0.070 * scale", "depends_on": ["tub_depth", "scale"], "rationale": "Keeps the closed rack behind the gasket and clear of the back wall."},
+        {"name": "rack_travel", "mode": "derived", "expression": "min(0.78 * rack_depth, body_depth - 0.090 * scale)", "depends_on": ["rack_depth", "body_depth", "scale"], "rationale": "Allows useful extraction while retaining guide engagement."}
+      ]
+    },
+    {
+      "binding_id": "front_to_lower_wash_arm",
+      "provider": "front_family.lower_spray_axis",
+      "consumer": "wash_arm.rotation_axis",
+      "joint_type": "continuous",
+      "derived": [
+        {"name": "lower_arm_span", "mode": "derived", "expression": "min(0.72 * tub_width, 0.74 * tub_depth)", "depends_on": ["tub_width", "tub_depth"], "rationale": "Keeps the full rotating envelope inside the lower chamber."}
+      ]
+    },
+    {
+      "binding_id": "upper_rack_to_wash_arm",
+      "provider": "rack_geometry.underside_spray_axis",
+      "consumer": "wash_arm.rotation_axis",
+      "joint_type": "continuous",
+      "derived": [
+        {"name": "upper_arm_span", "mode": "derived", "expression": "0.82 * lower_arm_span", "depends_on": ["lower_arm_span"], "rationale": "Fits beneath the upper rack runners and basket walls."}
+      ]
+    },
+    {
+      "binding_id": "rack_to_accessory",
+      "provider": "rack_geometry.accessory_mount",
+      "consumer": "rack_accessory.rack_mount",
+      "joint_type": "candidate_specific",
+      "derived": [
+        {"name": "accessory_span", "mode": "derived", "expression": "0.42 * rack_width", "depends_on": ["rack_width"], "rationale": "Keeps caddy and shelves inside every basket family."}
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "rack_count",
+      "item_slot": "rack_geometry",
+      "values": [2, 3],
+      "spacing_expression": "available_tub_height / (rack_count + 0.45)",
+      "host_capacity_expression": "rack_count * rack_clear_height + (rack_count - 1) * tier_clearance <= available_tub_height"
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "name": "front_family",
+      "component_type": "coupled cabinet, door, hinge and controls",
+      "required": true,
+      "candidates": [
+        {
+          "name": "integrated_hidden",
+          "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_c5e1fea68689460f9170ba73efb04f9d",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L39-L131", "model.py:L251-L366", "model.py:L606-L619"],
+          "evidence": "Thin outer case and molded liner, concealed top controls, layered door pan and bottom hinge.",
+          "implementation_function": "_front_family_integrated_hidden_build",
+          "notes": "Control details sit on the door top edge and become visible when the door opens.",
+          "parameters": [
+            {"name": "scale", "mode": "independent", "minimum": 0.94, "maximum": 1.06, "rationale": "Conservative whole-appliance scale variation."},
+            {"name": "body_width", "mode": "derived", "expression": "0.598 * scale", "depends_on": ["scale"], "rationale": "Source nominal width."},
+            {"name": "body_depth", "mode": "derived", "expression": "0.595 * scale", "depends_on": ["scale"], "rationale": "Source nominal depth."},
+            {"name": "body_height", "mode": "derived", "expression": "0.820 * scale", "depends_on": ["scale"], "rationale": "Source nominal height."}
+          ],
+          "interfaces": [
+            {"name": "door_hinge_axis", "kind": "axis", "role": "provider", "part": "front_family__integrated_hidden__body", "frame": {"axis": [-1.0, 0.0, 0.0]}},
+            {"name": "rack_support_indexed", "kind": "plane", "role": "provider", "part": "front_family__integrated_hidden__body", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"width": "tub_width", "depth": "tub_depth"}},
+            {"name": "lower_spray_axis", "kind": "axis", "role": "provider", "part": "front_family__integrated_hidden__body", "frame": {"axis": [0.0, 0.0, 1.0]}}
+          ]
+        },
+        {
+          "name": "pro_fascia",
+          "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_6031139969f5409cbb18a74a9ff4f52d",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L187-L499"],
+          "evidence": "Deep stainless front with a broad fascia, large selector dial, paired buttons and robust hinge details.",
+          "implementation_function": "_front_family_pro_fascia_build",
+          "notes": "Fascia and controls remain fixed visual details on the coupled family.",
+          "parameters": [{"name": "scale", "mode": "independent", "minimum": 0.94, "maximum": 1.06, "rationale": "Safe source scale."}, {"name": "body_width", "mode": "derived", "expression": "0.600 * scale", "depends_on": ["scale"], "rationale": "Source width."}, {"name": "body_depth", "mode": "derived", "expression": "0.630 * scale", "depends_on": ["scale"], "rationale": "Source depth."}, {"name": "body_height", "mode": "derived", "expression": "0.860 * scale", "depends_on": ["scale"], "rationale": "Source height."}],
+          "interfaces": [{"name": "door_hinge_axis", "kind": "axis", "role": "provider", "part": "front_family__pro_fascia__body", "frame": {"axis": [-1.0, 0.0, 0.0]}}, {"name": "rack_support_indexed", "kind": "plane", "role": "provider", "part": "front_family__pro_fascia__body", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"width": "tub_width", "depth": "tub_depth"}}, {"name": "lower_spray_axis", "kind": "axis", "role": "provider", "part": "front_family__pro_fascia__body", "frame": {"axis": [0.0, 0.0, 1.0]}}]
+        },
+        {
+          "name": "black_glass",
+          "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_e86df143ffbf49bb9d808f3ebc04b89e",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L89-L362"],
+          "evidence": "Layered black-glass front with a large dial/button bank and a full hollow wash chamber.",
+          "implementation_function": "_front_family_black_glass_build",
+          "notes": "Glass skin is backed by a structural steel panel and does not replace the door liner.",
+          "parameters": [{"name": "scale", "mode": "independent", "minimum": 0.94, "maximum": 1.06, "rationale": "Safe source scale."}, {"name": "body_width", "mode": "derived", "expression": "0.610 * scale", "depends_on": ["scale"], "rationale": "Source width."}, {"name": "body_depth", "mode": "derived", "expression": "0.620 * scale", "depends_on": ["scale"], "rationale": "Source depth."}, {"name": "body_height", "mode": "derived", "expression": "0.840 * scale", "depends_on": ["scale"], "rationale": "Source height."}],
+          "interfaces": [{"name": "door_hinge_axis", "kind": "axis", "role": "provider", "part": "front_family__black_glass__body", "frame": {"axis": [-1.0, 0.0, 0.0]}}, {"name": "rack_support_indexed", "kind": "plane", "role": "provider", "part": "front_family__black_glass__body", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"width": "tub_width", "depth": "tub_depth"}}, {"name": "lower_spray_axis", "kind": "axis", "role": "provider", "part": "front_family__black_glass__body", "frame": {"axis": [0.0, 0.0, 1.0]}}]
+        },
+        {
+          "name": "commercial_pod",
+          "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_9dd15c0aefb940f2acd9fd2596b80ced",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L109-L173", "model.py:L281-L386", "model.py:L501-L558"],
+          "evidence": "Compact underbar shell with short control pod, timer dial and twin rocker details.",
+          "implementation_function": "_front_family_commercial_pod_build",
+          "notes": "Pod is integrated with this front family to preserve its commercial silhouette.",
+          "parameters": [{"name": "scale", "mode": "independent", "minimum": 0.94, "maximum": 1.06, "rationale": "Safe source scale."}, {"name": "body_width", "mode": "derived", "expression": "0.620 * scale", "depends_on": ["scale"], "rationale": "Source width."}, {"name": "body_depth", "mode": "derived", "expression": "0.630 * scale", "depends_on": ["scale"], "rationale": "Source depth."}, {"name": "body_height", "mode": "derived", "expression": "0.820 * scale", "depends_on": ["scale"], "rationale": "Source height."}],
+          "interfaces": [{"name": "door_hinge_axis", "kind": "axis", "role": "provider", "part": "front_family__commercial_pod__body", "frame": {"axis": [-1.0, 0.0, 0.0]}}, {"name": "rack_support_indexed", "kind": "plane", "role": "provider", "part": "front_family__commercial_pod__body", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"width": "tub_width", "depth": "tub_depth"}}, {"name": "lower_spray_axis", "kind": "axis", "role": "provider", "part": "front_family__commercial_pod__body", "frame": {"axis": [0.0, 0.0, 1.0]}}]
+        },
+        {
+          "name": "retro_rounded",
+          "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_25d4590c3dda434289d61fc5260cf697",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L35-L69", "model.py:L116-L180"],
+          "evidence": "Rounded fascia and door with a right-front paired dial/button cluster.",
+          "implementation_function": "_front_family_retro_rounded_build",
+          "notes": "Rounded outer skin is backed by the same normalized hollow tub and rail interfaces.",
+          "parameters": [{"name": "scale", "mode": "independent", "minimum": 0.94, "maximum": 1.06, "rationale": "Safe source scale."}, {"name": "body_width", "mode": "derived", "expression": "0.620 * scale", "depends_on": ["scale"], "rationale": "Source width."}, {"name": "body_depth", "mode": "derived", "expression": "0.620 * scale", "depends_on": ["scale"], "rationale": "Source depth."}, {"name": "body_height", "mode": "derived", "expression": "0.840 * scale", "depends_on": ["scale"], "rationale": "Source height."}],
+          "interfaces": [{"name": "door_hinge_axis", "kind": "axis", "role": "provider", "part": "front_family__retro_rounded__body", "frame": {"axis": [-1.0, 0.0, 0.0]}}, {"name": "rack_support_indexed", "kind": "plane", "role": "provider", "part": "front_family__retro_rounded__body", "frame": {"normal": [0.0, 0.0, 1.0]}, "dimensions": {"width": "tub_width", "depth": "tub_depth"}}, {"name": "lower_spray_axis", "kind": "axis", "role": "provider", "part": "front_family__retro_rounded__body", "frame": {"axis": [0.0, 0.0, 1.0]}}]
+        }
+      ]
+    },
+    {
+      "name": "rack_geometry",
+      "component_type": "open sliding basket",
+      "required": true,
+      "candidates": [
+        {"name": "round_wire", "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_11149fda5e9f4bc48c6a31d416e25a14", "revision": "rev_000001", "source_spans": ["model.py:L29-L192", "model.py:L359-L364", "model.py:L516-L543"], "evidence": "Dense round-wire perimeter, base grid, tall tines and side runners.", "implementation_function": "_rack_geometry_round_wire_build", "notes": "Local rod and tine spacing scale from each tier footprint.", "parameters": [{"name": "wire_scale", "mode": "independent", "minimum": 0.90, "maximum": 1.10, "rationale": "Small gauge/detail variation."}], "interfaces": [{"name": "bottom_support", "kind": "plane", "role": "consumer", "part": "rack_geometry__round_wire__rack", "frame": {"normal": [0.0, 0.0, -1.0]}, "dimensions": {"width": "rack_width", "depth": "rack_depth"}}, {"name": "underside_spray_axis", "kind": "axis", "role": "provider", "part": "rack_geometry__round_wire__rack", "frame": {"axis": [0.0, 0.0, 1.0]}}, {"name": "accessory_mount", "kind": "plane", "role": "provider", "part": "rack_geometry__round_wire__rack", "frame": {"normal": [1.0, 0.0, 0.0]}}]},
+        {"name": "formed_square_wire", "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_a77d41c69e924917bfc6c8107e13ec4f", "revision": "rev_000001", "source_spans": ["model.py:L168-L272", "model.py:L389-L483", "model.py:L553-L579"], "evidence": "Fused fine-member basket with front pull rail, runner shoes and shallow tray variant.", "implementation_function": "_rack_geometry_formed_square_wire_build", "notes": "Uses a connected CadQuery member network.", "parameters": [{"name": "wire_scale", "mode": "independent", "minimum": 0.90, "maximum": 1.10, "rationale": "Small gauge/detail variation."}], "interfaces": [{"name": "bottom_support", "kind": "plane", "role": "consumer", "part": "rack_geometry__formed_square_wire__rack", "frame": {"normal": [0.0, 0.0, -1.0]}, "dimensions": {"width": "rack_width", "depth": "rack_depth"}}, {"name": "underside_spray_axis", "kind": "axis", "role": "provider", "part": "rack_geometry__formed_square_wire__rack", "frame": {"axis": [0.0, 0.0, 1.0]}}, {"name": "accessory_mount", "kind": "plane", "role": "provider", "part": "rack_geometry__formed_square_wire__rack", "frame": {"normal": [1.0, 0.0, 0.0]}}]},
+        {"name": "glass_basket", "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_9dd15c0aefb940f2acd9fd2596b80ced", "revision": "rev_000001", "source_spans": ["model.py:L176-L278", "model.py:L387-L467"], "evidence": "Commercial square-cell glass rack with reinforced perimeter and supported guide shoes.", "implementation_function": "_rack_geometry_glass_basket_build", "notes": "Shorter basket walls and denser square cells retain the source use case.", "parameters": [{"name": "wire_scale", "mode": "independent", "minimum": 0.90, "maximum": 1.10, "rationale": "Small gauge/detail variation."}], "interfaces": [{"name": "bottom_support", "kind": "plane", "role": "consumer", "part": "rack_geometry__glass_basket__rack", "frame": {"normal": [0.0, 0.0, -1.0]}, "dimensions": {"width": "rack_width", "depth": "rack_depth"}}, {"name": "underside_spray_axis", "kind": "axis", "role": "provider", "part": "rack_geometry__glass_basket__rack", "frame": {"axis": [0.0, 0.0, 1.0]}}, {"name": "accessory_mount", "kind": "plane", "role": "provider", "part": "rack_geometry__glass_basket__rack", "frame": {"normal": [1.0, 0.0, 0.0]}}]}
+      ]
+    },
+    {
+      "name": "rack_accessory",
+      "component_type": "optional rack-local mechanism",
+      "required": true,
+      "candidates": [
+        {"name": "none", "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_6031139969f5409cbb18a74a9ff4f52d", "revision": "rev_000001", "source_spans": ["model.py:L500-L604"], "evidence": "Unobstructed lower and upper basket loading volumes.", "implementation_function": "_rack_accessory_none_build", "notes": "Emits no accessory.", "parameters": [], "interfaces": []},
+        {"name": "sliding_caddy", "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_11149fda5e9f4bc48c6a31d416e25a14", "revision": "rev_000001", "source_spans": ["model.py:L421-L435", "model.py:L575-L588"], "evidence": "Open utensil caddy slides laterally on the lower rack front rail.", "implementation_function": "_rack_accessory_sliding_caddy_build", "notes": "Travel is derived from basket width and caddy footprint.", "parameters": [], "interfaces": [{"name": "rack_mount", "kind": "plane", "role": "consumer", "part": "rack_accessory__sliding_caddy__caddy", "frame": {"normal": [-1.0, 0.0, 0.0]}, "dimensions": {"span": "accessory_span"}}]},
+        {"name": "folding_mug_shelves", "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_c5e1fea68689460f9170ba73efb04f9d", "revision": "rev_000001", "source_spans": ["model.py:L212-L226", "model.py:L579-L605", "model.py:L675-L707"], "evidence": "Paired slotted mug shelves pivot from supported axes on the upper rack sides.", "implementation_function": "_rack_accessory_folding_mug_shelves_build", "notes": "Each shelf has a registered rack-local hinge axis.", "parameters": [], "interfaces": [{"name": "rack_mount", "kind": "axis", "role": "consumer", "part": "rack_accessory__folding_mug_shelves__shelf", "frame": {"axis": [0.0, 1.0, 0.0]}, "dimensions": {"span": "accessory_span"}}]}
+      ]
+    },
+    {
+      "name": "wash_arm",
+      "component_type": "continuous rotating spray arm",
+      "required": true,
+      "candidates": [
+        {"name": "offset_paddle", "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_a77d41c69e924917bfc6c8107e13ec4f", "revision": "rev_000001", "source_spans": ["model.py:L275-L284", "model.py:L486-L499", "model.py:L580-L597"], "evidence": "Offset molded paddles with end jets and a central captured hub.", "implementation_function": "_wash_arm_offset_paddle_build", "notes": "Span derives from the tub/rack envelope.", "parameters": [], "interfaces": [{"name": "rotation_axis", "kind": "axis", "role": "consumer", "part": "wash_arm__offset_paddle__arm", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"span": "arm_span"}}]},
+        {"name": "cross_jet", "record_id": "rec_dishwasher_with_dropdown_door_and_sliding_racks_11149fda5e9f4bc48c6a31d416e25a14", "revision": "rev_000001", "source_spans": ["model.py:L194-L219", "model.py:L365-L394", "model.py:L544-L574"], "evidence": "Crossed arms with tapered jet ends and a central supply hub.", "implementation_function": "_wash_arm_cross_jet_build", "notes": "Span derives from the same host envelope.", "parameters": [], "interfaces": [{"name": "rotation_axis", "kind": "axis", "role": "consumer", "part": "wash_arm__cross_jet__arm", "frame": {"axis": [0.0, 0.0, 1.0]}, "dimensions": {"span": "arm_span"}}]}
+      ]
+    }
+  ],
+  "slug": "dishwasher_with_dropdown_door_and_sliding_racks",
+  "source_map_path": "articraft_template_authoring/source_maps/dishwasher_with_dropdown_door_and_sliding_racks.md",
+  "source_map_sha256": "8c13a69f54e30c37c0eb9d41ce9f4853d28a6aeb2d5705dd60fcdb6dd037089c"
+}

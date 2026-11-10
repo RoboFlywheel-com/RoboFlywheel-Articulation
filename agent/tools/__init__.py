@@ -1,0 +1,222 @@
+# SPDX-License-Identifier: Apache-2.0
+
+from __future__ import annotations
+
+import mimetypes
+from pathlib import Path
+from typing import Any
+
+from agent.prompts import normalize_sdk_package
+from agent.runtime_limits import BatchRuntimeLimits
+from agent.tools.apply_patch import ApplyPatchFreeformTool
+from agent.tools.base import (
+    BaseDeclarativeTool,
+    BaseToolInvocation,
+    ToolResult,
+    ToolSchema,
+    make_tool_schema,
+)
+from agent.tools.compile_model import CompileModelTool
+from agent.tools.edit_code import ReplaceTool
+from agent.tools.find_examples import FindExamplesTool
+from agent.tools.probe_model import ProbeModelTool
+from agent.tools.read_file import ReadFileTool
+from agent.tools.registry import ToolRegistry
+from agent.tools.write_code import WriteFileTool
+from articraft.values import ProviderName, normalize_provider_name
+
+SUPPORTED_IMAGE_MIME_TYPES_BY_PROVIDER: dict[str, set[str]] = {
+    ProviderName.ANTHROPIC.value: {
+        "image/png",
+        "image/jpeg",
+        "image/webp",
+        "image/gif",
+    },
+    ProviderName.OPENAI.value: {
+        "image/png",
+        "image/jpeg",
+        "image/webp",
+        "image/gif",
+    },
+    ProviderName.GEMINI.value: {
+        "image/png",
+        "image/jpeg",
+        "image/webp",
+        "image/heic",
+        "image/heif",
+    },
+    ProviderName.OPENROUTER.value: {
+        "image/png",
+        "image/jpeg",
+        "image/webp",
+        "image/gif",
+    },
+}
+
+_FIRST_TURN_RUNTIME_GUIDANCE_SHARED = (
+    "<runtime_task_guidance>\n"
+    "- Read the current `model.py` before editing.\n"
+    "- Make one small coherent change at a time.\n"
+    "- Treat visual realism as part of the deliverable: make the object read clearly as the requested thing, with believable proportions, silhouette, colors/materials, and major visible surface treatment.\n"
+    "- Run `compile_model` to check your latest revision.\n"
+    "- If compile is clean and you cannot name one specific remaining defect, conclude.\n"
+    "</runtime_task_guidance>"
+)
+
+
+def build_tool_registry(
+    provider: str,
+    *,
+    sdk_package: str = "sdk",
+    runtime_limits: BatchRuntimeLimits | None = None,
+) -> ToolRegistry:
+    provider_norm = normalize_provider_name(provider)
+    package = normalize_sdk_package(sdk_package)
+    if provider_norm is ProviderName.OPENAI:
+        tools: list[BaseDeclarativeTool] = [
+            ReadFileTool(),
+            ApplyPatchFreeformTool(),
+            CompileModelTool(),
+            ProbeModelTool(sdk_package=package, runtime_limits=runtime_limits),
+        ]
+    else:
+        tools = [
+            ReadFileTool(editable_model_only=True),
+            ReplaceTool(),
+            WriteFileTool(),
+            CompileModelTool(),
+            ProbeModelTool(sdk_package=package, runtime_limits=runtime_limits),
+        ]
+    tools.append(
+        FindExamplesTool(sdk_package=package, include_paths=provider_norm is ProviderName.OPENAI)
+    )
+    return ToolRegistry(tools)
+
+
+def build_first_turn_runtime_guidance(_provider: str) -> str:
+    return _FIRST_TURN_RUNTIME_GUIDANCE_SHARED
+
+
+def prepend_runtime_guidance(
+    user_content: Any,
+    *,
+    runtime_guidance_text: str | None = None,
+) -> Any:
+    guidance = (runtime_guidance_text or "").strip()
+    if not guidance:
+        return user_content
+
+    if isinstance(user_content, str):
+        if not user_content.strip():
+            return guidance
+        return f"{guidance}\n\n{user_content}"
+
+    if not isinstance(user_content, list):
+        return user_content
+
+    return [{"type": "input_text", "text": guidance}, *user_content]
+
+
+def build_first_turn_messages(
+    user_content: Any,
+    *,
+    sdk_docs_context: str,
+    provider: str,
+) -> list[dict[str, Any]]:
+    messages: list[dict[str, Any]] = []
+    if sdk_docs_context:
+        messages.append({"role": "user", "content": sdk_docs_context})
+    messages.append(
+        {
+            "role": "user",
+            "content": prepend_runtime_guidance(
+                user_content,
+                runtime_guidance_text=build_first_turn_runtime_guidance(provider),
+            ),
+        }
+    )
+    return messages
+
+
+def build_initial_user_content(
+    text_prompt: str,
+    *,
+    image_path: Path | None = None,
+    image_detail: str = "high",
+    runtime_guidance_text: str | None = None,
+) -> Any:
+    content: Any
+    if image_path is None:
+        content = text_prompt
+    else:
+        content = [
+            {"type": "input_text", "text": text_prompt},
+            {
+                "type": "input_image",
+                "image_path": str(image_path),
+                "detail": image_detail,
+            },
+        ]
+
+    return prepend_runtime_guidance(content, runtime_guidance_text=runtime_guidance_text)
+
+
+def resolve_image_path(
+    image_arg: str | None,
+    *,
+    provider: str | None = None,
+) -> Path | None:
+    if not image_arg:
+        return None
+
+    path = Path(image_arg).expanduser().resolve()
+    if not path.exists():
+        raise FileNotFoundError(f"Image file not found: {path}")
+    if not path.is_file():
+        raise ValueError(f"Image path is not a file: {path}")
+
+    mime_type, _ = mimetypes.guess_type(path.name)
+    provider_norm = normalize_provider_name(provider)
+    supported_mime_types = SUPPORTED_IMAGE_MIME_TYPES_BY_PROVIDER.get(provider_norm.value)
+    if supported_mime_types is None:
+        raise ValueError(f"Unsupported provider for image validation: {provider}")
+    if mime_type not in supported_mime_types:
+        raise ValueError(
+            f"Unsupported image type for {provider_norm.value}: {path.name} ({mime_type or 'unknown'})"
+        )
+
+    size_bytes = path.stat().st_size
+    if provider_norm is ProviderName.GEMINI:
+        if size_bytes >= 20 * 1024 * 1024:
+            raise ValueError(
+                f"Image file exceeds Gemini inline request limit: {path} "
+                "(must stay under 20 MB including prompt text)"
+            )
+    elif size_bytes > 50 * 1024 * 1024:
+        raise ValueError(f"Image file exceeds 50 MB request limit: {path}")
+
+    return path
+
+
+__all__ = [
+    "BaseDeclarativeTool",
+    "BaseToolInvocation",
+    "ToolResult",
+    "ToolSchema",
+    "make_tool_schema",
+    "ApplyPatchFreeformTool",
+    "CompileModelTool",
+    "FindExamplesTool",
+    "ProbeModelTool",
+    "ReadFileTool",
+    "ReplaceTool",
+    "WriteFileTool",
+    "ToolRegistry",
+    "SUPPORTED_IMAGE_MIME_TYPES_BY_PROVIDER",
+    "build_tool_registry",
+    "build_first_turn_runtime_guidance",
+    "prepend_runtime_guidance",
+    "build_first_turn_messages",
+    "build_initial_user_content",
+    "resolve_image_path",
+]

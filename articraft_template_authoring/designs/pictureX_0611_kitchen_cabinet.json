@@ -1,0 +1,860 @@
+{
+ "assembly_notes": "Compose every seed from the reviewed source pool: one compact open-front base carcass, one thin laminate worktop, four adjustable legs, N source-backed front access units, and a source-backed Shaker or flat face. Structural diversity comes from hinged, drawer, and lift mechanisms plus multiplicity; continuous dimensions adapt those components without simplifying their construction. The plinth-deck body raises the storage deck by a plinth height and sets a dark toe rail back from the front; the cavity floor derives from that rise so every access module opens above the deck. The seamed-slab front keeps its centre field flush with the slab and outlines it with four routed seam strips instead of recessing it.",
+ "bindings": [
+  {
+   "binding_id": "opening_to_unit",
+   "consumer": "access_module.unit_mount",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "carcass_width_m",
+      "access_count"
+     ],
+     "expression": "opening width / N for side-by-side fronts; full opening width for stacked trays",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "unit_width_m",
+     "rationale": "Front unit width follows the real opening and N.",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "choices": [],
+     "depends_on": [
+      "carcass_height_m",
+      "access_count"
+     ],
+     "expression": "full opening height for leaves; opening height / N for stacked trays",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "unit_height_m",
+     "rationale": "Front unit height follows the real opening and N.",
+     "unit": "m",
+     "value_type": "float"
+    },
+    {
+     "choices": [],
+     "depends_on": [
+      "carcass_depth_m"
+     ],
+     "expression": "runner travel is a bounded fraction of cavity depth; hinged and lift units use their angular range",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "unit_travel_m",
+     "rationale": "Motion stays inside the compact host envelope.",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "revolute",
+   "provider": "cabinet_body.front_opening"
+  },
+  {
+   "binding_id": "unit_to_face",
+   "consumer": "door_face.face_back",
+   "derived": [
+    {
+     "choices": [],
+     "depends_on": [
+      "carcass_width_m"
+     ],
+     "expression": "frame width is clamped to the derived unit width",
+     "maximum": null,
+     "minimum": null,
+     "mode": "derived",
+     "name": "face_frame_w_m",
+     "rationale": "N never collapses a framed front.",
+     "unit": "m",
+     "value_type": "float"
+    }
+   ],
+   "joint_type": "fixed",
+   "provider": "access_module.unit_mount"
+  }
+ ],
+ "category_anchors": [
+  {
+   "anchor_id": "compact_kitchen_cabinet_identity",
+   "applies_to": {
+    "candidates": [
+     "base_cabinet",
+     "plinth_deck_cabinet"
+    ],
+    "slot": "cabinet_body"
+   },
+   "required_author_checks": [
+    "category_anchor: one rigid cabinet carcass",
+    "category_anchor: a visible worktop closes the top of the carcass",
+    "category_anchor: the carcass stands on its own floor support",
+    "category_anchor: the toe board closes the front of the leg bay"
+   ],
+   "required_relations": [],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "carcass"
+    }
+   ]
+  },
+  {
+   "anchor_id": "hinged_front_identity",
+   "applies_to": {
+    "candidates": [
+     "hinged_doors"
+    ],
+    "slot": "access_module"
+   },
+   "required_author_checks": [
+    "category_anchor: every access unit is a moving child of the carcass",
+    "category_anchor: hinged leaf opens outward from the front plane"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "child_role": "access_unit",
+     "joint_type": "revolute",
+     "parent_role": "carcass"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "carcass"
+    },
+    {
+     "count_from": "access_count",
+     "role": "access_unit"
+    }
+   ]
+  },
+  {
+   "anchor_id": "drawer_front_identity",
+   "applies_to": {
+    "candidates": [
+     "drawer_stack"
+    ],
+    "slot": "access_module"
+   },
+   "required_author_checks": [
+    "category_anchor: every access unit is a moving child of the carcass",
+    "category_anchor: drawer trays are hollow boxes"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "child_role": "access_unit",
+     "joint_type": "prismatic",
+     "parent_role": "carcass"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "carcass"
+    },
+    {
+     "count_from": "access_count",
+     "role": "access_unit"
+    }
+   ]
+  },
+  {
+   "anchor_id": "lift_front_identity",
+   "applies_to": {
+    "candidates": [
+     "lift_up_flap"
+    ],
+    "slot": "access_module"
+   },
+   "required_author_checks": [
+    "category_anchor: every access unit is a moving child of the carcass",
+    "category_anchor: lift flap rotates about its horizontal pivot"
+   ],
+   "required_relations": [
+    {
+     "axis": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "child_role": "access_unit",
+     "joint_type": "revolute",
+     "parent_role": "carcass"
+    }
+   ],
+   "required_roles": [
+    {
+     "exact_count": 1,
+     "role": "carcass"
+    },
+    {
+     "count_from": "access_count",
+     "role": "access_unit"
+    }
+   ]
+  }
+ ],
+ "multiplicities": [
+  {
+   "host_capacity_expression": "Opening width and height are derived from the compact base-cabinet cavity and N.",
+   "item_slot": "access_module",
+   "name": "access_count",
+   "spacing_expression": "Split the full front opening into N side-by-side cells for leaves/flaps or N stacked levels for trays.",
+   "values": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "host_capacity_expression": "Rear shelf depth is bounded so it does not consume the front mechanism envelope.",
+   "item_slot": "cabinet_body",
+   "name": "shelf_count",
+   "spacing_expression": "Evenly pitch N shallow shelves at the rear of the cavity.",
+   "values": [
+    1,
+    2
+   ]
+  }
+ ],
+ "schema_version": 1,
+ "slots": [
+  {
+   "candidates": [
+    {
+     "evidence": "White laminate side, back, floor, and upper rail members form a real compact storage cavity.",
+     "implementation_function": "_cabinet_body_base_cabinet_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "depth": "clear cavity depth",
+        "height": "clear opening height",
+        "width": "clear opening width"
+       },
+       "frame": {
+        "normal": "-Y"
+       },
+       "kind": "plane",
+       "name": "front_opening",
+       "part": "carcass",
+       "role": "provider"
+      }
+     ],
+     "name": "base_cabinet",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.78,
+       "minimum": 0.48,
+       "mode": "independent",
+       "name": "carcass_width_m",
+       "rationale": "Compact source base-cabinet width range.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.62,
+       "minimum": 0.5,
+       "mode": "independent",
+       "name": "carcass_depth_m",
+       "rationale": "Source base-cabinet depth range.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.82,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "carcass_height_m",
+       "rationale": "Low worktop-height carcass range.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__001__png_5f29ccaadea944c09b6f9832561aa405",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L50-L89"
+     ]
+    },
+    {
+     "evidence": "A raised bottom deck over a recessed toe rail replaces the open floor panel of 001.",
+     "implementation_function": "_cabinet_body_plinth_deck_cabinet_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "depth": "clear cavity depth",
+        "height": "clear opening height",
+        "width": "clear opening width"
+       },
+       "frame": {
+        "normal": "-Y"
+       },
+       "kind": "plane",
+       "name": "front_opening",
+       "part": "carcass",
+       "role": "provider"
+      }
+     ],
+     "name": "plinth_deck_cabinet",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.78,
+       "minimum": 0.48,
+       "mode": "independent",
+       "name": "carcass_width_m",
+       "rationale": "Compact source base-cabinet width range.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.62,
+       "minimum": 0.5,
+       "mode": "independent",
+       "name": "carcass_depth_m",
+       "rationale": "Source base-cabinet depth range.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.82,
+       "minimum": 0.62,
+       "mode": "independent",
+       "name": "carcass_height_m",
+       "rationale": "Low worktop-height carcass range.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__002__png_241b2c4fbfaa407c837bd61a7fb1b21f",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L60-L120"
+     ]
+    }
+   ],
+   "component_type": "open-front panel carcass",
+   "name": "cabinet_body",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Mirrored recessed-panel leaves with outer vertical hinges and a centre reveal.",
+     "implementation_function": "_access_module_hinged_doors_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "height": "unit height",
+        "width": "unit width"
+       },
+       "kind": "axis",
+       "name": "unit_mount",
+       "part": "access_unit",
+       "role": "consumer"
+      }
+     ],
+     "name": "hinged_doors",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.9,
+       "minimum": 1.3,
+       "mode": "independent",
+       "name": "door_swing_rad",
+       "rationale": "Outward opening range from the source hinged bases.",
+       "unit": "rad",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_kitchen_cabinet_var_double_door_sink_base",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L165-L312"
+     ]
+    },
+    {
+     "evidence": "N hollow trays on bilateral side runners with fronts repeated by pitch.",
+     "implementation_function": "_access_module_drawer_stack_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "height": "unit height",
+        "width": "unit width"
+       },
+       "kind": "plane",
+       "name": "unit_mount",
+       "part": "access_unit",
+       "role": "consumer"
+      }
+     ],
+     "name": "drawer_stack",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.62,
+       "minimum": 0.34,
+       "mode": "independent",
+       "name": "drawer_travel_ratio",
+       "rationale": "Runner travel as a fraction of cavity depth.",
+       "unit": "ratio",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_kitchen_cabinet_var_drawer_stack",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L97-L223"
+     ]
+    },
+    {
+     "evidence": "Top-hinged front flap with paired linked side stays.",
+     "implementation_function": "_access_module_lift_up_flap_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "height": "unit height",
+        "width": "unit width"
+       },
+       "kind": "axis",
+       "name": "unit_mount",
+       "part": "access_unit",
+       "role": "consumer"
+      }
+     ],
+     "name": "lift_up_flap",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 1.55,
+       "minimum": 1.0,
+       "mode": "independent",
+       "name": "lift_flap_rad",
+       "rationale": "Lift travel from the source mechanism adapted to the compact base host.",
+       "unit": "rad",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_kitchen_cabinet_var_lift_up_wall_cabinet_refill",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L172-L328"
+     ]
+    }
+   ],
+   "component_type": "front access mechanism",
+   "name": "access_module",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Stiles and rails stand proud of a connected recessed centre field.",
+     "implementation_function": "_door_face_shaker_panel_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "width": "derived front width"
+       },
+       "frame": {
+        "normal": "+Y"
+       },
+       "kind": "plane",
+       "name": "face_back",
+       "part": "access_unit",
+       "role": "consumer"
+      }
+     ],
+     "name": "shaker_panel",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.075,
+       "minimum": 0.045,
+       "mode": "independent",
+       "name": "shaker_frame_w_m",
+       "rationale": "Source framed-front proportion.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__003__png_bd4b17b1bb1d45059fc34b510868a618",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L55-L152"
+     ]
+    },
+    {
+     "evidence": "The drawer source provides a connected plain laminate front with a restrained edge seam.",
+     "implementation_function": "_door_face_flat_panel_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "width": "derived front width"
+       },
+       "frame": {
+        "normal": "+Y"
+       },
+       "kind": "plane",
+       "name": "face_back",
+       "part": "access_unit",
+       "role": "consumer"
+      }
+     ],
+     "name": "flat_panel",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.026,
+       "minimum": 0.016,
+       "mode": "independent",
+       "name": "panel_t_m",
+       "rationale": "Source plain-front thickness.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_kitchen_cabinet_var_drawer_stack",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L140-L165"
+     ]
+    },
+    {
+     "evidence": "A full slab with proud rails and stiles plus four routed seam strips around a flush field.",
+     "implementation_function": "_door_face_seamed_slab_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "width": "derived front width"
+       },
+       "frame": {
+        "normal": "+Y"
+       },
+       "kind": "plane",
+       "name": "face_back",
+       "part": "access_unit",
+       "role": "consumer"
+      }
+     ],
+     "name": "seamed_slab",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.075,
+       "minimum": 0.045,
+       "mode": "independent",
+       "name": "shaker_frame_w_m",
+       "rationale": "Source framed-front proportion.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__004__png_5a44a3fb595d482486a4d5792aac684a",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L150-L210"
+     ]
+    },
+    {
+     "evidence": "Authored extension of 004's proud-strip-on-slab relief: a repeated vertical reed field with half-round noses between two plain stiles, pitched from the real leaf width.",
+     "implementation_function": "_door_face_reeded_slab_build",
+     "interfaces": [
+      {
+       "dimensions": {
+        "width": "derived front width"
+       },
+       "frame": {
+        "normal": "+Y"
+       },
+       "kind": "plane",
+       "name": "face_back",
+       "part": "access_unit",
+       "role": "consumer"
+      }
+     ],
+     "name": "reeded_slab",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.075,
+       "minimum": 0.045,
+       "mode": "independent",
+       "name": "shaker_frame_w_m",
+       "rationale": "Drives the plain stile width flanking the reed field.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__004__png_5a44a3fb595d482486a4d5792aac684a",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L184-L208"
+     ]
+    }
+   ],
+   "component_type": "front face construction",
+   "name": "door_face",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "A thin white laminate slab closes the cabinet and slightly overhangs the panel carcass.",
+     "implementation_function": "_top_treatment_laminate_worktop_build",
+     "interfaces": [],
+     "name": "laminate_worktop",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.05,
+       "minimum": 0.02,
+       "mode": "independent",
+       "name": "worktop_t_m",
+       "rationale": "Source laminate worktop thickness range.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__001__png_5f29ccaadea944c09b6f9832561aa405",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L90-L95"
+     ]
+    },
+    {
+     "evidence": "Authored extension of 002's thickest countertop: same footprint and underside plane, plus a half-round nose of the slab's own thickness along the front and both side edges with mitred corner rounds.",
+     "implementation_function": "_top_treatment_stone_slab_worktop_build",
+     "interfaces": [],
+     "name": "stone_slab_worktop",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.05,
+       "minimum": 0.02,
+       "mode": "independent",
+       "name": "worktop_t_m",
+       "rationale": "Slab thickness also sets the bullnose radius.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__002__png_241b2c4fbfaa407c837bd61a7fb1b21f",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L127-L133"
+     ]
+    },
+    {
+     "evidence": "Authored extension of 005's thick overhanging countertop: the slab is unchanged and a rear upstand, two short side returns and a scotia fillet are added above it.",
+     "implementation_function": "_top_treatment_worktop_with_upstand_build",
+     "interfaces": [],
+     "name": "worktop_with_upstand",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.05,
+       "minimum": 0.02,
+       "mode": "independent",
+       "name": "worktop_t_m",
+       "rationale": "Slab thickness of the host worktop.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.12,
+       "minimum": 0.04,
+       "mode": "independent",
+       "name": "upstand_h_m",
+       "rationale": "Height the upstand and its side returns rise above the worktop.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__005__png_32d18ad6c4bc42d1850e18a6ce8fa5cb",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L206-L213"
+     ]
+    }
+   ],
+   "component_type": "thin laminate worktop",
+   "name": "top_treatment",
+   "required": true
+  },
+  {
+   "candidates": [
+    {
+     "evidence": "Four recessed metal stems connect through mounting plates and terminate in broad levelling feet.",
+     "implementation_function": "_support_base_adjustable_legs_build",
+     "interfaces": [],
+     "name": "adjustable_legs",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.18,
+       "minimum": 0.08,
+       "mode": "independent",
+       "name": "plinth_leg_h_m",
+       "rationale": "Source adjustable-leg height range.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__001__png_5f29ccaadea944c09b6f9832561aa405",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L97-L124"
+     ]
+    },
+    {
+     "evidence": "The same four-leg base carries a toe_rail box down in the leg bay, held inside the leg line in x, tangent to the front leg shafts and running up into the raised deck.",
+     "implementation_function": "_support_base_legs_with_toe_board_build",
+     "interfaces": [],
+     "name": "legs_with_toe_board",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.18,
+       "minimum": 0.08,
+       "mode": "independent",
+       "name": "plinth_leg_h_m",
+       "rationale": "Same source leg-height range; the toe board height and ground clearance derive from it.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__004__png_5a44a3fb595d482486a4d5792aac684a",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L96-L127"
+     ]
+    },
+    {
+     "evidence": "Authored extension of 005's full-width toe_kick: the single front board is carried around both sides as a mitred three-sided skirt that reaches the floor and replaces the legs, with a dark shadow reveal under the carcass.",
+     "implementation_function": "_support_base_solid_plinth_build",
+     "interfaces": [],
+     "name": "solid_plinth",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.18,
+       "minimum": 0.08,
+       "mode": "independent",
+       "name": "plinth_leg_h_m",
+       "rationale": "Floor-line height; here it is the plinth height.",
+       "unit": "m",
+       "value_type": "float"
+      },
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.07,
+       "minimum": 0.03,
+       "mode": "independent",
+       "name": "plinth_setback_m",
+       "rationale": "How far the skirt is recessed behind the carcass front and side faces.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__005__png_32d18ad6c4bc42d1850e18a6ce8fa5cb",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L214-L221"
+     ]
+    },
+    {
+     "evidence": "Authored extension of 005's _add_leg post/mount/foot stack: the same three-member foot at the same four positions, rebuilt as a chunky square timber block on a round glide with a dark cap collar.",
+     "implementation_function": "_support_base_block_feet_build",
+     "interfaces": [],
+     "name": "block_feet",
+     "parameters": [
+      {
+       "choices": [],
+       "depends_on": [],
+       "expression": "",
+       "maximum": 0.18,
+       "minimum": 0.08,
+       "mode": "independent",
+       "name": "plinth_leg_h_m",
+       "rationale": "Floor-line height; here it is the block foot height.",
+       "unit": "m",
+       "value_type": "float"
+      }
+     ],
+     "record_id": "rec_picturex_0611__kitchen_cabinet__005__png_32d18ad6c4bc42d1850e18a6ce8fa5cb",
+     "revision": "rev_000001",
+     "source_spans": [
+      "model.py:L32-L52"
+     ]
+    }
+   ],
+   "component_type": "four adjustable legs",
+   "name": "support_base",
+   "required": true
+  }
+ ],
+ "slug": "pictureX_0611_kitchen_cabinet",
+ "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_kitchen_cabinet.md",
+ "source_map_sha256": "e7209eb01ec0f5c0898ad3adddfe323e32e0901db576f8ad83a69462e5bd479b"
+}

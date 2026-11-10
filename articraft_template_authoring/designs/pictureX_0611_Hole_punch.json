@@ -1,0 +1,1150 @@
+{
+  "assembly_notes": "Heavy-duty desk paper punch. One grounded `base` part carries the sole, rubber feet, the deck and one annular die per station; the deck is a CadQuery solid whose chip passages and drawer cavity are cut per station and per chip candidate. A `frame` part is FIXED on the rear of the deck and always exposes the same two interfaces: a head beam bored once per station (plus a plunger bore when the plunger is active) and a pivot line at (pivot_x, pivot_z). punch_station_count carriages ride PRISMATIC straight down from that beam, each guide stem running in its bore with a 0.8 mm fit over the whole stroke and each pin entering its own die ring and deck passage at full stroke, so nothing is retained by an overlap allowance. frame_form varies the structure around those interfaces (one-piece cast hood, built-up twin side plates, or a one-piece deep-throat C profile). actuation varies the input: a single long ball-grip lever or a twin-strap U-grip lever on the pivot line, a drag-link lever whose link mimics the handle and runs outboard of the head beam, or a press plunger whose PRISMATIC stem mimics carriage 0 so the driver plate can never be pressed into a carriage that has not moved. paper_guide varies registration (a graduated side rail with two sliding stops, or bed lateral and depth fences) and rides on the deck top plus the fixed bed thickness when that chip candidate is active. chip_handling is either a pull-out drawer in the deck cavity or a fixed bed plate. base_length_m, throat_depth_m and lever_reach_m are honest continuous parameters that derive the punch line, head overhang, frame profile, handle length, guide travel and drawer travel; palette and rail graduations are non-core.",
+  "bindings": [],
+  "category_anchors": [
+    {
+      "anchor_id": "frame_form_identity",
+      "applies_to": {
+        "candidates": [
+          "nose_hood",
+          "side_plate",
+          "c_loop"
+        ],
+        "slot": "frame_form"
+      },
+      "required_author_checks": [
+        "category_anchor: heavy-duty punch base, frame and station chain",
+        "category_anchor: punch pins stay guided over their dies",
+        "category_anchor: frame_form identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "frame",
+          "joint_type": "fixed",
+          "parent_role": "base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "punch_carriage",
+          "joint_type": "prismatic",
+          "parent_role": "frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "base"
+        },
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "count_from": "punch_station_count",
+          "role": "punch_carriage"
+        },
+        {
+          "exact_count": 1,
+          "role": "actuator"
+        },
+        {
+          "exact_count": 1,
+          "role": "chip_bed"
+        }
+      ]
+    },
+    {
+      "anchor_id": "actuation_identity",
+      "applies_to": {
+        "candidates": [
+          "direct_lever",
+          "compound_lever",
+          "plunger",
+          "lever_linkage"
+        ],
+        "slot": "actuation"
+      },
+      "required_author_checks": [
+        "category_anchor: heavy-duty punch base, frame and station chain",
+        "category_anchor: punch pins stay guided over their dies",
+        "category_anchor: actuation identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "frame",
+          "joint_type": "fixed",
+          "parent_role": "base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "punch_carriage",
+          "joint_type": "prismatic",
+          "parent_role": "frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "base"
+        },
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "count_from": "punch_station_count",
+          "role": "punch_carriage"
+        },
+        {
+          "exact_count": 1,
+          "role": "actuator"
+        },
+        {
+          "exact_count": 1,
+          "role": "chip_bed"
+        }
+      ]
+    },
+    {
+      "anchor_id": "punch_station_identity",
+      "applies_to": {
+        "candidates": [
+          "collared_pin",
+          "long_pin"
+        ],
+        "slot": "punch_station"
+      },
+      "required_author_checks": [
+        "category_anchor: heavy-duty punch base, frame and station chain",
+        "category_anchor: punch pins stay guided over their dies",
+        "category_anchor: punch_station identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "frame",
+          "joint_type": "fixed",
+          "parent_role": "base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "punch_carriage",
+          "joint_type": "prismatic",
+          "parent_role": "frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "base"
+        },
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "count_from": "punch_station_count",
+          "role": "punch_carriage"
+        },
+        {
+          "exact_count": 1,
+          "role": "actuator"
+        },
+        {
+          "exact_count": 1,
+          "role": "chip_bed"
+        }
+      ]
+    },
+    {
+      "anchor_id": "paper_guide_identity",
+      "applies_to": {
+        "candidates": [
+          "rail_guides",
+          "bed_guides"
+        ],
+        "slot": "paper_guide"
+      },
+      "required_author_checks": [
+        "category_anchor: heavy-duty punch base, frame and station chain",
+        "category_anchor: punch pins stay guided over their dies",
+        "category_anchor: paper_guide identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "frame",
+          "joint_type": "fixed",
+          "parent_role": "base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "punch_carriage",
+          "joint_type": "prismatic",
+          "parent_role": "frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "base"
+        },
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "count_from": "punch_station_count",
+          "role": "punch_carriage"
+        },
+        {
+          "exact_count": 1,
+          "role": "actuator"
+        },
+        {
+          "exact_count": 1,
+          "role": "chip_bed"
+        }
+      ]
+    },
+    {
+      "anchor_id": "chip_handling_identity",
+      "applies_to": {
+        "candidates": [
+          "pull_out_tray",
+          "fixed_bed"
+        ],
+        "slot": "chip_handling"
+      },
+      "required_author_checks": [
+        "category_anchor: heavy-duty punch base, frame and station chain",
+        "category_anchor: punch pins stay guided over their dies",
+        "category_anchor: chip_handling identity"
+      ],
+      "required_relations": [
+        {
+          "axis": null,
+          "child_role": "frame",
+          "joint_type": "fixed",
+          "parent_role": "base"
+        },
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "punch_carriage",
+          "joint_type": "prismatic",
+          "parent_role": "frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "base"
+        },
+        {
+          "exact_count": 1,
+          "role": "frame"
+        },
+        {
+          "count_from": "punch_station_count",
+          "role": "punch_carriage"
+        },
+        {
+          "exact_count": 1,
+          "role": "actuator"
+        },
+        {
+          "exact_count": 1,
+          "role": "chip_bed"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "1 <= punch_station_count <= 4; head-beam and deck width = station_span_m + 0.070 <= base width",
+      "item_slot": "punch_station",
+      "name": "punch_station_count",
+      "spacing_expression": "stations are centred on y with the standard 54 mm pitch: y_i = (i - (N-1)/2) * 0.054",
+      "values": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "A tapered nose footprint intersected with a side wedge carries a hood cut by a central lever throat and an axle bore.",
+          "implementation_function": "_frame_form_nose_hood_build",
+          "interfaces": [],
+          "name": "nose_hood",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_length_m",
+                "throat_depth_m"
+              ],
+              "expression": "0.5*base_length_m - 0.075 - throat_depth_m",
+              "mode": "derived",
+              "name": "punch_line_x_m",
+              "rationale": "the punch line sits one throat depth in front of the frame face",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hole_punch__001__png_71c0df550fa24757bcee07669b2a4e6d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L35-L111"
+          ]
+        },
+        {
+          "evidence": "Two rear side plates with rounded pivot bosses, a lower crossbeam, a head neck and a head beam bridged by two bearing blocks.",
+          "implementation_function": "_frame_form_side_plate_build",
+          "interfaces": [],
+          "name": "side_plate",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_length_m",
+                "throat_depth_m"
+              ],
+              "expression": "0.5*base_length_m - 0.075 - throat_depth_m",
+              "mode": "derived",
+              "name": "punch_line_x_m",
+              "rationale": "the punch line sits one throat depth in front of the frame face",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hole_punch__002__png_a3a370f3dd1245beb455c2172430dfff",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L108-L158"
+          ]
+        },
+        {
+          "evidence": "A closed C profile drawn in xz and extruded in y, with a cut throat and two widened pivot cheeks.",
+          "implementation_function": "_frame_form_c_loop_build",
+          "interfaces": [],
+          "name": "c_loop",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_length_m",
+                "throat_depth_m"
+              ],
+              "expression": "0.5*base_length_m - 0.075 - throat_depth_m",
+              "mode": "derived",
+              "name": "punch_line_x_m",
+              "rationale": "the punch line sits one throat depth in front of the frame face",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hole_punch_var_cloop",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L32-L87"
+          ]
+        }
+      ],
+      "component_type": "one-piece cast hood",
+      "name": "frame_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "An annular pivot eye bored for the axle carries a long flat bar ending in a ball grip and swings on one revolute axis.",
+          "implementation_function": "_actuation_direct_lever_build",
+          "interfaces": [],
+          "name": "direct_lever",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "lever_reach_m"
+              ],
+              "expression": "punch_line_x_m - lever_reach_m",
+              "mode": "derived",
+              "name": "grip_x_m",
+              "rationale": "the grip end of the actuation is one reach in front of the punch line",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hole_punch__001__png_71c0df550fa24757bcee07669b2a4e6d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L112-L133"
+          ]
+        },
+        {
+          "evidence": "Two rounded straps outboard of the frame carry pivot discs and a broad U-shaped cross grip on a single revolute axis.",
+          "implementation_function": "_actuation_compound_lever_build",
+          "interfaces": [],
+          "name": "compound_lever",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "lever_reach_m"
+              ],
+              "expression": "punch_line_x_m - lever_reach_m",
+              "mode": "derived",
+              "name": "grip_x_m",
+              "rationale": "the grip end of the actuation is one reach in front of the punch line",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hole_punch__002__png_a3a370f3dd1245beb455c2172430dfff",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L175-L220"
+          ]
+        },
+        {
+          "evidence": "A guided stem through the head-beam bore carries a return-spring collar, a mushroom press cap and a driver plate on a prismatic joint.",
+          "implementation_function": "_actuation_plunger_build",
+          "interfaces": [],
+          "name": "plunger",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "lever_reach_m"
+              ],
+              "expression": "punch_line_x_m - lever_reach_m",
+              "mode": "derived",
+              "name": "grip_x_m",
+              "rationale": "the grip end of the actuation is one reach in front of the punch line",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hole_punch_var_plunger",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L164-L224"
+          ]
+        },
+        {
+          "evidence": "A flat link plate with real pin bores at both ends is captured by pins and pivots on the handle as a visible transmission.",
+          "implementation_function": "_actuation_lever_linkage_build",
+          "interfaces": [],
+          "name": "lever_linkage",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "lever_reach_m"
+              ],
+              "expression": "punch_line_x_m - lever_reach_m",
+              "mode": "derived",
+              "name": "grip_x_m",
+              "rationale": "the grip end of the actuation is one reach in front of the punch line",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex0611_hole_punch_var_lever_linkage",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L155-L197"
+          ]
+        }
+      ],
+      "component_type": "single long lever arm",
+      "name": "actuation",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "The carriage block carries an upper guide stem, a spring cap collar and a short pin over an annular die.",
+          "implementation_function": "_punch_station_collared_pin_build",
+          "interfaces": [],
+          "name": "collared_pin",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "punch_station_count"
+              ],
+              "expression": "(punch_station_count - 1) * 0.054",
+              "mode": "derived",
+              "name": "station_span_m",
+              "rationale": "stations keep the standard 54 mm pitch, so the span grows with the count",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hole_punch__002__png_a3a370f3dd1245beb455c2172430dfff",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L222-L262"
+          ]
+        },
+        {
+          "evidence": "A wider carriage block drives one long punch pin through a deep throat with no collar.",
+          "implementation_function": "_punch_station_long_pin_build",
+          "interfaces": [],
+          "name": "long_pin",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "punch_station_count"
+              ],
+              "expression": "(punch_station_count - 1) * 0.054",
+              "mode": "derived",
+              "name": "station_span_m",
+              "rationale": "stations keep the standard 54 mm pitch, so the span grows with the count",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hole_punch__001__png_71c0df550fa24757bcee07669b2a4e6d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L407-L434"
+          ]
+        }
+      ],
+      "component_type": "collared guided carriage",
+      "name": "punch_station",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Two collared stops with fences slide along a graduated side rail on independent prismatic joints.",
+          "implementation_function": "_paper_guide_rail_guides_build",
+          "interfaces": [],
+          "name": "rail_guides",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_length_m",
+                "punch_station_count"
+              ],
+              "expression": "rail_guides: 0.32*base_length_m; bed_guides: deck_half_y - station_span_m/2 - 0.045",
+              "mode": "derived",
+              "name": "guide_travel_m",
+              "rationale": "a stop may travel to the bed edge without leaving the deck",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hole_punch__001__png_71c0df550fa24757bcee07669b2a4e6d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L435-L494"
+          ]
+        },
+        {
+          "evidence": "A lateral fence slides across the bed and a depth fence slides along it, each on a footed knob-topped carrier.",
+          "implementation_function": "_paper_guide_bed_guides_build",
+          "interfaces": [],
+          "name": "bed_guides",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_length_m",
+                "punch_station_count"
+              ],
+              "expression": "rail_guides: 0.32*base_length_m; bed_guides: deck_half_y - station_span_m/2 - 0.045",
+              "mode": "derived",
+              "name": "guide_travel_m",
+              "rationale": "a stop may travel to the bed edge without leaving the deck",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hole_punch__002__png_a3a370f3dd1245beb455c2172430dfff",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L263-L333"
+          ]
+        }
+      ],
+      "component_type": "side rail with sliding stops",
+      "name": "paper_guide",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "A thin catch tray following the base underside slides out on a prismatic joint and carries a pull tab and loop.",
+          "implementation_function": "_chip_handling_pull_out_tray_build",
+          "interfaces": [],
+          "name": "pull_out_tray",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_length_m"
+              ],
+              "expression": "0.30*base_length_m",
+              "mode": "derived",
+              "name": "tray_travel_m",
+              "rationale": "the drawer pulls out far enough to empty without leaving its runners",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hole_punch__001__png_71c0df550fa24757bcee07669b2a4e6d",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L162-L206"
+          ]
+        },
+        {
+          "evidence": "A rounded bed plate with a front pull lip is fixed on the deck in front of the punch line.",
+          "implementation_function": "_chip_handling_fixed_bed_build",
+          "interfaces": [],
+          "name": "fixed_bed",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.46,
+              "minimum": 0.3,
+              "mode": "independent",
+              "name": "base_length_m",
+              "rationale": "base footprint length; derives deck span, frame rear position, tray length and guide travel",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.045,
+              "mode": "independent",
+              "name": "throat_depth_m",
+              "rationale": "throat depth from the frame face to the punch line; derives head-beam overhang, die x and frame profile",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.2,
+              "mode": "independent",
+              "name": "lever_reach_m",
+              "rationale": "lever/plunger reach; derives handle bar length, grip position, drag-link length and press-cap height",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_length_m"
+              ],
+              "expression": "0.30*base_length_m",
+              "mode": "derived",
+              "name": "tray_travel_m",
+              "rationale": "the drawer pulls out far enough to empty without leaving its runners",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__hole_punch__002__png_a3a370f3dd1245beb455c2172430dfff",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L86-L107"
+          ]
+        }
+      ],
+      "component_type": "pull-out chip drawer",
+      "name": "chip_handling",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Hole_punch",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Hole_punch.md",
+  "source_map_sha256": "2fa6f8cd9b1ad0f348d14b823ca63dce42ce9507724e489fe4652461616f0999"
+}

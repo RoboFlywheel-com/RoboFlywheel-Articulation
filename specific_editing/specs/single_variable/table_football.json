@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "name": "table_football",
+  "generator": "table_football",
+  "base_config": {
+    "leg_form": "tubular_legs_4",
+    "grip_form": "contoured_waisted_grip",
+    "rod_count": 8,
+    "palette_style": "natural_wood_red_blue",
+    "cabinet_length_scale": 1.0,
+    "leg_splay_scale": 1.0,
+    "grip_radius_scale": 1.0,
+    "slide_travel_scale": 1.0
+  },
+  "edits": [
+    {
+      "kind": "component",
+      "target": "leg_form",
+      "label": "Support module",
+      "values": ["splayed_legs_4", "side_panels_full_height", "cross_x_trestles"]
+    },
+    {
+      "kind": "count",
+      "target": "rod_count",
+      "label": "Player-rod count",
+      "values": [6, 10]
+    },
+    {
+      "kind": "material",
+      "target": "pitch",
+      "label": "Playing-pitch material",
+      "values": [
+        {
+          "name": "walnut playing pitch",
+          "material_id": "blenderkit:c3f5ca2f-ba80-4b72-8f44-48d57e732fa3:df9aa2a3-5f5a-43cc-b5d4-1930beefcc2e",
+          "rgba": [0.29, 0.12, 0.055, 1.0],
+          "metallic": 0.0,
+          "roughness": 0.42
+        },
+        {
+          "name": "red enamel playing pitch",
+          "material_id": "blenderkit:940ca40e-25bd-4eab-8645-f11e37cf26a6:423ad6b6-81d2-46a0-a031-4bd57e10a13a",
+          "rgba": [0.82, 0.15, 0.10, 1.0],
+          "metallic": 0.05,
+          "roughness": 0.30
+        },
+        {
+          "name": "brushed aluminum playing pitch",
+          "material_id": "blenderkit:c3ab2079-1dc6-4b6b-94d9-c56eb2339e91:3f4ded88-44d7-484c-8376-8a29ef92d331",
+          "rgba": [0.63, 0.67, 0.71, 1.0],
+          "metallic": 0.86,
+          "roughness": 0.24
+        }
+      ]
+    },
+    {
+      "kind": "size",
+      "target": "cabinet_length_scale",
+      "label": "Cabinet length scale",
+      "values": [0.92, 1.10]
+    }
+  ],
+  "render": {
+    "backend": "blender",
+    "views": ["front_iso"],
+    "poses": ["closed"],
+    "image_size": [1600, 1120],
+    "supersample": 1,
+    "shadow_strength": 0.6
+  }
+}

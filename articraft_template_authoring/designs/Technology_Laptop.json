@@ -1,0 +1,554 @@
+{
+  "schema_version": 1,
+  "slug": "Technology_Laptop",
+  "source_map_path": "articraft_template_authoring/source_maps/Technology_Laptop.md",
+  "source_map_sha256": "79b5812f6c09e7abc57cfaaefb9e30608c5a7950c6a2bda7d5f04d374608d80a",
+  "assembly_notes": "Compose one source-backed clamshell shell, one visible hinge treatment sharing the real screen axis, one pointing system, one island key array, and N underside feet. Base dimensions derive the keyboard well, palm-rest pointing mount, lid footprint, hinge line, and support positions so all shell, hinge, and pointing candidates combine.",
+  "slots": [
+    {
+      "name": "shell_family",
+      "component_type": "laptop base and display-lid enclosure",
+      "required": true,
+      "candidates": [
+        {
+          "name": "budget_plastic",
+          "implementation_function": "_shell_family_budget_plastic_build",
+          "evidence": "Matte plastic lower shell, palm deck, speakers, webcam lid, and hinge cover form a complete 15.6-inch host.",
+          "record_id": "rec_a-black-budget-15-6-inch-clamshell-laptop-open-a_20260624_123651_161143_65d6f0bd",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L81-L163"],
+          "parameters": [
+            {
+              "name": "budget_base_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.35,
+              "maximum": 0.40,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source budget 15-inch chassis width range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "rear_hinge_axis",
+              "kind": "axis",
+              "part": "base_chassis",
+              "role": "provider",
+              "frame": {"axis": "+X", "location": "rear deck edge"},
+              "dimensions": {"width": "base width", "height": "base top"}
+            },
+            {
+              "name": "keyboard_deck",
+              "kind": "plane",
+              "part": "base_chassis",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"well_width": "derived from base width"}
+            },
+            {
+              "name": "pointing_deck",
+              "kind": "plane",
+              "part": "base_chassis",
+              "role": "provider",
+              "frame": {"normal": "+Z", "location": "front palm rest"},
+              "dimensions": {"width": "palm-rest capacity"}
+            }
+          ]
+        },
+        {
+          "name": "rugged_bumper",
+          "implementation_function": "_shell_family_rugged_bumper_build",
+          "evidence": "Thick base and lid combine with four loop-emitted bumper guards at the host corners.",
+          "record_id": "rec_laptop_var_rugged",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L17-L56", "model.py:L91-L177"],
+          "parameters": [
+            {
+              "name": "rugged_base_thickness_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.026,
+              "maximum": 0.038,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source rugged workstation thickness range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "rear_hinge_axis",
+              "kind": "axis",
+              "part": "base_chassis",
+              "role": "provider",
+              "frame": {"axis": "+X", "location": "reinforced rear edge"},
+              "dimensions": {"width": "base width", "height": "thick base top"}
+            },
+            {
+              "name": "keyboard_deck",
+              "kind": "plane",
+              "part": "base_chassis",
+              "role": "provider",
+              "frame": {"normal": "+Z"},
+              "dimensions": {"well_width": "bumper-clear inner width"}
+            },
+            {
+              "name": "pointing_deck",
+              "kind": "plane",
+              "part": "base_chassis",
+              "role": "provider",
+              "frame": {"normal": "+Z", "location": "front palm rest"},
+              "dimensions": {"width": "palm-rest capacity"}
+            }
+          ]
+        },
+        {
+          "name": "thin_aluminum",
+          "implementation_function": "_shell_family_thin_aluminum_build",
+          "evidence": "Filleted aluminum slab contains true keyboard and trackpad recesses and carries a thin rounded lid.",
+          "record_id": "rec_silver-thin-and-light-laptop-computer-with-a-hin_20260605_173856_302145_c183f0ed",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L68-L171", "model.py:L173-L252"],
+          "parameters": [
+            {
+              "name": "thin_base_width_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.30,
+              "maximum": 0.34,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source thin-and-light chassis width range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "rear_hinge_axis",
+              "kind": "axis",
+              "part": "base_chassis",
+              "role": "provider",
+              "frame": {"axis": "+X", "location": "thin rear edge"},
+              "dimensions": {"width": "base width", "height": "base top"}
+            },
+            {
+              "name": "keyboard_deck",
+              "kind": "plane",
+              "part": "base_chassis",
+              "role": "provider",
+              "frame": {"normal": "+Z", "surface": "recessed well"},
+              "dimensions": {"well_width": "derived from base width"}
+            },
+            {
+              "name": "pointing_deck",
+              "kind": "plane",
+              "part": "base_chassis",
+              "role": "provider",
+              "frame": {"normal": "+Z", "surface": "trackpad recess"},
+              "dimensions": {"width": "front palm-rest capacity"}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "hinge_style",
+      "component_type": "screen hinge treatment",
+      "required": true,
+      "candidates": [
+        {
+          "name": "full_width_barrel",
+          "implementation_function": "_hinge_style_full_width_barrel_build",
+          "evidence": "Long base barrel and centered lid cover visibly support the common screen pivot.",
+          "record_id": "rec_a-black-budget-15-6-inch-clamshell-laptop-open-a_20260624_123651_161143_65d6f0bd",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L107-L110", "model.py:L154-L163"],
+          "parameters": [
+            {
+              "name": "full_hinge_open_rad",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "rad",
+              "minimum": 1.65,
+              "maximum": 2.15,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source clamshell viewing-angle range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "screen_axis",
+              "kind": "axis",
+              "part": "screen_lid",
+              "role": "consumer",
+              "frame": {"axis": "+X"},
+              "dimensions": {"span": "single long barrel"}
+            }
+          ]
+        },
+        {
+          "name": "dual_side_barrels",
+          "implementation_function": "_hinge_style_dual_side_barrels_build",
+          "evidence": "Two short mirrored barrels and matching lid covers share the same screen rotation axis.",
+          "record_id": "rec_laptop_var_dualhinge",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L104-L119", "model.py:L155-L167"],
+          "parameters": [
+            {
+              "name": "dual_hinge_open_rad",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "rad",
+              "minimum": 1.65,
+              "maximum": 2.15,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source dual-hinge viewing-angle range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "screen_axis",
+              "kind": "axis",
+              "part": "screen_lid",
+              "role": "consumer",
+              "frame": {"axis": "+X"},
+              "dimensions": {"span": "two separated barrels"}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pointing_system",
+      "component_type": "palm-rest pointing mechanism",
+      "required": true,
+      "candidates": [
+        {
+          "name": "integrated_clickpad",
+          "implementation_function": "_pointing_system_integrated_clickpad_build",
+          "evidence": "Broad pad and front seam move together on a short downward prismatic joint.",
+          "record_id": "rec_a-black-budget-15-6-inch-clamshell-laptop-open-a_20260624_123651_161143_65d6f0bd",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L209-L230"],
+          "parameters": [
+            {
+              "name": "clickpad_travel_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.0005,
+              "maximum": 0.0010,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source clickpad press range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "deck_mount",
+              "kind": "plane",
+              "part": "pointing_surface",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"width": "derived from base width"}
+            }
+          ]
+        },
+        {
+          "name": "dual_mouse_buttons",
+          "implementation_function": "_pointing_system_dual_mouse_buttons_build",
+          "evidence": "A non-clicking pad is paired with two rounded front buttons on independent downward joints.",
+          "record_id": "rec_laptop_var_trackbtn",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L35-L100", "model.py:L233-L266"],
+          "parameters": [
+            {
+              "name": "mouse_button_travel_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.0005,
+              "maximum": 0.0010,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source discrete-button travel range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "deck_mount",
+              "kind": "plane",
+              "part": "pointing_surface",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"width": "pad plus two-button bar"}
+            }
+          ]
+        },
+        {
+          "name": "trackpoint_three_button",
+          "implementation_function": "_pointing_system_trackpoint_three_button_build",
+          "evidence": "A seated red nub between keys and three upper physical buttons define the business pointing system.",
+          "record_id": "rec_laptop_var_trackpoint",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L71-L221", "model.py:L246-L389"],
+          "parameters": [
+            {
+              "name": "trackpoint_button_travel_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.0005,
+              "maximum": 0.0010,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source TrackPoint button travel range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "deck_mount",
+              "kind": "plane",
+              "part": "pointing_surface",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"width": "trackpad plus upper button row"}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "key_array",
+      "component_type": "repeated island keyboard",
+      "required": true,
+      "candidates": [
+        {
+          "name": "island_keyboard",
+          "implementation_function": "_key_array_island_keyboard_build",
+          "evidence": "Rounded island caps populate a recessed well and every key retains independent downward travel.",
+          "record_id": "rec_silver-thin-and-light-laptop-computer-with-a-hin_20260605_173856_302145_c183f0ed",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L146-L171", "model.py:L290-L326"],
+          "parameters": [
+            {
+              "name": "laptop_key_pitch_m",
+              "mode": "independent",
+              "value_type": "float",
+              "unit": "m",
+              "minimum": 0.0155,
+              "maximum": 0.0180,
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "rationale": "Source laptop island-key pitch range."
+            }
+          ],
+          "interfaces": [
+            {
+              "name": "keybed_mount",
+              "kind": "plane",
+              "part": "keybed",
+              "role": "consumer",
+              "frame": {"normal": "-Z"},
+              "dimensions": {"rows": 6, "columns": 14}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "support_module",
+      "component_type": "underside rubber feet",
+      "required": true,
+      "candidates": [
+        {
+          "name": "rubber_feet",
+          "implementation_function": "_support_module_rubber_feet_build",
+          "evidence": "Reviewed sources repeat shared rubber-foot geometry at two front or four corner positions.",
+          "record_id": "rec_laptop_var_feet4",
+          "revision": "rev_000001",
+          "source_spans": ["model.py:L113-L128"],
+          "parameters": [],
+          "interfaces": []
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "name": "foot_count",
+      "item_slot": "support_module",
+      "values": [2, 3, 4],
+      "spacing_expression": "Two feet occupy the front underside corners, three add a centered rear support, and four use the complete corner pattern with shared geometry.",
+      "host_capacity_expression": "Foot offsets derive from base width and depth while staying inside rugged bumpers and shell edges."
+    }
+  ],
+  "bindings": [
+    {
+      "binding_id": "base_to_screen_hinge",
+      "provider": "shell_family.rear_hinge_axis",
+      "consumer": "hinge_style.screen_axis",
+      "joint_type": "revolute",
+      "derived": [
+        {
+          "name": "hinge_origin_z_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["shell_family"],
+          "expression": "selected base top plus source barrel center offset",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "Every lid rotates about the visible rear support."
+        },
+        {
+          "name": "lid_width_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["shell_family"],
+          "expression": "selected base width minus the source side reveal",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "Screen and hinge treatment adapt to each host width."
+        }
+      ]
+    },
+    {
+      "binding_id": "base_to_keybed",
+      "provider": "shell_family.keyboard_deck",
+      "consumer": "key_array.keybed_mount",
+      "joint_type": "fixed",
+      "derived": [
+        {
+          "name": "keyboard_width_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["shell_family", "laptop_key_pitch_m"],
+          "expression": "fourteen-column source key grid clamped to the selected base inner width",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "Keys remain inside every base family."
+        }
+      ]
+    },
+    {
+      "binding_id": "base_to_pointing",
+      "provider": "shell_family.pointing_deck",
+      "consumer": "pointing_system.deck_mount",
+      "joint_type": "fixed",
+      "derived": [
+        {
+          "name": "pointing_width_m",
+          "mode": "derived",
+          "value_type": "float",
+          "unit": "m",
+          "choices": [],
+          "depends_on": ["shell_family", "pointing_system"],
+          "expression": "pointing-system source width clamped to the selected palm-rest capacity",
+          "minimum": null,
+          "maximum": null,
+          "rationale": "Clickpads and button rows stay supported by the host."
+        }
+      ]
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "clamshell_laptop_identity",
+      "applies_to": {
+        "slot": "shell_family",
+        "candidates": ["budget_plastic", "rugged_bumper", "thin_aluminum"]
+      },
+      "required_roles": [
+        {"role": "laptop_base", "exact_count": 1},
+        {"role": "screen_lid", "exact_count": 1},
+        {"role": "keybed", "exact_count": 1},
+        {"role": "key_press", "exact_count": 84}
+      ],
+      "required_relations": [
+        {
+          "parent_role": "laptop_base",
+          "child_role": "screen_lid",
+          "joint_type": "revolute",
+          "axis": [1.0, 0.0, 0.0]
+        },
+        {
+          "parent_role": "keybed",
+          "child_role": "key_press",
+          "joint_type": "prismatic",
+          "axis": [0.0, 0.0, -1.0]
+        }
+      ],
+      "required_author_checks": [
+        "category_anchor: lid rotates about the visible rear hinge",
+        "category_anchor: display panel is mounted inside the lid",
+        "category_anchor: keyboard and pointing device stay inside the base",
+        "category_anchor: every island key presses downward"
+      ]
+    },
+    {
+      "anchor_id": "integrated_pointing_identity",
+      "applies_to": {
+        "slot": "pointing_system",
+        "candidates": ["integrated_clickpad"]
+      },
+      "required_roles": [
+        {"role": "pointing_surface", "exact_count": 1}
+      ],
+      "required_relations": [],
+      "required_author_checks": [
+        "category_anchor: integrated clickpad presses downward"
+      ]
+    },
+    {
+      "anchor_id": "dual_button_pointing_identity",
+      "applies_to": {
+        "slot": "pointing_system",
+        "candidates": ["dual_mouse_buttons"]
+      },
+      "required_roles": [
+        {"role": "pointing_surface", "exact_count": 1},
+        {"role": "pointing_button", "exact_count": 2}
+      ],
+      "required_relations": [],
+      "required_author_checks": [
+        "category_anchor: two mouse buttons press independently"
+      ]
+    },
+    {
+      "anchor_id": "trackpoint_pointing_identity",
+      "applies_to": {
+        "slot": "pointing_system",
+        "candidates": ["trackpoint_three_button"]
+      },
+      "required_roles": [
+        {"role": "pointing_surface", "exact_count": 1},
+        {"role": "pointing_button", "exact_count": 3},
+        {"role": "trackpoint_nub", "exact_count": 1}
+      ],
+      "required_relations": [],
+      "required_author_checks": [
+        "category_anchor: TrackPoint nub sits between the keys",
+        "category_anchor: three TrackPoint buttons press independently"
+      ]
+    }
+  ]
+}

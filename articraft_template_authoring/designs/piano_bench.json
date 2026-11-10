@@ -1,0 +1,707 @@
+{
+  "assembly_notes": "Root is support_frame; the seat is its PRISMATIC +Z child (seat_lift) and every height_mechanism candidate adds its rotary control(s) as REVOLUTE children of the frame, so the model carries at least two movable joints in every reachable configuration -- height adjustment is the category's core mechanism, not an option. storage=hinged_lid_box adds a third (the -X rear-edge lid hinge) and turns the lid into the seating surface. There are no compatibility gates: seat_form publishes one plan profile (rectangular extent or radius) that drives the frame-top ring/ledge, the storage box and lid outline, and the mechanism mount span, so a round seat on a four-leg frame with a storage box builds a round top ring, a round box and a round lid rather than being excluded.",
+  "bindings": [
+    {
+      "binding_id": "seat_plan_drives_frame_top",
+      "consumer": "support_frame.frame_top",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "seat_width_m",
+            "seat_depth_m"
+          ],
+          "expression": "seat plan footprint inset by 0.02 m; round seats emit a circular top ring, rectangular seats the ledge pair",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "frame_top_extent",
+          "rationale": "host adaptation: the frame top follows the seat plan profile instead of gating the combination",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "seat_form.seat_plan"
+    },
+    {
+      "binding_id": "seat_plan_drives_storage_box",
+      "consumer": "storage.box_plan",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "seat_width_m",
+            "seat_depth_m"
+          ],
+          "expression": "storage box and lid share the seat plan profile, inset by the 0.018 m wall",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "box_plan_extent",
+          "rationale": "a round seat yields a round box and a round lid",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "seat_form.seat_plan"
+    },
+    {
+      "binding_id": "frame_top_carries_drive_axis",
+      "consumer": "height_mechanism.drive_axis",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "seat_height_m"
+          ],
+          "expression": "frame_top_z - 0.02",
+          "maximum": null,
+          "minimum": null,
+          "mode": "derived",
+          "name": "drive_axis_z",
+          "rationale": "every support candidate presents the drive axis at the same offset below the frame top",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "support_frame.frame_top"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "piano_bench_identity",
+      "applies_to": {
+        "candidates": [
+          "side_handwheel_yoke",
+          "central_spindle",
+          "twin_side_knobs",
+          "scissor_lift"
+        ],
+        "slot": "height_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: bench seat rides a prismatic height lift",
+        "category_anchor: every seed is articulated"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "seat",
+          "joint_type": "prismatic",
+          "parent_role": "support_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "support_frame"
+        },
+        {
+          "exact_count": 1,
+          "role": "seat"
+        }
+      ]
+    },
+    {
+      "anchor_id": "piano_bench_single_rotary_control",
+      "applies_to": {
+        "candidates": [
+          "side_handwheel_yoke",
+          "central_spindle",
+          "scissor_lift"
+        ],
+        "slot": "height_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: height mechanism provides a real rotary control"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "height_control",
+          "joint_type": "revolute",
+          "parent_role": "support_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "height_control"
+        }
+      ]
+    },
+    {
+      "anchor_id": "piano_bench_twin_rotary_controls",
+      "applies_to": {
+        "candidates": [
+          "twin_side_knobs"
+        ],
+        "slot": "height_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: height mechanism provides a real rotary control"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "height_control",
+          "joint_type": "revolute",
+          "parent_role": "support_frame"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 2,
+          "role": "height_control"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "002 model.py:L88-L164: four square legs at x=+-0.226 / y=+-0.135, four aprons, top ledges, four corner blocks, rubber feet.",
+          "implementation_function": "_support_frame_four_leg_apron_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_x": "seat_width_m - 0.02",
+                "extent_y": "seat_depth_m - 0.02"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "point": "(0, 0, frame_top_z)"
+              },
+              "kind": "plane",
+              "name": "frame_top",
+              "part": "support_frame",
+              "role": "provider"
+            }
+          ],
+          "name": "four_leg_apron",
+          "notes": "Four corner posts + closed apron box; presents the rectangular frame-top plane.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "grounded seat height; drives leg/column length and the frame-top plane",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.0,
+              "minimum": 0.55,
+              "mode": "independent",
+              "name": "leg_taper_ratio",
+              "rationale": "001 model.py:L26-L40 lofted tapered leg: top/bottom section ratio of the square posts",
+              "unit": "ratio",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__piano_bench__002__png_40f64d0afe014cf084e43a5c586b96f2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L88-L164"
+          ]
+        },
+        {
+          "evidence": "003 model.py:L36-L56/L101-L121: two long feet, twin columns at x=+-0.195, upper and lower H rails, clearanced sleeve voids.",
+          "implementation_function": "_support_frame_twin_pedestal_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_x": "seat_width_m - 0.02",
+                "extent_y": "seat_depth_m - 0.02"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "point": "(0, 0, frame_top_z)"
+              },
+              "kind": "plane",
+              "name": "frame_top",
+              "part": "support_frame",
+              "role": "provider"
+            }
+          ],
+          "name": "twin_pedestal",
+          "notes": "Welded twin-pedestal H-frame; the sleeve wells host the lift mechanism.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "grounded seat height; drives leg/column length and the frame-top plane",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__piano_bench__003__png_9089cd9627714abeb4526ba1b9a84e99",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L36-L56",
+            "model.py:L101-L121"
+          ]
+        },
+        {
+          "evidence": "var_support_folding_x_frame model.py:L89-L216: crossed X leg pairs per side, top rails, centre stretcher.",
+          "implementation_function": "_support_frame_folding_x_frame_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_x": "seat_width_m - 0.02",
+                "extent_y": "seat_depth_m - 0.02"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "point": "(0, 0, frame_top_z)"
+              },
+              "kind": "plane",
+              "name": "frame_top",
+              "part": "support_frame",
+              "role": "provider"
+            }
+          ],
+          "name": "folding_x_frame",
+          "notes": "Folding X skeleton; emits the same frame-top rail pair so every mechanism mounts identically.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.52,
+              "minimum": 0.42,
+              "mode": "independent",
+              "name": "seat_height_m",
+              "rationale": "grounded seat height; drives leg/column length and the frame-top plane",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_piano_bench_var_support_folding_x_frame",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L89-L216"
+          ]
+        }
+      ],
+      "component_type": "four square legs + four aprons + corner blocks + feet",
+      "name": "support_frame",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "002 model.py:L21-L37 (_padded_cushion two-stage crown) and L193-L219 (seat_board + roller tracks).",
+          "implementation_function": "_seat_form_rectangle_padded_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_x": "0.5 * seat_width_m",
+                "extent_y": "0.5 * seat_depth_m"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "point": "(0, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "seat_plan",
+              "part": "seat",
+              "role": "provider"
+            }
+          ],
+          "name": "rectangle_padded",
+          "notes": "Rectangular plan form; width covers the duet proportion recorded from var_seat_form_duet_rectangle.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.44,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "bench width; duet proportion is the upper part of the range",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.36,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "seat_depth_m",
+              "rationale": "bench depth of the rectangular plan form",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__piano_bench__002__png_40f64d0afe014cf084e43a5c586b96f2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L21-L37",
+            "model.py:L193-L219"
+          ]
+        },
+        {
+          "evidence": "var_seat_form_round_stool model.py:L59-L90 (round cushion/board builders) and L138-L213 (seat part).",
+          "implementation_function": "_seat_form_round_stool_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radius": "0.5 * seat_width_m"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "point": "(0, 0, 0)"
+              },
+              "kind": "plane",
+              "name": "seat_plan",
+              "part": "seat",
+              "role": "provider"
+            }
+          ],
+          "name": "round_stool",
+          "notes": "Circular plan form; depth is derived from the diameter so hosts and storage boxes follow the same profile.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.62,
+              "minimum": 0.44,
+              "mode": "independent",
+              "name": "seat_width_m",
+              "rationale": "stool diameter",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "seat_width_m"
+              ],
+              "expression": "seat_width_m",
+              "maximum": null,
+              "minimum": null,
+              "mode": "derived",
+              "name": "seat_depth_m",
+              "rationale": "round plan form: depth follows the diameter",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_piano_bench_var_seat_form_round_stool",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L59-L90",
+            "model.py:L138-L213"
+          ]
+        }
+      ],
+      "component_type": "rectangular board + crowned upholstered cushion",
+      "name": "seat_form",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "002 model.py:L40-L67 (_add_lift_arm_visuals), L221-L239 (arm/wheel parts), L241-L281 (wheel_turn REVOLUTE, arm_pivot_0/1, seat_lift PRISMATIC).",
+          "implementation_function": "_height_mechanism_side_handwheel_yoke_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radial": "0.012"
+              },
+              "frame": {
+                "axis": "(1, 0, 0)",
+                "point": "(0, 0, frame_top_z - 0.02)"
+              },
+              "kind": "axis",
+              "name": "drive_axis",
+              "part": "support_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "side_handwheel_yoke",
+          "notes": "Side handwheel plus two lifting yokes: 3 revolute + 1 prismatic.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.04,
+              "mode": "independent",
+              "name": "lift_travel_m",
+              "rationale": "seat_lift prismatic travel; source anchors show 0.055 (001/002) and 0.080 (003)",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__piano_bench__002__png_40f64d0afe014cf084e43a5c586b96f2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L40-L67",
+            "model.py:L221-L239",
+            "model.py:L241-L281"
+          ]
+        },
+        {
+          "evidence": "var_height_mechanism_central_spindle model.py:L40-L72 (rod + collar), L173-L202 (nut/gear housing), L251-L253, L270-L307 (wheel_turn, spindle_turn, seat lift).",
+          "implementation_function": "_height_mechanism_central_spindle_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radial": "0.012"
+              },
+              "frame": {
+                "axis": "(1, 0, 0)",
+                "point": "(0, 0, frame_top_z - 0.02)"
+              },
+              "kind": "axis",
+              "name": "drive_axis",
+              "part": "support_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "central_spindle",
+          "notes": "Central threaded rod driven through a bevel-gear housing: 2 revolute + 1 prismatic.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.04,
+              "mode": "independent",
+              "name": "lift_travel_m",
+              "rationale": "seat_lift prismatic travel; source anchors show 0.055 (001/002) and 0.080 (003)",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_piano_bench_var_height_mechanism_central_spindle",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L40-L72",
+            "model.py:L173-L202",
+            "model.py:L251-L253",
+            "model.py:L270-L307"
+          ]
+        },
+        {
+          "evidence": "var_height_mechanism_twin_side_knobs model.py:L44-L78 (knob builder), L179-L205 (screw + lift nuts), L234-L251, L253-L290 (knob_turn_0/1, seat lift).",
+          "implementation_function": "_height_mechanism_twin_side_knobs_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radial": "0.012"
+              },
+              "frame": {
+                "axis": "(1, 0, 0)",
+                "point": "(0, 0, frame_top_z - 0.02)"
+              },
+              "kind": "axis",
+              "name": "drive_axis",
+              "part": "support_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "twin_side_knobs",
+          "notes": "Two opposed side knobs on one transverse screw: 2 revolute + 1 prismatic.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.04,
+              "mode": "independent",
+              "name": "lift_travel_m",
+              "rationale": "seat_lift prismatic travel; source anchors show 0.055 (001/002) and 0.080 (003)",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_piano_bench_var_height_mechanism_twin_side_knobs",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L44-L78",
+            "model.py:L179-L205",
+            "model.py:L234-L251",
+            "model.py:L253-L290"
+          ]
+        },
+        {
+          "evidence": "var_height_mechanism_scissor_lift model.py:L56-L90 (_add_scissor_visuals), L189-L208 (pivot mounts + guide rails), L224-L229, L252-L297 (wheel_turn, scissor pivots, seat lift).",
+          "implementation_function": "_height_mechanism_scissor_lift_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radial": "0.012"
+              },
+              "frame": {
+                "axis": "(1, 0, 0)",
+                "point": "(0, 0, frame_top_z - 0.02)"
+              },
+              "kind": "axis",
+              "name": "drive_axis",
+              "part": "support_frame",
+              "role": "consumer"
+            }
+          ],
+          "name": "scissor_lift",
+          "notes": "Crossed scissor pair on frame pivot mounts: 3 revolute + 1 prismatic.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.09,
+              "minimum": 0.04,
+              "mode": "independent",
+              "name": "lift_travel_m",
+              "rationale": "seat_lift prismatic travel; source anchors show 0.055 (001/002) and 0.080 (003)",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_piano_bench_var_height_mechanism_scissor_lift",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L56-L90",
+            "model.py:L189-L208",
+            "model.py:L224-L229",
+            "model.py:L252-L297"
+          ]
+        }
+      ],
+      "component_type": "side handwheel + paired two-rail lifting yokes + prismatic seat",
+      "name": "height_mechanism",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "002 model.py:L193-L219: solid seat board + cushion, no cavity and no lid.",
+          "implementation_function": "_storage_plain_apron_build",
+          "interfaces": [],
+          "name": "plain_apron",
+          "notes": "Non-storage bench: the seat underside carries only the roller tracks.",
+          "parameters": [],
+          "record_id": "rec_picturex_0611__piano_bench__002__png_40f64d0afe014cf084e43a5c586b96f2",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L193-L219"
+          ]
+        },
+        {
+          "evidence": "var_storage_hinged_seat_lid model.py:L76-L134 (_rabbeted_apron_shape), L279-L344 (box + lining), L366-L421 (lid + lift_to_lid REVOLUTE 0-1.35 about -X); origin anchor 001 model.py:L217-L315/L317-L372.",
+          "implementation_function": "_storage_hinged_lid_box_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "radial": "0.006"
+              },
+              "frame": {
+                "axis": "(-1, 0, 0)",
+                "point": "(0, 0.5 * seat_depth_m, box_rim_z)"
+              },
+              "kind": "axis",
+              "name": "hinge_axis",
+              "part": "storage_box",
+              "role": "provider"
+            },
+            {
+              "dimensions": {
+                "extent_x": "0.5 * seat_width_m - 0.018",
+                "extent_y": "0.5 * plan_depth - 0.018"
+              },
+              "frame": {
+                "normal": "(0, 0, 1)",
+                "point": "(0, 0, board_top_z)"
+              },
+              "kind": "plane",
+              "name": "box_plan",
+              "part": "seat",
+              "role": "consumer"
+            }
+          ],
+          "name": "hinged_lid_box",
+          "notes": "Storage box derived from the seat plan profile with a rabbet shelf; the lid becomes the seating surface.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.16,
+              "minimum": 0.09,
+              "mode": "independent",
+              "name": "storage_depth_m",
+              "rationale": "storage bay depth below the rabbet shelf",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 1.45,
+              "minimum": 1.15,
+              "mode": "independent",
+              "name": "lid_open_rad",
+              "rationale": "lid hinge upper limit; source 1.35 rad",
+              "unit": "rad",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_0611_piano_bench_var_storage_hinged_seat_lid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L76-L134",
+            "model.py:L279-L344",
+            "model.py:L366-L421"
+          ]
+        }
+      ],
+      "component_type": "closed seat with no storage bay",
+      "name": "storage",
+      "required": true
+    }
+  ],
+  "slug": "piano_bench",
+  "source_map_path": "articraft_template_authoring/source_maps/piano_bench.md",
+  "source_map_sha256": "9cb597b843c46ac479e8926331865a61eec1ca94508ec13b34f00182090a3aa2"
+}

@@ -1,0 +1,1639 @@
+# SPDX-License-Identifier: Apache-2.0
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import pytest
+
+from sdk import (
+    AllowedOverlap,
+    ArticulatedObject,
+    ArticulationType,
+    Box,
+    Mesh,
+    Mimic,
+    MotionLimits,
+    Origin,
+    PlaneInterface,
+    Sphere,
+    ValidationError,
+)
+from sdk import (
+    TestContext as SDKTestContext,
+)
+from sdk._core.v0.geometry_qc import find_unsupported_parts
+
+
+def _write_disconnected_boxes_obj(path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    centers = ((0.0, 0.0, 0.0), (0.45, 0.0, 0.0))
+    vertices: list[tuple[float, float, float]] = []
+    faces: list[tuple[int, int, int]] = []
+    cube_faces = (
+        (0, 1, 2),
+        (0, 2, 3),
+        (4, 6, 5),
+        (4, 7, 6),
+        (0, 4, 5),
+        (0, 5, 1),
+        (1, 5, 6),
+        (1, 6, 2),
+        (2, 6, 7),
+        (2, 7, 3),
+        (3, 7, 4),
+        (3, 4, 0),
+    )
+    for center_x, center_y, center_z in centers:
+        base_index = len(vertices) + 1
+        vertices.extend(
+            [
+                (center_x - 0.05, center_y - 0.05, center_z - 0.05),
+                (center_x + 0.05, center_y - 0.05, center_z - 0.05),
+                (center_x + 0.05, center_y + 0.05, center_z - 0.05),
+                (center_x - 0.05, center_y + 0.05, center_z - 0.05),
+                (center_x - 0.05, center_y - 0.05, center_z + 0.05),
+                (center_x + 0.05, center_y - 0.05, center_z + 0.05),
+                (center_x + 0.05, center_y + 0.05, center_z + 0.05),
+                (center_x - 0.05, center_y + 0.05, center_z + 0.05),
+            ]
+        )
+        faces.extend(tuple(base_index + idx for idx in face) for face in cube_faces)
+    lines = [f"v {x} {y} {z}" for x, y, z in vertices]
+    lines.extend(f"f {a} {b} {c}" for a, b, c in faces)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def _build_joint_origin_model(*, joint_z: float) -> ArticulatedObject:
+    model = ArticulatedObject(name="joint_origin_tolerance")
+
+    base = model.part("base")
+    base.visual(Box((0.1, 0.1, 0.1)), origin=Origin(xyz=(0.0, 0.0, 0.05)))
+
+    child = model.part("child")
+    child.visual(Box((0.1, 0.1, 0.1)), origin=Origin(xyz=(0.0, 0.0, 0.05)))
+
+    model.articulation(
+        "base_to_child",
+        ArticulationType.REVOLUTE,
+        parent=base,
+        child=child,
+        origin=Origin(xyz=(0.0, 0.0, joint_z)),
+        axis=(0.0, 1.0, 0.0),
+        motion_limits=MotionLimits(effort=1.0, velocity=1.0, lower=0.0, upper=1.0),
+    )
+    return model
+
+
+def _build_disconnected_part_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="disconnected_part")
+
+    base = model.part("base")
+    base.visual(Box((0.1, 0.1, 0.1)), origin=Origin(xyz=(0.0, 0.0, 0.05)))
+    base.visual(Box((0.1, 0.1, 0.1)), origin=Origin(xyz=(0.4, 0.0, 0.05)))
+
+    return model
+
+
+def _build_diagonally_floating_spheres_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="diagonally_floating_spheres")
+
+    base = model.part("base")
+    base.visual(Sphere(0.05), origin=Origin(xyz=(0.0, 0.0, 0.05)), name="sphere_a")
+    base.visual(Sphere(0.05), origin=Origin(xyz=(0.08, 0.08, 0.05)), name="sphere_b")
+
+    return model
+
+
+def _build_overlapping_parts_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="overlapping_parts")
+    root = model.part("root")
+
+    base = model.part("base")
+    base.visual(Box((0.2, 0.2, 0.2)), origin=Origin(xyz=(0.0, 0.0, 0.1)), name="base_box")
+
+    child = model.part("child")
+    child.visual(
+        Box((0.2, 0.2, 0.2)),
+        origin=Origin(xyz=(0.0, 0.0, 0.1)),
+        name="child_box",
+    )
+    model.articulation(
+        "root_to_base",
+        ArticulationType.FIXED,
+        parent=root,
+        child=base,
+        origin=Origin(),
+    )
+    model.articulation(
+        "root_to_child",
+        ArticulationType.FIXED,
+        parent=root,
+        child=child,
+        origin=Origin(),
+    )
+
+    return model
+
+
+def _build_small_overlap_parts_model(
+    *, child_center_xyz: tuple[float, float, float]
+) -> ArticulatedObject:
+    model = ArticulatedObject(name="small_overlap_parts")
+    root = model.part("root")
+
+    base = model.part("base")
+    base.visual(Box((0.02, 0.02, 0.02)), origin=Origin(xyz=(0.0, 0.0, 0.01)), name="base_box")
+
+    child = model.part("child")
+    child.visual(Box((0.02, 0.02, 0.02)), origin=Origin(xyz=child_center_xyz), name="child_box")
+    model.articulation(
+        "root_to_base",
+        ArticulationType.FIXED,
+        parent=root,
+        child=base,
+        origin=Origin(),
+    )
+    model.articulation(
+        "root_to_child",
+        ArticulationType.FIXED,
+        parent=root,
+        child=child,
+        origin=Origin(),
+    )
+
+    return model
+
+
+def _build_isolated_part_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="isolated_part")
+
+    base = model.part("base")
+    base.visual(Box((0.1, 0.1, 0.1)), origin=Origin(xyz=(0.0, 0.0, 0.05)))
+
+    support = model.part("support")
+    support.visual(Box((0.1, 0.1, 0.1)), origin=Origin(xyz=(0.0, 0.0, 0.05)))
+
+    antenna = model.part("antenna")
+    antenna.visual(Box((0.04, 0.04, 0.2)), origin=Origin(xyz=(0.0, 0.0, 0.1)))
+
+    model.articulation(
+        "base_to_support",
+        ArticulationType.FIXED,
+        parent=base,
+        child=support,
+        origin=Origin(xyz=(0.0, 0.0, 0.0)),
+    )
+    model.articulation(
+        "base_to_antenna",
+        ArticulationType.FIXED,
+        parent=base,
+        child=antenna,
+        origin=Origin(xyz=(0.6, 0.0, 0.0)),
+    )
+
+    return model
+
+
+def _build_floating_group_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="floating_group")
+
+    base = model.part("base")
+    base.visual(Box((0.28, 0.2, 0.1)), origin=Origin(xyz=(0.14, 0.0, 0.05)))
+
+    lid = model.part("lid")
+    lid.visual(
+        Box((0.28, 0.2, 0.02)),
+        origin=Origin(xyz=(0.14, 0.0, -0.07)),
+    )
+
+    top_vent = model.part("top_vent")
+    top_vent.visual(
+        Box((0.06, 0.06, 0.04)),
+        origin=Origin(xyz=(0.0, 0.0, -0.08)),
+    )
+
+    model.articulation(
+        "lid_hinge",
+        ArticulationType.REVOLUTE,
+        parent=base,
+        child=lid,
+        origin=Origin(xyz=(0.0, 0.0, 0.18)),
+        axis=(0.0, 1.0, 0.0),
+        motion_limits=MotionLimits(effort=1.0, velocity=1.0, lower=0.0, upper=1.319468914507713),
+        meta={"qc_samples": [1.319468914507713]},
+    )
+    model.articulation(
+        "lid_to_top_vent",
+        ArticulationType.FIXED,
+        parent=lid,
+        child=top_vent,
+        origin=Origin(),
+    )
+
+    return model
+
+
+def _build_multi_element_overlapping_parts_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="multi_element_overlapping_parts")
+    root = model.part("root")
+
+    base = model.part("base")
+    base.visual(Box((0.14, 0.14, 0.14)), origin=Origin(xyz=(-0.04, 0.0, 0.07)), name="base_left")
+    base.visual(Box((0.14, 0.14, 0.14)), origin=Origin(xyz=(0.04, 0.0, 0.07)), name="base_right")
+
+    child = model.part("child")
+    child.visual(
+        Box((0.14, 0.14, 0.14)),
+        origin=Origin(xyz=(-0.04, 0.0, 0.07)),
+        name="child_left",
+    )
+    child.visual(
+        Box((0.14, 0.14, 0.14)),
+        origin=Origin(xyz=(0.04, 0.0, 0.07)),
+        name="child_right",
+    )
+    model.articulation(
+        "root_to_base",
+        ArticulationType.FIXED,
+        parent=root,
+        child=base,
+        origin=Origin(),
+    )
+    model.articulation(
+        "root_to_child",
+        ArticulationType.FIXED,
+        parent=root,
+        child=child,
+        origin=Origin(),
+    )
+
+    return model
+
+
+def _build_articulation_overlap_model(*, joint_type: ArticulationType) -> ArticulatedObject:
+    model = ArticulatedObject(name=f"articulation_overlap_{joint_type.value.lower()}")
+
+    base = model.part("base")
+    base.visual(Box((0.24, 0.24, 0.24)), origin=Origin(xyz=(0.0, 0.0, 0.12)))
+
+    child = model.part("child")
+    child.visual(Box((0.2, 0.2, 0.2)), origin=Origin(xyz=(0.0, 0.0, 0.1)))
+
+    articulation_kwargs = {}
+    if joint_type == ArticulationType.REVOLUTE:
+        articulation_kwargs = {
+            "axis": (0.0, 1.0, 0.0),
+            "motion_limits": MotionLimits(effort=1.0, velocity=1.0, lower=-0.4, upper=0.4),
+        }
+    elif joint_type == ArticulationType.PRISMATIC:
+        articulation_kwargs = {
+            "axis": (1.0, 0.0, 0.0),
+            "motion_limits": MotionLimits(effort=1.0, velocity=1.0, lower=-0.02, upper=0.02),
+        }
+    elif joint_type == ArticulationType.CONTINUOUS:
+        articulation_kwargs = {
+            "axis": (0.0, 1.0, 0.0),
+            "motion_limits": MotionLimits(effort=1.0, velocity=1.0),
+        }
+
+    model.articulation(
+        "base_to_child",
+        joint_type,
+        parent=base,
+        child=child,
+        origin=Origin(xyz=(0.0, 0.0, 0.0)),
+        **articulation_kwargs,
+    )
+    return model
+
+
+def _build_non_articulation_overlap_only_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="non_articulation_overlap_only")
+
+    base = model.part("base")
+    base.visual(Box((0.2, 0.2, 0.2)), origin=Origin(xyz=(0.0, 0.0, 0.1)))
+
+    arm = model.part("arm")
+    arm.visual(Box((0.12, 0.12, 0.12)), origin=Origin(xyz=(0.22, 0.0, 0.06)))
+
+    rogue_a = model.part("rogue_a")
+    rogue_a.visual(Box((0.18, 0.18, 0.18)), origin=Origin(xyz=(0.8, 0.0, 0.09)))
+
+    rogue_b = model.part("rogue_b")
+    rogue_b.visual(Box((0.18, 0.18, 0.18)), origin=Origin(xyz=(0.8, 0.0, 0.09)))
+
+    model.articulation(
+        "base_to_arm",
+        ArticulationType.REVOLUTE,
+        parent=base,
+        child=arm,
+        origin=Origin(xyz=(0.22, 0.0, 0.0)),
+        axis=(0.0, 1.0, 0.0),
+        motion_limits=MotionLimits(effort=1.0, velocity=1.0, lower=-0.2, upper=0.2),
+    )
+    model.articulation(
+        "base_to_rogue_a",
+        ArticulationType.FIXED,
+        parent=base,
+        child=rogue_a,
+        origin=Origin(),
+    )
+    model.articulation(
+        "base_to_rogue_b",
+        ArticulationType.FIXED,
+        parent=base,
+        child=rogue_b,
+        origin=Origin(),
+    )
+    return model
+
+
+def _build_pose_specific_part_overlap_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="pose_specific_part_overlap")
+
+    base = model.part("base")
+    base.visual(Box((0.2, 0.2, 0.2)), origin=Origin(xyz=(0.0, 0.0, 0.1)), name="base_box")
+
+    slider = model.part("slider")
+    slider.visual(Box((0.2, 0.2, 0.2)), origin=Origin(xyz=(0.25, 0.0, 0.1)), name="slider_box")
+
+    model.articulation(
+        "base_to_slider",
+        ArticulationType.PRISMATIC,
+        parent=base,
+        child=slider,
+        origin=Origin(),
+        axis=(1.0, 0.0, 0.0),
+        motion_limits=MotionLimits(effort=1.0, velocity=1.0, lower=-0.2, upper=0.0),
+    )
+    return model
+
+
+def _build_coplanar_surface_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="coplanar_surfaces")
+    root = model.part("root")
+
+    base = model.part("base")
+    base.visual(Box((0.2, 0.2, 0.2)), origin=Origin(xyz=(0.0, 0.0, 0.1)))
+
+    cap = model.part("cap")
+    cap.visual(Box((0.12, 0.12, 0.02)), origin=Origin(xyz=(0.0, 0.0, 0.19)))
+    model.articulation(
+        "root_to_base",
+        ArticulationType.FIXED,
+        parent=root,
+        child=base,
+        origin=Origin(),
+    )
+    model.articulation(
+        "root_to_cap",
+        ArticulationType.FIXED,
+        parent=root,
+        child=cap,
+        origin=Origin(),
+    )
+
+    return model
+
+
+def _build_adjacent_coplanar_surface_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="adjacent_coplanar_surfaces")
+
+    base = model.part("base")
+    base.visual(Box((0.2, 0.2, 0.2)), origin=Origin(xyz=(0.0, 0.0, 0.1)))
+
+    door = model.part("door")
+    door.visual(Box((0.12, 0.12, 0.02)), origin=Origin(xyz=(0.0, 0.0, 0.19)))
+
+    model.articulation(
+        "base_to_door",
+        ArticulationType.REVOLUTE,
+        parent=base,
+        child=door,
+        origin=Origin(xyz=(0.0, 0.0, 0.19)),
+        axis=(0.0, 1.0, 0.0),
+        motion_limits=MotionLimits(effort=1.0, velocity=1.0, lower=0.0, upper=1.0),
+    )
+    return model
+
+
+def _build_element_gap_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="element_gap")
+    root = model.part("root")
+
+    base = model.part("base")
+    base.visual(Box((0.2, 0.2, 0.1)), origin=Origin(xyz=(0.0, 0.0, 0.05)), name="body")
+
+    arm = model.part("arm")
+    arm.visual(Box((0.04, 0.04, 0.04)), origin=Origin(xyz=(0.0, 0.0, 0.121)), name="hub")
+    arm.visual(Box((0.01, 0.01, 0.02)), origin=Origin(xyz=(0.0, 0.0, 0.11)), name="brace")
+    model.articulation(
+        "root_to_base",
+        ArticulationType.FIXED,
+        parent=root,
+        child=base,
+        origin=Origin(),
+    )
+    model.articulation(
+        "root_to_arm",
+        ArticulationType.FIXED,
+        parent=root,
+        child=arm,
+        origin=Origin(),
+    )
+
+    return model
+
+
+def _build_contact_gap_model(gap: float) -> ArticulatedObject:
+    model = ArticulatedObject(name=f"contact_gap_{gap:g}")
+    base = model.part("base")
+    base.visual(Box((0.1, 0.1, 0.1)), origin=Origin(xyz=(0.0, 0.0, 0.05)))
+    child = model.part("child")
+    child.visual(Box((0.1, 0.1, 0.1)), origin=Origin(xyz=(0.0, 0.0, 0.05)))
+    model.articulation(
+        "base_to_child",
+        ArticulationType.FIXED,
+        parent=base,
+        child=child,
+        origin=Origin(xyz=(0.0, 0.0, 0.1 + float(gap))),
+    )
+    return model
+
+
+def _build_nested_parts_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="nested_parts")
+    root = model.part("root")
+
+    outer = model.part("outer")
+    outer.visual(Box((0.3, 0.3, 0.3)), origin=Origin(xyz=(0.0, 0.0, 0.15)), name="shell")
+
+    inner = model.part("inner")
+    inner.visual(Box((0.1, 0.1, 0.1)), origin=Origin(xyz=(0.0, 0.0, 0.15)), name="insert")
+    model.articulation(
+        "root_to_outer",
+        ArticulationType.FIXED,
+        parent=root,
+        child=outer,
+        origin=Origin(),
+    )
+    model.articulation(
+        "root_to_inner",
+        ArticulationType.FIXED,
+        parent=root,
+        child=inner,
+        origin=Origin(),
+    )
+
+    return model
+
+
+def _build_surface_relation_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="surface_relation")
+    base = model.part("base")
+    base.visual(Box((0.2, 0.2, 0.02)), origin=Origin(xyz=(0.0, 0.0, 0.01)))
+
+    key = model.part("key")
+    key.visual(Box((0.04, 0.03, 0.01)), origin=Origin(xyz=(0.0, 0.0, 0.005)))
+    model.articulation(
+        "base_to_key",
+        ArticulationType.FIXED,
+        parent=base,
+        child=key,
+        origin=Origin(xyz=(0.0, 0.0, 0.02)),
+    )
+    return model
+
+
+def _build_mesh_connectivity_model(tmp_path: Path) -> ArticulatedObject:
+    mesh_path = tmp_path / "assets" / "meshes" / "frame.obj"
+    _write_disconnected_boxes_obj(mesh_path)
+
+    model = ArticulatedObject(name="mesh_connectivity")
+    frame = model.part("frame")
+    frame.visual(Mesh(filename=mesh_path.as_posix()), origin=Origin(), name="frame_body")
+    return model
+
+
+def _build_mesh_overlap_model(tmp_path: Path) -> ArticulatedObject:
+    mesh_path = tmp_path / "assets" / "meshes" / "frame.obj"
+    _write_disconnected_boxes_obj(mesh_path)
+
+    model = ArticulatedObject(name="mesh_overlap")
+    root = model.part("root")
+    base = model.part("base")
+    base.visual(Mesh(filename=mesh_path.as_posix()), origin=Origin(), name="frame_body")
+
+    child = model.part("child")
+    child.visual(
+        Box((0.12, 0.12, 0.12)),
+        origin=Origin(xyz=(0.45, 0.0, 0.0)),
+        name="child_box",
+    )
+    model.articulation(
+        "root_to_base",
+        ArticulationType.FIXED,
+        parent=root,
+        child=base,
+        origin=Origin(),
+    )
+    model.articulation(
+        "root_to_child",
+        ArticulationType.FIXED,
+        parent=root,
+        child=child,
+        origin=Origin(),
+    )
+    return model
+
+
+def test_articulation_origin_tolerance_is_truncated_to_three_decimals() -> None:
+    ctx = SDKTestContext(_build_joint_origin_model(joint_z=0.115))
+
+    assert ctx.fail_if_articulation_origin_far_from_geometry(tol=0.0159)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.checks == ("fail_if_articulation_origin_far_from_geometry(tol=0.015)",)
+
+
+def test_articulation_origin_tolerance_is_capped_at_point_one_five() -> None:
+    ctx = SDKTestContext(_build_joint_origin_model(joint_z=0.25))
+
+    assert ctx.fail_if_articulation_origin_far_from_geometry(tol=0.159)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.checks == ("fail_if_articulation_origin_far_from_geometry(tol=0.15)",)
+
+
+def test_warn_if_articulation_origin_far_from_geometry_records_warning_only() -> None:
+    ctx = SDKTestContext(_build_joint_origin_model(joint_z=0.2))
+
+    assert not ctx.warn_if_articulation_origin_far_from_geometry(tol=0.015)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("warn_if_articulation_origin_far_from_geometry(tol=0.015)",)
+    assert len(report.warnings) == 2
+    assert report.warnings[0].startswith("DEPRECATED AS DEFAULT: ")
+    assert "warn_if_articulation_origin_far_from_geometry(...)" in report.warnings[0]
+    assert "warn_if_articulation_origin_far_from_geometry(tol=0.015)" in report.warnings[1]
+    assert "Articulation origin(s) far from geometry" in report.warnings[1]
+
+
+def test_warn_if_part_contains_disconnected_geometry_islands_records_warning_only() -> None:
+    ctx = SDKTestContext(_build_disconnected_part_model())
+
+    assert not ctx.warn_if_part_contains_disconnected_geometry_islands()
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("warn_if_part_contains_disconnected_geometry_islands(tol=1e-06)",)
+    assert len(report.warnings) == 1
+    assert "warn_if_part_contains_disconnected_geometry_islands(tol=1e-06)" in report.warnings[0]
+    assert "Disconnected geometry islands detected" in report.warnings[0]
+
+
+def test_fail_if_part_contains_disconnected_geometry_islands_records_failure() -> None:
+    ctx = SDKTestContext(_build_disconnected_part_model())
+
+    assert not ctx.fail_if_part_contains_disconnected_geometry_islands()
+
+    report = ctx.report()
+    assert not report.passed
+    assert report.checks == ("fail_if_part_contains_disconnected_geometry_islands(tol=1e-06)",)
+    assert len(report.failures) == 1
+    assert (
+        report.failures[0].name == "fail_if_part_contains_disconnected_geometry_islands(tol=1e-06)"
+    )
+    assert "Disconnected geometry islands detected" in report.failures[0].details
+
+
+def test_warn_if_part_contains_disconnected_geometry_islands_uses_exact_geometry_not_aabb_overlap() -> (
+    None
+):
+    ctx = SDKTestContext(_build_diagonally_floating_spheres_model())
+
+    assert not ctx.warn_if_part_contains_disconnected_geometry_islands()
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("warn_if_part_contains_disconnected_geometry_islands(tol=1e-06)",)
+    assert len(report.warnings) == 1
+    assert "connected=1/2" in report.warnings[0]
+
+
+def test_warn_if_part_contains_disconnected_geometry_islands_records_mesh_component_warning(
+    tmp_path: Path,
+) -> None:
+    ctx = SDKTestContext(_build_mesh_connectivity_model(tmp_path))
+
+    assert not ctx.warn_if_part_contains_disconnected_geometry_islands()
+
+    report = ctx.report()
+    assert report.passed
+    assert len(report.warnings) == 1
+    assert "frame_body__component_002:Mesh" in report.warnings[0]
+
+
+def test_fail_if_part_contains_disconnected_geometry_islands_records_mesh_component_failure(
+    tmp_path: Path,
+) -> None:
+    ctx = SDKTestContext(_build_mesh_connectivity_model(tmp_path))
+
+    assert not ctx.fail_if_part_contains_disconnected_geometry_islands()
+
+    report = ctx.report()
+    assert not report.passed
+    assert len(report.failures) == 1
+    assert "frame_body__component_002:Mesh" in report.failures[0].details
+
+
+def test_fail_if_isolated_parts_fails_for_isolated_part() -> None:
+    ctx = SDKTestContext(_build_isolated_part_model())
+
+    assert not ctx.fail_if_isolated_parts()
+
+    report = ctx.report()
+    assert report.checks == ("fail_if_isolated_parts()",)
+    assert len(report.failures) == 1
+    assert report.failures[0].name == "fail_if_isolated_parts()"
+    assert "Isolated parts detected" in report.failures[0].details
+    assert (
+        "part 'antenna' is disconnected from the grounded body rooted at 'base'"
+        in report.failures[0].details
+    )
+
+
+def test_find_unsupported_parts_reports_floating_connected_group() -> None:
+    findings = find_unsupported_parts(_build_floating_group_model(), max_pose_samples=8)
+
+    assert len(findings) == 1
+    finding = findings[0]
+    assert finding.parts == ("lid", "top_vent")
+    assert finding.root_parts == ("base",)
+    assert finding.nearest_part == "base"
+    assert finding.min_distance is not None
+    assert finding.min_distance > 0.0
+    assert finding.pose["lid_hinge"] == 1.319468914507713
+
+
+def test_fail_if_isolated_parts_reports_floating_group_with_pose_context() -> None:
+    ctx = SDKTestContext(_build_floating_group_model())
+
+    assert not ctx.fail_if_isolated_parts(max_pose_samples=8)
+
+    report = ctx.report()
+    assert report.checks == ("fail_if_isolated_parts(samples=8,contact_tol=0.001)",)
+    assert len(report.failures) == 1
+    details = report.failures[0].details
+    assert "Isolated parts detected" in details
+    assert (
+        "floating group ['lid', 'top_vent'] is disconnected from the grounded body rooted at 'base'"
+        in details
+    )
+    assert "lid_hinge=1.319" in details
+
+
+def test_allow_isolated_part_suppresses_fail_if_isolated_parts() -> None:
+    model = _build_isolated_part_model()
+    ctx = SDKTestContext(model)
+    antenna = model.get_part("antenna")
+    ctx.allow_isolated_part(antenna, reason="intentionally freestanding accent")
+
+    assert ctx.fail_if_isolated_parts()
+
+    report = ctx.report()
+    assert report.failures == ()
+    assert report.checks == ("fail_if_isolated_parts()",)
+    assert report.allowed_isolated_parts == ("antenna",)
+    assert len(report.warnings) == 1
+    assert "Isolated parts detected but allowed by justification" in report.warnings[0]
+
+
+def test_allow_isolated_part_requires_all_parts_in_floating_group() -> None:
+    model = _build_floating_group_model()
+    ctx = SDKTestContext(model)
+    ctx.allow_isolated_part("lid", reason="only part of the group is intentionally freestanding")
+
+    assert not ctx.fail_if_isolated_parts(max_pose_samples=8)
+
+    report = ctx.report()
+    assert len(report.failures) == 1
+    assert "floating group ['lid', 'top_vent']" in report.failures[0].details
+
+    ctx = SDKTestContext(model)
+    ctx.allow_isolated_part("lid", reason="intentional floating display assembly")
+    ctx.allow_isolated_part("top_vent", reason="intentional floating display assembly")
+
+    assert ctx.fail_if_isolated_parts(max_pose_samples=8)
+
+    report = ctx.report()
+    assert report.failures == ()
+    assert len(report.warnings) == 1
+    assert "Isolated parts detected but allowed by justification" in report.warnings[0]
+    assert "floating group ['lid', 'top_vent']" in report.warnings[0]
+
+
+def test_warn_if_overlaps_records_warning_only() -> None:
+    ctx = SDKTestContext(_build_overlapping_parts_model())
+
+    assert not ctx.warn_if_overlaps(max_pose_samples=8, overlap_tol=0.001, overlap_volume_tol=0.0)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("warn_if_overlaps(samples=8,ignore_adjacent=False,ignore_fixed=True)",)
+    assert len(report.warnings) == 2
+    assert report.warnings[0].startswith("DEPRECATED AS DEFAULT: ")
+    assert "warn_if_overlaps(...)" in report.warnings[0]
+    assert (
+        "warn_if_overlaps(samples=8,ignore_adjacent=False,ignore_fixed=True)" in report.warnings[1]
+    )
+    assert "Overlaps detected" in report.warnings[1]
+    assert "overlap_tol=0.001" in report.warnings[1]
+    assert "overlap_volume_tol=0" in report.warnings[1]
+    assert "relation=unrelated" in report.warnings[1]
+    assert "depth=(0.2,0.2,0.2)" in report.warnings[1]
+    assert "elem_a=#0 'base_box':Box" in report.warnings[1]
+    assert "elem_b=#0 'child_box':Box" in report.warnings[1]
+
+
+def test_fail_if_parts_overlap_in_current_pose_fails_for_rest_pose_part_overlap() -> None:
+    ctx = SDKTestContext(_build_overlapping_parts_model())
+
+    assert not ctx.fail_if_parts_overlap_in_current_pose(overlap_tol=0.001, overlap_volume_tol=0.0)
+
+    report = ctx.report()
+    assert not report.passed
+    assert report.checks == (
+        "fail_if_parts_overlap_in_current_pose(overlap_tol=0.001,overlap_volume_tol=0)",
+    )
+    assert len(report.failures) == 1
+    assert (
+        report.failures[0].name
+        == "fail_if_parts_overlap_in_current_pose(overlap_tol=0.001,overlap_volume_tol=0)"
+    )
+    assert "Part overlaps detected" in report.failures[0].details
+    assert "pair=('base','child')" in report.failures[0].details
+    assert "depth=(0.2,0.2,0.2)" in report.failures[0].details
+    assert "elem_a=#0 'base_box':Box" in report.failures[0].details
+    assert "elem_b=#0 'child_box':Box" in report.failures[0].details
+    assert "pose={}" in report.failures[0].details
+
+
+def test_fail_if_parts_overlap_in_current_pose_uses_current_pose_only() -> None:
+    model = _build_pose_specific_part_overlap_model()
+    articulation = model.get_articulation("base_to_slider")
+    ctx = SDKTestContext(model)
+
+    assert ctx.fail_if_parts_overlap_in_current_pose(overlap_tol=0.001, overlap_volume_tol=0.0)
+    with ctx.pose({articulation: -0.1}):
+        assert not ctx.fail_if_parts_overlap_in_current_pose(
+            overlap_tol=0.001, overlap_volume_tol=0.0
+        )
+
+    report = ctx.report()
+    assert report.checks == (
+        "fail_if_parts_overlap_in_current_pose(overlap_tol=0.001,overlap_volume_tol=0)",
+        "fail_if_parts_overlap_in_current_pose(overlap_tol=0.001,overlap_volume_tol=0)",
+    )
+    assert len(report.failures) == 1
+    assert "pair=('base','slider')" in report.failures[0].details
+    assert "pose={'base_to_slider': -0.1}" in report.failures[0].details
+
+
+def test_fail_if_parts_overlap_in_current_pose_aggregates_to_one_failure_per_part_pair() -> None:
+    ctx = SDKTestContext(_build_multi_element_overlapping_parts_model())
+
+    assert not ctx.fail_if_parts_overlap_in_current_pose(overlap_tol=0.001, overlap_volume_tol=0.0)
+
+    report = ctx.report()
+    assert len(report.failures) == 1
+    assert report.failures[0].details.count("pair=('base','child')") == 1
+
+
+def test_fail_if_parts_overlap_in_current_pose_uses_default_volume_tolerance_for_tiny_overlap(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("OBJECT_GEOMETRY_OVERLAP_TOL", raising=False)
+    monkeypatch.delenv("URDF_GEOMETRY_OVERLAP_TOL", raising=False)
+    monkeypatch.delenv("OBJECT_GEOMETRY_OVERLAP_VOLUME_TOL", raising=False)
+    monkeypatch.delenv("URDF_GEOMETRY_OVERLAP_VOLUME_TOL", raising=False)
+
+    ctx = SDKTestContext(
+        _build_small_overlap_parts_model(child_center_xyz=(0.014, 0.014, 0.024)),
+    )
+
+    assert ctx.fail_if_parts_overlap_in_current_pose()
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("fail_if_parts_overlap_in_current_pose()",)
+
+
+def test_fail_if_parts_overlap_in_current_pose_still_fails_large_overlap_under_defaults(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("OBJECT_GEOMETRY_OVERLAP_TOL", raising=False)
+    monkeypatch.delenv("URDF_GEOMETRY_OVERLAP_TOL", raising=False)
+    monkeypatch.delenv("OBJECT_GEOMETRY_OVERLAP_VOLUME_TOL", raising=False)
+    monkeypatch.delenv("URDF_GEOMETRY_OVERLAP_VOLUME_TOL", raising=False)
+
+    ctx = SDKTestContext(
+        _build_small_overlap_parts_model(child_center_xyz=(0.01, 0.01, 0.02)),
+    )
+
+    assert not ctx.fail_if_parts_overlap_in_current_pose()
+
+    report = ctx.report()
+    assert not report.passed
+    assert report.checks == ("fail_if_parts_overlap_in_current_pose()",)
+    assert len(report.failures) == 1
+    assert "Part overlaps detected" in report.failures[0].details
+
+
+def test_allow_overlap_suppresses_fail_if_parts_overlap_in_current_pose() -> None:
+    ctx = SDKTestContext(_build_overlapping_parts_model())
+    ctx.allow_overlap("base", "child", reason="bowl nests into the seated opening")
+
+    assert ctx.fail_if_parts_overlap_in_current_pose(overlap_tol=0.001, overlap_volume_tol=0.0)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == (
+        "fail_if_parts_overlap_in_current_pose(overlap_tol=0.001,overlap_volume_tol=0)",
+    )
+    assert report.allowances == (
+        "allow_overlap('base', 'child'): bowl nests into the seated opening",
+    )
+    assert len(report.warnings) == 1
+    assert "Overlaps detected but allowed by justification" in report.warnings[0]
+
+
+def test_allow_overlap_accepts_original_mesh_element_name_after_component_split(
+    tmp_path: Path,
+) -> None:
+    ctx = SDKTestContext(_build_mesh_overlap_model(tmp_path))
+    ctx.allow_overlap(
+        "base", "child", elem_a="frame_body", elem_b="child_box", reason="mesh contact"
+    )
+
+    assert ctx.fail_if_parts_overlap_in_current_pose(overlap_tol=0.001, overlap_volume_tol=0.0)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.allowances == (
+        "allow_overlap('base', 'child', elem_a='frame_body', elem_b='child_box'): mesh contact",
+    )
+
+
+def test_allow_overlap_accepts_mesh_component_specific_name_after_component_split(
+    tmp_path: Path,
+) -> None:
+    ctx = SDKTestContext(_build_mesh_overlap_model(tmp_path))
+    ctx.allow_overlap(
+        "base",
+        "child",
+        elem_a="frame_body__component_002",
+        elem_b="child_box",
+        reason="mesh contact",
+    )
+
+    assert ctx.fail_if_parts_overlap_in_current_pose(overlap_tol=0.001, overlap_volume_tol=0.0)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.allowances == (
+        "allow_overlap('base', 'child', elem_a='frame_body__component_002', elem_b='child_box'): mesh contact",
+    )
+
+
+def test_fail_if_parts_overlap_in_sampled_poses_records_failure() -> None:
+    ctx = SDKTestContext(_build_overlapping_parts_model())
+
+    assert not ctx.fail_if_parts_overlap_in_sampled_poses(
+        max_pose_samples=8,
+        overlap_tol=0.001,
+        overlap_volume_tol=0.0,
+        name="sampled_clearance",
+    )
+
+    report = ctx.report()
+    assert not report.passed
+    assert report.checks == ("sampled_clearance",)
+    assert len(report.failures) == 1
+    assert report.failures[0].name == "sampled_clearance"
+    assert "Overlaps detected" in report.failures[0].details
+    assert "relation=unrelated" in report.failures[0].details
+
+
+def test_deprecated_default_helper_warning_emits_once_per_helper() -> None:
+    ctx = SDKTestContext(_build_joint_origin_model(joint_z=0.2))
+
+    assert not ctx.warn_if_articulation_origin_far_from_geometry(tol=0.015)
+    assert not ctx.warn_if_articulation_origin_far_from_geometry(tol=0.015)
+
+    report = ctx.report()
+    assert (
+        sum(
+            warning.startswith(
+                "DEPRECATED AS DEFAULT: warn_if_articulation_origin_far_from_geometry(...)"
+            )
+            for warning in report.warnings
+        )
+        == 1
+    )
+
+
+def test_fail_if_articulation_overlaps_fails_for_revolute_pair() -> None:
+    ctx = SDKTestContext(
+        _build_articulation_overlap_model(joint_type=ArticulationType.REVOLUTE),
+    )
+
+    assert not ctx.fail_if_articulation_overlaps(max_pose_samples=8)
+
+    report = ctx.report()
+    assert not report.passed
+    assert report.checks == ("fail_if_articulation_overlaps(samples=8)",)
+    assert len(report.failures) == 1
+    assert report.failures[0].name == "fail_if_articulation_overlaps(samples=8)"
+    assert "pair=('base','child')" in report.failures[0].details
+
+
+def test_warn_if_articulation_overlaps_records_warning_only() -> None:
+    ctx = SDKTestContext(
+        _build_articulation_overlap_model(joint_type=ArticulationType.REVOLUTE),
+    )
+
+    assert not ctx.warn_if_articulation_overlaps(max_pose_samples=8)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("warn_if_articulation_overlaps(samples=8)",)
+    assert len(report.warnings) == 1
+    assert report.warnings[0].startswith("warn_if_articulation_overlaps(samples=8): ")
+    assert "pair=('base','child')" in report.warnings[0]
+
+
+def test_fail_if_articulation_overlaps_fails_for_prismatic_pair() -> None:
+    ctx = SDKTestContext(
+        _build_articulation_overlap_model(joint_type=ArticulationType.PRISMATIC),
+    )
+
+    assert not ctx.fail_if_articulation_overlaps(max_pose_samples=8)
+
+    report = ctx.report()
+    assert not report.passed
+    assert len(report.failures) == 1
+    assert report.failures[0].name == "fail_if_articulation_overlaps(samples=8)"
+    assert "pair=('base','child')" in report.failures[0].details
+
+
+def test_fail_if_articulation_overlaps_fails_for_continuous_pair() -> None:
+    ctx = SDKTestContext(
+        _build_articulation_overlap_model(joint_type=ArticulationType.CONTINUOUS),
+    )
+
+    assert not ctx.fail_if_articulation_overlaps(max_pose_samples=8)
+
+    report = ctx.report()
+    assert not report.passed
+    assert len(report.failures) == 1
+    assert report.failures[0].name == "fail_if_articulation_overlaps(samples=8)"
+    assert "pair=('base','child')" in report.failures[0].details
+
+
+def test_fail_if_articulation_overlaps_ignores_fixed_pairs() -> None:
+    ctx = SDKTestContext(
+        _build_articulation_overlap_model(joint_type=ArticulationType.FIXED),
+    )
+
+    assert ctx.fail_if_articulation_overlaps(max_pose_samples=8)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("fail_if_articulation_overlaps(samples=8)",)
+
+
+def test_fail_if_articulation_overlaps_ignores_non_articulation_pairs() -> None:
+    ctx = SDKTestContext(_build_non_articulation_overlap_only_model())
+
+    assert ctx.fail_if_articulation_overlaps(max_pose_samples=8)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("fail_if_articulation_overlaps(samples=8)",)
+
+
+def test_allow_overlap_suppresses_reported_articulation_pair() -> None:
+    ctx = SDKTestContext(
+        _build_articulation_overlap_model(joint_type=ArticulationType.REVOLUTE),
+    )
+    ctx.allow_overlap("base", "child", reason="bearing sleeve nests around the hinge pin")
+
+    assert ctx.fail_if_articulation_overlaps(max_pose_samples=8)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("fail_if_articulation_overlaps(samples=8)",)
+    assert report.allowances == (
+        "allow_overlap('base', 'child'): bearing sleeve nests around the hinge pin",
+    )
+    assert len(report.warnings) == 1
+    assert "Overlaps detected but allowed by justification" in report.warnings[0]
+
+
+def test_allow_isolated_part_records_allowance_and_structured_part_list() -> None:
+    model = _build_overlapping_parts_model()
+    child = model.get_part("child")
+    ctx = SDKTestContext(model)
+
+    ctx.allow_isolated_part(child, reason="intentionally freestanding accent")
+
+    report = ctx.report()
+    assert report.allowances == ("allow_isolated_part('child'): intentionally freestanding accent",)
+    assert report.allowed_isolated_parts == ("child",)
+
+
+def test_allow_isolated_part_accepts_string_name() -> None:
+    ctx = SDKTestContext(_build_overlapping_parts_model())
+
+    ctx.allow_isolated_part("child", reason="intentionally freestanding accent")
+
+    report = ctx.report()
+    assert report.allowed_isolated_parts == ("child",)
+
+
+def test_allow_isolated_part_rejects_empty_reason() -> None:
+    ctx = SDKTestContext(_build_overlapping_parts_model())
+
+    try:
+        ctx.allow_isolated_part("child", reason="  ")
+    except ValueError as exc:
+        assert "allow_isolated_part requires a non-empty reason" in str(exc)
+    else:  # pragma: no cover - assertion helper
+        raise AssertionError("expected ValueError")
+
+
+def test_warn_if_coplanar_surfaces_records_warning_only() -> None:
+    ctx = SDKTestContext(_build_coplanar_surface_model())
+
+    assert not ctx.warn_if_coplanar_surfaces(
+        max_pose_samples=1,
+        plane_tol=0.001,
+        min_overlap=0.05,
+        min_overlap_ratio=0.35,
+        ignore_adjacent=False,
+        ignore_fixed=False,
+    )
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == (
+        "warn_if_coplanar_surfaces(samples=1,plane_tol=0.001,min_overlap=0.05,min_overlap_ratio=0.35,ignore_adjacent=False,ignore_fixed=False)",
+    )
+    assert len(report.warnings) == 1
+    assert (
+        "warn_if_coplanar_surfaces(samples=1,plane_tol=0.001,min_overlap=0.05,min_overlap_ratio=0.35,ignore_adjacent=False,ignore_fixed=False)"
+        in report.warnings[0]
+    )
+    assert "Coplanar or nearly coplanar surfaces detected (max_risk=medium" in report.warnings[0]
+    assert "risk=medium relation=unrelated pair=('base','cap')" in report.warnings[0]
+
+
+def test_warn_if_coplanar_surfaces_defaults_ignore_adjacent_pairs() -> None:
+    ctx = SDKTestContext(_build_adjacent_coplanar_surface_model())
+
+    assert ctx.warn_if_coplanar_surfaces(
+        max_pose_samples=1,
+        plane_tol=0.001,
+        min_overlap=0.05,
+    )
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.warnings == ()
+    assert report.checks == (
+        "warn_if_coplanar_surfaces(samples=1,plane_tol=0.001,min_overlap=0.05,min_overlap_ratio=0.35,ignore_adjacent=True,ignore_fixed=True)",
+    )
+
+
+def test_allow_coplanar_surfaces_suppresses_reported_pair() -> None:
+    ctx = SDKTestContext(_build_coplanar_surface_model())
+    ctx.allow_coplanar_surfaces("base", "cap", reason="flush mounted cap")
+
+    assert ctx.warn_if_coplanar_surfaces(
+        max_pose_samples=1,
+        plane_tol=0.001,
+        min_overlap=0.05,
+        min_overlap_ratio=0.35,
+        ignore_adjacent=False,
+        ignore_fixed=False,
+    )
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.warnings == ()
+    assert report.allowances == ("allow_coplanar_surfaces('base', 'cap'): flush mounted cap",)
+
+
+def test_allow_overlap_accepts_part_and_visual_objects() -> None:
+    model = _build_overlapping_parts_model()
+    base = model.get_part("base")
+    child = model.get_part("child")
+    base_box = base.visuals[0]
+    child_box = child.visuals[0]
+
+    ctx = SDKTestContext(model)
+    ctx.allow_overlap(base, child, reason="bearing sleeve nests around the hinge pin")
+    ctx.allow_overlap(
+        base, child, reason="explicit element allowance", elem_a=base_box, elem_b=child_box
+    )
+
+    report = ctx.report()
+    assert report.passed
+    assert report.allowances == (
+        "allow_overlap('base', 'child'): bearing sleeve nests around the hinge pin",
+        "allow_overlap('base', 'child', elem_a='base_box', elem_b='child_box'): explicit element allowance",
+    )
+    assert report.allowed_overlaps == (
+        AllowedOverlap("base", "child", "bearing sleeve nests around the hinge pin"),
+        AllowedOverlap(
+            "base",
+            "child",
+            "explicit element allowance",
+            elem_a="base_box",
+            elem_b="child_box",
+        ),
+    )
+
+
+def test_allow_coplanar_surfaces_accepts_part_objects() -> None:
+    model = _build_coplanar_surface_model()
+    base = model.get_part("base")
+    cap = model.get_part("cap")
+
+    ctx = SDKTestContext(model)
+    ctx.allow_coplanar_surfaces(base, cap, reason="flush mounted cap")
+
+    assert ctx.warn_if_coplanar_surfaces(
+        max_pose_samples=1,
+        plane_tol=0.001,
+        min_overlap=0.05,
+        min_overlap_ratio=0.35,
+        ignore_adjacent=False,
+        ignore_fixed=False,
+    )
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.warnings == ()
+    assert report.allowances == ("allow_coplanar_surfaces('base', 'cap'): flush mounted cap",)
+
+
+def test_expect_aabb_gap_keeps_whole_link_behavior_by_default() -> None:
+    ctx = SDKTestContext(_build_element_gap_model())
+
+    assert ctx.expect_aabb_gap("arm", "base", axis="z", max_gap=0.0, max_penetration=0.0)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("expect_aabb_gap(arm,base,axis=z)",)
+    assert len(report.warnings) == 1
+    assert "DEPRECATED: expect_aabb_gap(...)" in report.warnings[0]
+
+
+def test_expect_aabb_gap_can_target_named_elements() -> None:
+    ctx = SDKTestContext(_build_element_gap_model())
+
+    assert not ctx.expect_aabb_gap(
+        "arm",
+        "base",
+        axis="z",
+        max_gap=0.0,
+        max_penetration=0.0,
+        positive_elem="hub",
+        negative_elem="body",
+    )
+
+    report = ctx.report()
+    assert not report.passed
+    assert len(report.failures) == 1
+    assert report.failures[0].name == "expect_aabb_gap(arm,base,axis=z)"
+    assert "gap_z=0.001" in report.failures[0].details
+    assert "positive_elem='hub'" in report.failures[0].details
+    assert "negative_elem='body'" in report.failures[0].details
+    assert any("DEPRECATED: expect_aabb_gap(...)" in warning for warning in report.warnings)
+
+
+def test_expect_aabb_gap_accepts_part_and_visual_objects() -> None:
+    model = _build_element_gap_model()
+    arm = model.get_part("arm")
+    base = model.get_part("base")
+    hub = arm.visuals[0]
+    body = base.visuals[0]
+
+    ctx = SDKTestContext(model)
+
+    assert not ctx.expect_aabb_gap(
+        arm,
+        base,
+        axis="z",
+        max_gap=0.0,
+        max_penetration=0.0,
+        positive_elem=hub,
+        negative_elem=body,
+    )
+
+    report = ctx.report()
+    assert not report.passed
+    assert len(report.failures) == 1
+    assert report.failures[0].name == "expect_aabb_gap(arm,base,axis=z)"
+    assert "gap_z=0.001" in report.failures[0].details
+    assert "positive_elem='hub'" in report.failures[0].details
+    assert "negative_elem='body'" in report.failures[0].details
+    assert any("DEPRECATED: expect_aabb_gap(...)" in warning for warning in report.warnings)
+
+
+def test_pose_accepts_articulation_objects() -> None:
+    model = _build_joint_origin_model(joint_z=0.05)
+    child = model.get_part("child")
+    joint = model.get_articulation("base_to_child")
+
+    ctx = SDKTestContext(model)
+    rest_aabb = ctx.link_world_aabb(child)
+    assert rest_aabb is not None
+
+    with ctx.pose({joint: 0.5}):
+        posed_aabb = ctx.link_world_aabb(child)
+
+    assert posed_aabb is not None
+    assert posed_aabb != rest_aabb
+
+
+def test_expect_aabb_gap_reports_missing_named_element() -> None:
+    ctx = SDKTestContext(_build_element_gap_model())
+
+    assert not ctx.expect_aabb_gap(
+        "arm",
+        "base",
+        axis="z",
+        max_gap=0.0,
+        positive_elem="missing_hub",
+    )
+
+    report = ctx.report()
+    assert not report.passed
+    assert len(report.failures) == 1
+    assert (
+        "missing element AABB for positive_elem='missing_hub' on 'arm'"
+        in report.failures[0].details
+    )
+    assert any("DEPRECATED: expect_aabb_gap(...)" in warning for warning in report.warnings)
+
+
+def test_expect_contact_uses_exact_visual_geometry() -> None:
+    ctx = SDKTestContext(_build_element_gap_model())
+
+    assert ctx.expect_contact("arm", "base")
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("expect_contact(arm,base)",)
+
+
+@pytest.mark.parametrize(
+    ("gap", "expected"),
+    ((0.0005, True), (0.0006, False)),
+)
+def test_expect_contact_default_is_inclusive_half_mm(
+    gap: float,
+    expected: bool,
+) -> None:
+    ctx = SDKTestContext(_build_contact_gap_model(gap))
+
+    assert ctx.expect_contact("child", "base") is expected
+
+
+def test_expect_contact_can_target_exact_named_elements() -> None:
+    ctx = SDKTestContext(_build_element_gap_model())
+
+    assert not ctx.expect_contact("arm", "base", elem_a="hub", elem_b="body", contact_tol=1e-6)
+
+    report = ctx.report()
+    assert not report.passed
+    assert len(report.failures) == 1
+    assert report.failures[0].name == "expect_contact(arm,base)"
+    assert "min_distance=0.001" in report.failures[0].details
+    assert "elem_a='hub'" in report.failures[0].details
+    assert "elem_b='body'" in report.failures[0].details
+
+
+def test_expect_gap_uses_exact_visual_projection() -> None:
+    ctx = SDKTestContext(_build_element_gap_model())
+
+    assert ctx.expect_gap("arm", "base", axis="z", max_gap=0.0, max_penetration=0.0)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("expect_gap(arm,base,axis=z)",)
+
+
+def test_expect_gap_can_target_named_elements() -> None:
+    ctx = SDKTestContext(_build_element_gap_model())
+
+    assert not ctx.expect_gap(
+        "arm",
+        "base",
+        axis="z",
+        max_gap=0.0,
+        max_penetration=0.0,
+        positive_elem="hub",
+        negative_elem="body",
+    )
+
+    report = ctx.report()
+    assert not report.passed
+    assert len(report.failures) == 1
+    assert report.failures[0].name == "expect_gap(arm,base,axis=z)"
+    assert "gap_z=0.001" in report.failures[0].details
+    assert "positive_elem='hub'" in report.failures[0].details
+    assert "negative_elem='body'" in report.failures[0].details
+
+
+def test_expect_gap_accepts_elem_aliases() -> None:
+    ctx = SDKTestContext(_build_element_gap_model())
+
+    assert not ctx.expect_gap(
+        "arm",
+        "base",
+        axis="z",
+        max_gap=0.0,
+        max_penetration=0.0,
+        elem_a="hub",
+        elem_b="body",
+    )
+
+    report = ctx.report()
+    assert not report.passed
+    assert "positive_elem='hub'" in report.failures[0].details
+    assert "negative_elem='body'" in report.failures[0].details
+
+
+def test_expect_overlap_uses_exact_visual_geometry() -> None:
+    ctx = SDKTestContext(_build_overlapping_parts_model())
+
+    assert ctx.expect_overlap("base", "child", axes="xy", min_overlap=0.19)
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("expect_overlap(base,child,axes=xy)",)
+
+
+def test_expect_within_uses_exact_visual_geometry() -> None:
+    ctx = SDKTestContext(_build_nested_parts_model())
+
+    assert ctx.expect_within("inner", "outer", axes="xyz")
+
+    report = ctx.report()
+    assert report.passed
+    assert report.failures == ()
+    assert report.checks == ("expect_within(inner,outer,axes=xyz)",)
+
+
+def test_expect_within_accepts_elem_aliases() -> None:
+    ctx = SDKTestContext(_build_nested_parts_model())
+
+    assert ctx.expect_within("inner", "outer", axes="xyz", elem_a="insert", elem_b="shell")
+
+    report = ctx.report()
+    assert report.passed
+    assert report.checks == ("expect_within(inner,outer,axes=xyz)",)
+
+
+def test_expect_normal_band_uses_local_plane_frame() -> None:
+    ctx = SDKTestContext(_build_surface_relation_model())
+    frame = PlaneInterface(
+        name="base.surface",
+        point=(0.0, 0.0, 0.02),
+        normal=(0.0, 0.0, 1.0),
+        tangent_u=(1.0, 0.0, 0.0),
+        extent=(0.06, 0.05),
+    )
+
+    assert ctx.expect_normal_band(
+        "key",
+        frame=frame,
+        frame_part="base",
+        minimum=0.0,
+        maximum=0.011,
+    )
+    assert not ctx.expect_normal_band(
+        "key",
+        frame=frame,
+        frame_part="base",
+        minimum=0.002,
+        maximum=0.011,
+        name="key base must clear surface",
+    )
+
+    report = ctx.report()
+    assert not report.passed
+    assert report.failures[0].name == "key base must clear surface"
+    assert "normal_interval=(0,0.01)" in report.failures[0].details
+
+
+def test_expect_normal_band_can_require_minimum_protrusion() -> None:
+    ctx = SDKTestContext(_build_surface_relation_model())
+    frame = PlaneInterface(
+        name="base.surface",
+        point=(0.0, 0.0, 0.02),
+        normal=(0.0, 0.0, 1.0),
+        tangent_u=(1.0, 0.0, 0.0),
+        extent=(0.06, 0.05),
+    )
+
+    assert ctx.expect_normal_band(
+        "key",
+        frame=frame,
+        frame_part="base",
+        minimum=0.0,
+        maximum=0.011,
+        minimum_protrusion=0.009,
+    )
+    assert not ctx.expect_normal_band(
+        "key",
+        frame=frame,
+        frame_part="base",
+        minimum=0.0,
+        maximum=0.011,
+        minimum_protrusion=0.0105,
+        name="key must remain visibly proud",
+    )
+
+    report = ctx.report()
+    assert not report.passed
+    assert report.failures[0].name == "key must remain visibly proud"
+    assert "minimum_protrusion=0.0105" in report.failures[0].details
+
+
+def test_expect_footprint_within_uses_local_plane_extent() -> None:
+    ctx = SDKTestContext(_build_surface_relation_model())
+    fitting = PlaneInterface(
+        name="base.opening",
+        point=(0.0, 0.0, 0.02),
+        normal=(0.0, 0.0, 1.0),
+        tangent_u=(1.0, 0.0, 0.0),
+        extent=(0.05, 0.04),
+    )
+    too_small = PlaneInterface(
+        name="base.small_opening",
+        point=(0.0, 0.0, 0.02),
+        normal=(0.0, 0.0, 1.0),
+        tangent_u=(1.0, 0.0, 0.0),
+        extent=(0.03, 0.02),
+    )
+
+    assert ctx.expect_footprint_within("key", frame=fitting, frame_part="base")
+    assert not ctx.expect_footprint_within(
+        "key",
+        frame=too_small,
+        frame_part="base",
+    )
+
+    report = ctx.report()
+    assert not report.passed
+    assert report.failures[0].name == "expect_footprint_within(key,frame=base.small_opening)"
+
+
+def _build_floating_pose_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="floating_pose_checks")
+
+    base = model.part("base")
+    base.visual(Box((0.2, 0.2, 0.2)), origin=Origin(xyz=(0.0, 0.0, 0.1)), name="base_box")
+
+    payload = model.part("payload")
+    payload.visual(
+        Box((0.1, 0.1, 0.1)),
+        origin=Origin(xyz=(0.0, 0.0, 0.05)),
+        name="payload_box",
+    )
+
+    model.articulation(
+        "base_to_payload",
+        ArticulationType.FLOATING,
+        parent=base,
+        child=payload,
+        origin=Origin(xyz=(0.4, 0.0, 0.0)),
+    )
+
+    return model
+
+
+def _build_multi_root_pose_model() -> ArticulatedObject:
+    model = ArticulatedObject(name="multiple_roots_pose_checks")
+
+    base = model.part("base")
+    base.visual(Box((0.2, 0.2, 0.2)), origin=Origin(xyz=(0.0, 0.0, 0.1)), name="base_box")
+
+    rogue = model.part("rogue")
+    rogue.visual(Box((0.1, 0.1, 0.1)), origin=Origin(xyz=(0.0, 0.0, 0.05)), name="rogue_box")
+
+    return model
+
+
+def test_pose_accepts_origin_for_floating_joint() -> None:
+    model = _build_floating_pose_model()
+    ctx = SDKTestContext(model)
+    joint = model.get_articulation("base_to_payload")
+
+    with ctx.pose({joint: Origin(xyz=(0.1, 0.2, 0.3))}):
+        pos = ctx.part_world_position("payload")
+        assert pos is not None
+        assert pos == pytest.approx((0.5, 0.2, 0.3))
+
+
+def test_pose_rejects_scalar_for_floating_joint() -> None:
+    model = _build_floating_pose_model()
+    ctx = SDKTestContext(model)
+    joint = model.get_articulation("base_to_payload")
+
+    with pytest.raises(Exception, match="expects an Origin pose value"):
+        with ctx.pose({joint: 0.1}):
+            pass
+
+
+def test_pose_rejects_origin_for_scalar_joint() -> None:
+    model = _build_joint_origin_model(joint_z=0.1)
+    ctx = SDKTestContext(model)
+    joint = model.get_articulation("base_to_child")
+
+    with pytest.raises(Exception, match="expects a scalar pose value"):
+        with ctx.pose({joint: Origin(xyz=(0.1, 0.0, 0.0))}):
+            pass
+
+
+def test_pose_kwargs_accept_origin_for_floating_joint() -> None:
+    model = _build_floating_pose_model()
+    ctx = SDKTestContext(model)
+
+    with ctx.pose(base_to_payload=Origin(xyz=(0.0, -0.2, 0.15))):
+        pos = ctx.part_world_position("payload")
+        assert pos is not None
+        assert pos == pytest.approx((0.4, -0.2, 0.15))
+
+
+def test_pose_rejects_direct_mimic_joint_override() -> None:
+    model = ArticulatedObject(name="mimic_pose_override")
+    base = model.part("base")
+    carriage = model.part("carriage")
+    tool = model.part("tool")
+    driver = model.articulation(
+        "base_to_carriage",
+        ArticulationType.PRISMATIC,
+        parent=base,
+        child=carriage,
+        axis=(1.0, 0.0, 0.0),
+        motion_limits=MotionLimits(effort=2.0, velocity=1.0, lower=0.0, upper=0.2),
+    )
+    follower = model.articulation(
+        "carriage_to_tool",
+        ArticulationType.PRISMATIC,
+        parent=carriage,
+        child=tool,
+        axis=(1.0, 0.0, 0.0),
+        motion_limits=MotionLimits(effort=2.0, velocity=1.0, lower=0.0, upper=0.2),
+        mimic=Mimic(joint=driver.name, multiplier=0.5),
+    )
+    ctx = SDKTestContext(model)
+
+    with pytest.raises(Exception, match="mimic-driven and cannot be posed directly"):
+        with ctx.pose({follower: 0.1}):
+            pass
+
+
+def test_part_world_position_rejects_multiple_root_parts() -> None:
+    ctx = SDKTestContext(_build_multi_root_pose_model())
+
+    with pytest.raises(ValidationError, match="exactly one root part"):
+        ctx.part_world_position("base")

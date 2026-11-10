@@ -1,0 +1,979 @@
+{
+  "assembly_notes": "Four independent structural slots over a grounded moulded base and one sorter body. tray_body owns the deck family and exports the deck interface (deck plane, usable half-width, bay depth, wall height); end_walls, divider_mechanism and base_style consume only that interface, so all 5x3x3x2 = 90 combinations build without a gate. The source's signature perforation is real through-geometry (SlotPatternPanelGeometry, a 5x5 rounded slot grid derived from the panel size), not a solid placeholder. Fold-flat end walls are solved by mate_axes and registered with register_interface_mate; dividers are placed by mate_planes against the declared bay extent and ride a guide rod (sliding) or stay captured between socket cheeks (lift-out). Filed contents are sparse decoration sized to clear the divider travel envelope, because the authoritative image shows the sorter empty.",
+  "bindings": [
+    {
+      "binding_id": "deck_to_dividers",
+      "consumer": "divider_mechanism.deck_plane",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "width_m",
+            "divider_count"
+          ],
+          "expression": "min(clamp(0.26*bay_pitch_m, 0.004, 0.045), clear_gap/2) with clear_gap = bay_pitch_m - 2*half_span - 0.004 and half_span = max(0.9*panel_thickness_m, 0.18*bay_pitch_m for sliding bookends)",
+          "mode": "derived",
+          "name": "divider_travel_m",
+          "rationale": "two neighbouring dividers may never meet at opposite travel extremes",
+          "unit": "m",
+          "value_type": "float"
+        },
+        {
+          "choices": [],
+          "depends_on": [
+            "width_m",
+            "divider_count"
+          ],
+          "expression": "divider_travel_m + 0.030 for lift-out sockets",
+          "mode": "derived",
+          "name": "socket_height_m",
+          "rationale": "the lifted divider stays captured in its socket",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "prismatic",
+      "provider": "tray_body.deck_plane"
+    },
+    {
+      "binding_id": "deck_to_end_walls",
+      "consumer": "end_walls.deck_plane",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "width_m",
+            "panel_thickness_m"
+          ],
+          "expression": "+/-(width_m/2 - panel_thickness_m) at z = 0.010",
+          "mode": "derived",
+          "name": "fold_axis_x_m",
+          "rationale": "the fold axis rides the deck edge",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "revolute",
+      "provider": "tray_body.deck_plane"
+    },
+    {
+      "binding_id": "base_to_tray",
+      "consumer": "tray_body.deck_plane",
+      "derived": [
+        {
+          "choices": [],
+          "depends_on": [
+            "base_style"
+          ],
+          "expression": "base_lift_m + deck thickness - 0.002 so the deck seats 2 mm onto its rails or feet",
+          "mode": "derived",
+          "name": "deck_z_m",
+          "rationale": "the sorter body is never a floating island",
+          "unit": "m",
+          "value_type": "float"
+        }
+      ],
+      "joint_type": "fixed",
+      "provider": "base_style.deck_mount"
+    }
+  ],
+  "category_anchors": [
+    {
+      "anchor_id": "file_sorter_identity",
+      "applies_to": {
+        "candidates": [
+          "sliding_dividers",
+          "liftout_dividers",
+          "sliding_bookends"
+        ],
+        "slot": "divider_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: one grounded base carries one sorter body",
+        "category_anchor: the sorter has a deck board",
+        "category_anchor: the sorter carries upright filed contents",
+        "category_anchor: N movable dividers split the sorter bays",
+        "category_anchor: the sorter has at least one real non-fixed joint",
+        "category_anchor: two end walls close the sorter bays"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "base_body"
+        },
+        {
+          "exact_count": 1,
+          "role": "tray"
+        },
+        {
+          "count_from": "divider_count",
+          "role": "divider"
+        }
+      ]
+    },
+    {
+      "anchor_id": "perforated_end_wall_identity",
+      "applies_to": {
+        "candidates": [
+          "perforated_end_walls"
+        ],
+        "slot": "end_walls"
+      },
+      "required_author_checks": [
+        "category_anchor: two end walls close the sorter bays",
+        "category_anchor: the moulded end walls are perforated"
+      ],
+      "required_relations": [],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "tray"
+        }
+      ]
+    },
+    {
+      "anchor_id": "sliding_divider_axis",
+      "applies_to": {
+        "candidates": [
+          "sliding_dividers",
+          "sliding_bookends"
+        ],
+        "slot": "divider_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: N movable dividers split the sorter bays"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "child_role": "divider",
+          "joint_type": "prismatic",
+          "parent_role": "tray"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": "divider_count",
+          "role": "divider"
+        }
+      ]
+    },
+    {
+      "anchor_id": "liftout_divider_axis",
+      "applies_to": {
+        "candidates": [
+          "liftout_dividers"
+        ],
+        "slot": "divider_mechanism"
+      },
+      "required_author_checks": [
+        "category_anchor: N movable dividers split the sorter bays"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "child_role": "divider",
+          "joint_type": "prismatic",
+          "parent_role": "tray"
+        }
+      ],
+      "required_roles": [
+        {
+          "count_from": "divider_count",
+          "role": "divider"
+        }
+      ]
+    },
+    {
+      "anchor_id": "fold_flat_end_walls",
+      "applies_to": {
+        "candidates": [
+          "fold_flat_walls"
+        ],
+        "slot": "end_walls"
+      },
+      "required_author_checks": [
+        "category_anchor: two end walls close the sorter bays"
+      ],
+      "required_relations": [
+        {
+          "axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "child_role": "end_wall",
+          "joint_type": "revolute",
+          "parent_role": "tray"
+        }
+      ],
+      "required_roles": [
+        {
+          "exact_count": 1,
+          "role": "tray"
+        },
+        {
+          "exact_count": 2,
+          "role": "end_wall"
+        }
+      ]
+    }
+  ],
+  "multiplicities": [
+    {
+      "host_capacity_expression": "2 <= divider_count <= 7; width_m is derived upward so each bay keeps >= 0.055 m of filed content",
+      "item_slot": "divider_mechanism",
+      "name": "divider_count",
+      "spacing_expression": "divider i sits at -usable_half_x + (i+1)*bay_pitch_m; book rows, sockets/rails and travel re-derived per N",
+      "values": [
+        2,
+        3,
+        5,
+        7
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "slots": [
+    {
+      "candidates": [
+        {
+          "evidence": "tray deck, end walls",
+          "implementation_function": "_tray_body_flat_tray_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "bay_pitch_m",
+                "extent_v": "bay_depth",
+                "wall_height": "derived per body"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(bay x, bay_y_center, deck_top_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_plane",
+              "part": "tray_body__flat_tray__tray",
+              "role": "provider"
+            }
+          ],
+          "name": "flat_tray",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.55,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "source SORTER_WIDTH 0.340 m; the sorter stays a desktop object",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source tray depth ~0.22 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "wall_height_m",
+              "rationale": "source end-wall height ~0.185 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.016,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "panel_thickness_m",
+              "rationale": "source divider/end-wall panels ~0.012 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_style"
+              ],
+              "expression": "flat rails 0.016 or moulded feet 0.030",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "base_lift_m",
+              "rationale": "the sorter stands on its moulded base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "divider_count",
+                "panel_thickness_m",
+                "width_m"
+              ],
+              "expression": "width_m grows to 2*panel_t + (divider_count+1)*(0.032+panel_t); bay_pitch_m = 2*usable_half_x/(divider_count+1); divider_travel_m capped by half the clear gap between neighbouring dividers",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "host capacity: each bay must still take a book row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__bookshelf_with_books__001__png__adjustable_rebuild_20260710_04de0b28014249f6921c8824d8eb81bc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L106-L253"
+          ]
+        },
+        {
+          "evidence": "tray inclined deck, front lip",
+          "implementation_function": "_tray_body_incline_rack_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "bay_pitch_m",
+                "extent_v": "bay_depth",
+                "wall_height": "derived per body"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(bay x, bay_y_center, deck_top_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_plane",
+              "part": "tray_body__incline_rack__tray",
+              "role": "provider"
+            }
+          ],
+          "name": "incline_rack",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookshelf_with_books_var_incline_rack",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L114-L272"
+          ]
+        },
+        {
+          "evidence": "tray step riser, rear deck",
+          "implementation_function": "_tray_body_stepped_tiers_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "bay_pitch_m",
+                "extent_v": "bay_depth",
+                "wall_height": "derived per body"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(bay x, bay_y_center, deck_top_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_plane",
+              "part": "tray_body__stepped_tiers__tray",
+              "role": "provider"
+            }
+          ],
+          "name": "stepped_tiers",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookshelf_with_books_var_stepped_tiers",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L135-L308"
+          ]
+        },
+        {
+          "evidence": "tray mid board",
+          "implementation_function": "_tray_body_cube_grid_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "bay_pitch_m",
+                "extent_v": "bay_depth",
+                "wall_height": "derived per body"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(bay x, bay_y_center, deck_top_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_plane",
+              "part": "tray_body__cube_grid__tray",
+              "role": "provider"
+            }
+          ],
+          "name": "cube_grid",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookshelf_with_books_var_cube_grid",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L81-L345"
+          ]
+        },
+        {
+          "evidence": "tray lattice walls",
+          "implementation_function": "_tray_body_mesh_basket_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "bay_pitch_m",
+                "extent_v": "bay_depth",
+                "wall_height": "derived per body"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(bay x, bay_y_center, deck_top_z)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_plane",
+              "part": "tray_body__mesh_basket__tray",
+              "role": "provider"
+            }
+          ],
+          "name": "mesh_basket",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookshelf_with_books_var_mesh_basket",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L146-L398"
+          ]
+        }
+      ],
+      "component_type": "tray_body",
+      "name": "tray_body",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "Source anchor: the tapered moulded end wall with the 5x5 rounded through-slot grid (_end_wall_mm, model.py:L47-L105); the perforation is the recognisable feature of the moulding and is cut, not faked.",
+          "implementation_function": "_end_walls_perforated_end_walls_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "panel_thickness_m",
+                "extent_v": "0.96*bay_depth"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, bay_y_center, 0)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_plane",
+              "part": "end_walls__fixed_end_walls__wall_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "perforated_end_walls",
+          "notes": "Built with SlotPatternPanelGeometry so the slot grid is real through-geometry.",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.55,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "source SORTER_WIDTH 0.340 m; the sorter stays a desktop object",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source tray depth ~0.22 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "wall_height_m",
+              "rationale": "source end-wall height ~0.185 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.016,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "panel_thickness_m",
+              "rationale": "source divider/end-wall panels ~0.012 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_style"
+              ],
+              "expression": "flat rails 0.016 or moulded feet 0.030",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "base_lift_m",
+              "rationale": "the sorter stands on its moulded base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "divider_count",
+                "panel_thickness_m",
+                "width_m"
+              ],
+              "expression": "width_m grows to 2*panel_t + (divider_count+1)*(0.032+panel_t); bay_pitch_m = 2*usable_half_x/(divider_count+1); divider_travel_m capped by half the clear gap between neighbouring dividers",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "host capacity: each bay must still take a book row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__bookshelf_with_books__001__png__adjustable_rebuild_20260710_04de0b28014249f6921c8824d8eb81bc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L47-L105"
+          ]
+        },
+        {
+          "evidence": "end_wall_i, axis (0,1,0)",
+          "implementation_function": "_end_walls_fold_flat_walls_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "panel_thickness_m",
+                "extent_v": "0.96*bay_depth"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, bay_y_center, 0)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_plane",
+              "part": "end_walls__fold_flat_walls__wall_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "fold_flat_walls",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookshelf_with_books_var_fold_flat",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L267-L306"
+          ]
+        },
+        {
+          "evidence": "tray bookend feet",
+          "implementation_function": "_end_walls_bookend_supports_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "panel_thickness_m",
+                "extent_v": "0.96*bay_depth"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, bay_y_center, 0)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_plane",
+              "part": "end_walls__bookend_supports__wall_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "bookend_supports",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookshelf_with_books_var_bookend_supports",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L47-L123"
+          ]
+        }
+      ],
+      "component_type": "end_walls",
+      "name": "end_walls",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "divider_i, axis (1,0,0)",
+          "implementation_function": "_divider_mechanism_sliding_dividers_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "panel_thickness_m or shoe width",
+                "extent_v": "0.92*bay_depth"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, bay_y_center, 0)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_plane",
+              "part": "divider_mechanism__sliding_dividers__divider_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "sliding_dividers",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.55,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "source SORTER_WIDTH 0.340 m; the sorter stays a desktop object",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source tray depth ~0.22 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "wall_height_m",
+              "rationale": "source end-wall height ~0.185 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.016,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "panel_thickness_m",
+              "rationale": "source divider/end-wall panels ~0.012 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_style"
+              ],
+              "expression": "flat rails 0.016 or moulded feet 0.030",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "base_lift_m",
+              "rationale": "the sorter stands on its moulded base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "divider_count",
+                "panel_thickness_m",
+                "width_m"
+              ],
+              "expression": "width_m grows to 2*panel_t + (divider_count+1)*(0.032+panel_t); bay_pitch_m = 2*usable_half_x/(divider_count+1); divider_travel_m capped by half the clear gap between neighbouring dividers",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "host capacity: each bay must still take a book row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__bookshelf_with_books__001__png__adjustable_rebuild_20260710_04de0b28014249f6921c8824d8eb81bc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L254-L338"
+          ]
+        },
+        {
+          "evidence": "divider_i, axis (0,0,1)",
+          "implementation_function": "_divider_mechanism_liftout_dividers_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "panel_thickness_m or shoe width",
+                "extent_v": "0.92*bay_depth"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, bay_y_center, 0)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_plane",
+              "part": "divider_mechanism__liftout_dividers__divider_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "liftout_dividers",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookshelf_with_books_var_liftout_dividers",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L112-L132",
+            "model.py:L293-L360"
+          ]
+        },
+        {
+          "evidence": "bookend_i, foot + rail",
+          "implementation_function": "_divider_mechanism_sliding_bookends_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "panel_thickness_m or shoe width",
+                "extent_v": "0.92*bay_depth"
+              },
+              "frame": {
+                "normal": "(0,0,-1)",
+                "point": "(0, bay_y_center, 0)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_plane",
+              "part": "divider_mechanism__sliding_bookends__divider_i",
+              "role": "consumer"
+            }
+          ],
+          "name": "sliding_bookends",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookshelf_with_books_var_sliding_bookend",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L306-L410"
+          ]
+        }
+      ],
+      "component_type": "divider_mechanism",
+      "name": "divider_mechanism",
+      "required": true
+    },
+    {
+      "candidates": [
+        {
+          "evidence": "base rails",
+          "implementation_function": "_base_style_flat_base_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "width_m",
+                "extent_v": "depth_m"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(0,0,deck_z_m)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_mount",
+              "part": "base_style__flat_base__base",
+              "role": "provider"
+            }
+          ],
+          "name": "flat_base",
+          "notes": "",
+          "parameters": [
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.55,
+              "minimum": 0.28,
+              "mode": "independent",
+              "name": "width_m",
+              "rationale": "source SORTER_WIDTH 0.340 m; the sorter stays a desktop object",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.32,
+              "minimum": 0.14,
+              "mode": "independent",
+              "name": "depth_m",
+              "rationale": "source tray depth ~0.22 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.26,
+              "minimum": 0.13,
+              "mode": "independent",
+              "name": "wall_height_m",
+              "rationale": "source end-wall height ~0.185 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [],
+              "expression": "",
+              "maximum": 0.016,
+              "minimum": 0.008,
+              "mode": "independent",
+              "name": "panel_thickness_m",
+              "rationale": "source divider/end-wall panels ~0.012 m",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "base_style"
+              ],
+              "expression": "flat rails 0.016 or moulded feet 0.030",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "base_lift_m",
+              "rationale": "the sorter stands on its moulded base",
+              "unit": "m",
+              "value_type": "float"
+            },
+            {
+              "choices": [],
+              "depends_on": [
+                "divider_count",
+                "panel_thickness_m",
+                "width_m"
+              ],
+              "expression": "width_m grows to 2*panel_t + (divider_count+1)*(0.032+panel_t); bay_pitch_m = 2*usable_half_x/(divider_count+1); divider_travel_m capped by half the clear gap between neighbouring dividers",
+              "maximum": 0.0,
+              "minimum": 0.0,
+              "mode": "derived",
+              "name": "bay_pitch_m",
+              "rationale": "host capacity: each bay must still take a book row",
+              "unit": "m",
+              "value_type": "float"
+            }
+          ],
+          "record_id": "rec_picturex_0611__bookshelf_with_books__001__png__adjustable_rebuild_20260710_04de0b28014249f6921c8824d8eb81bc",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L136-L200"
+          ]
+        },
+        {
+          "evidence": "base feet",
+          "implementation_function": "_base_style_footed_base_build",
+          "interfaces": [
+            {
+              "dimensions": {
+                "extent_u": "width_m",
+                "extent_v": "depth_m"
+              },
+              "frame": {
+                "normal": "(0,0,1)",
+                "point": "(0,0,deck_z_m)",
+                "tangent_u": "(1,0,0)"
+              },
+              "kind": "plane",
+              "name": "deck_mount",
+              "part": "base_style__footed_base__base",
+              "role": "provider"
+            }
+          ],
+          "name": "footed_base",
+          "notes": "",
+          "parameters": [],
+          "record_id": "rec_bookshelf_with_books_var_footed_base",
+          "revision": "rev_000001",
+          "source_spans": [
+            "model.py:L59-L67",
+            "model.py:L159-L296"
+          ]
+        }
+      ],
+      "component_type": "base_style",
+      "name": "base_style",
+      "required": true
+    }
+  ],
+  "slug": "pictureX_0611_Bookshelf_with_books",
+  "source_map_path": "articraft_template_authoring/source_maps/pictureX_0611_Bookshelf_with_books.md",
+  "source_map_sha256": "4338a62ce1d62d88cf4f4fb16e3f34d9c0b98c98138e428756366bf7875aa2c7"
+}
