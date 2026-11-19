@@ -2,54 +2,62 @@
 
 # RFW-A: Agentic Procedural Generation of 400K Articulated Assets over 500 Categories
 
-Yuanbo Lyu, Changjian Pan, Saining Zhang, Yi Yang, Peishuo Li, Zhiheng Li, Jialu Liu, Junhao Chen, Jiawei Weng, Yupeng Gao, Weiqing Xiao, Wenyi Li, Jiarui Guo, Rui Zhang, Jingrun Du, Weiyi Lin, Zenan Meng, Hu Wei, Lin Qu, Zongzheng Zhang, Hao Zhao, Chaojian Li
+Yuanbo Lyu<sup>1,\*</sup>, Changjian Pan<sup>2,3,\*</sup>, Saining Zhang<sup>2,4,\*,†</sup>, Yi Yang<sup>1,\*</sup>, Peishuo Li<sup>4</sup>, Zhiheng Li<sup>2</sup>, Jialu Liu<sup>2</sup>, Junhao Chen<sup>2</sup>, Jiawei Weng<sup>1</sup>, Yupeng Gao<sup>5</sup>, Weiqing Xiao<sup>5</sup>, Wenyi Li<sup>1,2</sup>, Jiarui Guo<sup>1,2</sup>, Rui Zhang<sup>1,2</sup>, Jingrun Du<sup>1,2</sup>, Weiyi Lin<sup>1</sup>, Zenan Meng<sup>1,‡</sup>, Hu Wei<sup>1,‡</sup>, Lin Qu<sup>1</sup>, Zongzheng Zhang<sup>2</sup>, Hao Zhao<sup>2</sup>, Chaojian Li<sup>6,‡</sup>
 
-[![arXiv](https://img.shields.io/badge/arXiv-2610.40333-B31B1B?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2610.40333)
-[![GitHub](https://img.shields.io/badge/GitHub-Code-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/RoboFlywheel-com/RoboFlywheel-Articulation)
-[![ModelScope](https://img.shields.io/badge/ModelScope-Coming%20soon-624AFF?style=for-the-badge&logo=modelscope&logoColor=white)](https://modelscope.cn/datasets/RoboFlywheel/Articulation)
+<sup>1</sup>Alibaba Group &nbsp; <sup>2</sup>Tsinghua University &nbsp; <sup>3</sup>Peking University &nbsp; <sup>4</sup>Nanyang Technological University &nbsp; <sup>5</sup>Nanjing University &nbsp; <sup>6</sup>The Hong Kong University of Science and Technology
 
-[Overview](#overview) · [Dataset](#dataset) · [Citation](#citation) · [Release Plan](#release-plan)
-
-<img src="figures/Teaser_PV_A.png" alt="RFW-A-400K overview" width="100%">
-
-<sub><b>RFW-A-400K</b>: 402,410 procedurally generated articulated assets spanning more than 500 object categories.</sub>
+<sub>\*Equal contribution. †Project leader. ‡Corresponding authors.</sub>
 
 </div>
 
----
+<div align="center">
+  <a href="https://roboflywheel-com.github.io/RoboFlywheel-Articulation/"><img src="https://img.shields.io/badge/Project%20Page-333399.svg?logo=googlehome" height="22px"></a>
+  <a href="https://arxiv.org/abs/2610.40333"><img src="https://img.shields.io/badge/arXiv-2610.40333-b5212f.svg?logo=arxiv" height="22px"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-yellow.svg" height="22px"></a>
+  <a href="https://modelscope.cn/datasets/RoboFlywheel/Articulation"><img src="https://img.shields.io/badge/ModelScope-Dataset-624AFF.svg" height="22px"></a>
+  <a href="README_zh.md"><img src="https://img.shields.io/badge/Docs-%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E-green.svg" height="22px"></a>
+</div>
 
-## Overview
+<div align="center">
+  <img src="figures/Teaser_PV_A.png" alt="RFW-A-400K overview" width="95%">
+</div>
 
-**From reusable construction logic to 400K simulation-ready articulated assets.** RoboFlywheel-Articulation (RFW-A) combines agentic synthesis with procedural generation. Starting from existing articulated programs, RFW-A organizes reusable components and their dependencies into category-level generators. Agents test and refine these generators across sampled configurations and motion states. Once constructed and validated, the generators produce diverse assets through procedural execution with no further model calls or token charges.
+**RoboFlywheel-Articulation (RFW-A)** combines agentic synthesis with procedural
+generation: agents construct reusable category-level generators once, and
+procedural execution then produces diverse simulation-ready articulated assets
+with no further model calls or token charges.
 
-| Stage | What happens |
-| --- | --- |
-| **Agentic synthesis** | Agents construct reusable category-level generators from existing articulated programs, then test and refine them across sampled configurations and motion states |
-| **Procedural generation** | Validated generators produce diverse articulated assets through procedural execution, requiring no further model inference |
-| **Validation** | The paper evaluates sampled assets for structural and kinematic validity and cross-simulator compatibility in Genesis, PyBullet, MuJoCo, and Isaac Sim |
+[中文说明](README_zh.md) · [Generator construction](docs/generator_construction.md) · [Sampling and editing](docs/usage.md) · [Paper-to-code mapping](docs/architecture.md) · [External source data](EXTERNAL_AGENT_DATA.md)
 
-Using RFW-A, we build **RFW-A-400K**, containing **402,410 articulated assets across more than 500 object categories**. Each asset includes explicit part structure, kinematics, estimated physical properties, and reproducible generation parameters.
+## 📰 News
 
-Training with RFW-A-400K improves part-level articulation estimation on seen and unseen categories. Across five manipulation tasks, policies trained in simulation with retrieved and program-edited assets transfer zero-shot to real articulated objects.
+- **November 2026:** RFW-A-Light dataset released on [ModelScope](https://modelscope.cn/datasets/RoboFlywheel/Articulation) — 10,000 articulated assets across 531 categories.
+- **October 2026:** Open-source code release under Apache-2.0 — generator-construction tools, procedural sampling runtime, articulated-object SDK, mechanical checks, material binding, and directed editing. Paper on [arXiv](https://arxiv.org/abs/2610.40333).
 
----
+## ✨ Highlights
 
-## Code and Quickstart
+- **Category-level reuse** — agents construct a generator once per category; procedural sampling reuses its construction logic across seeds with no model inference
+- **RFW-A-400K** — 402,410 articulated assets across more than 500 object categories, each with explicit part structure, kinematics, estimated physical properties, and reproducible generation parameters
+- **Checked generation** — sampled assets pass geometry, URDF and sampled-motion checks; failing seeds are logged and skipped
+- **Cross-simulator evidence** — the paper evaluates structural and kinematic validity and compatibility in Genesis, PyBullet, MuJoCo, and Isaac Sim
 
-This repository includes the RFW-A generator-construction tools, procedural
-sampling runtime, articulated-object SDK, mechanical checks, material binding,
-and directed editing. Source asset generation and record management are integrated
-from the shared Articraft runtime; its original import paths remain compatible.
+## 📊 Resource at a Glance
 
-The generator-construction pipeline is not tied to Articraft sources. Any
-procedural CAD pipeline — code-authored parametric geometry with explicit part
-structure and articulation — can supply source assets: an external agent or
-human author imports them with `rfwa source
-external` (see [EXTERNAL_AGENT_DATA.md](EXTERNAL_AGENT_DATA.md)), after which
-source maps, blueprints and generators are built the same way.
+| Release | Assets | Categories | Availability |
+| --- | ---: | ---: | --- |
+| RFW-A-400K (paper dataset) | 402,410 | 531 | see dataset section |
+| RFW-A-Light | 10,000 | 531 | [ModelScope](https://modelscope.cn/datasets/RoboFlywheel/Articulation) |
 
-Use Python 3.11 or 3.12 and [uv](https://docs.astral.sh/uv/). Clone this repository
-and run the following from its root directory (Linux is the tested platform):
+Each light-release asset directory contains `model.urdf`, `part_physics.json`
+(whole-body and per-part physical properties), `appearance.json` (PBR material
+bindings), meshes and textures, and affordance annotations. The dataset page
+documents simulator import notes for PyBullet, MuJoCo, Genesis, SAPIEN, and
+Isaac Sim.
+
+## 🛠️ Quick Start
+
+Python 3.11 or 3.12 and [uv](https://docs.astral.sh/uv/) are required. Run these
+commands from the repository root (Linux is the tested platform):
 
 ```bash
 uv sync --locked --group dev
@@ -63,8 +71,8 @@ seed's assets and a `sampling.json` construction record. It uses no model API.
 The output directory must be empty. Bundled generators include legacy programs;
 the inventory is not a claim that every generator meets the current release gate.
 
-For new categories, use the source-map and blueprint tools, implement the generator,
-then assess the generator before sampling at scale:
+For new categories, use the source-map and blueprint tools, implement the
+generator, then assess the generator before sampling at scale:
 
 ```bash
 uv run rfwa author --help
@@ -73,49 +81,61 @@ uv run rfwa check <generator> --stage random-36
 uv run rfwa release <generator>
 ```
 
-`check` and `release` default to a practical 90% sampled pass-rate threshold; default readiness checks use random-16 and random-36.
-Passing assets are retained; failing seeds are logged and skipped. Missing legacy
-blueprints or source records are reported without blocking useful generators.
-Use `--pass-threshold` to adjust the target, or `--strict` to opt into all-cases-pass,
-complete-coverage and provenance requirements. Four authoring roles are documented
-for an external agent or human coordinator; this code does not provide an autonomous
-four-agent scheduler.
+`check` and `release` default to a practical 90% sampled pass-rate threshold;
+default readiness checks use random-16 and random-36. Passing assets are
+retained; failing seeds are logged and skipped. Use `--pass-threshold` to adjust
+the target, or `--strict` to opt into all-cases-pass, complete-coverage and
+provenance requirements.
 
-This is the generator and local-tooling release. The paper reports cross-simulator
-and downstream task results; the corresponding evaluation scripts, training
-checkpoints and datasets are not included here. Local mechanical and sampled-motion
-checks do not reproduce those experiments.
+The generator-construction pipeline is not tied to Articraft sources. Any
+procedural CAD pipeline — code-authored parametric geometry with explicit part
+structure and articulation — can supply source assets: an external agent or
+human author imports them with `rfwa source external` (see
+[EXTERNAL_AGENT_DATA.md](EXTERNAL_AGENT_DATA.md)), after which source maps,
+blueprints and generators are built the same way.
+
+## 🗂️ What This Code Release Contains
+
+| Directory | Contents |
+| --- | --- |
+| `rfwa/` | Public CLI: `generators`, `config`, `sample`, `author`, `check`, `release`, `source` |
+| `agent/` | Source maps, blueprint design, preflight and motion checks, template registry, sampling sweeps |
+| `sdk/` | Component construction, dependency resolution and assembly runtime used by generators |
+| `articraft/` | Inherited Articraft runtime: appearance and material grounding, physical-property annotation |
+| `articraft_template_authoring/` | Category blueprint designs and authoring guidance |
+| `controlled_morphology/`, `specific_editing/` | Directed editing of configurations, geometry and articulation |
+| `storage/`, `cli/` | Source records and revisions; compatibility CLI |
+| `data/`, `viewer/` | Bundled frozen pools and prompts; local asset viewer |
+| `docs/` | [Architecture](docs/architecture.md), [generator construction](docs/generator_construction.md), [usage](docs/usage.md), [verification](docs/verification.md) |
+| `tests/` | Local regression tests |
+
+This repository contains code only. The 400K dataset, source-record collection
+and frozen PBR material library are separate artifacts and are not bundled in
+this checkout; the paper's evaluation scripts, training checkpoints and
+cross-simulator experiment harness are likewise not included. Local mechanical
+and sampled-motion checks do not reproduce those experiments.
 
 Material-grounded export accepts `--library-pointer /path/to/unified/latest.json`.
-The 400K dataset, source-record collection and frozen PBR library are separate
-artifacts and are not bundled in this code checkout. The six physical properties
-are estimated annotations; material binding preserves authored URDF inertias.
+The six physical properties are estimated annotations; material binding
+preserves authored URDF inertias.
 
-- [Generator construction and role instructions](docs/generator_construction.md)
-- [Sampling, material grounding and directed editing](docs/usage.md)
-- [Paper-to-code mapping and migration decisions](docs/architecture.md)
-- [Code provenance and compatibility](docs/migration.md)
+## 📊 Dataset
 
----
+The **RFW-A-Light** release is available on ModelScope:
+[RoboFlywheel/Articulation](https://modelscope.cn/datasets/RoboFlywheel/Articulation)
+— 10,000 articulated assets across 531 categories under Apache-2.0. Every asset
+is one deterministic `generator(seed)` draw of a category-level procedural
+generator, so it is reproducible from its category and seed. The dataset page
+documents the directory layout, per-engine import notes, and friction/fixed-base
+caveats. The full RFW-A-400K collection is a separate artifact; its release
+terms will accompany it.
 
-## Paper
+## 📖 Citation
 
-**RFW-A: Agentic Procedural Generation of 400K Articulated Assets over 500 Categories**<br>
-Yuanbo Lyu, Changjian Pan, Saining Zhang, Yi Yang, Peishuo Li, Zhiheng Li, Jialu Liu, Junhao Chen, Jiawei Weng, Yupeng Gao, Weiqing Xiao, Wenyi Li, Jiarui Guo, Rui Zhang, Jingrun Du, Weiyi Lin, Zenan Meng, Hu Wei, Lin Qu, Zongzheng Zhang, Hao Zhao, Chaojian Li
-
-arXiv preprint: [arXiv:2610.40333](https://arxiv.org/abs/2610.40333) (October 2026).
-
----
-
-## Dataset
-
-The full dataset is planned for release on **ModelScope** in **November 2026**. The official dataset link, inventory, directory structure, download instructions, and usage examples will be added here when available.
-
-**ModelScope dataset:** [RoboFlywheel/Articulation](https://modelscope.cn/datasets/RoboFlywheel/Articulation) · **Release:** November 2026
-
----
-
-## Citation
+The associated manuscript is **RFW-A: Agentic Procedural Generation of 400K
+Articulated Assets over 500 Categories**
+([arXiv:2610.40333](https://arxiv.org/abs/2610.40333), October 2026). See also
+[CITATION.cff](CITATION.cff).
 
 ```bibtex
 @misc{rfwa2026,
@@ -129,22 +149,20 @@ The full dataset is planned for release on **ModelScope** in **November 2026**. 
 }
 ```
 
----
+## 🙏 Acknowledgements
+
+Validation and loading examples use [Genesis](https://genesis-embodied-ai.github.io/), PyBullet, MuJoCo, Isaac Sim, and SAPIEN. External models, software, and separately distributed datasets retain their own terms; see [THIRD_PARTY.md](THIRD_PARTY.md).
 
 ## License
 
-Code is distributed under [Apache-2.0](LICENSE), with inherited notices retained in
-[NOTICE](NOTICE) and third-party dependency licenses listed in
-[THIRD_PARTY.md](THIRD_PARTY.md). Dataset and material-library terms will
-accompany their releases; the Apache-2.0 grant here does not extend to them.
-
----
-
-## Release Plan
-
-- [x] Generator code and local tooling — October 2026
-- [ ] Full dataset on ModelScope — November 2026
-- [x] Paper on arXiv — [arXiv:2610.40333](https://arxiv.org/abs/2610.40333), October 2026
+Original source code is licensed under [Apache-2.0](LICENSE), with inherited
+notices retained in [NOTICE](NOTICE) and third-party dependency licenses listed
+in [THIRD_PARTY.md](THIRD_PARTY.md). The Apache-2.0 grant covers only this
+repository's original code: it does **not** extend to third-party model weights,
+simulation runtimes, or separately distributed datasets, each of which remains
+under its own license. Dataset and material-library terms accompany their own
+releases. [Contribution guidelines](CONTRIBUTING.md) describe local checks and
+release boundaries.
 
 ---
 
@@ -157,5 +175,3 @@ platforms are **not included** in this public release, and their implementations
 specs, source records and tests have been removed. The paper's dataset figures
 (402,410 assets across more than 500 categories) describe the full research
 dataset; the code release scope is defined by the registry in this repository.
-
-从参考图构建新类别和 generator，参见 [图像到 generator 的完整流程](docs/image_to_generator.md)。
