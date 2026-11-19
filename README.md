@@ -119,7 +119,7 @@ Material-grounded export accepts `--library-pointer /path/to/unified/latest.json
 The six physical properties are estimated annotations; material binding
 preserves authored URDF inertias.
 
-## 📊 Dataset
+## 📦 Dataset
 
 The **RFW-A-Light** release is available on ModelScope:
 [RoboFlywheel/Articulation](https://modelscope.cn/datasets/RoboFlywheel/Articulation)
