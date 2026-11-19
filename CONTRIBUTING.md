@@ -1,18 +1,17 @@
 # Contributing
 
-Use Python 3.11/3.12 and `uv sync --group dev`. Run focused pytest regressions
-for changes and use Ruff on changed Python files. See
-[docs/architecture.md](docs/architecture.md) and
-[docs/generator_construction.md](docs/generator_construction.md) before changing
-generator authoring behavior.
+Use Python 3.11/3.12 and [uv](https://docs.astral.sh/uv/). Set up from the
+repository root with `uv sync --locked --group dev`, run the tests with
+`uv run pytest`, and run Ruff on changed Python files. If you change generator
+authoring behavior, read [docs/architecture.md](docs/architecture.md) and
+[docs/generator_construction.md](docs/generator_construction.md) first.
 
-Keep paper terminology in public documentation: source map, category blueprint,
-generator, Revision Module and procedural sampling. Preserve inherited licenses,
-notices and provenance, and do not change source ratings or dataset counts.
-Generated data, provider credentials and material libraries stay outside Git.
+Do not commit credentials, provider API keys, generated asset data, or material
+libraries. Preserve inherited licenses, notices and provenance headers, and keep
+failure records intact when repairing generators.
 
-Describe the changed behavior, how you checked it, and any affected contract
-versions when submitting a change.
+Describe the changed behavior, how you checked it, and which commands you ran
+when submitting a change.
 
 ## Developer Certificate of Origin
 
