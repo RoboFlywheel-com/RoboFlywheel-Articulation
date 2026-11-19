@@ -1,0 +1,133 @@
+{
+  "assetId": "tower_001_5eed890d",
+  "dimensions_m": [
+    11.669633150100708,
+    6.116828918457031,
+    17.600750982761383
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Blackened Steel",
+      "surfaceMaterial": "PBR_blackened_steel",
+      "parts": [
+        "lock_pin::sliding_lock_pin_0",
+        "rotor::flange_bolt_2_5",
+        "rotor::flange_bolt_4_7",
+        "rotor::flange_bolt_1_4",
+        "rotor::flange_bolt_7_10",
+        "rotor::flange_bolt_0_3",
+        "rotor::flange_bolt_6_9",
+        "nacelle::shaft_housing_4",
+        "rotor::flange_bolt_3_6",
+        "rotor::flange_bolt_5_8",
+        "rotor::main_shaft_0"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Galvanized Steel",
+      "surfaceMaterial": "PBR_galvanized_steel",
+      "parts": [
+        "nacelle::bedplate_2",
+        "rotor::blade_root_cuff_3_17",
+        "rotor::blade_root_cuff_2_15",
+        "lock_pin::pin_handle_1",
+        "nacelle::yaw_collar_0",
+        "rotor::blade_root_cuff_1_13",
+        "tower::head_flange_2",
+        "rotor::hub_barrel_1",
+        "tower::foundation_pad_0",
+        "nacelle::front_bearing_collar_3",
+        "rotor::blade_root_cuff_4_19",
+        "rotor::blade_root_cuff_0_11",
+        "rotor::exposed_front_flange_2"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted Steel (Off-White)",
+      "surfaceMaterial": "PBR_paint_off_white",
+      "parts": [
+        "nacelle::nacelle_shell_1"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "GFRP Composite",
+      "surfaceMaterial": "PBR_composite_blade",
+      "parts": [
+        "rotor::blade_shell_0_12",
+        "rotor::blade_shell_4_20",
+        "rotor::blade_shell_3_18",
+        "rotor::blade_shell_2_16",
+        "rotor::blade_shell_1_14"
+      ],
+      "values": {
+        "density_kg_m3": 1900.0,
+        "youngs_modulus_pa": 40000000000.0,
+        "poissons_ratio": 0.28,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "4",
+      "material": "Painted Steel (Light Gray)",
+      "surfaceMaterial": "PBR_paint_light_gray",
+      "parts": [
+        "tower::tapered_tower_1"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Concrete",
+      "surfaceMaterial": "PBR_concrete",
+      "parts": [
+        "foundation::square_footing_1",
+        "foundation::concrete_puck_0"
+      ],
+      "values": {
+        "density_kg_m3": 2400.0,
+        "youngs_modulus_pa": 30000000000.0,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.65,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.3
+      }
+    }
+  ]
+}

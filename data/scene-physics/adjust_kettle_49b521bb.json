@@ -1,0 +1,266 @@
+{
+  "assetId": "adjust_kettle_49b521bb",
+  "name": "Kettle",
+  "totalMassKg": 2.238,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "4",
+      "name": "trivet stand",
+      "materials": [
+        "Matte black stainless steel"
+      ],
+      "massKg": 1.2,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.0,
+        0.0,
+        0.014
+      ],
+      "inertia": {
+        "ixx": 0.0022459,
+        "iyy": 0.0022459,
+        "izz": 0.004335,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.3588218688964844,
+        0.3588218688964844,
+        0.06332141160964966
+      ],
+      "sourceLink": "trivet_stand",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "Kettle | ck_base_matte_black_electric"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "kettle body",
+      "materials": [
+        "Matte black stainless steel",
+        "Matte black opaque plastic"
+      ],
+      "massKg": 0.9,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.0,
+        0.0,
+        0.066082
+      ],
+      "inertia": {
+        "ixx": 0.00297815,
+        "iyy": 0.00297815,
+        "izz": 0.00333619,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.702296257019043,
+        0.36999988555908203,
+        0.30102598667144775
+      ],
+      "sourceLink": "kettle_body",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "Kettle | ck_body_matte_black_electric_matte_black_electric",
+        "Kettle | ck_grip_matte_black_electric",
+        "Kettle | ck_rim_matte_black_electric"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "lid",
+      "materials": [
+        "Matte black opaque plastic",
+        "Matte black stainless steel"
+      ],
+      "massKg": 0.12,
+      "massOrigin": "source",
+      "centerOfMass": [
+        -0.0380456,
+        0.0,
+        0.012
+      ],
+      "inertia": {
+        "ixx": 4.9184e-05,
+        "iyy": 4.9184e-05,
+        "izz": 8.68481e-05,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.18714666366577148,
+        0.1871509552001953,
+        0.10764646530151367
+      ],
+      "sourceLink": "lid",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "Kettle | ck_grip_matte_black_electric",
+        "Kettle | ck_lid_matte_black_electric_matte_black_electric"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "whistle cap",
+      "materials": [
+        "Matte black stainless steel",
+        "Matte black opaque plastic"
+      ],
+      "massKg": 0.01,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0,
+        0,
+        0
+      ],
+      "inertia": {
+        "ixx": 6.93333e-07,
+        "iyy": 6.93333e-07,
+        "izz": 1.28e-06,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.07309460639953613,
+        0.06685447692871094,
+        0.08189904689788818
+      ],
+      "sourceLink": "whistle_cap",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "Kettle | ck_body_matte_black_electric_matte_black_electric",
+        "Kettle | ck_grip_matte_black_electric",
+        "Kettle | ck_rim_matte_black_electric"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "cap",
+      "materials": [
+        "Matte black stainless steel"
+      ],
+      "massKg": 0.008,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.9081958532333374,
+        5.224586486816406,
+        1.2853311896324158
+      ],
+      "inertia": {
+        "ixx": 9.12200755806225e-07,
+        "iyy": 5.145273154903408e-07,
+        "izz": 8.383435018140517e-07,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.019835710525512695,
+        0.035881996154785156,
+        0.02292037010192871
+      ],
+      "sourceLink": null,
+      "massBasis": "Small matte-black plastic spout cap (~20x36x23 mm bounding box). Thin-shell ABS construction with integrated hinge tab; effective material volume ~5-7 cm\u00b3 at ~1150 kg/m\u00b3. COM slightly toward hinge side (z). Shell geometry concentrates mass near surfaces, giving variance just below uniform-box 1/12.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small matte-black plastic spout cap (~20x36x23 mm bounding box). Thin-shell ABS construction with integrated hinge tab; effective material volume ~5-7 cm\u00b3 at ~1150 kg/m\u00b3. COM slightly toward hinge side (z). Shell geometry concentrates mass near surfaces, giving variance just below uniform-box 1/12.",
+      "surfaceMaterials": [
+        "Kettle | ck_body_matte_black_electric_matte_black_electric"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "trivet_to_body",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.06042,
+      "id": "0",
+      "effort": 40.0,
+      "velocity": 0.3,
+      "damping": 3.0,
+      "friction": 2.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "spout_to_cap",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.4,
+      "id": "1",
+      "effort": 2.0,
+      "velocity": 3.0,
+      "damping": 0.01,
+      "friction": 0.02,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_lid",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.04028,
+      "id": "2",
+      "effort": 20.0,
+      "velocity": 0.2,
+      "damping": 2.0,
+      "friction": 1.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/adjustment/Container_Kettle/seed_0011/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

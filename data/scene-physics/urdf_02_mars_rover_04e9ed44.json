@@ -1,0 +1,1219 @@
+{
+  "assetId": "urdf_02_mars_rover_04e9ed44",
+  "name": "Mars rover",
+  "totalMassKg": 723.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "1",
+      "name": "MOTION2 Mars Rover",
+      "materials": [
+        "glass / smoked tinted",
+        "metal / aluminum bare",
+        "metal / blackened gunmetal",
+        "metal / paint coated",
+        "metal / stainless matte",
+        "rubber / directional grooved",
+        "Smooth rubber",
+        "Cable pipe bundle",
+        "Circuit board substrate"
+      ],
+      "massKg": 620.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        6.0169947147369385,
+        13.717562675476074,
+        0.7422166212648154
+      ],
+      "inertia": {
+        "ixx": 527.6282120695108,
+        "iyy": 552.546333184045,
+        "izz": 831.8811532158272,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.976332187652588,
+        2.8884754180908203,
+        1.7159999934956431
+      ],
+      "sourceLink": null,
+      "massBasis": "Main rover chassis: hollow aluminum box with internal electronics, RTG mock, wiring; CoM slightly low due to heavy base plate and wheel bogies",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Main rover chassis: hollow aluminum box with internal electronics, RTG mock, wiring; CoM slightly low due to heavy base plate and wheel bogies",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | glass.smoked_tinted",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.aluminum_bare",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.aluminum_bare.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.aluminum_bare.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.003",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.004",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated.003",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated.004",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.003",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.directional_grooved",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.smooth_plain",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | tech.cable_pipe_bundle",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | tech.cable_pipe_bundle.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | tech.circuit_board"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "MOTION2 Mars hatch",
+      "materials": [
+        "metal / aluminum bare",
+        "metal / blackened gunmetal",
+        "metal / paint coated",
+        "Solar cell panel"
+      ],
+      "massKg": 19.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        6.733163595199585,
+        14.187618255615234,
+        1.847136878967285
+      ],
+      "inertia": {
+        "ixx": 2.9223307614643534,
+        "iyy": 2.7903395730784446,
+        "izz": 2.9770917543636113,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.0208630561828613,
+        1.0671730041503906,
+        1.0812264680862427
+      ],
+      "sourceLink": null,
+      "massBasis": "Hatch with solar cells on top surface; thin aluminum frame with solar panel, slightly top-heavy",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hatch with solar cells on top surface; thin aluminum frame with solar panel, slightly top-heavy",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.aluminum_bare",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.005",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | tech.solar_cell"
+      ]
+    },
+    {
+      "id": "12",
+      "name": "MOTION2 Mars wing -1",
+      "materials": [
+        "metal / stainless matte",
+        "Solar cell panel"
+      ],
+      "massKg": 17.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.355777025222778,
+        14.74084997177124,
+        1.4505615830421448
+      ],
+      "inertia": {
+        "ixx": 4.608298514273109,
+        "iyy": 6.106625672619877,
+        "izz": 10.549684796539253,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.0488810539245605,
+        1.7758893966674805,
+        0.34355223178863525
+      ],
+      "sourceLink": null,
+      "massBasis": "Solar panel wing: thin stainless frame with solar cells; mass spread in-plane, very thin in z",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solar panel wing: thin stainless frame with solar cells; mass spread in-plane, very thin in z",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.003",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | tech.solar_cell"
+      ]
+    },
+    {
+      "id": "13",
+      "name": "MOTION2 Mars wing 1",
+      "materials": [
+        "metal / stainless matte",
+        "Solar cell panel"
+      ],
+      "massKg": 17.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        6.655543565750122,
+        12.645712852478027,
+        1.4083858132362366
+      ],
+      "inertia": {
+        "ixx": 4.532545181113264,
+        "iyy": 5.960597038276717,
+        "izz": 10.412833825071656,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.0608468055725098,
+        1.7951774597167969,
+        0.25978076457977295
+      ],
+      "sourceLink": null,
+      "massBasis": "Solar panel wing: thin stainless frame with solar cells; slightly thinner than opposite wing",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solar panel wing: thin stainless frame with solar cells; slightly thinner than opposite wing",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.003",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | tech.solar_cell"
+      ]
+    },
+    {
+      "id": "14",
+      "name": "MOTION2 Mars arm shoulder",
+      "materials": [
+        "metal / aluminum bare",
+        "metal / blackened gunmetal",
+        "metal / paint coated",
+        "metal / stainless matte"
+      ],
+      "massKg": 16.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.42356550693512,
+        12.678356704711915,
+        0.7654322683811188
+      ],
+      "inertia": {
+        "ixx": 1.3247559197613852,
+        "iyy": 2.16019118821612,
+        "izz": 2.8219569069482984,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.2582871913909912,
+        0.9623498916625977,
+        0.5357319712638855
+      ],
+      "sourceLink": null,
+      "massBasis": "Robotic arm shoulder: aluminum and gunmetal actuator housing with stainless joints; slightly forward-biased CoM",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Robotic arm shoulder: aluminum and gunmetal actuator housing with stainless joints; slightly forward-biased CoM",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.aluminum_bare.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.003",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.004",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.002"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "MOTION2 Mars sensor",
+      "materials": [
+        "metal / aluminum bare"
+      ],
+      "massKg": 5.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        6.213764429092407,
+        13.350722312927246,
+        1.5877657532691956
+      ],
+      "inertia": {
+        "ixx": 0.28831713139646337,
+        "iyy": 0.2933894562079426,
+        "izz": 0.47099900456721855,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.7596421241760254,
+        0.7515048980712891,
+        0.37917816638946533
+      ],
+      "sourceLink": null,
+      "massBasis": "Sensor/camera head on mast; aluminum housing with optics, roughly symmetric",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Sensor/camera head on mast; aluminum housing with optics, roughly symmetric",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.aluminum_bare"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "MOTION2 Mars antenna",
+      "materials": [
+        "glass / smoked tinted",
+        "metal / aluminum bare",
+        "metal / blackened gunmetal",
+        "metal / paint coated"
+      ],
+      "massKg": 3.8,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.519876718521118,
+        13.22872543334961,
+        1.7564763808250428
+      ],
+      "inertia": {
+        "ixx": 0.4223757017734695,
+        "iyy": 0.42002820599559604,
+        "izz": 0.037182128088236815,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.27639055252075195,
+        0.29442787170410156,
+        1.084999918937683
+      ],
+      "sourceLink": null,
+      "massBasis": "HGA dish on mast; dish mass concentrated low, thin aluminum/glass construction, mostly hollow",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: HGA dish on mast; dish mass concentrated low, thin aluminum/glass construction, mostly hollow",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | glass.smoked_tinted",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.aluminum_bare",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated.002"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "MOTION2 Mars lamp pan",
+      "materials": [
+        "metal / blackened gunmetal",
+        "metal / stainless matte"
+      ],
+      "massKg": 3.8,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.222314357757568,
+        13.779888153076172,
+        1.7655096244812012
+      ],
+      "inertia": {
+        "ixx": 0.16172984017029435,
+        "iyy": 0.16278060609581246,
+        "izz": 0.2044325629011382,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6214876174926758,
+        0.6183013916015625,
+        0.47508978843688965
+      ],
+      "sourceLink": null,
+      "massBasis": "Lamp pan mechanism; small gunmetal/stainless housing with motor, nearly symmetric",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Lamp pan mechanism; small gunmetal/stainless housing with motor, nearly symmetric",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.001"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "MOTION2 Mars lamp tilt",
+      "materials": [
+        "metal / blackened gunmetal",
+        "metal / paint coated",
+        "metal / stainless matte",
+        "Opaque plastic housing"
+      ],
+      "massKg": 3.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.211437702178955,
+        13.76722240447998,
+        2.0348516702651978
+      ],
+      "inertia": {
+        "ixx": 0.11913119334799288,
+        "iyy": 0.11968153796637947,
+        "izz": 0.168239124269574,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6138095855712891,
+        0.6118049621582031,
+        0.4118835926055908
+      ],
+      "sourceLink": null,
+      "massBasis": "Lamp tilt bracket; gunmetal and stainless with plastic lens cover, compact symmetric assembly",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Lamp tilt bracket; gunmetal and stainless with plastic lens cover, compact symmetric assembly",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | plastic.opaque_generic"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "MOTION2 Mars wheel -0.95 -1",
+      "materials": [
+        "metal / blackened gunmetal",
+        "rubber / directional grooved"
+      ],
+      "massKg": 2.4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        6.375194072723389,
+        15.08938980102539,
+        0.20617753267288208
+      ],
+      "inertia": {
+        "ixx": 0.08718516667297284,
+        "iyy": 0.10087184437941528,
+        "izz": 0.08634364329745584,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5893449783325195,
+        0.449249267578125,
+        0.5942822694778442
+      ],
+      "sourceLink": null,
+      "massBasis": "Rover wheel: grooved rubber tire on gunmetal hub; mass concentrated at rim like a hollow cylinder",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rover wheel: grooved rubber tire on gunmetal hub; mass concentrated at rim like a hollow cylinder",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.directional_grooved"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "MOTION2 Mars wheel -0.95 1",
+      "materials": [
+        "metal / blackened gunmetal",
+        "rubber / directional grooved"
+      ],
+      "massKg": 2.4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        7.413715839385986,
+        13.415361404418945,
+        0.20617524906992912
+      ],
+      "inertia": {
+        "ixx": 0.08718517304893009,
+        "iyy": 0.1008718507553725,
+        "izz": 0.08634364329745584,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5893449783325195,
+        0.449249267578125,
+        0.5942823067307472
+      ],
+      "sourceLink": null,
+      "massBasis": "Rover wheel: identical to other wheels, grooved rubber tire on gunmetal hub",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rover wheel: identical to other wheels, grooved rubber tire on gunmetal hub",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.directional_grooved"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "MOTION2 Mars wheel 0.05 -1",
+      "materials": [
+        "metal / blackened gunmetal",
+        "rubber / directional grooved"
+      ],
+      "massKg": 2.4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.525433540344238,
+        14.562220096588135,
+        0.20617755502462387
+      ],
+      "inertia": {
+        "ixx": 0.08718531325948414,
+        "iyy": 0.1008718367282671,
+        "izz": 0.08634379753511529,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5893449783325195,
+        0.4492502212524414,
+        0.5942822247743607
+      ],
+      "sourceLink": null,
+      "massBasis": "Rover wheel: grooved rubber tire on gunmetal hub, hollow rim construction",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rover wheel: grooved rubber tire on gunmetal hub, hollow rim construction",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.directional_grooved"
+      ]
+    },
+    {
+      "id": "9",
+      "name": "MOTION2 Mars wheel 0.05 1",
+      "materials": [
+        "metal / blackened gunmetal",
+        "rubber / directional grooved"
+      ],
+      "massKg": 2.4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        6.563956022262573,
+        12.888192653656006,
+        0.20617694035172462
+      ],
+      "inertia": {
+        "ixx": 0.0871853196354409,
+        "iyy": 0.10087192403847299,
+        "izz": 0.08634387846936442,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5893454551696777,
+        0.4492502212524414,
+        0.5942822620272636
+      ],
+      "sourceLink": null,
+      "massBasis": "Rover wheel: grooved rubber tire on gunmetal hub, hollow rim construction",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rover wheel: grooved rubber tire on gunmetal hub, hollow rim construction",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.directional_grooved"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "MOTION2 Mars wheel 1.05 -1",
+      "materials": [
+        "metal / blackened gunmetal",
+        "rubber / directional grooved"
+      ],
+      "massKg": 2.4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.675673484802246,
+        14.03505277633667,
+        0.20617595314979553
+      ],
+      "inertia": {
+        "ixx": 0.08718533111216407,
+        "iyy": 0.10087185458094707,
+        "izz": 0.08634379753511529,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5893449783325195,
+        0.4492502212524414,
+        0.594282329082489
+      ],
+      "sourceLink": null,
+      "massBasis": "Rover wheel: grooved rubber tire on gunmetal hub, hollow rim construction",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rover wheel: grooved rubber tire on gunmetal hub, hollow rim construction",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.directional_grooved"
+      ]
+    },
+    {
+      "id": "11",
+      "name": "MOTION2 Mars wheel 1.05 1",
+      "materials": [
+        "metal / blackened gunmetal",
+        "rubber / directional grooved"
+      ],
+      "massKg": 2.4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.714195013046265,
+        12.361024379730225,
+        0.20617700740695
+      ],
+      "inertia": {
+        "ixx": 0.08718533748812195,
+        "iyy": 0.10087194189115406,
+        "izz": 0.08634387846936442,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5893454551696777,
+        0.4492502212524414,
+        0.594282366335392
+      ],
+      "sourceLink": null,
+      "massBasis": "Rover wheel: grooved rubber tire on gunmetal hub, hollow rim construction",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rover wheel: grooved rubber tire on gunmetal hub, hollow rim construction",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.directional_grooved"
+      ]
+    },
+    {
+      "id": "16",
+      "name": "MOTION2 Mars gripper right",
+      "materials": [
+        "metal / blackened gunmetal",
+        "metal / stainless matte",
+        "Smooth rubber"
+      ],
+      "massKg": 1.1,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        3.9407018423080444,
+        12.287496566772461,
+        0.698027491569519
+      ],
+      "inertia": {
+        "ixx": 0.004434500573219339,
+        "iyy": 0.0050947610401882466,
+        "izz": 0.007829329683555557,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.2536041736602783,
+        0.2330474853515625,
+        0.11348247528076172
+      ],
+      "sourceLink": null,
+      "massBasis": "Larger gripper finger: gunmetal/stainless with rubber pad; slightly bigger than left finger",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Larger gripper finger: gunmetal/stainless with rubber pad; slightly bigger than left finger",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.smooth_plain"
+      ]
+    },
+    {
+      "id": "15",
+      "name": "MOTION2 Mars gripper left",
+      "materials": [
+        "metal / blackened gunmetal",
+        "metal / stainless matte",
+        "Smooth rubber"
+      ],
+      "massKg": 0.7,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        3.8113245964050293,
+        12.438878059387207,
+        0.6187189221382141
+      ],
+      "inertia": {
+        "ixx": 0.0013040175333394472,
+        "iyy": 0.0015908125489886515,
+        "izz": 0.0021809693761447304,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1714005470275879,
+        0.15016555786132812,
+        0.09218645095825195
+      ],
+      "sourceLink": null,
+      "massBasis": "Small gripper finger: gunmetal/stainless with rubber pad; compact, nearly point-like",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small gripper finger: gunmetal/stainless with rubber pad; compact, nearly point-like",
+      "surfaceMaterials": [
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.001",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.002",
+        "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.smooth_plain"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "MOTION2_Mars_wheel_-0.95_1",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "0",
+      "effort": 1.5,
+      "velocity": 0.5,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_antenna",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "1",
+      "effort": 0.6,
+      "velocity": 0.35,
+      "damping": 0.06,
+      "friction": 0.02,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_lamp_tilt",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "2",
+      "effort": 0.35,
+      "velocity": 0.6,
+      "damping": 0.03,
+      "friction": 0.012,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_wing_1",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "3",
+      "effort": 2.0,
+      "velocity": 0.12,
+      "damping": 0.5,
+      "friction": 0.12,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_arm_shoulder",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "4",
+      "effort": 5.0,
+      "velocity": 0.3,
+      "damping": 0.35,
+      "friction": 0.15,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_wheel_0.05_-1",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "5",
+      "effort": 1.5,
+      "velocity": 0.5,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_gripper_left",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "6",
+      "effort": 0.4,
+      "velocity": 1.2,
+      "damping": 0.02,
+      "friction": 0.01,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_wheel_0.05_1",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "7",
+      "effort": 1.5,
+      "velocity": 0.5,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_sensor",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "8",
+      "effort": 0.6,
+      "velocity": 0.45,
+      "damping": 0.06,
+      "friction": 0.02,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_gripper_right",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "9",
+      "effort": 0.4,
+      "velocity": 1.2,
+      "damping": 0.02,
+      "friction": 0.01,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_wheel_1.05_-1",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "10",
+      "effort": 1.5,
+      "velocity": 0.5,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_wheel_-0.95_-1",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "11",
+      "effort": 1.5,
+      "velocity": 0.5,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_hatch",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "12",
+      "effort": 1.2,
+      "velocity": 0.2,
+      "damping": 0.2,
+      "friction": 0.06,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_wheel_1.05_1",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "13",
+      "effort": 1.5,
+      "velocity": 0.5,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_lamp_pan",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "14",
+      "effort": 0.35,
+      "velocity": 0.6,
+      "damping": 0.03,
+      "friction": 0.012,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Mars_wing_-1",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "15",
+      "effort": 2.0,
+      "velocity": 0.12,
+      "damping": 0.5,
+      "friction": 0.12,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_left_wheel_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "16",
+      "effort": 45.0,
+      "velocity": 6.0,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "middle_left_wheel_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "17",
+      "effort": 45.0,
+      "velocity": 6.0,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_left_wheel_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "18",
+      "effort": 45.0,
+      "velocity": 6.0,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_right_wheel_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "19",
+      "effort": 45.0,
+      "velocity": 6.0,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "middle_right_wheel_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "20",
+      "effort": 45.0,
+      "velocity": 6.0,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_right_wheel_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "21",
+      "effort": 45.0,
+      "velocity": 6.0,
+      "damping": 0.25,
+      "friction": 0.08,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "mast_yaw",
+      "type": "revolute",
+      "lower": -2.8,
+      "upper": 2.8,
+      "id": "22",
+      "effort": 10.0,
+      "velocity": 1.5,
+      "damping": 0.08,
+      "friction": 0.03,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "head_tilt",
+      "type": "revolute",
+      "lower": -0.45,
+      "upper": 0.45,
+      "id": "23",
+      "effort": 6.0,
+      "velocity": 1.5,
+      "damping": 0.04,
+      "friction": 0.015,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "arm_shoulder_yaw",
+      "type": "revolute",
+      "lower": -0.35,
+      "upper": 0.5,
+      "id": "24",
+      "effort": 20.0,
+      "velocity": 0.8,
+      "damping": 0.3,
+      "friction": 0.12,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "hga_azimuth",
+      "type": "revolute",
+      "lower": -2.6,
+      "upper": 2.6,
+      "id": "25",
+      "effort": 8.0,
+      "velocity": 1.0,
+      "damping": 0.06,
+      "friction": 0.02,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/space_blend_asset/02_Mars_rover/Astronomy_Mars_rover/seed_0000/model.urdf",
+  "referenceFrame": 240,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

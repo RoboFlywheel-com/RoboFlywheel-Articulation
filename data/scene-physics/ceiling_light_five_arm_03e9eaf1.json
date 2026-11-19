@@ -1,0 +1,647 @@
+{
+  "assetId": "ceiling_light_five_arm_03e9eaf1",
+  "name": "Ceiling light five arm",
+  "totalMassKg": 3.33,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "5",
+      "name": "mount",
+      "materials": [
+        "Blackened Gunmetal",
+        "Brushed Steel"
+      ],
+      "massKg": 0.95,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.528212785720825,
+        0.0,
+        3.4555889487266542
+      ],
+      "inertia": {
+        "ixx": 0.04001740664649218,
+        "iyy": 0.040017412498315995,
+        "izz": 0.07045895199001721,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.7176704406738281,
+        0.7176703810691833,
+        0.3174879550933838
+      ],
+      "sourceLink": "mount",
+      "massBasis": "Central ceiling mount plate/canopy, stamped steel ~10% fill; includes wiring channel and mounting hardware; cz shifted down for bracket mass; two materials (metal body + accent trim).",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Central ceiling mount plate/canopy, stamped steel ~10% fill; includes wiring channel and mounting hardware; cz shifted down for bracket mass; two materials (metal body + accent trim).",
+      "surfaceMaterials": [
+        "M_seeded_ceiling_light_fixture_adjustable_3_001",
+        "M_seeded_ceiling_light_fixture_adjustable_3_002"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "shade 2",
+      "materials": [
+        "Blackened Gunmetal",
+        "Brushed Steel",
+        "Frosted Glass"
+      ],
+      "massKg": 0.3,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.96494859457016,
+        0.4072713181376457,
+        3.1046468138694765
+      ],
+      "inertia": {
+        "ixx": 0.004049263419552885,
+        "iyy": 0.004166674606239249,
+        "izz": 0.006030955639576536,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.4065448045730591,
+        0.40529634058475494,
+        0.2754404544830322
+      ],
+      "sourceLink": "shade_2",
+      "massBasis": "Largest shade, ~0.41 m dia.; glass bowl with metal rim; shell fill ~12%; consistent with shade family.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Largest shade, ~0.41 m dia.; glass bowl with metal rim; shell fill ~12%; consistent with shade family.",
+      "surfaceMaterials": [
+        "M_seeded_ceiling_light_fixture_adjustable_3_001",
+        "M_seeded_ceiling_light_fixture_adjustable_3_002",
+        "M_seeded_ceiling_light_fixture_adjustable_3_003"
+      ]
+    },
+    {
+      "id": "9",
+      "name": "shade 3",
+      "materials": [
+        "Blackened Gunmetal",
+        "Brushed Steel",
+        "Frosted Glass"
+      ],
+      "massKg": 0.29,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.9549099206924438,
+        -0.3970158025622368,
+        3.10436235666275
+      ],
+      "inertia": {
+        "ixx": 0.0038121630793999904,
+        "iyy": 0.0038615052272431057,
+        "izz": 0.005639696406000905,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.40099644660949707,
+        0.4008021503686905,
+        0.2702949047088623
+      ],
+      "sourceLink": "shade_3",
+      "massBasis": "Near-identical to shade 2, marginally smaller; same shell construction and material mix.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Near-identical to shade 2, marginally smaller; same shell construction and material mix.",
+      "surfaceMaterials": [
+        "M_seeded_ceiling_light_fixture_adjustable_3_001",
+        "M_seeded_ceiling_light_fixture_adjustable_3_002",
+        "M_seeded_ceiling_light_fixture_adjustable_3_003"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "shade 1",
+      "materials": [
+        "Blackened Gunmetal",
+        "Brushed Steel",
+        "Frosted Glass"
+      ],
+      "massKg": 0.28,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.7254267930984497,
+        0.660899430513382,
+        3.1054518103599547
+      ],
+      "inertia": {
+        "ixx": 0.003368674244695209,
+        "iyy": 0.003309696733319552,
+        "izz": 0.004463395503837934,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.36205506324768066,
+        0.37314289808273315,
+        0.28705811500549316
+      ],
+      "sourceLink": "shade_1",
+      "massBasis": "Slightly larger glass shade; same shell construction; mass scales with surface area; three-material composition.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Slightly larger glass shade; same shell construction; mass scales with surface area; three-material composition.",
+      "surfaceMaterials": [
+        "M_seeded_ceiling_light_fixture_adjustable_3_001",
+        "M_seeded_ceiling_light_fixture_adjustable_3_002",
+        "M_seeded_ceiling_light_fixture_adjustable_3_003"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "shade 4",
+      "materials": [
+        "Blackened Gunmetal",
+        "Brushed Steel",
+        "Frosted Glass"
+      ],
+      "massKg": 0.27,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.7307482957839966,
+        -0.6633613556623459,
+        3.1048478960990904
+      ],
+      "inertia": {
+        "ixx": 0.0031168923418105655,
+        "iyy": 0.003086754715883031,
+        "izz": 0.004190632714300281,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.36136794090270996,
+        0.3671005070209503,
+        0.27868008613586426
+      ],
+      "sourceLink": "shade_4",
+      "massBasis": "Glass shade similar to shade 1; shell construction; three materials; consistent mass scaling.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Glass shade similar to shade 1; shell construction; three materials; consistent mass scaling.",
+      "surfaceMaterials": [
+        "M_seeded_ceiling_light_fixture_adjustable_3_001",
+        "M_seeded_ceiling_light_fixture_adjustable_3_002",
+        "M_seeded_ceiling_light_fixture_adjustable_3_003"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "arm 2",
+      "materials": [
+        "Brushed Steel"
+      ],
+      "massKg": 0.22,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.1827438473701477,
+        0.21947939768433572,
+        3.2311325073242188
+      ],
+      "inertia": {
+        "ixx": 0.005483906558033486,
+        "iyy": 0.0070033974535064925,
+        "izz": 0.010492294899345759,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6745308637619019,
+        0.6089146286249161,
+        0.3285651206970215
+      ],
+      "sourceLink": "arm_2",
+      "massBasis": "Hollow metal arm, largest bounding box of the five; same tube construction ~4% fill; consistent density with other arms.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow metal arm, largest bounding box of the five; same tube construction ~4% fill; consistent density with other arms.",
+      "surfaceMaterials": [
+        "M_seeded_ceiling_light_fixture_adjustable_3_002"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "arm 3",
+      "materials": [
+        "Brushed Steel"
+      ],
+      "massKg": 0.22,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.1782995462417603,
+        -0.27368592731654645,
+        3.2311326265335083
+      ],
+      "inertia": {
+        "ixx": 0.0053739475780330915,
+        "iyy": 0.0070426623364300235,
+        "izz": 0.010421603697567484,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6767323017120361,
+        0.6014063730835915,
+        0.3285648822784424
+      ],
+      "sourceLink": "arm_3",
+      "massBasis": "Hollow metal arm, nearly identical bounding box to arm 2; same construction and fill fraction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow metal arm, nearly identical bounding box to arm 2; same construction and fill fraction.",
+      "surfaceMaterials": [
+        "M_seeded_ceiling_light_fixture_adjustable_3_002"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "shade 0",
+      "materials": [
+        "Blackened Gunmetal",
+        "Brushed Steel",
+        "Frosted Glass"
+      ],
+      "massKg": 0.22,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        3.216487169265747,
+        0.009854830801486969,
+        3.105691075325012
+      ],
+      "inertia": {
+        "ixx": 0.0019272669473788708,
+        "iyy": 0.0021285939188510385,
+        "izz": 0.0022800723440463346,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.31182289123535156,
+        0.2930845767259598,
+        0.28996706008911133
+      ],
+      "sourceLink": "shade_0",
+      "massBasis": "Glass/fabric shade with thin metal rim; shell construction ~12% effective fill; three materials (glass, metal frame, diffuser); cz biased low for glass bowl weight.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Glass/fabric shade with thin metal rim; shell construction ~12% effective fill; three materials (glass, metal frame, diffuser); cz biased low for glass bowl weight.",
+      "surfaceMaterials": [
+        "M_seeded_ceiling_light_fixture_adjustable_3_001",
+        "M_seeded_ceiling_light_fixture_adjustable_3_002",
+        "M_seeded_ceiling_light_fixture_adjustable_3_003"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "arm 1",
+      "materials": [
+        "Brushed Steel"
+      ],
+      "massKg": 0.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.6512025594711304,
+        0.37477094382047654,
+        3.2311320304870605
+      ],
+      "inertia": {
+        "ixx": 0.005835020431032821,
+        "iyy": 0.0033545866302079844,
+        "izz": 0.00737595714960653,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.471724271774292,
+        0.6693412959575653,
+        0.3285655975341797
+      ],
+      "sourceLink": "arm_1",
+      "massBasis": "Hollow metal arm, wider lateral span (0.67 m) but same tube cross-section; slightly heavier than arm 0; same fill fraction and bias.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow metal arm, wider lateral span (0.67 m) but same tube cross-section; slightly heavier than arm 0; same fill fraction and bias.",
+      "surfaceMaterials": [
+        "M_seeded_ceiling_light_fixture_adjustable_3_002"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "arm 4",
+      "materials": [
+        "Brushed Steel"
+      ],
+      "massKg": 0.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.65351665019989,
+        -0.44106362089514733,
+        3.2311320304870605
+      ],
+      "inertia": {
+        "ixx": 0.005849110471354755,
+        "iyy": 0.00339279912540095,
+        "izz": 0.0074282596851214305,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.47539210319519043,
+        0.6702974587678909,
+        0.3285655975341797
+      ],
+      "sourceLink": "arm_4",
+      "massBasis": "Hollow metal arm, similar span to arm 1; consistent tube construction and mass estimate.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow metal arm, similar span to arm 1; consistent tube construction and mass estimate.",
+      "surfaceMaterials": [
+        "M_seeded_ceiling_light_fixture_adjustable_3_002"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "arm 0",
+      "materials": [
+        "Brushed Steel"
+      ],
+      "massKg": 0.18,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.954560875892639,
+        -0.010755684226751328,
+        3.231131911277771
+      ],
+      "inertia": {
+        "ixx": 0.0017606461264872489,
+        "iyy": 0.004843310893922106,
+        "izz": 0.004971664993275887,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6106436252593994,
+        0.323951318860054,
+        0.328566312789917
+      ],
+      "sourceLink": "arm_0",
+      "massBasis": "Hollow metal tube arm, ~4% solid fill of bounding box; steel density 7800 kg/m\u00b3; mass biased toward mount-side (cy 0.45); thin-walled tube gives variance below 1/12.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow metal tube arm, ~4% solid fill of bounding box; steel density 7800 kg/m\u00b3; mass biased toward mount-side (cy 0.45); thin-walled tube gives variance below 1/12.",
+      "surfaceMaterials": [
+        "M_seeded_ceiling_light_fixture_adjustable_3_002"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "arm_swing_0",
+      "type": "revolute",
+      "lower": -0.367611,
+      "upper": 0.367611,
+      "id": "0",
+      "effort": 12.0,
+      "velocity": 1.3,
+      "damping": 0.02,
+      "friction": 0.03,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "shade_tilt_0",
+      "type": "revolute",
+      "lower": -0.265,
+      "upper": 0.656,
+      "id": "1",
+      "effort": 8.0,
+      "velocity": 1.4,
+      "damping": 0.012,
+      "friction": 0.018,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "arm_swing_1",
+      "type": "revolute",
+      "lower": -0.367611,
+      "upper": 0.367611,
+      "id": "2",
+      "effort": 12.0,
+      "velocity": 1.3,
+      "damping": 0.02,
+      "friction": 0.03,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "shade_tilt_1",
+      "type": "revolute",
+      "lower": -0.265,
+      "upper": 0.656,
+      "id": "3",
+      "effort": 8.0,
+      "velocity": 1.4,
+      "damping": 0.012,
+      "friction": 0.018,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "arm_swing_2",
+      "type": "revolute",
+      "lower": -0.367611,
+      "upper": 0.367611,
+      "id": "4",
+      "effort": 12.0,
+      "velocity": 1.3,
+      "damping": 0.02,
+      "friction": 0.03,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "shade_tilt_2",
+      "type": "revolute",
+      "lower": -0.265,
+      "upper": 0.656,
+      "id": "5",
+      "effort": 8.0,
+      "velocity": 1.4,
+      "damping": 0.012,
+      "friction": 0.018,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "arm_swing_3",
+      "type": "revolute",
+      "lower": -0.367611,
+      "upper": 0.367611,
+      "id": "6",
+      "effort": 12.0,
+      "velocity": 1.3,
+      "damping": 0.02,
+      "friction": 0.03,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "shade_tilt_3",
+      "type": "revolute",
+      "lower": -0.265,
+      "upper": 0.656,
+      "id": "7",
+      "effort": 8.0,
+      "velocity": 1.4,
+      "damping": 0.012,
+      "friction": 0.018,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "arm_swing_4",
+      "type": "revolute",
+      "lower": -0.367611,
+      "upper": 0.367611,
+      "id": "8",
+      "effort": 12.0,
+      "velocity": 1.3,
+      "damping": 0.02,
+      "friction": 0.03,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "shade_tilt_4",
+      "type": "revolute",
+      "lower": -0.265,
+      "upper": 0.656,
+      "id": "9",
+      "effort": 8.0,
+      "velocity": 1.4,
+      "damping": 0.012,
+      "friction": 0.018,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/space_blend_asset/ceiling_light_fixture_adjustable/seed_0003/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

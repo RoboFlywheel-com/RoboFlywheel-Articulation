@@ -1,0 +1,93 @@
+{
+  "assetId": "phone_booth_c992441a",
+  "dimensions_m": [
+    1.2542572021484375,
+    1.25178861618042,
+    3.2500001788139343
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Painted steel frame",
+      "surfaceMaterial": "M_seeded_phone_box_0_002",
+      "parts": [
+        "door",
+        "kiosk_body"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Tinted glass panel",
+      "surfaceMaterial": "M_seeded_phone_box_0_003",
+      "parts": [
+        "door",
+        "kiosk_body"
+      ],
+      "values": {
+        "density_kg_m3": 2500,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.23,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.85
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted steel trim",
+      "surfaceMaterial": "M_seeded_phone_box_0_001",
+      "parts": [
+        "door",
+        "kiosk_body"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Painted steel door detail",
+      "surfaceMaterial": "M_seeded_phone_box_0_005",
+      "parts": [
+        "door"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Painted steel body panel",
+      "surfaceMaterial": "M_seeded_phone_box_0_004",
+      "parts": [
+        "kiosk_body"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

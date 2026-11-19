@@ -1,0 +1,409 @@
+{
+  "assetId": "asset_56_laundry_clothes_drying_rack_c40fe128",
+  "name": "Laundry clothes drying rack",
+  "totalMassKg": 2.9,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "4",
+      "name": "main frame",
+      "materials": [
+        "Black Molded Plastic",
+        "Black Molded Plastic Fitting",
+        "Painted Steel Tube"
+      ],
+      "massKg": 0.85,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -6.190787315368652,
+        2.950388803482056,
+        0.7225473821163177
+      ],
+      "inertia": {
+        "ixx": 0.09676851405648719,
+        "iyy": 0.02438104211173648,
+        "izz": 0.10790792212718531,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.4818296432495117,
+        1.230888843536377,
+        0.29418808221817017
+      ],
+      "sourceLink": "main_frame",
+      "massBasis": "Central frame: vertical and horizontal hollow tubes with plastic end-caps and dark metal fittings at joints; fittings add slight low-y bias; tubular layout keeps variance below uniform-box 1/12.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Central frame: vertical and horizontal hollow tubes with plastic end-caps and dark metal fittings at joints; fittings add slight low-y bias; tubular layout keeps variance below uniform-box 1/12.",
+      "surfaceMaterials": [
+        "56 | black_plastic",
+        "56 | dark_fitting",
+        "56 | rack_tube"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "leg family  scissor x legs  frame 0",
+      "materials": [
+        "Black Molded Plastic",
+        "Painted Steel Tube"
+      ],
+      "massKg": 0.55,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -5.750044584274292,
+        2.97329044342041,
+        0.3105579447001219
+      ],
+      "inertia": {
+        "ixx": 0.08590891724229581,
+        "iyy": 0.03642893516549073,
+        "izz": 0.07271214196818869,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.459566593170166,
+        1.1783661842346191,
+        0.671671662479639
+      ],
+      "sourceLink": "leg_family__scissor_x_legs__frame_0",
+      "massBasis": "Scissor X-leg frame of hollow steel tubes (~16 mm OD, 1 mm wall) with plastic pivot joints; mass along crossing diagonals lowers variance vs solid box; symmetric about all axes.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Scissor X-leg frame of hollow steel tubes (~16 mm OD, 1 mm wall) with plastic pivot joints; mass along crossing diagonals lowers variance vs solid box; symmetric about all axes.",
+      "surfaceMaterials": [
+        "56 | black_plastic",
+        "56 | rack_tube"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "leg family  scissor x legs  frame 1",
+      "materials": [
+        "Black Molded Plastic",
+        "Painted Steel Tube"
+      ],
+      "massKg": 0.55,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -6.631530046463013,
+        2.9767227172851562,
+        0.3105579447001219
+      ],
+      "inertia": {
+        "ixx": 0.08590891724229581,
+        "iyy": 0.03642893516549073,
+        "izz": 0.07271214196818869,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.459566593170166,
+        1.1783661842346191,
+        0.671671662479639
+      ],
+      "sourceLink": "leg_family__scissor_x_legs__frame_1",
+      "massBasis": "Identical scissor X-leg frame mirrored/duplicated; same hollow-tube construction and plastic joints as part 2.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical scissor X-leg frame mirrored/duplicated; same hollow-tube construction and plastic joints as part 2.",
+      "surfaceMaterials": [
+        "56 | black_plastic",
+        "56 | rack_tube"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "wing form  parallel bar wing  tier0 front",
+      "materials": [
+        "Black Molded Plastic",
+        "Painted Steel Tube"
+      ],
+      "massKg": 0.45,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -6.437321186065674,
+        2.975966453552246,
+        0.9542295634746552
+      ],
+      "inertia": {
+        "ixx": 0.05131617602213872,
+        "iyy": 0.010671091266106478,
+        "izz": 0.05381264171908106,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.3646993637084961,
+        1.1453876495361328,
+        0.3013787865638733
+      ],
+      "sourceLink": "wing_form__parallel_bar_wing__tier0_front",
+      "massBasis": "Front wing: several parallel hollow tubes (~12 mm) spanning the y-length with plastic cross-brackets; bars dominate mass, giving moderate x/z spread and low y variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Front wing: several parallel hollow tubes (~12 mm) spanning the y-length with plastic cross-brackets; bars dominate mass, giving moderate x/z spread and low y variance.",
+      "surfaceMaterials": [
+        "56 | black_plastic",
+        "56 | rack_tube"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "wing form  parallel bar wing  tier0 rear",
+      "materials": [
+        "Black Molded Plastic",
+        "Painted Steel Tube"
+      ],
+      "massKg": 0.45,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -5.9385085105896,
+        2.974024176597595,
+        0.949840784072876
+      ],
+      "inertia": {
+        "ixx": 0.05106829146055276,
+        "iyy": 0.010381296246498835,
+        "izz": 0.053769984111016814,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.3635263442993164,
+        1.1453831195831299,
+        0.2921111583709717
+      ],
+      "sourceLink": "wing_form__parallel_bar_wing__tier0_rear",
+      "massBasis": "Rear wing: same parallel-bar construction as front wing with nearly identical dimensions; consistent mass and distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rear wing: same parallel-bar construction as front wing with nearly identical dimensions; consistent mass and distribution.",
+      "surfaceMaterials": [
+        "56 | black_plastic",
+        "56 | rack_tube"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "hanger type  wire triangle  hanger 0",
+      "materials": [
+        "Galvanized Steel Wire"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -6.185127019882202,
+        2.718815565109253,
+        0.7715855956077575
+      ],
+      "inertia": {
+        "ixx": 0.00011039012848770824,
+        "iyy": 0.0002586250221460631,
+        "izz": 0.0001483685320874884,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.20584440231323242,
+        0.006674289703369141,
+        0.191766619682312
+      ],
+      "sourceLink": "hanger_type__wire_triangle__hanger_0",
+      "massBasis": "Thin steel wire hanger (~2 mm dia) bent into triangle; mass on perimeter gives higher x/z variance than solid box; y-extent is wire thickness so low variance; centroid slightly below mid-height of triangle.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin steel wire hanger (~2 mm dia) bent into triangle; mass on perimeter gives higher x/z variance than solid box; y-extent is wire thickness so low variance; centroid slightly below mid-height of triangle.",
+      "surfaceMaterials": [
+        "56 | hanger_wire"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "hanger type  wire triangle  hanger 1",
+      "materials": [
+        "Galvanized Steel Wire"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -6.180392742156982,
+        3.231317639350891,
+        0.7713721776008606
+      ],
+      "inertia": {
+        "ixx": 0.00011804446810982938,
+        "iyy": 0.0002748666309731078,
+        "izz": 0.0001569567290187877,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.21172046661376953,
+        0.006697416305541992,
+        0.19830715656280518
+      ],
+      "sourceLink": "hanger_type__wire_triangle__hanger_1",
+      "massBasis": "Same wire-triangle hanger as part 0 with marginally different dims; identical construction and mass distribution assumed.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same wire-triangle hanger as part 0 with marginally different dims; identical construction and mass distribution assumed.",
+      "surfaceMaterials": [
+        "56 | hanger_wire"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "spine_to_leg_0",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.949684,
+      "id": "0",
+      "effort": 12.0,
+      "velocity": 1.5,
+      "damping": 1.6,
+      "friction": 0.9,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "source",
+        "friction": "source"
+      }
+    },
+    {
+      "name": "spine_to_leg_1",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.949684,
+      "id": "1",
+      "effort": 12.0,
+      "velocity": 1.5,
+      "damping": 1.6,
+      "friction": 0.9,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "source",
+        "friction": "source"
+      }
+    },
+    {
+      "name": "spine_to_wing_t0_front",
+      "type": "revolute",
+      "lower": -0.9,
+      "upper": 0.993992,
+      "id": "2",
+      "effort": 8.0,
+      "velocity": 1.2,
+      "damping": 1.2,
+      "friction": 0.6,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "source",
+        "friction": "source"
+      }
+    },
+    {
+      "name": "spine_to_wing_t0_rear",
+      "type": "revolute",
+      "lower": -0.9,
+      "upper": 0.993992,
+      "id": "3",
+      "effort": 8.0,
+      "velocity": 1.2,
+      "damping": 1.2,
+      "friction": 0.6,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "source",
+        "friction": "source"
+      }
+    },
+    {
+      "name": "rail_to_hanger_0",
+      "type": "revolute",
+      "lower": -0.192353,
+      "upper": 0.192353,
+      "id": "4",
+      "effort": 1.0,
+      "velocity": 2.0,
+      "damping": 0.3,
+      "friction": 0.15,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "source",
+        "friction": "source"
+      }
+    },
+    {
+      "name": "rail_to_hanger_1",
+      "type": "revolute",
+      "lower": -0.192353,
+      "upper": 0.192353,
+      "id": "5",
+      "effort": 1.0,
+      "velocity": 2.0,
+      "damping": 0.3,
+      "friction": 0.15,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "source",
+        "friction": "source"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/Indoor_blend_asset/56_Laundry_Clothes_drying_rack/Household_Laundry_Clothes_drying_rack_Laundry_drying_rack/seed_0000/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

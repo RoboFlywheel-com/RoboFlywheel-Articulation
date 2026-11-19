@@ -1,0 +1,309 @@
+{
+  "assetId": "bicycle_b12ab088",
+  "name": "Bicycle",
+  "totalMassKg": 13.8,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "2",
+      "name": "body",
+      "materials": [
+        "Painted Steel Frame",
+        "Bare Aluminum Alloy",
+        "Blackened Steel"
+      ],
+      "massKg": 4.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        7.867805004119873,
+        4.149374222755432,
+        1.002199511229992
+      ],
+      "inertia": {
+        "ixx": 1.0704878083504121,
+        "iyy": 0.5190556836757848,
+        "izz": 0.6339430846603568,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.36189746856689453,
+        1.1476426124572754,
+        1.0861646234989166
+      ],
+      "sourceLink": null,
+      "massBasis": "Main frame triangle, seat tube, seatpost, saddle: hollow steel/aluminum tubes. Mass spread along tube network; narrow laterally (small x-extent) so low x-variance. CoM slightly forward-low near BB junction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Main frame triangle, seat tube, seatpost, saddle: hollow steel/aluminum tubes. Mass spread along tube network; narrow laterally (small x-extent) so low x-variance. CoM slightly forward-low near BB junction.",
+      "surfaceMaterials": [
+        "M_seeded_bicycle_0_001",
+        "M_seeded_bicycle_0_002",
+        "M_seeded_bicycle_0_003"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "steering",
+      "materials": [
+        "Bare Aluminum Alloy",
+        "Blackened Steel",
+        "Brown Leather Grip"
+      ],
+      "massKg": 3.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        7.7197911739349365,
+        3.6208939743041992,
+        1.0236737126111985
+      ],
+      "inertia": {
+        "ixx": 0.43900145662659745,
+        "iyy": 0.5169534439156908,
+        "izz": 0.5007670139649645,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.9821057319641113,
+        0.8848676681518555,
+        0.9738111197948456
+      ],
+      "sourceLink": null,
+      "massBasis": "Handlebars, stem, headset, and fork: hollow aluminum/steel tubes. Mass distributed along fork legs and bar; CoM biased upward toward handlebars. Hollow tube construction reduces variance vs solid.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Handlebars, stem, headset, and fork: hollow aluminum/steel tubes. Mass distributed along fork legs and bar; CoM biased upward toward handlebars. Hollow tube construction reduces variance vs solid.",
+      "surfaceMaterials": [
+        "M_seeded_bicycle_0_002",
+        "M_seeded_bicycle_0_003",
+        "M_seeded_bicycle_0_004"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "rear wheel roll",
+      "materials": [
+        "Bare Aluminum Alloy",
+        "Blackened Steel",
+        "Rubber Tire Tread",
+        "Steel Rim",
+        "Brass Spoke Nipple"
+      ],
+      "massKg": 2.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        7.938352823257446,
+        4.695979118347168,
+        0.4810895323753357
+      ],
+      "inertia": {
+        "ixx": 0.7036591628397987,
+        "iyy": 0.35644608087816043,
+        "izz": 0.36281404529003114,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.2280421257019043,
+        0.8034172058105469,
+        0.7961790561676025
+      ],
+      "sourceLink": null,
+      "massBasis": "Rear wheel with cassette/freewheel adds axial mass vs front. Ring geometry dominates radial inertia; cassette widens x-extent slightly raising x-variance. Heavier than front due to drivetrain hardware.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rear wheel with cassette/freewheel adds axial mass vs front. Ring geometry dominates radial inertia; cassette widens x-extent slightly raising x-variance. Heavier than front due to drivetrain hardware.",
+      "surfaceMaterials": [
+        "M_seeded_bicycle_0_002",
+        "M_seeded_bicycle_0_003",
+        "M_seeded_bicycle_0_005",
+        "M_seeded_bicycle_0_006",
+        "M_seeded_bicycle_0_007"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "crank spin",
+      "materials": [
+        "Bare Aluminum Alloy",
+        "Blackened Steel"
+      ],
+      "massKg": 2.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        7.848823070526123,
+        4.116839289665222,
+        0.4339386177062988
+      ],
+      "inertia": {
+        "ixx": 0.04817169749701655,
+        "iyy": 0.04489409516440354,
+        "izz": 0.04475871519063162,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.29397106170654297,
+        0.3304140567779541,
+        0.33134394884109497
+      ],
+      "sourceLink": null,
+      "massBasis": "Crankset with chainrings, pedals, and BB: solid aluminum/steel rotating parts; mass concentrated near center with arms extending radially. Slightly lower CoM due to chainring weight below BB axis.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Crankset with chainrings, pedals, and BB: solid aluminum/steel rotating parts; mass concentrated near center with arms extending radially. Slightly lower CoM due to chainring weight below BB axis.",
+      "surfaceMaterials": [
+        "M_seeded_bicycle_0_002",
+        "M_seeded_bicycle_0_003"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "front wheel roll",
+      "materials": [
+        "Bare Aluminum Alloy",
+        "Blackened Steel",
+        "Rubber Tire Tread",
+        "Steel Rim",
+        "Brass Spoke Nipple"
+      ],
+      "massKg": 1.8,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        7.632034778594971,
+        3.421323537826538,
+        0.47513472661376
+      ],
+      "inertia": {
+        "ixx": 0.46746921491988475,
+        "iyy": 0.30033731158152366,
+        "izz": 0.2293116592380088,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6571178436279297,
+        0.7241520881652832,
+        0.8245712593197823
+      ],
+      "sourceLink": null,
+      "massBasis": "Front wheel: tire, rim, spokes, hub. Thin-shell/ring geometry concentrates mass at rim radius \u2192 high y,z variance near ring limit; very thin axially (x) \u2192 low x-variance. Symmetric about hub.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Front wheel: tire, rim, spokes, hub. Thin-shell/ring geometry concentrates mass at rim radius \u2192 high y,z variance near ring limit; very thin axially (x) \u2192 low x-variance. Symmetric about hub.",
+      "surfaceMaterials": [
+        "M_seeded_bicycle_0_002",
+        "M_seeded_bicycle_0_003",
+        "M_seeded_bicycle_0_005",
+        "M_seeded_bicycle_0_006",
+        "M_seeded_bicycle_0_007"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "steering",
+      "type": "revolute",
+      "lower": -0.7,
+      "upper": 0.7,
+      "id": "0",
+      "effort": 10.0,
+      "velocity": 4.0,
+      "damping": 1.0,
+      "friction": 0.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_wheel_roll",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "1",
+      "effort": 2.0,
+      "velocity": 40.0,
+      "damping": 0.03,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_wheel_roll",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "2",
+      "effort": 35.0,
+      "velocity": 40.0,
+      "damping": 0.05,
+      "friction": 0.2,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "crank_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "3",
+      "effort": 50.0,
+      "velocity": 12.0,
+      "damping": 0.1,
+      "friction": 0.3,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

@@ -1,0 +1,65 @@
+{
+  "assetId": "fire_hydrant_6e0aefc3",
+  "dimensions_m": [
+    0.47347110509872437,
+    0.44668006896972656,
+    1.2000001072883606
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Painted cast iron chain",
+      "surfaceMaterial": "M_seeded_fire_hydrant_0_003.001",
+      "parts": [
+        "outlet_0_chain_1",
+        "outlet_0_chain_0",
+        "outlet_0_chain_2",
+        "outlet_0_chain_3",
+        "outlet_0_chain_4"
+      ],
+      "values": {
+        "density_kg_m3": 7200.0,
+        "youngs_modulus_pa": 170000000000.0,
+        "poissons_ratio": 0.28,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "1",
+      "material": "Painted ductile iron body",
+      "surfaceMaterial": "M_seeded_fire_hydrant_0_001.001",
+      "parts": [
+        "body.002",
+        "outlet_0_cap"
+      ],
+      "values": {
+        "density_kg_m3": 7100.0,
+        "youngs_modulus_pa": 170000000000.0,
+        "poissons_ratio": 0.28,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted cast iron hardware",
+      "surfaceMaterial": "M_seeded_fire_hydrant_0_002.001",
+      "parts": [
+        "body.002",
+        "operating_nut",
+        "outlet_0_cap"
+      ],
+      "values": {
+        "density_kg_m3": 7200.0,
+        "youngs_modulus_pa": 170000000000.0,
+        "poissons_ratio": 0.28,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.45
+      }
+    }
+  ]
+}

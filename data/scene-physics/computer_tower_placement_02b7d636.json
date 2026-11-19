@@ -1,0 +1,296 @@
+{
+  "assetId": "computer_tower_placement_02b7d636",
+  "name": "Computer tower",
+  "totalMassKg": 8.6,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Galvanized Steel",
+        "ABS Plastic"
+      ],
+      "massKg": 8.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.3640000820159912,
+        1.9624400234222412,
+        1.0467349886894226
+      ],
+      "inertia": {
+        "ixx": 0.5403487118009898,
+        "iyy": 0.38515353078524067,
+        "izz": 0.3238977599504514,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.312999963760376,
+        0.563500165939331,
+        0.5910700559616089
+      ],
+      "sourceLink": null,
+      "massBasis": "Mid-tower PC case: ~0.8 mm sheet-steel panels plus plastic bezels form a hollow shell; internal standoffs and PSU bracket shift CoM slightly below geometric centre. Mass estimated from typical 18-20 L steel tower (~8 kg) plus plastics. Variance factors slightly above 1/12 reflecting mass concentrated on outer shell faces with some internal framing.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Mid-tower PC case: ~0.8 mm sheet-steel panels plus plastic bezels form a hollow shell; internal standoffs and PSU bracket shift CoM slightly below geometric centre. Mass estimated from typical 18-20 L steel tower (~8 kg) plus plastics. Variance factors slightly above 1/12 reflecting mass concentrated on outer shell faces with some internal framing.",
+      "surfaceMaterials": [
+        "Material_0.002",
+        "Material_1.002",
+        "Material_2.002",
+        "Material_3.002",
+        "Material_4.001"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "JOINT | Computer Tower | drive tray slide 0",
+      "materials": [
+        "ABS Plastic"
+      ],
+      "massKg": 0.1,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.362000048160553,
+        1.8074613213539124,
+        1.2522700428962708
+      ],
+      "inertia": {
+        "ixx": 0.0012816396898152392,
+        "iyy": 0.00043986120651179025,
+        "izz": 0.0016747007996244037,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.22400009632110596,
+        0.3893522024154663,
+        0.060000061988830566
+      ],
+      "sourceLink": null,
+      "massBasis": "5.25-inch drive-tray slide: thin stamped-steel rails with a plastic caddy, mostly flat. Uniform thin-frame distribution; z-extent small (60 mm) so vz reduced toward thin-plate limit. Consistent across all four identical trays.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: 5.25-inch drive-tray slide: thin stamped-steel rails with a plastic caddy, mostly flat. Uniform thin-frame distribution; z-extent small (60 mm) so vz reduced toward thin-plate limit. Consistent across all four identical trays.",
+      "surfaceMaterials": [
+        "Material_2.002",
+        "Material_4.001",
+        "Material_5"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "JOINT | Computer Tower | drive tray slide 1",
+      "materials": [
+        "ABS Plastic"
+      ],
+      "massKg": 0.1,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.362000048160553,
+        1.7914406657218933,
+        1.1790700554847717
+      ],
+      "inertia": {
+        "ixx": 0.0012816396898152392,
+        "iyy": 0.00043986120651179025,
+        "izz": 0.0016747007996244037,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.22400009632110596,
+        0.3893522024154663,
+        0.060000061988830566
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical drive-tray slide as part 1; same stamped-steel/plastic construction and mass distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical drive-tray slide as part 1; same stamped-steel/plastic construction and mass distribution.",
+      "surfaceMaterials": [
+        "Material_2.002",
+        "Material_4.001",
+        "Material_5"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "JOINT | Computer Tower | drive tray slide 2",
+      "materials": [
+        "ABS Plastic"
+      ],
+      "massKg": 0.1,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.362000048160553,
+        1.778858482837677,
+        1.1058700680732727
+      ],
+      "inertia": {
+        "ixx": 0.0012816396898152392,
+        "iyy": 0.00043986120651179025,
+        "izz": 0.0016747007996244037,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.22400009632110596,
+        0.3893522024154663,
+        0.060000061988830566
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical drive-tray slide as part 1; same stamped-steel/plastic construction and mass distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical drive-tray slide as part 1; same stamped-steel/plastic construction and mass distribution.",
+      "surfaceMaterials": [
+        "Material_2.002",
+        "Material_4.001",
+        "Material_5"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "JOINT | Computer Tower | drive tray slide 3",
+      "materials": [
+        "ABS Plastic"
+      ],
+      "massKg": 0.1,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.362000048160553,
+        1.7704969644546509,
+        1.032670021057129
+      ],
+      "inertia": {
+        "ixx": 0.001281638826353077,
+        "iyy": 0.00043986111352854073,
+        "izz": 0.001674700029145491,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.22400009632110596,
+        0.38935208320617676,
+        0.059999942779541016
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical drive-tray slide as part 1; same stamped-steel/plastic construction and mass distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical drive-tray slide as part 1; same stamped-steel/plastic construction and mass distribution.",
+      "surfaceMaterials": [
+        "Material_2.002",
+        "Material_4.001",
+        "Material_5"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "drive_tray_slide_0",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.16,
+      "id": "0",
+      "effort": 12.0,
+      "velocity": 0.25,
+      "damping": 2.5,
+      "friction": 3.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "drive_tray_slide_3",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.16,
+      "id": "1",
+      "effort": 12.0,
+      "velocity": 0.25,
+      "damping": 2.5,
+      "friction": 3.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "drive_tray_slide_2",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.16,
+      "id": "2",
+      "effort": 12.0,
+      "velocity": 0.25,
+      "damping": 2.5,
+      "friction": 3.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "drive_tray_slide_1",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.16,
+      "id": "3",
+      "effort": 12.0,
+      "velocity": 0.25,
+      "damping": 2.5,
+      "friction": 3.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

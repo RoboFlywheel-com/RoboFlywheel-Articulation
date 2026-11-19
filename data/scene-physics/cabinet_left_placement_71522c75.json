@@ -1,0 +1,177 @@
+{
+  "assetId": "cabinet_left_placement_71522c75",
+  "name": "Cabinet left",
+  "totalMassKg": 44.8,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Dark Coated Steel",
+        "Polished Stainless Steel",
+        "Brushed Stainless Steel"
+      ],
+      "massKg": 38.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0,
+        3.121898651123047,
+        0.9429999780654907
+      ],
+      "inertia": {
+        "ixx": 38.50229372733425,
+        "iyy": 42.04079110081552,
+        "izz": 19.858987651216445,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.2729196548461914,
+        1.0362029075622559,
+        2.049999952316284
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow cabinet shell (~18 mm side/top/bottom panels, ~6 mm back, 2 shelves, metal feet and hardware). Wood ~700 kg/m\u00b3 panels plus ~2 kg metal hardware/feet. COM slightly below mid-height due to feet and lower shelf mass. Variance > 1/12 because mass concentrates in outer panels rather than filling volume.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow cabinet shell (~18 mm side/top/bottom panels, ~6 mm back, 2 shelves, metal feet and hardware). Wood ~700 kg/m\u00b3 panels plus ~2 kg metal hardware/feet. COM slightly below mid-height due to feet and lower shelf mass. Variance > 1/12 because mass concentrates in outer panels rather than filling volume.",
+      "surfaceMaterials": [
+        "Cabinet / dark feet",
+        "Cabinet / polished hardware",
+        "Cabinet / satin silver metal"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "JOINT | Cabinet Asset Left | door hinge 0",
+      "materials": [
+        "Polished Stainless Steel",
+        "Brushed Stainless Steel"
+      ],
+      "massKg": 3.4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.26376736164093,
+        2.664181351661682,
+        1.227789282798767
+      ],
+      "inertia": {
+        "ixx": 0.5360597147949979,
+        "iyy": 0.6082822609636931,
+        "izz": 0.07408856560623775,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.512244462966919,
+        0.05856776237487793,
+        1.3854215145111084
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin metal door panel (~1.2 mm satin-silver steel skin with light frame, 0.512\u00d71.385 m face, 0.059 m overall thickness). Mostly hollow/thin-shell so mass << solid bounding-box. Uniform spread in x and z; very thin in y so variance near 1/12 on all axes.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin metal door panel (~1.2 mm satin-silver steel skin with light frame, 0.512\u00d71.385 m face, 0.059 m overall thickness). Mostly hollow/thin-shell so mass << solid bounding-box. Uniform spread in x and z; very thin in y so variance near 1/12 on all axes.",
+      "surfaceMaterials": [
+        "Cabinet / polished hardware",
+        "Cabinet / satin silver metal"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "JOINT | Cabinet Asset Left | door hinge 1",
+      "materials": [
+        "Polished Stainless Steel",
+        "Brushed Stainless Steel"
+      ],
+      "massKg": 3.4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7362323999404907,
+        2.664181351661682,
+        1.227789282798767
+      ],
+      "inertia": {
+        "ixx": 0.5360597147949979,
+        "iyy": 0.6082822609636931,
+        "izz": 0.07408856560623775,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.512244462966919,
+        0.05856776237487793,
+        1.3854215145111084
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical door panel to part 1 (same dimensions and materials), keeping mass and distribution consistent for the symmetric pair.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical door panel to part 1 (same dimensions and materials), keeping mass and distribution consistent for the symmetric pair.",
+      "surfaceMaterials": [
+        "Cabinet / polished hardware",
+        "Cabinet / satin silver metal"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "door_hinge_1",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.58,
+      "id": "0",
+      "effort": 3.0,
+      "velocity": 1.5,
+      "damping": 0.3,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "door_hinge_0",
+      "type": "revolute",
+      "lower": -0.58,
+      "upper": 0.0,
+      "id": "1",
+      "effort": 3.0,
+      "velocity": 1.5,
+      "damping": 0.3,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

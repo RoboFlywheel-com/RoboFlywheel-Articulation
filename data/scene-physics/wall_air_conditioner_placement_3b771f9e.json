@@ -1,0 +1,232 @@
+{
+  "assetId": "wall_air_conditioner_placement_3b771f9e",
+  "name": "Wall air conditioner",
+  "totalMassKg": 9.95,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "1",
+      "name": "body",
+      "materials": [
+        "HIPS Plastic",
+        "ABS Plastic Dark",
+        "Polypropylene",
+        "Nylon Mesh"
+      ],
+      "massKg": 9.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.930000066757202,
+        3.573704242706299,
+        2.8495680046081544
+      ],
+      "inertia": {
+        "ixx": 0.15095282992187448,
+        "iyy": 0.9008727462860618,
+        "izz": 0.8453403950506795,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.0396151542663574,
+        0.26586055755615234,
+        0.3834960460662842
+      ],
+      "sourceLink": null,
+      "massBasis": "Main housing: sheet-metal chassis, copper/aluminum heat exchanger, blower fan, PCB, and plastic shroud. Hollow shell construction with dense internal components (copper coils, motor) pulling CoM slightly below and behind geometric center. ~9 kg typical for 1 m indoor split unit.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Main housing: sheet-metal chassis, copper/aluminum heat exchanger, blower fan, PCB, and plastic shroud. Hollow shell construction with dense internal components (copper coils, motor) pulling CoM slightly below and behind geometric center. ~9 kg typical for 1 m indoor split unit.",
+      "surfaceMaterials": [
+        "Material_0.008",
+        "Material_1.008",
+        "Material_2.008",
+        "Material_3.008"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "JOINT | Wall Air Conditioner | front panel hinge",
+      "materials": [
+        "ABS Plastic"
+      ],
+      "massKg": 0.85,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.9300003051757812,
+        3.4290981483459473,
+        2.9165025901794435
+      ],
+      "inertia": {
+        "ixx": 0.002040642193898338,
+        "iyy": 0.06978468835357284,
+        "izz": 0.0682829243449826,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.9818587303161621,
+        0.061799049377441406,
+        0.18635845184326172
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin ABS/plastic front panel (hinged flap), mostly hollow with slight ribbing. Mass concentrated near outer face; center slightly forward and below geometric center due to hinge at top edge.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin ABS/plastic front panel (hinged flap), mostly hollow with slight ribbing. Mass concentrated near outer face; center slightly forward and below geometric center due to hinge at top edge.",
+      "surfaceMaterials": [
+        "Material_4.007"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "JOINT | Wall Air Conditioner | louver pivot 0",
+      "materials": [
+        "ABS Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.9300003051757812,
+        3.4970866441726685,
+        2.775428891181946
+      ],
+      "inertia": {
+        "ixx": 3.0047644870307977e-06,
+        "iyy": 0.003635442591735725,
+        "izz": 0.003636808524603427,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.9358487129211426,
+        0.02294754981994629,
+        0.014051675796508789
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin plastic louver slat (~23 mm \u00d7 14 mm cross-section, 0.94 m span). Nearly uniform thin-walled extrusion; negligible mass, symmetric.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin plastic louver slat (~23 mm \u00d7 14 mm cross-section, 0.94 m span). Nearly uniform thin-walled extrusion; negligible mass, symmetric.",
+      "surfaceMaterials": [
+        "Material_4.007"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "JOINT | Wall Air Conditioner | louver pivot 1",
+      "materials": [
+        "ABS Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.930000066757202,
+        3.417437791824341,
+        2.972861886024475
+      ],
+      "inertia": {
+        "ixx": 3.150376354014384e-06,
+        "iyy": 0.003636850488872821,
+        "izz": 0.0036355610547558976,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.935849666595459,
+        0.014973640441894531,
+        0.023128271102905273
+      ],
+      "sourceLink": null,
+      "massBasis": "Second thin plastic louver slat (15 mm \u00d7 23 mm cross-section). Same material and construction as louver 0; consistent mass.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Second thin plastic louver slat (15 mm \u00d7 23 mm cross-section). Same material and construction as louver 0; consistent mass.",
+      "surfaceMaterials": [
+        "Material_4.007"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "front_panel_hinge",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.9664,
+      "id": "0",
+      "effort": 3.0,
+      "velocity": 1.5,
+      "damping": 0.6,
+      "friction": 0.25,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "louver_pivot_1",
+      "type": "revolute",
+      "lower": -0.94588,
+      "upper": 0.94588,
+      "id": "1",
+      "effort": 0.15,
+      "velocity": 2.5,
+      "damping": 0.02,
+      "friction": 0.02,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "louver_pivot_0",
+      "type": "revolute",
+      "lower": -0.94588,
+      "upper": 0.94588,
+      "id": "2",
+      "effort": 0.15,
+      "velocity": 2.5,
+      "damping": 0.02,
+      "friction": 0.02,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

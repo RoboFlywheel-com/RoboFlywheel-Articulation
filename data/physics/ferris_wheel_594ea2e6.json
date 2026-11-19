@@ -1,0 +1,198 @@
+{
+  "assetId": "ferris_wheel_594ea2e6",
+  "dimensions_m": [
+    13.230562210083008,
+    15.893505096435547,
+    18.86216897610575
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "painted steel frame",
+      "surfaceMaterial": "M_seeded_ferris_wheel_1_004.001",
+      "parts": [
+        "gondola_11",
+        "gondola_13",
+        "gondola_2",
+        "gondola_6",
+        "gondola_8",
+        "gondola_5",
+        "gondola_10",
+        "gondola_16",
+        "gondola_1",
+        "gondola_15",
+        "gondola_4",
+        "gondola_12",
+        "gondola_14",
+        "gondola_3",
+        "gondola_7",
+        "gondola_9"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.25,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "painted steel green accent",
+      "surfaceMaterial": "M_seeded_ferris_wheel_1_008.001",
+      "parts": [
+        "gondola_11",
+        "gondola_15",
+        "gondola_3",
+        "gondola_7"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.25,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "translucent polycarbonate panel",
+      "surfaceMaterial": "M_seeded_ferris_wheel_1_006.001",
+      "parts": [
+        "gondola_11",
+        "gondola_13",
+        "gondola_2",
+        "gondola_6",
+        "gondola_8",
+        "gondola_5",
+        "gondola_10",
+        "gondola_16",
+        "gondola_1",
+        "gondola_15",
+        "gondola_4",
+        "gondola_12",
+        "gondola_14",
+        "gondola_3",
+        "gondola_7",
+        "gondola_9"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "painted steel blue accent",
+      "surfaceMaterial": "M_seeded_ferris_wheel_1_005.001",
+      "parts": [
+        "gondola_13",
+        "gondola_5",
+        "gondola_1",
+        "gondola_9"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.25,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "painted steel cyan accent",
+      "surfaceMaterial": "M_seeded_ferris_wheel_1_007.001",
+      "parts": [
+        "gondola_2",
+        "gondola_6",
+        "gondola_10",
+        "gondola_14"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.25,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "painted steel purple accent",
+      "surfaceMaterial": "M_seeded_ferris_wheel_1_009.001",
+      "parts": [
+        "gondola_8",
+        "gondola_16",
+        "gondola_4",
+        "gondola_12"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.25,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "galvanized steel support",
+      "surfaceMaterial": "M_seeded_ferris_wheel_1_001.001",
+      "parts": [
+        "support_frame"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "7",
+      "material": "dark structural steel",
+      "surfaceMaterial": "M_seeded_ferris_wheel_1_002.001",
+      "parts": [
+        "support_frame",
+        "wheel"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "8",
+      "material": "steel wheel rim",
+      "surfaceMaterial": "M_seeded_ferris_wheel_1_003.001",
+      "parts": [
+        "support_frame",
+        "wheel"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

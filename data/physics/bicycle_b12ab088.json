@@ -1,0 +1,133 @@
+{
+  "assetId": "bicycle_b12ab088",
+  "dimensions_m": [
+    0.9821057319641113,
+    2.038440227508545,
+    1.4281244948506355
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Bare Aluminum Alloy",
+      "surfaceMaterial": "M_seeded_bicycle_0_002",
+      "parts": [
+        "crank",
+        "rear_wheel",
+        "front_wheel.001",
+        "fork",
+        "frame.002"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.61,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Blackened Steel",
+      "surfaceMaterial": "M_seeded_bicycle_0_003",
+      "parts": [
+        "crank",
+        "rear_wheel",
+        "front_wheel.001",
+        "fork",
+        "frame.002"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Rubber Tire Tread",
+      "surfaceMaterial": "M_seeded_bicycle_0_005",
+      "parts": [
+        "rear_wheel",
+        "front_wheel.001"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Steel Rim",
+      "surfaceMaterial": "M_seeded_bicycle_0_006",
+      "parts": [
+        "rear_wheel",
+        "front_wheel.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Brass Spoke Nipple",
+      "surfaceMaterial": "M_seeded_bicycle_0_007",
+      "parts": [
+        "rear_wheel",
+        "front_wheel.001"
+      ],
+      "values": {
+        "density_kg_m3": 8500.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "5",
+      "material": "Brown Leather Grip",
+      "surfaceMaterial": "M_seeded_bicycle_0_004",
+      "parts": [
+        "fork"
+      ],
+      "values": {
+        "density_kg_m3": 950.0,
+        "youngs_modulus_pa": 25000000.0,
+        "poissons_ratio": 0.38,
+        "static_friction_coefficient": 0.62,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "6",
+      "material": "Painted Steel Frame",
+      "surfaceMaterial": "M_seeded_bicycle_0_001",
+      "parts": [
+        "frame.002"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

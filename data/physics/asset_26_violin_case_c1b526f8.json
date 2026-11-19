@@ -1,0 +1,62 @@
+{
+  "assetId": "asset_26_violin_case_c1b526f8",
+  "dimensions_m": [
+    1.0500001311302185,
+    0.48019838333129883,
+    0.2538023889064789
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Brown tweed fabric shell",
+      "surfaceMaterial": "26 | vc_shell_brown_tweed_red",
+      "parts": [
+        "bottom_shell",
+        "lid"
+      ],
+      "values": {
+        "density_kg_m3": 650.0,
+        "youngs_modulus_pa": 800000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.2
+      }
+    },
+    {
+      "id": "1",
+      "material": "Brown plush velvet lining",
+      "surfaceMaterial": "26 | vc_plush_brown_tweed_red",
+      "parts": [
+        "bottom_shell",
+        "lid"
+      ],
+      "values": {
+        "density_kg_m3": 380.0,
+        "youngs_modulus_pa": 1500000.0,
+        "poissons_ratio": 0.38,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "2",
+      "material": "Brushed steel hardware",
+      "surfaceMaterial": "26 | vc_metal_brown_tweed_red",
+      "parts": [
+        "bottom_shell",
+        "latch_1",
+        "latch_0"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

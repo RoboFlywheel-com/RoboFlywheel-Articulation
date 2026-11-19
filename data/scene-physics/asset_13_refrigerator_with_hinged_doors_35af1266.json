@@ -1,0 +1,309 @@
+{
+  "assetId": "asset_13_refrigerator_with_hinged_doors_35af1266",
+  "name": "Refrigerator with hinged doors",
+  "totalMassKg": 79.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "fridge body",
+      "materials": [
+        "Painted Metal Body",
+        "Interior Plastic Liner",
+        "Plastic Kick Plate",
+        "Matte Fruit Plastic",
+        "Glossy Fruit Plastic"
+      ],
+      "massKg": 55.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.4500000774860382,
+        5.000000953674316,
+        0.856600026153028
+      ],
+      "inertia": {
+        "ixx": 19.49043977736992,
+        "iyy": 22.45287678860203,
+        "izz": 7.945897702583151,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.049691379070282,
+        0.7094926834106445,
+        2.029999816790223
+      ],
+      "sourceLink": "fridge_body",
+      "massBasis": "Hollow cabinet with ~5 cm insulated walls, compressor and condenser at base, internal shelving. Mass concentrated in shell and lower compressor region; CoM shifted below mid-height. Variance slightly above 1/12 in x/y for shell, lower in z due to bottom-heavy compressor.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow cabinet with ~5 cm insulated walls, compressor and condenser at base, internal shelving. Mass concentrated in shell and lower compressor region; CoM shifted below mid-height. Variance slightly above 1/12 in x/y for shell, lower in z due to bottom-heavy compressor.",
+      "surfaceMaterials": [
+        "13 | fridge_body",
+        "13 | fridge_interior",
+        "13 | fridge_kick",
+        "Banana Matte",
+        "Passion"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "door 0",
+      "materials": [
+        "Gray Plastic Trim",
+        "Painted Metal Door",
+        "Rubber Gasket",
+        "Brushed Metal Handle",
+        "Interior Plastic Liner"
+      ],
+      "massKg": 12.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.182795375585556,
+        4.192163467407227,
+        1.4619987607002258
+      ],
+      "inertia": {
+        "ixx": 1.9476731626446346,
+        "iyy": 1.4762175216391933,
+        "izz": 1.1901001348627487,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6117957234382629,
+        0.9132986068725586,
+        1.0589526891708374
+      ],
+      "sourceLink": "door_0",
+      "massBasis": "Upper/larger hinged door: thin insulated panel (~5-6 cm) with gasket, handle, and interior liner. Nearly uniform thin-slab distribution; handle adds marginal asymmetry. Mass consistent with a French-door or top-freezer panel of this size.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Upper/larger hinged door: thin insulated panel (~5-6 cm) with gasket, handle, and interior liner. Nearly uniform thin-slab distribution; handle adds marginal asymmetry. Mass consistent with a French-door or top-freezer panel of this size.",
+      "surfaceMaterials": [
+        "13 | fridge_accent",
+        "13 | fridge_door",
+        "13 | fridge_gasket",
+        "13 | fridge_handle",
+        "13 | fridge_interior"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "door 1",
+      "materials": [
+        "Painted Metal Door",
+        "Rubber Gasket",
+        "Brushed Metal Handle",
+        "Interior Plastic Liner"
+      ],
+      "massKg": 9.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.2416956722736359,
+        4.229663610458374,
+        0.518619567155838
+      ],
+      "inertia": {
+        "ixx": 1.0166456004851867,
+        "iyy": 0.844474285864992,
+        "izz": 0.8811470913757962,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.7016724944114685,
+        0.8396620750427246,
+        0.8099005818367004
+      ],
+      "sourceLink": "door_1",
+      "massBasis": "Smaller lower/freezer door: thinner insulated panel with gasket, handle, interior liner. Same construction as door 0 but smaller bounding volume; slightly less mass. Uniform thin-panel distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Smaller lower/freezer door: thinner insulated panel with gasket, handle, interior liner. Same construction as door 0 but smaller bounding volume; slightly less mass. Uniform thin-panel distribution.",
+      "surfaceMaterials": [
+        "13 | fridge_door",
+        "13 | fridge_gasket",
+        "13 | fridge_handle",
+        "13 | fridge_interior"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "drawer 0",
+      "materials": [
+        "Brushed Metal Hardware",
+        "Interior Plastic Liner"
+      ],
+      "massKg": 1.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.4500000178813934,
+        4.974274396896362,
+        0.2462796062231064
+      ],
+      "inertia": {
+        "ixx": 0.05192093722021576,
+        "iyy": 0.12386181586889887,
+        "izz": 0.16187066075580264,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.9870231747627258,
+        0.6121335029602051,
+        0.2573869824409485
+      ],
+      "sourceLink": "drawer_0",
+      "massBasis": "Plastic crisper/utility drawer on metal slide rails. Thin-walled open-top box; mass in floor and low side walls, CoM slightly below geometric center. Hardware rails add small bottom-concentrated mass.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Plastic crisper/utility drawer on metal slide rails. Thin-walled open-top box; mass in floor and low side walls, CoM slightly below geometric center. Hardware rails add small bottom-concentrated mass.",
+      "surfaceMaterials": [
+        "13 | fridge_hardware",
+        "13 | fridge_interior"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "drawer 1",
+      "materials": [
+        "Brushed Metal Hardware",
+        "Interior Plastic Liner"
+      ],
+      "massKg": 1.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.4500000178813934,
+        4.983104944229126,
+        0.6333246886730194
+      ],
+      "inertia": {
+        "ixx": 0.051920940441922664,
+        "iyy": 0.12386181909060577,
+        "izz": 0.16187066075580264,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.9870231747627258,
+        0.6121335029602051,
+        0.25738704204559326
+      ],
+      "sourceLink": "drawer_1",
+      "massBasis": "Identical construction and dimensions to drawer 0; same plastic tray with metal slide hardware. Kept consistent with drawer 0 for repeated-part symmetry.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical construction and dimensions to drawer 0; same plastic tray with metal slide hardware. Kept consistent with drawer 0 for repeated-part symmetry.",
+      "surfaceMaterials": [
+        "13 | fridge_hardware",
+        "13 | fridge_interior"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "drawer_0_joint",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.024,
+      "id": "0",
+      "effort": 40.0,
+      "velocity": 0.25,
+      "damping": 8.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "drawer_1_joint",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.024,
+      "id": "1",
+      "effort": 40.0,
+      "velocity": 0.25,
+      "damping": 8.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "door_0_joint",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.8,
+      "id": "2",
+      "effort": 18.0,
+      "velocity": 1.5,
+      "damping": 1.0,
+      "friction": 0.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "door_1_joint",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.8,
+      "id": "3",
+      "effort": 18.0,
+      "velocity": 1.5,
+      "damping": 1.0,
+      "friction": 0.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/Indoor_blend_asset/13_refrigerator_with_hinged_doors/refrigerator_with_hinged_doors/seed_0002/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

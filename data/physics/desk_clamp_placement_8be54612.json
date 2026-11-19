@@ -1,0 +1,108 @@
+{
+  "assetId": "desk_clamp_placement_8be54612",
+  "dimensions_m": [
+    0.18416857719421387,
+    0.14642488956451416,
+    0.09519004821777344
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Rubber Pad",
+      "surfaceMaterial": "Material_5.006",
+      "parts": [
+        "Desk_Clamp / pad_swivel_pad"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 5000000,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.8,
+        "dynamic_friction_coefficient": 0.6,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "1",
+      "material": "Cast Iron Anvil Pad",
+      "surfaceMaterial": "Material_1.011",
+      "parts": [
+        "Desk_Clamp / frame_anvil_pad"
+      ],
+      "values": {
+        "density_kg_m3": 7200,
+        "youngs_modulus_pa": 170000000000,
+        "poissons_ratio": 0.27,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "2",
+      "material": "Steel Handle",
+      "surfaceMaterial": "Material_3.011",
+      "parts": [
+        "Desk_Clamp / screw_handle_bar",
+        "Desk_Clamp / screw_handle_hub"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "3",
+      "material": "Cast Iron Frame",
+      "surfaceMaterial": "Material_0.011",
+      "parts": [
+        "Desk_Clamp / frame_frame_body"
+      ],
+      "values": {
+        "density_kg_m3": 7200,
+        "youngs_modulus_pa": 170000000000,
+        "poissons_ratio": 0.27,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "4",
+      "material": "Plastic Handle Caps",
+      "surfaceMaterial": "Material_4.010",
+      "parts": [
+        "Desk_Clamp / screw_handle_caps"
+      ],
+      "values": {
+        "density_kg_m3": 1400,
+        "youngs_modulus_pa": 3000000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "5",
+      "material": "Steel Screw",
+      "surfaceMaterial": "Material_2.011",
+      "parts": [
+        "Desk_Clamp / screw_screw_collar",
+        "Desk_Clamp / screw_screw_core"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.4
+      }
+    }
+  ]
+}

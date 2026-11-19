@@ -1,0 +1,224 @@
+{
+  "assetId": "asset_26_violin_case_c1b526f8",
+  "name": "Violin case",
+  "totalMassKg": 3.46,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "bottom shell",
+      "materials": [
+        "Brushed steel hardware",
+        "Brown plush velvet lining",
+        "Brown tweed fabric shell"
+      ],
+      "massKg": 2.4,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.0,
+        0.0,
+        0.0425
+      ],
+      "inertia": {
+        "ixx": 0.014965,
+        "iyy": 0.129445,
+        "izz": 0.14152,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        1.0500001311302185,
+        0.48019838333129883,
+        0.10768496990203857
+      ],
+      "sourceLink": "bottom_shell",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "26 | vc_metal_brown_tweed_red",
+        "26 | vc_plush_brown_tweed_red",
+        "26 | vc_shell_brown_tweed_red"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "lid",
+      "materials": [
+        "Brown plush velvet lining",
+        "Brown tweed fabric shell"
+      ],
+      "massKg": 1.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        -0.144,
+        -0.13,
+        0.0225
+      ],
+      "inertia": {
+        "ixx": 0.00580208,
+        "iyy": 0.0535021,
+        "izz": 0.0589667,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        1.04677215218544,
+        0.4534285068511963,
+        0.14642935991287231
+      ],
+      "sourceLink": "lid",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "26 | vc_plush_brown_tweed_red",
+        "26 | vc_shell_brown_tweed_red"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "latch 0",
+      "materials": [
+        "Brushed steel hardware"
+      ],
+      "massKg": 0.03,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.0,
+        0.0,
+        0.017
+      ],
+      "inertia": {
+        "ixx": 4.64e-06,
+        "iyy": 8e-06,
+        "izz": 4.64e-06,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.05327492952346802,
+        0.030648231506347656,
+        0.05025799572467804
+      ],
+      "sourceLink": "latch_0",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "26 | vc_metal_brown_tweed_red"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "latch 1",
+      "materials": [
+        "Brushed steel hardware"
+      ],
+      "massKg": 0.03,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.0,
+        0.0,
+        0.017
+      ],
+      "inertia": {
+        "ixx": 4.64e-06,
+        "iyy": 8e-06,
+        "izz": 4.64e-06,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.05327492952346802,
+        0.030648231506347656,
+        0.05025799572467804
+      ],
+      "sourceLink": "latch_1",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "26 | vc_metal_brown_tweed_red"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "bottom_to_lid",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 3.14159,
+      "id": "0",
+      "effort": 8.0,
+      "velocity": 2.0,
+      "damping": 0.15,
+      "friction": 0.08,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "bottom_to_latch_0",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.39626,
+      "id": "1",
+      "effort": 2.0,
+      "velocity": 2.0,
+      "damping": 0.02,
+      "friction": 0.015,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "bottom_to_latch_1",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.39626,
+      "id": "2",
+      "effort": 2.0,
+      "velocity": 2.0,
+      "damping": 0.02,
+      "friction": 0.015,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/Indoor_blend_asset/26_Violin_case/Music_Violin_case/seed_0000/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

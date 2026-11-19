@@ -1,0 +1,72 @@
+{
+  "assetId": "ceiling_light_rail_b_8980c652",
+  "dimensions_m": [
+    0.4643526077270508,
+    0.9996132850646973,
+    0.3753848075866699
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Brushed Steel",
+      "surfaceMaterial": "M_seeded_ceiling_light_fixture_adjustable_1369_002.002",
+      "parts": [
+        "carriage_1.002",
+        "carriage_0.002",
+        "lamp_head_1.002",
+        "lamp_head_0.002",
+        "carriage_2.002",
+        "lamp_head_2.002",
+        "mount.003",
+        "swivel_yoke_0.002",
+        "swivel_yoke_1.002",
+        "swivel_yoke_2.002"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Black Polycarbonate",
+      "surfaceMaterial": "M_seeded_ceiling_light_fixture_adjustable_1369_001.002",
+      "parts": [
+        "lamp_head_1.002",
+        "lamp_head_0.002",
+        "lamp_head_2.002",
+        "mount.003"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2400000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "2",
+      "material": "Frosted Glass Diffuser",
+      "surfaceMaterial": "M_seeded_ceiling_light_fixture_adjustable_1369_003.002",
+      "parts": [
+        "lamp_head_1.002",
+        "lamp_head_0.002",
+        "lamp_head_2.002"
+      ],
+      "values": {
+        "density_kg_m3": 2500.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.23,
+        "static_friction_coefficient": 0.62,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.62
+      }
+    }
+  ]
+}

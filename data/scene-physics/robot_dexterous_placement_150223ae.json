@@ -1,0 +1,1336 @@
+{
+  "assetId": "robot_dexterous_placement_150223ae",
+  "name": "Robot dexterous",
+  "totalMassKg": 10.528,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "base",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Dark Anodized Aluminum",
+        "Stainless Steel"
+      ],
+      "massKg": 4.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9999999403953552,
+        0.0,
+        0.8052000492811203
+      ],
+      "inertia": {
+        "ixx": 0.09155154602503017,
+        "iyy": 0.09155150598129318,
+        "izz": 0.17221664032648015,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5126849412918091,
+        0.5126850605010986,
+        0.12000006437301636
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow aluminum base plate with steel mounting bolts; mass spread over wide area, slightly bottom-heavy from mounting hardware.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow aluminum base plate with steel mounting bolts; mass spread over wide area, slightly bottom-heavy from mounting hardware.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "dark.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "19",
+      "name": "upper arm",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 1.85,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9560932517051697,
+        5.960464477539063e-08,
+        1.0996686255931853
+      ],
+      "inertia": {
+        "ixx": 0.030577239205626456,
+        "iyy": 0.028919468538554562,
+        "izz": 0.016258581301730673,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.23743164539337158,
+        0.2630116045475006,
+        0.39473164081573486
+      ],
+      "sourceLink": null,
+      "massBasis": "Upper arm: hollow aluminum tube with internal actuator and steel joints; mass slightly toward shoulder end.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Upper arm: hollow aluminum tube with internal actuator and steel joints; mass slightly toward shoulder end.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "18",
+      "name": "shoulder root",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Stainless Steel"
+      ],
+      "massKg": 1.3,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0000000596046448,
+        3.725290298461914e-08,
+        0.925750344991684
+      ],
+      "inertia": {
+        "ixx": 0.01046987272746259,
+        "iyy": 0.007487843408612305,
+        "izz": 0.010984706626522673,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.2025817632675171,
+        0.2770204097032547,
+        0.18910056352615356
+      ],
+      "sourceLink": null,
+      "massBasis": "Shoulder root: thick aluminum housing with steel bearing race; moderate hollowness.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Shoulder root: thick aluminum housing with steel bearing race; moderate hollowness.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "16",
+      "name": "forearm",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 1.15,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7901890277862549,
+        -0.002140641212463379,
+        1.2166519689559936
+      ],
+      "inertia": {
+        "ixx": 0.005545024683711826,
+        "iyy": 0.01121624623158661,
+        "izz": 0.011781629348341479,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.32924580574035645,
+        0.18223264813423157,
+        0.16450917720794678
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow aluminum forearm shell with internal cable routing and steel bearing mounts; slightly bottom-heavy.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow aluminum forearm shell with internal cable routing and steel bearing mounts; slightly bottom-heavy.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "17",
+      "name": "palm",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Dark Anodized Aluminum",
+        "Stainless Steel"
+      ],
+      "massKg": 0.85,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.6422978043556213,
+        -0.04432883858680725,
+        1.2938039302825928
+      ],
+      "inertia": {
+        "ixx": 0.007491262333673821,
+        "iyy": 0.0051778574149478895,
+        "izz": 0.006324804902422473,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1773751974105835,
+        0.26028957962989807,
+        0.2230679988861084
+      ],
+      "sourceLink": null,
+      "massBasis": "Palm frame: hollow aluminum with steel tendon routes and dark polymer covers; near-uniform hollow box.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Palm frame: hollow aluminum with steel tendon routes and dark polymer covers; near-uniform hollow box.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "dark.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "20",
+      "name": "wrist pitch",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Stainless Steel"
+      ],
+      "massKg": 0.3,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.6169251203536987,
+        -0.008174866437911987,
+        1.1900922060012817
+      ],
+      "inertia": {
+        "ixx": 0.0006407649699034166,
+        "iyy": 0.0006335864004511791,
+        "izz": 0.0004734775584315982,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.09856247901916504,
+        0.10006832331418991,
+        0.13808846473693848
+      ],
+      "sourceLink": null,
+      "massBasis": "Wrist pitch: compact aluminum housing with steel bearing; near-solid small part.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Wrist pitch: compact aluminum housing with steel bearing; near-solid small part.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "21",
+      "name": "wrist roll",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Stainless Steel"
+      ],
+      "massKg": 0.29,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.6528249979019165,
+        -0.006910800933837891,
+        1.1871616840362549
+      ],
+      "inertia": {
+        "ixx": 0.0004545617894522364,
+        "iyy": 0.0006409803524188191,
+        "izz": 0.0006045137627914754,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.13056015968322754,
+        0.09492456167936325,
+        0.10624504089355469
+      ],
+      "sourceLink": null,
+      "massBasis": "Wrist roll: small aluminum drum with steel shaft; slightly higher fill than larger hollow parts.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Wrist roll: small aluminum drum with steel shaft; slightly higher fill than larger hollow parts.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "15",
+      "name": "finger 4 proximal",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 0.072,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.660756140947342,
+        0.043257239973172545,
+        1.3609274625778198
+      ],
+      "inertia": {
+        "ixx": 5.051371814467751e-05,
+        "iyy": 5.5024950213745565e-05,
+        "izz": 6.667623195280719e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.084037184715271,
+        0.07345929043367505,
+        0.058081626892089844
+      ],
+      "sourceLink": null,
+      "massBasis": "Thumb proximal is bulkier with larger servo; steel joint hardware; more fill fraction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thumb proximal is bulkier with larger servo; steel joint hardware; more fill fraction.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "finger 1 proximal",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 0.07,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.6456707000732422,
+        -0.048221079632639885,
+        1.38414865732193
+      ],
+      "inertia": {
+        "ixx": 4.3050165431306765e-05,
+        "iyy": 0.00010441441259837348,
+        "izz": 7.756475192049011e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1190648078918457,
+        0.036896977573633194,
+        0.07900035381317139
+      ],
+      "sourceLink": null,
+      "massBasis": "Proximal phalanx with servo and steel linkage; motor mass near joint side.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Proximal phalanx with servo and steel linkage; motor mass near joint side.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "finger 0 proximal",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 0.068,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.644299817085266,
+        -0.0035636210814118385,
+        1.3974518775939941
+      ],
+      "inertia": {
+        "ixx": 4.5634251990668346e-05,
+        "iyy": 9.126184539797579e-05,
+        "izz": 6.321901979194984e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.10692739486694336,
+        0.03900961019098759,
+        0.0822908878326416
+      ],
+      "sourceLink": null,
+      "massBasis": "Proximal phalanx with embedded servo and steel shaft; motor concentrates mass toward joint end.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Proximal phalanx with embedded servo and steel shaft; motor concentrates mass toward joint end.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "finger 1 middle",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 0.048,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7141008853912354,
+        -0.05216520465910435,
+        1.4220080971717834
+      ],
+      "inertia": {
+        "ixx": 2.534491112033394e-05,
+        "iyy": 5.0771544815776226e-05,
+        "izz": 3.706258624967874e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.09316146373748779,
+        0.03669814392924309,
+        0.07131016254425049
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow aluminum middle phalanx, slightly larger than finger 0; accent shell with steel hinge.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow aluminum middle phalanx, slightly larger than finger 0; accent shell with steel hinge.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "9",
+      "name": "finger 2 proximal",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 0.044,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.6541886448860168,
+        -0.09281351789832115,
+        1.3560798168182373
+      ],
+      "inertia": {
+        "ixx": 1.3794496856677079e-05,
+        "iyy": 5.205617129497683e-05,
+        "izz": 4.9722803852723415e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.11951231956481934,
+        0.039143793284893036,
+        0.04643416404724121
+      ],
+      "sourceLink": null,
+      "massBasis": "Proximal phalanx with small servo; steel joint hardware at proximal end.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Proximal phalanx with small servo; steel joint hardware at proximal end.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "12",
+      "name": "finger 3 proximal",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 0.038,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.6630168020725251,
+        -0.13499964773654938,
+        1.3399205803871155
+      ],
+      "inertia": {
+        "ixx": 1.16882419979126e-05,
+        "iyy": 3.788745862754766e-05,
+        "izz": 3.5557909392448015e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.10774266719818115,
+        0.03806197643280029,
+        0.046582579612731934
+      ],
+      "sourceLink": null,
+      "massBasis": "Proximal phalanx with micro servo and steel shaft; joint-end mass bias.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Proximal phalanx with micro servo and steel shaft; joint-end mass bias.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "finger 0 middle",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 0.035,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7067148351669312,
+        -0.00866578845307231,
+        1.4271612763404846
+      ],
+      "inertia": {
+        "ixx": 1.1485532948268712e-05,
+        "iyy": 2.8641527241097365e-05,
+        "izz": 2.48396497558151e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.08943808078765869,
+        0.03492317069321871,
+        0.04926025867462158
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow aluminum middle phalanx with accent cover and steel hinge; slightly joint-side heavy.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow aluminum middle phalanx with accent cover and steel hinge; slightly joint-side heavy.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "finger 2 distal",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Rubber",
+        "Stainless Steel"
+      ],
+      "massKg": 0.034,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7585753202438354,
+        -0.07585650123655796,
+        1.3472665071487426
+      ],
+      "inertia": {
+        "ixx": 2.0387325441658227e-05,
+        "iyy": 1.9318285064492787e-05,
+        "izz": 1.0518664681419927e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03929448127746582,
+        0.04351339861750603,
+        0.07830524444580078
+      ],
+      "sourceLink": null,
+      "massBasis": "Aluminum distal phalanx with rubber tip and steel pin; consistent with other distals.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Aluminum distal phalanx with rubber tip and steel pin; consistent with other distals.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "rubber.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "finger 0 distal",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Rubber",
+        "Stainless Steel"
+      ],
+      "massKg": 0.032,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7429956793785095,
+        -0.0017030555754899979,
+        1.421165132522583
+      ],
+      "inertia": {
+        "ixx": 1.7246369429540253e-05,
+        "iyy": 1.6398542835672745e-05,
+        "izz": 9.640161693446356e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.0390697717666626,
+        0.04267119988799095,
+        0.07319974899291992
+      ],
+      "sourceLink": null,
+      "massBasis": "Small aluminum distal phalanx with rubber fingertip and steel pin; rubber adds mass at tip end.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small aluminum distal phalanx with rubber fingertip and steel pin; rubber adds mass at tip end.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "rubber.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "finger 1 distal",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Rubber",
+        "Stainless Steel"
+      ],
+      "massKg": 0.03,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7485035061836243,
+        -0.050055187195539474,
+        1.4222560703754425
+      ],
+      "inertia": {
+        "ixx": 1.871769202047619e-05,
+        "iyy": 1.609791759753989e-05,
+        "izz": 8.422499140945544e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03278076648712158,
+        0.04522018879652023,
+        0.07927215099334717
+      ],
+      "sourceLink": null,
+      "massBasis": "Small aluminum distal segment with rubber pad and steel pin; similar to finger 0 distal.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small aluminum distal segment with rubber pad and steel pin; similar to finger 0 distal.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "rubber.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "13",
+      "name": "finger 4 distal",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Rubber",
+        "Stainless Steel"
+      ],
+      "massKg": 0.03,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7329072952270508,
+        0.013331861235201359,
+        1.3794073534011841
+      ],
+      "inertia": {
+        "ixx": 1.5417655150697424e-05,
+        "iyy": 1.0231458165162621e-05,
+        "izz": 1.372922513304034e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03977489471435547,
+        0.060900790616869926,
+        0.049832820892333984
+      ],
+      "sourceLink": null,
+      "massBasis": "Thumb distal; slightly wider rubber contact patch; steel pivot pin.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thumb distal; slightly wider rubber contact patch; steel pivot pin.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "rubber.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "finger 2 middle",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7298948335647584,
+        -0.08654807507991791,
+        1.3647826313972473
+      ],
+      "inertia": {
+        "ixx": 5.816687494968387e-06,
+        "iyy": 1.8832514873396988e-05,
+        "izz": 1.9723499244583886e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.0934370756149292,
+        0.038608208298683167,
+        0.033084750175476074
+      ],
+      "sourceLink": null,
+      "massBasis": "Compact hollow aluminum middle phalanx; thinner profile gives slightly higher z-variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Compact hollow aluminum middle phalanx; thinner profile gives slightly higher z-variance.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "11",
+      "name": "finger 3 middle",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 0.024,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7280413246154784,
+        -0.12924085557460785,
+        1.3473233580589294
+      ],
+      "inertia": {
+        "ixx": 6.180814308429206e-06,
+        "iyy": 1.6102115926730105e-05,
+        "izz": 1.6742600557619483e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.08606183528900146,
+        0.03973668813705444,
+        0.035811781883239746
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin hollow aluminum middle phalanx with accent cover and steel hinge.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin hollow aluminum middle phalanx with accent cover and steel hinge.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "finger 3 distal",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Rubber",
+        "Stainless Steel"
+      ],
+      "massKg": 0.02,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7569406628608704,
+        -0.117833461612463,
+        1.3259507238864898
+      ],
+      "inertia": {
+        "ixx": 1.0102191213484092e-05,
+        "iyy": 8.12354381921523e-06,
+        "izz": 4.5186089415197305e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.026562094688415527,
+        0.04248286038637161,
+        0.06996715068817139
+      ],
+      "sourceLink": null,
+      "massBasis": "Smallest distal phalanx; aluminum shell, rubber pad, steel pin.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Smallest distal phalanx; aluminum shell, rubber pad, steel pin.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "rubber.001",
+        "steel.001"
+      ]
+    },
+    {
+      "id": "14",
+      "name": "finger 4 middle",
+      "materials": [
+        "Satin Silver Aluminum",
+        "Orange Engineering Plastic",
+        "Stainless Steel"
+      ],
+      "massKg": 0.018,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.7051338624954224,
+        0.02456780057400465,
+        1.3732656836509705
+      ],
+      "inertia": {
+        "ixx": 4.495676948459789e-06,
+        "iyy": 7.824039451757159e-06,
+        "izz": 7.482259966582745e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06327664852142334,
+        0.0358059648424387,
+        0.03863990306854248
+      ],
+      "sourceLink": null,
+      "massBasis": "Short thumb middle phalanx; hollow aluminum with accent shell.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Short thumb middle phalanx; hollow aluminum with accent shell.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Dexterous",
+        "accent.001",
+        "steel.001"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "finger_0_proximal",
+      "type": "revolute",
+      "lower": 0.4674013098933405,
+      "upper": 0.4814013098933405,
+      "id": "0",
+      "effort": 1.2,
+      "velocity": 6.0,
+      "damping": 0.02,
+      "friction": 0.03,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_4_distal",
+      "type": "revolute",
+      "lower": -1.6549999999999998,
+      "upper": -1.645,
+      "id": "1",
+      "effort": 0.6,
+      "velocity": 7.0,
+      "damping": 0.012,
+      "friction": 0.02,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_2_proximal",
+      "type": "revolute",
+      "lower": 0.9823377649173658,
+      "upper": 0.9963377649173658,
+      "id": "2",
+      "effort": 1.2,
+      "velocity": 6.0,
+      "damping": 0.02,
+      "friction": 0.03,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "upper_arm",
+      "type": "revolute",
+      "lower": -0.25,
+      "upper": 0.25,
+      "id": "3",
+      "effort": 18.0,
+      "velocity": 2.5,
+      "damping": 0.5,
+      "friction": 0.25,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_1_distal",
+      "type": "revolute",
+      "lower": 0.948,
+      "upper": 0.962,
+      "id": "4",
+      "effort": 0.7,
+      "velocity": 7.0,
+      "damping": 0.012,
+      "friction": 0.02,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_4_middle",
+      "type": "revolute",
+      "lower": 0.10299999999999997,
+      "upper": 0.11299999999999998,
+      "id": "5",
+      "effort": 0.5,
+      "velocity": 6.5,
+      "damping": 0.01,
+      "friction": 0.018,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_3_distal",
+      "type": "revolute",
+      "lower": 0.30627946074180434,
+      "upper": 0.32027946074180436,
+      "id": "6",
+      "effort": 0.7,
+      "velocity": 7.0,
+      "damping": 0.012,
+      "friction": 0.02,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "wrist_pitch",
+      "type": "revolute",
+      "lower": -0.25,
+      "upper": 0.25,
+      "id": "7",
+      "effort": 8.0,
+      "velocity": 3.5,
+      "damping": 0.2,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_1_middle",
+      "type": "revolute",
+      "lower": -1.2319999999999998,
+      "upper": -1.218,
+      "id": "8",
+      "effort": 0.8,
+      "velocity": 6.5,
+      "damping": 0.015,
+      "friction": 0.025,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_4_proximal",
+      "type": "revolute",
+      "lower": 0.39499999999999996,
+      "upper": 0.40499999999999997,
+      "id": "9",
+      "effort": 1.4,
+      "velocity": 5.5,
+      "damping": 0.022,
+      "friction": 0.03,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_0_distal",
+      "type": "revolute",
+      "lower": 0.5508026862810698,
+      "upper": 0.5648026862810698,
+      "id": "10",
+      "effort": 0.6,
+      "velocity": 7.0,
+      "damping": 0.012,
+      "friction": 0.02,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_3_middle",
+      "type": "revolute",
+      "lower": -0.7222302303808155,
+      "upper": -0.7082302303808155,
+      "id": "11",
+      "effort": 0.8,
+      "velocity": 6.5,
+      "damping": 0.015,
+      "friction": 0.025,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "wrist_roll",
+      "type": "revolute",
+      "lower": -0.45,
+      "upper": 0.45,
+      "id": "12",
+      "effort": 8.0,
+      "velocity": 3.5,
+      "damping": 0.2,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_1_proximal",
+      "type": "revolute",
+      "lower": 0.39399999999999996,
+      "upper": 0.408,
+      "id": "13",
+      "effort": 1.2,
+      "velocity": 6.0,
+      "damping": 0.02,
+      "friction": 0.03,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "forearm",
+      "type": "revolute",
+      "lower": -0.25,
+      "upper": 0.25,
+      "id": "14",
+      "effort": 12.0,
+      "velocity": 3.0,
+      "damping": 0.35,
+      "friction": 0.18,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_0_middle",
+      "type": "revolute",
+      "lower": -0.6801678766448879,
+      "upper": -0.6661678766448879,
+      "id": "15",
+      "effort": 0.8,
+      "velocity": 6.5,
+      "damping": 0.015,
+      "friction": 0.025,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_3_proximal",
+      "type": "revolute",
+      "lower": 0.8763674793958723,
+      "upper": 0.8903674793958724,
+      "id": "16",
+      "effort": 1.2,
+      "velocity": 6.0,
+      "damping": 0.02,
+      "friction": 0.03,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_2_distal",
+      "type": "revolute",
+      "lower": 0.6212367754706956,
+      "upper": 0.6352367754706956,
+      "id": "17",
+      "effort": 0.7,
+      "velocity": 7.0,
+      "damping": 0.012,
+      "friction": 0.02,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "palm",
+      "type": "revolute",
+      "lower": -0.25,
+      "upper": 0.25,
+      "id": "18",
+      "effort": 10.0,
+      "velocity": 3.0,
+      "damping": 0.3,
+      "friction": 0.15,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "finger_2_middle",
+      "type": "revolute",
+      "lower": -0.8617036515033621,
+      "upper": -0.8477036515033621,
+      "id": "19",
+      "effort": 0.8,
+      "velocity": 6.5,
+      "damping": 0.015,
+      "friction": 0.025,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "shoulder_root",
+      "type": "revolute",
+      "lower": -0.45,
+      "upper": 0.45,
+      "id": "20",
+      "effort": 22.0,
+      "velocity": 2.0,
+      "damping": 0.6,
+      "friction": 0.3,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

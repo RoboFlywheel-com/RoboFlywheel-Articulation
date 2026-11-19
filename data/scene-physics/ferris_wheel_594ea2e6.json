@@ -1,0 +1,1094 @@
+{
+  "assetId": "ferris_wheel_594ea2e6",
+  "name": "Ferris wheel",
+  "totalMassKg": 24050,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "16",
+      "name": "support frame",
+      "materials": [
+        "galvanized steel support",
+        "dark structural steel",
+        "steel wheel rim"
+      ],
+      "massKg": 12000,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -28.165980339050293,
+        21.448523387908935,
+        5.154135848861188
+      ],
+      "inertia": {
+        "ixx": 250349.83292059076,
+        "iyy": 229412.99273775826,
+        "izz": 306614.81125927105,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        13.230562210083008,
+        13.22778034210205,
+        10.300271698273718
+      ],
+      "sourceLink": "support_frame",
+      "massBasis": "Steel A-frame/truss support, ~1.5 m\u00b3 effective steel in 1790 m\u00b3 envelope; base plates and gussets lower CoM; mass along members gives sub-uniform variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Steel A-frame/truss support, ~1.5 m\u00b3 effective steel in 1790 m\u00b3 envelope; base plates and gussets lower CoM; mass along members gives sub-uniform variance.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_001.001",
+        "M_seeded_ferris_wheel_1_002.001",
+        "M_seeded_ferris_wheel_1_003.001"
+      ]
+    },
+    {
+      "id": "17",
+      "name": "wheel",
+      "materials": [
+        "dark structural steel",
+        "steel wheel rim"
+      ],
+      "massKg": 7500,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -28.94770050048828,
+        21.303001403808594,
+        9.943507075309753
+      ],
+      "inertia": {
+        "ixx": 449709.03007884836,
+        "iyy": 299243.0212430408,
+        "izz": 247384.51035860815,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        11.146949768066406,
+        15.893505096435547,
+        17.84532380104065
+      ],
+      "sourceLink": "wheel",
+      "massBasis": "Rim-and-spoke steel wheel ~18 m dia; hollow tube rim dominates inertia in YZ plane; hub and axle along X reduce vx; ~1 m\u00b3 effective steel.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rim-and-spoke steel wheel ~18 m dia; hollow tube rim dominates inertia in YZ plane; hub and axle along X reduce vx; ~1 m\u00b3 effective steel.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_002.001",
+        "M_seeded_ferris_wheel_1_003.001"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "gondola 13",
+      "materials": [
+        "painted steel frame",
+        "painted steel blue accent",
+        "translucent polycarbonate panel"
+      ],
+      "massKg": 305,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -31.83904457092285,
+        16.727436981201173,
+        6.50623083114624
+      ],
+      "inertia": {
+        "ixx": 174.57671095257916,
+        "iyy": 164.66113472870347,
+        "izz": 175.49690782934607,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.8194236755371094,
+        2.054652214050293,
+        1.8092842102050781
+      ],
+      "sourceLink": "gondola_13",
+      "massBasis": "Slightly larger gondola variant; same hollow cabin construction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Slightly larger gondola variant; same hollow cabin construction.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_005.001",
+        "M_seeded_ferris_wheel_1_006.001"
+      ]
+    },
+    {
+      "id": "11",
+      "name": "gondola 5",
+      "materials": [
+        "painted steel frame",
+        "painted steel blue accent",
+        "translucent polycarbonate panel"
+      ],
+      "massKg": 305,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -25.4097957611084,
+        26.62397003173828,
+        12.333917140960693
+      ],
+      "inertia": {
+        "ixx": 170.9996631801837,
+        "iyy": 159.14884624440282,
+        "izz": 184.69504597420763,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.8588981628417969,
+        2.1154403686523438,
+        1.7052583694458008
+      ],
+      "sourceLink": "gondola_5",
+      "massBasis": "Matches id-4 class; hollow gondola with seats.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Matches id-4 class; hollow gondola with seats.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_005.001",
+        "M_seeded_ferris_wheel_1_006.001"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "gondola 4",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel purple accent"
+      ],
+      "massKg": 300,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -25.123663902282715,
+        27.07158935546875,
+        9.738874435424805
+      ],
+      "inertia": {
+        "ixx": 171.25518816182083,
+        "iyy": 163.1860196459209,
+        "izz": 164.47549374982992,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.7829723358154297,
+        1.9985218048095703,
+        1.858652114868164
+      ],
+      "sourceLink": "gondola_4",
+      "massBasis": "Medium-large gondola; hollow construction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Medium-large gondola; hollow construction.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_009.001"
+      ]
+    },
+    {
+      "id": "14",
+      "name": "gondola 8",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel purple accent"
+      ],
+      "massKg": 300,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -28.821439743041992,
+        21.37007843017578,
+        15.994253158569336
+      ],
+      "inertia": {
+        "ixx": 167.17278881498495,
+        "iyy": 155.2930853085767,
+        "izz": 182.71758104904438,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.8634147644042969,
+        2.122396469116211,
+        1.6853523254394531
+      ],
+      "sourceLink": "gondola_8",
+      "massBasis": "Medium-large gondola; consistent with id-10.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Medium-large gondola; consistent with id-10.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_009.001"
+      ]
+    },
+    {
+      "id": "15",
+      "name": "gondola 9",
+      "materials": [
+        "painted steel frame",
+        "painted steel blue accent",
+        "translucent polycarbonate panel"
+      ],
+      "massKg": 300,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -30.23015022277832,
+        19.20731246948242,
+        15.208077430725098
+      ],
+      "inertia": {
+        "ixx": 171.59615900953287,
+        "iyy": 163.04919671490714,
+        "izz": 166.80019755923132,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.7934684753417969,
+        2.0146865844726562,
+        1.8470211029052734
+      ],
+      "sourceLink": "gondola_9",
+      "massBasis": "Same class as id-10/14; hollow cabin.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same class as id-10/14; hollow cabin.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_005.001",
+        "M_seeded_ferris_wheel_1_006.001"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "gondola 14",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel cyan accent"
+      ],
+      "massKg": 295,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -30.938003540039062,
+        18.11003128051758,
+        4.613495111465454
+      ],
+      "inertia": {
+        "ixx": 161.4101962228854,
+        "iyy": 149.29316799963954,
+        "izz": 181.7160893058474,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.872314453125,
+        2.1361007690429688,
+        1.6328282356262207
+      ],
+      "sourceLink": "gondola_14",
+      "massBasis": "Larger bounding box but narrower depth; hollow gondola.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Larger bounding box but narrower depth; hollow gondola.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_007.001"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "gondola 1",
+      "materials": [
+        "painted steel frame",
+        "painted steel blue accent",
+        "translucent polycarbonate panel"
+      ],
+      "massKg": 285,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -27.145977020263672,
+        23.96224411010742,
+        3.414849877357483
+      ],
+      "inertia": {
+        "ixx": 159.5960342959329,
+        "iyy": 154.0711486478131,
+        "izz": 145.66971163261812,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.7315864562988281,
+        1.9193954467773438,
+        1.8958632946014404
+      ],
+      "sourceLink": "gondola_1",
+      "massBasis": "Hollow 4-person gondola, steel/aluminium frame with composite panels and seats; ~45 kg/m\u00b3 effective fill of bounding box; floor and seats lower CoM.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow 4-person gondola, steel/aluminium frame with composite panels and seats; ~45 kg/m\u00b3 effective fill of bounding box; floor and seats lower CoM.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_005.001",
+        "M_seeded_ferris_wheel_1_006.001"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "gondola 16",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel purple accent"
+      ],
+      "massKg": 285,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -28.35097026824951,
+        22.09321586608887,
+        3.02774441242218
+      ],
+      "inertia": {
+        "ixx": 152.72272086084544,
+        "iyy": 140.75988328250176,
+        "izz": 176.75787910686665,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.877706527709961,
+        2.1444015502929688,
+        1.5802910327911377
+      ],
+      "sourceLink": "gondola_16",
+      "massBasis": "Standard gondola geometry; hollow cabin.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Standard gondola geometry; hollow cabin.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_009.001"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "gondola 12",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel purple accent"
+      ],
+      "massKg": 280,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -32.26759910583496,
+        16.076614456176756,
+        8.863257884979248
+      ],
+      "inertia": {
+        "ixx": 155.94158499280243,
+        "iyy": 150.93025408866748,
+        "izz": 141.0209845627015,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.7210121154785156,
+        1.903111457824707,
+        1.900456428527832
+      ],
+      "sourceLink": "gondola_12",
+      "massBasis": "Standard gondola, hollow construction with seat platform.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Standard gondola, hollow construction with seat platform.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_009.001"
+      ]
+    },
+    {
+      "id": "12",
+      "name": "gondola 6",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel cyan accent"
+      ],
+      "massKg": 280,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -26.21394157409668,
+        25.38375862121582,
+        14.467465877532959
+      ],
+      "inertia": {
+        "ixx": 147.70697028532675,
+        "iyy": 135.85593975602117,
+        "izz": 174.11398103949963,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.8797874450683594,
+        2.1476097106933594,
+        1.543848991394043
+      ],
+      "sourceLink": "gondola_6",
+      "massBasis": "Narrower depth gondola; hollow shell.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Narrower depth gondola; hollow shell.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_007.001"
+      ]
+    },
+    {
+      "id": "13",
+      "name": "gondola 7",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel green accent"
+      ],
+      "massKg": 280,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -27.4121675491333,
+        23.538621139526366,
+        15.7541184425354
+      ],
+      "inertia": {
+        "ixx": 147.03183810891986,
+        "iyy": 135.16352643035842,
+        "izz": 174.1954789319061,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.8801593780517578,
+        2.1481800079345703,
+        1.533595085144043
+      ],
+      "sourceLink": "gondola_7",
+      "massBasis": "Similar to id-12; hollow gondola.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Similar to id-12; hollow gondola.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_008.001"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "gondola 15",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel green accent"
+      ],
+      "massKg": 275,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -29.71481704711914,
+        19.99281364440918,
+        3.407125234603882
+      ],
+      "inertia": {
+        "ixx": 143.27876386043113,
+        "iyy": 131.60246973931038,
+        "izz": 171.17755055902745,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.8805885314941406,
+        2.1488418579101562,
+        1.5163826942443848
+      ],
+      "sourceLink": "gondola_15",
+      "massBasis": "Gondola with reduced depth; hollow shell construction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Gondola with reduced depth; hollow shell construction.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_008.001"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "gondola 10",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel cyan accent"
+      ],
+      "massKg": 270,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -31.402047157287598,
+        17.411840744018555,
+        13.573834896087646
+      ],
+      "inertia": {
+        "ixx": 148.11467022649455,
+        "iyy": 144.24592064476278,
+        "izz": 131.09283599935435,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.6950435638427734,
+        1.8631248474121094,
+        1.908402442932129
+      ],
+      "sourceLink": "gondola_10",
+      "massBasis": "Same gondola design, slightly smaller bounding volume; hollow cabin construction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same gondola design, slightly smaller bounding volume; hollow cabin construction.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_007.001"
+      ]
+    },
+    {
+      "id": "9",
+      "name": "gondola 3",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel green accent"
+      ],
+      "massKg": 270,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -25.374260902404785,
+        26.694600296020507,
+        7.131779909133911
+      ],
+      "inertia": {
+        "ixx": 147.322957249826,
+        "iyy": 143.75883747774577,
+        "izz": 129.5320957693943,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.686655044555664,
+        1.8502044677734375,
+        1.9100699424743652
+      ],
+      "sourceLink": "gondola_3",
+      "massBasis": "Matches id-1 class; hollow gondola.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Matches id-1 class; hollow gondola.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_008.001"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "gondola 11",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel green accent"
+      ],
+      "massKg": 260,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -32.122178077697754,
+        16.306353759765624,
+        11.348269939422607
+      ],
+      "inertia": {
+        "ixx": 139.08432015730713,
+        "iyy": 136.62698640838096,
+        "izz": 119.68111356438865,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.6580562591552734,
+        1.806168556213379,
+        1.9129152297973633
+      ],
+      "sourceLink": "gondola_11",
+      "massBasis": "Smallest gondola variant; hollow frame-and-panel cabin.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Smallest gondola variant; hollow frame-and-panel cabin.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_008.001"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "gondola 2",
+      "materials": [
+        "painted steel frame",
+        "translucent polycarbonate panel",
+        "painted steel cyan accent"
+      ],
+      "massKg": 260,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -26.087718963623047,
+        25.59840202331543,
+        4.912901759147644
+      ],
+      "inertia": {
+        "ixx": 139.31963817967707,
+        "iyy": 136.784775237549,
+        "izz": 120.08709407629038,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.6603775024414062,
+        1.8097400665283203,
+        1.9128363132476807
+      ],
+      "sourceLink": "gondola_2",
+      "massBasis": "Matches id-2 dimensions; consistent hollow gondola mass.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Matches id-2 dimensions; consistent hollow gondola mass.",
+      "surfaceMaterials": [
+        "M_seeded_ferris_wheel_1_004.001",
+        "M_seeded_ferris_wheel_1_006.001",
+        "M_seeded_ferris_wheel_1_007.001"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "wheel_rotation",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 6.28,
+      "id": "0",
+      "effort": 250.0,
+      "velocity": 0.35,
+      "damping": 1500.0,
+      "friction": 450.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_1",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "1",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_2",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "2",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_3",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "3",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_4",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "4",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_5",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "5",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_6",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "6",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_7",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "7",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_8",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "8",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_9",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "9",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_10",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "10",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_11",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "11",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_12",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "12",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_13",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "13",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_14",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "14",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_15",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "15",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gondola_pivot_16",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "16",
+      "effort": 24.0,
+      "velocity": 1.0,
+      "damping": 15.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/outdoor_blend_asset/47_ferris_wheel/ferris_wheel/seed_0000/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

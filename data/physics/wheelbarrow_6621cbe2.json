@@ -1,0 +1,123 @@
+{
+  "assetId": "wheelbarrow_6621cbe2",
+  "dimensions_m": [
+    2.9759159088134766,
+    1.945389747619629,
+    1.5707112550735474
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "painted steel green",
+      "surfaceMaterial": "M_wheelbarrow_001",
+      "parts": [
+        "frame"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "dark coated steel",
+      "surfaceMaterial": "M_wheelbarrow_002",
+      "parts": [
+        "frame",
+        "rear_legs"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "dark painted steel",
+      "surfaceMaterial": "M_wheelbarrow_003",
+      "parts": [
+        "frame"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "galvanized steel",
+      "surfaceMaterial": "M_wheelbarrow_004",
+      "parts": [
+        "frame"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "rubber tire",
+      "surfaceMaterial": "M_wheelbarrow_006",
+      "parts": [
+        "front_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "5",
+      "material": "painted steel red",
+      "surfaceMaterial": "M_wheelbarrow_007",
+      "parts": [
+        "front_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "painted steel orange",
+      "surfaceMaterial": "M_wheelbarrow_005",
+      "parts": [
+        "rear_legs"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

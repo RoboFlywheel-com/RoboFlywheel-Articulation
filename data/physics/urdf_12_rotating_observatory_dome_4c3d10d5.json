@@ -1,0 +1,170 @@
+{
+  "assetId": "urdf_12_rotating_observatory_dome_4c3d10d5",
+  "dimensions_m": [
+    8.328898429870605,
+    8.328897476196289,
+    3.8833199813961983
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "painted steel dome shell",
+      "surfaceMaterial": "REF_12_rotating_observatory_dome_dome_shell_00",
+      "parts": [
+        "dome_shell"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "painted steel dome panel",
+      "surfaceMaterial": "REF_12_rotating_observatory_dome_dome_shell_01",
+      "parts": [
+        "dome_shell"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "painted steel support pier",
+      "surfaceMaterial": "REF_12_rotating_observatory_dome_support_pier_00",
+      "parts": [
+        "support_pier"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "bare steel support bracket",
+      "surfaceMaterial": "REF_12_rotating_observatory_dome_support_pier_01",
+      "parts": [
+        "support_pier"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "painted steel shutter leaf",
+      "surfaceMaterial": "REF_12_rotating_observatory_dome_shutter_leaf_00",
+      "parts": [
+        "shutter_leaf"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "painted steel shutter inner",
+      "surfaceMaterial": "REF_12_rotating_observatory_dome_shutter_leaf_01",
+      "parts": [
+        "shutter_leaf"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "cast concrete foundation",
+      "surfaceMaterial": "REF_12_rotating_observatory_dome_foundation_00",
+      "parts": [
+        "foundation"
+      ],
+      "values": {
+        "density_kg_m3": 2300.0,
+        "youngs_modulus_pa": 25000000000.0,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.62,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "7",
+      "material": "cast concrete foundation",
+      "surfaceMaterial": "REF_12_rotating_observatory_dome_foundation_01",
+      "parts": [
+        "foundation"
+      ],
+      "values": {
+        "density_kg_m3": 2300.0,
+        "youngs_modulus_pa": 25000000000.0,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.62,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "8",
+      "material": "cast concrete foundation",
+      "surfaceMaterial": "REF_12_rotating_observatory_dome_foundation_02",
+      "parts": [
+        "foundation"
+      ],
+      "values": {
+        "density_kg_m3": 2300.0,
+        "youngs_modulus_pa": 25000000000.0,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.62,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "9",
+      "material": "steel foundation anchor",
+      "surfaceMaterial": "REF_12_rotating_observatory_dome_foundation_03",
+      "parts": [
+        "foundation"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

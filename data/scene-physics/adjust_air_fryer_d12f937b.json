@@ -1,0 +1,374 @@
+{
+  "assetId": "adjust_air_fryer_d12f937b",
+  "name": "Air fryer",
+  "totalMassKg": 4.615,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "2",
+      "name": "body",
+      "materials": [
+        "Stainless Steel Basket",
+        "Smoked Glass Panel",
+        "Stainless Steel Shell",
+        "Stainless Steel Trim"
+      ],
+      "massKg": 3.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.450000047683716,
+        5.18913724899292,
+        1.161620408296585
+      ],
+      "inertia": {
+        "ixx": 0.07120390275370768,
+        "iyy": 0.0933403025801122,
+        "izz": 0.09185530982203492,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.440000057220459,
+        0.35799407958984375,
+        0.35524076223373413
+      ],
+      "sourceLink": "body",
+      "massBasis": "Main housing: thin stainless-steel shell with glass window, internal heating element, fan, and electronics. Hollow construction shifts variance above 1/12; internal components raise CoM slightly toward top-back.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Main housing: thin stainless-steel shell with glass window, internal heating element, fan, and electronics. Hollow construction shifts variance above 1/12; internal components raise CoM slightly toward top-back.",
+      "surfaceMaterials": [
+        "Air fryer | air_fryer_basket_stainless_steel",
+        "Air fryer | air_fryer_glass_stainless_steel",
+        "Air fryer | air_fryer_shell_stainless_steel",
+        "Air fryer | air_fryer_trim_stainless_steel"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "drawer 0",
+      "materials": [
+        "Stainless Steel Basket",
+        "Fried Potato Fries",
+        "Stainless Steel Shell",
+        "Stainless Steel Trim",
+        "Tinted Glass Window"
+      ],
+      "massKg": 0.65,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.553715944290161,
+        5.14155387878418,
+        1.0673424243927
+      ],
+      "inertia": {
+        "ixx": 0.007699488148286445,
+        "iyy": 0.002874729143729292,
+        "izz": 0.007787796001366542,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1709423065185547,
+        0.3596658706665039,
+        0.17253828048706055
+      ],
+      "sourceLink": "drawer_0",
+      "massBasis": "Hollow stainless-steel basket with fries and thin shell; mass concentrated in walls and base, slightly bottom-heavy. Thin-wall construction reduces variance vs solid box.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow stainless-steel basket with fries and thin shell; mass concentrated in walls and base, slightly bottom-heavy. Thin-wall construction reduces variance vs solid box.",
+      "surfaceMaterials": [
+        "Air fryer | air_fryer_basket_stainless_steel",
+        "Air fryer | air_fryer_fries_stainless_steel",
+        "Air fryer | air_fryer_shell_stainless_steel",
+        "Air fryer | air_fryer_trim_stainless_steel",
+        "Air fryer | air_fryer_window_stainless_steel"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "drawer 1",
+      "materials": [
+        "Stainless Steel Basket",
+        "Fried Potato Fries",
+        "Stainless Steel Shell",
+        "Stainless Steel Trim",
+        "Tinted Glass Window"
+      ],
+      "massKg": 0.65,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.3462841510772705,
+        5.120091915130615,
+        1.0673424243927
+      ],
+      "inertia": {
+        "ixx": 0.007699488148286445,
+        "iyy": 0.002874729143729292,
+        "izz": 0.007787796001366542,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1709423065185547,
+        0.3596658706665039,
+        0.17253828048706055
+      ],
+      "sourceLink": "drawer_1",
+      "massBasis": "Identical drawer to part 0; same hollow basket construction with stainless-steel shell, basket, fries, trim, and window.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical drawer to part 0; same hollow basket construction with stainless-steel shell, basket, fries, trim, and window.",
+      "surfaceMaterials": [
+        "Air fryer | air_fryer_basket_stainless_steel",
+        "Air fryer | air_fryer_fries_stainless_steel",
+        "Air fryer | air_fryer_shell_stainless_steel",
+        "Air fryer | air_fryer_trim_stainless_steel",
+        "Air fryer | air_fryer_window_stainless_steel"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "mode knob",
+      "materials": [
+        "Stainless Steel Knob",
+        "Stainless Steel Shaft",
+        "Stainless Steel Trim"
+      ],
+      "massKg": 0.04,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.3462841510772705,
+        5.070101737976074,
+        1.3398285508155823
+      ],
+      "inertia": {
+        "ixx": 1.1404731188713414e-05,
+        "iyy": 1.1404576960512714e-05,
+        "izz": 1.8680967924137807e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.057756900787353516,
+        0.05775737762451172,
+        0.025397896766662598
+      ],
+      "sourceLink": "mode_knob",
+      "massBasis": "Small cylindrical stainless-steel knob with short shaft. Nearly solid but radially symmetric; variance slightly below 1/12 in radial axes, near 1/12 along rotation axis.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small cylindrical stainless-steel knob with short shaft. Nearly solid but radially symmetric; variance slightly below 1/12 in radial axes, near 1/12 along rotation axis.",
+      "surfaceMaterials": [
+        "Air fryer | air_fryer_knob_stainless_steel",
+        "Air fryer | air_fryer_shaft_stainless_steel",
+        "Air fryer | air_fryer_trim_stainless_steel"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "temp knob",
+      "materials": [
+        "Stainless Steel Knob",
+        "Stainless Steel Shaft",
+        "Stainless Steel Trim"
+      ],
+      "massKg": 0.04,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.450000047683716,
+        5.070101737976074,
+        1.3398285508155823
+      ],
+      "inertia": {
+        "ixx": 1.1344063857222865e-05,
+        "iyy": 1.1344063857222865e-05,
+        "izz": 1.8559787489357408e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05756950378417969,
+        0.05756950378417969,
+        0.025397896766662598
+      ],
+      "sourceLink": "temp_knob",
+      "massBasis": "Identical construction to mode knob; small solid-ish stainless-steel knob and shaft assembly.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical construction to mode knob; small solid-ish stainless-steel knob and shaft assembly.",
+      "surfaceMaterials": [
+        "Air fryer | air_fryer_knob_stainless_steel",
+        "Air fryer | air_fryer_shaft_stainless_steel",
+        "Air fryer | air_fryer_trim_stainless_steel"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "timer knob",
+      "materials": [
+        "Stainless Steel Knob",
+        "Stainless Steel Shaft",
+        "Stainless Steel Trim"
+      ],
+      "massKg": 0.035,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.553715944290161,
+        5.070101737976074,
+        1.3398285508155823
+      ],
+      "inertia": {
+        "ixx": 8.664312596187075e-06,
+        "iyy": 8.664312596187075e-06,
+        "izz": 1.3716327495421868e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05290794372558594,
+        0.05290794372558594,
+        0.025397896766662598
+      ],
+      "sourceLink": "timer_knob",
+      "massBasis": "Slightly smaller timer knob; same stainless-steel knob/shaft/trim construction, marginally lighter than mode and temp knobs.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Slightly smaller timer knob; same stainless-steel knob/shaft/trim construction, marginally lighter than mode and temp knobs.",
+      "surfaceMaterials": [
+        "Air fryer | air_fryer_knob_stainless_steel",
+        "Air fryer | air_fryer_shaft_stainless_steel",
+        "Air fryer | air_fryer_trim_stainless_steel"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "drawer_slide_1",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.17272,
+      "id": "0",
+      "effort": 30.0,
+      "velocity": 0.3,
+      "damping": 3.0,
+      "friction": 8.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_temp_knob",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 5.235988,
+      "id": "1",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.01,
+      "friction": 0.02,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "drawer_slide_0",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.17272,
+      "id": "2",
+      "effort": 30.0,
+      "velocity": 0.3,
+      "damping": 3.0,
+      "friction": 8.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_mode_knob",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 5.235988,
+      "id": "3",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.01,
+      "friction": 0.02,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_timer_knob",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 5.235988,
+      "id": "4",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.01,
+      "friction": 0.018,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/adjustment/Kitchen_Air_fryer/seed_0004_top_knobs/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

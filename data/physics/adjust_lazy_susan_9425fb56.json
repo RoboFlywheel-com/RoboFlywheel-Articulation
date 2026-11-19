@@ -1,0 +1,205 @@
+{
+  "assetId": "adjust_lazy_susan_9425fb56",
+  "dimensions_m": [
+    0.5500001907348633,
+    0.5499999523162842,
+    0.2172403335571289
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Steel metal",
+      "surfaceMaterial": "Lazy Susan | white_marble_steel_metal",
+      "parts": [
+        "Lazy Susan / upper_carrier",
+        "Lazy Susan / fixed_bearing_race",
+        "Lazy Susan / rotating_bearing_race"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Fruit skin (passion fruit)",
+      "surfaceMaterial": "Passion",
+      "parts": [
+        "Island fruit 2"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "2",
+      "material": "Orange peel",
+      "surfaceMaterial": "Orange peel",
+      "parts": [
+        "Island fruit 1"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.65,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "3",
+      "material": "Plant leaf",
+      "surfaceMaterial": "leaf",
+      "parts": [
+        "Island fruit 1"
+      ],
+      "values": {
+        "density_kg_m3": 1000.0,
+        "youngs_modulus_pa": 10000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "4",
+      "material": "Banana peel (matte)",
+      "surfaceMaterial": "Banana Matte",
+      "parts": [
+        "Island fruit 0"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 4000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "5",
+      "material": "Steel base body",
+      "surfaceMaterial": "Lazy Susan | white_marble_steel_base_body",
+      "parts": [
+        "Lazy Susan / base_body"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "Steel platter edge",
+      "surfaceMaterial": "Lazy Susan | white_marble_steel_platter_edge",
+      "parts": [
+        "Lazy Susan / edge_band"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "7",
+      "material": "Bronze decor mark",
+      "surfaceMaterial": "Lazy Susan | white_marble_steel_decor_mark",
+      "parts": [
+        "Lazy Susan / orientation_mark"
+      ],
+      "values": {
+        "density_kg_m3": 8750.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "8",
+      "material": "Ivory enamel ceramic",
+      "surfaceMaterial": "ROOM3D | warm ivory enamel",
+      "parts": [
+        "Lazy Susan fruit plate"
+      ],
+      "values": {
+        "density_kg_m3": 2400.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.22,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "9",
+      "material": "White marble",
+      "surfaceMaterial": "Lazy Susan | white marble textured",
+      "parts": [
+        "Lazy Susan / platter_core",
+        "Lazy Susan / top_veneer"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 60000000000.0,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "10",
+      "material": "Rubber pad",
+      "surfaceMaterial": "Lazy Susan | white_marble_steel_pad",
+      "parts": [
+        "Lazy Susan / rubber_pad"
+      ],
+      "values": {
+        "density_kg_m3": 930.0,
+        "youngs_modulus_pa": 3500000.0,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "11",
+      "material": "Steel inlay ring",
+      "surfaceMaterial": "Lazy Susan | white_marble_steel_decor_line",
+      "parts": [
+        "Lazy Susan / top_inlay_ring"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

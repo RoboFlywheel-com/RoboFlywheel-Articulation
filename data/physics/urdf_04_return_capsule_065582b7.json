@@ -1,0 +1,170 @@
+{
+  "assetId": "urdf_04_return_capsule_065582b7",
+  "dimensions_m": [
+    4.866855621337891,
+    4.866855621337891,
+    4.206521034240723
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Painted steel capsule shell",
+      "surfaceMaterial": "REF_04_Return_capsule_capsule_00",
+      "parts": [
+        "capsule"
+      ],
+      "values": {
+        "density_kg_m3": 7500.0,
+        "youngs_modulus_pa": 190000000000.0,
+        "poissons_ratio": 0.28,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.42,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Ablative heat shield coating",
+      "surfaceMaterial": "REF_04_Return_capsule_capsule_01",
+      "parts": [
+        "capsule"
+      ],
+      "values": {
+        "density_kg_m3": 1600.0,
+        "youngs_modulus_pa": 8000000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted steel capsule shell",
+      "surfaceMaterial": "REF_04_Return_capsule_capsule_02",
+      "parts": [
+        "capsule"
+      ],
+      "values": {
+        "density_kg_m3": 7500.0,
+        "youngs_modulus_pa": 190000000000.0,
+        "poissons_ratio": 0.28,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.42,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Smoked glass window",
+      "surfaceMaterial": "REF_04_Return_capsule_capsule_03",
+      "parts": [
+        "capsule"
+      ],
+      "values": {
+        "density_kg_m3": 2500.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.23,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Weathered rubber seal",
+      "surfaceMaterial": "REF_04_Return_capsule_capsule_04",
+      "parts": [
+        "capsule"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Bronze alloy fitting",
+      "surfaceMaterial": "REF_04_Return_capsule_capsule_05",
+      "parts": [
+        "capsule"
+      ],
+      "values": {
+        "density_kg_m3": 8600.0,
+        "youngs_modulus_pa": 105000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.42,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "6",
+      "material": "Weathered rubber pad",
+      "surfaceMaterial": "REF_04_Return_capsule_capsule_06",
+      "parts": [
+        "capsule"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "7",
+      "material": "Painted steel hatch panel",
+      "surfaceMaterial": "REF_04_Return_capsule_hatch_00",
+      "parts": [
+        "hatch"
+      ],
+      "values": {
+        "density_kg_m3": 7500.0,
+        "youngs_modulus_pa": 190000000000.0,
+        "poissons_ratio": 0.28,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.42,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "8",
+      "material": "Brass hatch hardware",
+      "surfaceMaterial": "REF_04_Return_capsule_hatch_01",
+      "parts": [
+        "hatch"
+      ],
+      "values": {
+        "density_kg_m3": 8600.0,
+        "youngs_modulus_pa": 105000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.42,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "9",
+      "material": "Painted aluminum hatch frame",
+      "surfaceMaterial": "REF_04_Return_capsule_hatch_02",
+      "parts": [
+        "hatch"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.38,
+        "restitution_coefficient": 0.5
+      }
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "assetId": "toy_car_184d604b",
+  "dimensions_m": [
+    1.1088842451572418,
+    0.8459749221801758,
+    0.7355441004037857
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Blue painted plastic",
+      "surfaceMaterial": "M_seeded_toy_car_2_001",
+      "parts": [
+        "body.001"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Beige painted plastic",
+      "surfaceMaterial": "M_seeded_toy_car_2_002",
+      "parts": [
+        "body.001",
+        "wheel_0",
+        "wheel_1",
+        "wheel_2",
+        "wheel_3",
+        "wheel_4",
+        "wheel_5"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Orange painted plastic",
+      "surfaceMaterial": "M_seeded_toy_car_2_003",
+      "parts": [
+        "body.001"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Dark rubber tire",
+      "surfaceMaterial": "M_seeded_toy_car_2_004",
+      "parts": [
+        "body.001",
+        "wheel_0",
+        "wheel_1",
+        "wheel_2",
+        "wheel_3",
+        "wheel_4",
+        "wheel_5"
+      ],
+      "values": {
+        "density_kg_m3": 1100.0,
+        "youngs_modulus_pa": 10000000.0,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.85,
+        "dynamic_friction_coefficient": 0.65,
+        "restitution_coefficient": 0.75
+      }
+    },
+    {
+      "id": "4",
+      "material": "Dark blue painted plastic",
+      "surfaceMaterial": "M_seeded_toy_car_2_005",
+      "parts": [
+        "body.001",
+        "steering_wheel.002"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Yellow painted plastic",
+      "surfaceMaterial": "M_seeded_toy_car_2_006",
+      "parts": [
+        "wheel_0",
+        "wheel_1",
+        "wheel_2",
+        "wheel_3",
+        "wheel_4",
+        "wheel_5"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "Red painted plastic",
+      "surfaceMaterial": "M_seeded_toy_car_2_007",
+      "parts": [
+        "steering_wheel.002"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

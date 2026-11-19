@@ -1,0 +1,182 @@
+{
+  "assetId": "asset_13_refrigerator_with_hinged_doors_35af1266",
+  "dimensions_m": [
+    1.0979482531547546,
+    1.6192331314086914,
+    2.029999816790223
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Glossy Fruit Plastic",
+      "surfaceMaterial": "Passion",
+      "parts": [
+        "Fridge fruit 5",
+        "Fridge fruit 2",
+        "Fridge fruit 8"
+      ],
+      "values": {
+        "density_kg_m3": 1100.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Matte Fruit Plastic",
+      "surfaceMaterial": "Banana Matte",
+      "parts": [
+        "Fridge fruit 0",
+        "Fridge fruit 3",
+        "Fridge fruit 6"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.28,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted Metal Door",
+      "surfaceMaterial": "13 | fridge_door",
+      "parts": [
+        "door_0.001",
+        "door_1.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Rubber Gasket",
+      "surfaceMaterial": "13 | fridge_gasket",
+      "parts": [
+        "door_0.001",
+        "door_1.001"
+      ],
+      "values": {
+        "density_kg_m3": 930.0,
+        "youngs_modulus_pa": 3500000.0,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Brushed Metal Handle",
+      "surfaceMaterial": "13 | fridge_handle",
+      "parts": [
+        "door_0.001",
+        "door_1.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Interior Plastic Liner",
+      "surfaceMaterial": "13 | fridge_interior",
+      "parts": [
+        "door_0.001",
+        "door_1.001",
+        "drawer_0.001",
+        "fridge_body.001",
+        "drawer_1.001"
+      ],
+      "values": {
+        "density_kg_m3": 1100.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "Gray Plastic Trim",
+      "surfaceMaterial": "13 | fridge_accent",
+      "parts": [
+        "door_0.001"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.28,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "7",
+      "material": "Brushed Metal Hardware",
+      "surfaceMaterial": "13 | fridge_hardware",
+      "parts": [
+        "drawer_0.001",
+        "drawer_1.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "8",
+      "material": "Painted Metal Body",
+      "surfaceMaterial": "13 | fridge_body",
+      "parts": [
+        "fridge_body.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "9",
+      "material": "Plastic Kick Plate",
+      "surfaceMaterial": "13 | fridge_kick",
+      "parts": [
+        "fridge_body.001"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.28,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

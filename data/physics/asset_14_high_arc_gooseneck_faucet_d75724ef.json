@@ -1,0 +1,97 @@
+{
+  "assetId": "asset_14_high_arc_gooseneck_faucet_d75724ef",
+  "dimensions_m": [
+    0.1248244596645236,
+    0.2156982421875,
+    0.440000057220459
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Polished Chrome Accent",
+      "surfaceMaterial": "14 | faucet_accent_polished_chrome",
+      "parts": [
+        "dial_cap",
+        "pin_lever_0",
+        "faucet_column",
+        "spray_head",
+        "spray_hose"
+      ],
+      "values": {
+        "density_kg_m3": 8500.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Dark Polished Chrome",
+      "surfaceMaterial": "14 | faucet_dark_polished_chrome",
+      "parts": [
+        "dial_cap",
+        "faucet_column"
+      ],
+      "values": {
+        "density_kg_m3": 8000.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Polished Chrome Body",
+      "surfaceMaterial": "14 | faucet_body_polished_chrome",
+      "parts": [
+        "faucet_column",
+        "gooseneck",
+        "spray_hose"
+      ],
+      "values": {
+        "density_kg_m3": 8500.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Hot Polished Chrome",
+      "surfaceMaterial": "14 | faucet_hot_polished_chrome",
+      "parts": [
+        "faucet_column"
+      ],
+      "values": {
+        "density_kg_m3": 8500.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Cold Polished Chrome",
+      "surfaceMaterial": "14 | faucet_cold_polished_chrome",
+      "parts": [
+        "faucet_column"
+      ],
+      "values": {
+        "density_kg_m3": 8500.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

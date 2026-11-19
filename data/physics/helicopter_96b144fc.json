@@ -1,0 +1,138 @@
+{
+  "assetId": "helicopter_96b144fc",
+  "dimensions_m": [
+    10.650911331176758,
+    9.326675415039062,
+    2.2426271438598633
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Painted Aluminum Alloy",
+      "surfaceMaterial": "M_single_rotor_helicopter_004",
+      "parts": [
+        "main_rotor",
+        "airframe",
+        "left_service_door",
+        "crew_door",
+        "right_service_door",
+        "tail_rotor"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Dark Painted Steel",
+      "surfaceMaterial": "M_single_rotor_helicopter_007",
+      "parts": [
+        "main_rotor",
+        "tail_rotor"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Carbon Fiber Composite",
+      "surfaceMaterial": "M_single_rotor_helicopter_002",
+      "parts": [
+        "main_rotor",
+        "airframe",
+        "left_service_door",
+        "crew_door",
+        "right_service_door",
+        "tail_rotor"
+      ],
+      "values": {
+        "density_kg_m3": 1600.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "3",
+      "material": "Orange Painted Aluminum",
+      "surfaceMaterial": "M_single_rotor_helicopter_006",
+      "parts": [
+        "main_rotor",
+        "airframe"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Red Painted Aluminum",
+      "surfaceMaterial": "M_single_rotor_helicopter_001",
+      "parts": [
+        "airframe"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "White Painted Aluminum",
+      "surfaceMaterial": "M_single_rotor_helicopter_003",
+      "parts": [
+        "airframe",
+        "left_service_door",
+        "crew_door",
+        "right_service_door"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "Tinted Acrylic Canopy Glass",
+      "surfaceMaterial": "M_single_rotor_helicopter_005",
+      "parts": [
+        "airframe",
+        "crew_door"
+      ],
+      "values": {
+        "density_kg_m3": 1180.0,
+        "youngs_modulus_pa": 3200000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.3
+      }
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "assetId": "skateboard_a13d755e",
+  "dimensions_m": [
+    2.1969666555523872,
+    0.9628030061721802,
+    0.3073015436530113
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Maple Plywood",
+      "surfaceMaterial": "M_skateboard_001",
+      "parts": [
+        "deck"
+      ],
+      "values": {
+        "density_kg_m3": 600.0,
+        "youngs_modulus_pa": 6500000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.38,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "1",
+      "material": "Blackened Steel",
+      "surfaceMaterial": "M_skateboard_002",
+      "parts": [
+        "deck",
+        "front_wheel_1.001",
+        "front_wheel_0.001",
+        "rear_wheel_0.002",
+        "rear_wheel_1.002"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 205000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Bare Aluminum",
+      "surfaceMaterial": "M_skateboard_003",
+      "parts": [
+        "front_hanger",
+        "front_wheel_1.001",
+        "front_wheel_0.001",
+        "front_baseplate",
+        "rear_baseplate",
+        "rear_hanger",
+        "rear_wheel_0.002",
+        "rear_wheel_1.002"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Polyurethane Rubber",
+      "surfaceMaterial": "M_skateboard_004",
+      "parts": [
+        "front_wheel_1.001",
+        "front_wheel_0.001",
+        "rear_wheel_0.002",
+        "rear_wheel_1.002"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

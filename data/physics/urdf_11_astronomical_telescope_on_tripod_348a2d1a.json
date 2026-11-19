@@ -1,0 +1,218 @@
+{
+  "assetId": "urdf_11_astronomical_telescope_on_tripod_348a2d1a",
+  "dimensions_m": [
+    2.651139497756958,
+    2.179136276245117,
+    3.401326074730605
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Painted steel tripod leg",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_tripod_00",
+      "parts": [
+        "tripod"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Bare aluminum tripod fitting",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_tripod_01",
+      "parts": [
+        "tripod"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.61,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted steel tripod accent",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_tripod_02",
+      "parts": [
+        "tripod"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Bronze tripod knob",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_tripod_03",
+      "parts": [
+        "tripod"
+      ],
+      "values": {
+        "density_kg_m3": 8800.0,
+        "youngs_modulus_pa": 110000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "4",
+      "material": "Painted steel optical tube body",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_optical_tube_00",
+      "parts": [
+        "optical_tube"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Painted steel optical tube section",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_optical_tube_01",
+      "parts": [
+        "optical_tube"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "Optical glass lens",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_optical_tube_02",
+      "parts": [
+        "optical_tube"
+      ],
+      "values": {
+        "density_kg_m3": 2500.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.23,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "7",
+      "material": "Bronze optical tube fitting",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_optical_tube_03",
+      "parts": [
+        "optical_tube"
+      ],
+      "values": {
+        "density_kg_m3": 8800.0,
+        "youngs_modulus_pa": 110000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "8",
+      "material": "Painted steel polar head housing",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_polar_head_00",
+      "parts": [
+        "polar_head"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "9",
+      "material": "Painted steel polar head detail",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_polar_head_01",
+      "parts": [
+        "polar_head"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "10",
+      "material": "Bronze polar head knob",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_polar_head_02",
+      "parts": [
+        "polar_head"
+      ],
+      "values": {
+        "density_kg_m3": 8800.0,
+        "youngs_modulus_pa": 110000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "11",
+      "material": "Painted steel fork arm body",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_fork_arm_00",
+      "parts": [
+        "fork_arm"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "12",
+      "material": "Painted steel fork arm detail",
+      "surfaceMaterial": "REF_11_astronomical_telescope_on_tripod_fork_arm_01",
+      "parts": [
+        "fork_arm"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

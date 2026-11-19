@@ -1,0 +1,184 @@
+{
+  "assetId": "transport_helicopter_23beb005",
+  "dimensions_m": [
+    14.23642349243164,
+    12.005561828613281,
+    3.7090110778808594
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Painted aluminum alloy",
+      "surfaceMaterial": "M_tandem_rotor_helicopter_002",
+      "parts": [
+        "front_rotor",
+        "fuselage.001",
+        "cargo_ramp",
+        "front_left_wheel.001",
+        "front_right_wheel.001",
+        "rear_left_wheel.001",
+        "rear_right_wheel.001",
+        "rear_rotor"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "1",
+      "material": "Carbon fiber composite",
+      "surfaceMaterial": "M_tandem_rotor_helicopter_008",
+      "parts": [
+        "front_rotor",
+        "rear_rotor"
+      ],
+      "values": {
+        "density_kg_m3": 1600.0,
+        "youngs_modulus_pa": 150000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "2",
+      "material": "Olive drab painted aluminum",
+      "surfaceMaterial": "M_tandem_rotor_helicopter_009",
+      "parts": [
+        "front_rotor",
+        "rear_rotor"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "3",
+      "material": "Blue-gray painted aluminum",
+      "surfaceMaterial": "M_tandem_rotor_helicopter_001",
+      "parts": [
+        "fuselage.001",
+        "cargo_ramp"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "4",
+      "material": "Dark coated steel",
+      "surfaceMaterial": "M_tandem_rotor_helicopter_003",
+      "parts": [
+        "fuselage.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "5",
+      "material": "Navy painted aluminum",
+      "surfaceMaterial": "M_tandem_rotor_helicopter_004",
+      "parts": [
+        "fuselage.001",
+        "cargo_ramp"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "6",
+      "material": "Gray painted steel",
+      "surfaceMaterial": "M_tandem_rotor_helicopter_005",
+      "parts": [
+        "fuselage.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "7",
+      "material": "Dark gray coated aluminum",
+      "surfaceMaterial": "M_tandem_rotor_helicopter_006",
+      "parts": [
+        "fuselage.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "8",
+      "material": "Olive drab painted steel",
+      "surfaceMaterial": "M_tandem_rotor_helicopter_007",
+      "parts": [
+        "fuselage.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "9",
+      "material": "Aircraft tire rubber",
+      "surfaceMaterial": "M_tandem_rotor_helicopter_010",
+      "parts": [
+        "front_left_wheel.001",
+        "front_right_wheel.001",
+        "rear_left_wheel.001",
+        "rear_right_wheel.001"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 10000000.0,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.4
+      }
+    }
+  ]
+}

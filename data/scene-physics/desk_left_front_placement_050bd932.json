@@ -1,0 +1,421 @@
+{
+  "assetId": "desk_left_front_placement_050bd932",
+  "name": "Desk left front",
+  "totalMassKg": 54.7,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "4",
+      "name": "body",
+      "materials": [
+        "Oak laminate board",
+        "Wood edge banding",
+        "Melamine-faced MDF",
+        "ABS plastic trim",
+        "Grey melamine chipboard",
+        "Zinc-plated steel hardware"
+      ],
+      "massKg": 42.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0,
+        -0.020435971021652233,
+        0.37560001015663147
+      ],
+      "inertia": {
+        "ixx": 3.2086987853220563,
+        "iyy": 11.653383391182196,
+        "izz": 11.212180265189646,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.743299961090088,
+        0.6812000274658203,
+        0.7512000203132629
+      ],
+      "sourceLink": null,
+      "massBasis": "Large desk carcass in chipboard/MDF panels with metal fasteners; ~5 % solid-fill of bounding box typical for hollow case furniture. Mass biased slightly low due to heavier base panels; variance below 1/12 reflecting shell-like mass on outer faces.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Large desk carcass in chipboard/MDF panels with metal fasteners; ~5 % solid-fill of bounding box typical for hollow case furniture. Mass biased slightly low due to heavier base panels; variance below 1/12 reflecting shell-like mass on outer faces.",
+      "surfaceMaterials": [
+        "Material_0.003",
+        "Material_1.003",
+        "Material_2.003",
+        "Material_3.003",
+        "Material_4.002",
+        "Material_5.001"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "JOINT | Desk Left Front | drawer slide 0",
+      "materials": [
+        "Grey melamine chipboard",
+        "Zinc-plated steel hardware",
+        "Painted MDF door panel"
+      ],
+      "massKg": 5.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.6672000885009766,
+        -0.013735944628715524,
+        0.24800008907914162
+      ],
+      "inertia": {
+        "ixx": 0.21012101214768333,
+        "iyy": 0.09672191405513682,
+        "izz": 0.21759810291847875,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.3608999252319336,
+        0.6688000559806824,
+        0.33400004357099533
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow drawer box (wood sides/bottom) with metal slide rails; roughly 30 % fill of bounding volume. Centre shifted slightly down for bottom panel and rail hardware.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow drawer box (wood sides/bottom) with metal slide rails; roughly 30 % fill of bounding volume. Centre shifted slightly down for bottom panel and rail hardware.",
+      "surfaceMaterials": [
+        "Material_4.002",
+        "Material_5.001",
+        "Material_6"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "JOINT | Desk Left Front | keyboard tray slide",
+      "materials": [
+        "ABS plastic trim",
+        "Zinc-plated steel hardware"
+      ],
+      "massKg": 2.3,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.08300244808197,
+        -0.2099796198308468,
+        0.6542001068592072
+      ],
+      "inertia": {
+        "ixx": 0.024406815862510863,
+        "iyy": 0.07882699808146752,
+        "izz": 0.10294401334516597,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6419999599456787,
+        0.3565000370144844,
+        0.030000030994415283
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin 30 mm keyboard tray platform with under-mount slide; near-uniform flat panel, variance in thickness axis reduced by metal rail strip.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin 30 mm keyboard tray platform with under-mount slide; near-uniform flat panel, variance in thickness axis reduced by metal rail strip.",
+      "surfaceMaterials": [
+        "Material_3.003",
+        "Material_5.001"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "JOINT | Desk Left Front | bypass door slide 1",
+      "materials": [
+        "ABS plastic trim",
+        "Painted MDF door panel"
+      ],
+      "massKg": 1.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.5896658897399902,
+        -0.3170999735593796,
+        0.36610008031129837
+      ],
+      "inertia": {
+        "ixx": 0.04089031862150467,
+        "iyy": 0.042793991890738355,
+        "izz": 0.002158500532208078,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.12772607803344727,
+        0.03300008177757263,
+        0.5722000449895859
+      ],
+      "sourceLink": null,
+      "massBasis": "Slightly thicker 33 mm panel variant of bypass door; same construction as part 0 with modestly more material, keeping consistent density.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Slightly thicker 33 mm panel variant of bypass door; same construction as part 0 with modestly more material, keeping consistent density.",
+      "surfaceMaterials": [
+        "Material_3.003",
+        "Material_6"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "JOINT | Desk Left Front | bypass door slide 3",
+      "materials": [
+        "ABS plastic trim",
+        "Painted MDF door panel"
+      ],
+      "massKg": 1.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.3302128911018372,
+        -0.3170999735593796,
+        0.36610008031129837
+      ],
+      "inertia": {
+        "ixx": 0.04089031862150467,
+        "iyy": 0.0427939880994325,
+        "izz": 0.0021584967409022274,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.12772595882415771,
+        0.03300008177757263,
+        0.5722000449895859
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical geometry and materials to part 1; same 33 mm panel estimate for consistency.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical geometry and materials to part 1; same 33 mm panel estimate for consistency.",
+      "surfaceMaterials": [
+        "Material_3.003",
+        "Material_6"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "JOINT | Desk Left Front | bypass door slide 0",
+      "materials": [
+        "ABS plastic trim",
+        "Painted MDF door panel"
+      ],
+      "massKg": 1.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.6013920307159424,
+        -0.2833499610424042,
+        0.36610007658600807
+      ],
+      "inertia": {
+        "ixx": 0.03266806730902624,
+        "iyy": 0.034235194361824615,
+        "izz": 0.0016826119883550292,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.12772607803344727,
+        0.025500059127807617,
+        0.5722000524401665
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin 26 mm MDF/wood panel with light metal slide hardware; near-uniform sheet with slight hardware concentration reducing thickness-axis variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin 26 mm MDF/wood panel with light metal slide hardware; near-uniform sheet with slight hardware concentration reducing thickness-axis variance.",
+      "surfaceMaterials": [
+        "Material_3.003",
+        "Material_6"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "JOINT | Desk Left Front | bypass door slide 2",
+      "materials": [
+        "ABS plastic trim",
+        "Painted MDF door panel"
+      ],
+      "massKg": 1.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.3419389724731445,
+        -0.2833499610424042,
+        0.36610007658600807
+      ],
+      "inertia": {
+        "ixx": 0.03266806730902624,
+        "iyy": 0.034235194361824615,
+        "izz": 0.0016826119883550292,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.12772607803344727,
+        0.025500059127807617,
+        0.5722000524401665
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical geometry and materials to part 0; same thin-panel estimate for consistency.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical geometry and materials to part 0; same thin-panel estimate for consistency.",
+      "surfaceMaterials": [
+        "Material_3.003",
+        "Material_6"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "bypass_door_slide_3",
+      "type": "prismatic",
+      "lower": -0.1,
+      "upper": 0.0,
+      "id": "0",
+      "effort": 20.0,
+      "velocity": 0.4,
+      "damping": 6.0,
+      "friction": 4.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "drawer_slide_0",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.2,
+      "id": "1",
+      "effort": 25.0,
+      "velocity": 0.4,
+      "damping": 10.0,
+      "friction": 6.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "keyboard_tray_slide",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.17,
+      "id": "2",
+      "effort": 15.0,
+      "velocity": 0.35,
+      "damping": 5.0,
+      "friction": 3.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "bypass_door_slide_0",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.1,
+      "id": "3",
+      "effort": 20.0,
+      "velocity": 0.4,
+      "damping": 6.0,
+      "friction": 4.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "bypass_door_slide_1",
+      "type": "prismatic",
+      "lower": -0.1,
+      "upper": 0.0,
+      "id": "4",
+      "effort": 20.0,
+      "velocity": 0.4,
+      "damping": 6.0,
+      "friction": 4.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "bypass_door_slide_2",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.1,
+      "id": "5",
+      "effort": 20.0,
+      "velocity": 0.4,
+      "damping": 6.0,
+      "friction": 4.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

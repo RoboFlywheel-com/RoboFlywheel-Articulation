@@ -1,0 +1,366 @@
+{
+  "assetId": "hydraulic_jack_d363801f",
+  "name": "Hydraulic jack",
+  "totalMassKg": 358.7,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "1",
+      "name": "jack frame",
+      "materials": [
+        "Blackened Gunmetal",
+        "Painted Steel",
+        "Bare Steel",
+        "Blue Painted Steel",
+        "Blackened Steel",
+        "Polished Chrome Steel"
+      ],
+      "massKg": 215.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.2491061091423035,
+        1.211965479850769,
+        0.808295875787735
+      ],
+      "inertia": {
+        "ixx": 170.0432167723507,
+        "iyy": 98.1213683806532,
+        "izz": 173.15921447458027,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.4974128007888794,
+        3.134777009487152,
+        1.4505917429924011
+      ],
+      "sourceLink": "jack_frame",
+      "massBasis": "Main cylinder body, base plate, and housing in steel; hollow cylindrical shell with base plate gives ~12% effective fill; CoM below mid-height due to heavy base; x/z variance elevated for hollow-cylinder radial distribution, y lower for long axis.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Main cylinder body, base plate, and housing in steel; hollow cylindrical shell with base plate gives ~12% effective fill; CoM below mid-height due to heavy base; x/z variance elevated for hollow-cylinder radial distribution, y lower for long axis.",
+      "surfaceMaterials": [
+        "M_hydraulic_jack1_seed_1_001",
+        "M_hydraulic_jack1_seed_1_002",
+        "M_hydraulic_jack1_seed_1_003",
+        "M_hydraulic_jack1_seed_1_004",
+        "M_hydraulic_jack1_seed_1_005",
+        "M_hydraulic_jack1_seed_1_006"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "ram stage  stepped ram  stage 0",
+      "materials": [
+        "Painted Steel",
+        "Bare Steel"
+      ],
+      "massKg": 52.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.233959913253784,
+        2.2364516258239746,
+        0.9688686728477478
+      ],
+      "inertia": {
+        "ixx": 6.128808334637306,
+        "iyy": 6.128808334637306,
+        "izz": 1.8587517638818387,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.498227596282959,
+        0.498227596282959,
+        1.0975826978683472
+      ],
+      "sourceLink": "ram_stage__stepped_ram__stage_0",
+      "massBasis": "Stepped ram outer stage, near-solid steel cylinder with central bore; ~30% fill of bounding box; symmetric so CoM at center; radial variance slightly below 1/12 for solid cylinder (1/8\u2192adjusted), axial near uniform.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Stepped ram outer stage, near-solid steel cylinder with central bore; ~30% fill of bounding box; symmetric so CoM at center; radial variance slightly below 1/12 for solid cylinder (1/8\u2192adjusted), axial near uniform.",
+      "surfaceMaterials": [
+        "M_hydraulic_jack1_seed_1_002",
+        "M_hydraulic_jack1_seed_1_003"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "head fitting  screw extension  head",
+      "materials": [
+        "Blackened Gunmetal",
+        "Painted Steel",
+        "Bare Steel"
+      ],
+      "massKg": 38.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.233959972858429,
+        2.2364516854286194,
+        1.704141330718994
+      ],
+      "inertia": {
+        "ixx": 2.043572904125358,
+        "iyy": 2.043572904125358,
+        "izz": 3.196814357783512,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.7643383741378784,
+        0.7643383741378784,
+        0.43468356132507324
+      ],
+      "sourceLink": "head_fitting__screw_extension__head",
+      "massBasis": "Saddle/cup head, thick-walled hollow steel cup ~18% fill of bounding box; CoM slightly below mid-height due to thicker base flange; variance near uniform-disc values reduced for wall concentration.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Saddle/cup head, thick-walled hollow steel cup ~18% fill of bounding box; CoM slightly below mid-height due to thicker base flange; variance near uniform-disc values reduced for wall concentration.",
+      "surfaceMaterials": [
+        "M_hydraulic_jack1_seed_1_001",
+        "M_hydraulic_jack1_seed_1_002",
+        "M_hydraulic_jack1_seed_1_003"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "ram stage  stepped ram  stage 1",
+      "materials": [
+        "Painted Steel",
+        "Bare Steel"
+      ],
+      "massKg": 33.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.233959913253784,
+        2.2364516258239746,
+        1.0676508843898773
+      ],
+      "inertia": {
+        "ixx": 2.5664770594090363,
+        "iyy": 2.5664770594090363,
+        "izz": 0.6956033241037657,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.3825979232788086,
+        0.3825979232788086,
+        0.9000173211097717
+      ],
+      "sourceLink": "ram_stage__stepped_ram__stage_1",
+      "massBasis": "Inner telescoping ram stage, solid polished steel rod with slight hollow core; ~35% fill; symmetric geometry places CoM at center; variance factors match solid-cylinder profile.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Inner telescoping ram stage, solid polished steel rod with slight hollow core; ~35% fill; symmetric geometry places CoM at center; variance factors match solid-cylinder profile.",
+      "surfaceMaterials": [
+        "M_hydraulic_jack1_seed_1_002",
+        "M_hydraulic_jack1_seed_1_003"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "pump drive  air over hydraulic  pump handle",
+      "materials": [
+        "Blackened Gunmetal",
+        "Bare Steel",
+        "Blackened Steel"
+      ],
+      "massKg": 17.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0609997510910034,
+        -0.42605609893798824,
+        1.0594779253005981
+      ],
+      "inertia": {
+        "ixx": 3.7019456871138217,
+        "iyy": 1.2411921342057597,
+        "izz": 2.671062808507007,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.3040454387664795,
+        1.1816990375518799,
+        0.9122838973999023
+      ],
+      "sourceLink": "pump_drive__air_over_hydraulic__pump_handle",
+      "massBasis": "Air-over-hydraulic pump cylinder plus lever handle; elongated lever biases CoM toward pivot (low y-fraction); y-variance larger for lever-like mass spread along length; ~20% fill of bounding box.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Air-over-hydraulic pump cylinder plus lever handle; elongated lever biases CoM toward pivot (low y-fraction); y-variance larger for lever-like mass spread along length; ~20% fill of bounding box.",
+      "surfaceMaterials": [
+        "M_hydraulic_jack1_seed_1_001",
+        "M_hydraulic_jack1_seed_1_003",
+        "M_hydraulic_jack1_seed_1_005"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "release valve",
+      "materials": [
+        "Blackened Gunmetal",
+        "Painted Steel",
+        "Bare Steel"
+      ],
+      "massKg": 3.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.405395269393921,
+        0.5139996558427811,
+        0.47475136518478395
+      ],
+      "inertia": {
+        "ixx": 0.03354757792320129,
+        "iyy": 0.027028577126512576,
+        "izz": 0.028696113826910966,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.20812177658081055,
+        0.26225849986076355,
+        0.24953097105026245
+      ],
+      "sourceLink": "release_valve",
+      "massBasis": "Small needle/gate release valve with knurled knob; compact near-uniform hardware; CoM slightly toward valve body (z>0.5); variance close to 1/12 for small roughly solid piece.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small needle/gate release valve with knurled knob; compact near-uniform hardware; CoM slightly toward valve body (z>0.5); variance close to 1/12 for small roughly solid piece.",
+      "surfaceMaterials": [
+        "M_hydraulic_jack1_seed_1_001",
+        "M_hydraulic_jack1_seed_1_002",
+        "M_hydraulic_jack1_seed_1_003"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "frame_to_ram_stage_0",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 8.915500199276957,
+      "id": "0",
+      "effort": 90000.0,
+      "velocity": 0.03,
+      "damping": 9500.0,
+      "friction": 1400.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "ram_stage_0_to_ram_stage_1",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 7.310710163407105,
+      "id": "1",
+      "effort": 90000.0,
+      "velocity": 0.03,
+      "damping": 6500.0,
+      "friction": 900.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "ram_head_to_fitting",
+      "type": "revolute",
+      "lower": -3.14159,
+      "upper": 3.14159,
+      "id": "2",
+      "effort": 60.0,
+      "velocity": 2.0,
+      "damping": 12.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "frame_to_pump_handle",
+      "type": "revolute",
+      "lower": -0.34,
+      "upper": 0.34,
+      "id": "3",
+      "effort": 300.0,
+      "velocity": 2.2,
+      "damping": 4.0,
+      "friction": 1.8,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "frame_to_release_valve",
+      "type": "revolute",
+      "lower": -0.8,
+      "upper": 0.8,
+      "id": "4",
+      "effort": 4.0,
+      "velocity": 4.0,
+      "damping": 1.2,
+      "friction": 0.6,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/outdoor_blend_asset/37_hydraulic_jack/pictureX_0611_hydraulic_jack1/seed_0001/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

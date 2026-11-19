@@ -1,0 +1,120 @@
+{
+  "assetId": "barrier_gate_524d75dd",
+  "name": "Barrier gate",
+  "totalMassKg": 59.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "1",
+      "name": "body",
+      "materials": [
+        "Black painted steel",
+        "Dark painted steel support",
+        "Red painted steel"
+      ],
+      "massKg": 45.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        8.692680358886719,
+        17.361658096313477,
+        0.7260338513553143
+      ],
+      "inertia": {
+        "ixx": 8.853110001562179,
+        "iyy": 10.23224590637268,
+        "izz": 4.317765263235015,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.9008464813232422,
+        0.6469993591308594,
+        1.5310329869389534
+      ],
+      "sourceLink": null,
+      "massBasis": "Steel-sheet cabinet (hollow box, ~2 mm walls) housing motor, gearbox and control board. Motor and gearbox concentrated in lower portion lower the COM in z. Variances slightly below uniform-box 1/12 due to shell construction and internal point masses.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Steel-sheet cabinet (hollow box, ~2 mm walls) housing motor, gearbox and control board. Motor and gearbox concentrated in lower portion lower the COM in z. Variances slightly below uniform-box 1/12 due to shell construction and internal point masses.",
+      "surfaceMaterials": [
+        "M_seeded_barrier_gate_boom_1_001",
+        "M_seeded_barrier_gate_boom_1_002",
+        "M_seeded_barrier_gate_boom_1_003"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "boom hinge",
+      "materials": [
+        "Black painted steel",
+        "Red painted steel",
+        "Painted aluminum boom"
+      ],
+      "massKg": 14.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        6.503137016296387,
+        17.77633762359619,
+        1.4913166165351868
+      ],
+      "inertia": {
+        "ixx": 0.8683321234669863,
+        "iyy": 17.489198761951723,
+        "izz": 18.118628055350353,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        3.866283416748047,
+        0.9071636199951172,
+        0.36230552196502686
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow aluminium rectangular tube boom (~3 mm wall) with hinge hardware near one end; length dominates, cross-section is thin-shell so transverse variances slightly below 1/12. COM shifted slightly toward hinge end for counterweight bracket.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow aluminium rectangular tube boom (~3 mm wall) with hinge hardware near one end; length dominates, cross-section is thin-shell so transverse variances slightly below 1/12. COM shifted slightly toward hinge end for counterweight bracket.",
+      "surfaceMaterials": [
+        "M_seeded_barrier_gate_boom_1_001",
+        "M_seeded_barrier_gate_boom_1_003",
+        "M_seeded_barrier_gate_boom_1_004"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "boom_hinge",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.744,
+      "id": "0",
+      "effort": 80.0,
+      "velocity": 0.5,
+      "damping": 8.0,
+      "friction": 3.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

@@ -1,0 +1,110 @@
+{
+  "assetId": "desk_caliper_placement_8443c7fd",
+  "dimensions_m": [
+    0.2672414779663086,
+    0.13873791694641113,
+    0.02219998836517334
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Tool Steel",
+      "surfaceMaterial": "Material_5.005",
+      "parts": [
+        "Desk_Caliper / needle_needle"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "1",
+      "material": "Stainless Steel",
+      "surfaceMaterial": "Material_0.010",
+      "parts": [
+        "Desk_Caliper / beam_beam_body",
+        "Desk_Caliper / slider_depth_rod",
+        "Desk_Caliper / beam_fixed_jaw"
+      ],
+      "values": {
+        "density_kg_m3": 7900,
+        "youngs_modulus_pa": 193000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "2",
+      "material": "Anodized Aluminum",
+      "surfaceMaterial": "Material_1.010",
+      "parts": [
+        "Desk_Caliper / beam_beam_scale",
+        "Desk_Caliper / slider_dial_ticks"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "3",
+      "material": "Chrome Plated Steel",
+      "surfaceMaterial": "Material_3.010",
+      "parts": [
+        "Desk_Caliper / slider_dial_bezel"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "4",
+      "material": "ABS Plastic",
+      "surfaceMaterial": "Material_4.009",
+      "parts": [
+        "Desk_Caliper / slider_dial_face"
+      ],
+      "values": {
+        "density_kg_m3": 1050,
+        "youngs_modulus_pa": 2300000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "5",
+      "material": "Zinc Alloy",
+      "surfaceMaterial": "Material_2.010",
+      "parts": [
+        "Desk_Caliper / slider_slider_body",
+        "Desk_Caliper / slider_thumb_roller"
+      ],
+      "values": {
+        "density_kg_m3": 6600,
+        "youngs_modulus_pa": 100000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.4
+      }
+    }
+  ]
+}

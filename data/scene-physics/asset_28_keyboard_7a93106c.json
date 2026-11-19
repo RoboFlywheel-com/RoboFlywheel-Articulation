@@ -1,0 +1,4834 @@
+{
+  "assetId": "asset_28_keyboard_7a93106c",
+  "name": "Keyboard",
+  "totalMassKg": 14.105,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "chassis",
+      "materials": [
+        "ABS plastic dark accent",
+        "ABS plastic dark body",
+        "ABS plastic dark matte",
+        "Dark walnut wood",
+        "Paint-coated steel tube"
+      ],
+      "massKg": 11.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.3561802208423615,
+        -2.079933398962021,
+        0.5641137454658747
+      ],
+      "inertia": {
+        "ixx": 1.699858953612814,
+        "iyy": 4.981668522004228,
+        "izz": 4.558666357004785,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.0721482634544373,
+        0.9105645418167114,
+        1.0782275013625622
+      ],
+      "sourceLink": "chassis",
+      "massBasis": "Hollow chassis shell with wood side panels, metal interior frame, and electronics; ~2-3% solid fill of bounding volume; COM slightly below geometric center due to metal base plate.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow chassis shell with wood side panels, metal interior frame, and electronics; ~2-3% solid fill of bounding volume; COM slightly below geometric center due to metal base plate.",
+      "surfaceMaterials": [
+        "28 | mk_accent",
+        "28 | mk_body",
+        "28 | mk_knob",
+        "28 | mk_wood",
+        "Interior | black metal"
+      ]
+    },
+    {
+      "id": "46",
+      "name": "wheel 0",
+      "materials": [
+        "ABS plastic dark accent"
+      ],
+      "massKg": 0.075,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.46509480476379395,
+        -2.340515375137329,
+        0.8161057233810425
+      ],
+      "inertia": {
+        "ixx": 0.00023118050976560198,
+        "iyy": 0.0001318827056058254,
+        "izz": 0.00013673947065928046,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06449949741363525,
+        0.13769102096557617,
+        0.1348280906677246
+      ],
+      "sourceLink": "wheel_0",
+      "massBasis": "Rubber-coated pitch/mod wheel; mass concentrated at rim reduces x-variance (axle axis); accent material.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rubber-coated pitch/mod wheel; mass concentrated at rim reduces x-variance (axle axis); accent material.",
+      "surfaceMaterials": [
+        "28 | mk_accent"
+      ]
+    },
+    {
+      "id": "47",
+      "name": "wheel 1",
+      "materials": [
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.065,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.5558637380599976,
+        -2.3356802463531494,
+        0.8161057233810425
+      ],
+      "inertia": {
+        "ixx": 0.00016598927066833284,
+        "iyy": 9.696608175030007e-05,
+        "izz": 0.00010082054963745889,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06384813785552979,
+        0.12546253204345703,
+        0.12258219718933105
+      ],
+      "sourceLink": "wheel_1",
+      "massBasis": "Slightly smaller knob/wheel; similar rim-concentrated distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Slightly smaller knob/wheel; similar rim-concentrated distribution.",
+      "surfaceMaterials": [
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "black key 0",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.745768129825592,
+        -2.2708131456375122,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 0.00012830084013133017,
+        "iyy": 9.032104360071004e-06,
+        "izz": 0.00012706406586439215,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230404853820801,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_0",
+      "massBasis": "Hollow injection-molded plastic white key; COM shifted toward pivot (rear); thin shell reduces y-variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow injection-molded plastic white key; COM shifted toward pivot (rear); thin shell reduces y-variance.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "black key 1",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.7913914918899536,
+        -2.26838294506073,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 0.00012830084013133017,
+        "iyy": 9.032104360071004e-06,
+        "izz": 0.00012706406586439215,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230404853820801,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_1",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "black key 10",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.3844953179359436,
+        -2.236790337562561,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 0.00012830084013133017,
+        "iyy": 9.032075593582291e-06,
+        "izz": 0.00012706403709790342,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_10",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "black key 11",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.4301185011863708,
+        -2.234360136985779,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 0.00012830084013133017,
+        "iyy": 9.032075593582291e-06,
+        "izz": 0.00012706403709790342,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_11",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "black key 12",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.5213651061058044,
+        -2.2294994974136353,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 0.00012830084013133017,
+        "iyy": 9.032075593582291e-06,
+        "izz": 0.00012706403709790342,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_12",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "black key 13",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.5669886469841003,
+        -2.227073082923889,
+        0.7897822260856628
+      ],
+      "inertia": {
+        "ixx": 0.0001284229563811118,
+        "iyy": 9.103615957996211e-06,
+        "izz": 0.00012711576368315853,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230631351470947,
+        0.21362614631652832,
+        0.03733205795288086
+      ],
+      "sourceLink": "black_key_13",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "black key 14",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.6126119494438171,
+        -2.224639096260071,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 0.00012830084013133017,
+        "iyy": 9.032075593582291e-06,
+        "izz": 0.00012706403709790342,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_14",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "black key 15",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.7038585543632507,
+        -2.2197786951065064,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 0.00012830084013133017,
+        "iyy": 9.032075593582291e-06,
+        "izz": 0.00012706403709790342,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_15",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "9",
+      "name": "black key 16",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.7494820952415466,
+        -2.217348494529724,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 0.00012830084013133017,
+        "iyy": 9.032075593582291e-06,
+        "izz": 0.00012706403709790342,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_16",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "black key 17",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.8407288193702698,
+        -2.2124880933761597,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 0.00012830084013133017,
+        "iyy": 9.032075593582291e-06,
+        "izz": 0.00012706403709790342,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_17",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "11",
+      "name": "black key 18",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.886352002620697,
+        -2.2100578927993775,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 0.00012830084013133017,
+        "iyy": 9.032075593582291e-06,
+        "izz": 0.00012706403709790342,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_18",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "12",
+      "name": "black key 19",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.9319753050804138,
+        -2.2076276922225953,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 0.00012830084013133017,
+        "iyy": 9.032075593582291e-06,
+        "izz": 0.00012706403709790342,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_19",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "48",
+      "name": "white key 0",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.7256505787372589,
+        -2.3311701679229735,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.607912520405135e-05,
+        "izz": 0.00029058059368448403,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05900031328201294,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_0",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "49",
+      "name": "white key 1",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.7712739408016205,
+        -2.3287399673461913,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.607912520405135e-05,
+        "izz": 0.00029058059368448403,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05900031328201294,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_1",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "50",
+      "name": "white key 10",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.181884229183197,
+        -2.306867923736572,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_10",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "51",
+      "name": "white key 11",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.2275075316429138,
+        -2.30443772315979,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_11",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "52",
+      "name": "white key 12",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.2731309533119202,
+        -2.3020075225830077,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_12",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "53",
+      "name": "white key 13",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.3187540769577026,
+        -2.299580068588257,
+        0.7663990259170532
+      ],
+      "inertia": {
+        "ixx": 0.0002807984441160974,
+        "iyy": 1.6162563812346774e-05,
+        "izz": 0.0002906408551966146,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05900216102600098,
+        0.32066965103149414,
+        0.029087305068969727
+      ],
+      "sourceLink": "white_key_13",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "54",
+      "name": "white key 14",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.3643776774406433,
+        -2.297147121429443,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_14",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "55",
+      "name": "white key 15",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.4100010991096497,
+        -2.294716920852661,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_15",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "56",
+      "name": "white key 16",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.4556244015693665,
+        -2.2922867202758788,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_16",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "57",
+      "name": "white key 17",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.5012475848197937,
+        -2.2898565196990965,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_17",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "58",
+      "name": "white key 18",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.5468711256980896,
+        -2.2874263191223143,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_18",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "59",
+      "name": "white key 19",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.592494547367096,
+        -2.284996118545532,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_19",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "60",
+      "name": "white key 2",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.8168974220752716,
+        -2.326309766769409,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.607912520405135e-05,
+        "izz": 0.00029058059368448403,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05900031328201294,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_2",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "61",
+      "name": "white key 20",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.6381179094314575,
+        -2.2825686645507814,
+        0.7663990259170532
+      ],
+      "inertia": {
+        "ixx": 0.0002807984441160974,
+        "iyy": 1.6162563812346774e-05,
+        "izz": 0.0002906408551966146,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05900216102600098,
+        0.32066965103149414,
+        0.029087305068969727
+      ],
+      "sourceLink": "white_key_20",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "62",
+      "name": "white key 21",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.6837411522865295,
+        -2.2801357173919676,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_21",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "63",
+      "name": "white key 22",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.7293645739555359,
+        -2.2777055168151854,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_22",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "64",
+      "name": "white key 23",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.7749877572059631,
+        -2.275275316238403,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_23",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "65",
+      "name": "white key 24",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.8206114172935486,
+        -2.272845115661621,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_24",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "66",
+      "name": "white key 25",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.8662344813346863,
+        -2.2704149150848387,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_25",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "67",
+      "name": "white key 26",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.911857783794403,
+        -2.2679844760894774,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_26",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "68",
+      "name": "white key 27",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.9574813842773438,
+        -2.265557260513306,
+        0.7663990259170532
+      ],
+      "inertia": {
+        "ixx": 0.0002807984441160974,
+        "iyy": 1.6162563812346774e-05,
+        "izz": 0.0002906408551966146,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05900216102600098,
+        0.32066965103149414,
+        0.029087305068969727
+      ],
+      "sourceLink": "white_key_27",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "69",
+      "name": "white key 28",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.0031047463417053,
+        -2.263124074935913,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_28",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "70",
+      "name": "white key 29",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.048727869987488,
+        -2.2606938743591307,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079098934370038e-05,
+        "izz": 0.0002905805674148027,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000253677368164,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_29",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "71",
+      "name": "white key 3",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.8625206053256989,
+        -2.323879566192627,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.607912520405135e-05,
+        "izz": 0.00029058059368448403,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05900031328201294,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_3",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "72",
+      "name": "white key 30",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.0943511724472046,
+        -2.2582636737823485,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079098934370038e-05,
+        "izz": 0.0002905805674148027,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000253677368164,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_30",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "73",
+      "name": "white key 31",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.1399744749069214,
+        -2.2558334732055663,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079098934370038e-05,
+        "izz": 0.0002905805674148027,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000253677368164,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_31",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "74",
+      "name": "white key 32",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.185597777366638,
+        -2.253403272628784,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079098934370038e-05,
+        "izz": 0.0002905805674148027,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000253677368164,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_32",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "75",
+      "name": "white key 33",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.231221556663513,
+        -2.250973072052002,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079098934370038e-05,
+        "izz": 0.0002905805674148027,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000253677368164,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_33",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "76",
+      "name": "white key 34",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.27684485912323,
+        -2.248545618057251,
+        0.7663990259170532
+      ],
+      "inertia": {
+        "ixx": 0.0002807984441160974,
+        "iyy": 1.6162563812346774e-05,
+        "izz": 0.0002906408551966146,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05900216102600098,
+        0.32066965103149414,
+        0.029087305068969727
+      ],
+      "sourceLink": "white_key_34",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "77",
+      "name": "white key 35",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.3224681615829468,
+        -2.2461126708984374,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079098934370038e-05,
+        "izz": 0.0002905805674148027,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000253677368164,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_35",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "78",
+      "name": "white key 4",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.9081440269947052,
+        -2.3214493656158446,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.607912520405135e-05,
+        "izz": 0.00029058059368448403,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05900031328201294,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_4",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "79",
+      "name": "white key 5",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.9537673890590668,
+        -2.3190189266204833,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.607912520405135e-05,
+        "izz": 0.00029058059368448403,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05900031328201294,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_5",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "80",
+      "name": "white key 6",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.999390721321106,
+        -2.3165914726257326,
+        0.7663990259170532
+      ],
+      "inertia": {
+        "ixx": 0.0002807984441160974,
+        "iyy": 1.6162563812346774e-05,
+        "izz": 0.0002906408551966146,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05900216102600098,
+        0.32066965103149414,
+        0.029087305068969727
+      ],
+      "sourceLink": "white_key_6",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "81",
+      "name": "white key 7",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.0450140833854675,
+        -2.314158525466919,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_7",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "82",
+      "name": "white key 8",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.0906375050544739,
+        -2.3117283248901366,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_8",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "83",
+      "name": "white key 9",
+      "materials": [
+        "ABS plastic white glossy"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1362608075141907,
+        -2.3092981243133544,
+        0.766590416431427
+      ],
+      "inertia": {
+        "ixx": 0.0002806563727422391,
+        "iyy": 1.6079151473759198e-05,
+        "izz": 0.00029058061995419185,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.059000372886657715,
+        0.3206353187561035,
+        0.028704524040222168
+      ],
+      "sourceLink": "white_key_9",
+      "massBasis": "Same as white key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as white key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_white"
+      ]
+    },
+    {
+      "id": "30",
+      "name": "pad 0",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1720643639564514,
+        -1.9507099986076355,
+        0.855117866396904
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_0",
+      "massBasis": "Rubber/silicone pad with LED backlight; slightly denser at base; near-uniform.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rubber/silicone pad with LED backlight; slightly denser at base; near-uniform.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "31",
+      "name": "pad 1",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.250890076160431,
+        -1.946511447429657,
+        0.855117866396904
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_1",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "32",
+      "name": "pad 10",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.3236718773841858,
+        -1.8288511633872986,
+        0.9002190917730332
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_10",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "33",
+      "name": "pad 11",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.4024975895881653,
+        -1.824652373790741,
+        0.9002190917730332
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_11",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "34",
+      "name": "pad 12",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1629987359046936,
+        -1.7805177569389343,
+        0.9227712243795395
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_12",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "35",
+      "name": "pad 13",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.241824448108673,
+        -1.7763188481330872,
+        0.9227712243795395
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_13",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "36",
+      "name": "pad 14",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.3206501603126526,
+        -1.7721200585365295,
+        0.9227712243795395
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_14",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "37",
+      "name": "pad 15",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.399475872516632,
+        -1.767921268939972,
+        0.9227712243795395
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_15",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "38",
+      "name": "pad 2",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.3297157883644104,
+        -1.9423124194145203,
+        0.855117866396904
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_2",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "39",
+      "name": "pad 3",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.408523976802826,
+        -1.9377853274345398,
+        0.8542893022298813
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_3",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "40",
+      "name": "pad 4",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1688910126686096,
+        -1.8911352753639221,
+        0.8704933017492295
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_4",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "41",
+      "name": "pad 5",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.2476992011070251,
+        -1.8866079449653625,
+        0.8696647971868515
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_5",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "42",
+      "name": "pad 6",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.3265249133110046,
+        -1.882409155368805,
+        0.8696647971868515
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_6",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "43",
+      "name": "pad 7",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.4053506255149841,
+        -1.8782103657722473,
+        0.8696647971868515
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_7",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "44",
+      "name": "pad 8",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1658870577812195,
+        -1.83474200963974,
+        0.8938951581716538
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_8",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "45",
+      "name": "pad 9",
+      "materials": [
+        "Polycarbonate translucent diffuser",
+        "ABS plastic dark matte"
+      ],
+      "massKg": 0.028,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.2448462843894958,
+        -1.8330499529838562,
+        0.9002190917730332
+      ],
+      "inertia": {
+        "ixx": 1.3524177466876126e-05,
+        "iyy": 1.294997204511398e-05,
+        "izz": 2.0526116847407255e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06551778316497803,
+        0.06737697124481201,
+        0.03895324468612671
+      ],
+      "sourceLink": "pad_9",
+      "massBasis": "Same as pad 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as pad 0.",
+      "surfaceMaterials": [
+        "28 | mk_backlight",
+        "28 | mk_knob"
+      ]
+    },
+    {
+      "id": "13",
+      "name": "black key 2",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.8826382756233215,
+        -2.2635225439071656,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 7.127824451740565e-05,
+        "iyy": 5.017835755595002e-06,
+        "izz": 7.059114770244008e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230404853820801,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_2",
+      "massBasis": "Hollow molded black key, smaller than white; plastic shell ~25% fill.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow molded black key, smaller than white; plastic shell ~25% fill.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "14",
+      "name": "black key 20",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.023222327232361,
+        -2.2027708387374876,
+        0.7897822260856628
+      ],
+      "inertia": {
+        "ixx": 7.134608687839546e-05,
+        "iyy": 5.057580403671124e-06,
+        "izz": 7.061988469542797e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230643272399902,
+        0.21362614631652832,
+        0.03733205795288086
+      ],
+      "sourceLink": "black_key_20",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "15",
+      "name": "black key 21",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.0688456296920776,
+        -2.2003370904922486,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 7.127824451740565e-05,
+        "iyy": 5.017835755595002e-06,
+        "izz": 7.059114770244008e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230404853820801,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_21",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "16",
+      "name": "black key 22",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.1600922346115112,
+        -2.195476689338684,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 7.127824451740565e-05,
+        "iyy": 5.017835755595002e-06,
+        "izz": 7.059114770244008e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230404853820801,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_22",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "17",
+      "name": "black key 23",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.205715537071228,
+        -2.193046488761902,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 7.127824451740565e-05,
+        "iyy": 5.017835755595002e-06,
+        "izz": 7.059114770244008e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230404853820801,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_23",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "18",
+      "name": "black key 24",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.251338839530945,
+        -2.1906162881851197,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 7.127824451740565e-05,
+        "iyy": 5.017835755595002e-06,
+        "izz": 7.059114770244008e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230404853820801,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_24",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "19",
+      "name": "black key 3",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.9282615780830383,
+        -2.2610923433303833,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 7.127824451740565e-05,
+        "iyy": 5.017835755595002e-06,
+        "izz": 7.059114770244008e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230404853820801,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_3",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "20",
+      "name": "black key 4",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.9738849997520447,
+        -2.258662142753601,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 7.127824451740565e-05,
+        "iyy": 5.017835755595002e-06,
+        "izz": 7.059114770244008e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230404853820801,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_4",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "21",
+      "name": "black key 5",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.0651317238807678,
+        -2.2538017416000367,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 7.127824451740565e-05,
+        "iyy": 5.017819774212385e-06,
+        "izz": 7.059113172105746e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_5",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "22",
+      "name": "black key 6",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1107550263404846,
+        -2.251375088691711,
+        0.7897822260856628
+      ],
+      "inertia": {
+        "ixx": 7.134608687839546e-05,
+        "iyy": 5.057564421109007e-06,
+        "izz": 7.061986871286585e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230631351470947,
+        0.21362614631652832,
+        0.03733205795288086
+      ],
+      "sourceLink": "black_key_6",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "23",
+      "name": "black key 7",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.2020017504692078,
+        -2.24651113986969,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 7.127824451740565e-05,
+        "iyy": 5.017819774212385e-06,
+        "izz": 7.059113172105746e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_7",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "24",
+      "name": "black key 8",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.2476250529289246,
+        -2.2440809392929078,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 7.127824451740565e-05,
+        "iyy": 5.017819774212385e-06,
+        "izz": 7.059113172105746e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_8",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "25",
+      "name": "black key 9",
+      "materials": [
+        "ABS plastic black keys"
+      ],
+      "massKg": 0.025,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.293248474597931,
+        -2.2416507387161255,
+        0.7899128198623657
+      ],
+      "inertia": {
+        "ixx": 7.127824451740565e-05,
+        "iyy": 5.017819774212385e-06,
+        "izz": 7.059113172105746e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03230392932891846,
+        0.21358180046081543,
+        0.037076711654663086
+      ],
+      "sourceLink": "black_key_9",
+      "massBasis": "Same as black key 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as black key 0.",
+      "surfaceMaterials": [
+        "28 | mk_key_black"
+      ]
+    },
+    {
+      "id": "26",
+      "name": "env slider 0",
+      "materials": [
+        "ABS plastic dark matte",
+        "Polycarbonate slider pointer"
+      ],
+      "massKg": 0.008,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.489058494567871,
+        -1.830757737159729,
+        0.8979184925556183
+      ],
+      "inertia": {
+        "ixx": 9.15018665529118e-07,
+        "iyy": 1.4232411073201947e-06,
+        "izz": 1.5764903373983544e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03962087631225586,
+        0.028362274169921875,
+        0.023950397968292236
+      ],
+      "sourceLink": "env_slider_0",
+      "massBasis": "Small plastic slider cap with pointer on metal track; nearly uniform small part.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small plastic slider cap with pointer on metal track; nearly uniform small part.",
+      "surfaceMaterials": [
+        "28 | mk_knob",
+        "28 | mk_pointer"
+      ]
+    },
+    {
+      "id": "27",
+      "name": "env slider 1",
+      "materials": [
+        "ABS plastic dark matte",
+        "Polycarbonate slider pointer"
+      ],
+      "massKg": 0.008,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.560704231262207,
+        -1.8266772031784058,
+        0.8980230391025543
+      ],
+      "inertia": {
+        "ixx": 9.15018665529118e-07,
+        "iyy": 1.4232411073201947e-06,
+        "izz": 1.5764903373983544e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03962087631225586,
+        0.028362274169921875,
+        0.023950397968292236
+      ],
+      "sourceLink": "env_slider_1",
+      "massBasis": "Same as env slider 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as env slider 0.",
+      "surfaceMaterials": [
+        "28 | mk_knob",
+        "28 | mk_pointer"
+      ]
+    },
+    {
+      "id": "28",
+      "name": "env slider 2",
+      "materials": [
+        "ABS plastic dark matte",
+        "Polycarbonate slider pointer"
+      ],
+      "massKg": 0.008,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.6326837539672852,
+        -1.8288649320602417,
+        0.8956362307071686
+      ],
+      "inertia": {
+        "ixx": 9.15018665529118e-07,
+        "iyy": 1.4232411073201947e-06,
+        "izz": 1.5764903373983544e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03962087631225586,
+        0.028362274169921875,
+        0.023950397968292236
+      ],
+      "sourceLink": "env_slider_2",
+      "massBasis": "Same as env slider 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as env slider 0.",
+      "surfaceMaterials": [
+        "28 | mk_knob",
+        "28 | mk_pointer"
+      ]
+    },
+    {
+      "id": "29",
+      "name": "env slider 3",
+      "materials": [
+        "ABS plastic dark matte",
+        "Polycarbonate slider pointer"
+      ],
+      "massKg": 0.008,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.704885482788086,
+        -1.835222840309143,
+        0.8915915787220001
+      ],
+      "inertia": {
+        "ixx": 9.15018665529118e-07,
+        "iyy": 1.4232411073201947e-06,
+        "izz": 1.5764903373983544e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03962087631225586,
+        0.028362274169921875,
+        0.023950397968292236
+      ],
+      "sourceLink": "env_slider_3",
+      "massBasis": "Same as env slider 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same as env slider 0.",
+      "surfaceMaterials": [
+        "28 | mk_knob",
+        "28 | mk_pointer"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "chassis_to_white_key_0",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "0",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_1",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "1",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_2",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "2",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_3",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "3",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_4",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "4",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_5",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "5",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_6",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "6",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_7",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "7",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_8",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "8",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_9",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "9",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_10",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "10",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_11",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "11",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_12",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "12",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_13",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "13",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_14",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "14",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_15",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "15",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_16",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "16",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_17",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "17",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_18",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "18",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_19",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "19",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_20",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "20",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_21",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "21",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_22",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "22",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_23",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "23",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_24",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "24",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_25",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "25",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_26",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "26",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_27",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "27",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_28",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "28",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_29",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "29",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_30",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "30",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_31",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "31",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_32",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "32",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_33",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "33",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_34",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "34",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_white_key_35",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "35",
+      "effort": 2.0,
+      "velocity": 4.0,
+      "damping": 0.02,
+      "friction": 0.008,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_0",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "36",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_1",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "37",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_2",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "38",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_3",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "39",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_4",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "40",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_5",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "41",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_6",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "42",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_7",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "43",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_8",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "44",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_9",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "45",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_10",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "46",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_11",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "47",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_12",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "48",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_13",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "49",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_14",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "50",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_15",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "51",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_16",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "52",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_17",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "53",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_18",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "54",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_19",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "55",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_20",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "56",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_21",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "57",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_22",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "58",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_23",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "59",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_black_key_24",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.0587,
+      "id": "60",
+      "effort": 1.8,
+      "velocity": 4.0,
+      "damping": 0.018,
+      "friction": 0.007,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_0",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "61",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_1",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "62",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_2",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "63",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_3",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "64",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_4",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "65",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_5",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "66",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_6",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "67",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_7",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "68",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_8",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "69",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_9",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "70",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_10",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "71",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_11",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "72",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_12",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "73",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_13",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "74",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_14",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "75",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_pad_15",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.004,
+      "id": "76",
+      "effort": 3.0,
+      "velocity": 0.1,
+      "damping": 1.2,
+      "friction": 0.25,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_env_slider_0",
+      "type": "prismatic",
+      "lower": -0.014,
+      "upper": 0.014,
+      "id": "77",
+      "effort": 2.0,
+      "velocity": 0.2,
+      "damping": 0.8,
+      "friction": 0.15,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_env_slider_1",
+      "type": "prismatic",
+      "lower": -0.014,
+      "upper": 0.014,
+      "id": "78",
+      "effort": 2.0,
+      "velocity": 0.2,
+      "damping": 0.8,
+      "friction": 0.15,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_env_slider_2",
+      "type": "prismatic",
+      "lower": -0.014,
+      "upper": 0.014,
+      "id": "79",
+      "effort": 2.0,
+      "velocity": 0.2,
+      "damping": 0.8,
+      "friction": 0.15,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_env_slider_3",
+      "type": "prismatic",
+      "lower": -0.014,
+      "upper": 0.014,
+      "id": "80",
+      "effort": 2.0,
+      "velocity": 0.2,
+      "damping": 0.8,
+      "friction": 0.15,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_wheel_0",
+      "type": "revolute",
+      "lower": -1.0,
+      "upper": 1.0,
+      "id": "81",
+      "effort": 1.5,
+      "velocity": 4.0,
+      "damping": 0.04,
+      "friction": 0.015,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_wheel_1",
+      "type": "revolute",
+      "lower": -1.0,
+      "upper": 1.0,
+      "id": "82",
+      "effort": 1.5,
+      "velocity": 4.0,
+      "damping": 0.04,
+      "friction": 0.015,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/Indoor_blend_asset/28_keyboard/Music_keyboard/seed_0006/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

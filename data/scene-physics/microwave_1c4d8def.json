@@ -1,0 +1,340 @@
+{
+  "assetId": "microwave_1c4d8def",
+  "name": "Microwave",
+  "totalMassKg": 12.702,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Beige painted metal casing",
+        "Dark coated metal panel",
+        "Roasted chicken bone",
+        "Roasted chicken skin"
+      ],
+      "massKg": 10.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.6874098777770996,
+        5.351339826583862,
+        1.1786779850721358
+      ],
+      "inertia": {
+        "ixx": 0.15847714463569762,
+        "iyy": 0.25890341211606527,
+        "izz": 0.25304591852392605,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5387086868286133,
+        0.37384700775146484,
+        0.3673169016838074
+      ],
+      "sourceLink": "body",
+      "massBasis": "Hollow sheet-metal cabinet with internal magnetron, transformer, and fan concentrated low and rear. Shell construction lowers variance vs solid box; heavy components shift CoM slightly down and back.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow sheet-metal cabinet with internal magnetron, transformer, and fan concentrated low and rear. Shell construction lowers variance vs solid box; heavy components shift CoM slightly down and back.",
+      "surfaceMaterials": [
+        "M_seeded_microwave_953_001",
+        "M_seeded_microwave_953_002",
+        "M_seeded_microwave_953_003",
+        "M_seeded_microwave_953_004",
+        "V06_Roasted_bone_ends",
+        "V06_Roasted_chicken_skin"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "V06 Microwave vertical hinge",
+      "materials": [
+        "Dark coated metal panel",
+        "Beige painted metal casing"
+      ],
+      "massKg": 1.4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.6368909454345704,
+        5.155375957489014,
+        1.179137110710144
+      ],
+      "inertia": {
+        "ixx": 0.008677127929218795,
+        "iyy": 0.02393862367900569,
+        "izz": 0.016302860431228236,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.3956882953643799,
+        0.0704193115234375,
+        0.2927062511444092
+      ],
+      "sourceLink": null,
+      "massBasis": "Door panel with glass window and thin metal frame hinged on one vertical edge. Mass spread across panel; slight CoM shift toward latch side. Thin in hinge-axis direction reduces vz.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Door panel with glass window and thin metal frame hinged on one vertical edge. Mass spread across panel; slight CoM shift toward latch side. Thin in hinge-axis direction reduces vz.",
+      "surfaceMaterials": [
+        "M_seeded_microwave_953_007",
+        "M_seeded_microwave_953_008",
+        "M_seeded_microwave_953_009"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "turntable",
+      "materials": [
+        "Dark turntable support",
+        "Beige turntable plate"
+      ],
+      "massKg": 0.6,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.6459707021713257,
+        5.3283185958862305,
+        1.0789023041725159
+      ],
+      "inertia": {
+        "ixx": 0.004508633938622327,
+        "iyy": 0.004508625369407358,
+        "izz": 0.00897096975964132,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.24959635734558105,
+        0.24959659576416016,
+        0.021558165550231934
+      ],
+      "sourceLink": "turntable",
+      "massBasis": "Flat circular glass turntable plate. In-plane variance 1/8 for solid disc (m*r\u00b2/2); through-thickness variance 1/12 for uniform thin slab.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Flat circular glass turntable plate. In-plane variance 1/8 for solid disc (m*r\u00b2/2); through-thickness variance 1/12 for uniform thin slab.",
+      "surfaceMaterials": [
+        "M_seeded_microwave_953_010",
+        "M_seeded_microwave_953_011"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "shelf rack",
+      "materials": [
+        "Metal shelf rack"
+      ],
+      "massKg": 0.14,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.6459707021713257,
+        5.3283185958862305,
+        1.1812928318977356
+      ],
+      "inertia": {
+        "ixx": 0.0007686353261312607,
+        "iyy": 0.000926822979437508,
+        "izz": 0.0016947832421890941,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.2840850353240967,
+        0.2586984634399414,
+        0.005389571189880371
+      ],
+      "sourceLink": "shelf_rack",
+      "massBasis": "Thin wire shelf rack, nearly planar. Very small z-extent makes absolute z-inertia negligible; in-plane distribution roughly uniform grid.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin wire shelf rack, nearly planar. Very small z-extent makes absolute z-inertia negligible; in-plane distribution roughly uniform grid.",
+      "surfaceMaterials": [
+        "M_seeded_microwave_953_012"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "power knob",
+      "materials": [
+        "Dark plastic knob",
+        "Beige plastic knob"
+      ],
+      "massKg": 0.032,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.8945544362068176,
+        5.180884599685669,
+        1.2429527640342712
+      ],
+      "inertia": {
+        "ixx": 1.1726489205939288e-05,
+        "iyy": 2.0320874840035682e-05,
+        "izz": 1.1741408489797323e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06302249431610107,
+        0.024792194366455078,
+        0.06297624111175537
+      ],
+      "sourceLink": "power_knob",
+      "massBasis": "Small solid plastic rotary knob, roughly cylindrical and symmetric. Uniform density assumed; variance near solid-cylinder value.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small solid plastic rotary knob, roughly cylindrical and symmetric. Uniform density assumed; variance near solid-cylinder value.",
+      "surfaceMaterials": [
+        "M_seeded_microwave_953_005",
+        "M_seeded_microwave_953_006"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "timer knob",
+      "materials": [
+        "Dark plastic knob",
+        "Beige plastic knob"
+      ],
+      "massKg": 0.03,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.8945655822753906,
+        5.180884599685669,
+        1.1151664853096008
+      ],
+      "inertia": {
+        "ixx": 1.0305807815200297e-05,
+        "iyy": 1.768500384531535e-05,
+        "izz": 1.0329529957334671e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.060739755630493164,
+        0.024792194366455078,
+        0.06065833568572998
+      ],
+      "sourceLink": "timer_knob",
+      "massBasis": "Small solid plastic timer knob, same construction as power knob. Symmetric cylinder, uniform density.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small solid plastic timer knob, same construction as power knob. Symmetric cylinder, uniform density.",
+      "surfaceMaterials": [
+        "M_seeded_microwave_953_005",
+        "M_seeded_microwave_953_006"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "power_knob_dial",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 4.71239,
+      "id": "0",
+      "effort": 3.0,
+      "velocity": 4.0,
+      "damping": 0.003,
+      "friction": 0.025,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "timer_knob_dial",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 4.71239,
+      "id": "1",
+      "effort": 3.0,
+      "velocity": 4.0,
+      "damping": 0.003,
+      "friction": 0.03,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "door_hinge",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.70309,
+      "id": "2",
+      "effort": 8.0,
+      "velocity": 2.0,
+      "damping": 0.12,
+      "friction": 0.4,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "turntable_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "3",
+      "effort": 2.0,
+      "velocity": 3.0,
+      "damping": 0.008,
+      "friction": 0.035,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/Indoor_blend_asset/seed_0953/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

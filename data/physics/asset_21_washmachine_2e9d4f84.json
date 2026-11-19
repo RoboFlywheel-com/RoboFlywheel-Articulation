@@ -1,0 +1,126 @@
+{
+  "assetId": "asset_21_washmachine_2e9d4f84",
+  "dimensions_m": [
+    0.7073132991790771,
+    1.0236859321594238,
+    0.9199999943375587
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Matte stainless steel",
+      "surfaceMaterial": "21 | wm_frame",
+      "parts": [
+        "door.001",
+        "drawer",
+        "body.003"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Smoked glass",
+      "surfaceMaterial": "21 | wm_glass",
+      "parts": [
+        "door.001"
+      ],
+      "values": {
+        "density_kg_m3": 2500.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.23,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Glossy molded plastic",
+      "surfaceMaterial": "21 | wm_panel",
+      "parts": [
+        "drawer",
+        "body.003"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.34,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Paint-coated steel",
+      "surfaceMaterial": "21 | wm_body",
+      "parts": [
+        "body.003"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Stainless steel drum",
+      "surfaceMaterial": "21 | wm_drum",
+      "parts": [
+        "body.003",
+        "drum"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Emissive display surface",
+      "surfaceMaterial": "21 | wm_display",
+      "parts": [
+        "body.003"
+      ],
+      "values": {
+        "density_kg_m3": 7800.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "Molded plastic control",
+      "surfaceMaterial": "21 | wm_control",
+      "parts": [
+        "dial"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.34,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

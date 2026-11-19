@@ -1,0 +1,214 @@
+{
+  "assetId": "tower_crane_ccb3c33d",
+  "name": "Tower crane",
+  "totalMassKg": 14395,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "3",
+      "name": "slew joint",
+      "materials": [
+        "Painted structural steel"
+      ],
+      "massKg": 9600,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -15.854858798980713,
+        46.061044692993164,
+        9.755953311920166
+      ],
+      "inertia": {
+        "ixx": 57329.07783258863,
+        "iyy": 277627.59382176155,
+        "izz": 322447.8475970284,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        20.85408639907837,
+        8.84530258178711,
+        3.00809383392334
+      ],
+      "sourceLink": null,
+      "massBasis": "Full upper structure: lattice jib + counter-jib (~20 m span), slew ring, operator cab, and counterweight slab. Counterweight concentrates mass toward one end, shifting COM to ~0.44 in x. Jib is an open lattice truss so x-variance is below solid-box 1/12; counterweight partially offsets by adding end mass. y/z extents are narrow relative to bounding box.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Full upper structure: lattice jib + counter-jib (~20 m span), slew ring, operator cab, and counterweight slab. Counterweight concentrates mass toward one end, shifting COM to ~0.44 in x. Jib is an open lattice truss so x-variance is below solid-box 1/12; counterweight partially offsets by adding end mass. y/z extents are narrow relative to bounding box.",
+      "surfaceMaterials": [
+        "M_seeded_crane_tower_1_002",
+        "M_seeded_crane_tower_1_003",
+        "M_seeded_crane_tower_1_004"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Painted structural steel"
+      ],
+      "massKg": 4200,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -18.46876335144043,
+        47.360107421875,
+        3.9101960029453036
+      ],
+      "inertia": {
+        "ixx": 29878.00946541155,
+        "iyy": 29878.00946541155,
+        "izz": 13532.489705312764,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.9118728637695312,
+        2.9118728637695312,
+        8.191906400024891
+      ],
+      "sourceLink": null,
+      "massBasis": "Lattice steel tower mast (hollow square cross-section with cross-bracing). Mass concentrated at four corner chords and diagonal bracing, giving edge-weighted x/y variance above 1/12. Nearly uniform distribution along height. Typical ~500 kg per metre for 2.9 m square lattice section.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Lattice steel tower mast (hollow square cross-section with cross-bracing). Mass concentrated at four corner chords and diagonal bracing, giving edge-weighted x/y variance above 1/12. Nearly uniform distribution along height. Typical ~500 kg per metre for 2.9 m square lattice section.",
+      "surfaceMaterials": [
+        "M_seeded_crane_tower_1_001",
+        "M_seeded_crane_tower_1_002",
+        "M_seeded_crane_tower_1_003"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "trolley",
+      "materials": [
+        "Painted structural steel"
+      ],
+      "massKg": 410,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -16.802867889404297,
+        46.80020713806152,
+        8.787592887878418
+      ],
+      "inertia": {
+        "ixx": 92.38606059619562,
+        "iyy": 60.775313844674685,
+        "izz": 143.73341706835737,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.2913169860839844,
+        1.6050910949707031,
+        0.3791027069091797
+      ],
+      "sourceLink": null,
+      "massBasis": "Compact trolley drive unit: steel frame, geared motor, rail wheels. Nearly solid mechanical assembly with roughly uniform density, so variances close to 1/12. Slightly lower z-variance because wheels and rail gear sit at the bottom plate.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Compact trolley drive unit: steel frame, geared motor, rail wheels. Nearly solid mechanical assembly with roughly uniform density, so variances close to 1/12. Slightly lower z-variance because wheels and rail gear sit at the bottom plate.",
+      "surfaceMaterials": [
+        "M_seeded_crane_tower_1_002",
+        "M_seeded_crane_tower_1_003"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "hook suspension joint",
+      "materials": [
+        "Painted structural steel"
+      ],
+      "massKg": 185,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -16.906375885009766,
+        46.83499526977539,
+        7.159101943969727
+      ],
+      "inertia": {
+        "ixx": 212.35090058675794,
+        "iyy": 212.5408903415484,
+        "izz": 1.0545089363562876,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5294265747070312,
+        0.44126129150390625,
+        3.832228660583496
+      ],
+      "sourceLink": null,
+      "massBasis": "Wire-rope cable with hook block at lower end. Cable is thin and axially symmetric so x/y variance is very small; z variance near uniform-rod value. Hook block adds mass toward one end, shifting centre slightly. Total ~40 m of 12 mm rope plus 60 kg hook assembly.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Wire-rope cable with hook block at lower end. Cable is thin and axially symmetric so x/y variance is very small; z variance near uniform-rod value. Hook block adds mass toward one end, shifting centre slightly. Total ~40 m of 12 mm rope plus 60 kg hook assembly.",
+      "surfaceMaterials": [
+        "M_seeded_crane_tower_1_003"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "slew_joint",
+      "type": "revolute",
+      "lower": -1.705,
+      "upper": 1.705,
+      "id": "0",
+      "effort": 85000,
+      "velocity": 0.084,
+      "damping": 12000,
+      "friction": 3200,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "turntable_to_trolley",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 1396.0000312030322,
+      "id": "1",
+      "effort": 5200,
+      "velocity": 0.55,
+      "damping": 1100,
+      "friction": 350,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

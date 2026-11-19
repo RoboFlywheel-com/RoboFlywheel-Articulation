@@ -1,0 +1,177 @@
+{
+  "assetId": "seesaw_a5ddfa5e",
+  "name": "Seesaw",
+  "totalMassKg": 120.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "base",
+      "materials": [
+        "Painted steel base blue",
+        "Painted steel base red"
+      ],
+      "massKg": 60.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.0,
+        0.0,
+        0.365105
+      ],
+      "inertia": {
+        "ixx": 6.71603,
+        "iyy": 6.71603,
+        "izz": 8.1,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        1.4846954345703125,
+        1.4085168838500977,
+        1.739845633506775
+      ],
+      "sourceLink": "base",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "Seesaw visible paint | M_seeded_playground_seesaw_2_001",
+        "Seesaw visible paint | M_seeded_playground_seesaw_2_002"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "beam 0",
+      "materials": [
+        "Dark painted steel beam",
+        "Painted steel beam blue",
+        "Painted steel beam blue variant",
+        "Painted steel beam red",
+        "Painted steel beam orange"
+      ],
+      "massKg": 52.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        13.97935438156128,
+        14.602073192596436,
+        1.1436992585659027
+      ],
+      "inertia": {
+        "ixx": 15.508374415316583,
+        "iyy": 100.20327847256297,
+        "izz": 94.14605677978318,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        4.551743507385254,
+        0.8056783676147461,
+        1.2170265316963196
+      ],
+      "sourceLink": "beam_0",
+      "massBasis": "Long hollow steel playground beam with painted surfaces; ~85% of 60 kg total. Mass distributed uniformly along length (var\u22481/12), but cross-section is thin-walled tube so transverse variance elevated toward thin-shell value (~1/7). Symmetric geometry places CoM at bounding-box center.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Long hollow steel playground beam with painted surfaces; ~85% of 60 kg total. Mass distributed uniformly along length (var\u22481/12), but cross-section is thin-walled tube so transverse variance elevated toward thin-shell value (~1/7). Symmetric geometry places CoM at bounding-box center.",
+      "surfaceMaterials": [
+        "M_seeded_playground_seesaw_2_008",
+        "Seesaw visible paint | M_seeded_playground_seesaw_2_004",
+        "Seesaw visible paint | M_seeded_playground_seesaw_2_005",
+        "Seesaw visible paint | M_seeded_playground_seesaw_2_006",
+        "Seesaw visible paint | M_seeded_playground_seesaw_2_007"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "spring hub 0",
+      "materials": [
+        "Painted steel hub"
+      ],
+      "massKg": 8.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        14.0,
+        14.600001335144043,
+        0.5791746377944946
+      ],
+      "inertia": {
+        "ixx": 0.4595515487144076,
+        "iyy": 0.4595515487144076,
+        "izz": 0.07799490150529892,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.24684715270996094,
+        0.24684715270996094,
+        0.7250466346740723
+      ],
+      "sourceLink": "spring_hub_0",
+      "massBasis": "Compact steel spring/pivot hub, roughly cylindrical, mostly solid metal with internal spring coil. Slightly higher z-variance due to coil windings along the vertical axis. ~13% of total mass; remainder is beam.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Compact steel spring/pivot hub, roughly cylindrical, mostly solid metal with internal spring coil. Slightly higher z-variance due to coil windings along the vertical axis. ~13% of total mass; remainder is beam.",
+      "surfaceMaterials": [
+        "M_seeded_playground_seesaw_2_003"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "beam_0_spring",
+      "type": "prismatic",
+      "lower": -6.000000134110453,
+      "upper": 0.0,
+      "id": "0",
+      "effort": 400.0,
+      "velocity": 0.5,
+      "damping": 120.0,
+      "friction": 35.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "beam_0_pivot",
+      "type": "revolute",
+      "lower": -0.287558,
+      "upper": 0.287558,
+      "id": "1",
+      "effort": 200.0,
+      "velocity": 2.5,
+      "damping": 12.0,
+      "friction": 5.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/outdoor_blend_asset/50_Seesaw/Playground_Seesaw/seed_0002/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

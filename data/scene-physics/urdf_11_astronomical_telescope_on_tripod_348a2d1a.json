@@ -1,0 +1,244 @@
+{
+  "assetId": "urdf_11_astronomical_telescope_on_tripod_348a2d1a",
+  "name": "Astronomical telescope on tripod",
+  "totalMassKg": 54.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "1",
+      "name": "optical tube",
+      "materials": [
+        "Painted steel optical tube body",
+        "Painted steel optical tube section",
+        "Optical glass lens",
+        "Bronze optical tube fitting"
+      ],
+      "massKg": 22.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.6265763342380524,
+        16.88232707977295,
+        2.6719003915786743
+      ],
+      "inertia": {
+        "ixx": 5.514997094538799,
+        "iyy": 5.615138537924517,
+        "izz": 5.623216700650552,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.2751290202140808,
+        1.1680736541748047,
+        1.1663639545440674
+      ],
+      "sourceLink": "optical_tube",
+      "massBasis": "Optical tube assembly is a thin-walled cylindrical shell (aluminum or carbon fiber) with primary/secondary mirrors and focuser. Four materials indicate tube wall, mirror cell, focuser, and dew shield. Radial variance slightly above 1/12 due to shell mass at outer radius; axial variance near uniform. Hollow construction keeps mass well below solid-box density.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Optical tube assembly is a thin-walled cylindrical shell (aluminum or carbon fiber) with primary/secondary mirrors and focuser. Four materials indicate tube wall, mirror cell, focuser, and dew shield. Radial variance slightly above 1/12 due to shell mass at outer radius; axial variance near uniform. Hollow construction keeps mass well below solid-box density.",
+      "surfaceMaterials": [
+        "REF_11_astronomical_telescope_on_tripod_optical_tube_00",
+        "REF_11_astronomical_telescope_on_tripod_optical_tube_01",
+        "REF_11_astronomical_telescope_on_tripod_optical_tube_02",
+        "REF_11_astronomical_telescope_on_tripod_optical_tube_03"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "tripod",
+      "materials": [
+        "Painted steel tripod leg",
+        "Bare aluminum tripod fitting",
+        "Painted steel tripod accent",
+        "Bronze tripod knob"
+      ],
+      "massKg": 12.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.6999990344047546,
+        16.825666236877442,
+        0.987961225444451
+      ],
+      "inertia": {
+        "ixx": 7.81629794594057,
+        "iyy": 11.303273669116134,
+        "izz": 10.372496343324345,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.481887459754944,
+        2.179136276245117,
+        1.9716969872824848
+      ],
+      "sourceLink": "tripod",
+      "massBasis": "Tripod consists of three hollow tubular legs (aluminum or steel), a center spreader, and rubber/metal feet. Four materials map to legs, spreader, feet, and top plate. Mass distributed along slender legs spreading outward and downward; CoM below geometric center. Higher x/z variance from leg splay, lower y variance from legs being thin tubes along mostly-vertical direction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Tripod consists of three hollow tubular legs (aluminum or steel), a center spreader, and rubber/metal feet. Four materials map to legs, spreader, feet, and top plate. Mass distributed along slender legs spreading outward and downward; CoM below geometric center. Higher x/z variance from leg splay, lower y variance from legs being thin tubes along mostly-vertical direction.",
+      "surfaceMaterials": [
+        "REF_11_astronomical_telescope_on_tripod_tripod_00",
+        "REF_11_astronomical_telescope_on_tripod_tripod_01",
+        "REF_11_astronomical_telescope_on_tripod_tripod_02",
+        "REF_11_astronomical_telescope_on_tripod_tripod_03"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "fork arm",
+      "materials": [
+        "Painted steel fork arm body",
+        "Painted steel fork arm detail"
+      ],
+      "massKg": 10.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.9411020278930664,
+        16.839131927490236,
+        2.352633535861969
+      ],
+      "inertia": {
+        "ixx": 2.0871350136933406,
+        "iyy": 2.966231144720198,
+        "izz": 2.057115409518632,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.3935346603393555,
+        0.9669208526611328,
+        1.4077099561691284
+      ],
+      "sourceLink": "fork_arm",
+      "massBasis": "Fork arm is a hollow U/yoke structure in cast aluminum or steel; mass concentrated in two side arms and base pivot, slightly below geometric center. Two material refs suggest structural shell plus bearing housing. Thin-walled hollow sections reduce variance vs solid box.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Fork arm is a hollow U/yoke structure in cast aluminum or steel; mass concentrated in two side arms and base pivot, slightly below geometric center. Two material refs suggest structural shell plus bearing housing. Thin-walled hollow sections reduce variance vs solid box.",
+      "surfaceMaterials": [
+        "REF_11_astronomical_telescope_on_tripod_fork_arm_00",
+        "REF_11_astronomical_telescope_on_tripod_fork_arm_01"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "polar head",
+      "materials": [
+        "Painted steel polar head housing",
+        "Painted steel polar head detail",
+        "Bronze polar head knob"
+      ],
+      "massKg": 9.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.5473432540893555,
+        16.741661224365235,
+        1.8606690168380737
+      ],
+      "inertia": {
+        "ixx": 0.38356080337302073,
+        "iyy": 0.4456343964900846,
+        "izz": 0.40151403948361986,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6154251098632812,
+        0.5702056884765625,
+        0.591111421585083
+      ],
+      "sourceLink": "polar_head",
+      "massBasis": "Polar head houses worm gears, bearings, and latitude adjustment in a compact machined-aluminum or steel enclosure. Three materials suggest housing, gear train, and adjustment knob. Dense mechanical internals concentrate mass near center, yielding variance below uniform-box 1/12. Slightly low CoM from heavy worm-gear housing.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Polar head houses worm gears, bearings, and latitude adjustment in a compact machined-aluminum or steel enclosure. Three materials suggest housing, gear train, and adjustment knob. Dense mechanical internals concentrate mass near center, yielding variance below uniform-box 1/12. Slightly low CoM from heavy worm-gear housing.",
+      "surfaceMaterials": [
+        "REF_11_astronomical_telescope_on_tripod_polar_head_00",
+        "REF_11_astronomical_telescope_on_tripod_polar_head_01",
+        "REF_11_astronomical_telescope_on_tripod_polar_head_02"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "polar_angle",
+      "type": "revolute",
+      "lower": -0.22,
+      "upper": 0.3,
+      "id": "0",
+      "effort": 60.0,
+      "velocity": 0.25,
+      "damping": 3.2,
+      "friction": 5.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "right_ascension",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "1",
+      "effort": 18.0,
+      "velocity": 0.75,
+      "damping": 0.8,
+      "friction": 1.2,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "declination",
+      "type": "revolute",
+      "lower": -0.75,
+      "upper": 1.15,
+      "id": "2",
+      "effort": 10.0,
+      "velocity": 0.65,
+      "damping": 2.0,
+      "friction": 4.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/space_blend_asset/11_astronomical_telescope_on_tripod/astronomical_telescope_on_tripod/seed_0000/model.urdf",
+  "referenceFrame": 240,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

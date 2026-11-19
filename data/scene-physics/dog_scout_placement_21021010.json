@@ -1,0 +1,1165 @@
+{
+  "assetId": "dog_scout_placement_21021010",
+  "name": "Dog scout",
+  "totalMassKg": 6.5969999999999995,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "chassis",
+      "materials": [
+        "Slate Blue Aluminum Alloy",
+        "Orange Accent Plastic",
+        "Dark Actuator Housing",
+        "Dark Belly Panel",
+        "Cyan LED Diffuser",
+        "Pearl Shell Composite",
+        "Stainless Steel Hardware",
+        "Black Vent Polymer"
+      ],
+      "massKg": 2.8,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.0267844796180725,
+        -1.0016233801841736,
+        0.3578593581914902
+      ],
+      "inertia": {
+        "ixx": 0.09632101568324591,
+        "iyy": 0.08059488002774755,
+        "izz": 0.1605223045427862,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5301400423049927,
+        0.5913537740707397,
+        0.1937294900417328
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow alloy shell with internal frame and vented panels; mass biased slightly low by belly_dark plate; ~15% volumetric fill of bounding box.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow alloy shell with internal frame and vented panels; mass biased slightly low by belly_dark plate; ~15% volumetric fill of bounding box.",
+      "surfaceMaterials": [
+        "Dog scout / slate blue alloy",
+        "accent_orange",
+        "actuator_dark",
+        "belly_dark",
+        "led_cyan",
+        "shell_pearl",
+        "steel.002",
+        "vent_black"
+      ]
+    },
+    {
+      "id": "15",
+      "name": "rear left thigh",
+      "materials": [
+        "Slate Blue Aluminum Alloy",
+        "Dark Actuator Housing",
+        "Stainless Steel Hardware"
+      ],
+      "massKg": 0.36,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.8994728028774261,
+        -0.7996717751026153,
+        0.2639460787177086
+      ],
+      "inertia": {
+        "ixx": 0.0017951097565037427,
+        "iyy": 0.0012545194898187448,
+        "izz": 0.0012372384191769996,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.11283236742019653,
+        0.17679303884506226,
+        0.18443520367145538
+      ],
+      "sourceLink": null,
+      "massBasis": "Larger rear thigh with alloy shell; slightly wider than front; actuator upper region.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Larger rear thigh with alloy shell; slightly wider than front; actuator upper region.",
+      "surfaceMaterials": [
+        "Dog scout / slate blue alloy",
+        "actuator_dark",
+        "steel.002"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "front right thigh",
+      "materials": [
+        "Slate Blue Aluminum Alloy",
+        "Dark Actuator Housing",
+        "Stainless Steel Hardware"
+      ],
+      "massKg": 0.35,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.0918075442314148,
+        -1.3068385744094848,
+        0.2639461159706116
+      ],
+      "inertia": {
+        "ixx": 0.001831559049253967,
+        "iyy": 0.0011240131615970611,
+        "izz": 0.0011935247191771309,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.09557688236236572,
+        0.1854114532470703,
+        0.18443524837493896
+      ],
+      "sourceLink": null,
+      "massBasis": "Larger FR thigh with alloy shell and steel actuator; ~18% fill; actuator upper-biased.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Larger FR thigh with alloy shell and steel actuator; ~18% fill; actuator upper-biased.",
+      "surfaceMaterials": [
+        "Dog scout / slate blue alloy",
+        "actuator_dark",
+        "steel.002"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "front left thigh",
+      "materials": [
+        "Slate Blue Aluminum Alloy",
+        "Dark Actuator Housing",
+        "Stainless Steel Hardware"
+      ],
+      "massKg": 0.28,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.7522331178188324,
+        -1.1236027669906616,
+        0.2489362135529518
+      ],
+      "inertia": {
+        "ixx": 0.001211131371201499,
+        "iyy": 0.0009484473447336337,
+        "izz": 0.0005641700010128657,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.08529502153396606,
+        0.13758563995361328,
+        0.19755159318447113
+      ],
+      "sourceLink": null,
+      "massBasis": "Alloy shell over steel actuator; actuator sits upper-inner, shifting CoM slightly up; moderate hollow fraction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Alloy shell over steel actuator; actuator sits upper-inner, shifting CoM slightly up; moderate hollow fraction.",
+      "surfaceMaterials": [
+        "Dog scout / slate blue alloy",
+        "actuator_dark",
+        "steel.002"
+      ]
+    },
+    {
+      "id": "19",
+      "name": "rear right thigh",
+      "materials": [
+        "Slate Blue Aluminum Alloy",
+        "Dark Actuator Housing",
+        "Stainless Steel Hardware"
+      ],
+      "massKg": 0.28,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.2563799023628235,
+        -0.9416131222248078,
+        0.24893631041049957
+      ],
+      "inertia": {
+        "ixx": 0.0012111318553763026,
+        "iyy": 0.0009484483977970047,
+        "izz": 0.0005641698534846628,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.08529508113861084,
+        0.1375855803489685,
+        0.1975516974925995
+      ],
+      "sourceLink": null,
+      "massBasis": "Rear right thigh mirrors FL thigh; alloy shell over steel actuator.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rear right thigh mirrors FL thigh; alloy shell over steel actuator.",
+      "surfaceMaterials": [
+        "Dog scout / slate blue alloy",
+        "actuator_dark",
+        "steel.002"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "front right hip",
+      "materials": [
+        "Dark Actuator Housing",
+        "Stainless Steel Hardware",
+        "Black Vent Polymer"
+      ],
+      "massKg": 0.25,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.0891835689544678,
+        -1.2119470834732056,
+        0.32952140271663666
+      ],
+      "inertia": {
+        "ixx": 0.0003573769198759624,
+        "iyy": 0.0003081782727227438,
+        "izz": 0.0005127532556001028,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.11676454544067383,
+        0.12856125831604004,
+        0.06514981389045715
+      ],
+      "sourceLink": null,
+      "massBasis": "Symmetric hip actuator housing; steel pivot and vented cover; concentrated central mass.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Symmetric hip actuator housing; steel pivot and vented cover; concentrated central mass.",
+      "surfaceMaterials": [
+        "actuator_dark",
+        "steel.002",
+        "vent_black"
+      ]
+    },
+    {
+      "id": "14",
+      "name": "rear left hip",
+      "materials": [
+        "Dark Actuator Housing",
+        "Stainless Steel Hardware",
+        "Black Vent Polymer"
+      ],
+      "massKg": 0.25,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.9643873572349548,
+        -0.7442681789398193,
+        0.3295212835073471
+      ],
+      "inertia": {
+        "ixx": 0.00035737834330288546,
+        "iyy": 0.0003081776596664856,
+        "izz": 0.0005127543455633088,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.11676442623138428,
+        0.1285616159439087,
+        0.06514975428581238
+      ],
+      "sourceLink": null,
+      "massBasis": "Rear hip actuator housing; mirrors FR hip in steel/vent construction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rear hip actuator housing; mirrors FR hip in steel/vent construction.",
+      "surfaceMaterials": [
+        "actuator_dark",
+        "steel.002",
+        "vent_black"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "front left hip",
+      "materials": [
+        "Dark Actuator Housing",
+        "Stainless Steel Hardware",
+        "Black Vent Polymer"
+      ],
+      "massKg": 0.24,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.8047420680522919,
+        -1.0868520736694336,
+        0.3266945332288742
+      ],
+      "inertia": {
+        "ixx": 0.0003327556479920048,
+        "iyy": 0.00027954950607581,
+        "izz": 0.00047513654209942955,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.11369603872299194,
+        0.1272280216217041,
+        0.06299999356269836
+      ],
+      "sourceLink": null,
+      "massBasis": "Compact actuator housing in steel/vent shell; mass concentrated around central pivot, reducing variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Compact actuator housing in steel/vent shell; mass concentrated around central pivot, reducing variance.",
+      "surfaceMaterials": [
+        "actuator_dark",
+        "steel.002",
+        "vent_black"
+      ]
+    },
+    {
+      "id": "18",
+      "name": "rear right hip",
+      "materials": [
+        "Dark Actuator Housing",
+        "Stainless Steel Hardware",
+        "Black Vent Polymer"
+      ],
+      "massKg": 0.24,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.2488285303115845,
+        -0.8693627715110779,
+        0.32669466733932495
+      ],
+      "inertia": {
+        "ixx": 0.0003327567029671696,
+        "iyy": 0.00027954979215902086,
+        "izz": 0.0004751377533817868,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.11369609832763672,
+        0.1272282600402832,
+        0.06300002336502075
+      ],
+      "sourceLink": null,
+      "massBasis": "Rear right hip mirrors FL hip; actuator + steel + vent_black.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rear right hip mirrors FL hip; actuator + steel + vent_black.",
+      "surfaceMaterials": [
+        "actuator_dark",
+        "steel.002",
+        "vent_black"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "front right calf",
+      "materials": [
+        "Dark Actuator Housing",
+        "Dark Calf Tube",
+        "Stainless Steel Hardware"
+      ],
+      "massKg": 0.22,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.0996795296669006,
+        -1.3032667219638825,
+        0.14373737387359142
+      ],
+      "inertia": {
+        "ixx": 0.000968968584433379,
+        "iyy": 0.0008079034877707104,
+        "izz": 0.00045195524402332496,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.09388744831085205,
+        0.1391056776046753,
+        0.2017214633524418
+      ],
+      "sourceLink": null,
+      "massBasis": "Mirror-geometry calf with actuator_dark and calf_dark shell; slightly larger than FL counterpart.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Mirror-geometry calf with actuator_dark and calf_dark shell; slightly larger than FL counterpart.",
+      "surfaceMaterials": [
+        "actuator_dark",
+        "calf_dark",
+        "steel.002"
+      ]
+    },
+    {
+      "id": "20",
+      "name": "body",
+      "materials": [
+        "Dark Sensor Polymer"
+      ],
+      "massKg": 0.22,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.0610175132751465,
+        -0.9046967029571533,
+        0.4544946253299713
+      ],
+      "inertia": {
+        "ixx": 0.0008903340872642736,
+        "iyy": 0.0008479777934043349,
+        "izz": 0.0015131381936468644,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.20441031455993652,
+        0.21021461486816406,
+        0.08100003004074097
+      ],
+      "sourceLink": null,
+      "massBasis": "Dark sensor polymer housing; semi-solid polymer block with embedded sensor; ~30% fill.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Dark sensor polymer housing; semi-solid polymer block with embedded sensor; ~30% fill.",
+      "surfaceMaterials": [
+        "Dog variants / dark sensor polymer"
+      ]
+    },
+    {
+      "id": "12",
+      "name": "rear left calf",
+      "materials": [
+        "Dark Actuator Housing",
+        "Dark Calf Tube",
+        "Stainless Steel Hardware"
+      ],
+      "massKg": 0.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.8923592865467072,
+        -0.7902150303125381,
+        0.14373737759888172
+      ],
+      "inertia": {
+        "ixx": 0.0009250563265991708,
+        "iyy": 0.0006849551655643771,
+        "izz": 0.00040554102554359874,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.07426077127456665,
+        0.14869779348373413,
+        0.20172151550650597
+      ],
+      "sourceLink": null,
+      "massBasis": "Rear calf, slightly longer than front; actuator plus calf_dark shell; hollow construction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rear calf, slightly longer than front; actuator plus calf_dark shell; hollow construction.",
+      "surfaceMaterials": [
+        "actuator_dark",
+        "calf_dark",
+        "steel.002"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "front left calf",
+      "materials": [
+        "Dark Actuator Housing",
+        "Dark Calf Tube",
+        "Stainless Steel Hardware"
+      ],
+      "massKg": 0.18,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.7544818818569183,
+        -1.1133127629756927,
+        0.10348457260988653
+      ],
+      "inertia": {
+        "ixx": 0.0006730535164748446,
+        "iyy": 0.0005606528704555051,
+        "izz": 0.00025728449130406,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.07325345277786255,
+        0.11942589282989502,
+        0.1914483574219048
+      ],
+      "sourceLink": null,
+      "massBasis": "Small hollow calf shell with concentrated actuator; steel linkage adds central mass, lowering variance vs uniform shell.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small hollow calf shell with concentrated actuator; steel linkage adds central mass, lowering variance vs uniform shell.",
+      "surfaceMaterials": [
+        "actuator_dark",
+        "calf_dark",
+        "steel.002"
+      ]
+    },
+    {
+      "id": "9",
+      "name": "head",
+      "materials": [
+        "Slate Blue Aluminum Alloy",
+        "Eye Glow Lens",
+        "Cyan LED Diffuser",
+        "Black Vent Polymer"
+      ],
+      "massKg": 0.18,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.9280999600887299,
+        -1.187060956954956,
+        0.5297944718599319
+      ],
+      "inertia": {
+        "ixx": 0.00040537436717776726,
+        "iyy": 0.00040709573424174326,
+        "izz": 0.000692464812781254,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.15061813592910767,
+        0.15204358100891113,
+        0.06455114483833313
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin alloy/pearl head shell with LED and eye_glow sensors at front; hollow, mass slightly forward and low.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin alloy/pearl head shell with LED and eye_glow sensors at front; hollow, mass slightly forward and low.",
+      "surfaceMaterials": [
+        "Dog scout / slate blue alloy",
+        "eye_glow",
+        "led_cyan",
+        "vent_black"
+      ]
+    },
+    {
+      "id": "16",
+      "name": "rear right calf",
+      "materials": [
+        "Dark Actuator Housing",
+        "Dark Calf Tube",
+        "Stainless Steel Hardware"
+      ],
+      "massKg": 0.18,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.2586288452148438,
+        -0.931323054432869,
+        0.10348470602184534
+      ],
+      "inertia": {
+        "ixx": 0.0006730528180808532,
+        "iyy": 0.0005606526076944611,
+        "izz": 0.00025728381989392285,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.07325339317321777,
+        0.1194257140159607,
+        0.19144832901656628
+      ],
+      "sourceLink": null,
+      "massBasis": "Rear right calf mirrors front left geometry; same actuator/steel/shell mix.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rear right calf mirrors front left geometry; same actuator/steel/shell mix.",
+      "surfaceMaterials": [
+        "actuator_dark",
+        "calf_dark",
+        "steel.002"
+      ]
+    },
+    {
+      "id": "11",
+      "name": "neck base",
+      "materials": [
+        "Dark Actuator Housing"
+      ],
+      "massKg": 0.11,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.9507141709327698,
+        -1.1412427425384521,
+        0.44207462668418884
+      ],
+      "inertia": {
+        "ixx": 0.00012060156986074547,
+        "iyy": 0.0001252395380464289,
+        "izz": 0.0001856892968897924,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.11117064952850342,
+        0.10842776298522949,
+        0.06120002269744873
+      ],
+      "sourceLink": null,
+      "massBasis": "Dark actuator block at neck base; mostly solid actuator housing, concentrated mass.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Dark actuator block at neck base; mostly solid actuator housing, concentrated mass.",
+      "surfaceMaterials": [
+        "actuator_dark"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "neck",
+      "materials": [
+        "Dark Actuator Housing",
+        "Slate Leg Metal",
+        "Stainless Steel Hardware"
+      ],
+      "massKg": 0.1,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.9430976808071136,
+        -1.1552790999412537,
+        0.470599964261055
+      ],
+      "inertia": {
+        "ixx": 0.0001076747535815324,
+        "iyy": 9.64667275329484e-05,
+        "izz": 0.00012833977012941488,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.09018951654434204,
+        0.0984419584274292,
+        0.07156631350517273
+      ],
+      "sourceLink": null,
+      "massBasis": "Slate leg-material tube with steel actuator; semi-hollow cylindrical structure.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Slate leg-material tube with steel actuator; semi-hollow cylindrical structure.",
+      "surfaceMaterials": [
+        "actuator_dark",
+        "leg_slate",
+        "steel.002"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "front right foot",
+      "materials": [
+        "Foot Rubber"
+      ],
+      "massKg": 0.045,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.1301839351654053,
+        -1.2479888200759888,
+        0.06258942186832428
+      ],
+      "inertia": {
+        "ixx": 1.819007522738934e-05,
+        "iyy": 1.7030100562618367e-05,
+        "izz": 2.4337016813686888e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05570173263549805,
+        0.05842304229736328,
+        0.03816956281661987
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid rubber pad, slightly larger than FL foot; uniform density.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid rubber pad, slightly larger than FL foot; uniform density.",
+      "surfaceMaterials": [
+        "rubber.002"
+      ]
+    },
+    {
+      "id": "13",
+      "name": "rear left foot",
+      "materials": [
+        "Foot Rubber"
+      ],
+      "massKg": 0.042,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.9133309125900269,
+        -0.7297923564910889,
+        0.06258946843445301
+      ],
+      "inertia": {
+        "ixx": 1.7472039039546042e-05,
+        "iyy": 1.491692425726728e-05,
+        "izz": 2.223135023498216e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.053124189376831055,
+        0.05962502956390381,
+        0.038169559091329575
+      ],
+      "sourceLink": null,
+      "massBasis": "Rubber foot pad, near-solid; matches FR foot size.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rubber foot pad, near-solid; matches FR foot size.",
+      "surfaceMaterials": [
+        "rubber.002"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "front left foot",
+      "materials": [
+        "Foot Rubber"
+      ],
+      "massKg": 0.035,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.7750296592712402,
+        -1.0684207677841187,
+        0.014807880030275555
+      ],
+      "inertia": {
+        "ixx": 1.1557680792272469e-05,
+        "iyy": 1.0682613284795398e-05,
+        "izz": 1.71475088011448e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05292224884033203,
+        0.055695533752441406,
+        0.02960667365550762
+      ],
+      "sourceLink": null,
+      "massBasis": "Nearly solid rubber foot pad; uniform density ~1100 kg/m\u00b3 at ~40% fill.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Nearly solid rubber foot pad; uniform density ~1100 kg/m\u00b3 at ~40% fill.",
+      "surfaceMaterials": [
+        "rubber.002"
+      ]
+    },
+    {
+      "id": "17",
+      "name": "rear right foot",
+      "materials": [
+        "Foot Rubber"
+      ],
+      "massKg": 0.035,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.279176950454712,
+        -0.8864307999610901,
+        0.014807962941176811
+      ],
+      "inertia": {
+        "ixx": 1.1557672133433979e-05,
+        "iyy": 1.068260462595691e-05,
+        "izz": 1.71475088011448e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05292224884033203,
+        0.055695533752441406,
+        0.02960662331770436
+      ],
+      "sourceLink": null,
+      "massBasis": "Rubber foot matching FL foot dimensions; uniform solid rubber.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rubber foot matching FL foot dimensions; uniform solid rubber.",
+      "surfaceMaterials": [
+        "rubber.002"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "front_left_thigh",
+      "type": "revolute",
+      "lower": -0.9,
+      "upper": 0.9,
+      "id": "0",
+      "effort": 6.0,
+      "velocity": 5.0,
+      "damping": 0.3,
+      "friction": 0.15,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_left_hip",
+      "type": "revolute",
+      "lower": -0.1,
+      "upper": 0.1,
+      "id": "1",
+      "effort": 4.0,
+      "velocity": 3.0,
+      "damping": 0.2,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_left_calf",
+      "type": "revolute",
+      "lower": -0.9,
+      "upper": 0.9,
+      "id": "3",
+      "effort": 5.0,
+      "velocity": 5.0,
+      "damping": 0.25,
+      "friction": 0.12,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_left_calf",
+      "type": "revolute",
+      "lower": -0.9,
+      "upper": 0.9,
+      "id": "4",
+      "effort": 5.0,
+      "velocity": 5.0,
+      "damping": 0.25,
+      "friction": 0.12,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "neck_base",
+      "type": "revolute",
+      "lower": -0.3,
+      "upper": 0.3,
+      "id": "6",
+      "effort": 1.5,
+      "velocity": 3.0,
+      "damping": 0.08,
+      "friction": 0.05,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "neck",
+      "type": "revolute",
+      "lower": -0.3,
+      "upper": 0.3,
+      "id": "7",
+      "effort": 1.2,
+      "velocity": 3.0,
+      "damping": 0.07,
+      "friction": 0.04,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_right_thigh",
+      "type": "revolute",
+      "lower": -0.9,
+      "upper": 0.9,
+      "id": "9",
+      "effort": 6.5,
+      "velocity": 5.0,
+      "damping": 0.3,
+      "friction": 0.15,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_right_thigh",
+      "type": "revolute",
+      "lower": -0.9,
+      "upper": 0.9,
+      "id": "10",
+      "effort": 6.5,
+      "velocity": 5.0,
+      "damping": 0.3,
+      "friction": 0.15,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_right_hip",
+      "type": "revolute",
+      "lower": -0.1,
+      "upper": 0.1,
+      "id": "11",
+      "effort": 4.0,
+      "velocity": 3.0,
+      "damping": 0.2,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_right_hip",
+      "type": "revolute",
+      "lower": -0.1,
+      "upper": 0.1,
+      "id": "12",
+      "effort": 4.0,
+      "velocity": 3.0,
+      "damping": 0.2,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_right_calf",
+      "type": "revolute",
+      "lower": -0.9,
+      "upper": 0.9,
+      "id": "15",
+      "effort": 5.5,
+      "velocity": 5.0,
+      "damping": 0.25,
+      "friction": 0.12,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_right_calf",
+      "type": "revolute",
+      "lower": -0.9,
+      "upper": 0.9,
+      "id": "16",
+      "effort": 5.0,
+      "velocity": 5.0,
+      "damping": 0.25,
+      "friction": 0.12,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_left_thigh",
+      "type": "revolute",
+      "lower": -0.9,
+      "upper": 0.9,
+      "id": "17",
+      "effort": 6.0,
+      "velocity": 5.0,
+      "damping": 0.3,
+      "friction": 0.15,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_left_hip",
+      "type": "revolute",
+      "lower": -0.1,
+      "upper": 0.1,
+      "id": "18",
+      "effort": 4.0,
+      "velocity": 3.0,
+      "damping": 0.2,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

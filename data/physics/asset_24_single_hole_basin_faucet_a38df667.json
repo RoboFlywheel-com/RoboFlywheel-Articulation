@@ -1,0 +1,76 @@
+{
+  "assetId": "asset_24_single_hole_basin_faucet_a38df667",
+  "dimensions_m": [
+    0.08681869506835938,
+    0.15721702575683594,
+    0.34046339988708496
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Matte Black Coated Brass",
+      "surfaceMaterial": "24 | shbf_body_matte_black",
+      "parts": [
+        "lever_handle",
+        "body.005",
+        "lever_pivot_block"
+      ],
+      "values": {
+        "density_kg_m3": 8500.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "1",
+      "material": "Matte Black Coated Brass",
+      "surfaceMaterial": "24 | shbf_hot_matte_black",
+      "parts": [
+        "lever_handle"
+      ],
+      "values": {
+        "density_kg_m3": 8500.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "2",
+      "material": "Matte Black Rubber Gasket",
+      "surfaceMaterial": "24 | shbf_gasket_matte_black",
+      "parts": [
+        "body.005"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Matte Black Coated Brass",
+      "surfaceMaterial": "24 | shbf_accent_matte_black",
+      "parts": [
+        "body.005"
+      ],
+      "values": {
+        "density_kg_m3": 8500.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.5
+      }
+    }
+  ]
+}

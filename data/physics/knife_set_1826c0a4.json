@@ -1,0 +1,98 @@
+{
+  "assetId": "knife_set_1826c0a4",
+  "dimensions_m": [
+    0.2361682653427124,
+    0.26411867141723633,
+    0.47476768493652344
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Light Walnut Wood",
+      "surfaceMaterial": "M_seeded_knife_set_0_001",
+      "parts": [
+        "knife_block"
+      ],
+      "values": {
+        "density_kg_m3": 650.0,
+        "youngs_modulus_pa": 11000000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.38,
+        "dynamic_friction_coefficient": 0.28,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "1",
+      "material": "Dark Stained Wood",
+      "surfaceMaterial": "M_seeded_knife_set_0_002",
+      "parts": [
+        "knife_block"
+      ],
+      "values": {
+        "density_kg_m3": 700.0,
+        "youngs_modulus_pa": 1100000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.38,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "2",
+      "material": "Medium Brown Wood",
+      "surfaceMaterial": "M_seeded_knife_set_0_003",
+      "parts": [
+        "knife_block"
+      ],
+      "values": {
+        "density_kg_m3": 650.0,
+        "youngs_modulus_pa": 11000000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.38,
+        "dynamic_friction_coefficient": 0.28,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "3",
+      "material": "Stainless Steel Blade",
+      "surfaceMaterial": "M_seeded_knife_set_0_004",
+      "parts": [
+        "knife_0",
+        "knife_2",
+        "knife_1",
+        "shears_inner_half",
+        "shears_outer_half"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Wooden Handle",
+      "surfaceMaterial": "M_seeded_knife_set_0_005",
+      "parts": [
+        "knife_0",
+        "knife_2",
+        "knife_1",
+        "shears_inner_half",
+        "shears_outer_half"
+      ],
+      "values": {
+        "density_kg_m3": 700.0,
+        "youngs_modulus_pa": 1100000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.38,
+        "restitution_coefficient": 0.45
+      }
+    }
+  ]
+}

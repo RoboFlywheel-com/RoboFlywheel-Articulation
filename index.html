@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#ffffff"/>
+  <title>RFW-A · Agentic Procedural Generation of 400K Articulated Assets</title>
+  <meta name="description" content="RFW-A: Agentic Procedural Generation of 400K Articulated Assets over 500 Categories. Explore reusable generators, articulated assets, directed editing, and zero-shot sim-to-real transfer."/>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml"/>
+  <script type="module" crossorigin src="./assets/main-BAn4seNy.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/__vite-browser-external-B5Qt9EMX.js">
+  <link rel="stylesheet" crossorigin href="./assets/main-Big6Sh_R.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header"><a class="wordmark" href="#" aria-label="RFW-A home">RFW-A</a><button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">Menu <span>＋</span></button><nav aria-label="Main navigation"><a href="#paper-title" data-show-paper>Paper</a><a href="#dataset">Explore assets</a><a href="#worlds">Explore scenes</a><a href="#method">Method</a><a href="#editing">Editing</a><a href="#validation">Physical validation</a><a href="#simdemo">Simulation demos</a><a href="#citation">Citation</a></nav></header>
+<main id="main">
+<section class="project-hero" id="home" aria-labelledby="paper-title">
+ <video id="hero-video" class="hero-background" autoplay muted loop playsinline preload="metadata" poster="./media/scenes/indoor.webp" aria-label="RFW-A indoor scene"><source src="./media/indoor.mp4" type="video/mp4"/></video>
+ <div class="hero-shade" aria-hidden="true"></div>
+ <div class="hero-paper" id="hero-paper-info">
+  <h1 id="paper-title" tabindex="-1">RFW-A: Agentic Procedural Generation of 400K Articulated Assets over 500 Categories</h1>
+  <div id="author-details" class="hero-authors" aria-label="Authors and affiliations"></div>
+  <div class="hero-actions"><button class="hero-film film-open"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7z"/></svg>Watch full video <small>2:24</small></button><div class="resource-links" id="resource-links"><button disabled>Paper <span>SOON</span></button><button disabled>Code <span>SOON</span></button><button disabled>Dataset <span>SOON</span></button><button disabled>Gallery <span>SOON</span></button></div></div>
+ </div>
+ <div class="hero-controls">
+  <div class="hero-controls-row"><div class="hero-scene-tabs" role="group" aria-label="Choose a background scene"><button data-hero-scene="indoor" aria-pressed="true">Indoor</button><button data-hero-scene="outdoor" aria-pressed="false">Outdoor</button><button data-hero-scene="space" aria-pressed="false">Space</button><button data-hero-scene="laboratory" aria-pressed="false">Laboratory</button></div><div class="hero-playback"><button id="hero-play" aria-controls="hero-video">Pause video</button><button id="hero-view" aria-controls="hero-paper-info" aria-expanded="true">Watch scene</button></div></div>
+  <div class="hero-caption"><span id="hero-scene-caption">Indoor · Articulated assets generated with RFW-A</span><a id="hero-explore" href="#worlds">Explore this scene ↓</a></div>
+ </div>
+</section>
+<div class="wrap hero-abstract-wrap"><details class="hero-abstract"><summary>Read the abstract <span>＋</span></summary><p id="hero-abstract-text"></p></details></div>
+<section class="section wrap generator-explorer" id="dataset" aria-labelledby="dataset-title">
+ <div class="section-heading"><div><span class="eyebrow">IMAGE → GENERATOR → ARTICULATED ASSETS</span><h2 id="dataset-title">Explore RFW-A-400K</h2></div><p>One category generator. Many possibilities. Explore variations in structure, materials, and motion.</p></div>
+ <div class="dataset-facts" aria-label="Dataset release statistics"><div><strong>402,410</strong><span>articulated assets</span></div><div><strong>531</strong><span>object categories</span></div><div><strong>2.68M</strong><span>parsed links</span></div><div><strong>84.65%</strong><span>assets with multiple movable joints</span></div></div>
+ <div class="gx-browser-heading"><div><h3>Find a category</h3><p id="gx-count" class="gx-muted" role="status">Loading image-grounded generators…</p></div><div class="gx-filters"><label class="sr-only" for="gx-search">Search categories</label><input id="gx-search" type="search" placeholder="Search categories…"/><label class="sr-only" for="gx-domain">Filter categories</label><select id="gx-domain"><option value="all">All categories</option></select></div></div>
+ <div id="gx-categories" class="gx-categories" aria-label="Generator categories"></div>
+ <button id="gx-more" class="gx-more" hidden>Show all categories ↓</button>
+ <div id="gx-family" class="gx-family" hidden>
+  <div class="gx-family-heading"><div><span class="eyebrow" id="gx-domain-label"></span><h3 id="gx-family-title"></h3></div><p id="gx-family-count" class="gx-muted"></p></div>
+  <div class="gx-generation">
+   <figure class="gx-input"><div class="gx-step"><span>01</span> Input image</div><button id="gx-input-enlarge" aria-label="Enlarge input image"><img id="gx-input-image" alt="" width="640" height="480"/></button><div id="gx-input-choices" class="gx-input-choices" aria-label="Source input images"></div><figcaption>Reference for the category generator</figcaption></figure>
+   <div class="gx-outputs"><div class="gx-step"><span>02</span> Same generator · different seeds <span class="gx-step-note">Select a preview to explore ↓</span></div><div id="gx-seeds" class="gx-seeds"></div></div>
+  </div>
+  <p class="gx-preview-note">Generated previews use the same camera direction and are fitted individually. Click a seed to load its 3D model.</p>
+  <div id="gx-workbench" class="gx-workbench" hidden aria-labelledby="gx-asset-title">
+   <div class="gx-workbench-heading"><div><span class="eyebrow" id="gx-asset-tag"></span><h3 id="gx-asset-title"></h3></div><div class="gx-actions"><button id="gx-color" aria-pressed="false">Color parts</button><button id="gx-simulate" aria-pressed="false">Simulate</button><button id="gx-reset">Reset</button><button id="gx-share">Copy link</button></div></div>
+   <div class="gx-inspector"><div class="gx-visual-column"><div id="gx-viewer"><p id="gx-status" class="gx-status" role="status">Loading model…</p><span class="viewer-hint">DRAG TO ROTATE · CLICK A PART · SCROLL TO ZOOM</span></div><div class="gx-part-heading"><span>Select a part</span><label class="sr-only" for="gx-part-search">Search parts</label><input id="gx-part-search" type="search" placeholder="Find a part…"/></div><div id="gx-parts" class="gx-parts" aria-label="Select a model part"></div></div>
+   <aside class="gx-properties"><div id="gx-part-info"></div><div class="gx-joint-control"><label for="gx-joint">Joint</label><select id="gx-joint"></select><label for="gx-position">Position <output id="gx-position-output"></output></label><input id="gx-position" type="range" min="0" max="1000" value="0"/><p id="gx-joint-description" class="gx-muted"></p></div><div id="gx-simulation" hidden><div class="gx-simulation-toolbar"><button id="gx-play">▶ Run</button><span id="gx-time" class="mono">0.00 s</span></div><label class="gx-gravity"><input id="gx-gravity" type="checkbox" checked/> Gravity</label><label class="gx-gravity" title="Adds virtual joint damping and reflected inertia for interaction; switch off to use source joint dynamics."><input id="gx-damping" type="checkbox" checked/> Damped interaction</label><div class="gx-force-controls"><button id="gx-force-minus">− Push joint</button><button id="gx-force-plus">+ Push joint</button></div><p id="gx-sim-note" class="gx-muted">MuJoCo · fixed base · source joint dynamics</p></div><details class="gx-record"><summary>Source & simulation details</summary><div id="gx-record"></div></details></aside></div>
+  </div>
+ </div>
+</section>
+
+<section class="worlds wrap scene-showcase" id="worlds" aria-labelledby="worlds-title">
+ <div class="scene-heading"><div><h2 id="worlds-title">Explore scenes</h2></div><p>Select an object to explore its motion, mass, materials, and joints.</p></div>
+ <div class="scene-tabs scene-picker" role="tablist" aria-label="Select a world">
+  <button role="tab" aria-selected="true" data-scene="indoor"><img src="./media/scenes/indoor.webp" alt=""/><span>Indoor<small>29 assets</small></span></button>
+  <button role="tab" aria-selected="false" data-scene="outdoor"><img src="./media/scenes/outdoor.webp" alt=""/><span>Outdoor<small>24 assets</small></span></button>
+  <button role="tab" aria-selected="false" data-scene="space"><img src="./media/scenes/space.webp" alt=""/><span>Space<small>10 assets</small></span></button>
+  <button role="tab" aria-selected="false" data-scene="laboratory"><img src="./media/scenes/laboratory.webp" alt=""/><span>Laboratory<small>21 assets</small></span></button>
+ </div>
+ <div class="scene-workbench">
+  <div class="scene-map-column"><div class="world-stage scene-map">
+   <img id="scene-map-image" src="./media/scenes/indoor.webp" width="960" height="540" alt="Indoor scene with selectable objects"/>
+   <video id="scene-video" muted playsinline loop preload="none" poster="./media/scenes/indoor.webp" aria-label="Indoor articulated scene"><source src="./media/indoor.mp4" type="video/mp4"/></video>
+   <div id="scene-hotspots" aria-label="Featured objects in the scene"></div>
+  </div><div class="scene-map-toolbar"><span id="scene-map-caption">Indoor · Select a highlighted object</span><button id="scene-play" aria-label="Play scene video">▶ <span>Watch scene</span></button></div>
+  <div id="scene-object-choices" class="scene-object-choices" aria-label="Select a featured object"></div>
+  <p class="scene-map-note">Select a numbered object in the scene or use the buttons above.</p>
+  <div class="sr-only"><span id="scene-index">01 / 04</span><span id="scene-title">Indoor</span><span id="scene-subtitle"></span></div>
+  </div>
+  <aside class="scene-inspector" aria-labelledby="scene-object-title">
+   <div class="scene-inspector-heading"><span id="scene-object-context" class="eyebrow">INDOOR</span><h3 id="scene-object-title">Scene close-up</h3><div class="scene-mass"><strong id="scene-object-mass">—</strong><span id="scene-mass-unit">kg</span><small>Total mass per instance</small></div></div>
+   <video id="scene-detail-video" controls muted playsinline preload="none" aria-label="Selected object in its native scene"></video>
+   <div class="scene-clip-caption"><span>Camera walkthrough · Native scene motion</span><button id="scene-replay">Replay ↻</button></div>
+   <div class="scene-object-summary"><p id="scene-object-summary"></p></div>
+   <div class="scene-property-tabs" role="tablist" aria-label="Selected scene object properties"><button role="tab" aria-selected="true" data-scene-property="materials">Mass & materials</button><button role="tab" aria-selected="false" data-scene-property="joints" tabindex="-1">Joint limits</button><button role="tab" aria-selected="false" data-scene-property="dynamics" tabindex="-1">Joint dynamics</button><button role="tab" aria-selected="false" data-scene-property="inertia" tabindex="-1">Inertia</button></div>
+   <div id="scene-object-properties" role="tabpanel" class="scene-object-properties" aria-live="polite"></div>
+  </aside>
+ </div><p id="scene-live-status" class="sr-only" role="status"></p>
+</section>
+
+<section class="idea-section" id="method"><div class="wrap section"><div class="section-heading"><div><h2>Method</h2></div><p>Build a category generator, validate it, then sample articulated assets with grounded materials and physics.</p></div><button class="figure-button" data-lightbox="media/method.webp" data-caption="RFW-A pipeline: generator construction, material and physics annotation, and procedural variants"><img src="./media/method.webp" width="2276" height="1280" loading="lazy" alt="RFW-A pipeline: Source, Architect, Code and Revision agents build a category generator; sampled assets receive material and physics annotations and form articulated rover variants"/><span>Generator construction and procedural sampling <span>Click to enlarge ↗</span></span></button>
+<div class="cost-panel"><div><h3>Generation cost</h3><p>Adjust the sample count to see the API cost per asset.</p><label class="cost-label" for="sample-count">Assets per generator <output id="sample-output">200</output></label><input id="sample-count" type="range" min="1" max="1000" value="200"/><div class="range-labels mono"><span>1</span><span>1,000 ASSETS</span></div></div><div class="cost-result"><div class="cost-row ours"><span>RFW-A</span><strong id="our-cost">$0.053</strong><small>per asset</small><div class="cost-track"><i id="our-cost-bar"></i></div></div><div class="cost-row"><span>Per-asset agentic synthesis</span><strong>$1.237</strong><small>per asset</small><div class="cost-track"><i></i></div></div><p class="cost-footnote">Estimated API cost only; procedural compute is excluded. Mean generator authoring: $10.62. Based on 10 categories and 200 successful baseline synthesis records.</p></div></div></div></section>
+<section class="section wrap" id="editing"><div class="section-heading"><div><h2>Directed editing</h2></div><p>Pick an object and change exactly one thing — a component, a count, a material, a dimension. Every edited model is a real run of the same generator with one field changed; the reference configuration stays fixed for comparison.</p></div><div class="edit3d"><p class="edit3d-guide"><span><i>1</i> Pick an object</span><span><i>2</i> Choose what to change</span><span><i>3</i> Compare side by side</span></p><div class="edit3d-objects" id="edit3d-objects" role="tablist" aria-label="Object"></div><div class="edit3d-stages"><figure class="edit3d-stage"><span class="image-tag">BEFORE</span><div class="edit3d-view" id="edit3d-ref"><span class="edit3d-orbit">drag to orbit</span></div><figcaption id="edit3d-ref-cap"></figcaption></figure><figure class="edit3d-stage"><span class="image-tag accent">AFTER</span><div class="edit3d-view" id="edit3d-new"><span class="edit3d-orbit">drag to orbit</span></div><figcaption id="edit3d-new-cap"></figcaption></figure></div><div class="edit3d-controls"><div class="edit3d-row"><span class="edit3d-rowlabel">Change</span><div class="pill-tabs" id="edit3d-kinds" role="tablist" aria-label="Edit kind"></div></div><div class="edit3d-row"><span class="edit3d-rowlabel">To</span><div class="edit3d-values" id="edit3d-values"></div></div><div class="code-readout"><span class="mono">CONFIGURATION EDIT</span><code id="edit3d-code"></code></div><p class="note">Every output is a real run of the same generator with exactly one field changed — not a re-sampled lookalike. Models are baked in a fixed pose; joint interaction lives in the asset explorer. Cameras share a fixed frame per edit group, so size edits stay true to scale.</p></div></div></section>
+<section class="material-section wrap"><div class="material-copy"><h2>Materials & physics</h2><p>A shared library links PBR appearance to six physical properties. Seeded material selection binds appearance and physical annotations together.</p><div class="material-stats"><div><strong>18</strong><span>families</span></div><div><strong>124</strong><span>material classes</span></div><div><strong>8,295</strong><span>PBR materials</span></div></div><p class="note">A consistent material vocabulary connects appearance and physical behavior across the dataset.</p></div><div class="material-diagram"><span class="mono">ONE MATERIAL ENTRY → SIX PHYSICAL PROPERTIES</span><div class="property-list"><span><i>ρ</i>Density <small>kg/m³</small></span><span><i>E</i>Young’s modulus <small>Pa</small></span><span><i>ν</i>Poisson’s ratio <small>—</small></span><span><i>μₛ</i>Static friction <small>—</small></span><span><i>μₖ</i>Dynamic friction <small>—</small></span><span><i>e</i>Restitution <small>—</small></span></div><button class="text-link" data-lightbox="media/materials.webp" data-caption="Material grounding · paper figure">Material pipeline ↗</button></div></section>
+<section class="section results-section" id="validation"><div class="wrap"><div class="section-heading"><div><h2>Physical validation</h2></div><p>Kinematic validity, simulator import, and stable rollouts.</p></div><div class="validation-cards"><article><span class="mono">KINEMATIC VALIDITY</span><strong>100.0<span>%</span></strong><p>Full-release assets passing the kinematic validity check.</p></article><article><span class="mono">SIMULATOR IMPORT</span><strong>100.0<span>%</span></strong><p>Core-200 assets imported across the evaluated simulators.</p></article><article><span class="mono">STABLE ROLLOUT</span><strong>99.5<span>%</span></strong><p>One-second stable rollouts on Core-200.</p></article></div><div class="benchmark" id="benchmark"><div class="benchmark-label"><h3>Results</h3><p>Dataset scale, asset quality, and articulation estimation. Select a column to sort.</p></div><div class="benchmark-toolbar"><div class="pill-tabs" role="tablist" aria-label="Result group"><button role="tab" aria-selected="true" data-result="scale">Dataset scale</button><button role="tab" aria-selected="false" data-result="validity">Asset quality</button><button role="tab" aria-selected="false" data-result="transfer">Articulation estimation</button></div><label id="split-control" hidden>Evaluation split <select id="split-select"><option value="ood">Category OOD</option><option value="in">In-domain</option></select></label></div><div class="table-scroll" tabindex="0" role="region" aria-label="Paper results table"><table id="results-table"></table></div><p class="table-note" id="results-note"></p></div><details class="qualitative"><summary>Qualitative results <span>＋</span></summary><img src="./media/articulation.webp" loading="lazy" alt="Qualitative comparison of PM-only, PM plus Articraft, PM plus RFW-A-400K and ground truth"/></details></div></section>
+<section class="section wrap robotics-section" id="sim2real" aria-labelledby="robotics-title">
+ <div class="section-heading"><h2 id="robotics-title">Robotic manipulation</h2></div>
+ <button class="robotics-flow" data-lightbox="media/robotics-flow.webp?v=0ec43737d23e" data-lightbox-mobile="media/robotics-flow-mobile.webp?v=419b8ece50e4" data-caption="Retrieve → optionally edit → train in simulation → deploy zero-shot. Rendered close-ups illustrate opening and closing; real-world trials are shown below." aria-label="Enlarge the robotic manipulation workflow"><picture><source media="(max-width: 760px)" srcset="./media/robotics-flow-mobile.webp?v=419b8ece50e4" width="1394" height="1612"/><img src="./media/robotics-flow.webp?v=0ec43737d23e" width="2854" height="742" loading="lazy" alt="Retrieve a half-open yellow cabinet from a diverse 400K+ pool; six half-open edit examples vary proportions, handles, interiors and light wood, yellow, walnut and blue-gray finishes. A blue-gray Piper with mesh lines opens the taller cabinet over a blue simulation grid; a deployment schematic shows a darker arm closing a shorter cabinet against a plain background with a soft contact shadow. All panels are rendered method illustrations."/></picture><span aria-hidden="true">Enlarge ↗</span></button>
+ <div id="robotics-picker" class="robotics-picker" role="group" aria-label="Choose a manipulation task"></div>
+ <div class="robotics-playback"><h3 id="robotics-selection" aria-live="polite">Cabinet</h3><div><button id="robotics-play" aria-controls="robotics-grid">Play videos</button><button id="robotics-replay" aria-controls="robotics-grid">Replay</button></div></div>
+ <p id="task-description" class="robotics-description">Open the cabinet door with the left arm, then close it with the right arm.</p>
+ <div id="robotics-grid" class="robotics-grid"><p>Loading task videos…</p></div>
+ <div class="robotics-caption"><p>Select a video to enlarge.</p></div>
+ <div class="robotics-results">
+  <h3>Real-world success</h3>
+  <div class="robotics-scores"><article><strong>62<span>%</span></strong><p>Retrieval</p></article><article><strong>72<span>%</span></strong><p>Retrieval + 4 Edit</p></article><article><strong>80<span>%</span></strong><p>Retrieval + 9 Edit</p></article></div>
+  <p class="robotics-protocol">500 simulation demonstrations per task, with the same policy architecture and training budget. Mean success over five tasks, with 10 real-world trials per task.</p>
+  <details class="robotics-details"><summary>Results by task <span aria-hidden="true">＋</span></summary><div class="table-scroll" tabindex="0" role="region" aria-label="Real-world successes by training configuration"><table id="robotics-results"><thead></thead><tbody></tbody></table></div></details>
+ </div>
+</section>
+<section class="section wrap simdemo-section" id="simdemo" aria-labelledby="simdemo-title">
+ <div class="section-heading"><h2 id="simdemo-title">Simulation demos</h2></div>
+ <div id="simdemo-grid" class="simdemo-grid" aria-label="Simulation demo videos"></div>
+</section>
+<section class="section wrap citation-section" id="citation" aria-labelledby="citation-title"><div class="section-heading"><h2 id="citation-title">Citation</h2></div><div class="citation-box"><button id="copy-citation" class="copy-button">Copy BibTeX</button><pre id="citation-text">@misc{rfwa2026,
+  title = {RFW-A: Agentic Procedural Generation of 400K Articulated Assets over 500 Categories},
+  author = {Lyu, Yuanbo and Pan, Changjian and Zhang, Saining and Yang, Yi and others},
+  year = {2026},
+  note = {Public identifier to be added}
+}</pre></div></section>
+</main>
+<footer class="wrap"><a class="wordmark" href="#">RFW–A <span class="brand-small">2026</span></a><a class="back-top" href="#">Back to top ↑</a></footer>
+<dialog id="simdemo-dialog" class="robotics-dialog" aria-labelledby="simdemo-dialog-title"><div class="robotics-dialog-heading"><h2 id="simdemo-dialog-title">Simulation demo</h2><button class="dialog-close" aria-label="Close demo video">✕</button></div><video controls muted playsinline loop preload="none"></video></dialog>
+<dialog id="robotics-dialog" class="robotics-dialog" aria-labelledby="robotics-dialog-title"><div class="robotics-dialog-heading"><h2 id="robotics-dialog-title">Task video</h2><button class="dialog-close" aria-label="Close task video">✕</button></div><video controls muted playsinline loop preload="none"></video></dialog>
+<dialog id="film-dialog" class="media-dialog"><button class="dialog-close" aria-label="Close film">✕</button><video controls playsinline preload="none" poster="./media/film-poster.webp" src="https://github.com/RoboFlywheel-com/RoboFlywheel-Articulation/releases/download/media-v1/film.mp4"></video></dialog>
+<dialog id="figure-dialog" class="media-dialog figure-dialog"><button class="dialog-close" aria-label="Close figure">✕</button><img alt=""/></dialog>
+</body></html>

@@ -1,0 +1,223 @@
+{
+  "assetId": "urdf_08_antenna_dish_001_8494e9b1",
+  "name": "Antenna dish",
+  "totalMassKg": 12300,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "2",
+      "name": "mount base",
+      "materials": [
+        "Painted Steel Beige",
+        "Painted Steel Green",
+        "Painted Steel Red-Brown",
+        "Bronze Alloy",
+        "Painted Steel Gray"
+      ],
+      "massKg": 8000,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -14.085407257080078,
+        33.08097553253174,
+        1.268930253200233
+      ],
+      "inertia": {
+        "ixx": 17655.306690660156,
+        "iyy": 17655.29615356668,
+        "izz": 25433.155975897535,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        4.603725433349609,
+        4.603727340698242,
+        3.0818087328225374
+      ],
+      "sourceLink": "mount_base",
+      "massBasis": "Heavy welded-steel pedestal with base plate and azimuth bearing ring, possibly grouted/concrete-filled. Effective solid volume ~1.2 m\u00b3 steel plus ballast. CoM slightly below mid-height; variance near uniform-box but tightened by central column geometry.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Heavy welded-steel pedestal with base plate and azimuth bearing ring, possibly grouted/concrete-filled. Effective solid volume ~1.2 m\u00b3 steel plus ballast. CoM slightly below mid-height; variance near uniform-box but tightened by central column geometry.",
+      "surfaceMaterials": [
+        "REF_08_Antenna_dish_mount_base_00",
+        "REF_08_Antenna_dish_mount_base_01",
+        "REF_08_Antenna_dish_mount_base_02",
+        "REF_08_Antenna_dish_mount_base_03",
+        "REF_08_Antenna_dish_mount_base_04"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "MOTION2 Dish elevation",
+      "materials": [
+        "Painted Steel Gray",
+        "Painted Steel Beige",
+        "Painted Steel Red-Brown",
+        "Bronze Alloy",
+        "Painted Steel Green"
+      ],
+      "massKg": 2800,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -13.836543083190918,
+        32.9046516418457,
+        4.1731278562545775
+      ],
+      "inertia": {
+        "ixx": 13950.857199437518,
+        "iyy": 14295.432788659304,
+        "izz": 23044.393835314433,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        7.22547721862793,
+        7.118232727050781,
+        4.109656095504761
+      ],
+      "sourceLink": null,
+      "massBasis": "7 m parabolic reflector with thin aluminium/composite skin, radial ribs, feed horn and quad-pod struts. Shell construction gives low z-variance (mass near dish surface) and moderate in-plane spread. CoM shifted toward dish face (low z) due to concave geometry.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: 7 m parabolic reflector with thin aluminium/composite skin, radial ribs, feed horn and quad-pod struts. Shell construction gives low z-variance (mass near dish surface) and moderate in-plane spread. CoM shifted toward dish face (low z) due to concave geometry.",
+      "surfaceMaterials": [
+        "REF_08_Antenna_dish_dish_assembly_00",
+        "REF_08_Antenna_dish_dish_assembly_01",
+        "REF_08_Antenna_dish_dish_assembly_02",
+        "REF_08_Antenna_dish_dish_assembly_03",
+        "REF_08_Antenna_dish_dish_assembly_04"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "MOTION2 Dish azimuth",
+      "materials": [
+        "Painted Steel Gray",
+        "Painted Steel Green",
+        "Bronze Alloy"
+      ],
+      "massKg": 1500,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -14.085411071777344,
+        33.08097839355469,
+        3.5234655857086183
+      ],
+      "inertia": {
+        "ixx": 358.26246524863564,
+        "iyy": 358.261833386232,
+        "izz": 522.5953860049231,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.5775127410888672,
+        1.5775146484375,
+        1.0379705429077148
+      ],
+      "sourceLink": null,
+      "massBasis": "Cylindrical steel turret housing azimuth drive gears, bearings and motor. Bounding volume ~2.6 m\u00b3 with ~30% fill of dense mechanical components; CoM slightly low due to base flange. Variance below uniform-box 1/12 reflecting concentrated rotating mass near axis.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Cylindrical steel turret housing azimuth drive gears, bearings and motor. Bounding volume ~2.6 m\u00b3 with ~30% fill of dense mechanical components; CoM slightly low due to base flange. Variance below uniform-box 1/12 reflecting concentrated rotating mass near axis.",
+      "surfaceMaterials": [
+        "REF_08_Antenna_dish_azimuth_turret_00",
+        "REF_08_Antenna_dish_azimuth_turret_01",
+        "REF_08_Antenna_dish_azimuth_turret_02"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "MOTION2_Dish_elevation",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "0",
+      "effort": 12000,
+      "velocity": 0.08,
+      "damping": 2000,
+      "friction": 400,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Dish_azimuth",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "1",
+      "effort": 15000,
+      "velocity": 0.06,
+      "damping": 3000,
+      "friction": 500,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "azimuth_drive",
+      "type": "revolute",
+      "lower": -3.14159,
+      "upper": 3.14159,
+      "id": "2",
+      "effort": 800.0,
+      "velocity": 0.3,
+      "damping": 2500,
+      "friction": 350,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "elevation_drive",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.15,
+      "id": "3",
+      "effort": 4000.0,
+      "velocity": 0.08,
+      "damping": 1500,
+      "friction": 250,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/space_blend_asset/08_Antenna_dish/Astronomy_Antenna_dish/seed_0001/model.urdf",
+  "referenceFrame": 240,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

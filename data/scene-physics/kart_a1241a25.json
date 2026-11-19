@@ -1,0 +1,528 @@
+{
+  "assetId": "kart_a1241a25",
+  "name": "Kart",
+  "totalMassKg": 61.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Bare Aluminum Panel",
+        "Steel Body Panel",
+        "Painted Steel Fairing",
+        "Steel Structural Tube",
+        "Steel Chassis Frame"
+      ],
+      "massKg": 38.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.5787454951554538,
+        14.245686531066895,
+        0.3732275545597077
+      ],
+      "inertia": {
+        "ixx": 17.32876257817427,
+        "iyy": 51.763556307616554,
+        "izz": 67.50807838824792,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        3.662449426949024,
+        2.0860843658447266,
+        0.5104565322399139
+      ],
+      "sourceLink": null,
+      "massBasis": "Tubular-steel go-kart chassis with engine mount; mostly hollow 25 mm tubes plus thin floor pan, so fill fraction ~3 %. CoM shifted forward (engine) and low. Variance above 1/12 reflects mass along perimeter tubes.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Tubular-steel go-kart chassis with engine mount; mostly hollow 25 mm tubes plus thin floor pan, so fill fraction ~3 %. CoM shifted forward (engine) and low. Variance above 1/12 reflects mass along perimeter tubes.",
+      "surfaceMaterials": [
+        "M_seeded_go_kart_0_001",
+        "M_seeded_go_kart_0_002",
+        "M_seeded_go_kart_0_003",
+        "M_seeded_go_kart_0_004",
+        "M_seeded_go_kart_0_005"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "seat mount",
+      "materials": [
+        "Upholstered Seat Foam"
+      ],
+      "massKg": 5.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.639767587184906,
+        14.233056545257568,
+        0.5411836117506028
+      ],
+      "inertia": {
+        "ixx": 0.40619957016018005,
+        "iyy": 0.4400752014120974,
+        "izz": 0.6050185112928786,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.8033353090286255,
+        0.759547233581543,
+        0.5597497820854187
+      ],
+      "sourceLink": null,
+      "massBasis": "Fibreglass bucket seat on thin steel brackets; thin-shell seat lowers z-variance, CoM slightly below mid-height.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Fibreglass bucket seat on thin steel brackets; thin-shell seat lowers z-variance, CoM slightly below mid-height.",
+      "surfaceMaterials": [
+        "M_seeded_go_kart_0_006"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "rear left roll",
+      "materials": [
+        "Steel Chassis Frame",
+        "Painted Steel Accent",
+        "Rubber Tire",
+        "Aluminum Wheel Rim"
+      ],
+      "massKg": 3.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.654975175857544,
+        13.33438491821289,
+        0.2857527807354927
+      ],
+      "inertia": {
+        "ixx": 0.1924846710072794,
+        "iyy": 0.20355874880051772,
+        "izz": 0.21713405205992015,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5212258100509644,
+        0.6484832763671875,
+        0.4615055173635483
+      ],
+      "sourceLink": null,
+      "massBasis": "Rear wheel with wider slick tyre and hub; slightly heavier than front. Torus mass ring raises radial-plane variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rear wheel with wider slick tyre and hub; slightly heavier than front. Torus mass ring raises radial-plane variance.",
+      "surfaceMaterials": [
+        "M_seeded_go_kart_0_005",
+        "M_seeded_go_kart_0_007",
+        "M_seeded_go_kart_0_008",
+        "M_seeded_go_kart_0_009"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "rear right roll",
+      "materials": [
+        "Steel Chassis Frame",
+        "Painted Steel Accent",
+        "Rubber Tire",
+        "Aluminum Wheel Rim"
+      ],
+      "massKg": 3.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.491870641708374,
+        14.911109924316406,
+        0.2857527807354927
+      ],
+      "inertia": {
+        "ixx": 0.1924846710072794,
+        "iyy": 0.20355874880051772,
+        "izz": 0.21713405205992015,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5212258100509644,
+        0.6484832763671875,
+        0.4615055173635483
+      ],
+      "sourceLink": null,
+      "massBasis": "Mirror of rear-left wheel; identical tyre/rim/hub assembly.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Mirror of rear-left wheel; identical tyre/rim/hub assembly.",
+      "surfaceMaterials": [
+        "M_seeded_go_kart_0_005",
+        "M_seeded_go_kart_0_007",
+        "M_seeded_go_kart_0_008",
+        "M_seeded_go_kart_0_009"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "front left roll",
+      "materials": [
+        "Steel Chassis Frame",
+        "Painted Steel Accent",
+        "Rubber Tire",
+        "Aluminum Wheel Rim"
+      ],
+      "massKg": 2.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        3.057901382446289,
+        13.646699905395508,
+        0.24414142966270447
+      ],
+      "inertia": {
+        "ixx": 0.0851777630739928,
+        "iyy": 0.11681843426202185,
+        "izz": 0.11613745083402592,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.49628305435180664,
+        0.4913444519042969,
+        0.3782828450202942
+      ],
+      "sourceLink": null,
+      "massBasis": "Front wheel: rubber tyre + small rim. Torus-like mass concentrated at outer radius raises x/z variance; narrow hub lowers y variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Front wheel: rubber tyre + small rim. Torus-like mass concentrated at outer radius raises x/z variance; narrow hub lowers y variance.",
+      "surfaceMaterials": [
+        "M_seeded_go_kart_0_005",
+        "M_seeded_go_kart_0_007",
+        "M_seeded_go_kart_0_008",
+        "M_seeded_go_kart_0_009"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "front right roll",
+      "materials": [
+        "Steel Chassis Frame",
+        "Painted Steel Accent",
+        "Rubber Tire",
+        "Aluminum Wheel Rim"
+      ],
+      "massKg": 2.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.9078454971313477,
+        15.097286224365234,
+        0.24414142966270447
+      ],
+      "inertia": {
+        "ixx": 0.0851777630739928,
+        "iyy": 0.11681843426202185,
+        "izz": 0.11613745083402592,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.49628305435180664,
+        0.4913444519042969,
+        0.3782828450202942
+      ],
+      "sourceLink": null,
+      "massBasis": "Mirror of front-left wheel assembly; same tyre/rim torus distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Mirror of front-left wheel assembly; same tyre/rim torus distribution.",
+      "surfaceMaterials": [
+        "M_seeded_go_kart_0_005",
+        "M_seeded_go_kart_0_007",
+        "M_seeded_go_kart_0_008",
+        "M_seeded_go_kart_0_009"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "steering spin",
+      "materials": [
+        "Steel Chassis Frame",
+        "Painted Steel Accent"
+      ],
+      "massKg": 2.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.0671982169151306,
+        14.277271270751953,
+        0.5840278804302216
+      ],
+      "inertia": {
+        "ixx": 0.1513772168375482,
+        "iyy": 0.18876881239565754,
+        "izz": 0.19870296286830008,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6551815271377563,
+        0.5679988861083984,
+        0.5946491956710815
+      ],
+      "sourceLink": null,
+      "massBasis": "Steering wheel (rim-heavy ring) plus column shaft; ring geometry raises x/y variance; CoM slightly above centre due to wheel head.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Steering wheel (rim-heavy ring) plus column shaft; ring geometry raises x/y variance; CoM slightly above centre due to wheel head.",
+      "surfaceMaterials": [
+        "M_seeded_go_kart_0_005",
+        "M_seeded_go_kart_0_007"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "front left steer",
+      "materials": [
+        "Steel Chassis Frame"
+      ],
+      "massKg": 1.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        3.0065629482269287,
+        13.69087839126587,
+        0.24414142966270447
+      ],
+      "inertia": {
+        "ixx": 0.01393000509163379,
+        "iyy": 0.012075218681544118,
+        "izz": 0.012931745146207051,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.21091651916503906,
+        0.24368762969970703,
+        0.2291373610496521
+      ],
+      "sourceLink": null,
+      "massBasis": "Small machined-steel/aluminium steering knuckle; nearly solid, symmetric, so uniform-box variance 1/12.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small machined-steel/aluminium steering knuckle; nearly solid, symmetric, so uniform-box variance 1/12.",
+      "surfaceMaterials": [
+        "M_seeded_go_kart_0_005"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "front right steer",
+      "materials": [
+        "Steel Chassis Frame"
+      ],
+      "massKg": 1.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.906962752342224,
+        15.029562950134277,
+        0.24414142966270447
+      ],
+      "inertia": {
+        "ixx": 0.013930062959006808,
+        "iyy": 0.01207523120286898,
+        "izz": 0.012931815534904929,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.21091675758361816,
+        0.24368858337402344,
+        0.2291373610496521
+      ],
+      "sourceLink": null,
+      "massBasis": "Mirror of front-left steering knuckle; identical small solid part.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Mirror of front-left steering knuckle; identical small solid part.",
+      "surfaceMaterials": [
+        "M_seeded_go_kart_0_005"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "steering_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "0",
+      "effort": 8.0,
+      "velocity": 6.0,
+      "damping": 0.4,
+      "friction": 0.3,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_left_steer",
+      "type": "revolute",
+      "lower": -0.52,
+      "upper": 0.52,
+      "id": "1",
+      "effort": 10.0,
+      "velocity": 4.0,
+      "damping": 0.8,
+      "friction": 0.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_left_roll",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "2",
+      "effort": 55.0,
+      "velocity": 85.0,
+      "damping": 0.15,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_right_steer",
+      "type": "revolute",
+      "lower": -0.52,
+      "upper": 0.52,
+      "id": "3",
+      "effort": 10.0,
+      "velocity": 4.0,
+      "damping": 0.8,
+      "friction": 0.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_right_roll",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "4",
+      "effort": 55.0,
+      "velocity": 85.0,
+      "damping": 0.15,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_left_roll",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "5",
+      "effort": 80.0,
+      "velocity": 85.0,
+      "damping": 0.2,
+      "friction": 0.15,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_right_roll",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "6",
+      "effort": 80.0,
+      "velocity": 85.0,
+      "damping": 0.2,
+      "friction": 0.15,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

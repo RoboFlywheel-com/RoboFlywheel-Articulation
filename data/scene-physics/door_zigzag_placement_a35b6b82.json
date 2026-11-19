@@ -1,0 +1,311 @@
+{
+  "assetId": "door_zigzag_placement_a35b6b82",
+  "name": "Door zigzag",
+  "totalMassKg": 139.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "4",
+      "name": "body",
+      "materials": [
+        "Yellow Safety Paint",
+        "Dark Steel",
+        "Hazard Rubber",
+        "Keypad Housing Alloy",
+        "Keypad Key Metal",
+        "Keypad Screen Glass",
+        "Olive Painted Steel",
+        "Green Status LED",
+        "Amber Warning Lens"
+      ],
+      "massKg": 78.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -3.865999937057495,
+        2.1500001549720764,
+        1.1599999666312213
+      ],
+      "inertia": {
+        "ixx": 79.00339758674339,
+        "iyy": 35.54135952403952,
+        "izz": 45.69310027431459,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.3880000114440918,
+        2.6400002241134644,
+        2.319999933223153
+      ],
+      "sourceLink": null,
+      "massBasis": "Main door frame/housing 0.39\u00d72.64\u00d72.32 m with keypad, status lights, hazard striping. Open-frame steel construction with electronics; ~5 % solid fraction. Frame edges push variance slightly above 1/12 in x.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Main door frame/housing 0.39\u00d72.64\u00d72.32 m with keypad, status lights, hazard striping. Open-frame steel construction with electronics; ~5 % solid fraction. Frame edges push variance slightly above 1/12 in x.",
+      "surfaceMaterials": [
+        "accent_yellow",
+        "dark_steel",
+        "hazard_black",
+        "keypad_body",
+        "keypad_key",
+        "keypad_screen",
+        "olive_frame",
+        "status_green",
+        "warning_amber"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "JOINT | Door Gate | door 0 track slide",
+      "materials": [
+        "Yellow Safety Paint",
+        "Dark Steel",
+        "Gunmetal Steel"
+      ],
+      "massKg": 19.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -3.8410000801086426,
+        2.893840160369873,
+        1.0749999582767487
+      ],
+      "inertia": {
+        "ixx": 6.9182213629579445,
+        "iyy": 6.559956854663356,
+        "izz": 0.3663795900539728,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06799983978271484,
+        0.5080001354217529,
+        2.0499998927116394
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow steel-framed sliding door panel ~2.05 m tall, 0.51 m wide, 68 mm thick. Steel frame with thin panels; ~18 % solid fraction of bounding-box volume at steel density. Mass slightly low due to track hardware at bottom.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow steel-framed sliding door panel ~2.05 m tall, 0.51 m wide, 68 mm thick. Steel frame with thin panels; ~18 % solid fraction of bounding-box volume at steel density. Mass slightly low due to track hardware at bottom.",
+      "surfaceMaterials": [
+        "accent_yellow",
+        "dark_steel",
+        "gunmetal"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "JOINT | Door Gate | door 1 track slide",
+      "materials": [
+        "Yellow Safety Paint",
+        "Dark Steel",
+        "Gunmetal Steel"
+      ],
+      "massKg": 19.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -3.8410000801086426,
+        1.3858400869369507,
+        1.0749999582767487
+      ],
+      "inertia": {
+        "ixx": 6.91822119291016,
+        "iyy": 6.559956854663356,
+        "izz": 0.36637942000618745,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06799983978271484,
+        0.5080000162124634,
+        2.0499998927116394
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical to part 0 (door 1 track slide panel); same geometry and materials, consistent mass.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical to part 0 (door 1 track slide panel); same geometry and materials, consistent mass.",
+      "surfaceMaterials": [
+        "accent_yellow",
+        "dark_steel",
+        "gunmetal"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "JOINT | Door Gate | door 0 outer track slide",
+      "materials": [
+        "Dark Steel",
+        "Deep Gunmetal Steel"
+      ],
+      "massKg": 11.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -3.921000123023987,
+        3.0490000247955322,
+        1.074999988079071
+      ],
+      "inertia": {
+        "ixx": 3.8183908083877975,
+        "iyy": 3.7004882831145753,
+        "izz": 0.12248029580225053,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06800007820129395,
+        0.4099998474121094,
+        2.0499998331069946
+      ],
+      "sourceLink": null,
+      "massBasis": "Outer track/rail channel, dark steel and gunmetal, 0.41 m wide. Mostly channel-section steel, ~14 % solid fraction. Uniformly distributed along height.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Outer track/rail channel, dark steel and gunmetal, 0.41 m wide. Mostly channel-section steel, ~14 % solid fraction. Uniformly distributed along height.",
+      "surfaceMaterials": [
+        "dark_steel",
+        "gunmetal_deep"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "JOINT | Door Gate | door 1 outer track slide",
+      "materials": [
+        "Dark Steel",
+        "Deep Gunmetal Steel"
+      ],
+      "massKg": 11.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -3.921000123023987,
+        1.251000165939331,
+        1.074999988079071
+      ],
+      "inertia": {
+        "ixx": 3.818390948172599,
+        "iyy": 3.7004882831145753,
+        "izz": 0.12248043558705206,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.06800007820129395,
+        0.4100000858306885,
+        2.0499998331069946
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical to part 1 (door 1 outer track slide); same geometry and materials, consistent mass.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical to part 1 (door 1 outer track slide); same geometry and materials, consistent mass.",
+      "surfaceMaterials": [
+        "dark_steel",
+        "gunmetal_deep"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "door_1_track_slide",
+      "type": "prismatic",
+      "lower": -0.48,
+      "upper": 0.0,
+      "id": "0",
+      "effort": 85.0,
+      "velocity": 0.4,
+      "damping": 32.0,
+      "friction": 14.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "door_1_outer_track_slide",
+      "type": "prismatic",
+      "lower": -0.66,
+      "upper": 0.0,
+      "id": "1",
+      "effort": 60.0,
+      "velocity": 0.35,
+      "damping": 24.0,
+      "friction": 10.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "door_0_track_slide",
+      "type": "prismatic",
+      "lower": -0.48,
+      "upper": 0.0,
+      "id": "2",
+      "effort": 85.0,
+      "velocity": 0.4,
+      "damping": 32.0,
+      "friction": 14.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "door_0_outer_track_slide",
+      "type": "prismatic",
+      "lower": -0.66,
+      "upper": 0.0,
+      "id": "3",
+      "effort": 60.0,
+      "velocity": 0.35,
+      "damping": 24.0,
+      "friction": 10.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

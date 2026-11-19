@@ -1,0 +1,291 @@
+{
+  "assetId": "v03_satellite_articulated_508d3d52",
+  "dimensions_m": [
+    7.333470404148102,
+    3.508882522583008,
+    5.421475887298584
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Satellite structural panel",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_006",
+      "parts": [
+        "left_solar_wing",
+        "bus.001",
+        "right_solar_wing",
+        "high_gain_antenna.003"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Gold thermal foil",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_012",
+      "parts": [
+        "left_solar_wing",
+        "right_solar_wing"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Dark solar cell coating",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_003",
+      "parts": [
+        "left_solar_wing",
+        "bus.001",
+        "right_solar_wing"
+      ],
+      "values": {
+        "density_kg_m3": 1700.0,
+        "youngs_modulus_pa": 50000000000.0,
+        "poissons_ratio": 0.22,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.42,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "3",
+      "material": "Blue solar cell",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_013",
+      "parts": [
+        "left_solar_wing",
+        "right_solar_wing"
+      ],
+      "values": {
+        "density_kg_m3": 1700.0,
+        "youngs_modulus_pa": 50000000000.0,
+        "poissons_ratio": 0.22,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.42,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "4",
+      "material": "Lighter blue solar cell",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_014",
+      "parts": [
+        "left_solar_wing",
+        "right_solar_wing"
+      ],
+      "values": {
+        "density_kg_m3": 1700.0,
+        "youngs_modulus_pa": 50000000000.0,
+        "poissons_ratio": 0.22,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.42,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "5",
+      "material": "Copper interconnect strip",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_015",
+      "parts": [
+        "left_solar_wing",
+        "right_solar_wing"
+      ],
+      "values": {
+        "density_kg_m3": 8960.0,
+        "youngs_modulus_pa": 117000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "6",
+      "material": "Bus gold foil insulation",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_001",
+      "parts": [
+        "bus.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "7",
+      "material": "Teal painted panel",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_002",
+      "parts": [
+        "bus.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "8",
+      "material": "Reddish thermal paint",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_004",
+      "parts": [
+        "bus.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "9",
+      "material": "Beige composite panel",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_005",
+      "parts": [
+        "bus.001"
+      ],
+      "values": {
+        "density_kg_m3": 1600.0,
+        "youngs_modulus_pa": 30000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "10",
+      "material": "Tan structural coating",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_007",
+      "parts": [
+        "bus.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "11",
+      "material": "Blue-gray painted metal",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_008",
+      "parts": [
+        "bus.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "12",
+      "material": "Brown anodized aluminum",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_009",
+      "parts": [
+        "bus.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "13",
+      "material": "Purple thermal coating",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_010",
+      "parts": [
+        "bus.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "14",
+      "material": "Black anodized aluminum",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_011",
+      "parts": [
+        "bus.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "15",
+      "material": "Antenna red coating",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_016",
+      "parts": [
+        "high_gain_antenna.003"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "16",
+      "material": "Antenna reflector surface",
+      "surfaceMaterial": "M_satellite_with_articulated_solar_panels_017",
+      "parts": [
+        "high_gain_antenna.003"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

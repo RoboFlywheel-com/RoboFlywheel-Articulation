@@ -1,0 +1,183 @@
+{
+  "assetId": "tractor_fb71fbf2",
+  "dimensions_m": [
+    5.036979675292969,
+    4.1187896728515625,
+    2.611595094203949
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Black rubber tire",
+      "surfaceMaterial": "M_seeded_tractor_1_009",
+      "parts": [
+        "front_wheel_1",
+        "front_wheel_0",
+        "rear_wheel_0.001",
+        "rear_wheel_1.001"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "1",
+      "material": "Steel wheel rim",
+      "surfaceMaterial": "M_seeded_tractor_1_010",
+      "parts": [
+        "front_wheel_1",
+        "front_wheel_0",
+        "rear_wheel_0.001",
+        "rear_wheel_1.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted steel chassis dark",
+      "surfaceMaterial": "M_seeded_tractor_1_001",
+      "parts": [
+        "chassis.001",
+        "front_axle"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Painted steel body orange",
+      "surfaceMaterial": "M_seeded_tractor_1_002",
+      "parts": [
+        "chassis.001",
+        "front_axle"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Black plastic trim",
+      "surfaceMaterial": "M_seeded_tractor_1_003",
+      "parts": [
+        "chassis.001"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2500000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "5",
+      "material": "Tinted glass window",
+      "surfaceMaterial": "M_seeded_tractor_1_004",
+      "parts": [
+        "chassis.001"
+      ],
+      "values": {
+        "density_kg_m3": 2500.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.22,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.7
+      }
+    },
+    {
+      "id": "6",
+      "material": "Brushed aluminum panel",
+      "surfaceMaterial": "M_seeded_tractor_1_005",
+      "parts": [
+        "chassis.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "7",
+      "material": "Dark steel component",
+      "surfaceMaterial": "M_seeded_tractor_1_006",
+      "parts": [
+        "chassis.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "8",
+      "material": "Gray cast iron",
+      "surfaceMaterial": "M_seeded_tractor_1_007",
+      "parts": [
+        "chassis.001",
+        "front_axle",
+        "hitch",
+        "rear_wheel_0.001",
+        "rear_wheel_1.001"
+      ],
+      "values": {
+        "density_kg_m3": 7200.0,
+        "youngs_modulus_pa": 130000000000.0,
+        "poissons_ratio": 0.26,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "9",
+      "material": "Black rubber grip",
+      "surfaceMaterial": "M_seeded_tractor_1_008",
+      "parts": [
+        "hitch",
+        "steering_wheel.003"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.4
+      }
+    }
+  ]
+}

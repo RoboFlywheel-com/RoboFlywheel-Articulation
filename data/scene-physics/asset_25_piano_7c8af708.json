@@ -1,0 +1,5474 @@
+{
+  "assetId": "asset_25_piano_7c8af708",
+  "name": "Piano",
+  "totalMassKg": 288.46,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "37",
+      "name": "body",
+      "materials": [
+        "Piano Case Wood",
+        "Satin Finish Wood"
+      ],
+      "massKg": 270.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.340862452983856,
+        -2.798981742858887,
+        0.6345279788970948
+      ],
+      "inertia": {
+        "ixx": 140.85443665354796,
+        "iyy": 70.12129967817096,
+        "izz": 134.64025042334686,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.1596752405166626,
+        2.115269660949707,
+        1.4011999368667603
+      ],
+      "sourceLink": null,
+      "massBasis": "Grand piano case with cast-iron frame, soundboard, strings; hollow wood shell with dense internal structure, mass biased toward tail and bottom",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Grand piano case with cast-iron frame, soundboard, strings; hollow wood shell with dense internal structure, mass biased toward tail and bottom",
+      "surfaceMaterials": [
+        "25 | piano_case",
+        "25 | piano_satin"
+      ]
+    },
+    {
+      "id": "43",
+      "name": "top lid",
+      "materials": [
+        "Piano Case Wood"
+      ],
+      "massKg": 9.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.4400432109832764,
+        -2.830991208553314,
+        1.4489060640335083
+      ],
+      "inertia": {
+        "ixx": 3.2924159310040872,
+        "iyy": 0.69691453255838,
+        "izz": 3.9840391341450694,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.9623212814331055,
+        2.0947829484939575,
+        0.05940508842468262
+      ],
+      "sourceLink": null,
+      "massBasis": "Grand piano top lid, thin wood panel with satin finish, uniform distribution",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Grand piano top lid, thin wood panel with satin finish, uniform distribution",
+      "surfaceMaterials": [
+        "25 | piano_case"
+      ]
+    },
+    {
+      "id": "38",
+      "name": "fallboard",
+      "materials": [
+        "Piano Case Wood",
+        "Satin Finish Wood"
+      ],
+      "massKg": 2.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.1162073016166687,
+        -2.8646079301834106,
+        1.0409639477729797
+      ],
+      "inertia": {
+        "ixx": 0.6126520939495419,
+        "iyy": 0.02270649033309258,
+        "izz": 0.6344281059727106,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.3268038034439087,
+        1.7145473957061768,
+        0.04726564884185791
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin wood fallboard panel, uniform satin-finished plywood",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin wood fallboard panel, uniform satin-finished plywood",
+      "surfaceMaterials": [
+        "25 | piano_case",
+        "25 | piano_satin"
+      ]
+    },
+    {
+      "id": "39",
+      "name": "pedal 0",
+      "materials": [
+        "Polished Brass"
+      ],
+      "massKg": 0.35,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9115856289863586,
+        -2.9730138778686523,
+        0.1800536960363388
+      ],
+      "inertia": {
+        "ixx": 9.789854014238113e-05,
+        "iyy": 0.0006807070587075705,
+        "izz": 0.0007632925747227708,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1519383192062378,
+        0.05563497543334961,
+        0.01620537042617798
+      ],
+      "sourceLink": null,
+      "massBasis": "Brass piano pedal, small dense casting",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Brass piano pedal, small dense casting",
+      "surfaceMaterials": [
+        "25 | piano_brass"
+      ]
+    },
+    {
+      "id": "40",
+      "name": "pedal 1",
+      "materials": [
+        "Polished Brass"
+      ],
+      "massKg": 0.35,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9056243300437927,
+        -2.9155229330062866,
+        0.17906790971755981
+      ],
+      "inertia": {
+        "ixx": 9.99406947450474e-05,
+        "iyy": 0.0006844637363476332,
+        "izz": 0.0007651417027740873,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1521393060684204,
+        0.055655717849731445,
+        0.01817554235458374
+      ],
+      "sourceLink": null,
+      "massBasis": "Brass piano pedal, small dense casting",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Brass piano pedal, small dense casting",
+      "surfaceMaterials": [
+        "25 | piano_brass"
+      ]
+    },
+    {
+      "id": "41",
+      "name": "pedal 2",
+      "materials": [
+        "Polished Brass"
+      ],
+      "massKg": 0.35,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.8997390270233154,
+        -2.8580242395401,
+        0.17640261352062225
+      ],
+      "inertia": {
+        "ixx": 0.00010653300515173725,
+        "iyy": 0.000694583931396539,
+        "izz": 0.0007689482398453318,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.15255212783813477,
+        0.05569863319396973,
+        0.023487955331802368
+      ],
+      "sourceLink": null,
+      "massBasis": "Brass piano pedal, small dense casting",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Brass piano pedal, small dense casting",
+      "surfaceMaterials": [
+        "25 | piano_brass"
+      ]
+    },
+    {
+      "id": "42",
+      "name": "pedal 3",
+      "materials": [
+        "Polished Brass"
+      ],
+      "massKg": 0.35,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.894030213356018,
+        -2.800507068634033,
+        0.17285141348838806
+      ],
+      "inertia": {
+        "ixx": 0.00011771577075935026,
+        "iyy": 0.0007079327688292977,
+        "izz": 0.0007712862543979937,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.15280508995056152,
+        0.05572509765625,
+        0.030533552169799805
+      ],
+      "sourceLink": null,
+      "massBasis": "Brass piano pedal, small dense casting",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Brass piano pedal, small dense casting",
+      "surfaceMaterials": [
+        "25 | piano_brass"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "black key 0",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.1006877422332764,
+        -3.6829540729522705,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "black key 1",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.09733247756958,
+        -3.650632381439209,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "black key 10",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.053715229034424,
+        -3.2304575443267822,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "black key 11",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0503599643707275,
+        -3.198136806488037,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "black key 12",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.043649673461914,
+        -3.133495569229126,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "black key 13",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.040294647216797,
+        -3.101174831390381,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "black key 14",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0369393825531006,
+        -3.068852663040161,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "black key 15",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.030229091644287,
+        -3.004210948944092,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "black key 16",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.026873826980591,
+        -2.9718894958496094,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "9",
+      "name": "black key 17",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0201635360717773,
+        -2.907247543334961,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "black key 18",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.016808271408081,
+        -2.8749265670776367,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "11",
+      "name": "black key 19",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0134530067443848,
+        -2.8426051139831543,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "12",
+      "name": "black key 2",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0906221866607666,
+        -3.5859906673431396,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "13",
+      "name": "black key 20",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0067427158355713,
+        -2.777963161468506,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "14",
+      "name": "black key 21",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.003387451171875,
+        -2.7456417083740234,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "15",
+      "name": "black key 22",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9966774582862854,
+        -2.680999994277954,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694942167047807,
+        "izz": 0.00010507826491221215,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.12246787548065186,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "16",
+      "name": "black key 23",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9933221936225891,
+        -2.6486783027648926,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694942167047807,
+        "izz": 0.00010507826491221215,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.12246787548065186,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "17",
+      "name": "black key 24",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.989966869354248,
+        -2.6163570880889893,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "18",
+      "name": "black key 25",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9832565784454346,
+        -2.551715850830078,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "19",
+      "name": "black key 26",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9799016118049622,
+        -2.519395112991333,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694942167047807,
+        "izz": 0.00010507826491221215,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.12246787548065186,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "20",
+      "name": "black key 27",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9731910228729248,
+        -2.454751968383789,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "21",
+      "name": "black key 28",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9698360562324524,
+        -2.422430992126465,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694942167047807,
+        "izz": 0.00010507826491221215,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.12246787548065186,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "22",
+      "name": "black key 29",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9664807319641113,
+        -2.390110492706299,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "23",
+      "name": "black key 3",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0872669219970703,
+        -3.5536699295043945,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "24",
+      "name": "black key 30",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9597702026367188,
+        -2.325467586517334,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "25",
+      "name": "black key 31",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9564151763916016,
+        -2.2931466102600098,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "26",
+      "name": "black key 32",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.949704885482788,
+        -2.2285048961639404,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "27",
+      "name": "black key 33",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9463494420051575,
+        -2.1961827278137207,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694942167047807,
+        "izz": 0.00010507826491221215,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.12246787548065186,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "28",
+      "name": "black key 34",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9429943561553955,
+        -2.1638622283935547,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "29",
+      "name": "black key 35",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.936284065246582,
+        -2.0992207527160645,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "30",
+      "name": "black key 36",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9329288005828857,
+        -2.0668985843658447,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "31",
+      "name": "black key 4",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.083911657333374,
+        -3.521347761154175,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "32",
+      "name": "black key 5",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0772013664245605,
+        -3.4567060470581055,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "33",
+      "name": "black key 6",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0738463401794434,
+        -3.4243853092193604,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "34",
+      "name": "black key 7",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.067135810852051,
+        -3.3597424030303955,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "35",
+      "name": "black key 8",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0637807846069336,
+        -3.3274216651916504,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "36",
+      "name": "black key 9",
+      "materials": [
+        "Ebony Wood"
+      ],
+      "massKg": 0.08,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0604255199432373,
+        -3.295100688934326,
+        0.9916726052761078
+      ],
+      "inertia": {
+        "ixx": 1.2129270948896222e-05,
+        "iyy": 0.00010694961625015551,
+        "izz": 0.00010507845949188959,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1224679946899414,
+        0.027742862701416016,
+        0.03241068124771118
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid ebony black key, small uniform block",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid ebony black key, small uniform block",
+      "surfaceMaterials": [
+        "25 | piano_ebony"
+      ]
+    },
+    {
+      "id": "44",
+      "name": "white key 0",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.065426826477051,
+        -3.702949285507202,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop on wood substrate",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop on wood substrate",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "45",
+      "name": "white key 1",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0620710849761963,
+        -3.6706271171569824,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "46",
+      "name": "white key 10",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.031874895095825,
+        -3.379737377166748,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "47",
+      "name": "white key 11",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.02851939201355,
+        -3.347416400909424,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "48",
+      "name": "white key 12",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0251646041870117,
+        -3.3150954246520996,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "49",
+      "name": "white key 13",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0218091011047363,
+        -3.2827749252319336,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "50",
+      "name": "white key 14",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0184543132781982,
+        -3.2504541873931885,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "51",
+      "name": "white key 15",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.015099048614502,
+        -3.2181320190429688,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "52",
+      "name": "white key 16",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0117435455322266,
+        -3.1858112812042236,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "53",
+      "name": "white key 17",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0083887577056885,
+        -3.1534905433654785,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "54",
+      "name": "white key 18",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.005033254623413,
+        -3.1211695671081543,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "55",
+      "name": "white key 19",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.001677989959717,
+        -3.0888471603393555,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "56",
+      "name": "white key 2",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.058716058731079,
+        -3.6383063793182373,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "57",
+      "name": "white key 20",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9983227849006653,
+        -3.0565266609191895,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "58",
+      "name": "white key 21",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9949676990509033,
+        -3.0242059230804443,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "59",
+      "name": "white key 22",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9916124939918518,
+        -2.99188494682312,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "60",
+      "name": "white key 23",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9882574081420898,
+        -2.959563732147217,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "61",
+      "name": "white key 24",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9849022030830383,
+        -2.9272422790527344,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "62",
+      "name": "white key 25",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.981546938419342,
+        -2.8949215412139893,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "63",
+      "name": "white key 26",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.97819185256958,
+        -2.862600564956665,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "64",
+      "name": "white key 27",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9748366475105286,
+        -2.8302793502807617,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "65",
+      "name": "white key 28",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9714818000793457,
+        -2.7979578971862793,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "66",
+      "name": "white key 29",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9681262969970703,
+        -2.765637159347534,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "67",
+      "name": "white key 3",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.055360794067383,
+        -3.605985641479492,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "68",
+      "name": "white key 30",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9647710919380188,
+        -2.7333157062530518,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "69",
+      "name": "white key 31",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9614160060882568,
+        -2.7009949684143066,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "70",
+      "name": "white key 32",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9580608010292053,
+        -2.6686744689941406,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "71",
+      "name": "white key 33",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.954705536365509,
+        -2.636352300643921,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "72",
+      "name": "white key 34",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.951350450515747,
+        -2.604031562805176,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "73",
+      "name": "white key 35",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9479952454566956,
+        -2.5717108249664307,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "74",
+      "name": "white key 36",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9446401596069336,
+        -2.5393900871276855,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "75",
+      "name": "white key 37",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9412848949432373,
+        -2.507067918777466,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "76",
+      "name": "white key 38",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9379296898841858,
+        -2.4747467041015625,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "77",
+      "name": "white key 39",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9345746040344238,
+        -2.4424262046813965,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "78",
+      "name": "white key 4",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0520057678222656,
+        -3.573664665222168,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "79",
+      "name": "white key 40",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9312193989753723,
+        -2.4101054668426514,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "80",
+      "name": "white key 41",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9278643131256104,
+        -2.3777847290039062,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "81",
+      "name": "white key 42",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.924509048461914,
+        -2.3454625606536865,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "82",
+      "name": "white key 43",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9211538434028625,
+        -2.3131418228149414,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "83",
+      "name": "white key 44",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9177987575531006,
+        -2.280820846557617,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "84",
+      "name": "white key 45",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.914443552494049,
+        -2.248500108718872,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "85",
+      "name": "white key 46",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9110882878303528,
+        -2.2161779403686523,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "86",
+      "name": "white key 47",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9077332019805908,
+        -2.1838572025299072,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "87",
+      "name": "white key 48",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9043779969215393,
+        -2.151536464691162,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748498886641543,
+        "izz": 0.00017366010570983925,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789397716522217,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "88",
+      "name": "white key 49",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9010229110717773,
+        -2.119215488433838,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "89",
+      "name": "white key 5",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0486505031585693,
+        -3.541343927383423,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "90",
+      "name": "white key 50",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.8976677656173706,
+        -2.086894989013672,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "91",
+      "name": "white key 51",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.8943123817443848,
+        -2.054572582244873,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "92",
+      "name": "white key 6",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.045295238494873,
+        -3.509021759033203,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "93",
+      "name": "white key 7",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.041940212249756,
+        -3.476701021194458,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "94",
+      "name": "white key 8",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0385849475860596,
+        -3.444380283355713,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    },
+    {
+      "id": "95",
+      "name": "white key 9",
+      "materials": [
+        "Ivory Plastic"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.0352299213409424,
+        -3.4120595455169678,
+        0.9741168022155762
+      ],
+      "inertia": {
+        "ixx": 1.4925416344669958e-05,
+        "iyy": 0.00016748518537784216,
+        "izz": 0.00017366030222126599,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19789409637451172,
+        0.05032968521118164,
+        0.03241074085235596
+      ],
+      "sourceLink": null,
+      "massBasis": "Ivory/plastic white key, lightweight uniform keytop",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Ivory/plastic white key, lightweight uniform keytop",
+      "surfaceMaterials": [
+        "25 | piano_ivory"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "body_to_white_key_0",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "0",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_1",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "1",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_2",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "2",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_3",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "3",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_4",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "4",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_5",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "5",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_6",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "6",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_7",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "7",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_8",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "8",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_9",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "9",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_10",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "10",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_11",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "11",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_12",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "12",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_13",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "13",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_14",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "14",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_15",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "15",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_16",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "16",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_17",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "17",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_18",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "18",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_19",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "19",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_20",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "20",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_21",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "21",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_22",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "22",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_23",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "23",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_24",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "24",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_25",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "25",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_26",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "26",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_27",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "27",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_28",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "28",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_29",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "29",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_30",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "30",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_31",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "31",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_32",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "32",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_33",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "33",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_34",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "34",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_35",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "35",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_36",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "36",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_37",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "37",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_38",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "38",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_39",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "39",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_40",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "40",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_41",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "41",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_42",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "42",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_43",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "43",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_44",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "44",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_45",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "45",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_46",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "46",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_47",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "47",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_48",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "48",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_49",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "49",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_50",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "50",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_white_key_51",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.009,
+      "id": "51",
+      "effort": 5.0,
+      "velocity": 0.5,
+      "damping": 0.4,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_0",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "52",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_1",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "53",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_2",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "54",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_3",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "55",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_4",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "56",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_5",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "57",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_6",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "58",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_7",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "59",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_8",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "60",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_9",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "61",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_10",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "62",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_11",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "63",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_12",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "64",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_13",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "65",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_14",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "66",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_15",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "67",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_16",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "68",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_17",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "69",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_18",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "70",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_19",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "71",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_20",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "72",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_21",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "73",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_22",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "74",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_23",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "75",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_24",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "76",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_25",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "77",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_26",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "78",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_27",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "79",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_28",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "80",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_29",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "81",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_30",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "82",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_31",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "83",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_32",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "84",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_33",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "85",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_34",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "86",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_35",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "87",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_black_key_36",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.007,
+      "id": "88",
+      "effort": 6.0,
+      "velocity": 0.45,
+      "damping": 0.35,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_top_lid",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.2,
+      "id": "89",
+      "effort": 30.0,
+      "velocity": 1.0,
+      "damping": 5.0,
+      "friction": 2.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_fallboard",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.2,
+      "id": "90",
+      "effort": 25.0,
+      "velocity": 0.3,
+      "damping": 8.0,
+      "friction": 4.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_pedal_0",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.18,
+      "id": "91",
+      "effort": 12.0,
+      "velocity": 2.0,
+      "damping": 1.0,
+      "friction": 0.4,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_pedal_1",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.18,
+      "id": "92",
+      "effort": 12.0,
+      "velocity": 2.0,
+      "damping": 1.0,
+      "friction": 0.4,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_pedal_2",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.18,
+      "id": "93",
+      "effort": 12.0,
+      "velocity": 2.0,
+      "damping": 1.0,
+      "friction": 0.4,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_pedal_3",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.18,
+      "id": "94",
+      "effort": 12.0,
+      "velocity": 2.0,
+      "damping": 1.0,
+      "friction": 0.4,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

@@ -1,0 +1,484 @@
+{
+  "assetId": "tractor_fb71fbf2",
+  "name": "Tractor",
+  "totalMassKg": 9799,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "chassis",
+      "materials": [
+        "Painted steel chassis dark",
+        "Painted steel body orange",
+        "Black plastic trim",
+        "Tinted glass window",
+        "Brushed aluminum panel",
+        "Dark steel component",
+        "Gray cast iron"
+      ],
+      "massKg": 8200,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -14.225703582763671,
+        32.158523864746094,
+        1.6102639436721802
+      ],
+      "inertia": {
+        "ixx": 10950.124823624066,
+        "iyy": 16198.570822493271,
+        "izz": 21385.01026364148,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        4.749256134033203,
+        4.1187896728515625,
+        2.122662305831909
+      ],
+      "sourceLink": "chassis",
+      "massBasis": "Large tractor chassis with engine, transmission, cab frame. Hollow construction (cab glazing, air gaps around engine). Heavy drivetrain low and forward shifts CoM forward and down. Multi-material shell lowers variance vs solid block.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Large tractor chassis with engine, transmission, cab frame. Hollow construction (cab glazing, air gaps around engine). Heavy drivetrain low and forward shifts CoM forward and down. Multi-material shell lowers variance vs solid block.",
+      "surfaceMaterials": [
+        "M_seeded_tractor_1_001",
+        "M_seeded_tractor_1_002",
+        "M_seeded_tractor_1_003",
+        "M_seeded_tractor_1_004",
+        "M_seeded_tractor_1_005",
+        "M_seeded_tractor_1_006",
+        "M_seeded_tractor_1_007"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "rear wheel 0",
+      "materials": [
+        "Gray cast iron",
+        "Black rubber tire",
+        "Steel wheel rim"
+      ],
+      "massKg": 540,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -15.437142848968506,
+        32.20625972747803,
+        0.8398198187351227
+      ],
+      "inertia": {
+        "ixx": 313.9700136049151,
+        "iyy": 536.8717434458987,
+        "izz": 325.42698772961563,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.5932855606079102,
+        1.0694599151611328,
+        1.5596396327018738
+      ],
+      "sourceLink": "rear_wheel_0",
+      "massBasis": "Large rear agricultural tire with steel rim and cast-iron hub. Mass heavily at outer tread radius; axial width uniform. Radial variance near thin-ring limit.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Large rear agricultural tire with steel rim and cast-iron hub. Mass heavily at outer tread radius; axial width uniform. Radial variance near thin-ring limit.",
+      "surfaceMaterials": [
+        "M_seeded_tractor_1_007",
+        "M_seeded_tractor_1_009",
+        "M_seeded_tractor_1_010"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "rear wheel 1",
+      "materials": [
+        "Gray cast iron",
+        "Black rubber tire",
+        "Steel wheel rim"
+      ],
+      "massKg": 540,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -14.521153926849365,
+        34.102500915527344,
+        0.8398198187351227
+      ],
+      "inertia": {
+        "ixx": 313.9698307544564,
+        "iyy": 536.8717434458987,
+        "izz": 325.42680487915686,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.5932855606079102,
+        1.0694580078125,
+        1.5596396327018738
+      ],
+      "sourceLink": "rear_wheel_1",
+      "massBasis": "Identical rear wheel to id 5; same tire, rim, and hub construction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical rear wheel to id 5; same tire, rim, and hub construction.",
+      "surfaceMaterials": [
+        "M_seeded_tractor_1_007",
+        "M_seeded_tractor_1_009",
+        "M_seeded_tractor_1_010"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "hitch",
+      "materials": [
+        "Gray cast iron",
+        "Black rubber grip"
+      ],
+      "massKg": 210,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -15.991049880981445,
+        33.60570011138916,
+        0.7174509465694427
+      ],
+      "inertia": {
+        "ixx": 14.51289292028339,
+        "iyy": 21.846299719453942,
+        "izz": 33.396589009861415,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.1770191192626953,
+        0.9770851135253906,
+        0.34287554025650024
+      ],
+      "sourceLink": "hitch",
+      "massBasis": "Three-point hitch / drawbar assembly in welded steel. Slightly rearward and lower CoM due to lift-arm pivot hardware. Mostly hollow box-section steel.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Three-point hitch / drawbar assembly in welded steel. Slightly rearward and lower CoM due to lift-arm pivot hardware. Mostly hollow box-section steel.",
+      "surfaceMaterials": [
+        "M_seeded_tractor_1_007",
+        "M_seeded_tractor_1_008"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "front axle",
+      "materials": [
+        "Painted steel chassis dark",
+        "Painted steel body orange",
+        "Gray cast iron"
+      ],
+      "massKg": 115,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -12.418386936187744,
+        31.917394638061523,
+        0.5290553867816925
+      ],
+      "inertia": {
+        "ixx": 4.855783434638213,
+        "iyy": 2.5316560147611185,
+        "izz": 5.405870129085178,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.4725618362426758,
+        0.6694145202636719,
+        0.36406928300857544
+      ],
+      "sourceLink": "front_axle",
+      "massBasis": "Solid steel front axle beam with steering knuckles. Nearly uniform dense metal; slight variance reduction from king-pin bosses at ends.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid steel front axle beam with steering knuckles. Nearly uniform dense metal; slight variance reduction from king-pin bosses at ends.",
+      "surfaceMaterials": [
+        "M_seeded_tractor_1_001",
+        "M_seeded_tractor_1_002",
+        "M_seeded_tractor_1_007"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "front wheel 0",
+      "materials": [
+        "Black rubber tire",
+        "Steel wheel rim"
+      ],
+      "massKg": 95,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -12.517231941223145,
+        31.724599838256836,
+        0.4537975937128067
+      ],
+      "inertia": {
+        "ixx": 13.195034685998483,
+        "iyy": 22.374536699836003,
+        "izz": 13.473989538136122,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.7921619415283203,
+        0.5218429565429688,
+        0.7823464572429657
+      ],
+      "sourceLink": "front_wheel_0",
+      "massBasis": "Front tire (rubber) + steel rim. Mass concentrated at outer radius in x-z plane giving higher radial variance; axial (y) distribution roughly uniform across tire width.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Front tire (rubber) + steel rim. Mass concentrated at outer radius in x-z plane giving higher radial variance; axial (y) distribution roughly uniform across tire width.",
+      "surfaceMaterials": [
+        "M_seeded_tractor_1_009",
+        "M_seeded_tractor_1_010"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "front wheel 1",
+      "materials": [
+        "Black rubber tire",
+        "Steel wheel rim"
+      ],
+      "massKg": 95,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -12.32880973815918,
+        32.114662170410156,
+        0.4537975937128067
+      ],
+      "inertia": {
+        "ixx": 13.195034685998483,
+        "iyy": 22.374536699836003,
+        "izz": 13.473989538136122,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.7921619415283203,
+        0.5218429565429688,
+        0.7823464572429657
+      ],
+      "sourceLink": "front_wheel_1",
+      "massBasis": "Identical front wheel to id 2; same tire-rim construction and mass distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical front wheel to id 2; same tire-rim construction and mass distribution.",
+      "surfaceMaterials": [
+        "M_seeded_tractor_1_009",
+        "M_seeded_tractor_1_010"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "steering wheel",
+      "materials": [
+        "Black rubber grip"
+      ],
+      "massKg": 4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -14.332084655761719,
+        32.809193801879886,
+        1.9254469275474548
+      ],
+      "inertia": {
+        "ixx": 0.3547498475477255,
+        "iyy": 0.3694705815656266,
+        "izz": 0.6277024967642502,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6336517333984375,
+        0.6524429321289062,
+        0.31707966327667236
+      ],
+      "sourceLink": "steering_wheel",
+      "massBasis": "Steering wheel rim + column stub. Mass concentrated at rim ring; thin lightweight polymer/metal. Slightly lower CoM due to column attachment below.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Steering wheel rim + column stub. Mass concentrated at rim ring; thin lightweight polymer/metal. Slightly lower CoM due to column attachment below.",
+      "surfaceMaterials": [
+        "M_seeded_tractor_1_008"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "steering_wheel_turn",
+      "type": "revolute",
+      "lower": -1.25237,
+      "upper": 1.25237,
+      "id": "0",
+      "effort": 10.0,
+      "velocity": 4.0,
+      "damping": 3.5,
+      "friction": 1.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_wheel_0_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "1",
+      "effort": 300.0,
+      "velocity": 12.0,
+      "damping": 10.0,
+      "friction": 3.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_wheel_1_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "2",
+      "effort": 300.0,
+      "velocity": 12.0,
+      "damping": 10.0,
+      "friction": 3.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_front_axle",
+      "type": "revolute",
+      "lower": -0.450855,
+      "upper": 0.450855,
+      "id": "3",
+      "effort": 120.0,
+      "velocity": 1.2,
+      "damping": 65.0,
+      "friction": 30.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_wheel_0_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "4",
+      "effort": 80.0,
+      "velocity": 18.0,
+      "damping": 5.0,
+      "friction": 1.8,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_wheel_1_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "5",
+      "effort": 80.0,
+      "velocity": 18.0,
+      "damping": 5.0,
+      "friction": 1.8,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "chassis_to_hitch",
+      "type": "revolute",
+      "lower": -0.31713,
+      "upper": 0.443982,
+      "id": "6",
+      "effort": 220.0,
+      "velocity": 0.7,
+      "damping": 45.0,
+      "friction": 20.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/outdoor_blend_asset/40_tractor/tractor/seed_0001/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

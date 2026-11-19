@@ -1,0 +1,285 @@
+{
+  "assetId": "asset_21_washmachine_2e9d4f84",
+  "name": "Washmachine",
+  "totalMassKg": 81.85,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Paint-coated steel",
+        "Emissive display surface",
+        "Stainless steel drum",
+        "Matte stainless steel",
+        "Glossy molded plastic"
+      ],
+      "massKg": 70.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.297704,
+        0.0,
+        0.41558
+      ],
+      "inertia": {
+        "ixx": 6.5144,
+        "iyy": 6.0978,
+        "izz": 4.55257,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.7073132991790771,
+        0.6543726921081543,
+        0.9199999943375587
+      ],
+      "sourceLink": "body",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "21 | wm_body",
+        "21 | wm_display",
+        "21 | wm_drum",
+        "21 | wm_frame",
+        "21 | wm_panel"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "drum",
+      "materials": [
+        "Stainless steel drum"
+      ],
+      "massKg": 8.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0,
+        0,
+        0
+      ],
+      "inertia": {
+        "ixx": 0.191469,
+        "iyy": 0.16701,
+        "izz": 0.16701,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6276803016662598,
+        0.3793635368347168,
+        0.62774857878685
+      ],
+      "sourceLink": "drum",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "21 | wm_drum"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "door",
+      "materials": [
+        "Matte stainless steel",
+        "Smoked glass"
+      ],
+      "massKg": 3.2,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.03,
+        -0.224474,
+        0.0
+      ],
+      "inertia": {
+        "ixx": 0.107496,
+        "iyy": 0.0547078,
+        "izz": 0.0547078,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.3787519931793213,
+        0.41750574111938477,
+        0.4852584898471832
+      ],
+      "sourceLink": "door",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "21 | wm_frame",
+        "21 | wm_glass"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "drawer",
+      "materials": [
+        "Matte stainless steel",
+        "Glossy molded plastic"
+      ],
+      "massKg": 0.6,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.116601,
+        0.0,
+        0.0
+      ],
+      "inertia": {
+        "ixx": 0.00127625,
+        "iyy": 0.0028704,
+        "izz": 0.00384415,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.17294073104858398,
+        0.2747616767883301,
+        0.07458066940307617
+      ],
+      "sourceLink": "drawer",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "21 | wm_frame",
+        "21 | wm_panel"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "dial",
+      "materials": [
+        "Molded plastic control"
+      ],
+      "massKg": 0.05,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0,
+        0,
+        0
+      ],
+      "inertia": {
+        "ixx": 3.63e-05,
+        "iyy": 2.01667e-05,
+        "izz": 2.01667e-05,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.08840346336364746,
+        0.03026437759399414,
+        0.08850032091140747
+      ],
+      "sourceLink": "dial",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "21 | wm_control"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "body_to_drum",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "0",
+      "effort": 20.0,
+      "velocity": 15.0,
+      "damping": 1.2,
+      "friction": 1.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_door",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.66846,
+      "id": "1",
+      "effort": 10.0,
+      "velocity": 2.0,
+      "damping": 0.4,
+      "friction": 0.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_dial",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "2",
+      "effort": 0.5,
+      "velocity": 6.0,
+      "damping": 0.015,
+      "friction": 0.04,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_drawer",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.163709,
+      "id": "3",
+      "effort": 5.0,
+      "velocity": 0.3,
+      "damping": 4.0,
+      "friction": 3.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/Indoor_blend_asset/21_washmachine/Bathroom_washmachine/seed_0000/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

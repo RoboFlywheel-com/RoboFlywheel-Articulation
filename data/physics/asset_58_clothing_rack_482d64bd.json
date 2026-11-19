@@ -1,0 +1,121 @@
+{
+  "assetId": "asset_58_clothing_rack_482d64bd",
+  "dimensions_m": [
+    1.1861035823822021,
+    0.35880422592163086,
+    1.300227489322424
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Chrome-plated steel hook",
+      "surfaceMaterial": "58 | hook",
+      "parts": [
+        "top_hanger_2",
+        "top_hanger_0",
+        "top_hanger_1",
+        "top_hanger_3"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "1",
+      "material": "Polished wood",
+      "surfaceMaterial": "58 | wood",
+      "parts": [
+        "top_hanger_2",
+        "top_hanger_0",
+        "top_hanger_1",
+        "top_hanger_3"
+      ],
+      "values": {
+        "density_kg_m3": 650,
+        "youngs_modulus_pa": 10000000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.38,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted steel frame",
+      "surfaceMaterial": "58 | frame.002",
+      "parts": [
+        "base_frame",
+        "upper_frame"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Cast iron hub",
+      "surfaceMaterial": "58 | hub",
+      "parts": [
+        "base_frame",
+        "upper_frame",
+        "wheel_0.001",
+        "wheel_1.001",
+        "wheel_2",
+        "wheel_3"
+      ],
+      "values": {
+        "density_kg_m3": 7200,
+        "youngs_modulus_pa": 170000000000,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "4",
+      "material": "Red painted steel",
+      "surfaceMaterial": "58 | red",
+      "parts": [
+        "upper_frame"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Smooth rubber tire",
+      "surfaceMaterial": "58 | rubber.002",
+      "parts": [
+        "wheel_0.001",
+        "wheel_1.001",
+        "wheel_2",
+        "wheel_3"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 5000000,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

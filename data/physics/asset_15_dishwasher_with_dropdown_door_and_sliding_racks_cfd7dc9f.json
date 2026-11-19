@@ -1,0 +1,119 @@
+{
+  "assetId": "asset_15_dishwasher_with_dropdown_door_and_sliding_racks_cfd7dc9f",
+  "dimensions_m": [
+    0.6641459465026855,
+    1.4989724159240723,
+    0.9049999788403511
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Stainless steel shell",
+      "surfaceMaterial": "15 | dishwasher_stainless_shell",
+      "parts": [
+        "front_family__integrated_hidden__body",
+        "front_family__integrated_hidden__door"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Stainless steel liner",
+      "surfaceMaterial": "15 | dishwasher_stainless_liner",
+      "parts": [
+        "front_family__integrated_hidden__body",
+        "front_family__integrated_hidden__door"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Stainless steel trim",
+      "surfaceMaterial": "15 | dishwasher_stainless_trim",
+      "parts": [
+        "front_family__integrated_hidden__body",
+        "rack_geometry__round_wire__rack_1",
+        "front_family__integrated_hidden__door",
+        "rack_geometry__round_wire__rack_0",
+        "wash_arm__offset_paddle__lower",
+        "wash_arm__offset_paddle__upper"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Dark molded plastic",
+      "surfaceMaterial": "15 | dishwasher_stainless_dark",
+      "parts": [
+        "front_family__integrated_hidden__body",
+        "front_family__integrated_hidden__door",
+        "wash_arm__offset_paddle__lower",
+        "wash_arm__offset_paddle__upper"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Stainless steel rack",
+      "surfaceMaterial": "15 | dishwasher_stainless_rack",
+      "parts": [
+        "rack_geometry__round_wire__rack_1",
+        "rack_geometry__round_wire__rack_0"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Stainless steel accent",
+      "surfaceMaterial": "15 | dishwasher_stainless_accent",
+      "parts": [
+        "front_family__integrated_hidden__door",
+        "wash_arm__offset_paddle__lower",
+        "wash_arm__offset_paddle__upper"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

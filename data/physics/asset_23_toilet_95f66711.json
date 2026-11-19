@@ -1,0 +1,60 @@
+{
+  "assetId": "asset_23_toilet_95f66711",
+  "dimensions_m": [
+    0.47443294525146484,
+    0.870854377746582,
+    1.03911242634058
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Glazed ceramic",
+      "surfaceMaterial": "23 | ceramic",
+      "parts": [
+        "body.004"
+      ],
+      "values": {
+        "density_kg_m3": 2400.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.23,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Polished chrome",
+      "surfaceMaterial": "23 | chrome",
+      "parts": [
+        "body.004",
+        "flush_button"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Glossy plastic",
+      "surfaceMaterial": "23 | seat",
+      "parts": [
+        "seat_lid",
+        "seat_ring"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

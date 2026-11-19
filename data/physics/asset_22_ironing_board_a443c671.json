@@ -1,0 +1,111 @@
+{
+  "assetId": "asset_22_ironing_board_a443c671",
+  "dimensions_m": [
+    1.3591570854187012,
+    0.6016221046447754,
+    0.859633207321167
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "painted metal frame",
+      "surfaceMaterial": "22 | frame",
+      "parts": [
+        "height_latch",
+        "rear_leg_pair",
+        "front_leg_pair",
+        "board"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "molded plastic latch",
+      "surfaceMaterial": "22 | latch",
+      "parts": [
+        "height_latch"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "rubber feet",
+      "surfaceMaterial": "22 | rubber",
+      "parts": [
+        "rear_leg_pair",
+        "front_leg_pair"
+      ],
+      "values": {
+        "density_kg_m3": 950.0,
+        "youngs_modulus_pa": 3000000.0,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.85,
+        "dynamic_friction_coefficient": 0.65,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "3",
+      "material": "generic plastic trim",
+      "surfaceMaterial": "22 | shadow",
+      "parts": [
+        "front_leg_pair",
+        "board"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "canvas fabric cover",
+      "surfaceMaterial": "22 | fabric",
+      "parts": [
+        "board"
+      ],
+      "values": {
+        "density_kg_m3": 700.0,
+        "youngs_modulus_pa": 300000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.08
+      }
+    },
+    {
+      "id": "5",
+      "material": "printed canvas fabric",
+      "surfaceMaterial": "22 | print",
+      "parts": [
+        "board"
+      ],
+      "values": {
+        "density_kg_m3": 700.0,
+        "youngs_modulus_pa": 300000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.08
+      }
+    }
+  ]
+}

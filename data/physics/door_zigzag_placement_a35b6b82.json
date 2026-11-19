@@ -1,0 +1,236 @@
+{
+  "assetId": "door_zigzag_placement_a35b6b82",
+  "dimensions_m": [
+    0.3880000114440918,
+    2.6400002241134644,
+    2.319999933223153
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Dark Steel",
+      "surfaceMaterial": "dark_steel",
+      "parts": [
+        "Zigzag Door / door_0/groove_mid_3",
+        "Zigzag Door / door_1/groove_lo_2",
+        "Zigzag Door / door_0_outer/groove_mid_2",
+        "Zigzag Door / door_1/kick_plate_5",
+        "Zigzag Door / door_1_outer/groove_lo_1",
+        "Zigzag Door / frame/bottom_guide_4",
+        "Zigzag Door / right_housing/rivet_lo_in_4",
+        "Zigzag Door / door_1/groove_hi_4",
+        "Zigzag Door / door_0/groove_lo_2",
+        "Zigzag Door / door_0_outer/groove_lo_1",
+        "Zigzag Door / door_1_outer/groove_hi_3",
+        "Zigzag Door / left_housing/rivet_lo_out_5",
+        "Zigzag Door / right_housing/cowl_plate_1",
+        "Zigzag Door / right_housing/rivet_hi_out_7",
+        "Zigzag Door / left_housing/rivet_lo_in_4",
+        "Zigzag Door / door_0/groove_hi_4",
+        "Zigzag Door / door_0_outer/groove_hi_3",
+        "Zigzag Door / door_1_outer/kick_plate_4",
+        "Zigzag Door / frame/top_guide_3",
+        "Zigzag Door / left_housing/cowl_plate_1",
+        "Zigzag Door / right_housing/rivet_hi_in_6",
+        "Zigzag Door / left_housing/rivet_hi_out_7",
+        "Zigzag Door / door_0/kick_plate_5",
+        "Zigzag Door / door_1/groove_mid_3",
+        "Zigzag Door / door_0_outer/kick_plate_4",
+        "Zigzag Door / door_1_outer/groove_mid_2",
+        "Zigzag Door / frame/header_trim_1",
+        "Zigzag Door / left_housing/rivet_hi_in_6",
+        "Zigzag Door / right_housing/rivet_lo_out_5"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "1",
+      "material": "Gunmetal Steel",
+      "surfaceMaterial": "gunmetal",
+      "parts": [
+        "Zigzag Door / door_0/leaf_panel_0",
+        "Zigzag Door / door_1/leaf_panel_0"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "2",
+      "material": "Olive Painted Steel",
+      "surfaceMaterial": "olive_frame",
+      "parts": [
+        "Zigzag Door / frame/lintel_header_0",
+        "Zigzag Door / right_housing/cowl_front_0",
+        "Zigzag Door / right_housing/pocket_end_wall_3",
+        "Zigzag Door / left_housing/rear_rail_2",
+        "Zigzag Door / left_housing/pocket_end_wall_3",
+        "Zigzag Door / frame/sill_2",
+        "Zigzag Door / left_housing/cowl_front_0",
+        "Zigzag Door / right_housing/rear_rail_2"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "3",
+      "material": "Amber Warning Lens",
+      "surfaceMaterial": "warning_amber",
+      "parts": [
+        "Zigzag Door / frame/warning_lamp_r_6",
+        "Zigzag Door / frame/warning_lamp_l_5"
+      ],
+      "values": {
+        "density_kg_m3": 1190,
+        "youngs_modulus_pa": 3200000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "4",
+      "material": "Keypad Housing Alloy",
+      "surfaceMaterial": "keypad_body",
+      "parts": [
+        "Zigzag Door / keypad/keypad_box_0"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "5",
+      "material": "Green Status LED",
+      "surfaceMaterial": "status_green",
+      "parts": [
+        "Zigzag Door / keypad/status_lamp_11"
+      ],
+      "values": {
+        "density_kg_m3": 1190,
+        "youngs_modulus_pa": 3200000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "6",
+      "material": "Deep Gunmetal Steel",
+      "surfaceMaterial": "gunmetal_deep",
+      "parts": [
+        "Zigzag Door / door_1_outer/leaf_panel_0",
+        "Zigzag Door / door_0_outer/leaf_panel_0"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "7",
+      "material": "Hazard Rubber",
+      "surfaceMaterial": "hazard_black",
+      "parts": [
+        "Zigzag Door / hazard_right/hazard_back_0",
+        "Zigzag Door / hazard_left/hazard_back_0"
+      ],
+      "values": {
+        "density_kg_m3": 1100,
+        "youngs_modulus_pa": 10000000,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "8",
+      "material": "Keypad Key Metal",
+      "surfaceMaterial": "keypad_key",
+      "parts": [
+        "Zigzag Door / keypad/key_1_1_6",
+        "Zigzag Door / keypad/key_2_2_10",
+        "Zigzag Door / keypad/key_2_1_9",
+        "Zigzag Door / keypad/key_0_0_2",
+        "Zigzag Door / keypad/key_1_0_5",
+        "Zigzag Door / keypad/key_0_2_4",
+        "Zigzag Door / keypad/key_2_0_8",
+        "Zigzag Door / keypad/key_0_1_3",
+        "Zigzag Door / keypad/key_1_2_7"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "9",
+      "material": "Yellow Safety Paint",
+      "surfaceMaterial": "accent_yellow",
+      "parts": [
+        "Zigzag Door / door_1/leaf_seam_accent_1",
+        "Zigzag Door / hazard_left/hazard_stripes_1",
+        "Zigzag Door / door_0/leaf_seam_accent_1",
+        "Zigzag Door / hazard_right/hazard_stripes_1"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "10",
+      "material": "Keypad Screen Glass",
+      "surfaceMaterial": "keypad_screen",
+      "parts": [
+        "Zigzag Door / keypad/keypad_screen_1"
+      ],
+      "values": {
+        "density_kg_m3": 2500,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.22,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.5
+      }
+    }
+  ]
+}

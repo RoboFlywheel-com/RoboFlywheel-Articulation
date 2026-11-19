@@ -1,0 +1,175 @@
+{
+  "assetId": "desk_clamp_placement_8be54612",
+  "name": "Desk clamp",
+  "totalMassKg": 0.792,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Cast Iron Frame",
+        "Cast Iron Anvil Pad"
+      ],
+      "massKg": 0.52,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.5110793113708496,
+        1.830094985961914,
+        0.8020449280738831
+      ],
+      "inertia": {
+        "ixx": 0.0008041478640165589,
+        "iyy": 0.0011935418947375614,
+        "izz": 0.0019056483893640805,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.17507028579711914,
+        0.14642488956451416,
+        0.03840601444244385
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow C-shaped clamp frame in aluminium alloy (~2700 kg/m\u00b3), roughly 25% fill of bounding box; COM shifted slightly toward the fixed jaw side (\u2212y); variance below 1/12 reflecting shell-like mass concentration in the frame arms and thin z-extent.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow C-shaped clamp frame in aluminium alloy (~2700 kg/m\u00b3), roughly 25% fill of bounding box; COM shifted slightly toward the fixed jaw side (\u2212y); variance below 1/12 reflecting shell-like mass concentration in the frame arms and thin z-extent.",
+      "surfaceMaterials": [
+        "Material_0.011",
+        "Material_1.011"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "screw",
+      "materials": [
+        "Steel Screw",
+        "Steel Handle",
+        "Plastic Handle Caps"
+      ],
+      "massKg": 0.24,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.5494624376296997,
+        1.8059033155441284,
+        0.7952373647689819
+      ],
+      "inertia": {
+        "ixx": 0.00027305264743292354,
+        "iyy": 0.0003868138553629433,
+        "izz": 0.00027712372618125304,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.1165006160736084,
+        0.06972789764404297,
+        0.09519004821777344
+      ],
+      "sourceLink": null,
+      "massBasis": "Threaded steel screw (~8 mm dia, 90 mm length) with T-handle knob and frame bracket; ~20% fill; COM slightly toward handle end (\u2212z); higher vz reflects mass spread along screw axis, lower vx/vy from slender rod geometry.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Threaded steel screw (~8 mm dia, 90 mm length) with T-handle knob and frame bracket; ~20% fill; COM slightly toward handle end (\u2212z); higher vz reflects mass spread along screw axis, lower vx/vy from slender rod geometry.",
+      "surfaceMaterials": [
+        "Material_2.011",
+        "Material_3.011",
+        "Material_4.010"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "pad",
+      "materials": [
+        "Rubber Pad"
+      ],
+      "massKg": 0.032,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.4877573251724243,
+        1.8331890106201172,
+        0.7853803396224975
+      ],
+      "inertia": {
+        "ixx": 6.646777581314609e-06,
+        "iyy": 5.8349111607606115e-06,
+        "izz": 6.423938480729703e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03310751914978027,
+        0.03759312629699707,
+        0.03397494554519653
+      ],
+      "sourceLink": null,
+      "massBasis": "Small swivel pad (rubber/plastic cap over short steel stem), nearly solid at ~60% fill; COM slightly toward contact face (+z); variance near uniform-box 1/12 given compact geometry.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small swivel pad (rubber/plastic cap over short steel stem), nearly solid at ~60% fill; COM slightly toward contact face (+z); variance near uniform-box 1/12 given compact geometry.",
+      "surfaceMaterials": [
+        "Material_5.006"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "frame_to_screw",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.0305284,
+      "id": "0",
+      "effort": 160.0,
+      "velocity": 0.025,
+      "damping": 12.0,
+      "friction": 9.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "screw_to_pad",
+      "type": "revolute",
+      "lower": -0.32025,
+      "upper": 0.32025,
+      "id": "1",
+      "effort": 1.2,
+      "velocity": 2.5,
+      "damping": 0.1,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

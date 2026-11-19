@@ -1,0 +1,219 @@
+{
+  "assetId": "urdf_12_rotating_observatory_dome_4c3d10d5",
+  "name": "Rotating observatory dome",
+  "totalMassKg": 13315.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "1",
+      "name": "body",
+      "materials": [
+        "cast concrete foundation",
+        "steel foundation anchor"
+      ],
+      "massKg": 6200.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        12.400000095367432,
+        34.00000286102295,
+        0.5778913030028343
+      ],
+      "inertia": {
+        "ixx": 36240.66814905428,
+        "iyy": 36240.67622555368,
+        "izz": 70535.96620272733,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        8.328898429870605,
+        8.328897476196289,
+        1.374839909374714
+      ],
+      "sourceLink": null,
+      "massBasis": "Circular concrete-and-steel foundation ring, 8.3 m dia \u00d7 1.37 m tall. Hollow interior for telescope access; effective solid fraction ~35 % of bounding cylinder. Near-uniform mass distribution about vertical axis; slight COM shift down due to thicker base slab.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Circular concrete-and-steel foundation ring, 8.3 m dia \u00d7 1.37 m tall. Hollow interior for telescope access; effective solid fraction ~35 % of bounding cylinder. Near-uniform mass distribution about vertical axis; slight COM shift down due to thicker base slab.",
+      "surfaceMaterials": [
+        "REF_12_rotating_observatory_dome_foundation_00",
+        "REF_12_rotating_observatory_dome_foundation_01",
+        "REF_12_rotating_observatory_dome_foundation_02",
+        "REF_12_rotating_observatory_dome_foundation_03"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "support pier",
+      "materials": [
+        "painted steel support pier",
+        "bare steel support bracket"
+      ],
+      "massKg": 4800.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        12.578983306884766,
+        34.599586486816406,
+        1.2325081825256348
+      ],
+      "inertia": {
+        "ixx": 2133.9299473990923,
+        "iyy": 2133.9299473990923,
+        "izz": 918.6545342870057,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.0737457275390625,
+        1.0737457275390625,
+        2.0501999855041504
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid cast-concrete instrument pier, 1.07 m square \u00d7 2.05 m tall. Nearly uniform density; variance factors \u2248 1/12 for a solid rectangular column. Slight anchoring flange at base does not shift COM appreciably.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid cast-concrete instrument pier, 1.07 m square \u00d7 2.05 m tall. Nearly uniform density; variance factors \u2248 1/12 for a solid rectangular column. Slight anchoring flange at base does not shift COM appreciably.",
+      "surfaceMaterials": [
+        "REF_12_rotating_observatory_dome_support_pier_00",
+        "REF_12_rotating_observatory_dome_support_pier_01"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "dome rotation",
+      "materials": [
+        "painted steel dome shell",
+        "painted steel dome panel"
+      ],
+      "massKg": 2200.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        12.418426990509033,
+        33.98856258392334,
+        2.24603040933609
+      ],
+      "inertia": {
+        "ixx": 10899.528507635,
+        "iyy": 10881.538016602408,
+        "izz": 20175.227447865167,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        7.8155317306518555,
+        7.822504043579102,
+        2.508480191230774
+      ],
+      "sourceLink": null,
+      "massBasis": "Hemispherical steel shell (~4 mm) on light framing, ~7.8 m dia, 2.5 m rise. Surface area ~67 m\u00b2 gives shell mass ~2100 kg plus ribs/ring. COM below mid-height because dome curvature concentrates area lower. Variance below 1/12 reflecting thin-shell surface distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hemispherical steel shell (~4 mm) on light framing, ~7.8 m dia, 2.5 m rise. Surface area ~67 m\u00b2 gives shell mass ~2100 kg plus ribs/ring. COM below mid-height because dome curvature concentrates area lower. Variance below 1/12 reflecting thin-shell surface distribution.",
+      "surfaceMaterials": [
+        "REF_12_rotating_observatory_dome_dome_shell_00",
+        "REF_12_rotating_observatory_dome_dome_shell_01"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "slit shutter",
+      "materials": [
+        "painted steel shutter leaf",
+        "painted steel shutter inner"
+      ],
+      "massKg": 115.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        11.103752136230469,
+        34.80477714538574,
+        3.6009868383407593
+      ],
+      "inertia": {
+        "ixx": 32.286611180377975,
+        "iyy": 50.69510155236512,
+        "izz": 65.42660623781194,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.1345386505126953,
+        1.7089118957519531,
+        1.4767391681671143
+      ],
+      "sourceLink": null,
+      "massBasis": "Two thin steel shutter leaves (~2.5 mm) covering the observation slit, total panel area \u2248 6 m\u00b2 plus edge frames. Nearly symmetric; thin in the radial direction so z-variance is small. Centered within its bounding box.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Two thin steel shutter leaves (~2.5 mm) covering the observation slit, total panel area \u2248 6 m\u00b2 plus edge frames. Nearly symmetric; thin in the radial direction so z-variance is small. Centered within its bounding box.",
+      "surfaceMaterials": [
+        "REF_12_rotating_observatory_dome_shutter_leaf_00",
+        "REF_12_rotating_observatory_dome_shutter_leaf_01"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "dome_rotation",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "0",
+      "effort": 1200.0,
+      "velocity": 0.12,
+      "damping": 2200.0,
+      "friction": 420.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "slit_shutter",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.46608,
+      "id": "1",
+      "effort": 180.0,
+      "velocity": 0.2,
+      "damping": 40.0,
+      "friction": 25.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 240,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

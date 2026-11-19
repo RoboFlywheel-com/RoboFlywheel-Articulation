@@ -1,0 +1,256 @@
+{
+  "assetId": "asset_28_keyboard_7a93106c",
+  "dimensions_m": [
+    2.0721482634544373,
+    0.9105645418167114,
+    1.0782275013625622
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "ABS plastic dark matte",
+      "surfaceMaterial": "28 | mk_knob",
+      "parts": [
+        "pad_11",
+        "pad_7",
+        "chassis",
+        "pad_3",
+        "wheel_1",
+        "pad_12",
+        "env_slider_0",
+        "pad_0",
+        "pad_4",
+        "env_slider_1",
+        "pad_13",
+        "pad_9",
+        "pad_1",
+        "pad_5",
+        "pad_14",
+        "env_slider_2",
+        "pad_10",
+        "pad_6",
+        "pad_8",
+        "env_slider_3",
+        "pad_15",
+        "pad_2"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.38,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Polycarbonate translucent diffuser",
+      "surfaceMaterial": "28 | mk_backlight",
+      "parts": [
+        "pad_11",
+        "pad_7",
+        "pad_3",
+        "pad_12",
+        "pad_0",
+        "pad_4",
+        "pad_13",
+        "pad_9",
+        "pad_1",
+        "pad_5",
+        "pad_14",
+        "pad_10",
+        "pad_6",
+        "pad_8",
+        "pad_15",
+        "pad_2"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "2",
+      "material": "ABS plastic white glossy",
+      "surfaceMaterial": "28 | mk_key_white",
+      "parts": [
+        "white_key_20.001",
+        "white_key_0.001",
+        "white_key_22.001",
+        "white_key_13.001",
+        "white_key_27.001",
+        "white_key_30.001",
+        "white_key_1.001",
+        "white_key_25.001",
+        "white_key_35.001",
+        "white_key_3.001",
+        "white_key_11.001",
+        "white_key_16.001",
+        "white_key_34.001",
+        "white_key_18.001",
+        "white_key_23.001",
+        "white_key_33.001",
+        "white_key_4.001",
+        "white_key_5.001",
+        "white_key_14.001",
+        "white_key_28.001",
+        "white_key_19.001",
+        "white_key_32.001",
+        "white_key_9.001",
+        "white_key_21.001",
+        "white_key_12.001",
+        "white_key_26.001",
+        "white_key_17.001",
+        "white_key_31.001",
+        "white_key_8.001",
+        "white_key_7.001",
+        "white_key_10.001",
+        "white_key_2.001",
+        "white_key_24.001",
+        "white_key_15.001",
+        "white_key_29.001",
+        "white_key_6.001"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Paint-coated steel tube",
+      "surfaceMaterial": "Interior | black metal",
+      "parts": [
+        "Keyboard X stand.002",
+        "Keyboard X stand.003",
+        "Keyboard X stand",
+        "Keyboard X stand.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "ABS plastic dark body",
+      "surfaceMaterial": "28 | mk_body",
+      "parts": [
+        "chassis"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.38,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Dark walnut wood",
+      "surfaceMaterial": "28 | mk_wood",
+      "parts": [
+        "chassis"
+      ],
+      "values": {
+        "density_kg_m3": 610.0,
+        "youngs_modulus_pa": 10500000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.42,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "6",
+      "material": "ABS plastic dark accent",
+      "surfaceMaterial": "28 | mk_accent",
+      "parts": [
+        "chassis",
+        "wheel_0"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.38,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "7",
+      "material": "ABS plastic black keys",
+      "surfaceMaterial": "28 | mk_key_black",
+      "parts": [
+        "black_key_9.001",
+        "black_key_8.001",
+        "black_key_12.001",
+        "black_key_17.001",
+        "black_key_21.001",
+        "black_key_15.001",
+        "black_key_2.001",
+        "black_key_10.001",
+        "black_key_24.001",
+        "black_key_6.001",
+        "black_key_0.001",
+        "black_key_13.001",
+        "black_key_18.001",
+        "black_key_22.001",
+        "black_key_4.001",
+        "black_key_7.001",
+        "black_key_11.001",
+        "black_key_16.001",
+        "black_key_20.001",
+        "black_key_14.001",
+        "black_key_3.001",
+        "black_key_23.001",
+        "black_key_1.001",
+        "black_key_19.001",
+        "black_key_5.001"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "8",
+      "material": "Polycarbonate slider pointer",
+      "surfaceMaterial": "28 | mk_pointer",
+      "parts": [
+        "env_slider_0",
+        "env_slider_1",
+        "env_slider_2",
+        "env_slider_3"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.5
+      }
+    }
+  ]
+}

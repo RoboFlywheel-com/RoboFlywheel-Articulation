@@ -1,0 +1,238 @@
+{
+  "assetId": "asset_27_vocal_mic_bcb8d220",
+  "name": "Vocal mic",
+  "totalMassKg": 4.549,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "base",
+      "materials": [
+        "Chrome-plated zinc alloy",
+        "Blackened steel"
+      ],
+      "massKg": 4.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.675410196185112,
+        -3.250753402709961,
+        0.3441644660755992
+      ],
+      "inertia": {
+        "ixx": 0.8368941368110561,
+        "iyy": 0.8235185423170115,
+        "izz": 0.15767963944410923,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.7005926668643951,
+        0.7627716064453125,
+        1.45074743591249
+      ],
+      "sourceLink": "base",
+      "massBasis": "Vintage chrome mic stand: weighted cast-iron disc at bottom (~2.5 kg) plus thin hollow chrome pole (~1.2 kg) and hardware (~0.5 kg). Mass concentrated low; narrow pole gives small x/y variance relative to wide bounding box.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Vintage chrome mic stand: weighted cast-iron disc at bottom (~2.5 kg) plus thin hollow chrome pole (~1.2 kg) and hardware (~0.5 kg). Mass concentrated low; narrow pole gives small x/y variance relative to wide bounding box.",
+      "surfaceMaterials": [
+        "27 | vm_base_vintage_chrome_oval",
+        "27 | vm_body_vintage_chrome_oval",
+        "27 | vm_metal_vintage_chrome_oval",
+        "Interior | black metal"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "body",
+      "materials": [
+        "Chrome-plated zinc alloy",
+        "Dark painted plastic",
+        "Chrome-plated steel mesh"
+      ],
+      "massKg": 0.32,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.5923109650611877,
+        -3.2297656536102295,
+        1.4698322916030884
+      ],
+      "inertia": {
+        "ixx": 0.0029716018410693413,
+        "iyy": 0.0030876380854664245,
+        "izz": 0.0013230728007005838,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.15806496143341064,
+        0.1447601318359375,
+        0.3080180883407593
+      ],
+      "sourceLink": "body",
+      "massBasis": "Hollow chrome mic capsule housing with wire-mesh grille and internal diaphragm assembly. Shell construction spreads mass outward (variance slightly above 1/12); center shifted slightly toward grille end.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow chrome mic capsule housing with wire-mesh grille and internal diaphragm assembly. Shell construction spreads mass outward (variance slightly above 1/12); center shifted slightly toward grille end.",
+      "surfaceMaterials": [
+        "27 | vm_badge_vintage_chrome_oval",
+        "27 | vm_body_vintage_chrome_oval",
+        "27 | vm_dark_vintage_chrome_oval",
+        "27 | vm_mesh_vintage_chrome_oval",
+        "27 | vm_mute_vintage_chrome_oval"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "front knob 0",
+      "materials": [
+        "Chrome-plated zinc alloy"
+      ],
+      "massKg": 0.016,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.669951468706131,
+        -3.235215663909912,
+        1.3763485550880432
+      ],
+      "inertia": {
+        "ixx": 6.167562680963102e-06,
+        "iyy": 4.270120134450508e-06,
+        "izz": 4.2265494071693865e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.031794607639312744,
+        0.0542607307434082,
+        0.054645419120788574
+      ],
+      "sourceLink": "front_knob_0",
+      "massBasis": "Small solid chrome-plated rotary knob with indicator marker; roughly cylindrical, near-uniform density.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small solid chrome-plated rotary knob with indicator marker; roughly cylindrical, near-uniform density.",
+      "surfaceMaterials": [
+        "27 | vm_knob_vintage_chrome_oval",
+        "27 | vm_marker_vintage_chrome_oval"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "front knob 1",
+      "materials": [
+        "Chrome-plated zinc alloy"
+      ],
+      "massKg": 0.013,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.6652573943138123,
+        -3.234885334968567,
+        1.4295819401741028
+      ],
+      "inertia": {
+        "ixx": 3.684915999738578e-06,
+        "iyy": 2.8514192359122743e-06,
+        "izz": 2.8302998245089266e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03265988826751709,
+        0.04656100273132324,
+        0.046828627586364746
+      ],
+      "sourceLink": "front_knob_1",
+      "massBasis": "Slightly smaller sibling knob, same construction and material; consistent per-knob density with knob 0.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Slightly smaller sibling knob, same construction and material; consistent per-knob density with knob 0.",
+      "surfaceMaterials": [
+        "27 | vm_knob_vintage_chrome_oval",
+        "27 | vm_marker_vintage_chrome_oval"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "base_to_body",
+      "type": "revolute",
+      "lower": -0.829328,
+      "upper": 0.829328,
+      "id": "0",
+      "effort": 2.0,
+      "velocity": 2.0,
+      "damping": 0.8,
+      "friction": 0.45,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_front_knob_0",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "1",
+      "effort": 0.3,
+      "velocity": 8.0,
+      "damping": 0.003,
+      "friction": 0.012,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_front_knob_1",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "2",
+      "effort": 0.3,
+      "velocity": 8.0,
+      "damping": 0.003,
+      "friction": 0.01,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/Indoor_blend_asset/27_Vocal_mic/Music_Vocal_mic/seed_0000/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

@@ -1,0 +1,404 @@
+{
+  "assetId": "propeller_aircraft_48d4f1e3",
+  "name": "Propeller aircraft",
+  "totalMassKg": 2449.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "2",
+      "name": "fuselage",
+      "materials": [
+        "Bare aluminum alloy",
+        "Painted aluminum alloy"
+      ],
+      "massKg": 1200.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -14.24734706878662,
+        42.74642562866211,
+        13.458250694274902
+      ],
+      "inertia": {
+        "ixx": 5098.040809706553,
+        "iyy": 5915.038546138479,
+        "izz": 10271.827368189384,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        7.506374359130859,
+        5.984458923339844,
+        1.6388092041015625
+      ],
+      "sourceLink": "fuselage",
+      "massBasis": "Hollow monocoque/semi-monocoque shell with frames and longerons; mass concentrated at skin perimeter giving higher y/z variance; slight forward CoM from cockpit and equipment.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow monocoque/semi-monocoque shell with frames and longerons; mass concentrated at skin perimeter giving higher y/z variance; slight forward CoM from cockpit and equipment.",
+      "surfaceMaterials": [
+        "M_military_aircraft_001",
+        "M_military_aircraft_002",
+        "M_military_aircraft_003"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "wing",
+      "materials": [
+        "Bare aluminum alloy"
+      ],
+      "massKg": 550.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -12.827693939208984,
+        43.204163703918454,
+        13.009758949279785
+      ],
+      "inertia": {
+        "ixx": 3991.383363429884,
+        "iyy": 2807.6219425885147,
+        "izz": 6789.9078681954115,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        8.083297729492188,
+        10.033824920654297,
+        0.37761497497558594
+      ],
+      "sourceLink": "wing",
+      "massBasis": "Hollow airfoil with two spars, ribs, and stressed skin; mass distributed along 10 m span with slight inboard bias (fuel, structure); very thin in z.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow airfoil with two spars, ribs, and stressed skin; mass distributed along 10 m span with slight inboard bias (fuel, structure); very thin in z.",
+      "surfaceMaterials": [
+        "M_military_aircraft_001"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "engine 0",
+      "materials": [
+        "Bare aluminum alloy",
+        "Painted aluminum alloy",
+        "Painted steel"
+      ],
+      "massKg": 500.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -11.29335823059082,
+        44.64634323120117,
+        13.366394996643066
+      ],
+      "inertia": {
+        "ixx": 110.37123302344298,
+        "iyy": 130.19013141744836,
+        "izz": 194.79081895231505,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.8170547485351562,
+        1.6406936645507812,
+        0.8391437530517578
+      ],
+      "sourceLink": "engine_0",
+      "massBasis": "Dense metal engine block (steel/aluminum alloy), roughly uniform solid mass; slight forward bias for crankshaft/accessories.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Dense metal engine block (steel/aluminum alloy), roughly uniform solid mass; slight forward bias for crankshaft/accessories.",
+      "surfaceMaterials": [
+        "M_military_aircraft_001",
+        "M_military_aircraft_002",
+        "M_military_aircraft_005"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "propeller 0",
+      "materials": [
+        "Bare aluminum alloy",
+        "Painted steel"
+      ],
+      "massKg": 90.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -10.32779836654663,
+        45.32146072387695,
+        13.366394996643066
+      ],
+      "inertia": {
+        "ixx": 101.28095528811681,
+        "iyy": 89.46781057712323,
+        "izz": 113.75501431845295,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.17244815826416,
+        2.4110870361328125,
+        2.1800689697265625
+      ],
+      "sourceLink": "propeller_0",
+      "massBasis": "Blades extend radially from hub; mass concentrated toward blade tips and hub, giving higher variance in blade-plane axes; includes spinner and hub hardware.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Blades extend radially from hub; mass concentrated toward blade tips and hub, giving higher variance in blade-plane axes; includes spinner and hub hardware.",
+      "surfaceMaterials": [
+        "M_military_aircraft_001",
+        "M_military_aircraft_005",
+        "M_military_aircraft_006"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "horizontal stabilizer",
+      "materials": [
+        "Bare aluminum alloy"
+      ],
+      "massKg": 45.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -16.43611764907837,
+        40.88350486755371,
+        13.470783710479736
+      ],
+      "inertia": {
+        "ixx": 44.98101677402235,
+        "iyy": 28.703556395160266,
+        "izz": 73.44658100858832,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.8178281784057617,
+        3.530109405517578,
+        0.2192697525024414
+      ],
+      "sourceLink": "horizontal_stabilizer",
+      "massBasis": "Thin airfoil structure with front/rear spars and ribs; mass distributed along span and chord, very thin in z.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin airfoil structure with front/rear spars and ribs; mass distributed along span and chord, very thin in z.",
+      "surfaceMaterials": [
+        "M_military_aircraft_001"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "tail fin",
+      "materials": [
+        "Bare aluminum alloy",
+        "Painted aluminum alloy"
+      ],
+      "massKg": 38.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -16.46157455444336,
+        40.86500930786133,
+        14.122250576019287
+      ],
+      "inertia": {
+        "ixx": 10.130405950540817,
+        "iyy": 11.703937540230482,
+        "izz": 5.590025150948204,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.0854568481445312,
+        0.8567428588867188,
+        1.4999685287475586
+      ],
+      "sourceLink": "tail_fin",
+      "massBasis": "Vertical stabilizer with spar/rib/skin construction; CoM slightly below mid-height due to root attachment hardware; mass extends vertically.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Vertical stabilizer with spar/rib/skin construction; CoM slightly below mid-height due to root attachment hardware; mass extends vertically.",
+      "surfaceMaterials": [
+        "M_military_aircraft_001",
+        "M_military_aircraft_004"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "elevator",
+      "materials": [
+        "Bare aluminum alloy",
+        "Painted steel"
+      ],
+      "massKg": 16.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -16.863719940185547,
+        40.572832107543945,
+        13.445914268493652
+      ],
+      "inertia": {
+        "ixx": 9.85132428906113,
+        "iyy": 6.26580779741751,
+        "izz": 16.09877501442982,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.2108802795410156,
+        2.8082618713378906,
+        0.10711288452148438
+      ],
+      "sourceLink": "elevator",
+      "massBasis": "Thin hinged control surface, aluminum skin over ribs; mass spread along span and chord, very thin in thickness so low z-variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin hinged control surface, aluminum skin over ribs; mass spread along span and chord, very thin in thickness so low z-variance.",
+      "surfaceMaterials": [
+        "M_military_aircraft_001",
+        "M_military_aircraft_005"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "rudder",
+      "materials": [
+        "Bare aluminum alloy",
+        "Painted aluminum alloy",
+        "Painted steel"
+      ],
+      "massKg": 10.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -16.93998622894287,
+        40.531959533691406,
+        14.265607833862305
+      ],
+      "inertia": {
+        "ixx": 1.6323354688676772,
+        "iyy": 1.7402366409571184,
+        "izz": 0.2738379347310911,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5044727325439453,
+        0.34427642822265625,
+        1.3916568756103516
+      ],
+      "sourceLink": "rudder",
+      "massBasis": "Thin fabric/skin-covered control surface on trailing edge of fin; lightweight frame, mass distributed along height.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin fabric/skin-covered control surface on trailing edge of fin; lightweight frame, mass distributed along height.",
+      "surfaceMaterials": [
+        "M_military_aircraft_001",
+        "M_military_aircraft_004",
+        "M_military_aircraft_005"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "fin_to_rudder",
+      "type": "revolute",
+      "lower": -0.483791,
+      "upper": 0.483791,
+      "id": "0",
+      "effort": 60.0,
+      "velocity": 3.0,
+      "damping": 1.0,
+      "friction": 0.45,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "stabilizer_to_elevator",
+      "type": "revolute",
+      "lower": -0.415979,
+      "upper": 0.415979,
+      "id": "1",
+      "effort": 80.0,
+      "velocity": 3.0,
+      "damping": 1.3,
+      "friction": 0.55,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "propeller_0_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "2",
+      "effort": 400.0,
+      "velocity": 80.0,
+      "damping": 1.6,
+      "friction": 0.3,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/outdoor_blend_asset/03_Outdoor_Sky/29_Aircraft/Military_Aircraft/seed_0000/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

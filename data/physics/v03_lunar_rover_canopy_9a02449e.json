@@ -1,0 +1,163 @@
+{
+  "assetId": "v03_lunar_rover_canopy_9a02449e",
+  "dimensions_m": [
+    3.5712432861328125,
+    2.89900803565979,
+    2.1221771240234375
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Gold alloy",
+      "surfaceMaterial": "V03_Rover_gold",
+      "parts": [
+        "front_right_wheel.001",
+        "chassis.001",
+        "rear_left_wheel.001",
+        "rear_right_wheel.001",
+        "front_left_wheel.001"
+      ],
+      "values": {
+        "density_kg_m3": 19300,
+        "youngs_modulus_pa": 78000000000,
+        "poissons_ratio": 0.44,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "1",
+      "material": "Rubber",
+      "surfaceMaterial": "V03_Rover_rubber",
+      "parts": [
+        "front_right_wheel.001",
+        "rear_left_wheel.001",
+        "rear_right_wheel.001",
+        "front_left_wheel.001"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 10000000,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "2",
+      "material": "Aluminum alloy",
+      "surfaceMaterial": "V03_Rover_silver",
+      "parts": [
+        "front_right_wheel.001",
+        "canopy",
+        "chassis.001",
+        "hand_controller.001",
+        "rear_left_wheel.001",
+        "rear_right_wheel.001",
+        "high_gain_antenna.002",
+        "front_left_wheel.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "3",
+      "material": "Painted aluminum",
+      "surfaceMaterial": "V03_Rover_coral",
+      "parts": [
+        "canopy",
+        "chassis.001",
+        "chassis.001",
+        "chassis.001",
+        "sun_visor"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "4",
+      "material": "Graphite composite",
+      "surfaceMaterial": "V03_Rover_graphite",
+      "parts": [
+        "canopy",
+        "chassis.001",
+        "sun_visor"
+      ],
+      "values": {
+        "density_kg_m3": 1800,
+        "youngs_modulus_pa": 20000000000,
+        "poissons_ratio": 0.25,
+        "static_friction_coefficient": 0.3,
+        "dynamic_friction_coefficient": 0.2,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "5",
+      "material": "Painted fiberglass",
+      "surfaceMaterial": "V03_Rover_ivory",
+      "parts": [
+        "canopy",
+        "chassis.001",
+        "high_gain_antenna.002",
+        "sun_visor"
+      ],
+      "values": {
+        "density_kg_m3": 1900,
+        "youngs_modulus_pa": 25000000000,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "6",
+      "material": "Gold-coated Kapton",
+      "surfaceMaterial": "V03_Rover_warm_gold",
+      "parts": [
+        "canopy",
+        "chassis.001"
+      ],
+      "values": {
+        "density_kg_m3": 1420,
+        "youngs_modulus_pa": 2500000000,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.2
+      }
+    },
+    {
+      "id": "7",
+      "material": "Painted steel",
+      "surfaceMaterial": "V03_Rover_sage",
+      "parts": [
+        "chassis.001",
+        "chassis.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.4
+      }
+    }
+  ]
+}

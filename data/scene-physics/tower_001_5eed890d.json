@@ -1,0 +1,261 @@
+{
+  "assetId": "tower_001_5eed890d",
+  "name": "Wind turbine",
+  "totalMassKg": 41872,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "foundation",
+      "materials": [
+        "Concrete"
+      ],
+      "massKg": 36500,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.114954590797424,
+        65.00146293640137,
+        -0.30362319201231003
+      ],
+      "inertia": {
+        "ixx": 60224.714442068595,
+        "iyy": 60224.73318917836,
+        "izz": 113382.2292745769,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        4.32585597038269,
+        4.325855255126953,
+        1.0800000578165054
+      ],
+      "sourceLink": null,
+      "massBasis": "Solid concrete pad (~2400 kg/m\u00b3) with rebar, roughly 87% fill of bounding box. Uniform mass distribution assumed for a monolithic slab.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Solid concrete pad (~2400 kg/m\u00b3) with rebar, roughly 87% fill of bounding box. Uniform mass distribution assumed for a monolithic slab.",
+      "surfaceMaterials": [
+        "PBR_concrete"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "body",
+      "materials": [
+        "Galvanized Steel",
+        "Painted Steel (Light Gray)"
+      ],
+      "massKg": 3400,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.114954471588135,
+        65.00146484375,
+        4.98533549785614
+      ],
+      "inertia": {
+        "ixx": 33277.6837726255,
+        "iyy": 33277.68201930201,
+        "izz": 3976.5368203010667,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.1629323959350586,
+        2.162933349609375,
+        10.793087899684906
+      ],
+      "sourceLink": null,
+      "massBasis": "Tapered hollow galvanized-steel tube (~8 mm wall), plus internal ladder and cable. Thin-shell cylinder gives radial variance \u22481/8; axial variance near 1/12 shifted slightly low by base-heavy taper. ~0.9% fill of bounding box.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Tapered hollow galvanized-steel tube (~8 mm wall), plus internal ladder and cable. Thin-shell cylinder gives radial variance \u22481/8; axial variance near 1/12 shifted slightly low by base-heavy taper. ~0.9% fill of bounding box.",
+      "surfaceMaterials": [
+        "PBR_galvanized_steel",
+        "PBR_paint_light_gray"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "nacelle",
+      "materials": [
+        "Blackened Steel",
+        "Galvanized Steel",
+        "Painted Steel (Off-White)"
+      ],
+      "massKg": 1450,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.114954471588135,
+        64.04784393310547,
+        10.974447250366211
+      ],
+      "inertia": {
+        "ixx": 2250.4143387681015,
+        "iyy": 589.6547938245168,
+        "izz": 2271.063349395399,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.7339038848876953,
+        4.567108154296875,
+        1.6742115020751953
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow steel/fiberglass nacelle shell (~4 mm) enclosing generator, gearbox, bearings, and brake. Shell ~300 kg, internal drivetrain ~1150 kg concentrated mid-to-rear along the shaft axis. ~1.4% effective fill.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow steel/fiberglass nacelle shell (~4 mm) enclosing generator, gearbox, bearings, and brake. Shell ~300 kg, internal drivetrain ~1150 kg concentrated mid-to-rear along the shaft axis. ~1.4% effective fill.",
+      "surfaceMaterials": [
+        "PBR_blackened_steel",
+        "PBR_galvanized_steel",
+        "PBR_paint_off_white"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "rotor",
+      "materials": [
+        "Blackened Steel",
+        "GFRP Composite",
+        "Galvanized Steel"
+      ],
+      "massKg": 480,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.068138480186462,
+        62.22894859313965,
+        11.163368225097656
+      ],
+      "inertia": {
+        "ixx": 11562.028464065063,
+        "iyy": 23834.29198403254,
+        "izz": 12567.030105318841,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        11.669633150100708,
+        2.362773895263672,
+        11.187519073486328
+      ],
+      "sourceLink": null,
+      "massBasis": "Three composite (fiberglass) blades (~120 kg each) plus steel hub (~120 kg). Blades are thin hollow shells extending radially in x-z plane; y extent is hub/blade-root depth. Radial variance higher than through-thickness.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Three composite (fiberglass) blades (~120 kg each) plus steel hub (~120 kg). Blades are thin hollow shells extending radially in x-z plane; y extent is hub/blade-root depth. Radial variance higher than through-thickness.",
+      "surfaceMaterials": [
+        "PBR_blackened_steel",
+        "PBR_composite_blade",
+        "PBR_galvanized_steel"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "lock pin",
+      "materials": [
+        "Blackened Steel",
+        "Galvanized Steel"
+      ],
+      "massKg": 42,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.114954471588135,
+        62.02073669433594,
+        10.491500854492188
+      ],
+      "inertia": {
+        "ixx": 6.885671348164323,
+        "iyy": 1.1498770872355182,
+        "izz": 7.327930035983744,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5399999618530273,
+        1.44000244140625,
+        0.3600006103515625
+      ],
+      "sourceLink": null,
+      "massBasis": "Steel lock-pin and housing assembly; mostly cylindrical pin (~10 cm dia, ~1.2 m long) with small bracket. ~15% fill of bounding box at steel density. Mass concentrated along long axis.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Steel lock-pin and housing assembly; mostly cylindrical pin (~10 cm dia, ~1.2 m long) with small bracket. ~15% fill of bounding box at steel density. Mass concentrated along long axis.",
+      "surfaceMaterials": [
+        "PBR_blackened_steel",
+        "PBR_galvanized_steel"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "rotor",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "0",
+      "effort": 1100,
+      "velocity": 4.2,
+      "damping": 95,
+      "friction": 28,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "nacelle",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "1",
+      "effort": 320,
+      "velocity": 0.45,
+      "damping": 75,
+      "friction": 38,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

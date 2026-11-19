@@ -1,0 +1,345 @@
+{
+  "assetId": "robot_dog_placement_b3ab1056",
+  "dimensions_m": [
+    0.7230558544397354,
+    0.6928706169128418,
+    0.6311900789919491
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Black ABS Plastic",
+      "surfaceMaterial": "vent_black",
+      "parts": [
+        "Robot_Dog / chassis__charge_bezel",
+        "Robot_Dog / chassis__charge_port",
+        "Robot_Dog / front_left_hip__front_left_hip_cap_a",
+        "Robot_Dog / chassis__tail_antenna",
+        "Robot_Dog / front_right_hip__front_right_hip_cap_a",
+        "Robot_Dog / head__face_visor",
+        "Robot_Dog / front_left_hip__front_left_hip_cap_b",
+        "Robot_Dog / rear_right_hip__rear_right_hip_cap_b",
+        "Robot_Dog / rear_right_hip__rear_right_hip_cap_a",
+        "Robot_Dog / front_right_hip__front_right_hip_cap_b",
+        "Robot_Dog / rear_left_hip__rear_left_hip_cap_b",
+        "Robot_Dog / rear_left_hip__rear_left_hip_cap_a",
+        "Robot_Dog / chassis__left_vent_grille",
+        "Robot_Dog / chassis__right_vent_grille"
+      ],
+      "values": {
+        "density_kg_m3": 1050,
+        "youngs_modulus_pa": 2300000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "1",
+      "material": "Dark Polycarbonate Blend",
+      "surfaceMaterial": "actuator_dark",
+      "parts": [
+        "Robot_Dog / front_left_hip__front_left_hip_bridge",
+        "Robot_Dog / front_left_thigh__front_left_knee_cheek_out",
+        "Robot_Dog / front_right_hip__front_right_hip_cheek_out",
+        "Robot_Dog / front_right_thigh__front_right_knee_lug",
+        "Robot_Dog / front_right_thigh__front_right_knee_cheek_out",
+        "Robot_Dog / front_right_hip__front_right_hip_bridge",
+        "Robot_Dog / neck_base__neck_pan_shroud",
+        "Robot_Dog / rear_left_hip__rear_left_hip_bridge",
+        "Robot_Dog / front_right_thigh__front_right_knee_cheek_in",
+        "Robot_Dog / neck_base__neck_pan_can",
+        "Robot_Dog / front_left_calf__front_left_calf_can",
+        "Robot_Dog / front_left_thigh__front_left_knee_lug",
+        "Robot_Dog / rear_left_hip__rear_left_hip_barrel",
+        "Robot_Dog / rear_left_thigh__rear_left_knee_cheek_out",
+        "Robot_Dog / neck_base__neck_cheek_right",
+        "Robot_Dog / rear_left_hip__rear_left_hip_arm",
+        "Robot_Dog / rear_left_thigh__rear_left_knee_cheek_in",
+        "Robot_Dog / front_right_hip__front_right_hip_tie",
+        "Robot_Dog / neck_base__neck_cheek_left",
+        "Robot_Dog / chassis__carry_handle_bar",
+        "Robot_Dog / front_left_hip__front_left_hip_tie",
+        "Robot_Dog / front_right_calf__front_right_calf_can",
+        "Robot_Dog / rear_right_hip__rear_right_hip_cheek_out",
+        "Robot_Dog / rear_left_hip__rear_left_hip_tie",
+        "Robot_Dog / front_left_thigh__front_left_thigh_can",
+        "Robot_Dog / rear_right_hip__rear_right_hip_cheek_in",
+        "Robot_Dog / neck__neck_tilt_can",
+        "Robot_Dog / rear_right_calf__rear_right_calf_can",
+        "Robot_Dog / rear_right_thigh__rear_right_thigh_can",
+        "Robot_Dog / chassis__carry_handle_post_a",
+        "Robot_Dog / front_left_hip__front_left_hip_arm",
+        "Robot_Dog / front_right_thigh__front_right_thigh_can",
+        "Robot_Dog / rear_left_hip__rear_left_hip_cheek_out",
+        "Robot_Dog / rear_right_hip__rear_right_hip_bridge",
+        "Robot_Dog / rear_right_thigh__rear_right_knee_lug",
+        "Robot_Dog / front_left_hip__front_left_hip_cheek_in",
+        "Robot_Dog / rear_left_hip__rear_left_hip_cheek_in",
+        "Robot_Dog / rear_right_hip__rear_right_hip_barrel",
+        "Robot_Dog / rear_right_thigh__rear_right_knee_cheek_out",
+        "Robot_Dog / rear_left_calf__rear_left_calf_can",
+        "Robot_Dog / rear_right_hip__rear_right_hip_arm",
+        "Robot_Dog / rear_right_thigh__rear_right_knee_cheek_in",
+        "Robot_Dog / chassis__carry_handle_post_b",
+        "Robot_Dog / front_left_hip__front_left_hip_barrel",
+        "Robot_Dog / front_left_thigh__front_left_knee_cheek_in",
+        "Robot_Dog / front_right_hip__front_right_hip_cheek_in",
+        "Robot_Dog / rear_left_thigh__rear_left_thigh_can",
+        "Robot_Dog / front_left_hip__front_left_hip_cheek_out",
+        "Robot_Dog / front_right_hip__front_right_hip_arm",
+        "Robot_Dog / rear_left_thigh__rear_left_knee_lug",
+        "Robot_Dog / rear_right_hip__rear_right_hip_tie",
+        "Robot_Dog / chassis__neck_platform",
+        "Robot_Dog / front_right_hip__front_right_hip_barrel"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 2400000000,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "2",
+      "material": "Stainless Steel",
+      "surfaceMaterial": "steel.002",
+      "parts": [
+        "Robot_Dog / chassis__front_right_sleeve_a",
+        "Robot_Dog / chassis__rear_right_sleeve_a",
+        "Robot_Dog / chassis__battery_screw_3",
+        "Robot_Dog / chassis__front_left_sleeve_a",
+        "Robot_Dog / chassis__rear_left_sleeve_a",
+        "Robot_Dog / front_left_hip__front_left_hip_collar_b",
+        "Robot_Dog / chassis__front_right_sleeve_b",
+        "Robot_Dog / chassis__rear_right_sleeve_b",
+        "Robot_Dog / chassis__front_left_sleeve_b",
+        "Robot_Dog / chassis__rear_left_sleeve_b",
+        "Robot_Dog / rear_right_calf__rear_right_calf_stub_out",
+        "Robot_Dog / front_right_hip__front_right_hip_collar_b",
+        "Robot_Dog / rear_right_calf__rear_right_calf_stub_in",
+        "Robot_Dog / front_left_calf__front_left_calf_stub_in",
+        "Robot_Dog / chassis__deck_screw_0",
+        "Robot_Dog / rear_right_thigh__rear_right_thigh_stub_in",
+        "Robot_Dog / front_right_hip__front_right_hip_collar_a",
+        "Robot_Dog / rear_left_hip__rear_left_hip_collar_b",
+        "Robot_Dog / front_right_thigh__front_right_thigh_stub_out",
+        "Robot_Dog / neck__neck_stub_out",
+        "Robot_Dog / rear_left_hip__rear_left_hip_collar_a",
+        "Robot_Dog / front_right_calf__front_right_calf_stub_in",
+        "Robot_Dog / front_right_thigh__front_right_thigh_stub_in",
+        "Robot_Dog / neck__neck_stub_in",
+        "Robot_Dog / rear_left_calf__rear_left_calf_stub_out",
+        "Robot_Dog / rear_left_thigh__rear_left_thigh_stub_out",
+        "Robot_Dog / front_left_calf__front_left_calf_stub_out",
+        "Robot_Dog / chassis__battery_screw_0",
+        "Robot_Dog / chassis__deck_screw_1",
+        "Robot_Dog / rear_left_calf__rear_left_calf_stub_in",
+        "Robot_Dog / rear_left_thigh__rear_left_thigh_stub_in",
+        "Robot_Dog / front_right_calf__front_right_calf_stub_out",
+        "Robot_Dog / chassis__battery_screw_1",
+        "Robot_Dog / chassis__deck_screw_2",
+        "Robot_Dog / front_left_thigh__front_left_thigh_stub_in",
+        "Robot_Dog / rear_right_hip__rear_right_hip_collar_b",
+        "Robot_Dog / rear_right_hip__rear_right_hip_collar_a",
+        "Robot_Dog / front_left_hip__front_left_hip_collar_a",
+        "Robot_Dog / chassis__battery_screw_2",
+        "Robot_Dog / chassis__deck_screw_3",
+        "Robot_Dog / front_left_thigh__front_left_thigh_stub_out",
+        "Robot_Dog / rear_right_thigh__rear_right_thigh_stub_out"
+      ],
+      "values": {
+        "density_kg_m3": 8000,
+        "youngs_modulus_pa": 193000000000,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "3",
+      "material": "Carbon Fiber Composite",
+      "surfaceMaterial": "calf_dark",
+      "parts": [
+        "Robot_Dog / front_right_calf__front_right_calf_tube",
+        "Robot_Dog / rear_right_calf__rear_right_calf_tube",
+        "Robot_Dog / rear_left_calf__rear_left_calf_tube",
+        "Robot_Dog / front_left_calf__front_left_calf_tube"
+      ],
+      "values": {
+        "density_kg_m3": 1600,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.25,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "4",
+      "material": "Anodized Aluminum Alloy",
+      "surfaceMaterial": "leg_slate",
+      "parts": [
+        "Robot_Dog / neck__neck_collar",
+        "Robot_Dog / rear_right_thigh__rear_right_thigh_shell",
+        "Robot_Dog / front_left_thigh__front_left_thigh_shell",
+        "Robot_Dog / neck__neck_column",
+        "Robot_Dog / rear_left_thigh__rear_left_thigh_shell",
+        "Robot_Dog / front_right_thigh__front_right_thigh_shell"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "5",
+      "material": "Polished Aluminum",
+      "surfaceMaterial": "head_silver",
+      "parts": [
+        "Robot_Dog / head__head_shell"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "6",
+      "material": "Cyan LED Polycarbonate",
+      "surfaceMaterial": "led_cyan",
+      "parts": [
+        "Robot_Dog / chassis__status_led",
+        "Robot_Dog / head__head_accent_left"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 2400000000,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "7",
+      "material": "Vulcanized Rubber",
+      "surfaceMaterial": "rubber.002",
+      "parts": [
+        "Robot_Dog / front_left_foot__front_left_foot_rubber",
+        "Robot_Dog / rear_left_foot__rear_left_foot_rubber",
+        "Robot_Dog / front_right_foot__front_right_foot_rubber",
+        "Robot_Dog / rear_right_foot__rear_right_foot_rubber"
+      ],
+      "values": {
+        "density_kg_m3": 1150,
+        "youngs_modulus_pa": 10000000,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "8",
+      "material": "Optical Glass",
+      "surfaceMaterial": "eye_glow",
+      "parts": [
+        "Robot_Dog / head__head_eye_right",
+        "Robot_Dog / head__head_eye_left"
+      ],
+      "values": {
+        "density_kg_m3": 2500,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.22,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "9",
+      "material": "Painted Magnesium Alloy",
+      "surfaceMaterial": "shell_pearl",
+      "parts": [
+        "Robot_Dog / chassis__rear_right_web_a",
+        "Robot_Dog / chassis__front_right_web_a",
+        "Robot_Dog / chassis__front_left_web_a",
+        "Robot_Dog / chassis__rear_left_web_a",
+        "Robot_Dog / chassis__front_right_web_b",
+        "Robot_Dog / chassis__rear_right_web_b",
+        "Robot_Dog / chassis__front_left_web_b",
+        "Robot_Dog / chassis__rear_left_web_b",
+        "Robot_Dog / chassis__shell"
+      ],
+      "values": {
+        "density_kg_m3": 1800,
+        "youngs_modulus_pa": 45000000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "10",
+      "material": "Nylon PA66",
+      "surfaceMaterial": "belly_dark",
+      "parts": [
+        "Robot_Dog / chassis__battery_cover"
+      ],
+      "values": {
+        "density_kg_m3": 1140,
+        "youngs_modulus_pa": 3000000000,
+        "poissons_ratio": 0.4,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "11",
+      "material": "Orange Polyurethane",
+      "surfaceMaterial": "accent_orange",
+      "parts": [
+        "Robot_Dog / chassis__tail_tip"
+      ],
+      "values": {
+        "density_kg_m3": 1100,
+        "youngs_modulus_pa": 50000000,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "12",
+      "material": "Brushed Aluminum",
+      "surfaceMaterial": "deck_slate",
+      "parts": [
+        "Robot_Dog / chassis__top_deck"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.45
+      }
+    }
+  ]
+}

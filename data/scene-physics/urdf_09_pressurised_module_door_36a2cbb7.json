@@ -1,0 +1,145 @@
+{
+  "assetId": "urdf_09_pressurised_module_door_36a2cbb7",
+  "name": "Pressurised module door",
+  "totalMassKg": 6600,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "airlock shell",
+      "materials": [
+        "Painted steel shell",
+        "Brass alloy fitting",
+        "Dark coated steel",
+        "Bronze alloy component",
+        "Bare aluminum panel"
+      ],
+      "massKg": 4200,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.2799621820449829,
+        40.273590087890625,
+        1.754417411237955
+      ],
+      "inertia": {
+        "ixx": 61999.855400890905,
+        "iyy": 61999.811470242705,
+        "izz": 113885.84450684293,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        8.034992933273315,
+        8.034996032714844,
+        3.8318728655576706
+      ],
+      "sourceLink": "airlock_shell",
+      "massBasis": "Open-ended rectangular pressure shell ~8 m x 8 m x 3.8 m with 7-layer wall (6 mm Al pressure skin, structural ribs, insulation, MLI, micrometeorite shield, outer skin). Lateral area ~123 m\u00b2, effective wall thickness ~25 mm, effective density ~2300 kg/m\u00b3. Mass concentrated at perimeter walls giving higher cross-section variance (~0.21) than length variance (~0.08, near uniform). Slight z-offset for heavier base flange.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Open-ended rectangular pressure shell ~8 m x 8 m x 3.8 m with 7-layer wall (6 mm Al pressure skin, structural ribs, insulation, MLI, micrometeorite shield, outer skin). Lateral area ~123 m\u00b2, effective wall thickness ~25 mm, effective density ~2300 kg/m\u00b3. Mass concentrated at perimeter walls giving higher cross-section variance (~0.21) than length variance (~0.08, near uniform). Slight z-offset for heavier base flange.",
+      "surfaceMaterials": [
+        "REF_09_Pressurised_module_door_airlock_shell_00",
+        "REF_09_Pressurised_module_door_airlock_shell_01",
+        "REF_09_Pressurised_module_door_airlock_shell_02",
+        "REF_09_Pressurised_module_door_airlock_shell_03",
+        "REF_09_Pressurised_module_door_airlock_shell_04",
+        "REF_09_Pressurised_module_door_airlock_shell_05",
+        "REF_09_Pressurised_module_door_airlock_shell_06"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "hatch lid",
+      "materials": [
+        "Painted steel hatch",
+        "Brass alloy fitting",
+        "Bare aluminum panel",
+        "Dark coated steel"
+      ],
+      "massKg": 2400,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.2587145566940308,
+        39.79871368408203,
+        4.848760294914245
+      ],
+      "inertia": {
+        "ixx": 5279.574490228152,
+        "iyy": 4905.8188978100525,
+        "izz": 6677.314216588988,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        4.103221654891968,
+        4.339698791503906,
+        3.1216444969177246
+      ],
+      "sourceLink": "hatch_lid",
+      "massBasis": "Hatch lid spanning ~4.1 m x 4.3 m with 4 material groups (Al face plate, internal ribs/frame, elastomer seal ring, latch and hinge hardware). Designed for ~100 kPa differential over ~17.8 m\u00b2; plate + frame thickness ~0.15-0.25 m. The 3.1 m z-extent includes hinge swing envelope and mechanism depth. Near-solid distribution with moderate hollowness gives variance near 1/13. CoM slightly toward hinge side.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hatch lid spanning ~4.1 m x 4.3 m with 4 material groups (Al face plate, internal ribs/frame, elastomer seal ring, latch and hinge hardware). Designed for ~100 kPa differential over ~17.8 m\u00b2; plate + frame thickness ~0.15-0.25 m. The 3.1 m z-extent includes hinge swing envelope and mechanism depth. Near-solid distribution with moderate hollowness gives variance near 1/13. CoM slightly toward hinge side.",
+      "surfaceMaterials": [
+        "REF_09_Pressurised_module_door_hatch_lid_00",
+        "REF_09_Pressurised_module_door_hatch_lid_01",
+        "REF_09_Pressurised_module_door_hatch_lid_02",
+        "REF_09_Pressurised_module_door_hatch_lid_03"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "hatch_hinge",
+      "type": "revolute",
+      "lower": -1.9,
+      "upper": 0.08,
+      "id": "0",
+      "effort": 40.0,
+      "velocity": 1.0,
+      "damping": 950.0,
+      "friction": 140.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "handwheel_spin",
+      "type": "revolute",
+      "lower": -2.6,
+      "upper": 2.6,
+      "id": "1",
+      "effort": 10.0,
+      "velocity": 2.0,
+      "damping": 2.5,
+      "friction": 7.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/space_blend_asset/09_Pressurised_module_door/Astronomy_Pressurised_module_door/seed_0000/model.urdf",
+  "referenceFrame": 240,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

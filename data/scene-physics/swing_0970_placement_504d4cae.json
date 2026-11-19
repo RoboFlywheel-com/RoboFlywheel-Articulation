@@ -1,0 +1,180 @@
+{
+  "assetId": "swing_0970_placement_504d4cae",
+  "name": "Swing",
+  "totalMassKg": 39.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Painted structural steel",
+        "Galvanized steel"
+      ],
+      "massKg": 28.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        14.80000114440918,
+        22.945990753173827,
+        1.6100000385195017
+      ],
+      "inertia": {
+        "ixx": 44.38750898407691,
+        "iyy": 78.79597435172798,
+        "izz": 58.60427939345828,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        3.44439697265625,
+        2.1910629272460938,
+        3.1000000946223736
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow steel-tube A-frame swing structure ~3.4\u00d72.2\u00d73.1 m; mass concentrated in top bar and splayed legs, well below solid-box density. CoM slightly below geometric center due to leg mass. Variance higher than 1/12 along X/Z because mass sits near frame edges rather than filling volume.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow steel-tube A-frame swing structure ~3.4\u00d72.2\u00d73.1 m; mass concentrated in top bar and splayed legs, well below solid-box density. CoM slightly below geometric center due to leg mass. Variance higher than 1/12 along X/Z because mass sits near frame edges rather than filling volume.",
+      "surfaceMaterials": [
+        "Material_0",
+        "Material_1",
+        "Material_2"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "OUTDOOR SWING PIVOT 0",
+      "materials": [
+        "Galvanized steel",
+        "Smooth rubber",
+        "Sponge rubber foam"
+      ],
+      "massKg": 5.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        14.331953048706055,
+        23.010600204467774,
+        1.8317219018936157
+      ],
+      "inertia": {
+        "ixx": 1.078094664933901,
+        "iyy": 1.2106453977442422,
+        "izz": 0.22170221703097923,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.67828369140625,
+        0.24968719482421875,
+        1.9386208057403564
+      ],
+      "sourceLink": null,
+      "massBasis": "Single swing: two chains/cables (~0.68 m wide) with a seat at the bottom of a ~1.94 m drop. Seat concentrates mass low (cy\u22480.32); chains are light and thin. Low Z-variance reflects thin seat/chain profile (~0.25 m).",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Single swing: two chains/cables (~0.68 m wide) with a seat at the bottom of a ~1.94 m drop. Seat concentrates mass low (cy\u22480.32); chains are light and thin. Low Z-variance reflects thin seat/chain profile (~0.25 m).",
+      "surfaceMaterials": [
+        "Material_2",
+        "Material_3",
+        "Material_4"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "OUTDOOR SWING PIVOT 1",
+      "materials": [
+        "Galvanized steel",
+        "Smooth rubber",
+        "Sponge rubber foam"
+      ],
+      "massKg": 5.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        15.268049240112305,
+        23.29967903137207,
+        1.8880807161331177
+      ],
+      "inertia": {
+        "ixx": 1.5204463590934003,
+        "iyy": 1.1153335859043703,
+        "izz": 0.7593657230303508,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.67828369140625,
+        0.9023971557617188,
+        1.8470685482025146
+      ],
+      "sourceLink": null,
+      "massBasis": "Second swing, same construction as Pivot 0 (chains + seat). Slightly taller Y extent (0.90 m lateral spread) but comparable total mass. Kept consistent with Pivot 0 for identical hardware.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Second swing, same construction as Pivot 0 (chains + seat). Slightly taller Y extent (0.90 m lateral spread) but comparable total mass. Kept consistent with Pivot 0 for identical hardware.",
+      "surfaceMaterials": [
+        "Material_2",
+        "Material_3",
+        "Material_4"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "OUTDOOR_SWING_PIVOT_0",
+      "type": "revolute",
+      "lower": -0.5585053606381855,
+      "upper": 0.5585053606381855,
+      "id": "0",
+      "effort": 30.0,
+      "velocity": 2.0,
+      "damping": 1.0,
+      "friction": 0.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "OUTDOOR_SWING_PIVOT_1",
+      "type": "revolute",
+      "lower": -0.5585053606381855,
+      "upper": 0.5585053606381855,
+      "id": "1",
+      "effort": 30.0,
+      "velocity": 2.0,
+      "damping": 1.0,
+      "friction": 0.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

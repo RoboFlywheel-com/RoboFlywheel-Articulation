@@ -1,0 +1,458 @@
+{
+  "assetId": "fire_hydrant_6e0aefc3",
+  "name": "Fire hydrant",
+  "totalMassKg": 59.63,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Painted ductile iron body",
+        "Painted cast iron hardware"
+      ],
+      "massKg": 58.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.9533677399158478,
+        7.5246782302856445,
+        0.5979775094985962
+      ],
+      "inertia": {
+        "ixx": 6.356947882377831,
+        "iyy": 6.435587135059889,
+        "izz": 1.3515965286964804,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.47347110509872437,
+        0.44668006896972656,
+        1.1704034209251404
+      ],
+      "sourceLink": "body",
+      "massBasis": "Hollow cast-iron hydrant body; barrel ~0.28 m dia within 0.47 m bbox, 12 mm wall, base flange adds bottom weight; fill fraction ~18% of bbox volume at 7200 kg/m\u00b3 gives ~58 kg; COM slightly low due to flange; x/y variance reduced because mass concentrates in cylindrical shell well inside bbox.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow cast-iron hydrant body; barrel ~0.28 m dia within 0.47 m bbox, 12 mm wall, base flange adds bottom weight; fill fraction ~18% of bbox volume at 7200 kg/m\u00b3 gives ~58 kg; COM slightly low due to flange; x/y variance reduced because mass concentrates in cylindrical shell well inside bbox.",
+      "surfaceMaterials": [
+        "M_seeded_fire_hydrant_0_001.001",
+        "M_seeded_fire_hydrant_0_002.001"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "outlet 0 cap",
+      "materials": [
+        "Painted ductile iron body",
+        "Painted cast iron hardware"
+      ],
+      "massKg": 1.05,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.7801726460456848,
+        7.471102714538574,
+        0.8497220015525818
+      ],
+      "inertia": {
+        "ixx": 0.003823015366022377,
+        "iyy": 0.002511679113975923,
+        "izz": 0.002626617330757222,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.09326815605163574,
+        0.1660623550415039,
+        0.15882384777069092
+      ],
+      "sourceLink": "outlet_0_cap",
+      "massBasis": "Threaded cast-iron outlet cap with chain lug; roughly hollow disc/cylinder ~9\u00d717\u00d716 cm; slightly bottom-heavy from thread engagement; variance slightly below 1/12 due to hollow bore.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Threaded cast-iron outlet cap with chain lug; roughly hollow disc/cylinder ~9\u00d717\u00d716 cm; slightly bottom-heavy from thread engagement; variance slightly below 1/12 due to hollow bore.",
+      "surfaceMaterials": [
+        "M_seeded_fire_hydrant_0_001.001",
+        "M_seeded_fire_hydrant_0_002.001"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "operating nut",
+      "materials": [
+        "Painted cast iron hardware"
+      ],
+      "massKg": 0.38,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.9727627038955688,
+        7.530677795410156,
+        1.2568366527557373
+      ],
+      "inertia": {
+        "ixx": 0.0002540462708911036,
+        "iyy": 0.0002879834569421291,
+        "izz": 0.00037555286415035877,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.08206725120544434,
+        0.07495784759521484,
+        0.05232691764831543
+      ],
+      "sourceLink": "operating_nut",
+      "massBasis": "Small pentagonal cast-iron operating nut, nearly solid; dimensions ~8\u00d77.5\u00d75 cm; uniform density approximation; variance near 1/12 for compact solid.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small pentagonal cast-iron operating nut, nearly solid; dimensions ~8\u00d77.5\u00d75 cm; uniform density approximation; variance near 1/12 for compact solid.",
+      "surfaceMaterials": [
+        "M_seeded_fire_hydrant_0_002.001"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "outlet 0 chain 0",
+      "materials": [
+        "Painted cast iron chain"
+      ],
+      "massKg": 0.04,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.7700523734092712,
+        7.475987434387207,
+        0.8633639216423035
+      ],
+      "inertia": {
+        "ixx": 3.713633180765896e-06,
+        "iyy": 3.7473289179104082e-06,
+        "izz": 3.2732425141119842e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.023476719856262207,
+        0.02323627471923828,
+        0.02641880512237549
+      ],
+      "sourceLink": "outlet_0_chain_0",
+      "massBasis": "Single steel chain link ~2.3\u00d72.3\u00d72.6 cm; small torus-like solid; near-uniform variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Single steel chain link ~2.3\u00d72.3\u00d72.6 cm; small torus-like solid; near-uniform variance.",
+      "surfaceMaterials": [
+        "M_seeded_fire_hydrant_0_003.001"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "outlet 0 chain 1",
+      "materials": [
+        "Painted cast iron chain"
+      ],
+      "massKg": 0.04,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.7624616622924805,
+        7.47926664352417,
+        0.8738291263580322
+      ],
+      "inertia": {
+        "ixx": 5.31852065607552e-06,
+        "iyy": 5.318860273604287e-06,
+        "izz": 8.004275730328914e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.03652536869049072,
+        0.03652381896972656,
+        0.02094876766204834
+      ],
+      "sourceLink": "outlet_0_chain_1",
+      "massBasis": "Identical steel chain link to link 0; consistent mass and distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical steel chain link to link 0; consistent mass and distribution.",
+      "surfaceMaterials": [
+        "M_seeded_fire_hydrant_0_003.001"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "outlet 0 chain 2",
+      "materials": [
+        "Painted cast iron chain"
+      ],
+      "massKg": 0.04,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.7510355114936829,
+        7.478779315948486,
+        0.8806919455528259
+      ],
+      "inertia": {
+        "ixx": 7.622601581530831e-06,
+        "iyy": 5.160374545809532e-06,
+        "izz": 4.8993291693477656e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.02015399932861328,
+        0.035027503967285156,
+        0.03624832630157471
+      ],
+      "sourceLink": "outlet_0_chain_2",
+      "massBasis": "Identical steel chain link; consistent with other links.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical steel chain link; consistent with other links.",
+      "surfaceMaterials": [
+        "M_seeded_fire_hydrant_0_003.001"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "outlet 0 chain 3",
+      "materials": [
+        "Painted cast iron chain"
+      ],
+      "massKg": 0.04,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.7395074665546417,
+        7.474081516265869,
+        0.8854791522026062
+      ],
+      "inertia": {
+        "ixx": 5.7224010624850054e-06,
+        "iyy": 5.471943388908329e-06,
+        "izz": 4.9464292493546225e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.02797609567642212,
+        0.029430389404296875,
+        0.03226947784423828
+      ],
+      "sourceLink": "outlet_0_chain_3",
+      "massBasis": "Identical steel chain link; consistent with other links.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical steel chain link; consistent with other links.",
+      "surfaceMaterials": [
+        "M_seeded_fire_hydrant_0_003.001"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "outlet 0 chain 4",
+      "materials": [
+        "Painted cast iron chain"
+      ],
+      "massKg": 0.04,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.7283993363380432,
+        7.466790199279785,
+        0.8866441249847412
+      ],
+      "inertia": {
+        "ixx": 8.126185724620428e-06,
+        "iyy": 5.52986114290377e-06,
+        "izz": 5.8757146297665495e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.023378729820251465,
+        0.03757667541503906,
+        0.036010026931762695
+      ],
+      "sourceLink": "outlet_0_chain_4",
+      "massBasis": "Identical steel chain link; consistent with other links.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical steel chain link; consistent with other links.",
+      "surfaceMaterials": [
+        "M_seeded_fire_hydrant_0_003.001"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "operating_nut",
+      "type": "revolute",
+      "lower": -3.14159,
+      "upper": 3.14159,
+      "id": "0",
+      "effort": 1.0,
+      "velocity": 1.0,
+      "damping": 1.2,
+      "friction": 1.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "outlet_0_cap",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 12.000000268220907,
+      "id": "1",
+      "effort": 1.0,
+      "velocity": 1.0,
+      "damping": 12.0,
+      "friction": 9.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "outlet_0_chain_0",
+      "type": "revolute",
+      "lower": -0.610865,
+      "upper": 0.610865,
+      "id": "2",
+      "effort": 1.0,
+      "velocity": 1.0,
+      "damping": 0.02,
+      "friction": 0.015,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "outlet_0_chain_1",
+      "type": "revolute",
+      "lower": -0.610865,
+      "upper": 0.610865,
+      "id": "3",
+      "effort": 1.0,
+      "velocity": 1.0,
+      "damping": 0.02,
+      "friction": 0.015,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "outlet_0_chain_2",
+      "type": "revolute",
+      "lower": -0.610865,
+      "upper": 0.610865,
+      "id": "4",
+      "effort": 1.0,
+      "velocity": 1.0,
+      "damping": 0.02,
+      "friction": 0.015,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "outlet_0_chain_3",
+      "type": "revolute",
+      "lower": -0.610865,
+      "upper": 0.610865,
+      "id": "5",
+      "effort": 1.0,
+      "velocity": 1.0,
+      "damping": 0.02,
+      "friction": 0.015,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "outlet_0_chain_4",
+      "type": "revolute",
+      "lower": -0.610865,
+      "upper": 0.610865,
+      "id": "6",
+      "effort": 1.0,
+      "velocity": 1.0,
+      "damping": 0.02,
+      "friction": 0.015,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/outdoor_blend_asset/43_Fire_Hydrant/Urban_Environment_Fire_Hydrant/seed_0000/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

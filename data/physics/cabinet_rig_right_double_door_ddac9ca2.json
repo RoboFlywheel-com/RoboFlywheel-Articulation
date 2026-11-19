@@ -1,0 +1,66 @@
+{
+  "assetId": "cabinet_rig_right_double_door_ddac9ca2",
+  "dimensions_m": [
+    1.1000001430511475,
+    1.4693107604980469,
+    0.8830000180751085
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Satin Champagne Nickel",
+      "surfaceMaterial": "KITCHEN | satin champagne nickel",
+      "parts": [
+        "CABINET_right_double_door_door_0_handle",
+        "CABINET_right_double_door_door_1_handle"
+      ],
+      "values": {
+        "density_kg_m3": 8900,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.31,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "1",
+      "material": "Soft Grey Sage Lacquer MDF",
+      "surfaceMaterial": "KITCHEN | soft grey sage lacquer",
+      "parts": [
+        "CABINET_right_double_door_bottom",
+        "CABINET_right_double_door_door_0",
+        "CABINET_right_double_door_door_1",
+        "CABINET_right_double_door_left_side",
+        "CABINET_right_double_door_right_side",
+        "CABINET_right_double_door_toe_kick",
+        "CABINET_right_double_door_top"
+      ],
+      "values": {
+        "density_kg_m3": 750,
+        "youngs_modulus_pa": 3500000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "2",
+      "material": "Sage Interior Melamine Particleboard",
+      "surfaceMaterial": "KITCHEN | sage interior",
+      "parts": [
+        "CABINET_right_double_door_back",
+        "CABINET_right_double_door_shelf"
+      ],
+      "values": {
+        "density_kg_m3": 650,
+        "youngs_modulus_pa": 2500000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.25,
+        "restitution_coefficient": 0.2
+      }
+    }
+  ]
+}

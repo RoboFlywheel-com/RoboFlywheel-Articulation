@@ -1,0 +1,342 @@
+{
+  "assetId": "garbage_bin_70c1e75c",
+  "name": "Garbage bin",
+  "totalMassKg": 96.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Galvanized steel bin body panel",
+        "Galvanized steel bin body and lid",
+        "Dark gunmetal steel bin body accent"
+      ],
+      "massKg": 80.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.0,
+        0.0,
+        0.661554
+      ],
+      "inertia": {
+        "ixx": 23.4922,
+        "iyy": 15.7084,
+        "izz": 25.8911,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.9422359466552734,
+        1.2636175155639648,
+        0.7863925844430923
+      ],
+      "sourceLink": "body",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "M_seeded_garbage_bin_1_001",
+        "M_seeded_garbage_bin_1_002",
+        "M_seeded_garbage_bin_1_003"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "lid",
+      "materials": [
+        "Galvanized steel bin body and lid",
+        "Galvanized steel bin lid"
+      ],
+      "massKg": 8.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.617675,
+        0.0,
+        0.0
+      ],
+      "inertia": {
+        "ixx": 1.72699,
+        "iyy": 1.01799,
+        "izz": 2.74379,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.7683963775634766,
+        1.1651477813720703,
+        0.5146046280860901
+      ],
+      "sourceLink": "lid",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "M_seeded_garbage_bin_1_002",
+        "M_seeded_garbage_bin_1_005"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "wheel 0",
+      "materials": [
+        "Galvanized steel bin body and lid",
+        "Black rubber wheel"
+      ],
+      "massKg": 2.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "inertia": {
+        "ixx": 0.00322917,
+        "iyy": 0.00322917,
+        "izz": 0.005625,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        1.5708,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.10860633850097656,
+        0.04054737091064453,
+        0.10860690474510193
+      ],
+      "sourceLink": "wheel_0",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "M_seeded_garbage_bin_1_002",
+        "M_seeded_garbage_bin_1_004"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "wheel 1",
+      "materials": [
+        "Galvanized steel bin body and lid",
+        "Black rubber wheel"
+      ],
+      "massKg": 2.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "inertia": {
+        "ixx": 0.00322917,
+        "iyy": 0.00322917,
+        "izz": 0.005625,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        1.5708,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.10860633850097656,
+        0.04054737091064453,
+        0.10860690474510193
+      ],
+      "sourceLink": "wheel_1",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "M_seeded_garbage_bin_1_002",
+        "M_seeded_garbage_bin_1_004"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "wheel 2",
+      "materials": [
+        "Galvanized steel bin body and lid",
+        "Black rubber wheel"
+      ],
+      "massKg": 2.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "inertia": {
+        "ixx": 0.00322917,
+        "iyy": 0.00322917,
+        "izz": 0.005625,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        1.5708,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.10860633850097656,
+        0.04054737091064453,
+        0.10860690474510193
+      ],
+      "sourceLink": "wheel_2",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "M_seeded_garbage_bin_1_002",
+        "M_seeded_garbage_bin_1_004"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "wheel 3",
+      "materials": [
+        "Galvanized steel bin body and lid",
+        "Black rubber wheel"
+      ],
+      "massKg": 2.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "inertia": {
+        "ixx": 0.00322917,
+        "iyy": 0.00322917,
+        "izz": 0.005625,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        1.5708,
+        0.0,
+        0.0
+      ],
+      "dimensions_m": [
+        0.10860633850097656,
+        0.04054737091064453,
+        0.10860690474510193
+      ],
+      "sourceLink": "wheel_3",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "M_seeded_garbage_bin_1_002",
+        "M_seeded_garbage_bin_1_004"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "body_to_wheel_0",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "0",
+      "effort": 60.0,
+      "velocity": 30.0,
+      "damping": 0.03,
+      "friction": 0.15,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_wheel_1",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "1",
+      "effort": 60.0,
+      "velocity": 30.0,
+      "damping": 0.03,
+      "friction": 0.15,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_wheel_2",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "2",
+      "effort": 60.0,
+      "velocity": 30.0,
+      "damping": 0.03,
+      "friction": 0.15,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_wheel_3",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "3",
+      "effort": 60.0,
+      "velocity": 30.0,
+      "damping": 0.03,
+      "friction": 0.15,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_lid",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.8369,
+      "id": "4",
+      "effort": 40.0,
+      "velocity": 2.0,
+      "damping": 1.5,
+      "friction": 2.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/outdoor_blend_asset/44_Garbage_bin/Urban_Environment_Garbage_bin/seed_0001/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

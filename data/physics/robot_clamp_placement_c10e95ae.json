@@ -1,0 +1,164 @@
+{
+  "assetId": "robot_clamp_placement_c10e95ae",
+  "dimensions_m": [
+    1.1189950704574585,
+    0.9193577766418457,
+    0.7039170265197754
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Dark Anodized Aluminum",
+      "surfaceMaterial": "dark",
+      "parts": [
+        "Robot_Clamp / angular_jaw_0__milled_inner_pad_pocket",
+        "Robot_Clamp / base__base_anchor_counterbore_4",
+        "Robot_Clamp / base__base_anchor_counterbore_0",
+        "Robot_Clamp / base__base_anchor_counterbore_5",
+        "Robot_Clamp / angular_jaw_0__pad_screw_hex_socket_front",
+        "Robot_Clamp / gripper_base__jaw_pivot_socket_left",
+        "Robot_Clamp / base__yaw_socket",
+        "Robot_Clamp / base__base_anchor_counterbore_1",
+        "Robot_Clamp / base__base_anchor_counterbore_6",
+        "Robot_Clamp / angular_jaw_0__pad_screw_hex_socket_rear",
+        "Robot_Clamp / angular_jaw_1__milled_inner_pad_pocket",
+        "Robot_Clamp / gripper_base__jaw_pivot_socket_right",
+        "Robot_Clamp / base__base_anchor_counterbore_2",
+        "Robot_Clamp / angular_jaw_1__pad_screw_hex_socket_front",
+        "Robot_Clamp / base__base_anchor_counterbore_7",
+        "Robot_Clamp / base__base_anchor_counterbore_3",
+        "Robot_Clamp / angular_jaw_1__pad_screw_hex_socket_rear",
+        "Robot_Clamp / gripper_base__recessed_front_pivot_plate",
+        "Robot_Clamp / base__floor_plate"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "1",
+      "material": "Stainless Steel",
+      "surfaceMaterial": "steel",
+      "parts": [
+        "Robot_Clamp / angular_jaw_1__curved_pad_retainer_rail_upper",
+        "Robot_Clamp / base__base_anchor_cap_screw_2",
+        "Robot_Clamp / gripper_base__jaw_pivot_boss_right",
+        "Robot_Clamp / forearm__elbow_joint_collar",
+        "Robot_Clamp / base__yaw_bearing_cap",
+        "Robot_Clamp / angular_jaw_1__countersunk_pad_screw_front",
+        "Robot_Clamp / gripper_base__sensor_cover_screw_left",
+        "Robot_Clamp / shoulder_root__yaw_spindle",
+        "Robot_Clamp / base__base_anchor_cap_screw_3",
+        "Robot_Clamp / shoulder_root__shoulder_axis_core",
+        "Robot_Clamp / angular_jaw_1__milled_angular_finger",
+        "Robot_Clamp / gripper_base__contoured_pivot_cheek_left",
+        "Robot_Clamp / angular_jaw_0__curved_pad_retainer_rail_lower",
+        "Robot_Clamp / angular_jaw_1__countersunk_pad_screw_rear",
+        "Robot_Clamp / gripper_base__sensor_cover_screw_right",
+        "Robot_Clamp / wrist_roll__wrist_roll_input_hub",
+        "Robot_Clamp / forearm__forearm_datum",
+        "Robot_Clamp / base__base_anchor_cap_screw_4",
+        "Robot_Clamp / upper_arm__shoulder_axle",
+        "Robot_Clamp / angular_jaw_0__curved_pad_retainer_rail_upper",
+        "Robot_Clamp / base__base_anchor_cap_screw_0",
+        "Robot_Clamp / gripper_base__contoured_pivot_cheek_right",
+        "Robot_Clamp / gripper_base__wrist_coupler",
+        "Robot_Clamp / wrist_roll__wrist_roll_joint_collar",
+        "Robot_Clamp / forearm__wrist_axis",
+        "Robot_Clamp / angular_jaw_0__pivot_barrel",
+        "Robot_Clamp / base__base_anchor_cap_screw_5",
+        "Robot_Clamp / upper_arm__shoulder_joint_collar",
+        "Robot_Clamp / forearm__elbow_axle",
+        "Robot_Clamp / angular_jaw_0__milled_angular_finger",
+        "Robot_Clamp / angular_jaw_1__curved_pad_retainer_rail_lower",
+        "Robot_Clamp / base__base_anchor_cap_screw_1",
+        "Robot_Clamp / gripper_base__jaw_pivot_boss_left",
+        "Robot_Clamp / wrist_roll__wrist_roll_output_hub",
+        "Robot_Clamp / angular_jaw_0__countersunk_pad_screw_front",
+        "Robot_Clamp / base__base_anchor_cap_screw_6",
+        "Robot_Clamp / upper_arm__top_datum_rail",
+        "Robot_Clamp / base__base_anchor_cap_screw_7",
+        "Robot_Clamp / angular_jaw_0__countersunk_pad_screw_rear",
+        "Robot_Clamp / angular_jaw_1__pivot_barrel"
+      ],
+      "values": {
+        "density_kg_m3": 7900,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "2",
+      "material": "Aluminum Alloy",
+      "surfaceMaterial": "Satin silver gray aluminum / Robot_Clamp",
+      "parts": [
+        "Robot_Clamp / shoulder_root__shoulder_adapter",
+        "Robot_Clamp / upper_arm__elbow_fork_rear",
+        "Robot_Clamp / angular_jaw_1__rounded_root_link",
+        "Robot_Clamp / wrist_roll__wrist_roll_body",
+        "Robot_Clamp / forearm__forearm_beam",
+        "Robot_Clamp / upper_arm__metrology_beam",
+        "Robot_Clamp / shoulder_root__shoulder_cross_boss",
+        "Robot_Clamp / upper_arm__elbow_bridge",
+        "Robot_Clamp / gripper_base__pneumatic_drive_body",
+        "Robot_Clamp / shoulder_root__shoulder_yoke_front",
+        "Robot_Clamp / upper_arm__elbow_fork_front",
+        "Robot_Clamp / angular_jaw_0__rounded_root_link",
+        "Robot_Clamp / forearm__wrist_fork_front",
+        "Robot_Clamp / shoulder_root__shoulder_yoke_rear",
+        "Robot_Clamp / base__pedestal_column",
+        "Robot_Clamp / forearm__wrist_fork_rear",
+        "Robot_Clamp / shoulder_root__turret_deck"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "3",
+      "material": "Rubber",
+      "surfaceMaterial": "rubber",
+      "parts": [
+        "Robot_Clamp / angular_jaw_0__curved_flush_rubber_grip_insert",
+        "Robot_Clamp / angular_jaw_1__curved_flush_rubber_grip_insert"
+      ],
+      "values": {
+        "density_kg_m3": 1100,
+        "youngs_modulus_pa": 10000000,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 1.0,
+        "dynamic_friction_coefficient": 0.8,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "4",
+      "material": "Orange Plastic",
+      "surfaceMaterial": "accent",
+      "parts": [
+        "Robot_Clamp / gripper_base__recessed_sensor_cover"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 3000000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.3
+      }
+    }
+  ]
+}

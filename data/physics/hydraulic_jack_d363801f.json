@@ -1,0 +1,119 @@
+{
+  "assetId": "hydraulic_jack_d363801f",
+  "dimensions_m": [
+    1.4974128007888794,
+    3.7952743768692017,
+    1.8645641207695007
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Bare Steel",
+      "surfaceMaterial": "M_hydraulic_jack1_seed_1_003",
+      "parts": [
+        "pump_drive__air_over_hydraulic__pump_handle",
+        "head_fitting__screw_extension__head",
+        "ram_stage__stepped_ram__stage_0",
+        "ram_stage__stepped_ram__stage_1",
+        "jack_frame",
+        "release_valve"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Blackened Gunmetal",
+      "surfaceMaterial": "M_hydraulic_jack1_seed_1_001",
+      "parts": [
+        "pump_drive__air_over_hydraulic__pump_handle",
+        "head_fitting__screw_extension__head",
+        "jack_frame",
+        "release_valve"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Blackened Steel",
+      "surfaceMaterial": "M_hydraulic_jack1_seed_1_005",
+      "parts": [
+        "pump_drive__air_over_hydraulic__pump_handle",
+        "jack_frame"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Painted Steel",
+      "surfaceMaterial": "M_hydraulic_jack1_seed_1_002",
+      "parts": [
+        "head_fitting__screw_extension__head",
+        "ram_stage__stepped_ram__stage_0",
+        "ram_stage__stepped_ram__stage_1",
+        "jack_frame",
+        "release_valve"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Blue Painted Steel",
+      "surfaceMaterial": "M_hydraulic_jack1_seed_1_004",
+      "parts": [
+        "jack_frame"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Polished Chrome Steel",
+      "surfaceMaterial": "M_hydraulic_jack1_seed_1_006",
+      "parts": [
+        "jack_frame"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "assetId": "barrier_gate_524d75dd",
+  "dimensions_m": [
+    4.379794120788574,
+    1.1917610168457031,
+    1.5894693806767464
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Painted aluminum boom",
+      "surfaceMaterial": "M_seeded_barrier_gate_boom_1_004",
+      "parts": [
+        "boom_arm"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Black painted steel",
+      "surfaceMaterial": "M_seeded_barrier_gate_boom_1_001",
+      "parts": [
+        "boom_arm",
+        "fixed_support"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Red painted steel",
+      "surfaceMaterial": "M_seeded_barrier_gate_boom_1_003",
+      "parts": [
+        "boom_arm",
+        "fixed_support"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Dark painted steel support",
+      "surfaceMaterial": "M_seeded_barrier_gate_boom_1_002",
+      "parts": [
+        "fixed_support"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

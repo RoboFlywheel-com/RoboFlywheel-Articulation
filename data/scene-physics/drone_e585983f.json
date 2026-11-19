@@ -1,0 +1,553 @@
+{
+  "assetId": "drone_e585983f",
+  "name": "Drone",
+  "totalMassKg": 7.0600000000000005,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "airframe body",
+      "materials": [
+        "Dark gray painted aluminum",
+        "Black structural plastic",
+        "Dark blue tinted polycarbonate",
+        "Light gray painted aluminum",
+        "Blue anodized aluminum",
+        "Medium gray painted aluminum"
+      ],
+      "massKg": 4.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.11442494392395,
+        24.020089149475098,
+        0.29158944934606557
+      ],
+      "inertia": {
+        "ixx": 2.401515261074856,
+        "iyy": 2.975246285748186,
+        "izz": 4.896653301007069,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.7012887001037598,
+        1.512369155883789,
+        0.4924214780330658
+      ],
+      "sourceLink": "airframe_body",
+      "massBasis": "Hollow composite shell (6-material layup) with internal ribs, battery, and electronics. ~20% volumetric fill of bounding box at ~1400 kg/m\u00b3 composite density. CoM shifted slightly low for battery pack. Shell-dominated inertia raises variance above 1/12.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow composite shell (6-material layup) with internal ribs, battery, and electronics. ~20% volumetric fill of bounding box at ~1400 kg/m\u00b3 composite density. CoM shifted slightly low for battery pack. Shell-dominated inertia raises variance above 1/12.",
+      "surfaceMaterials": [
+        "M_seeded_drone_1_001",
+        "M_seeded_drone_1_002",
+        "M_seeded_drone_1_003",
+        "M_seeded_drone_1_004",
+        "M_seeded_drone_1_005",
+        "M_seeded_drone_1_006"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "arm 0",
+      "materials": [
+        "Light gray painted aluminum",
+        "Blue anodized aluminum",
+        "Medium gray painted aluminum"
+      ],
+      "massKg": 0.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.076514482498169,
+        25.073102951049805,
+        0.5264302790164948
+      ],
+      "inertia": {
+        "ixx": 0.07003536803066081,
+        "iyy": 0.015027792430519948,
+        "izz": 0.07496662366108445,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.3241105079650879,
+        1.2513809204101562,
+        0.23052042722702026
+      ],
+      "sourceLink": "arm_0",
+      "massBasis": "Hollow carbon-fiber tube arm, long axis along Y. Thin-walled box/tube cross-section gives near-shell variance in X and Z; uniform beam distribution along length gives ~1/12 in Y.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow carbon-fiber tube arm, long axis along Y. Thin-walled box/tube cross-section gives near-shell variance in X and Z; uniform beam distribution along length gives ~1/12 in Y.",
+      "surfaceMaterials": [
+        "M_seeded_drone_1_004",
+        "M_seeded_drone_1_005",
+        "M_seeded_drone_1_006"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "arm 1",
+      "materials": [
+        "Light gray painted aluminum",
+        "Blue anodized aluminum",
+        "Medium gray painted aluminum"
+      ],
+      "massKg": 0.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        3.9790375232696533,
+        24.155067443847656,
+        0.5264302790164948
+      ],
+      "inertia": {
+        "ixx": 0.019013399708698753,
+        "iyy": 0.070186561244182,
+        "izz": 0.07910342415278444,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.252835750579834,
+        0.3834075927734375,
+        0.23052042722702026
+      ],
+      "sourceLink": "arm_1",
+      "massBasis": "Hollow carbon-fiber tube arm, long axis along X. Same construction as arm 0; variance orientation rotated to match dominant axis.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow carbon-fiber tube arm, long axis along X. Same construction as arm 0; variance orientation rotated to match dominant axis.",
+      "surfaceMaterials": [
+        "M_seeded_drone_1_004",
+        "M_seeded_drone_1_005",
+        "M_seeded_drone_1_006"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "arm 2",
+      "materials": [
+        "Light gray painted aluminum",
+        "Blue anodized aluminum",
+        "Medium gray painted aluminum"
+      ],
+      "massKg": 0.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.082918167114258,
+        22.8985013961792,
+        0.5264302790164948
+      ],
+      "inertia": {
+        "ixx": 0.07018621415603511,
+        "iyy": 0.0191330088850801,
+        "izz": 0.0792226862410189,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.38504600524902344,
+        1.2528324127197266,
+        0.23052042722702026
+      ],
+      "sourceLink": "arm_2",
+      "massBasis": "Hollow carbon-fiber tube arm, long axis along Y. Identical construction to arm 0 for consistency across quad-arm layout.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow carbon-fiber tube arm, long axis along Y. Identical construction to arm 0 for consistency across quad-arm layout.",
+      "surfaceMaterials": [
+        "M_seeded_drone_1_004",
+        "M_seeded_drone_1_005",
+        "M_seeded_drone_1_006"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "arm 3",
+      "materials": [
+        "Light gray painted aluminum",
+        "Blue anodized aluminum",
+        "Medium gray painted aluminum"
+      ],
+      "massKg": 0.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        6.085829257965088,
+        24.192768096923828,
+        0.5264302790164948
+      ],
+      "inertia": {
+        "ixx": 0.058878418578667234,
+        "iyy": 0.0631594277560076,
+        "izz": 0.11194130953457852,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.1833295822143555,
+        0.7527503967285156,
+        0.23052042722702026
+      ],
+      "sourceLink": "arm_3",
+      "massBasis": "Hollow carbon-fiber tube arm, long axis along X. Same tube construction as other arms; slight diagonal footprint captured by bounding box but mass distribution similar.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow carbon-fiber tube arm, long axis along X. Same tube construction as other arms; slight diagonal footprint captured by bounding box but mass distribution similar.",
+      "surfaceMaterials": [
+        "M_seeded_drone_1_004",
+        "M_seeded_drone_1_005",
+        "M_seeded_drone_1_006"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "propeller 0",
+      "materials": [
+        "Light gray painted aluminum",
+        "Blue anodized aluminum",
+        "Carbon fiber reinforced polymer"
+      ],
+      "massKg": 0.14,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.020876407623291,
+        25.592374801635742,
+        0.6720203459262848
+      ],
+      "inertia": {
+        "ixx": 0.011902062868063543,
+        "iyy": 0.0012022074595493468,
+        "izz": 0.013084794800335734,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.37677669525146484,
+        1.0116500854492188,
+        0.06809574365615845
+      ],
+      "sourceLink": "propeller_0",
+      "massBasis": "Two-blade propeller, thin composite blades spanning mostly in Y. Mass distributed along span (~1/12), narrow chord reduces X variance, very thin in Z (68 mm) concentrates mass near mid-plane.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Two-blade propeller, thin composite blades spanning mostly in Y. Mass distributed along span (~1/12), narrow chord reduces X variance, very thin in Z (68 mm) concentrates mass near mid-plane.",
+      "surfaceMaterials": [
+        "M_seeded_drone_1_004",
+        "M_seeded_drone_1_005",
+        "M_seeded_drone_1_007"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "propeller 1",
+      "materials": [
+        "Light gray painted aluminum",
+        "Blue anodized aluminum",
+        "Carbon fiber reinforced polymer"
+      ],
+      "massKg": 0.14,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        3.463141918182373,
+        24.236249923706055,
+        0.6720203459262848
+      ],
+      "inertia": {
+        "ixx": 0.0015152116609885998,
+        "iyy": 0.01206642787657236,
+        "izz": 0.013562164010283801,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.0186171531677246,
+        0.42334747314453125,
+        0.06809574365615845
+      ],
+      "sourceLink": "propeller_1",
+      "massBasis": "Two-blade propeller, blades spanning mostly in X. Same blade construction as prop 0; variance axes swapped to match dominant span direction.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Two-blade propeller, blades spanning mostly in X. Same blade construction as prop 0; variance axes swapped to match dominant span direction.",
+      "surfaceMaterials": [
+        "M_seeded_drone_1_004",
+        "M_seeded_drone_1_005",
+        "M_seeded_drone_1_007"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "propeller 2",
+      "materials": [
+        "Light gray painted aluminum",
+        "Blue anodized aluminum",
+        "Carbon fiber reinforced polymer"
+      ],
+      "massKg": 0.14,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        5.164808750152588,
+        22.38271713256836,
+        0.6720203161239624
+      ],
+      "inertia": {
+        "ixx": 0.012070187058228155,
+        "iyy": 0.0015243482743401955,
+        "izz": 0.013575059839385287,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.42463016510009766,
+        1.0187759399414062,
+        0.06809568405151367
+      ],
+      "sourceLink": "propeller_2",
+      "massBasis": "Two-blade propeller, blades spanning mostly in Y. Consistent with prop 0 geometry and composite blade layup.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Two-blade propeller, blades spanning mostly in Y. Consistent with prop 0 geometry and composite blade layup.",
+      "surfaceMaterials": [
+        "M_seeded_drone_1_004",
+        "M_seeded_drone_1_005",
+        "M_seeded_drone_1_007"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "propeller 3",
+      "materials": [
+        "Light gray painted aluminum",
+        "Blue anodized aluminum",
+        "Carbon fiber reinforced polymer"
+      ],
+      "massKg": 0.14,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        6.546719312667847,
+        24.438369750976562,
+        0.6720203161239624
+      ],
+      "inertia": {
+        "ixx": 0.0041929964958800385,
+        "iyy": 0.011641409701577095,
+        "izz": 0.01581493070427407,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.000502109527588,
+        0.7056961059570312,
+        0.06809568405151367
+      ],
+      "sourceLink": "propeller_3",
+      "massBasis": "Two-blade propeller, blades spanning mostly in X. Consistent with prop 1 geometry; thin Z extent yields small thickness variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Two-blade propeller, blades spanning mostly in X. Consistent with prop 1 geometry; thin Z extent yields small thickness variance.",
+      "surfaceMaterials": [
+        "M_seeded_drone_1_004",
+        "M_seeded_drone_1_005",
+        "M_seeded_drone_1_007"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "arm_fold_0",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.832571,
+      "id": "0",
+      "effort": 8.0,
+      "velocity": 1.6,
+      "damping": 1.5,
+      "friction": 0.8,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "propeller_spin_0",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "1",
+      "effort": 1.0,
+      "velocity": 80.0,
+      "damping": 0.005,
+      "friction": 0.002,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "arm_fold_1",
+      "type": "revolute",
+      "lower": -0.832571,
+      "upper": 0.0,
+      "id": "2",
+      "effort": 8.0,
+      "velocity": 1.6,
+      "damping": 1.5,
+      "friction": 0.8,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "propeller_spin_1",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "3",
+      "effort": 1.0,
+      "velocity": 80.0,
+      "damping": 0.005,
+      "friction": 0.002,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "arm_fold_2",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.832571,
+      "id": "4",
+      "effort": 8.0,
+      "velocity": 1.6,
+      "damping": 1.5,
+      "friction": 0.8,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "propeller_spin_2",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "5",
+      "effort": 1.0,
+      "velocity": 80.0,
+      "damping": 0.005,
+      "friction": 0.002,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "arm_fold_3",
+      "type": "revolute",
+      "lower": -0.832571,
+      "upper": 0.0,
+      "id": "6",
+      "effort": 8.0,
+      "velocity": 1.6,
+      "damping": 1.5,
+      "friction": 0.8,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "propeller_spin_3",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "7",
+      "effort": 1.0,
+      "velocity": 80.0,
+      "damping": 0.005,
+      "friction": 0.002,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/outdoor_blend_asset/03_Outdoor_Sky/31_drone/drone/seed_0000/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

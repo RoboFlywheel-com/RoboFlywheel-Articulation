@@ -1,0 +1,118 @@
+{
+  "assetId": "propeller_aircraft_48d4f1e3",
+  "dimensions_m": [
+    9.183115005493164,
+    10.033824920654297,
+    2.715871810913086
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Bare aluminum alloy",
+      "surfaceMaterial": "M_military_aircraft_001",
+      "parts": [
+        "engine_0",
+        "propeller_0",
+        "elevator",
+        "horizontal_stabilizer",
+        "fuselage",
+        "rudder",
+        "tail_fin",
+        "wing"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Painted steel",
+      "surfaceMaterial": "M_military_aircraft_005",
+      "parts": [
+        "engine_0",
+        "propeller_0",
+        "elevator",
+        "rudder"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted aluminum alloy",
+      "surfaceMaterial": "M_military_aircraft_002",
+      "parts": [
+        "engine_0",
+        "fuselage"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Painted steel",
+      "surfaceMaterial": "M_military_aircraft_006",
+      "parts": [
+        "propeller_0"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Painted aluminum alloy",
+      "surfaceMaterial": "M_military_aircraft_003",
+      "parts": [
+        "fuselage"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Painted aluminum alloy",
+      "surfaceMaterial": "M_military_aircraft_004",
+      "parts": [
+        "rudder",
+        "tail_fin"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

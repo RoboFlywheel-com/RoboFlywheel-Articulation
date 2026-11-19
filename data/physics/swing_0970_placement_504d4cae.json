@@ -1,0 +1,182 @@
+{
+  "assetId": "swing_0970_placement_504d4cae",
+  "dimensions_m": [
+    3.44439697265625,
+    2.1910629272460938,
+    3.1000000946223736
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Painted structural steel",
+      "surfaceMaterial": "Material_1",
+      "parts": [
+        "frame_end0_lashing_band",
+        "frame_end1_foot_rear",
+        "frame_swing_1_pivot_saddle",
+        "frame_end1_lashing_band",
+        "frame_swing_0_pivot_saddle",
+        "frame_end0_foot_front",
+        "frame_end0_foot_rear",
+        "frame_end1_foot_front"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Painted structural steel",
+      "surfaceMaterial": "Material_0",
+      "parts": [
+        "frame_swing_0_front_clevis_cheek",
+        "frame_end0_post_front",
+        "frame_swing_1_rear_clevis_cheek",
+        "frame_end0_post_rear",
+        "frame_end1_post_front",
+        "frame_swing_0_rear_clevis_cheek",
+        "frame_end1_post_rear",
+        "frame_swing_1_front_clevis_cheek",
+        "frame_crossbeam"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Galvanized steel",
+      "surfaceMaterial": "Material_2",
+      "parts": [
+        "swing_0_chain_left_core",
+        "swing_0_chain_right_link_12",
+        "swing_0_seat_spreader_bar",
+        "swing_0_chain_left_link_5",
+        "swing_1_chain_left_link_10",
+        "swing_1_chain_left_link_8",
+        "swing_1_chain_right_link_3",
+        "swing_0_chain_right_link_0",
+        "swing_1_chain_left_link_4",
+        "frame_end0_finial_ball",
+        "swing_0_chain_left_link_13",
+        "swing_0_chain_right_link_6",
+        "swing_1_chain_right_link_11",
+        "swing_0_chain_right_link_13",
+        "swing_0_upper_hub",
+        "swing_0_chain_left_link_6",
+        "swing_1_chain_left_link_11",
+        "frame_swing_0_pivot_pin",
+        "swing_0_chain_left_link_0",
+        "swing_1_chain_left_link_9",
+        "swing_1_chain_right_link_4",
+        "swing_1_chain_left_core",
+        "swing_0_chain_right_link_1",
+        "frame_end0_finial_stem",
+        "swing_0_chain_left_link_2",
+        "swing_0_chain_right_link_7",
+        "swing_1_chain_left_link_5",
+        "swing_1_chain_right_link_12",
+        "swing_0_upper_yoke_bar",
+        "swing_1_chain_left_link_12",
+        "swing_0_chain_left_link_1",
+        "swing_0_chain_left_link_7",
+        "swing_0_chain_right_link_2",
+        "swing_1_chain_right_core",
+        "swing_1_chain_right_link_5",
+        "swing_1_upper_hub",
+        "swing_1_seat_spreader_bar",
+        "swing_0_chain_right_link_10",
+        "swing_1_chain_left_link_0",
+        "swing_0_chain_right_link_8",
+        "swing_0_chain_left_link_3",
+        "swing_1_chain_left_link_6",
+        "swing_1_chain_right_link_13",
+        "swing_1_chain_right_link_9",
+        "swing_1_chain_left_link_13",
+        "frame_end1_finial_ball",
+        "swing_0_chain_left_link_10",
+        "swing_0_chain_left_link_8",
+        "swing_0_chain_right_link_3",
+        "swing_1_chain_right_link_0",
+        "swing_1_chain_right_link_6",
+        "swing_1_chain_right_link_8",
+        "swing_0_chain_right_link_9",
+        "swing_0_chain_left_link_4",
+        "swing_1_chain_left_link_1",
+        "swing_0_chain_right_link_11",
+        "swing_1_chain_left_link_7",
+        "swing_1_chain_right_link_2",
+        "swing_1_upper_yoke_bar",
+        "frame_end1_finial_stem",
+        "swing_0_chain_left_link_11",
+        "swing_0_chain_right_link_4",
+        "swing_0_chain_left_link_9",
+        "swing_1_chain_left_link_2",
+        "swing_1_chain_right_link_1",
+        "swing_1_chain_right_link_7",
+        "swing_0_chain_right_link_5",
+        "swing_0_chain_left_link_12",
+        "swing_0_chain_right_core",
+        "swing_1_chain_left_link_3",
+        "frame_swing_1_pivot_pin",
+        "swing_1_chain_right_link_10"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Smooth rubber",
+      "surfaceMaterial": "Material_3",
+      "parts": [
+        "swing_1_belt_seat",
+        "swing_0_belt_seat"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Sponge rubber foam",
+      "surfaceMaterial": "Material_4",
+      "parts": [
+        "swing_0_belt_clamp_left",
+        "swing_0_belt_clamp_right",
+        "swing_0_belt_pad",
+        "swing_1_belt_clamp_left",
+        "swing_1_belt_clamp_right",
+        "swing_1_belt_pad"
+      ],
+      "values": {
+        "density_kg_m3": 110.0,
+        "youngs_modulus_pa": 150000.0,
+        "poissons_ratio": 0.32,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.75,
+        "restitution_coefficient": 0.35
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "assetId": "ceiling_light_five_arm_03e9eaf1",
+  "dimensions_m": [
+    1.6179869174957275,
+    1.6943824887275696,
+    0.6522493362426758
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Brushed Steel",
+      "surfaceMaterial": "M_seeded_ceiling_light_fixture_adjustable_3_002",
+      "parts": [
+        "arm_0",
+        "arm_1",
+        "arm_4",
+        "arm_2",
+        "arm_3",
+        "mount",
+        "shade_0",
+        "shade_1",
+        "shade_2",
+        "shade_3",
+        "shade_4"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Blackened Gunmetal",
+      "surfaceMaterial": "M_seeded_ceiling_light_fixture_adjustable_3_001",
+      "parts": [
+        "mount",
+        "shade_0",
+        "shade_1",
+        "shade_2",
+        "shade_3",
+        "shade_4"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Frosted Glass",
+      "surfaceMaterial": "M_seeded_ceiling_light_fixture_adjustable_3_003",
+      "parts": [
+        "shade_0",
+        "shade_1",
+        "shade_2",
+        "shade_3",
+        "shade_4"
+      ],
+      "values": {
+        "density_kg_m3": 2500.0,
+        "youngs_modulus_pa": 700000000000.0,
+        "poissons_ratio": 0.23,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.75
+      }
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "assetId": "kart_a1241a25",
+  "dimensions_m": [
+    3.662449426949024,
+    2.332815170288086,
+    0.7966200113296509
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Rubber Tire",
+      "surfaceMaterial": "M_seeded_go_kart_0_008",
+      "parts": [
+        "front_right_wheel",
+        "front_left_wheel",
+        "rear_left_wheel",
+        "rear_right_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Aluminum Wheel Rim",
+      "surfaceMaterial": "M_seeded_go_kart_0_009",
+      "parts": [
+        "front_right_wheel",
+        "front_left_wheel",
+        "rear_left_wheel",
+        "rear_right_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 75000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Steel Chassis Frame",
+      "surfaceMaterial": "M_seeded_go_kart_0_005",
+      "parts": [
+        "front_right_wheel",
+        "front_left_wheel",
+        "chassis",
+        "front_left_knuckle",
+        "front_right_knuckle",
+        "rear_left_wheel",
+        "rear_right_wheel",
+        "steering_wheel.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Painted Steel Accent",
+      "surfaceMaterial": "M_seeded_go_kart_0_007",
+      "parts": [
+        "front_right_wheel",
+        "front_left_wheel",
+        "rear_left_wheel",
+        "rear_right_wheel",
+        "steering_wheel.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Bare Aluminum Panel",
+      "surfaceMaterial": "M_seeded_go_kart_0_001",
+      "parts": [
+        "chassis"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 75000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Steel Body Panel",
+      "surfaceMaterial": "M_seeded_go_kart_0_002",
+      "parts": [
+        "chassis"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "Painted Steel Fairing",
+      "surfaceMaterial": "M_seeded_go_kart_0_003",
+      "parts": [
+        "chassis"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "7",
+      "material": "Steel Structural Tube",
+      "surfaceMaterial": "M_seeded_go_kart_0_004",
+      "parts": [
+        "chassis"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "8",
+      "material": "Upholstered Seat Foam",
+      "surfaceMaterial": "M_seeded_go_kart_0_006",
+      "parts": [
+        "seat"
+      ],
+      "values": {
+        "density_kg_m3": 300.0,
+        "youngs_modulus_pa": 1500000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.25
+      }
+    }
+  ]
+}

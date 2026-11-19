@@ -1,0 +1,126 @@
+{
+  "assetId": "urdf_03_astronaut_helmet_54712447",
+  "name": "Astronaut helmet",
+  "totalMassKg": 15.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Molded polycarbonate shell",
+        "Rubberized helmet trim",
+        "Painted polycarbonate shell",
+        "Anodized aluminum accent",
+        "Painted polycarbonate shell dark",
+        "Molded polycarbonate shell duplicate"
+      ],
+      "massKg": 11.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -1.9732326865196228,
+        12.770523080825805,
+        0.5605887081474066
+      ],
+      "inertia": {
+        "ixx": 5.663827198790628,
+        "iyy": 5.860625805955432,
+        "izz": 6.348162271539753,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.3110071420669556,
+        1.3530569076538086,
+        1.1330499835312366
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow composite shell (~4 mm fiberglass/epoxy layup) over ~1.3 m ellipsoidal envelope; 6 shell material refs indicate multi-panel construction with internal ribbing. Mass from surface-area \u00d7 thickness \u00d7 1550 kg/m\u00b3 composite density plus ~25 % for neck ring, padding, and comm hardware. COM slightly below geometric centre due to heavier neck-ring hardware. Variance near thin-shell sphere value (\u22481/6) adjusted for oblate shape and concentrated ring at base.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow composite shell (~4 mm fiberglass/epoxy layup) over ~1.3 m ellipsoidal envelope; 6 shell material refs indicate multi-panel construction with internal ribbing. Mass from surface-area \u00d7 thickness \u00d7 1550 kg/m\u00b3 composite density plus ~25 % for neck ring, padding, and comm hardware. COM slightly below geometric centre due to heavier neck-ring hardware. Variance near thin-shell sphere value (\u22481/6) adjusted for oblate shape and concentrated ring at base.",
+      "surfaceMaterials": [
+        "REF_03_Astronaut_helmet_shell_00",
+        "REF_03_Astronaut_helmet_shell_01",
+        "REF_03_Astronaut_helmet_shell_02",
+        "REF_03_Astronaut_helmet_shell_03",
+        "REF_03_Astronaut_helmet_shell_04",
+        "REF_03_Astronaut_helmet_shell_05"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "visor pivot",
+      "materials": [
+        "Gold-coated polycarbonate visor",
+        "Tinted polycarbonate visor",
+        "Dark polycarbonate visor inner"
+      ],
+      "massKg": 3.8,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.028016448020935,
+        12.55307674407959,
+        0.5465595397353172
+      ],
+      "inertia": {
+        "ixx": 0.8460153295065412,
+        "iyy": 1.3766723076389493,
+        "izz": 1.6571363373330399,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.4339444637298584,
+        1.0677833557128906,
+        0.8626392334699631
+      ],
+      "sourceLink": null,
+      "massBasis": "Polycarbonate visor pane (3 material layers suggest inner/outer/anti-fog sheets \u2248 3 mm total) plus small metal pivot brackets at lateral edges. Mass dominated by curved transparent sheet; COM shifted forward (cz 0.38) because glass area concentrates toward front. Variance lower in z because the curved plate is thin in the depth direction; x/y values reflect a wide, moderately tall curved shell.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Polycarbonate visor pane (3 material layers suggest inner/outer/anti-fog sheets \u2248 3 mm total) plus small metal pivot brackets at lateral edges. Mass dominated by curved transparent sheet; COM shifted forward (cz 0.38) because glass area concentrates toward front. Variance lower in z because the curved plate is thin in the depth direction; x/y values reflect a wide, moderately tall curved shell.",
+      "surfaceMaterials": [
+        "REF_03_Astronaut_helmet_visor_00",
+        "REF_03_Astronaut_helmet_visor_01",
+        "REF_03_Astronaut_helmet_visor_02"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "visor_pivot",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.31,
+      "id": "0",
+      "effort": 18.0,
+      "velocity": 1.5,
+      "damping": 0.8,
+      "friction": 0.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 240,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

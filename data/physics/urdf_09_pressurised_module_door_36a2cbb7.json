@@ -1,0 +1,186 @@
+{
+  "assetId": "urdf_09_pressurised_module_door_36a2cbb7",
+  "dimensions_m": [
+    8.034992933273315,
+    8.034996032714844,
+    4.429151698946953
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Painted steel shell",
+      "surfaceMaterial": "REF_09_Pressurised_module_door_airlock_shell_00",
+      "parts": [
+        "airlock_shell"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Brass alloy fitting",
+      "surfaceMaterial": "REF_09_Pressurised_module_door_airlock_shell_01",
+      "parts": [
+        "airlock_shell"
+      ],
+      "values": {
+        "density_kg_m3": 8500.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted steel shell",
+      "surfaceMaterial": "REF_09_Pressurised_module_door_airlock_shell_02",
+      "parts": [
+        "airlock_shell"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Dark coated steel",
+      "surfaceMaterial": "REF_09_Pressurised_module_door_airlock_shell_03",
+      "parts": [
+        "airlock_shell"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Bronze alloy component",
+      "surfaceMaterial": "REF_09_Pressurised_module_door_airlock_shell_04",
+      "parts": [
+        "airlock_shell"
+      ],
+      "values": {
+        "density_kg_m3": 8500.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Bare aluminum panel",
+      "surfaceMaterial": "REF_09_Pressurised_module_door_airlock_shell_05",
+      "parts": [
+        "airlock_shell"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "Painted steel shell",
+      "surfaceMaterial": "REF_09_Pressurised_module_door_airlock_shell_06",
+      "parts": [
+        "airlock_shell"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "7",
+      "material": "Painted steel hatch",
+      "surfaceMaterial": "REF_09_Pressurised_module_door_hatch_lid_00",
+      "parts": [
+        "hatch_lid"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "8",
+      "material": "Brass alloy fitting",
+      "surfaceMaterial": "REF_09_Pressurised_module_door_hatch_lid_01",
+      "parts": [
+        "hatch_lid"
+      ],
+      "values": {
+        "density_kg_m3": 8500.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "9",
+      "material": "Bare aluminum panel",
+      "surfaceMaterial": "REF_09_Pressurised_module_door_hatch_lid_02",
+      "parts": [
+        "hatch_lid"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "10",
+      "material": "Dark coated steel",
+      "surfaceMaterial": "REF_09_Pressurised_module_door_hatch_lid_03",
+      "parts": [
+        "hatch_lid"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

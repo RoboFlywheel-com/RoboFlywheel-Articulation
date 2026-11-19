@@ -1,0 +1,79 @@
+{
+  "assetId": "tower_crane_ccb3c33d",
+  "dimensions_m": [
+    20.85408639907837,
+    8.84530258178711,
+    11.20000023394823
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Painted structural steel",
+      "surfaceMaterial": "M_seeded_crane_tower_1_003",
+      "parts": [
+        "upperworks",
+        "base",
+        "trolley",
+        "hook_block"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Painted structural steel",
+      "surfaceMaterial": "M_seeded_crane_tower_1_002",
+      "parts": [
+        "upperworks",
+        "base",
+        "trolley"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted structural steel",
+      "surfaceMaterial": "M_seeded_crane_tower_1_004",
+      "parts": [
+        "upperworks"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Painted structural steel",
+      "surfaceMaterial": "M_seeded_crane_tower_1_001",
+      "parts": [
+        "base"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

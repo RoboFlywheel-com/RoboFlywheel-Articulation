@@ -1,0 +1,240 @@
+{
+  "assetId": "computer_monitor_placement_681de1bc",
+  "name": "Computer monitor",
+  "totalMassKg": 7.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Polypropylene",
+        "Rubber Elastomer",
+        "ABS Plastic"
+      ],
+      "massKg": 3.4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.180000066757202,
+        2.1284717321395874,
+        0.785575020313263
+      ],
+      "inertia": {
+        "ixx": 0.04468792041256241,
+        "iyy": 0.045722719257287464,
+        "izz": 0.08894970216984986,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.4017190933227539,
+        0.39707255363464355,
+        0.0625
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin LCD panel assembly (~40x40x6 cm); hollow shell with electronics board near rear face, so CoM slightly aft in z. Mass spread across panel area but concentrated in thin z, giving near-uniform x/y variance and lower z variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin LCD panel assembly (~40x40x6 cm); hollow shell with electronics board near rear face, so CoM slightly aft in z. Mass spread across panel area but concentrated in thin z, giving near-uniform x/y variance and lower z variance.",
+      "surfaceMaterials": [
+        "Material_0.007",
+        "Material_1.007",
+        "Material_2.007"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "JOINT | Computer Monitor | stand swivel",
+      "materials": [
+        "ABS Plastic",
+        "Polycarbonate"
+      ],
+      "massKg": 1.7,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.180000066757202,
+        2.0799999833106995,
+        0.9382216203212738
+      ],
+      "inertia": {
+        "ixx": 0.014406929244206373,
+        "iyy": 0.014406917064043191,
+        "izz": 0.005502662771170204,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.16156625747680664,
+        0.1615666151046753,
+        0.2964800000190735
+      ],
+      "sourceLink": null,
+      "massBasis": "Cylindrical swivel base with weighted bottom plate for stability. CoM below geometric centre. Radial mass near shell reduces x/y variance; z slightly below uniform due to bottom weighting.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Cylindrical swivel base with weighted bottom plate for stability. CoM below geometric centre. Radial mass near shell reduces x/y variance; z slightly below uniform due to bottom weighting.",
+      "surfaceMaterials": [
+        "Material_2.007",
+        "Material_3.007"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "JOINT | Computer Monitor | display tilt",
+      "materials": [
+        "Polypropylene",
+        "ABS Plastic",
+        "Polycarbonate",
+        "Soda-Lime Glass"
+      ],
+      "massKg": 1.25,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.1949301958084106,
+        1.9397394001483916,
+        1.2178409695625305
+      ],
+      "inertia": {
+        "ixx": 0.016722254425906125,
+        "iyy": 0.06686501058118602,
+        "izz": 0.05648229456006778,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.7541000843048096,
+        0.1803065538406372,
+        0.368137001991272
+      ],
+      "sourceLink": null,
+      "massBasis": "Tilt bracket/arm linking display to column; mostly hollow stamped-metal and plastic housing. Slightly lower y-CoM due to heavier lower pivot hardware. Near-uniform spread with mild shell effect.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Tilt bracket/arm linking display to column; mostly hollow stamped-metal and plastic housing. Slightly lower y-CoM due to heavier lower pivot hardware. Near-uniform spread with mild shell effect.",
+      "surfaceMaterials": [
+        "Material_0.007",
+        "Material_2.007",
+        "Material_3.007",
+        "Material_4.006"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "JOINT | Computer Monitor | height slide",
+      "materials": [
+        "ABS Plastic",
+        "Polycarbonate"
+      ],
+      "massKg": 0.65,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -2.1871774196624756,
+        2.060635566711426,
+        1.0827852189540863
+      ],
+      "inertia": {
+        "ixx": 0.0070329463902796315,
+        "iyy": 0.007097284771955584,
+        "izz": 0.0009094583877113109,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.11173439025878906,
+        0.10409069061279297,
+        0.3500400185585022
+      ],
+      "sourceLink": null,
+      "massBasis": "Vertical height-adjust rail (~11x10x35 cm); extruded aluminum channel with internal slider. Mass concentrated along z-axis, so x/y variance reduced; z near uniform.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Vertical height-adjust rail (~11x10x35 cm); extruded aluminum channel with internal slider. Mass concentrated along z-axis, so x/y variance reduced; z near uniform.",
+      "surfaceMaterials": [
+        "Material_2.007",
+        "Material_3.007"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "stand_swivel",
+      "type": "revolute",
+      "lower": -0.3,
+      "upper": 0.3,
+      "id": "0",
+      "effort": 6.0,
+      "velocity": 1.0,
+      "damping": 0.5,
+      "friction": 0.35,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "height_slide",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.04,
+      "id": "1",
+      "effort": 35.0,
+      "velocity": 0.05,
+      "damping": 60.0,
+      "friction": 6.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "display_tilt",
+      "type": "revolute",
+      "lower": -0.15,
+      "upper": 0.15,
+      "id": "2",
+      "effort": 4.0,
+      "velocity": 1.5,
+      "damping": 0.35,
+      "friction": 0.2,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

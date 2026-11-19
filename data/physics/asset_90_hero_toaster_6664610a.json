@@ -1,0 +1,193 @@
+{
+  "assetId": "asset_90_hero_toaster_6664610a",
+  "dimensions_m": [
+    0.5057780742645264,
+    0.28839111328125,
+    0.46494078636169434
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Bread",
+      "surfaceMaterial": "DefaultMaterial.002",
+      "parts": [
+        "Bread_003_Mesh_0"
+      ],
+      "values": {
+        "density_kg_m3": 250.0,
+        "youngs_modulus_pa": 1000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.1
+      }
+    },
+    {
+      "id": "1",
+      "material": "Painted plastic button",
+      "surfaceMaterial": "90 | toaster_button_pastel_cream.001",
+      "parts": [
+        "bagel_button.001",
+        "cancel_button.001",
+        "browning_dial.001",
+        "frozen_button.001"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Dark painted metal body",
+      "surfaceMaterial": "90 | toaster_dark_pastel_cream.001",
+      "parts": [
+        "bagel_button.001",
+        "cancel_button.001",
+        "browning_dial.001",
+        "frozen_button.001",
+        "body.008"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Painted plastic control",
+      "surfaceMaterial": "90 | toaster_control_pastel_cream.001",
+      "parts": [
+        "browning_dial.001"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "4",
+      "material": "Bread",
+      "surfaceMaterial": "DefaultMaterial.003",
+      "parts": [
+        "Bread_004_Mesh_0.001"
+      ],
+      "values": {
+        "density_kg_m3": 250.0,
+        "youngs_modulus_pa": 1000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.1
+      }
+    },
+    {
+      "id": "5",
+      "material": "Painted plastic knob",
+      "surfaceMaterial": "90 | toaster_knob_pastel_cream.001",
+      "parts": [
+        "carriage_lever.001"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "Brushed stainless steel",
+      "surfaceMaterial": "90 | toaster_carriage_pastel_cream.001",
+      "parts": [
+        "carriage_lever.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "7",
+      "material": "Polished stainless steel shell",
+      "surfaceMaterial": "V14_Toaster_shell_reveal",
+      "parts": [
+        "body.008"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "8",
+      "material": "Brushed stainless steel rim",
+      "surfaceMaterial": "90 | toaster_rim_pastel_cream.001",
+      "parts": [
+        "body.008"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "9",
+      "material": "Painted plastic panel",
+      "surfaceMaterial": "90 | toaster_panel_pastel_cream.001",
+      "parts": [
+        "body.008"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "10",
+      "material": "Painted plastic marking",
+      "surfaceMaterial": "90 | toaster_mark_pastel_cream.001",
+      "parts": [
+        "body.008"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

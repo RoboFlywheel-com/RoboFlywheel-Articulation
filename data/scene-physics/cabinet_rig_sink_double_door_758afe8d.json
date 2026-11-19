@@ -1,0 +1,175 @@
+{
+  "assetId": "cabinet_rig_sink_double_door_758afe8d",
+  "name": "Cabinet rig sink double door",
+  "totalMassKg": 53.3,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "MDF interior panel",
+        "MDF with lacquer coating"
+      ],
+      "massKg": 42.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.07999998331069946,
+        5.104799861907959,
+        0.4821600094437599
+      ],
+      "inertia": {
+        "ixx": 13.052128251216097,
+        "iyy": 18.230222173358012,
+        "izz": 18.838513475120664,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.1399999856948853,
+        0.880000114440918,
+        0.8830000180751085
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow 18 mm MDF/particleboard box (5 panels) with stainless-steel sink basin on top. Shell panels dominate mass; sink adds ~4 kg near top-centre, shifting CoM slightly up and back. Variance factors reflect thin-panel distribution concentrated near outer faces rather than a solid block.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow 18 mm MDF/particleboard box (5 panels) with stainless-steel sink basin on top. Shell panels dominate mass; sink adds ~4 kg near top-centre, shifting CoM slightly up and back. Variance factors reflect thin-panel distribution concentrated near outer faces rather than a solid block.",
+      "surfaceMaterials": [
+        "KITCHEN | sage interior",
+        "KITCHEN | soft grey sage lacquer"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "door 1",
+      "materials": [
+        "Nickel alloy",
+        "MDF with lacquer coating"
+      ],
+      "massKg": 5.8,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        0.21019601821899414,
+        4.628167390823364,
+        0.44273998975753787
+      ],
+      "inertia": {
+        "ixx": 0.15660744785985664,
+        "iyy": 0.29861726850650705,
+        "izz": 0.14652702132294756,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5474350452423096,
+        0.0684962272644043,
+        0.7959999740123749
+      ],
+      "sourceLink": null,
+      "massBasis": "Same construction as door 0 but bounding thickness 68 mm (slightly deeper handle or frame). Panel mass and distribution nearly identical; marginally higher mass and z-variance from extra hardware depth.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same construction as door 0 but bounding thickness 68 mm (slightly deeper handle or frame). Panel mass and distribution nearly identical; marginally higher mass and z-variance from extra hardware depth.",
+      "surfaceMaterials": [
+        "KITCHEN | satin champagne nickel",
+        "KITCHEN | soft grey sage lacquer"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "door 0",
+      "materials": [
+        "Nickel alloy",
+        "MDF with lacquer coating"
+      ],
+      "massKg": 5.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -0.37049999833106995,
+        4.637250185012817,
+        0.44273998975753787
+      ],
+      "inertia": {
+        "ixx": 0.14055971813904578,
+        "iyy": 0.27598441487347763,
+        "izz": 0.13775311121633477,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.546999990940094,
+        0.05050039291381836,
+        0.7959999740123749
+      ],
+      "sourceLink": null,
+      "massBasis": "~20 mm lacquered MDF door panel (0.547\u00d70.796 m) plus small champagne-nickel handle on front face. Panel is uniform in x-y (variance \u2248 1/12); z-variance reduced because panel thickness is a fraction of the 50 mm bounding depth, with handle adding slight front bias.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: ~20 mm lacquered MDF door panel (0.547\u00d70.796 m) plus small champagne-nickel handle on front face. Panel is uniform in x-y (variance \u2248 1/12); z-variance reduced because panel thickness is a fraction of the 50 mm bounding depth, with handle adding slight front bias.",
+      "surfaceMaterials": [
+        "KITCHEN | satin champagne nickel",
+        "KITCHEN | soft grey sage lacquer"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "door_0",
+      "type": "revolute",
+      "lower": -1.5707963267948966,
+      "upper": 0,
+      "id": "0",
+      "effort": 12.0,
+      "velocity": 2.0,
+      "damping": 1.2,
+      "friction": 0.3,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "door_1",
+      "type": "revolute",
+      "lower": 0,
+      "upper": 1.5707963267948966,
+      "id": "1",
+      "effort": 12.0,
+      "velocity": 2.0,
+      "damping": 1.2,
+      "friction": 0.3,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

@@ -1,0 +1,183 @@
+{
+  "assetId": "room_cabinet_e7872afb",
+  "name": "Room cabinet",
+  "totalMassKg": 39.6,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "1",
+      "name": "desk carcass",
+      "materials": [
+        "Brown varnished wood",
+        "Dark metallic laminate"
+      ],
+      "massKg": 30.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.294665217399597,
+        1.3428589522838592,
+        0.4208621084690094
+      ],
+      "inertia": {
+        "ixx": 4.616571144189109,
+        "iyy": 14.378975976132192,
+        "izz": 14.5319992788278,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.9637348651885986,
+        0.8915898203849792,
+        0.8417242169380188
+      ],
+      "sourceLink": "desk_carcass",
+      "massBasis": "Hollow desk/cabinet carcass 1.96\u00d70.89\u00d70.84 m built from 7 material panels (top, bottom, sides, back, internal shelf, kick). Shell construction shifts mass toward surfaces \u2192 variance > 1/12. Center slightly below mid-height due to thicker base/kick board. Effective panel thickness ~18-25 mm gives \u2248 30 kg.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow desk/cabinet carcass 1.96\u00d70.89\u00d70.84 m built from 7 material panels (top, bottom, sides, back, internal shelf, kick). Shell construction shifts mass toward surfaces \u2192 variance > 1/12. Center slightly below mid-height due to thicker base/kick board. Effective panel thickness ~18-25 mm gives \u2248 30 kg.",
+      "surfaceMaterials": [
+        "M_office_table_with_doors_or_drawers_001",
+        "M_office_table_with_doors_or_drawers_002",
+        "M_office_table_with_doors_or_drawers_003",
+        "M_office_table_with_doors_or_drawers_004",
+        "M_office_table_with_doors_or_drawers_005",
+        "M_office_table_with_doors_or_drawers_006",
+        "M_office_table_with_doors_or_drawers_007"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "drawer style  runner tray  drawer 0",
+      "materials": [
+        "Dark metallic laminate",
+        "Brown varnished wood"
+      ],
+      "massKg": 6.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        3.961868643760681,
+        1.3052623987197876,
+        0.28761038556694984
+      ],
+      "inertia": {
+        "ixx": 0.4102489253050669,
+        "iyy": 0.8926399103742053,
+        "izz": 1.1447497542508578,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.242488145828247,
+        0.8439275622367859,
+        0.38734620064496994
+      ],
+      "sourceLink": "drawer_style__runner_tray__drawer_0",
+      "massBasis": "Drawer/tray 1.24\u00d70.84\u00d70.39 m with side/bottom panels and metal runner hardware. Hollow box with steel slides at base lowers CoM (cy\u22480.44) and reduces y-variance. Four materials suggest panel sides + metal runners; \u2248 6 kg typical for this size office drawer.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Drawer/tray 1.24\u00d70.84\u00d70.39 m with side/bottom panels and metal runner hardware. Hollow box with steel slides at base lowers CoM (cy\u22480.44) and reduces y-variance. Four materials suggest panel sides + metal runners; \u2248 6 kg typical for this size office drawer.",
+      "surfaceMaterials": [
+        "M_office_table_with_doors_or_drawers_004",
+        "M_office_table_with_doors_or_drawers_005",
+        "M_office_table_with_doors_or_drawers_006",
+        "M_office_table_with_doors_or_drawers_008"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "closure  hinged door  leaf 0",
+      "materials": [
+        "Dark metallic laminate",
+        "Brown varnished wood"
+      ],
+      "massKg": 3.4,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.931072950363159,
+        0.9461767971515656,
+        0.4098447561264038
+      ],
+      "inertia": {
+        "ixx": 0.11394863149484377,
+        "iyy": 0.2253847188150723,
+        "izz": 0.11298693281246258,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6268153190612793,
+        0.05241924524307251,
+        0.6294956207275391
+      ],
+      "sourceLink": "closure__hinged_door__leaf_0",
+      "massBasis": "Hinged door leaf 0.63\u00d70.05\u00d70.63 m; thin MDF/wood panel with light hardware. Nearly uniform flat panel so variance \u2248 1/12 on all axes; slight edge-frame concentration raises x,z marginally. Mass consistent with ~18 mm panel plus veneer and hinge hardware.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hinged door leaf 0.63\u00d70.05\u00d70.63 m; thin MDF/wood panel with light hardware. Nearly uniform flat panel so variance \u2248 1/12 on all axes; slight edge-frame concentration raises x,z marginally. Mass consistent with ~18 mm panel plus veneer and hinge hardware.",
+      "surfaceMaterials": [
+        "M_office_table_with_doors_or_drawers_004",
+        "M_office_table_with_doors_or_drawers_005",
+        "M_office_table_with_doors_or_drawers_008"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "drawer_style__runner_tray__slide_0",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 50.16240112121703,
+      "id": "0",
+      "effort": 70.0,
+      "velocity": 0.32,
+      "damping": 18.0,
+      "friction": 8.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "closure__hinged_door__leaf_joint_0",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.75,
+      "id": "1",
+      "effort": 12.0,
+      "velocity": 1.6,
+      "damping": 0.55,
+      "friction": 0.8,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/Indoor_blend_asset/20_table_with_doors_and_drawers/seed_0000/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

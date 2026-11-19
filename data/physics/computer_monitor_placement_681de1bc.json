@@ -1,0 +1,120 @@
+{
+  "assetId": "computer_monitor_placement_681de1bc",
+  "dimensions_m": [
+    0.7541000843048096,
+    0.4684065580368042,
+    0.6507094502449036
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "ABS Plastic",
+      "surfaceMaterial": "Material_2.007",
+      "parts": [
+        "Computer_Monitor / base_tripod_hub",
+        "Computer_Monitor / display_tilt_axle",
+        "Computer_Monitor / height_stage_post_socket_pocket",
+        "Computer_Monitor / stand_upper_rear_collar",
+        "Computer_Monitor / stand_lower_side_collar_1",
+        "Computer_Monitor / stand_turntable_disk",
+        "Computer_Monitor / stand_lower_side_collar_0",
+        "Computer_Monitor / stand_upper_side_collar_1",
+        "Computer_Monitor / base_swivel_bearing_ring",
+        "Computer_Monitor / height_stage_guide_shoe",
+        "Computer_Monitor / height_stage_top_clamp",
+        "Computer_Monitor / stand_lower_rear_collar",
+        "Computer_Monitor / stand_upper_side_collar_0"
+      ],
+      "values": {
+        "density_kg_m3": 1050,
+        "youngs_modulus_pa": 2300000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "1",
+      "material": "Rubber Elastomer",
+      "surfaceMaterial": "Material_1.007",
+      "parts": [
+        "Computer_Monitor / base_rubber_pad_122",
+        "Computer_Monitor / base_rubber_pad_0",
+        "Computer_Monitor / base_rubber_pad_-122"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 10000000,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 0.8,
+        "dynamic_friction_coefficient": 0.6,
+        "restitution_coefficient": 0.7
+      }
+    },
+    {
+      "id": "2",
+      "material": "Polycarbonate",
+      "surfaceMaterial": "Material_3.007",
+      "parts": [
+        "Computer_Monitor / display_curved_screen_panel",
+        "Computer_Monitor / height_stage_hinge_bridge_rib",
+        "Computer_Monitor / height_stage_socket_vertical_web",
+        "Computer_Monitor / height_stage_yoke_neck",
+        "Computer_Monitor / stand_sleeve_back",
+        "Computer_Monitor / height_stage_mast_post",
+        "Computer_Monitor / height_stage_right_yoke_ear",
+        "Computer_Monitor / height_stage_left_yoke_ear",
+        "Computer_Monitor / height_stage_right_ear_bridge",
+        "Computer_Monitor / stand_sleeve_side_1",
+        "Computer_Monitor / height_stage_left_ear_bridge",
+        "Computer_Monitor / height_stage_post_socket_tongue",
+        "Computer_Monitor / stand_sleeve_side_0"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 2400000000,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "3",
+      "material": "Polypropylene",
+      "surfaceMaterial": "Material_0.007",
+      "parts": [
+        "Computer_Monitor / display_rear_hub_left",
+        "Computer_Monitor / base_tripod_leg_122",
+        "Computer_Monitor / base_tripod_leg_0",
+        "Computer_Monitor / display_rear_hub",
+        "Computer_Monitor / base_tripod_leg_-122"
+      ],
+      "values": {
+        "density_kg_m3": 900,
+        "youngs_modulus_pa": 1500000000,
+        "poissons_ratio": 0.42,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "4",
+      "material": "Soda-Lime Glass",
+      "surfaceMaterial": "Material_4.006",
+      "parts": [
+        "Computer_Monitor / display_display_glass"
+      ],
+      "values": {
+        "density_kg_m3": 2500,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.22,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.7
+      }
+    }
+  ]
+}

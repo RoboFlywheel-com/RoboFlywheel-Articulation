@@ -1,0 +1,154 @@
+{
+  "assetId": "urdf_03_astronaut_helmet_54712447",
+  "dimensions_m": [
+    1.4174379110336304,
+    1.4221982955932617,
+    1.1330499835312366
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Molded polycarbonate shell",
+      "surfaceMaterial": "REF_03_Astronaut_helmet_shell_00",
+      "parts": [
+        "shell"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.34,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Rubberized helmet trim",
+      "surfaceMaterial": "REF_03_Astronaut_helmet_shell_01",
+      "parts": [
+        "shell"
+      ],
+      "values": {
+        "density_kg_m3": 1100.0,
+        "youngs_modulus_pa": 50000000.0,
+        "poissons_ratio": 0.47,
+        "static_friction_coefficient": 0.8,
+        "dynamic_friction_coefficient": 0.65,
+        "restitution_coefficient": 0.7
+      }
+    },
+    {
+      "id": "2",
+      "material": "Painted polycarbonate shell",
+      "surfaceMaterial": "REF_03_Astronaut_helmet_shell_02",
+      "parts": [
+        "shell"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.34,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Anodized aluminum accent",
+      "surfaceMaterial": "REF_03_Astronaut_helmet_shell_03",
+      "parts": [
+        "shell"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "4",
+      "material": "Painted polycarbonate shell dark",
+      "surfaceMaterial": "REF_03_Astronaut_helmet_shell_04",
+      "parts": [
+        "shell"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.34,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Molded polycarbonate shell duplicate",
+      "surfaceMaterial": "REF_03_Astronaut_helmet_shell_05",
+      "parts": [
+        "shell"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.34,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "Gold-coated polycarbonate visor",
+      "surfaceMaterial": "REF_03_Astronaut_helmet_visor_00",
+      "parts": [
+        "visor"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "7",
+      "material": "Tinted polycarbonate visor",
+      "surfaceMaterial": "REF_03_Astronaut_helmet_visor_01",
+      "parts": [
+        "visor"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "8",
+      "material": "Dark polycarbonate visor inner",
+      "surfaceMaterial": "REF_03_Astronaut_helmet_visor_02",
+      "parts": [
+        "visor"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.34,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

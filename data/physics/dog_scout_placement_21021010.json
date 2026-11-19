@@ -1,0 +1,347 @@
+{
+  "assetId": "dog_scout_placement_21021010",
+  "dimensions_m": [
+    0.5960909724235535,
+    0.7047240138053894,
+    0.5594834552830434
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Dark Actuator Housing",
+      "surfaceMaterial": "actuator_dark",
+      "parts": [
+        "Dog_Scout / rear_right_hip__rear_right_hip_cheek_out",
+        "Dog_Scout / front_left_thigh__front_left_thigh_can",
+        "Dog_Scout / rear_left_hip__rear_left_hip_tie",
+        "Dog_Scout / rear_right_hip__rear_right_hip_cheek_in",
+        "Dog_Scout / neck__neck_tilt_can",
+        "Dog_Scout / rear_right_calf__rear_right_calf_can",
+        "Dog_Scout / chassis__carry_handle_post_a",
+        "Dog_Scout / front_left_hip__front_left_hip_arm",
+        "Dog_Scout / front_right_thigh__front_right_thigh_can",
+        "Dog_Scout / rear_right_thigh__rear_right_thigh_can",
+        "Dog_Scout / front_left_hip__front_left_hip_cheek_in",
+        "Dog_Scout / front_right_hip__front_right_hip_tie",
+        "Dog_Scout / rear_left_hip__rear_left_hip_cheek_out",
+        "Dog_Scout / rear_right_hip__rear_right_hip_bridge",
+        "Dog_Scout / rear_right_thigh__rear_right_knee_lug",
+        "Dog_Scout / rear_left_hip__rear_left_hip_cheek_in",
+        "Dog_Scout / rear_right_hip__rear_right_hip_barrel",
+        "Dog_Scout / rear_right_thigh__rear_right_knee_cheek_out",
+        "Dog_Scout / chassis__carry_handle_post_b",
+        "Dog_Scout / front_left_hip__front_left_hip_barrel",
+        "Dog_Scout / front_left_thigh__front_left_knee_cheek_in",
+        "Dog_Scout / front_right_hip__front_right_hip_cheek_in",
+        "Dog_Scout / rear_right_hip__rear_right_hip_arm",
+        "Dog_Scout / rear_right_thigh__rear_right_knee_cheek_in",
+        "Dog_Scout / front_right_hip__front_right_hip_arm",
+        "Dog_Scout / front_left_hip__front_left_hip_cheek_out",
+        "Dog_Scout / rear_right_hip__rear_right_hip_tie",
+        "Dog_Scout / front_left_hip__front_left_hip_bridge",
+        "Dog_Scout / front_left_thigh__front_left_knee_cheek_out",
+        "Dog_Scout / front_right_hip__front_right_hip_cheek_out",
+        "Dog_Scout / front_right_hip__front_right_hip_barrel",
+        "Dog_Scout / chassis__neck_platform",
+        "Dog_Scout / front_right_thigh__front_right_knee_cheek_in",
+        "Dog_Scout / front_left_thigh__front_left_knee_lug",
+        "Dog_Scout / front_left_calf__front_left_calf_can",
+        "Dog_Scout / rear_left_calf__rear_left_calf_can",
+        "Dog_Scout / front_right_hip__front_right_hip_bridge",
+        "Dog_Scout / front_right_thigh__front_right_knee_cheek_out",
+        "Dog_Scout / rear_left_thigh__rear_left_thigh_can",
+        "Dog_Scout / neck_base__neck_pan_shroud",
+        "Dog_Scout / rear_left_hip__rear_left_hip_bridge",
+        "Dog_Scout / rear_left_thigh__rear_left_knee_lug",
+        "Dog_Scout / neck_base__neck_pan_can",
+        "Dog_Scout / rear_left_hip__rear_left_hip_barrel",
+        "Dog_Scout / rear_left_thigh__rear_left_knee_cheek_out",
+        "Dog_Scout / neck_base__neck_cheek_right",
+        "Dog_Scout / rear_left_hip__rear_left_hip_arm",
+        "Dog_Scout / rear_left_thigh__rear_left_knee_cheek_in",
+        "Dog_Scout / front_left_hip__front_left_hip_tie",
+        "Dog_Scout / front_right_calf__front_right_calf_can",
+        "Dog_Scout / chassis__carry_handle_bar",
+        "Dog_Scout / front_right_thigh__front_right_knee_lug",
+        "Dog_Scout / neck_base__neck_cheek_left"
+      ],
+      "values": {
+        "density_kg_m3": 1400,
+        "youngs_modulus_pa": 3500000000,
+        "poissons_ratio": 0.38,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "1",
+      "material": "Dark Belly Panel",
+      "surfaceMaterial": "belly_dark",
+      "parts": [
+        "Dog_Scout / chassis__battery_cover"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 2800000000,
+        "poissons_ratio": 0.39,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "2",
+      "material": "Stainless Steel Hardware",
+      "surfaceMaterial": "steel.002",
+      "parts": [
+        "Dog_Scout / chassis__deck_screw_0",
+        "Dog_Scout / front_left_calf__front_left_calf_stub_in",
+        "Dog_Scout / front_right_hip__front_right_hip_collar_b",
+        "Dog_Scout / rear_right_thigh__rear_right_thigh_stub_out",
+        "Dog_Scout / rear_right_calf__rear_right_calf_stub_in",
+        "Dog_Scout / rear_right_thigh__rear_right_thigh_stub_in",
+        "Dog_Scout / rear_left_hip__rear_left_hip_collar_b",
+        "Dog_Scout / front_right_calf__front_right_calf_stub_in",
+        "Dog_Scout / neck__neck_stub_out",
+        "Dog_Scout / rear_left_hip__rear_left_hip_collar_a",
+        "Dog_Scout / chassis__battery_screw_0",
+        "Dog_Scout / chassis__deck_screw_1",
+        "Dog_Scout / front_left_calf__front_left_calf_stub_out",
+        "Dog_Scout / rear_left_calf__rear_left_calf_stub_out",
+        "Dog_Scout / rear_left_thigh__rear_left_thigh_stub_out",
+        "Dog_Scout / rear_left_thigh__rear_left_thigh_stub_in",
+        "Dog_Scout / front_right_calf__front_right_calf_stub_out",
+        "Dog_Scout / front_left_thigh__front_left_thigh_stub_in",
+        "Dog_Scout / chassis__battery_screw_1",
+        "Dog_Scout / chassis__deck_screw_2",
+        "Dog_Scout / chassis__front_right_sleeve_a",
+        "Dog_Scout / chassis__rear_right_sleeve_a",
+        "Dog_Scout / front_right_thigh__front_right_thigh_stub_in",
+        "Dog_Scout / chassis__battery_screw_2",
+        "Dog_Scout / chassis__deck_screw_3",
+        "Dog_Scout / front_left_hip__front_left_hip_collar_a",
+        "Dog_Scout / front_left_thigh__front_left_thigh_stub_out",
+        "Dog_Scout / neck__neck_stub_in",
+        "Dog_Scout / rear_left_calf__rear_left_calf_stub_in",
+        "Dog_Scout / chassis__front_right_sleeve_b",
+        "Dog_Scout / chassis__rear_right_sleeve_b",
+        "Dog_Scout / front_right_hip__front_right_hip_collar_a",
+        "Dog_Scout / front_right_thigh__front_right_thigh_stub_out",
+        "Dog_Scout / chassis__battery_screw_3",
+        "Dog_Scout / chassis__front_left_sleeve_a",
+        "Dog_Scout / chassis__rear_left_sleeve_a",
+        "Dog_Scout / front_left_hip__front_left_hip_collar_b",
+        "Dog_Scout / rear_right_hip__rear_right_hip_collar_b",
+        "Dog_Scout / chassis__front_left_sleeve_b",
+        "Dog_Scout / chassis__rear_left_sleeve_b",
+        "Dog_Scout / rear_right_hip__rear_right_hip_collar_a",
+        "Dog_Scout / rear_right_calf__rear_right_calf_stub_out"
+      ],
+      "values": {
+        "density_kg_m3": 7900,
+        "youngs_modulus_pa": 193000000000,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Pearl Shell Composite",
+      "surfaceMaterial": "shell_pearl",
+      "parts": [
+        "Dog_Scout / chassis__front_right_web_a",
+        "Dog_Scout / chassis__rear_right_web_a",
+        "Dog_Scout / chassis__front_left_web_a",
+        "Dog_Scout / chassis__rear_left_web_a",
+        "Dog_Scout / chassis__rear_right_web_b",
+        "Dog_Scout / chassis__front_right_web_b",
+        "Dog_Scout / chassis__front_left_web_b",
+        "Dog_Scout / chassis__rear_left_web_b"
+      ],
+      "values": {
+        "density_kg_m3": 1800,
+        "youngs_modulus_pa": 12000000000,
+        "poissons_ratio": 0.25,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.25,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "4",
+      "material": "Black Vent Polymer",
+      "surfaceMaterial": "vent_black",
+      "parts": [
+        "Dog_Scout / front_left_hip__front_left_hip_cap_b",
+        "Dog_Scout / rear_right_hip__rear_right_hip_cap_b",
+        "Dog_Scout / front_right_hip__front_right_hip_cap_b",
+        "Dog_Scout / rear_right_hip__rear_right_hip_cap_a",
+        "Dog_Scout / head__face_visor",
+        "Dog_Scout / chassis__left_vent_grille",
+        "Dog_Scout / chassis__right_vent_grille",
+        "Dog_Scout / chassis__charge_bezel",
+        "Dog_Scout / front_left_hip__front_left_hip_cap_a",
+        "Dog_Scout / chassis__charge_port",
+        "Dog_Scout / rear_left_hip__rear_left_hip_cap_b",
+        "Dog_Scout / rear_left_hip__rear_left_hip_cap_a",
+        "Dog_Scout / chassis__tail_antenna",
+        "Dog_Scout / front_right_hip__front_right_hip_cap_a"
+      ],
+      "values": {
+        "density_kg_m3": 1100,
+        "youngs_modulus_pa": 2500000000,
+        "poissons_ratio": 0.4,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.2
+      }
+    },
+    {
+      "id": "5",
+      "material": "Foot Rubber",
+      "surfaceMaterial": "rubber.002",
+      "parts": [
+        "Dog_Scout / front_right_foot__front_right_foot_rubber",
+        "Dog_Scout / rear_left_foot__rear_left_foot_rubber",
+        "Dog_Scout / front_left_foot__front_left_foot_rubber",
+        "Dog_Scout / rear_right_foot__rear_right_foot_rubber"
+      ],
+      "values": {
+        "density_kg_m3": 1150,
+        "youngs_modulus_pa": 15000000,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.75,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "6",
+      "material": "Slate Blue Aluminum Alloy",
+      "surfaceMaterial": "Dog scout / slate blue alloy",
+      "parts": [
+        "Dog_Scout / rear_right_thigh__rear_right_thigh_shell",
+        "Dog_Scout / front_left_thigh__front_left_thigh_shell",
+        "Dog_Scout / chassis__top_deck",
+        "Dog_Scout / front_right_thigh__front_right_thigh_shell",
+        "Dog_Scout / rear_left_thigh__rear_left_thigh_shell",
+        "Dog_Scout / chassis__shell",
+        "Dog_Scout / head__head_shell"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "7",
+      "material": "Orange Accent Plastic",
+      "surfaceMaterial": "accent_orange",
+      "parts": [
+        "Dog_Scout / chassis__tail_tip"
+      ],
+      "values": {
+        "density_kg_m3": 1050,
+        "youngs_modulus_pa": 2200000000,
+        "poissons_ratio": 0.4,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "8",
+      "material": "Dark Calf Tube",
+      "surfaceMaterial": "calf_dark",
+      "parts": [
+        "Dog_Scout / rear_left_calf__rear_left_calf_tube",
+        "Dog_Scout / front_left_calf__front_left_calf_tube",
+        "Dog_Scout / front_right_calf__front_right_calf_tube",
+        "Dog_Scout / rear_right_calf__rear_right_calf_tube"
+      ],
+      "values": {
+        "density_kg_m3": 1300,
+        "youngs_modulus_pa": 3000000000,
+        "poissons_ratio": 0.38,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "9",
+      "material": "Slate Leg Metal",
+      "surfaceMaterial": "leg_slate",
+      "parts": [
+        "Dog_Scout / neck__neck_collar",
+        "Dog_Scout / neck__neck_column"
+      ],
+      "values": {
+        "density_kg_m3": 4500,
+        "youngs_modulus_pa": 110000000000,
+        "poissons_ratio": 0.32,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.45
+      }
+    },
+    {
+      "id": "10",
+      "material": "Cyan LED Diffuser",
+      "surfaceMaterial": "led_cyan",
+      "parts": [
+        "Dog_Scout / head__head_accent_left",
+        "Dog_Scout / chassis__status_led"
+      ],
+      "values": {
+        "density_kg_m3": 1190,
+        "youngs_modulus_pa": 3200000000,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "11",
+      "material": "Eye Glow Lens",
+      "surfaceMaterial": "eye_glow",
+      "parts": [
+        "Dog_Scout / head__head_eye_left",
+        "Dog_Scout / head__head_eye_right"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 3100000000,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.35,
+        "dynamic_friction_coefficient": 0.25,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "12",
+      "material": "Dark Sensor Polymer",
+      "surfaceMaterial": "Dog variants / dark sensor polymer",
+      "parts": [
+        "Scout / round lidar housing",
+        "Scout / dorsal sensor pedestal"
+      ],
+      "values": {
+        "density_kg_m3": 1400,
+        "youngs_modulus_pa": 4000000000,
+        "poissons_ratio": 0.36,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.25
+      }
+    }
+  ]
+}

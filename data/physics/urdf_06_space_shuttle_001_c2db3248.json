@@ -1,0 +1,538 @@
+{
+  "assetId": "urdf_06_space_shuttle_001_c2db3248",
+  "dimensions_m": [
+    5.782836437225342,
+    4.789600372314453,
+    7.603033065795898
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Carbon-carbon composite",
+      "surfaceMaterial": "REF_06_Space_shuttle_body_flap_00",
+      "parts": [
+        "body_flap"
+      ],
+      "values": {
+        "density_kg_m3": 1600.0,
+        "youngs_modulus_pa": 80000000000.0,
+        "poissons_ratio": 0.25,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "1",
+      "material": "Aluminum alloy fuselage skin",
+      "surfaceMaterial": "REF_06_Space_shuttle_fuselage_00",
+      "parts": [
+        "fuselage"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.61,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "2",
+      "material": "Silica thermal tile",
+      "surfaceMaterial": "REF_06_Space_shuttle_fuselage_01",
+      "parts": [
+        "fuselage"
+      ],
+      "values": {
+        "density_kg_m3": 144.0,
+        "youngs_modulus_pa": 100000000.0,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.2
+      }
+    },
+    {
+      "id": "3",
+      "material": "Carbon-carbon composite",
+      "surfaceMaterial": "REF_06_Space_shuttle_fuselage_02",
+      "parts": [
+        "fuselage"
+      ],
+      "values": {
+        "density_kg_m3": 1600.0,
+        "youngs_modulus_pa": 80000000000.0,
+        "poissons_ratio": 0.25,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "4",
+      "material": "Stainless steel",
+      "surfaceMaterial": "REF_06_Space_shuttle_fuselage_03",
+      "parts": [
+        "fuselage"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "Silica thermal tile",
+      "surfaceMaterial": "REF_06_Space_shuttle_fuselage_04",
+      "parts": [
+        "fuselage"
+      ],
+      "values": {
+        "density_kg_m3": 144.0,
+        "youngs_modulus_pa": 100000000.0,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.2
+      }
+    },
+    {
+      "id": "6",
+      "material": "Aluminum alloy fuselage skin",
+      "surfaceMaterial": "REF_06_Space_shuttle_fuselage_05",
+      "parts": [
+        "fuselage"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.61,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "7",
+      "material": "Reinforced glass window",
+      "surfaceMaterial": "REF_06_Space_shuttle_fuselage_06",
+      "parts": [
+        "fuselage"
+      ],
+      "values": {
+        "density_kg_m3": 2500.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.23,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "8",
+      "material": "Stainless steel",
+      "surfaceMaterial": "REF_06_Space_shuttle_fuselage_07",
+      "parts": [
+        "fuselage"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "9",
+      "material": "Carbon-carbon composite",
+      "surfaceMaterial": "REF_06_Space_shuttle_fuselage_08",
+      "parts": [
+        "fuselage"
+      ],
+      "values": {
+        "density_kg_m3": 1600.0,
+        "youngs_modulus_pa": 80000000000.0,
+        "poissons_ratio": 0.25,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "10",
+      "material": "Stainless steel",
+      "surfaceMaterial": "REF_06_Space_shuttle_left_nose_gear_door_00",
+      "parts": [
+        "left_nose_gear_door"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "11",
+      "material": "Aluminum alloy",
+      "surfaceMaterial": "REF_06_Space_shuttle_left_payload_bay_door_00",
+      "parts": [
+        "left_payload_bay_door"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.61,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "12",
+      "material": "Rubber tire",
+      "surfaceMaterial": "REF_06_Space_shuttle_left_main_wheel_00",
+      "parts": [
+        "left_main_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "13",
+      "material": "Bronze alloy wheel hub",
+      "surfaceMaterial": "REF_06_Space_shuttle_left_main_wheel_01",
+      "parts": [
+        "left_main_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 8600.0,
+        "youngs_modulus_pa": 105000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "14",
+      "material": "Stainless steel",
+      "surfaceMaterial": "REF_06_Space_shuttle_nose_gear_strut_00",
+      "parts": [
+        "nose_gear_strut"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "15",
+      "material": "Stainless steel",
+      "surfaceMaterial": "REF_06_Space_shuttle_right_main_gear_strut_00",
+      "parts": [
+        "right_main_gear_strut"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "16",
+      "material": "Carbon-carbon composite",
+      "surfaceMaterial": "REF_06_Space_shuttle_right_main_gear_strut_01",
+      "parts": [
+        "right_main_gear_strut"
+      ],
+      "values": {
+        "density_kg_m3": 1600.0,
+        "youngs_modulus_pa": 80000000000.0,
+        "poissons_ratio": 0.25,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "17",
+      "material": "Aluminum alloy",
+      "surfaceMaterial": "REF_06_Space_shuttle_right_payload_bay_door_00",
+      "parts": [
+        "right_payload_bay_door"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.61,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "18",
+      "material": "Stainless steel",
+      "surfaceMaterial": "REF_06_Space_shuttle_left_main_gear_strut_00",
+      "parts": [
+        "left_main_gear_strut"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "19",
+      "material": "Carbon-carbon composite",
+      "surfaceMaterial": "REF_06_Space_shuttle_left_main_gear_strut_01",
+      "parts": [
+        "left_main_gear_strut"
+      ],
+      "values": {
+        "density_kg_m3": 1600.0,
+        "youngs_modulus_pa": 80000000000.0,
+        "poissons_ratio": 0.25,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "20",
+      "material": "Stainless steel",
+      "surfaceMaterial": "REF_06_Space_shuttle_nose_gear_fork_00",
+      "parts": [
+        "nose_gear_fork"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "21",
+      "material": "Carbon-carbon composite",
+      "surfaceMaterial": "REF_06_Space_shuttle_nose_gear_fork_01",
+      "parts": [
+        "nose_gear_fork"
+      ],
+      "values": {
+        "density_kg_m3": 1600.0,
+        "youngs_modulus_pa": 80000000000.0,
+        "poissons_ratio": 0.25,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "22",
+      "material": "Silica thermal tile",
+      "surfaceMaterial": "REF_06_Space_shuttle_right_elevon_00",
+      "parts": [
+        "right_elevon"
+      ],
+      "values": {
+        "density_kg_m3": 144.0,
+        "youngs_modulus_pa": 100000000.0,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.2
+      }
+    },
+    {
+      "id": "23",
+      "material": "Rubber tire",
+      "surfaceMaterial": "REF_06_Space_shuttle_right_nose_wheel_00",
+      "parts": [
+        "right_nose_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "24",
+      "material": "Bronze alloy wheel hub",
+      "surfaceMaterial": "REF_06_Space_shuttle_right_nose_wheel_01",
+      "parts": [
+        "right_nose_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 8600.0,
+        "youngs_modulus_pa": 105000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "25",
+      "material": "Rubber tire",
+      "surfaceMaterial": "REF_06_Space_shuttle_right_main_wheel_00",
+      "parts": [
+        "right_main_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "26",
+      "material": "Bronze alloy wheel hub",
+      "surfaceMaterial": "REF_06_Space_shuttle_right_main_wheel_01",
+      "parts": [
+        "right_main_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 8600.0,
+        "youngs_modulus_pa": 105000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "27",
+      "material": "Silica thermal tile",
+      "surfaceMaterial": "REF_06_Space_shuttle_left_elevon_00",
+      "parts": [
+        "left_elevon"
+      ],
+      "values": {
+        "density_kg_m3": 144.0,
+        "youngs_modulus_pa": 100000000.0,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.2
+      }
+    },
+    {
+      "id": "28",
+      "material": "Rubber tire",
+      "surfaceMaterial": "REF_06_Space_shuttle_left_nose_wheel_00",
+      "parts": [
+        "left_nose_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "29",
+      "material": "Bronze alloy wheel hub",
+      "surfaceMaterial": "REF_06_Space_shuttle_left_nose_wheel_01",
+      "parts": [
+        "left_nose_wheel"
+      ],
+      "values": {
+        "density_kg_m3": 8600.0,
+        "youngs_modulus_pa": 105000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "30",
+      "material": "Silica thermal tile",
+      "surfaceMaterial": "REF_06_Space_shuttle_left_rudder_panel_00",
+      "parts": [
+        "left_rudder_panel"
+      ],
+      "values": {
+        "density_kg_m3": 144.0,
+        "youngs_modulus_pa": 100000000.0,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.2
+      }
+    },
+    {
+      "id": "31",
+      "material": "Stainless steel",
+      "surfaceMaterial": "REF_06_Space_shuttle_right_nose_gear_door_00",
+      "parts": [
+        "right_nose_gear_door"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 195000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "32",
+      "material": "Silica thermal tile",
+      "surfaceMaterial": "REF_06_Space_shuttle_right_rudder_panel_00",
+      "parts": [
+        "right_rudder_panel"
+      ],
+      "values": {
+        "density_kg_m3": 144.0,
+        "youngs_modulus_pa": 100000000.0,
+        "poissons_ratio": 0.2,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.2
+      }
+    }
+  ]
+}

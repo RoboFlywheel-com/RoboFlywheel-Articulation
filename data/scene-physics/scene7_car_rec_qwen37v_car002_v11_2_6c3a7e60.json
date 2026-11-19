@@ -1,0 +1,528 @@
+{
+  "assetId": "scene7_car_rec_qwen37v_car002_v11_2_6c3a7e60",
+  "name": "Car",
+  "totalMassKg": 1512.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "link body",
+      "materials": [
+        "Amber Polycarbonate",
+        "Steel Alloy",
+        "ABS Plastic",
+        "Carbon Fiber Reinforced Polymer",
+        "Automotive Glass",
+        "Painted Steel Body Panel",
+        "Interior Polyurethane Foam",
+        "Polycarbonate Lens",
+        "Red Polycarbonate Lens"
+      ],
+      "massKg": 1350.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -18.370996475219727,
+        28.268840789794922,
+        0.6697626751661301
+      ],
+      "inertia": {
+        "ixx": 3229.107716665067,
+        "iyy": 2768.424696333534,
+        "izz": 5687.83277107683,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        5.1854248046875,
+        5.786937713623047,
+        1.4062886536121368
+      ],
+      "sourceLink": null,
+      "massBasis": "Full-size sedan body-in-white with engine, drivetrain, interior, glass. Hollow shell plus concentrated powertrain mass lowers CoG and reduces variance vs solid box.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Full-size sedan body-in-white with engine, drivetrain, interior, glass. Hollow shell plus concentrated powertrain mass lowers CoG and reduces variance vs solid box.",
+      "surfaceMaterials": [
+        "PBR_amber",
+        "PBR_axle_steel",
+        "PBR_black_trim",
+        "PBR_black_trim_aero",
+        "PBR_glass_tint",
+        "PBR_gloss_yellow",
+        "PBR_interior_dark",
+        "PBR_lens_pale",
+        "PBR_tail_red"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "link door left",
+      "materials": [
+        "ABS Plastic",
+        "Automotive Glass",
+        "Painted Steel Body Panel"
+      ],
+      "massKg": 28.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -19.09369686126709,
+        27.411370277404785,
+        0.7037075471878051
+      ],
+      "inertia": {
+        "ixx": 5.451132549573307,
+        "iyy": 3.953167925453589,
+        "izz": 5.888948349378974,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.1627140045166016,
+        1.3535404205322266,
+        1.006223738193512
+      ],
+      "sourceLink": null,
+      "massBasis": "Stamped-steel door panel with glass window and trim. Hinge-side heavier; glass upper region shifts CoG slightly inward and up.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Stamped-steel door panel with glass window and trim. Hinge-side heavier; glass upper region shifts CoG slightly inward and up.",
+      "surfaceMaterials": [
+        "PBR_black_trim",
+        "PBR_glass_tint",
+        "PBR_gloss_yellow"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "link door right",
+      "materials": [
+        "ABS Plastic",
+        "Automotive Glass",
+        "Painted Steel Body Panel"
+      ],
+      "massKg": 28.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -17.53093105316162,
+        28.600107192993164,
+        0.7037075471878051
+      ],
+      "inertia": {
+        "ixx": 5.261993093698974,
+        "iyy": 4.145734145731277,
+        "izz": 5.892375113782328,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.2126331329345703,
+        1.3184280395507812,
+        1.006223738193512
+      ],
+      "sourceLink": null,
+      "massBasis": "Mirror of left door; same construction with glass and yellow gloss trim. Slightly larger bounding box but similar mass.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Mirror of left door; same construction with glass and yellow gloss trim. Slightly larger bounding box but similar mass.",
+      "surfaceMaterials": [
+        "PBR_black_trim",
+        "PBR_glass_tint",
+        "PBR_gloss_yellow"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "link wheel rear left",
+      "materials": [
+        "Tire Rubber",
+        "Aluminum Alloy"
+      ],
+      "massKg": 27.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -20.200578689575195,
+        28.91425895690918,
+        0.45493997633457184
+      ],
+      "inertia": {
+        "ixx": 3.655799060223454,
+        "iyy": 3.275430982467548,
+        "izz": 4.58185502574686,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.8334808349609375,
+        0.9057998657226562,
+        0.7998799979686737
+      ],
+      "sourceLink": null,
+      "massBasis": "Slightly larger rear tire + alloy. Same annular distribution, marginally higher radial variance due to larger diameter.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Slightly larger rear tire + alloy. Same annular distribution, marginally higher radial variance due to larger diameter.",
+      "surfaceMaterials": [
+        "PBR_rubber",
+        "PBR_silver_alloy"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "link wheel rear right",
+      "materials": [
+        "Tire Rubber",
+        "Aluminum Alloy"
+      ],
+      "massKg": 27.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -18.472196578979492,
+        30.206287384033203,
+        0.45493997633457184
+      ],
+      "inertia": {
+        "ixx": 3.655799060223454,
+        "iyy": 3.275430982467548,
+        "izz": 4.58185502574686,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.8334808349609375,
+        0.9057998657226562,
+        0.7998799979686737
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical rear-right wheel/tire assembly to rear-left.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical rear-right wheel/tire assembly to rear-left.",
+      "surfaceMaterials": [
+        "PBR_rubber",
+        "PBR_silver_alloy"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "link wheel front left",
+      "materials": [
+        "Tire Rubber",
+        "Aluminum Alloy"
+      ],
+      "massKg": 24.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -18.277055740356445,
+        26.34110450744629,
+        0.45493997633457184
+      ],
+      "inertia": {
+        "ixx": 2.9601810722090085,
+        "iyy": 2.6175618219133248,
+        "izz": 3.48940954572754,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.7719993591308594,
+        0.8519172668457031,
+        0.7998799979686737
+      ],
+      "sourceLink": null,
+      "massBasis": "Rubber tire + alloy wheel. Annular mass ring raises radial variance above solid-disc value; narrow axial spread.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rubber tire + alloy wheel. Annular mass ring raises radial variance above solid-disc value; narrow axial spread.",
+      "surfaceMaterials": [
+        "PBR_rubber",
+        "PBR_silver_alloy"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "link wheel front right",
+      "materials": [
+        "Tire Rubber",
+        "Aluminum Alloy"
+      ],
+      "massKg": 24.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -16.54867172241211,
+        27.633132934570312,
+        0.45493997633457184
+      ],
+      "inertia": {
+        "ixx": 2.9601810722090085,
+        "iyy": 2.6175618219133248,
+        "izz": 3.48940954572754,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.7719993591308594,
+        0.8519172668457031,
+        0.7998799979686737
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical front-right wheel/tire assembly to front-left.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical front-right wheel/tire assembly to front-left.",
+      "surfaceMaterials": [
+        "PBR_rubber",
+        "PBR_silver_alloy"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "link steering wheel",
+      "materials": [
+        "Amber Polycarbonate",
+        "ABS Plastic",
+        "Interior Polyurethane Foam",
+        "Polycarbonate Lens",
+        "Painted Polymer"
+      ],
+      "massKg": 4.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -18.425310134887695,
+        27.65306854248047,
+        0.8774327039718628
+      ],
+      "inertia": {
+        "ixx": 0.1071019526122609,
+        "iyy": 0.11230065560111598,
+        "izz": 0.2097455273781088,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5058517456054688,
+        0.4934654235839844,
+        0.14184117317199707
+      ],
+      "sourceLink": null,
+      "massBasis": "Rim-ring steering wheel with column hub. Mass concentrated in torus rim; low axial (z) variance, higher radial variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rim-ring steering wheel with column hub. Mass concentrated in torus rim; low axial (z) variance, higher radial variance.",
+      "surfaceMaterials": [
+        "PBR_amber",
+        "PBR_black_trim",
+        "PBR_interior_dark",
+        "PBR_lens_pale",
+        "PBR_sw_accent"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "wheel_rear_right_spin",
+      "type": "continuous",
+      "lower": -3.14159,
+      "upper": 3.14159,
+      "id": "0",
+      "effort": 400.0,
+      "velocity": 120.0,
+      "damping": 0.3,
+      "friction": 0.05,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "steering_wheel_turn",
+      "type": "revolute",
+      "lower": -3.14,
+      "upper": 3.14,
+      "id": "1",
+      "effort": 12.0,
+      "velocity": 6.0,
+      "damping": 1.5,
+      "friction": 0.3,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "wheel_front_left_spin",
+      "type": "continuous",
+      "lower": -3.14159,
+      "upper": 3.14159,
+      "id": "2",
+      "effort": 400.0,
+      "velocity": 120.0,
+      "damping": 0.3,
+      "friction": 0.05,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "door_left_hinge",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.4,
+      "id": "3",
+      "effort": 25.0,
+      "velocity": 2.5,
+      "damping": 3.0,
+      "friction": 0.8,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "wheel_front_right_spin",
+      "type": "continuous",
+      "lower": -3.14159,
+      "upper": 3.14159,
+      "id": "4",
+      "effort": 400.0,
+      "velocity": 120.0,
+      "damping": 0.3,
+      "friction": 0.05,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "door_right_hinge",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.4,
+      "id": "5",
+      "effort": 25.0,
+      "velocity": 2.5,
+      "damping": 3.0,
+      "friction": 0.8,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "wheel_rear_left_spin",
+      "type": "continuous",
+      "lower": -3.14159,
+      "upper": 3.14159,
+      "id": "6",
+      "effort": 400.0,
+      "velocity": 120.0,
+      "damping": 0.3,
+      "friction": 0.05,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "steer_knuckle_front_left_steer",
+      "type": "revolute",
+      "lower": -0.4,
+      "upper": 0.4,
+      "id": "7",
+      "effort": 600.0,
+      "velocity": 4.0,
+      "damping": 8.0,
+      "friction": 1.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "steer_knuckle_front_right_steer",
+      "type": "revolute",
+      "lower": -0.4,
+      "upper": 0.4,
+      "id": "8",
+      "effort": 600.0,
+      "velocity": 4.0,
+      "damping": 8.0,
+      "friction": 1.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

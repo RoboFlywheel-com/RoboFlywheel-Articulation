@@ -1,0 +1,264 @@
+{
+  "assetId": "v03_satellite_articulated_508d3d52",
+  "name": "Satellite",
+  "totalMassKg": 808.5,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "bus",
+      "materials": [
+        "Bus gold foil insulation",
+        "Teal painted panel",
+        "Dark solar cell coating",
+        "Reddish thermal paint",
+        "Beige composite panel",
+        "Satellite structural panel",
+        "Tan structural coating",
+        "Blue-gray painted metal",
+        "Brown anodized aluminum",
+        "Purple thermal coating",
+        "Black anodized aluminum"
+      ],
+      "massKg": 700.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0,
+        0,
+        0
+      ],
+      "inertia": {
+        "ixx": 267.386,
+        "iyy": 254.105,
+        "izz": 126.309,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.593212842941284,
+        1.9484367370605469,
+        3.2782907485961914
+      ],
+      "sourceLink": "bus",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "M_satellite_with_articulated_solar_panels_001",
+        "M_satellite_with_articulated_solar_panels_002",
+        "M_satellite_with_articulated_solar_panels_003",
+        "M_satellite_with_articulated_solar_panels_004",
+        "M_satellite_with_articulated_solar_panels_005",
+        "M_satellite_with_articulated_solar_panels_006",
+        "M_satellite_with_articulated_solar_panels_007",
+        "M_satellite_with_articulated_solar_panels_008",
+        "M_satellite_with_articulated_solar_panels_009",
+        "M_satellite_with_articulated_solar_panels_010",
+        "M_satellite_with_articulated_solar_panels_011"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "left solar wing",
+      "materials": [
+        "Dark solar cell coating",
+        "Satellite structural panel",
+        "Gold thermal foil",
+        "Blue solar cell",
+        "Lighter blue solar cell",
+        "Copper interconnect strip"
+      ],
+      "massKg": 45.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0,
+        0,
+        0
+      ],
+      "inertia": {
+        "ixx": 44.7762,
+        "iyy": 32.9066,
+        "izz": 11.9175,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.5453600883483887,
+        2.186979293823242,
+        4.624892234802246
+      ],
+      "sourceLink": "left_solar_wing",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "M_satellite_with_articulated_solar_panels_003",
+        "M_satellite_with_articulated_solar_panels_006",
+        "M_satellite_with_articulated_solar_panels_012",
+        "M_satellite_with_articulated_solar_panels_013",
+        "M_satellite_with_articulated_solar_panels_014",
+        "M_satellite_with_articulated_solar_panels_015"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "right solar wing",
+      "materials": [
+        "Dark solar cell coating",
+        "Satellite structural panel",
+        "Gold thermal foil",
+        "Blue solar cell",
+        "Lighter blue solar cell",
+        "Copper interconnect strip"
+      ],
+      "massKg": 45.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0,
+        0,
+        0
+      ],
+      "inertia": {
+        "ixx": 44.7762,
+        "iyy": 32.9066,
+        "izz": 11.9175,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        2.2484707832336426,
+        2.4036941528320312,
+        4.571267127990723
+      ],
+      "sourceLink": "right_solar_wing",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "M_satellite_with_articulated_solar_panels_003",
+        "M_satellite_with_articulated_solar_panels_006",
+        "M_satellite_with_articulated_solar_panels_012",
+        "M_satellite_with_articulated_solar_panels_013",
+        "M_satellite_with_articulated_solar_panels_014",
+        "M_satellite_with_articulated_solar_panels_015"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "high gain antenna",
+      "materials": [
+        "Satellite structural panel",
+        "Antenna red coating",
+        "Antenna reflector surface"
+      ],
+      "massKg": 18.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.596696853637695,
+        29.239586448669435,
+        8.985623836517334
+      ],
+      "inertia": {
+        "ixx": 6.793508987873145,
+        "iyy": 6.758003906780494,
+        "izz": 6.925591627973427,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.6082191467285156,
+        1.8010425567626953,
+        1.5770883560180664
+      ],
+      "sourceLink": "high_gain_antenna",
+      "massBasis": "Parabolic HGA dish (~1.6 m aperture) with feed assembly on a 790 kg satellite. Thin-shell composite reflector plus metallic feed/strut hardware; mass concentrated in rim and central feed rather than filling the bounding volume. CoM shifted slightly toward the dish face along the depth axis. Radial variance below uniform-box 1/12 reflecting hollow shell; depth variance lower still due to thin reflector.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Parabolic HGA dish (~1.6 m aperture) with feed assembly on a 790 kg satellite. Thin-shell composite reflector plus metallic feed/strut hardware; mass concentrated in rim and central feed rather than filling the bounding volume. CoM shifted slightly toward the dish face along the depth axis. Radial variance below uniform-box 1/12 reflecting hollow shell; depth variance lower still due to thin reflector.",
+      "surfaceMaterials": [
+        "M_satellite_with_articulated_solar_panels_006",
+        "M_satellite_with_articulated_solar_panels_016",
+        "M_satellite_with_articulated_solar_panels_017"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "bus_to_left_solar_wing",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.0699,
+      "id": "0",
+      "effort": 160.0,
+      "velocity": 0.35,
+      "damping": 2.0,
+      "friction": 0.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "bus_to_right_solar_wing",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.0699,
+      "id": "1",
+      "effort": 160.0,
+      "velocity": 0.35,
+      "damping": 2.0,
+      "friction": 0.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "bus_to_high_gain_antenna",
+      "type": "revolute",
+      "lower": -0.35,
+      "upper": 0.35,
+      "id": "2",
+      "effort": 25.0,
+      "velocity": 0.25,
+      "damping": 1.0,
+      "friction": 0.3,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/space_blend_asset/07_Satellite/seed_0006/model.urdf",
+  "referenceFrame": 240,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

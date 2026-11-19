@@ -1,0 +1,93 @@
+{
+  "assetId": "desk_stapler_placement_b7105b68",
+  "dimensions_m": [
+    0.1988767385482788,
+    0.09887981414794922,
+    0.10524523258209229
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Blue ABS Plastic",
+      "surfaceMaterial": "Material_4.008",
+      "parts": [
+        "Desk_Stapler / top_arm_arm_shell"
+      ],
+      "values": {
+        "density_kg_m3": 1050,
+        "youngs_modulus_pa": 2300000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "1",
+      "material": "Zinc Alloy Die Cast",
+      "surfaceMaterial": "Material_2.009",
+      "parts": [
+        "Desk_Stapler / base_anvil_plate",
+        "Desk_Stapler / top_arm_carrier_rail",
+        "Desk_Stapler / top_arm_driver_blade"
+      ],
+      "values": {
+        "density_kg_m3": 6600,
+        "youngs_modulus_pa": 85000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "2",
+      "material": "Black ABS Plastic",
+      "surfaceMaterial": "Material_0.009",
+      "parts": [
+        "Desk_Stapler / base_base_body"
+      ],
+      "values": {
+        "density_kg_m3": 1050,
+        "youngs_modulus_pa": 2300000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "3",
+      "material": "Rubber Feet",
+      "surfaceMaterial": "Material_1.009",
+      "parts": [
+        "Desk_Stapler / base_base_feet"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 10000000,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "4",
+      "material": "Steel Hinge Pin",
+      "surfaceMaterial": "Material_3.009",
+      "parts": [
+        "Desk_Stapler / base_hinge_knuckles",
+        "Desk_Stapler / top_arm_hinge_pin"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.4
+      }
+    }
+  ]
+}

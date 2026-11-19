@@ -1,0 +1,484 @@
+{
+  "assetId": "robot_clamp_placement_c10e95ae",
+  "name": "Robot clamp",
+  "totalMassKg": 52.8,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "2",
+      "name": "base",
+      "materials": [
+        "Aluminum Alloy",
+        "Dark Anodized Aluminum",
+        "Stainless Steel"
+      ],
+      "massKg": 18.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.9000001549720764,
+        2.050000011920929,
+        0.8065000069141388
+      ],
+      "inertia": {
+        "ixx": 0.5349889832429168,
+        "iyy": 0.5349889832429168,
+        "izz": 1.0326531264406569,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.587877631187439,
+        0.587877631187439,
+        0.12000006437301636
+      ],
+      "sourceLink": null,
+      "massBasis": "Flat square base plate, aluminum with steel mounting bosses. Semi-solid ~45% fill with bolt-circle reinforcement. COM slightly low due to steel inserts at bottom. Variance near 1/12 for plate axes, lower on thin z.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Flat square base plate, aluminum with steel mounting bosses. Semi-solid ~45% fill with bolt-circle reinforcement. COM slightly low due to steel inserts at bottom. Variance near 1/12 for plate axes, lower on thin z.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Clamp",
+        "dark",
+        "steel"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "shoulder root",
+      "materials": [
+        "Aluminum Alloy",
+        "Stainless Steel"
+      ],
+      "massKg": 9.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.94773930311203,
+        2.0107492208480835,
+        0.9237962627410888
+      ],
+      "inertia": {
+        "ixx": 0.18329076043806086,
+        "iyy": 0.19955736463706578,
+        "izz": 0.3179387937737827,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.42365944385528564,
+        0.40668225288391113,
+        0.19270050525665283
+      ],
+      "sourceLink": null,
+      "massBasis": "Shoulder root housing with embedded motor and bearing set; aluminum shell over steel core ~28% fill. Slightly bottom-heavy due to motor stator. Hollow shell raises variance.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Shoulder root housing with embedded motor and bearing set; aluminum shell over steel core ~28% fill. Slightly bottom-heavy due to motor stator. Hollow shell raises variance.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Clamp",
+        "steel"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "upper arm",
+      "materials": [
+        "Aluminum Alloy",
+        "Stainless Steel"
+      ],
+      "massKg": 8.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.9625910520553589,
+        2.007737934589386,
+        1.1646314465999603
+      ],
+      "inertia": {
+        "ixx": 0.40909490445412916,
+        "iyy": 0.4096075022074276,
+        "izz": 0.2974532035328695,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.40285325050354004,
+        0.40403449535369873,
+        0.5482746362686157
+      ],
+      "sourceLink": null,
+      "massBasis": "Long hollow upper-arm link, aluminum tube-like shell ~20% fill with internal cable channel. COM slightly toward shoulder end. Thin-shell geometry elevates variance above 1/12.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Long hollow upper-arm link, aluminum tube-like shell ~20% fill with internal cable channel. COM slightly toward shoulder end. Thin-shell geometry elevates variance above 1/12.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Clamp",
+        "steel"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "forearm",
+      "materials": [
+        "Aluminum Alloy",
+        "Stainless Steel"
+      ],
+      "massKg": 7.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.18826199054718,
+        1.8350282907485962,
+        1.3124439716339111
+      ],
+      "inertia": {
+        "ixx": 0.19737845283693645,
+        "iyy": 0.26416784406670996,
+        "izz": 0.380179750281895,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5327193737030029,
+        0.43581366539001465,
+        0.23290419578552246
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow aluminum forearm link enclosing drive train; ~22% effective fill. Motor housing biases COM toward shoulder end (-x). Shell construction raises variance above 1/12.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow aluminum forearm link enclosing drive train; ~22% effective fill. Motor housing biases COM toward shoulder end (-x). Shell construction raises variance above 1/12.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Clamp",
+        "steel"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "gripper base",
+      "materials": [
+        "Aluminum Alloy",
+        "Orange Plastic",
+        "Dark Anodized Aluminum",
+        "Stainless Steel"
+      ],
+      "massKg": 3.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.4989694356918335,
+        1.623980164527893,
+        1.2042226791381836
+      ],
+      "inertia": {
+        "ixx": 0.01626808410651411,
+        "iyy": 0.01768370133355911,
+        "izz": 0.020010324156450224,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.20456671714782715,
+        0.19057226181030273,
+        0.16605448722839355
+      ],
+      "sourceLink": null,
+      "massBasis": "Compact gripper-base housing, aluminum shell with internal steel gear train and accent trim. ~35% fill; nearly symmetric mass distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Compact gripper-base housing, aluminum shell with internal steel gear train and accent trim. ~35% fill; nearly symmetric mass distribution.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Clamp",
+        "accent",
+        "dark",
+        "steel"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "angular jaw 0",
+      "materials": [
+        "Aluminum Alloy",
+        "Dark Anodized Aluminum",
+        "Rubber",
+        "Stainless Steel"
+      ],
+      "massKg": 2.8,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.582542300224304,
+        1.5360040974617004,
+        1.1001681089401245
+      ],
+      "inertia": {
+        "ixx": 0.012111023568157712,
+        "iyy": 0.01066893878093074,
+        "izz": 0.014198709818929489,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.17089390754699707,
+        0.18455612659454346,
+        0.13840007781982422
+      ],
+      "sourceLink": null,
+      "massBasis": "Small angular jaw with aluminum shell, rubber grip pad on one face, steel pivot pin. Slightly hollow ~30% fill; rubber shifts COM toward +y. Near-uniform distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small angular jaw with aluminum shell, rubber grip pad on one face, steel pivot pin. Slightly hollow ~30% fill; rubber shifts COM toward +y. Near-uniform distribution.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Clamp",
+        "dark",
+        "rubber",
+        "steel"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "wrist roll",
+      "materials": [
+        "Aluminum Alloy",
+        "Stainless Steel"
+      ],
+      "massKg": 1.8,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.417755603790283,
+        1.6893066763877869,
+        1.2420266270637512
+      ],
+      "inertia": {
+        "ixx": 0.004489200617218584,
+        "iyy": 0.005601498750951396,
+        "izz": 0.007061515340714622,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.16953039169311523,
+        0.14283549785614014,
+        0.10255730152130127
+      ],
+      "sourceLink": null,
+      "massBasis": "Small cylindrical wrist-roll housing, aluminum with steel shaft through center. ~35% fill; near-symmetric.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small cylindrical wrist-roll housing, aluminum with steel shaft through center. ~35% fill; near-symmetric.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Clamp",
+        "steel"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "angular jaw 1",
+      "materials": [
+        "Aluminum Alloy",
+        "Dark Anodized Aluminum",
+        "Rubber",
+        "Stainless Steel"
+      ],
+      "massKg": 1.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.624248743057251,
+        1.5196198809146881,
+        1.244297742843628
+      ],
+      "inertia": {
+        "ixx": 0.004258487778869309,
+        "iyy": 0.005181254515257137,
+        "izz": 0.008832931517696735,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.2016153335571289,
+        0.17931854724884033,
+        0.051589250564575195
+      ],
+      "sourceLink": null,
+      "massBasis": "Thinner mating jaw, aluminum with rubber contact strip and steel pin. ~30% fill hollow shell. Slight COM offset toward grip surface.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thinner mating jaw, aluminum with rubber contact strip and steel pin. ~30% fill hollow shell. Slight COM offset toward grip surface.",
+      "surfaceMaterials": [
+        "Satin silver gray aluminum / Robot_Clamp",
+        "dark",
+        "rubber",
+        "steel"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "upper_arm",
+      "type": "revolute",
+      "lower": -0.24,
+      "upper": -0.06,
+      "id": "0",
+      "effort": 80.0,
+      "velocity": 2.0,
+      "damping": 1.5,
+      "friction": 0.3,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "angular_jaw_0",
+      "type": "revolute",
+      "lower": -0.2,
+      "upper": 0.2,
+      "id": "1",
+      "effort": 12.0,
+      "velocity": 3.0,
+      "damping": 0.3,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "wrist_roll",
+      "type": "revolute",
+      "lower": -0.45,
+      "upper": 0.45,
+      "id": "2",
+      "effort": 15.0,
+      "velocity": 3.5,
+      "damping": 0.4,
+      "friction": 0.1,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "angular_jaw_1",
+      "type": "revolute",
+      "lower": -0.2,
+      "upper": 0.2,
+      "id": "3",
+      "effort": 12.0,
+      "velocity": 3.0,
+      "damping": 0.3,
+      "friction": 0.08,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "forearm",
+      "type": "revolute",
+      "lower": -0.18,
+      "upper": 0.1,
+      "id": "4",
+      "effort": 50.0,
+      "velocity": 2.5,
+      "damping": 1.0,
+      "friction": 0.2,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "gripper_base",
+      "type": "revolute",
+      "lower": -0.25,
+      "upper": 0.25,
+      "id": "5",
+      "effort": 20.0,
+      "velocity": 2.5,
+      "damping": 0.5,
+      "friction": 0.12,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "shoulder_root",
+      "type": "revolute",
+      "lower": -0.45,
+      "upper": 0.45,
+      "id": "6",
+      "effort": 100.0,
+      "velocity": 1.8,
+      "damping": 2.0,
+      "friction": 0.4,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

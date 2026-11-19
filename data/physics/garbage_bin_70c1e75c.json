@@ -1,0 +1,98 @@
+{
+  "assetId": "garbage_bin_70c1e75c",
+  "dimensions_m": [
+    0.9486370086669922,
+    1.2636175155639648,
+    1.3371041417121887
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Black rubber wheel",
+      "surfaceMaterial": "M_seeded_garbage_bin_1_004",
+      "parts": [
+        "wheel_1.001",
+        "wheel_0.001",
+        "wheel_2.001",
+        "wheel_3.001"
+      ],
+      "values": {
+        "density_kg_m3": 930.0,
+        "youngs_modulus_pa": 3500000.0,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Galvanized steel bin body and lid",
+      "surfaceMaterial": "M_seeded_garbage_bin_1_002",
+      "parts": [
+        "wheel_1.001",
+        "body.003",
+        "lid.001",
+        "wheel_0.001",
+        "wheel_2.001",
+        "wheel_3.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Galvanized steel bin body panel",
+      "surfaceMaterial": "M_seeded_garbage_bin_1_001",
+      "parts": [
+        "body.003"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Dark gunmetal steel bin body accent",
+      "surfaceMaterial": "M_seeded_garbage_bin_1_003",
+      "parts": [
+        "body.003"
+      ],
+      "values": {
+        "density_kg_m3": 8600.0,
+        "youngs_modulus_pa": 105000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.42,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "4",
+      "material": "Galvanized steel bin lid",
+      "surfaceMaterial": "M_seeded_garbage_bin_1_005",
+      "parts": [
+        "lid.001"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.29,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

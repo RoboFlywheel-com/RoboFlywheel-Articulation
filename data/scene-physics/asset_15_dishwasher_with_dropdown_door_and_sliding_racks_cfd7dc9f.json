@@ -1,0 +1,366 @@
+{
+  "assetId": "asset_15_dishwasher_with_dropdown_door_and_sliding_racks_cfd7dc9f",
+  "name": "Dishwasher with dropdown door and sliding racks",
+  "totalMassKg": 38.8,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "front family  integrated hidden  body",
+      "materials": [
+        "Dark molded plastic",
+        "Stainless steel liner",
+        "Stainless steel shell",
+        "Stainless steel trim"
+      ],
+      "massKg": 28.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1400001049041748,
+        4.9565840911865235,
+        0.45649999007582664
+      ],
+      "inertia": {
+        "ixx": 2.6041281858261613,
+        "iyy": 2.5403914367132794,
+        "izz": 1.842210976960864,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6641459465026855,
+        0.7236104011535645,
+        0.9049999788403511
+      ],
+      "sourceLink": "front_family__integrated_hidden__body",
+      "massBasis": "Hollow stainless tub/shell with internal pump and motor low in the cabinet. Mass concentrated in thin walls and base hardware; variance below 1/12 uniform-box value to reflect shell-dominated distribution with heavy bottom.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow stainless tub/shell with internal pump and motor low in the cabinet. Mass concentrated in thin walls and base hardware; variance below 1/12 uniform-box value to reflect shell-dominated distribution with heavy bottom.",
+      "surfaceMaterials": [
+        "15 | dishwasher_stainless_dark",
+        "15 | dishwasher_stainless_liner",
+        "15 | dishwasher_stainless_shell",
+        "15 | dishwasher_stainless_trim"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "front family  integrated hidden  door",
+      "materials": [
+        "Stainless steel accent",
+        "Dark molded plastic",
+        "Stainless steel liner",
+        "Stainless steel shell",
+        "Stainless steel trim"
+      ],
+      "massKg": 6.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1399966776371002,
+        4.272288799285889,
+        0.13895873665809633
+      ],
+      "inertia": {
+        "ixx": 0.3568061163994162,
+        "iyy": 0.23418839375129458,
+        "izz": 0.559263170860011,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6553098559379578,
+        0.8189105987548828,
+        0.2100483924150467
+      ],
+      "sourceLink": "front_family__integrated_hidden__door",
+      "massBasis": "Flat insulated stainless door panel with inner liner and trim. Mass spread across the panel face; thin z-extent gives lower z-variance. Slight z-offset toward inner liner side.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Flat insulated stainless door panel with inner liner and trim. Mass spread across the panel face; thin z-extent gives lower z-variance. Slight z-offset toward inner liner side.",
+      "surfaceMaterials": [
+        "15 | dishwasher_stainless_accent",
+        "15 | dishwasher_stainless_dark",
+        "15 | dishwasher_stainless_liner",
+        "15 | dishwasher_stainless_shell",
+        "15 | dishwasher_stainless_trim"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "rack geometry  round wire  rack 0",
+      "materials": [
+        "Stainless steel rack",
+        "Stainless steel trim"
+      ],
+      "massKg": 2.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1400004923343658,
+        4.765005826950073,
+        0.37024834752082825
+      ],
+      "inertia": {
+        "ixx": 0.05266789132547444,
+        "iyy": 0.05732484124434222,
+        "izz": 0.10227295377605117,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5780622363090515,
+        0.5523133277893066,
+        0.17934811115264893
+      ],
+      "sourceLink": "rack_geometry__round_wire__rack_0",
+      "massBasis": "Round-wire rack: open lattice of thin stainless rods. Mass distributed along perimeter and cross-wires, slightly less than solid-box variance; very thin in z.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Round-wire rack: open lattice of thin stainless rods. Mass distributed along perimeter and cross-wires, slightly less than solid-box variance; very thin in z.",
+      "surfaceMaterials": [
+        "15 | dishwasher_stainless_rack",
+        "15 | dishwasher_stainless_trim"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "rack geometry  round wire  rack 1",
+      "materials": [
+        "Stainless steel rack",
+        "Stainless steel trim"
+      ],
+      "massKg": 2.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1400003731250763,
+        4.788869619369507,
+        0.6493197679519653
+      ],
+      "inertia": {
+        "ixx": 0.052715480097724025,
+        "iyy": 0.057372430016591806,
+        "izz": 0.10227295377605117,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.5780622363090515,
+        0.5523133277893066,
+        0.18045032024383545
+      ],
+      "sourceLink": "rack_geometry__round_wire__rack_1",
+      "massBasis": "Identical wire-rack construction to rack 0; kept consistent. Same open-lattice distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical wire-rack construction to rack 0; kept consistent. Same open-lattice distribution.",
+      "surfaceMaterials": [
+        "15 | dishwasher_stainless_rack",
+        "15 | dishwasher_stainless_trim"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "wash arm  offset paddle  lower",
+      "materials": [
+        "Stainless steel accent",
+        "Dark molded plastic",
+        "Stainless steel trim"
+      ],
+      "massKg": 0.35,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1400001347064972,
+        4.9932098388671875,
+        0.18886258453130722
+      ],
+      "inertia": {
+        "ixx": 0.004409434930747591,
+        "iyy": 0.003358268138790143,
+        "izz": 0.007748902320709831,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.33952826261520386,
+        0.38918399810791016,
+        0.023176804184913635
+      ],
+      "sourceLink": "wash_arm__offset_paddle__lower",
+      "massBasis": "Thin offset-paddle spray arm, mostly hollow plastic/metal. Mass spread along the paddle length; very thin in z so z-variance is low.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin offset-paddle spray arm, mostly hollow plastic/metal. Mass spread along the paddle length; very thin in z so z-variance is low.",
+      "surfaceMaterials": [
+        "15 | dishwasher_stainless_accent",
+        "15 | dishwasher_stainless_dark",
+        "15 | dishwasher_stainless_trim"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "wash arm  offset paddle  upper",
+      "materials": [
+        "Stainless steel accent",
+        "Dark molded plastic",
+        "Stainless steel trim"
+      ],
+      "massKg": 0.25,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.1400001049041748,
+        4.795054912567139,
+        0.5508182942867279
+      ],
+      "inertia": {
+        "ixx": 0.0026916367840870256,
+        "iyy": 0.0005867111964541483,
+        "izz": 0.003264918822431284,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.16718745231628418,
+        0.3597135543823242,
+        0.023176848888397217
+      ],
+      "sourceLink": "wash_arm__offset_paddle__upper",
+      "massBasis": "Smaller upper spray arm, same construction as lower. Scaled mass by volume ratio (~0.7\u00d7 lower arm).",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Smaller upper spray arm, same construction as lower. Scaled mass by volume ratio (~0.7\u00d7 lower arm).",
+      "surfaceMaterials": [
+        "15 | dishwasher_stainless_accent",
+        "15 | dishwasher_stainless_dark",
+        "15 | dishwasher_stainless_trim"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "front_family__integrated_hidden__door_hinge",
+      "type": "revolute",
+      "lower": -1.51844,
+      "upper": 0.0,
+      "id": "0",
+      "effort": 80.0,
+      "velocity": 0.8,
+      "damping": 3.0,
+      "friction": 0.8,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rack_geometry__round_wire__rack_0_slide",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.288281,
+      "id": "1",
+      "effort": 45.0,
+      "velocity": 0.38,
+      "damping": 12.0,
+      "friction": 8.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rack_geometry__round_wire__rack_1_slide",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.258714,
+      "id": "2",
+      "effort": 45.0,
+      "velocity": 0.38,
+      "damping": 12.0,
+      "friction": 8.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "wash_arm__offset_paddle__upper_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "3",
+      "effort": 1.5,
+      "velocity": 12.0,
+      "damping": 0.01,
+      "friction": 0.02,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "wash_arm__offset_paddle__lower_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "4",
+      "effort": 2.0,
+      "velocity": 12.0,
+      "damping": 0.01,
+      "friction": 0.02,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/Indoor_blend_asset/15_dishwasher_with_dropdown_door_and_sliding_racks/dishwasher_with_dropdown_door_and_sliding_racks/seed_0000/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

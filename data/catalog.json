@@ -1,0 +1,5504 @@
+[
+  {
+    "id": "adjust_air_fryer_d12f937b",
+    "name": "Air fryer",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "drawer_slide_1",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.17272
+      },
+      {
+        "name": "body_to_temp_knob",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 5.235988
+      },
+      {
+        "name": "drawer_slide_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.17272
+      },
+      {
+        "name": "body_to_mode_knob",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 5.235988
+      },
+      {
+        "name": "body_to_timer_knob",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 5.235988
+      }
+    ],
+    "meshes": 33,
+    "model": "models/adjust_air_fryer_d12f937b.glb",
+    "thumbnail": "media/thumbs/adjust_air_fryer_d12f937b.webp",
+    "sourceHash": "50f01434d4ee873eb39a1aab4a1e1f3f22872466462578dd962b85e4a41cf44a",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "adjust_kettle_49b521bb",
+    "name": "Kettle",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "trivet_to_body",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.06042
+      },
+      {
+        "name": "spout_to_cap",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.4
+      },
+      {
+        "name": "body_to_lid",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.04028
+      }
+    ],
+    "meshes": 19,
+    "model": "models/adjust_kettle_49b521bb.glb",
+    "thumbnail": "media/thumbs/adjust_kettle_49b521bb.webp",
+    "sourceHash": "0e0dcbf31455fc0792421aa1b2ee316b1082a71f18f93cf799296e3fcff20831",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "adjust_lazy_susan_9425fb56",
+    "name": "Lazy susan",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "spin",
+        "type": "revolute",
+        "lower": -3.14159,
+        "upper": 3.14159
+      }
+    ],
+    "meshes": 14,
+    "model": "models/adjust_lazy_susan_9425fb56.glb",
+    "thumbnail": "media/thumbs/adjust_lazy_susan_9425fb56.webp",
+    "sourceHash": "9436ce2f12deb8eb6f3bb5397deabe798ed77d7680528d87ea370d65d8ac2e8c",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_13_refrigerator_with_hinged_doors_35af1266",
+    "name": "Refrigerator with hinged doors",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "drawer_0_joint",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.024
+      },
+      {
+        "name": "drawer_1_joint",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.024
+      },
+      {
+        "name": "door_0_joint",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.8
+      },
+      {
+        "name": "door_1_joint",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.8
+      }
+    ],
+    "meshes": 11,
+    "model": "models/asset_13_refrigerator_with_hinged_doors_35af1266.glb",
+    "thumbnail": "media/thumbs/asset_13_refrigerator_with_hinged_doors_35af1266.webp",
+    "sourceHash": "daba58cea14272cd73055464e541c475c35626ee3832666934a428e279cedb2f",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_14_high_arc_gooseneck_faucet_d75724ef",
+    "name": "High arc gooseneck faucet",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "column_to_gooseneck",
+        "type": "revolute",
+        "lower": -1.74533,
+        "upper": 1.74533
+      },
+      {
+        "name": "hose_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0693432
+      },
+      {
+        "name": "spray_pulldown",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0693432
+      },
+      {
+        "name": "lever_pivot_0",
+        "type": "revolute",
+        "lower": -1.5708,
+        "upper": 0.785398
+      },
+      {
+        "name": "dial_knob",
+        "type": "revolute",
+        "lower": -2.35619,
+        "upper": 2.35619
+      }
+    ],
+    "meshes": 6,
+    "model": "models/asset_14_high_arc_gooseneck_faucet_d75724ef.glb",
+    "thumbnail": "media/thumbs/asset_14_high_arc_gooseneck_faucet_d75724ef.webp",
+    "sourceHash": "ea88ed4801ca76512b6a971cf177fe63f21c09c9af2c3af71fa6a0c05836cf4d",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_15_dishwasher_with_dropdown_door_and_sliding_racks_cfd7dc9f",
+    "name": "Dishwasher with dropdown door and sliding racks",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "front_family__integrated_hidden__door_hinge",
+        "type": "revolute",
+        "lower": -1.51844,
+        "upper": 0.0
+      },
+      {
+        "name": "rack_geometry__round_wire__rack_0_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.288281
+      },
+      {
+        "name": "rack_geometry__round_wire__rack_1_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.258714
+      },
+      {
+        "name": "wash_arm__offset_paddle__upper_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "wash_arm__offset_paddle__lower_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 6,
+    "model": "models/asset_15_dishwasher_with_dropdown_door_and_sliding_racks_cfd7dc9f.glb",
+    "thumbnail": "media/thumbs/asset_15_dishwasher_with_dropdown_door_and_sliding_racks_cfd7dc9f.webp",
+    "sourceHash": "0b5b0890ef528c76a214a73f19efcfe3cfc3068cc990173fa9c82e6a63bf93f5",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_18_coffee_machine_1d83cdab",
+    "name": "Coffee machine",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "fascia_to_dial",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "body_to_tray",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.111096
+      },
+      {
+        "name": "body_to_wand",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.0428
+      },
+      {
+        "name": "body_to_spout",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.058146
+      },
+      {
+        "name": "deck_to_hopper_lid",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.87972
+      }
+    ],
+    "meshes": 6,
+    "model": "models/asset_18_coffee_machine_1d83cdab.glb",
+    "thumbnail": "media/thumbs/asset_18_coffee_machine_1d83cdab.webp",
+    "sourceHash": "acdf704d5b0b0a6750bb174ebdf5931814feeed0601c334e0d9c12bee99a7b12",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_21_washmachine_2e9d4f84",
+    "name": "Washmachine",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "body_to_drum",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "body_to_door",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.66846
+      },
+      {
+        "name": "body_to_dial",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "body_to_drawer",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.163709
+      }
+    ],
+    "meshes": 5,
+    "model": "models/asset_21_washmachine_2e9d4f84.glb",
+    "thumbnail": "media/thumbs/asset_21_washmachine_2e9d4f84.webp",
+    "sourceHash": "1d8017eb62ee2f47a2369b531d222a960c1df41c50c37c4716871ab90126ca06",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_22_ironing_board_a443c671",
+    "name": "Ironing board",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "board_to_rear_leg",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.55
+      },
+      {
+        "name": "board_to_front_leg",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.55
+      },
+      {
+        "name": "board_to_height_latch",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.11
+      }
+    ],
+    "meshes": 4,
+    "model": "models/asset_22_ironing_board_a443c671.glb",
+    "thumbnail": "media/thumbs/asset_22_ironing_board_a443c671.webp",
+    "sourceHash": "43ce2eafc9df9ec5ed26d53712ee803963b18bf9c96e41ae9b46a0e01112ca3c",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_23_toilet_95f66711",
+    "name": "Toilet",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "body_to_seat_ring",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.74533
+      },
+      {
+        "name": "body_to_seat_lid",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.74533
+      },
+      {
+        "name": "body_to_flush_button",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.006
+      }
+    ],
+    "meshes": 4,
+    "model": "models/asset_23_toilet_95f66711.glb",
+    "thumbnail": "media/thumbs/asset_23_toilet_95f66711.webp",
+    "sourceHash": "813ed19b74f4b103931ac323ed8c5300d8cab0489e54f91ced199760d8cd8007",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_24_single_hole_basin_faucet_a38df667",
+    "name": "Single hole basin faucet",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "body_to_pivot_block",
+        "type": "revolute",
+        "lower": -0.785,
+        "upper": 0.785
+      },
+      {
+        "name": "pivot_block_to_handle",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.44
+      }
+    ],
+    "meshes": 3,
+    "model": "models/asset_24_single_hole_basin_faucet_a38df667.glb",
+    "thumbnail": "media/thumbs/asset_24_single_hole_basin_faucet_a38df667.webp",
+    "sourceHash": "19635b931cff6611ec204b794e5e1052f44525546bab264d5770a2f87fdfb894",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_25_piano_7c8af708",
+    "name": "Piano",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "body_to_white_key_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_1",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_2",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_3",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_4",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_5",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_6",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_7",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_8",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_9",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_10",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_11",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_12",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_13",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_14",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_15",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_16",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_17",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_18",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_19",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_20",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_21",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_22",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_23",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_24",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_25",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_26",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_27",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_28",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_29",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_30",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_31",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_32",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_33",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_34",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_35",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_36",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_37",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_38",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_39",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_40",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_41",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_42",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_43",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_44",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_45",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_46",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_47",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_48",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_49",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_50",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_white_key_51",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.009
+      },
+      {
+        "name": "body_to_black_key_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_1",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_2",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_3",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_4",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_5",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_6",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_7",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_8",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_9",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_10",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_11",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_12",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_13",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_14",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_15",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_16",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_17",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_18",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_19",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_20",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_21",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_22",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_23",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_24",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_25",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_26",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_27",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_28",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_29",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_30",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_31",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_32",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_33",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_34",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_35",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_black_key_36",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.007
+      },
+      {
+        "name": "body_to_top_lid",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.2
+      },
+      {
+        "name": "body_to_fallboard",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "body_to_pedal_0",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.18
+      },
+      {
+        "name": "body_to_pedal_1",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.18
+      },
+      {
+        "name": "body_to_pedal_2",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.18
+      },
+      {
+        "name": "body_to_pedal_3",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.18
+      }
+    ],
+    "meshes": 96,
+    "model": "models/asset_25_piano_7c8af708.glb",
+    "thumbnail": "media/thumbs/asset_25_piano_7c8af708.webp",
+    "sourceHash": "cc3234205cb0a9741a35b39060b20f79134260d4c22d89c43764f5951610ea8d",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_26_violin_case_c1b526f8",
+    "name": "Violin case",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "bottom_to_lid",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 3.14159
+      },
+      {
+        "name": "bottom_to_latch_0",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.39626
+      },
+      {
+        "name": "bottom_to_latch_1",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.39626
+      }
+    ],
+    "meshes": 4,
+    "model": "models/asset_26_violin_case_c1b526f8.glb",
+    "thumbnail": "media/thumbs/asset_26_violin_case_c1b526f8.webp",
+    "sourceHash": "d96567355e52f90ebd85bae336396ee7ece3dfdd69a1eea7beb39973a79f794c",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_27_vocal_mic_bcb8d220",
+    "name": "Vocal mic",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "base_to_body",
+        "type": "revolute",
+        "lower": -0.829328,
+        "upper": 0.829328
+      },
+      {
+        "name": "body_to_front_knob_0",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "body_to_front_knob_1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 8,
+    "model": "models/asset_27_vocal_mic_bcb8d220.glb",
+    "thumbnail": "media/thumbs/asset_27_vocal_mic_bcb8d220.webp",
+    "sourceHash": "2df455a55f6964ee1943280befa6a681f6897072a201b6e61df7639ad11c9810",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_28_keyboard_7a93106c",
+    "name": "Keyboard",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "chassis_to_white_key_0",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_1",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_2",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_3",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_4",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_5",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_6",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_7",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_8",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_9",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_10",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_11",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_12",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_13",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_14",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_15",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_16",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_17",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_18",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_19",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_20",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_21",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_22",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_23",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_24",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_25",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_26",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_27",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_28",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_29",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_30",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_31",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_32",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_33",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_34",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_white_key_35",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_0",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_1",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_2",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_3",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_4",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_5",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_6",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_7",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_8",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_9",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_10",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_11",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_12",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_13",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_14",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_15",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_16",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_17",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_18",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_19",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_20",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_21",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_22",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_23",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_black_key_24",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.0587
+      },
+      {
+        "name": "chassis_to_pad_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_1",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_2",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_3",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_4",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_5",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_6",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_7",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_8",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_9",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_10",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_11",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_12",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_13",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_14",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_pad_15",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.004
+      },
+      {
+        "name": "chassis_to_env_slider_0",
+        "type": "prismatic",
+        "lower": -0.014,
+        "upper": 0.014
+      },
+      {
+        "name": "chassis_to_env_slider_1",
+        "type": "prismatic",
+        "lower": -0.014,
+        "upper": 0.014
+      },
+      {
+        "name": "chassis_to_env_slider_2",
+        "type": "prismatic",
+        "lower": -0.014,
+        "upper": 0.014
+      },
+      {
+        "name": "chassis_to_env_slider_3",
+        "type": "prismatic",
+        "lower": -0.014,
+        "upper": 0.014
+      },
+      {
+        "name": "chassis_to_wheel_0",
+        "type": "revolute",
+        "lower": -1.0,
+        "upper": 1.0
+      },
+      {
+        "name": "chassis_to_wheel_1",
+        "type": "revolute",
+        "lower": -1.0,
+        "upper": 1.0
+      }
+    ],
+    "meshes": 88,
+    "model": "models/asset_28_keyboard_7a93106c.glb",
+    "thumbnail": "media/thumbs/asset_28_keyboard_7a93106c.webp",
+    "sourceHash": "cf5eb874f6bbdbe5bd255770b0999e6c84693030187c1723c15bd865c2d26c83",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_56_laundry_clothes_drying_rack_c40fe128",
+    "name": "Laundry clothes drying rack",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "spine_to_leg_0",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.949684
+      },
+      {
+        "name": "spine_to_leg_1",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.949684
+      },
+      {
+        "name": "spine_to_wing_t0_front",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.993992
+      },
+      {
+        "name": "spine_to_wing_t0_rear",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.993992
+      },
+      {
+        "name": "rail_to_hanger_0",
+        "type": "revolute",
+        "lower": -0.192353,
+        "upper": 0.192353
+      },
+      {
+        "name": "rail_to_hanger_1",
+        "type": "revolute",
+        "lower": -0.192353,
+        "upper": 0.192353
+      }
+    ],
+    "meshes": 7,
+    "model": "models/asset_56_laundry_clothes_drying_rack_c40fe128.glb",
+    "thumbnail": "media/thumbs/asset_56_laundry_clothes_drying_rack_c40fe128.webp",
+    "sourceHash": "eb1cce11bb4ecff0e54bba89d3022894d208e178a99aa9a8f4be86c62d27dffb",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_58_clothing_rack_482d64bd",
+    "name": "Clothing rack",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "wheel_spin_0",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "wheel_spin_1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "wheel_spin_2",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "wheel_spin_3",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "height_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.14
+      },
+      {
+        "name": "top_hanger_0_swing",
+        "type": "revolute",
+        "lower": -0.35,
+        "upper": 0.35
+      },
+      {
+        "name": "top_hanger_1_swing",
+        "type": "revolute",
+        "lower": -0.35,
+        "upper": 0.35
+      },
+      {
+        "name": "top_hanger_2_swing",
+        "type": "revolute",
+        "lower": -0.35,
+        "upper": 0.35
+      },
+      {
+        "name": "top_hanger_3_swing",
+        "type": "revolute",
+        "lower": -0.35,
+        "upper": 0.35
+      }
+    ],
+    "meshes": 10,
+    "model": "models/asset_58_clothing_rack_482d64bd.glb",
+    "thumbnail": "media/thumbs/asset_58_clothing_rack_482d64bd.webp",
+    "sourceHash": "396c54611a114b2a2f3b9bff340d9e8fb6670bdf092e5cc4068df8a706577898",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "asset_90_hero_toaster_6664610a",
+    "name": "Toaster",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "body_to_carriage_lever",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.074025
+      },
+      {
+        "name": "body_to_browning_dial",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 5.14546
+      },
+      {
+        "name": "body_to_cancel_button",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.003
+      },
+      {
+        "name": "body_to_frozen_button",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.003
+      },
+      {
+        "name": "body_to_bagel_button",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.003
+      }
+    ],
+    "meshes": 8,
+    "model": "models/asset_90_hero_toaster_6664610a.glb",
+    "thumbnail": "media/thumbs/asset_90_hero_toaster_6664610a.webp",
+    "sourceHash": "d4f79cff7dca8e1738cecaf1ac9cbb5109089c8f8e95814aa7c5b8b78aa30eb5",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "cabinet_rig_right_double_door_ddac9ca2",
+    "name": "Cabinet rig right double door",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "door_0",
+        "type": "revolute",
+        "lower": -1.5707963267948966,
+        "upper": 0
+      },
+      {
+        "name": "door_1",
+        "type": "revolute",
+        "lower": 0,
+        "upper": 1.5707963267948966
+      }
+    ],
+    "meshes": 11,
+    "model": "models/cabinet_rig_right_double_door_ddac9ca2.glb",
+    "thumbnail": "media/thumbs/cabinet_rig_right_double_door_ddac9ca2.webp",
+    "sourceHash": "55a4451bd7e59625d2fcc3464ed109108a5682f5c7af15c8d5ef264a59bbaa84",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "cabinet_rig_sink_double_door_758afe8d",
+    "name": "Cabinet rig sink double door",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "door_0",
+        "type": "revolute",
+        "lower": -1.5707963267948966,
+        "upper": 0
+      },
+      {
+        "name": "door_1",
+        "type": "revolute",
+        "lower": 0,
+        "upper": 1.5707963267948966
+      }
+    ],
+    "meshes": 10,
+    "model": "models/cabinet_rig_sink_double_door_758afe8d.glb",
+    "thumbnail": "media/thumbs/cabinet_rig_sink_double_door_758afe8d.webp",
+    "sourceHash": "34242c1e447f5f8d27673690781eff7ce22a9ae7ea9b94ac0b2ba9e2eae19eaf",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "cabinet_rig_three_drawer_2fce3abe",
+    "name": "Cabinet rig three drawer",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "front_drawer_0",
+        "type": "prismatic",
+        "lower": 0,
+        "upper": 0.4
+      },
+      {
+        "name": "front_drawer_1",
+        "type": "prismatic",
+        "lower": 0,
+        "upper": 0.4
+      },
+      {
+        "name": "front_drawer_2",
+        "type": "prismatic",
+        "lower": 0,
+        "upper": 0.4
+      }
+    ],
+    "meshes": 24,
+    "model": "models/cabinet_rig_three_drawer_2fce3abe.glb",
+    "thumbnail": "media/thumbs/cabinet_rig_three_drawer_2fce3abe.webp",
+    "sourceHash": "ec032e8c1b0ea89a79cbcdd49ad8d50a5327ba6dd58686711db581e63e174834",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "cabinet_rig_two_drawer_b770d60f",
+    "name": "Cabinet rig two drawer",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "front_drawer_0",
+        "type": "prismatic",
+        "lower": 0,
+        "upper": 0.4
+      },
+      {
+        "name": "front_drawer_1",
+        "type": "prismatic",
+        "lower": 0,
+        "upper": 0.4
+      }
+    ],
+    "meshes": 18,
+    "model": "models/cabinet_rig_two_drawer_b770d60f.glb",
+    "thumbnail": "media/thumbs/cabinet_rig_two_drawer_b770d60f.webp",
+    "sourceHash": "a52a2179b56742e6256d3fa9c078ea2f1aa1ed107ddf3d5eed3ee6cb0d6c0eca",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "ceiling_light_five_arm_03e9eaf1",
+    "name": "Ceiling light five arm",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "arm_swing_0",
+        "type": "revolute",
+        "lower": -0.367611,
+        "upper": 0.367611
+      },
+      {
+        "name": "shade_tilt_0",
+        "type": "revolute",
+        "lower": -0.265,
+        "upper": 0.656
+      },
+      {
+        "name": "arm_swing_1",
+        "type": "revolute",
+        "lower": -0.367611,
+        "upper": 0.367611
+      },
+      {
+        "name": "shade_tilt_1",
+        "type": "revolute",
+        "lower": -0.265,
+        "upper": 0.656
+      },
+      {
+        "name": "arm_swing_2",
+        "type": "revolute",
+        "lower": -0.367611,
+        "upper": 0.367611
+      },
+      {
+        "name": "shade_tilt_2",
+        "type": "revolute",
+        "lower": -0.265,
+        "upper": 0.656
+      },
+      {
+        "name": "arm_swing_3",
+        "type": "revolute",
+        "lower": -0.367611,
+        "upper": 0.367611
+      },
+      {
+        "name": "shade_tilt_3",
+        "type": "revolute",
+        "lower": -0.265,
+        "upper": 0.656
+      },
+      {
+        "name": "arm_swing_4",
+        "type": "revolute",
+        "lower": -0.367611,
+        "upper": 0.367611
+      },
+      {
+        "name": "shade_tilt_4",
+        "type": "revolute",
+        "lower": -0.265,
+        "upper": 0.656
+      }
+    ],
+    "meshes": 11,
+    "model": "models/ceiling_light_five_arm_03e9eaf1.glb",
+    "thumbnail": "media/thumbs/ceiling_light_five_arm_03e9eaf1.webp",
+    "sourceHash": "2dc3c7e6858cabe0089b90f28bcc5a7802d2edd580efa10570ab21101617a280",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "ceiling_light_rail_a_227f1bdb",
+    "name": "Ceiling light rail a",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "rail_slide_0",
+        "type": "prismatic",
+        "lower": -4.28305009573363,
+        "upper": 4.28305009573363
+      },
+      {
+        "name": "carriage_swivel_0",
+        "type": "revolute",
+        "lower": -0.2,
+        "upper": 0.2
+      },
+      {
+        "name": "head_tilt_0",
+        "type": "revolute",
+        "lower": -0.333,
+        "upper": 0.68
+      },
+      {
+        "name": "rail_slide_1",
+        "type": "prismatic",
+        "lower": -4.28305009573363,
+        "upper": 4.28305009573363
+      },
+      {
+        "name": "carriage_swivel_1",
+        "type": "revolute",
+        "lower": -0.2,
+        "upper": 0.2
+      },
+      {
+        "name": "head_tilt_1",
+        "type": "revolute",
+        "lower": -0.333,
+        "upper": 0.68
+      },
+      {
+        "name": "rail_slide_2",
+        "type": "prismatic",
+        "lower": -4.28305009573363,
+        "upper": 4.28305009573363
+      },
+      {
+        "name": "carriage_swivel_2",
+        "type": "revolute",
+        "lower": -0.2,
+        "upper": 0.2
+      },
+      {
+        "name": "head_tilt_2",
+        "type": "revolute",
+        "lower": -0.333,
+        "upper": 0.68
+      }
+    ],
+    "meshes": 10,
+    "model": "models/ceiling_light_rail_a_227f1bdb.glb",
+    "thumbnail": "media/thumbs/ceiling_light_rail_a_227f1bdb.webp",
+    "sourceHash": "1bf456cc384aee0ba7cb1944219817768640dc6561fa8b4e4ae954f02bfe125b",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "ceiling_light_rail_b_8980c652",
+    "name": "Ceiling light rail b",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "rail_slide_0",
+        "type": "prismatic",
+        "lower": -4.28305009573363,
+        "upper": 4.28305009573363
+      },
+      {
+        "name": "carriage_swivel_0",
+        "type": "revolute",
+        "lower": -0.2,
+        "upper": 0.2
+      },
+      {
+        "name": "head_tilt_0",
+        "type": "revolute",
+        "lower": -0.333,
+        "upper": 0.68
+      },
+      {
+        "name": "rail_slide_1",
+        "type": "prismatic",
+        "lower": -4.28305009573363,
+        "upper": 4.28305009573363
+      },
+      {
+        "name": "carriage_swivel_1",
+        "type": "revolute",
+        "lower": -0.2,
+        "upper": 0.2
+      },
+      {
+        "name": "head_tilt_1",
+        "type": "revolute",
+        "lower": -0.333,
+        "upper": 0.68
+      },
+      {
+        "name": "rail_slide_2",
+        "type": "prismatic",
+        "lower": -4.28305009573363,
+        "upper": 4.28305009573363
+      },
+      {
+        "name": "carriage_swivel_2",
+        "type": "revolute",
+        "lower": -0.2,
+        "upper": 0.2
+      },
+      {
+        "name": "head_tilt_2",
+        "type": "revolute",
+        "lower": -0.333,
+        "upper": 0.68
+      }
+    ],
+    "meshes": 10,
+    "model": "models/ceiling_light_rail_b_8980c652.glb",
+    "thumbnail": "media/thumbs/ceiling_light_rail_b_8980c652.webp",
+    "sourceHash": "d8c142ed709f938d373acff52f34e1844aeddbb98af54df1d998bfcfd828556d",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "knife_set_1826c0a4",
+    "name": "Knife set",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "knife_0_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 16.625000371597718
+      },
+      {
+        "name": "knife_1_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 15.200000339746483
+      },
+      {
+        "name": "knife_2_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 14.725000329129404
+      },
+      {
+        "name": "shears_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 10.000000223517423
+      },
+      {
+        "name": "shears_pivot",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.65765
+      }
+    ],
+    "meshes": 6,
+    "model": "models/knife_set_1826c0a4.glb",
+    "thumbnail": "media/thumbs/knife_set_1826c0a4.webp",
+    "sourceHash": "e6c927d41567a95107a8d68934604f37b94f8b0fa06da640d2bd36658bcf8c9a",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "microwave_1c4d8def",
+    "name": "Microwave",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "power_knob_dial",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 4.71239
+      },
+      {
+        "name": "timer_knob_dial",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 4.71239
+      },
+      {
+        "name": "door_hinge",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.70309
+      },
+      {
+        "name": "turntable_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 9,
+    "model": "models/microwave_1c4d8def.glb",
+    "thumbnail": "media/thumbs/microwave_1c4d8def.webp",
+    "sourceHash": "9371acde05326a33a1ac9bc11bf757f5eda55e4c3b6331cd17f4141f312c1983",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "room_cabinet_e7872afb",
+    "name": "Room cabinet",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "drawer_style__runner_tray__slide_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 50.16240112121703
+      },
+      {
+        "name": "closure__hinged_door__leaf_joint_0",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.75
+      }
+    ],
+    "meshes": 3,
+    "model": "models/room_cabinet_e7872afb.glb",
+    "thumbnail": "media/thumbs/room_cabinet_e7872afb.webp",
+    "sourceHash": "0fa7942cc1121f1c4bf391e9084c6638f4ce258fcb42df2a807cdabe5fcbf73b",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "wine_rack_4b7d632f",
+    "name": "Wine rack",
+    "scene": "indoor",
+    "joints": [
+      {
+        "name": "rack_to_bottle_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 5.150750115128236
+      },
+      {
+        "name": "rack_to_bottle_1",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 5.150750115128236
+      },
+      {
+        "name": "rack_to_bottle_2",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 5.150750115128236
+      },
+      {
+        "name": "rack_to_bottle_3",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 5.150750115128236
+      }
+    ],
+    "meshes": 5,
+    "model": "models/wine_rack_4b7d632f.glb",
+    "thumbnail": "media/thumbs/wine_rack_4b7d632f.webp",
+    "sourceHash": "76a21953b1e91823059d3749b094ddd7ffe3ece8cd9e5f4be6452afc07c83dbb",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "cabinet_left_placement_71522c75",
+    "name": "Cabinet left",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "door_hinge_1",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.58
+      },
+      {
+        "name": "door_hinge_0",
+        "type": "revolute",
+        "lower": -0.58,
+        "upper": 0.0
+      }
+    ],
+    "meshes": 61,
+    "model": "models/cabinet_left_placement_71522c75.glb",
+    "thumbnail": "media/thumbs/cabinet_left_placement_71522c75.webp",
+    "sourceHash": "6338473c382194224dab99cb3f82d0be6f7459d6c1bcaa3f00c40c77af829356",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "cabinet_right_placement_50b14ef9",
+    "name": "Cabinet right",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "door_hinge_1",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.58
+      },
+      {
+        "name": "door_hinge_0",
+        "type": "revolute",
+        "lower": -0.58,
+        "upper": 0.0
+      }
+    ],
+    "meshes": 61,
+    "model": "models/cabinet_right_placement_50b14ef9.glb",
+    "thumbnail": "media/thumbs/cabinet_right_placement_50b14ef9.webp",
+    "sourceHash": "9f54ff4345e013d9c20cf2e474a2ea1812f9672e2560671777b669c03729c071",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "computer_keyboard_placement_b7c0b89e",
+    "name": "Computer keyboard",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "key_press_046",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_066",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_067",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_014",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_068",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_022",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_009",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_042",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_074",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_018",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_062",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_010",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_030",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_006",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_050",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_038",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_026",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_070",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_011",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_031",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_051",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_058",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_012",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_013",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_023",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_054",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_034",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_043",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "media_knob_turn",
+        "type": "continuous",
+        "lower": -6.283185307179586,
+        "upper": 6.283185307179586
+      },
+      {
+        "name": "key_press_019",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_063",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_015",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_035",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_055",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_007",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_039",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_027",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_071",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_059",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_047",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_056",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_057",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_044",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_032",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_064",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_008",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_052",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_000",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_020",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_040",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_028",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_072",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_016",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_060",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_048",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_001",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_021",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_041",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_036",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_002",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_003",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_033",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_024",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_004",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_053",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_065",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_005",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_025",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_045",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_029",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_073",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_017",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_061",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_049",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_037",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      },
+      {
+        "name": "key_press_069",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0006
+      }
+    ],
+    "meshes": 236,
+    "model": "models/computer_keyboard_placement_b7c0b89e.glb",
+    "thumbnail": "media/thumbs/computer_keyboard_placement_b7c0b89e.webp",
+    "sourceHash": "9597c49158960c1c1ff556e598732fb6edfe43cd8305c576e618ee364bc99dc0",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "computer_monitor_placement_681de1bc",
+    "name": "Computer monitor",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "stand_swivel",
+        "type": "revolute",
+        "lower": -0.3,
+        "upper": 0.3
+      },
+      {
+        "name": "height_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.04
+      },
+      {
+        "name": "display_tilt",
+        "type": "revolute",
+        "lower": -0.15,
+        "upper": 0.15
+      }
+    ],
+    "meshes": 35,
+    "model": "models/computer_monitor_placement_681de1bc.glb",
+    "thumbnail": "media/thumbs/computer_monitor_placement_681de1bc.webp",
+    "sourceHash": "7678a8f28f51f43ec7a54d4570c33a08f10f431bf638ee326033f8ed05372bc6",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "computer_tower_placement_02b7d636",
+    "name": "Computer tower",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "drive_tray_slide_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.16
+      },
+      {
+        "name": "drive_tray_slide_3",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.16
+      },
+      {
+        "name": "drive_tray_slide_2",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.16
+      },
+      {
+        "name": "drive_tray_slide_1",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.16
+      }
+    ],
+    "meshes": 66,
+    "model": "models/computer_tower_placement_02b7d636.glb",
+    "thumbnail": "media/thumbs/computer_tower_placement_02b7d636.webp",
+    "sourceHash": "c6fc23d70620b234555b93306bc545736ba42ea3a960a7e5c21d624a102ad73c",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "desk_caliper_placement_8443c7fd",
+    "name": "Desk caliper",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "beam_to_slider",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.137139
+      },
+      {
+        "name": "slider_to_needle",
+        "type": "continuous",
+        "lower": -6.283185307179586,
+        "upper": 6.283185307179586
+      }
+    ],
+    "meshes": 10,
+    "model": "models/desk_caliper_placement_8443c7fd.glb",
+    "thumbnail": "media/thumbs/desk_caliper_placement_8443c7fd.webp",
+    "sourceHash": "7102c0961d31b121e47df3fc6b939483756faa72e0f238a5960150bc2bd2ffe5",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "desk_clamp_placement_8be54612",
+    "name": "Desk clamp",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "frame_to_screw",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.0305284
+      },
+      {
+        "name": "screw_to_pad",
+        "type": "revolute",
+        "lower": -0.32025,
+        "upper": 0.32025
+      }
+    ],
+    "meshes": 8,
+    "model": "models/desk_clamp_placement_8be54612.glb",
+    "thumbnail": "media/thumbs/desk_clamp_placement_8be54612.webp",
+    "sourceHash": "65409133c7ee392d633f06cbf2abd7663ee0cd474375b83ba35227346beb8663",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "desk_left_back_placement_52d0ec02",
+    "name": "Desk left back",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "keyboard_tray_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.17
+      },
+      {
+        "name": "bypass_door_slide_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.1
+      },
+      {
+        "name": "bypass_door_slide_1",
+        "type": "prismatic",
+        "lower": -0.1,
+        "upper": 0.0
+      },
+      {
+        "name": "bypass_door_slide_2",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.1
+      },
+      {
+        "name": "bypass_door_slide_3",
+        "type": "prismatic",
+        "lower": -0.1,
+        "upper": 0.0
+      },
+      {
+        "name": "drawer_slide_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      }
+    ],
+    "meshes": 92,
+    "model": "models/desk_left_back_placement_52d0ec02.glb",
+    "thumbnail": "media/thumbs/desk_left_back_placement_52d0ec02.webp",
+    "sourceHash": "7321f790ad2f6796c512490c32d5f198ca9866fde683ece47bc35317efb82c5f",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "desk_left_front_placement_050bd932",
+    "name": "Desk left front",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "bypass_door_slide_3",
+        "type": "prismatic",
+        "lower": -0.1,
+        "upper": 0.0
+      },
+      {
+        "name": "drawer_slide_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "keyboard_tray_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.17
+      },
+      {
+        "name": "bypass_door_slide_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.1
+      },
+      {
+        "name": "bypass_door_slide_1",
+        "type": "prismatic",
+        "lower": -0.1,
+        "upper": 0.0
+      },
+      {
+        "name": "bypass_door_slide_2",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.1
+      }
+    ],
+    "meshes": 92,
+    "model": "models/desk_left_front_placement_050bd932.glb",
+    "thumbnail": "media/thumbs/desk_left_front_placement_050bd932.webp",
+    "sourceHash": "058ff92b936967e08f6a92165e313fa06bf689d3036f5b4c861056fe0ce1dd91",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "desk_microscope_placement_162ffbd1",
+    "name": "Desk microscope",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "base_to_mirror_fork",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "fork_to_mirror",
+        "type": "revolute",
+        "lower": -0.5,
+        "upper": 0.5
+      },
+      {
+        "name": "head_to_eyepiece",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "arm_to_coarse_focus",
+        "type": "continuous",
+        "lower": -6.283185307179586,
+        "upper": 6.283185307179586
+      },
+      {
+        "name": "head_to_nosepiece",
+        "type": "continuous",
+        "lower": -6.283185307179586,
+        "upper": 6.283185307179586
+      },
+      {
+        "name": "arm_to_fine_focus",
+        "type": "continuous",
+        "lower": -6.283185307179586,
+        "upper": 6.283185307179586
+      },
+      {
+        "name": "arm_to_stage",
+        "type": "prismatic",
+        "lower": -0.01,
+        "upper": 0.006
+      }
+    ],
+    "meshes": 69,
+    "model": "models/desk_microscope_placement_162ffbd1.glb",
+    "thumbnail": "media/thumbs/desk_microscope_placement_162ffbd1.webp",
+    "sourceHash": "88b8a7825610aa7842ad09c11e12d42b85940aae818d6bed92125b4ea03bc04e",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "desk_right_back_placement_7f1f94ca",
+    "name": "Desk right back",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "keyboard_tray_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.17
+      },
+      {
+        "name": "drawer_slide_4",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "drawer_slide_3",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "drawer_slide_2",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "drawer_slide_1",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "drawer_slide_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "bypass_door_slide_1",
+        "type": "prismatic",
+        "lower": -0.16,
+        "upper": 0.0
+      },
+      {
+        "name": "bypass_door_slide_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.16
+      }
+    ],
+    "meshes": 150,
+    "model": "models/desk_right_back_placement_7f1f94ca.glb",
+    "thumbnail": "media/thumbs/desk_right_back_placement_7f1f94ca.webp",
+    "sourceHash": "b541f169ec11923ea34f27a2b9b8c8410986fdf65f7c77a3b0768f89f3a6075a",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "desk_right_front_placement_58bf4247",
+    "name": "Desk right front",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "keyboard_tray_slide",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.17
+      },
+      {
+        "name": "drawer_slide_4",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "drawer_slide_3",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "drawer_slide_2",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "drawer_slide_1",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "drawer_slide_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.2
+      },
+      {
+        "name": "bypass_door_slide_1",
+        "type": "prismatic",
+        "lower": -0.16,
+        "upper": 0.0
+      },
+      {
+        "name": "bypass_door_slide_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 0.16
+      }
+    ],
+    "meshes": 150,
+    "model": "models/desk_right_front_placement_58bf4247.glb",
+    "thumbnail": "media/thumbs/desk_right_front_placement_58bf4247.webp",
+    "sourceHash": "655d9efbe15eabcdc5424d9407bf6ec874b40e288369d915d2799dbe79524b90",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "desk_stapler_placement_b7105b68",
+    "name": "Desk stapler",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "base_to_arm",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.566956
+      }
+    ],
+    "meshes": 8,
+    "model": "models/desk_stapler_placement_b7105b68.glb",
+    "thumbnail": "media/thumbs/desk_stapler_placement_b7105b68.webp",
+    "sourceHash": "a21da29242c4dc4d9c61f3a397f5d4507612fa6495c66948f93b7370b34c3939",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "dog_carrier_placement_eead9ff8",
+    "name": "Dog carrier",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "front_left_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "rear_left_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "front_left_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_left_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "neck_base",
+        "type": "revolute",
+        "lower": -0.3,
+        "upper": 0.3
+      },
+      {
+        "name": "neck",
+        "type": "revolute",
+        "lower": -0.3,
+        "upper": 0.3
+      },
+      {
+        "name": "head",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "front_right_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_right_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "front_right_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      },
+      {
+        "name": "rear_right_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      },
+      {
+        "name": "front_right_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "rear_right_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "front_right_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_right_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "front_left_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_left_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_left_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      },
+      {
+        "name": "front_left_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      }
+    ],
+    "meshes": 143,
+    "model": "models/dog_carrier_placement_eead9ff8.glb",
+    "thumbnail": "media/thumbs/dog_carrier_placement_eead9ff8.webp",
+    "sourceHash": "3e8d5da1ece11b188568a0a4233613f07f84b20a95fbde365fbddbbc355c6f6f",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "dog_scout_placement_21021010",
+    "name": "Dog scout",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "front_left_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_left_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      },
+      {
+        "name": "front_left_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "front_left_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_left_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_left_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "neck_base",
+        "type": "revolute",
+        "lower": -0.3,
+        "upper": 0.3
+      },
+      {
+        "name": "neck",
+        "type": "revolute",
+        "lower": -0.3,
+        "upper": 0.3
+      },
+      {
+        "name": "head",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "front_right_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_right_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "front_right_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      },
+      {
+        "name": "rear_right_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      },
+      {
+        "name": "front_right_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "rear_right_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "front_right_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_right_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_left_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "front_left_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      }
+    ],
+    "meshes": 142,
+    "model": "models/dog_scout_placement_21021010.glb",
+    "thumbnail": "media/thumbs/dog_scout_placement_21021010.webp",
+    "sourceHash": "1ec1551fbcafbd3b985ab803fcd34f22895d8da1d352bc4b670ee719c98e35c0",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "door_zigzag_placement_a35b6b82",
+    "name": "Door zigzag",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "door_1_track_slide",
+        "type": "prismatic",
+        "lower": -0.48,
+        "upper": 0.0
+      },
+      {
+        "name": "door_1_outer_track_slide",
+        "type": "prismatic",
+        "lower": -0.66,
+        "upper": 0.0
+      },
+      {
+        "name": "door_0_track_slide",
+        "type": "prismatic",
+        "lower": -0.48,
+        "upper": 0.0
+      },
+      {
+        "name": "door_0_outer_track_slide",
+        "type": "prismatic",
+        "lower": -0.66,
+        "upper": 0.0
+      }
+    ],
+    "meshes": 61,
+    "model": "models/door_zigzag_placement_a35b6b82.glb",
+    "thumbnail": "media/thumbs/door_zigzag_placement_a35b6b82.webp",
+    "sourceHash": "bbff37a826d0d9c98aa4010a9db4bd85d7edab6d3d81fd772d5bd2e122b26929",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "hand_pliers_placement_4756bab3",
+    "name": "Hand pliers",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "slot_slide",
+        "type": "prismatic",
+        "lower": -0.00011,
+        "upper": 0.00011
+      },
+      {
+        "name": "palm",
+        "type": "revolute",
+        "lower": -0.25,
+        "upper": 0.25
+      },
+      {
+        "name": "wrist_pitch",
+        "type": "revolute",
+        "lower": -0.25,
+        "upper": 0.25
+      },
+      {
+        "name": "forearm",
+        "type": "revolute",
+        "lower": -0.25,
+        "upper": 0.25
+      },
+      {
+        "name": "shoulder_root",
+        "type": "revolute",
+        "lower": -0.45,
+        "upper": 0.45
+      },
+      {
+        "name": "upper_arm",
+        "type": "revolute",
+        "lower": -0.25,
+        "upper": 0.25
+      },
+      {
+        "name": "pivot",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.05
+      },
+      {
+        "name": "wrist_roll",
+        "type": "revolute",
+        "lower": -0.45,
+        "upper": 0.45
+      }
+    ],
+    "meshes": 22,
+    "model": "models/hand_pliers_placement_4756bab3.glb",
+    "thumbnail": "media/thumbs/hand_pliers_placement_4756bab3.webp",
+    "sourceHash": "038ae4b2b1cbde9d6743c8c02f1c197e9754e161771b7c50960b93209b2ea9e0",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "robot_clamp_placement_c10e95ae",
+    "name": "Robot clamp",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "upper_arm",
+        "type": "revolute",
+        "lower": -0.24,
+        "upper": -0.06
+      },
+      {
+        "name": "angular_jaw_0",
+        "type": "revolute",
+        "lower": -0.2,
+        "upper": 0.2
+      },
+      {
+        "name": "wrist_roll",
+        "type": "revolute",
+        "lower": -0.45,
+        "upper": 0.45
+      },
+      {
+        "name": "angular_jaw_1",
+        "type": "revolute",
+        "lower": -0.2,
+        "upper": 0.2
+      },
+      {
+        "name": "forearm",
+        "type": "revolute",
+        "lower": -0.18,
+        "upper": 0.1
+      },
+      {
+        "name": "gripper_base",
+        "type": "revolute",
+        "lower": -0.25,
+        "upper": 0.25
+      },
+      {
+        "name": "shoulder_root",
+        "type": "revolute",
+        "lower": -0.45,
+        "upper": 0.45
+      }
+    ],
+    "meshes": 79,
+    "model": "models/robot_clamp_placement_c10e95ae.glb",
+    "thumbnail": "media/thumbs/robot_clamp_placement_c10e95ae.webp",
+    "sourceHash": "56b1ed815249af731cb9df952a5b9f80aeb75fc7037d475cbb80691d859ba97f",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "robot_dexterous_placement_150223ae",
+    "name": "Robot dexterous",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "finger_0_proximal",
+        "type": "revolute",
+        "lower": 0.4674013098933405,
+        "upper": 0.4814013098933405
+      },
+      {
+        "name": "finger_4_distal",
+        "type": "revolute",
+        "lower": -1.6549999999999998,
+        "upper": -1.645
+      },
+      {
+        "name": "finger_2_proximal",
+        "type": "revolute",
+        "lower": 0.9823377649173658,
+        "upper": 0.9963377649173658
+      },
+      {
+        "name": "upper_arm",
+        "type": "revolute",
+        "lower": -0.25,
+        "upper": 0.25
+      },
+      {
+        "name": "finger_1_distal",
+        "type": "revolute",
+        "lower": 0.948,
+        "upper": 0.962
+      },
+      {
+        "name": "finger_4_middle",
+        "type": "revolute",
+        "lower": 0.10299999999999997,
+        "upper": 0.11299999999999998
+      },
+      {
+        "name": "finger_3_distal",
+        "type": "revolute",
+        "lower": 0.30627946074180434,
+        "upper": 0.32027946074180436
+      },
+      {
+        "name": "wrist_pitch",
+        "type": "revolute",
+        "lower": -0.25,
+        "upper": 0.25
+      },
+      {
+        "name": "finger_1_middle",
+        "type": "revolute",
+        "lower": -1.2319999999999998,
+        "upper": -1.218
+      },
+      {
+        "name": "finger_4_proximal",
+        "type": "revolute",
+        "lower": 0.39499999999999996,
+        "upper": 0.40499999999999997
+      },
+      {
+        "name": "finger_0_distal",
+        "type": "revolute",
+        "lower": 0.5508026862810698,
+        "upper": 0.5648026862810698
+      },
+      {
+        "name": "finger_3_middle",
+        "type": "revolute",
+        "lower": -0.7222302303808155,
+        "upper": -0.7082302303808155
+      },
+      {
+        "name": "wrist_roll",
+        "type": "revolute",
+        "lower": -0.45,
+        "upper": 0.45
+      },
+      {
+        "name": "finger_1_proximal",
+        "type": "revolute",
+        "lower": 0.39399999999999996,
+        "upper": 0.408
+      },
+      {
+        "name": "forearm",
+        "type": "revolute",
+        "lower": -0.25,
+        "upper": 0.25
+      },
+      {
+        "name": "finger_0_middle",
+        "type": "revolute",
+        "lower": -0.6801678766448879,
+        "upper": -0.6661678766448879
+      },
+      {
+        "name": "finger_3_proximal",
+        "type": "revolute",
+        "lower": 0.8763674793958723,
+        "upper": 0.8903674793958724
+      },
+      {
+        "name": "finger_2_distal",
+        "type": "revolute",
+        "lower": 0.6212367754706956,
+        "upper": 0.6352367754706956
+      },
+      {
+        "name": "palm",
+        "type": "revolute",
+        "lower": -0.25,
+        "upper": 0.25
+      },
+      {
+        "name": "finger_2_middle",
+        "type": "revolute",
+        "lower": -0.8617036515033621,
+        "upper": -0.8477036515033621
+      },
+      {
+        "name": "shoulder_root",
+        "type": "revolute",
+        "lower": -0.45,
+        "upper": 0.45
+      }
+    ],
+    "meshes": 177,
+    "model": "models/robot_dexterous_placement_150223ae.glb",
+    "thumbnail": "media/thumbs/robot_dexterous_placement_150223ae.webp",
+    "sourceHash": "f2b158a8942f3830f395cf07f515ce677205558e62b9292635096d4bd33689d4",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "robot_dog_placement_b3ab1056",
+    "name": "Robot dog",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "front_left_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "rear_left_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "front_right_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_right_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      },
+      {
+        "name": "front_left_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      },
+      {
+        "name": "rear_left_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "rear_right_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "head",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "front_left_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_left_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      },
+      {
+        "name": "neck",
+        "type": "revolute",
+        "lower": -0.3,
+        "upper": 0.3
+      },
+      {
+        "name": "front_right_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "rear_left_thigh",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "front_left_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "neck_base",
+        "type": "revolute",
+        "lower": -0.3,
+        "upper": 0.3
+      },
+      {
+        "name": "front_right_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      {
+        "name": "rear_right_calf",
+        "type": "revolute",
+        "lower": -0.9,
+        "upper": 0.9
+      },
+      {
+        "name": "front_right_hip",
+        "type": "revolute",
+        "lower": -0.1,
+        "upper": 0.1
+      },
+      {
+        "name": "rear_right_foot",
+        "type": "fixed",
+        "lower": 0.0,
+        "upper": 0.0
+      }
+    ],
+    "meshes": 140,
+    "model": "models/robot_dog_placement_b3ab1056.glb",
+    "thumbnail": "media/thumbs/robot_dog_placement_b3ab1056.webp",
+    "sourceHash": "cdd41c3ecf15fe6ef2e30fb0255735eb794bb9df9d38e6fa4d8a296108ae2f64",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "wall_air_conditioner_placement_3b771f9e",
+    "name": "Wall air conditioner",
+    "scene": "laboratory",
+    "joints": [
+      {
+        "name": "front_panel_hinge",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.9664
+      },
+      {
+        "name": "louver_pivot_1",
+        "type": "revolute",
+        "lower": -0.94588,
+        "upper": 0.94588
+      },
+      {
+        "name": "louver_pivot_0",
+        "type": "revolute",
+        "lower": -0.94588,
+        "upper": 0.94588
+      }
+    ],
+    "meshes": 13,
+    "model": "models/wall_air_conditioner_placement_3b771f9e.glb",
+    "thumbnail": "media/thumbs/wall_air_conditioner_placement_3b771f9e.webp",
+    "sourceHash": "2bf31c994e5cb674ff62b816140663b75118f7c83b0553acf5ec0c58a3c7082a",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "barrier_gate_524d75dd",
+    "name": "Barrier gate",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "boom_hinge",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.744
+      }
+    ],
+    "meshes": 2,
+    "model": "models/barrier_gate_524d75dd.glb",
+    "thumbnail": "media/thumbs/barrier_gate_524d75dd.webp",
+    "sourceHash": "29f67a9b75607de774d0a06a67fb7c9b9a48617079bd1c17eea7d1cc6904460f",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "bicycle_b12ab088",
+    "name": "Bicycle",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "steering",
+        "type": "revolute",
+        "lower": -0.7,
+        "upper": 0.7
+      },
+      {
+        "name": "front_wheel_roll",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_wheel_roll",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "crank_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 5,
+    "model": "models/bicycle_b12ab088.glb",
+    "thumbnail": "media/thumbs/bicycle_b12ab088.webp",
+    "sourceHash": "e92ea25cb0686f988c2d8df551cb72668b7d77df44a32032415043e0bda251a4",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "drone_e585983f",
+    "name": "Drone",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "arm_fold_0",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.832571
+      },
+      {
+        "name": "propeller_spin_0",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "arm_fold_1",
+        "type": "revolute",
+        "lower": -0.832571,
+        "upper": 0.0
+      },
+      {
+        "name": "propeller_spin_1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "arm_fold_2",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.832571
+      },
+      {
+        "name": "propeller_spin_2",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "arm_fold_3",
+        "type": "revolute",
+        "lower": -0.832571,
+        "upper": 0.0
+      },
+      {
+        "name": "propeller_spin_3",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 9,
+    "model": "models/drone_e585983f.glb",
+    "thumbnail": "media/thumbs/drone_e585983f.webp",
+    "sourceHash": "b900f34e7f70d2b9a2943aee9ad26e7627469d7fef2108e26bb352b9d83def61",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "ferris_wheel_594ea2e6",
+    "name": "Ferris wheel",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "wheel_rotation",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 6.28
+      },
+      {
+        "name": "gondola_pivot_1",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_2",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_3",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_4",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_5",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_6",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_7",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_8",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_9",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_10",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_11",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_12",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_13",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_14",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_15",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "gondola_pivot_16",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      }
+    ],
+    "meshes": 18,
+    "model": "models/ferris_wheel_594ea2e6.glb",
+    "thumbnail": "media/thumbs/ferris_wheel_594ea2e6.webp",
+    "sourceHash": "31b204e0b5fa883c10d7d9eba14d6b76cf5f669547ed5a1a96f82724d17636a7",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "fire_extinguisher_4136e82c",
+    "name": "Fire extinguisher",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "body_to_wheel",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 12.5664
+      }
+    ],
+    "meshes": 2,
+    "model": "models/fire_extinguisher_4136e82c.glb",
+    "thumbnail": "media/thumbs/fire_extinguisher_4136e82c.webp",
+    "sourceHash": "ba6e90c910b9bd72c7a72b410c1fea0bbb0130b69d6817f47b6a0aafd3039dc9",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "fire_hydrant_6e0aefc3",
+    "name": "Fire hydrant",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "operating_nut",
+        "type": "revolute",
+        "lower": -3.14159,
+        "upper": 3.14159
+      },
+      {
+        "name": "outlet_0_cap",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 12.000000268220907
+      },
+      {
+        "name": "outlet_0_chain_0",
+        "type": "revolute",
+        "lower": -0.610865,
+        "upper": 0.610865
+      },
+      {
+        "name": "outlet_0_chain_1",
+        "type": "revolute",
+        "lower": -0.610865,
+        "upper": 0.610865
+      },
+      {
+        "name": "outlet_0_chain_2",
+        "type": "revolute",
+        "lower": -0.610865,
+        "upper": 0.610865
+      },
+      {
+        "name": "outlet_0_chain_3",
+        "type": "revolute",
+        "lower": -0.610865,
+        "upper": 0.610865
+      },
+      {
+        "name": "outlet_0_chain_4",
+        "type": "revolute",
+        "lower": -0.610865,
+        "upper": 0.610865
+      }
+    ],
+    "meshes": 8,
+    "model": "models/fire_hydrant_6e0aefc3.glb",
+    "thumbnail": "media/thumbs/fire_hydrant_6e0aefc3.webp",
+    "sourceHash": "1e1195ad5d423d77fc7f37deded473d0e5d8580673a167b06c24b99ff352e700",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "garbage_bin_70c1e75c",
+    "name": "Garbage bin",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "body_to_wheel_0",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "body_to_wheel_1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "body_to_wheel_2",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "body_to_wheel_3",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "body_to_lid",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.8369
+      }
+    ],
+    "meshes": 6,
+    "model": "models/garbage_bin_70c1e75c.glb",
+    "thumbnail": "media/thumbs/garbage_bin_70c1e75c.webp",
+    "sourceHash": "873fd0e29dc892f5365f1eb728189c9e9a80937a978117e7fa8b30475ca4bfc9",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "helicopter_96b144fc",
+    "name": "Helicopter",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "main_rotor_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "tail_rotor_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "right_service_door_hinge",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.0
+      },
+      {
+        "name": "left_service_door_hinge",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.0
+      },
+      {
+        "name": "crew_door_hinge",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.25
+      }
+    ],
+    "meshes": 6,
+    "model": "models/helicopter_96b144fc.glb",
+    "thumbnail": "media/thumbs/helicopter_96b144fc.webp",
+    "sourceHash": "016485728487e97daa7506374f4bc16c7b3f10b961d11bf3b1ae39ce01d63ce7",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "hydraulic_jack_d363801f",
+    "name": "Hydraulic jack",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "frame_to_ram_stage_0",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 8.915500199276957
+      },
+      {
+        "name": "ram_stage_0_to_ram_stage_1",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 7.310710163407105
+      },
+      {
+        "name": "ram_head_to_fitting",
+        "type": "revolute",
+        "lower": -3.14159,
+        "upper": 3.14159
+      },
+      {
+        "name": "frame_to_pump_handle",
+        "type": "revolute",
+        "lower": -0.34,
+        "upper": 0.34
+      },
+      {
+        "name": "frame_to_release_valve",
+        "type": "revolute",
+        "lower": -0.8,
+        "upper": 0.8
+      }
+    ],
+    "meshes": 6,
+    "model": "models/hydraulic_jack_d363801f.glb",
+    "thumbnail": "media/thumbs/hydraulic_jack_d363801f.webp",
+    "sourceHash": "3b9f8c475b91194bf9664d75796e76cb0709075d3e1271b3aa2d12121ee362ab",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "kart_a1241a25",
+    "name": "Kart",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "steering_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "front_left_steer",
+        "type": "revolute",
+        "lower": -0.52,
+        "upper": 0.52
+      },
+      {
+        "name": "front_left_roll",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "front_right_steer",
+        "type": "revolute",
+        "lower": -0.52,
+        "upper": 0.52
+      },
+      {
+        "name": "front_right_roll",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_left_roll",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_right_roll",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 9,
+    "model": "models/kart_a1241a25.glb",
+    "thumbnail": "media/thumbs/kart_a1241a25.webp",
+    "sourceHash": "360a71789b8ad6e0a02109816b7f09abb201cc1df7564527f6953ca9208a2e12",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "phone_booth_c992441a",
+    "name": "Phone booth",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "body_to_door",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.64989
+      }
+    ],
+    "meshes": 2,
+    "model": "models/phone_booth_c992441a.glb",
+    "thumbnail": "media/thumbs/phone_booth_c992441a.webp",
+    "sourceHash": "733f52bdd920f550e82ddfe2c78c3e25db8daed8964f531757cc655f171532b7",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "propeller_aircraft_48d4f1e3",
+    "name": "Propeller aircraft",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "fin_to_rudder",
+        "type": "revolute",
+        "lower": -0.483791,
+        "upper": 0.483791
+      },
+      {
+        "name": "stabilizer_to_elevator",
+        "type": "revolute",
+        "lower": -0.415979,
+        "upper": 0.415979
+      },
+      {
+        "name": "propeller_0_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 8,
+    "model": "models/propeller_aircraft_48d4f1e3.glb",
+    "thumbnail": "media/thumbs/propeller_aircraft_48d4f1e3.webp",
+    "sourceHash": "226b3415593bc584c61106717b85d2eb33948b39ec8331f7033977ea8b6987aa",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "roller_skates_96d7993d",
+    "name": "Roller skates",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "left_cuff_flex",
+        "type": "revolute",
+        "lower": -0.16,
+        "upper": 0.48
+      },
+      {
+        "name": "left_wheel_0_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "left_wheel_1_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "left_wheel_2_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "right_cuff_flex",
+        "type": "revolute",
+        "lower": -0.16,
+        "upper": 0.48
+      },
+      {
+        "name": "right_wheel_0_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "right_wheel_1_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "right_wheel_2_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 12,
+    "model": "models/roller_skates_96d7993d.glb",
+    "thumbnail": "media/thumbs/roller_skates_96d7993d.webp",
+    "sourceHash": "9e1a08acebf94f3be0f1291e1f20c901e0386dcb2fc51a98547dc3ad17a4a767",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "rolling_toolbox_abd506ad",
+    "name": "Rolling toolbox",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "wheel_joint_0",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "wheel_joint_1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "lid_joint",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.8
+      },
+      {
+        "name": "latch_joint_0",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.5708
+      },
+      {
+        "name": "handle_stage_joint",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 25.0800005605817
+      }
+    ],
+    "meshes": 6,
+    "model": "models/rolling_toolbox_abd506ad.glb",
+    "thumbnail": "media/thumbs/rolling_toolbox_abd506ad.webp",
+    "sourceHash": "c25731409ffea8ddf4e21b8f4abd6eef904725af780f08d649b7163b861d3093",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "scene7_car_rec_qwen37v_car002_v11_2_6c3a7e60",
+    "name": "Car",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "wheel_rear_right_spin",
+        "type": "continuous",
+        "lower": -3.14159,
+        "upper": 3.14159
+      },
+      {
+        "name": "steering_wheel_turn",
+        "type": "revolute",
+        "lower": -3.14,
+        "upper": 3.14
+      },
+      {
+        "name": "wheel_front_left_spin",
+        "type": "continuous",
+        "lower": -3.14159,
+        "upper": 3.14159
+      },
+      {
+        "name": "door_left_hinge",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.4
+      },
+      {
+        "name": "wheel_front_right_spin",
+        "type": "continuous",
+        "lower": -3.14159,
+        "upper": 3.14159
+      },
+      {
+        "name": "door_right_hinge",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.4
+      },
+      {
+        "name": "wheel_rear_left_spin",
+        "type": "continuous",
+        "lower": -3.14159,
+        "upper": 3.14159
+      },
+      {
+        "name": "steer_knuckle_front_left_steer",
+        "type": "revolute",
+        "lower": -0.4,
+        "upper": 0.4
+      },
+      {
+        "name": "steer_knuckle_front_right_steer",
+        "type": "revolute",
+        "lower": -0.4,
+        "upper": 0.4
+      }
+    ],
+    "meshes": 99,
+    "model": "models/scene7_car_rec_qwen37v_car002_v11_2_6c3a7e60.glb",
+    "thumbnail": "media/thumbs/scene7_car_rec_qwen37v_car002_v11_2_6c3a7e60.webp",
+    "sourceHash": "c7556bf0ee8669ab6fc33478d276b6e9c0662c80e432bf3ffdb2e4f1b329e9df",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "seesaw_a5ddfa5e",
+    "name": "Seesaw",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "beam_0_spring",
+        "type": "prismatic",
+        "lower": -6.000000134110453,
+        "upper": 0.0
+      },
+      {
+        "name": "beam_0_pivot",
+        "type": "revolute",
+        "lower": -0.287558,
+        "upper": 0.287558
+      }
+    ],
+    "meshes": 3,
+    "model": "models/seesaw_a5ddfa5e.glb",
+    "thumbnail": "media/thumbs/seesaw_a5ddfa5e.webp",
+    "sourceHash": "b8d2b7d484f7319224d08e1f147ca2aebe3ebfcdcd35fa3bdead05f3695c2f9c",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "skateboard_a13d755e",
+    "name": "Skateboard",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "front_baseplate_to_hanger",
+        "type": "revolute",
+        "lower": -0.261799,
+        "upper": 0.261799
+      },
+      {
+        "name": "front_hanger_to_wheel_0",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "front_hanger_to_wheel_1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_baseplate_to_hanger",
+        "type": "revolute",
+        "lower": -0.261799,
+        "upper": 0.261799
+      },
+      {
+        "name": "rear_hanger_to_wheel_0",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_hanger_to_wheel_1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 9,
+    "model": "models/skateboard_a13d755e.glb",
+    "thumbnail": "media/thumbs/skateboard_a13d755e.webp",
+    "sourceHash": "97004ddc4c4d527a5b698b8b3146601a966f86f65e281a31930f0dc53223b9fb",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "swing_0970_placement_504d4cae",
+    "name": "Swing",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "OUTDOOR_SWING_PIVOT_0",
+        "type": "revolute",
+        "lower": -0.5585053606381855,
+        "upper": 0.5585053606381855
+      },
+      {
+        "name": "OUTDOOR_SWING_PIVOT_1",
+        "type": "revolute",
+        "lower": -0.5585053606381855,
+        "upper": 0.5585053606381855
+      }
+    ],
+    "meshes": 97,
+    "model": "models/swing_0970_placement_504d4cae.glb",
+    "thumbnail": "media/thumbs/swing_0970_placement_504d4cae.webp",
+    "sourceHash": "2cdd218ff78fece4c3183c9288dfdb782edf3c1db6c100b45abd5fd261205c9e",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "tower_001_5eed890d",
+    "name": "Wind turbine",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "rotor",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "nacelle",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 33,
+    "model": "models/tower_001_5eed890d.glb",
+    "thumbnail": "media/thumbs/tower_001_5eed890d.webp",
+    "sourceHash": "ea100fd9835daf12d688c8f511df77efc88b5e58b3bbd92ddb1b029c5b6cffc8",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "tower_crane_ccb3c33d",
+    "name": "Tower crane",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "slew_joint",
+        "type": "revolute",
+        "lower": -1.705,
+        "upper": 1.705
+      },
+      {
+        "name": "turntable_to_trolley",
+        "type": "prismatic",
+        "lower": 0.0,
+        "upper": 1396.0000312030322
+      }
+    ],
+    "meshes": 4,
+    "model": "models/tower_crane_ccb3c33d.glb",
+    "thumbnail": "media/thumbs/tower_crane_ccb3c33d.webp",
+    "sourceHash": "38e4ecf90c574f4e5d3ab3b1eeedc8c537ed22882d0119b56791cda385b8653e",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "toy_car_184d604b",
+    "name": "Toy car",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "axle_wheel_0",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "axle_wheel_1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "axle_wheel_2",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "axle_wheel_3",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "axle_wheel_4",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "axle_wheel_5",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "body_to_steering",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 8,
+    "model": "models/toy_car_184d604b.glb",
+    "thumbnail": "media/thumbs/toy_car_184d604b.webp",
+    "sourceHash": "7f0f8e180f2a3a7579d39b70403aedc4d9045a27bc1ba3ceb135ed514e6f0032",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "tractor_fb71fbf2",
+    "name": "Tractor",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "steering_wheel_turn",
+        "type": "revolute",
+        "lower": -1.25237,
+        "upper": 1.25237
+      },
+      {
+        "name": "rear_wheel_0_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_wheel_1_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "chassis_to_front_axle",
+        "type": "revolute",
+        "lower": -0.450855,
+        "upper": 0.450855
+      },
+      {
+        "name": "front_wheel_0_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "front_wheel_1_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "chassis_to_hitch",
+        "type": "revolute",
+        "lower": -0.31713,
+        "upper": 0.443982
+      }
+    ],
+    "meshes": 8,
+    "model": "models/tractor_fb71fbf2.glb",
+    "thumbnail": "media/thumbs/tractor_fb71fbf2.webp",
+    "sourceHash": "a8ffbdc110e243aa776d60257083176b853298d0c7992d73e88941012ec61f04",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "transport_helicopter_23beb005",
+    "name": "Transport helicopter",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "front_rotor_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_rotor_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "front_left_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "front_right_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_left_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_right_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "ramp_hinge",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.74
+      }
+    ],
+    "meshes": 8,
+    "model": "models/transport_helicopter_23beb005.glb",
+    "thumbnail": "media/thumbs/transport_helicopter_23beb005.webp",
+    "sourceHash": "76df2081176e60526940f015b6276e5bc303d877b64356abe8774a4f6985451e",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "wheelbarrow_6621cbe2",
+    "name": "Wheelbarrow",
+    "scene": "outdoor",
+    "joints": [
+      {
+        "name": "wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 3,
+    "model": "models/wheelbarrow_6621cbe2.glb",
+    "thumbnail": "media/thumbs/wheelbarrow_6621cbe2.webp",
+    "sourceHash": "4e949cb7d9c62c19c9adf49b4e75117329dfbfe266c10904291ce00f92d997fe",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "urdf_02_mars_rover_04e9ed44",
+    "name": "Mars rover",
+    "scene": "space",
+    "joints": [
+      {
+        "name": "MOTION2_Mars_wheel_-0.95_1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_antenna",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_lamp_tilt",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_wing_1",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_arm_shoulder",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_wheel_0.05_-1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_gripper_left",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_wheel_0.05_1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_sensor",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_gripper_right",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_wheel_1.05_-1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_wheel_-0.95_-1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_hatch",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_wheel_1.05_1",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_lamp_pan",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Mars_wing_-1",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "front_left_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "middle_left_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_left_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "front_right_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "middle_right_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_right_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "mast_yaw",
+        "type": "revolute",
+        "lower": -2.8,
+        "upper": 2.8
+      },
+      {
+        "name": "head_tilt",
+        "type": "revolute",
+        "lower": -0.45,
+        "upper": 0.45
+      },
+      {
+        "name": "arm_shoulder_yaw",
+        "type": "revolute",
+        "lower": -0.35,
+        "upper": 0.5
+      },
+      {
+        "name": "hga_azimuth",
+        "type": "revolute",
+        "lower": -2.6,
+        "upper": 2.6
+      }
+    ],
+    "meshes": 66,
+    "model": "models/urdf_02_mars_rover_04e9ed44.glb",
+    "thumbnail": "media/thumbs/urdf_02_mars_rover_04e9ed44.webp",
+    "sourceHash": "f09e9b3f65cf2337586801264359195ed677b30d9d5328b30457b9c2e02425c4",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "urdf_03_astronaut_helmet_54712447",
+    "name": "Astronaut helmet",
+    "scene": "space",
+    "joints": [
+      {
+        "name": "visor_pivot",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.31
+      }
+    ],
+    "meshes": 2,
+    "model": "models/urdf_03_astronaut_helmet_54712447.glb",
+    "thumbnail": "media/thumbs/urdf_03_astronaut_helmet_54712447.webp",
+    "sourceHash": "2d42da09b61248a89c06c66f886924d0857cfc47c19d197fc5b6a2755d488bfc",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "urdf_04_return_capsule_065582b7",
+    "name": "Return capsule",
+    "scene": "space",
+    "joints": [
+      {
+        "name": "capsule_to_hatch",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 2.0
+      }
+    ],
+    "meshes": 2,
+    "model": "models/urdf_04_return_capsule_065582b7.glb",
+    "thumbnail": "media/thumbs/urdf_04_return_capsule_065582b7.webp",
+    "sourceHash": "da91b2eb429b3bd0e6055c7961af451833555c92b7deac6b412360bf139e86bf",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "urdf_06_space_shuttle_001_c2db3248",
+    "name": "Space shuttle",
+    "scene": "space",
+    "joints": [
+      {
+        "name": "MOTION2_Shuttle_left_payload_bay_door",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_link_left_nose_gear_door",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_link_right_main_gear_strut",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_link_right_nose_gear_door",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_right_rudder_panel",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_link_nose_gear_strut",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_body_flap",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_link_left_main_wheel",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_right_payload_bay_door",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_link_left_main_gear_strut",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_link_nose_gear_fork",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_right_elevon",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "fuselage_to_left_payload_bay_door",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 2.0
+      },
+      {
+        "name": "fuselage_to_right_payload_bay_door",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 2.0
+      },
+      {
+        "name": "fuselage_to_body_flap",
+        "type": "revolute",
+        "lower": -0.3,
+        "upper": 0.2
+      },
+      {
+        "name": "wing_to_left_elevon",
+        "type": "revolute",
+        "lower": -0.6,
+        "upper": 0.4
+      },
+      {
+        "name": "wing_to_right_elevon",
+        "type": "revolute",
+        "lower": -0.6,
+        "upper": 0.4
+      },
+      {
+        "name": "fin_to_left_rudder_panel",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.62
+      },
+      {
+        "name": "fin_to_right_rudder_panel",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.62
+      },
+      {
+        "name": "fuselage_to_nose_gear_strut",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.7
+      },
+      {
+        "name": "nose_gear_strut_to_fork",
+        "type": "revolute",
+        "lower": -0.35,
+        "upper": 0.35
+      },
+      {
+        "name": "nose_axle_to_left_wheel",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "nose_axle_to_right_wheel",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "fuselage_to_left_main_gear_strut",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.7
+      },
+      {
+        "name": "left_main_axle_to_wheel",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "fuselage_to_right_main_gear_strut",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.7
+      },
+      {
+        "name": "right_main_axle_to_wheel",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "fuselage_to_left_nose_gear_door",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.5
+      },
+      {
+        "name": "fuselage_to_right_nose_gear_door",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.5
+      },
+      {
+        "name": "MOTION2_Shuttle_left_rudder_panel",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_left_elevon",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_link_left_nose_wheel",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_link_right_main_wheel",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Shuttle_link_right_nose_wheel",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      }
+    ],
+    "meshes": 18,
+    "model": "models/urdf_06_space_shuttle_001_c2db3248.glb",
+    "thumbnail": "media/thumbs/urdf_06_space_shuttle_001_c2db3248.webp",
+    "sourceHash": "cfc57174b664b738197b0ad61fe0640a00f1b8e7cb038f3a9483681cba2a0667",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "urdf_08_antenna_dish_001_8494e9b1",
+    "name": "Antenna dish",
+    "scene": "space",
+    "joints": [
+      {
+        "name": "MOTION2_Dish_elevation",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Dish_azimuth",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "azimuth_drive",
+        "type": "revolute",
+        "lower": -3.14159,
+        "upper": 3.14159
+      },
+      {
+        "name": "elevation_drive",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.15
+      }
+    ],
+    "meshes": 3,
+    "model": "models/urdf_08_antenna_dish_001_8494e9b1.glb",
+    "thumbnail": "media/thumbs/urdf_08_antenna_dish_001_8494e9b1.webp",
+    "sourceHash": "bbc5678c48a60ac02d75cae1e396951bd34c6d44aec8031b2e173e570d2fdec6",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "urdf_09_pressurised_module_door_36a2cbb7",
+    "name": "Pressurised module door",
+    "scene": "space",
+    "joints": [
+      {
+        "name": "hatch_hinge",
+        "type": "revolute",
+        "lower": -1.9,
+        "upper": 0.08
+      },
+      {
+        "name": "handwheel_spin",
+        "type": "revolute",
+        "lower": -2.6,
+        "upper": 2.6
+      }
+    ],
+    "meshes": 2,
+    "model": "models/urdf_09_pressurised_module_door_36a2cbb7.glb",
+    "thumbnail": "media/thumbs/urdf_09_pressurised_module_door_36a2cbb7.webp",
+    "sourceHash": "2110aed02597f4a9b8410d0b7514ec62ccb36a3884b0e6970684810d41d8c8f6",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "urdf_11_astronomical_telescope_on_tripod_348a2d1a",
+    "name": "Astronomical telescope on tripod",
+    "scene": "space",
+    "joints": [
+      {
+        "name": "polar_angle",
+        "type": "revolute",
+        "lower": -0.22,
+        "upper": 0.3
+      },
+      {
+        "name": "right_ascension",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "declination",
+        "type": "revolute",
+        "lower": -0.75,
+        "upper": 1.15
+      }
+    ],
+    "meshes": 4,
+    "model": "models/urdf_11_astronomical_telescope_on_tripod_348a2d1a.glb",
+    "thumbnail": "media/thumbs/urdf_11_astronomical_telescope_on_tripod_348a2d1a.webp",
+    "sourceHash": "7fbc936b9f0c585b2dd0dd11bd34c27c1e834771369769b294c50986fbbc2d9a",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "urdf_12_rotating_observatory_dome_4c3d10d5",
+    "name": "Rotating observatory dome",
+    "scene": "space",
+    "joints": [
+      {
+        "name": "dome_rotation",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "slit_shutter",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.46608
+      }
+    ],
+    "meshes": 4,
+    "model": "models/urdf_12_rotating_observatory_dome_4c3d10d5.glb",
+    "thumbnail": "media/thumbs/urdf_12_rotating_observatory_dome_4c3d10d5.webp",
+    "sourceHash": "5ac37c58196cd20c79e0c7ec7e45a7a015ca0473108c73a64c51e7b95653e4cd",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "v03_lunar_rover_canopy_9a02449e",
+    "name": "Lunar rover",
+    "scene": "space",
+    "joints": [
+      {
+        "name": "MOTION2_Lunar_front_right_wheel.001",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Lunar_antenna",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Lunar_hand_controller",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Lunar_rear_left_wheel.001",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Lunar_front_left_wheel.001",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Lunar_rear_right_wheel.001",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "MOTION2_Lunar_visor",
+        "type": "revolute",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "front_left_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "front_right_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_left_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "rear_right_wheel_spin",
+        "type": "continuous",
+        "lower": null,
+        "upper": null
+      },
+      {
+        "name": "antenna_mast_swivel",
+        "type": "revolute",
+        "lower": -2.62,
+        "upper": 2.62
+      },
+      {
+        "name": "hand_controller_tilt",
+        "type": "revolute",
+        "lower": -0.35,
+        "upper": 0.35
+      },
+      {
+        "name": "canopy_to_sun_visor",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 0.9
+      }
+    ],
+    "meshes": 9,
+    "model": "models/v03_lunar_rover_canopy_9a02449e.glb",
+    "thumbnail": "media/thumbs/v03_lunar_rover_canopy_9a02449e.webp",
+    "sourceHash": "f400e25244abb995997feaf94cec12d50e6fc4f10c4ede9a43c52869bb7e07c1",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  },
+  {
+    "id": "v03_satellite_articulated_508d3d52",
+    "name": "Satellite",
+    "scene": "space",
+    "joints": [
+      {
+        "name": "bus_to_left_solar_wing",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.0699
+      },
+      {
+        "name": "bus_to_right_solar_wing",
+        "type": "revolute",
+        "lower": 0.0,
+        "upper": 1.0699
+      },
+      {
+        "name": "bus_to_high_gain_antenna",
+        "type": "revolute",
+        "lower": -0.35,
+        "upper": 0.35
+      }
+    ],
+    "meshes": 4,
+    "model": "models/v03_satellite_articulated_508d3d52.glb",
+    "thumbnail": "media/thumbs/v03_satellite_articulated_508d3d52.webp",
+    "sourceHash": "797220ccf465677bcd34d864ba2f72a52f094f2b50e18ad70aa95b9f0945492b",
+    "source": "Audited native scene asset",
+    "units": "meters"
+  }
+]

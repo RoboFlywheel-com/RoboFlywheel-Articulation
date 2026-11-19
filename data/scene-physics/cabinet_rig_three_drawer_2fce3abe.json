@@ -1,0 +1,240 @@
+{
+  "assetId": "cabinet_rig_three_drawer_2fce3abe",
+  "name": "Cabinet rig three drawer",
+  "totalMassKg": 51.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "MDF Board",
+        "MDF Lacquered"
+      ],
+      "massKg": 30.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.0399999618530273,
+        5.139999866485596,
+        0.4821600094437599
+      ],
+      "inertia": {
+        "ixx": 4.335115636433619,
+        "iyy": 5.465418794331534,
+        "izz": 5.683776342224164,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.0399999618530273,
+        0.880000114440918,
+        0.8830000180751085
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow cabinet shell (~18 mm MDF sides/top/bottom, ~9 mm back panel, open front for drawers). Mass in wall panels shifts variance above solid-box 1/12 in width/height; back panel shifts CoM slightly in depth. Painted lacquer adds negligible mass.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow cabinet shell (~18 mm MDF sides/top/bottom, ~9 mm back panel, open front for drawers). Mass in wall panels shifts variance above solid-box 1/12 in width/height; back panel shifts CoM slightly in depth. Painted lacquer adds negligible mass.",
+      "surfaceMaterials": [
+        "KITCHEN | sage interior",
+        "KITCHEN | soft grey sage lacquer"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "front drawer 0",
+      "materials": [
+        "MDF Board",
+        "Zinc Alloy",
+        "MDF Lacquered"
+      ],
+      "massKg": 7.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.0399999618530273,
+        4.649643516540527,
+        0.22083332762122154
+      ],
+      "inertia": {
+        "ixx": 0.48769954616671485,
+        "iyy": 0.6842500370545518,
+        "izz": 1.1015326676090422,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.0149998664855957,
+        0.8039999008178711,
+        0.24766666442155838
+      ],
+      "sourceLink": null,
+      "massBasis": "Drawer box (18 mm front, 16 mm sides/back, 9 mm bottom) plus champagne-nickel handle and ball-bearing slide hardware. Front panel and handle pull CoM toward the front face. Hollow box construction keeps variance moderate.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Drawer box (18 mm front, 16 mm sides/back, 9 mm bottom) plus champagne-nickel handle and ball-bearing slide hardware. Front panel and handle pull CoM toward the front face. Hollow box construction keeps variance moderate.",
+      "surfaceMaterials": [
+        "KITCHEN | sage interior",
+        "KITCHEN | satin champagne nickel",
+        "KITCHEN | soft grey sage lacquer"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "front drawer 1",
+      "materials": [
+        "MDF Board",
+        "Zinc Alloy",
+        "MDF Lacquered"
+      ],
+      "massKg": 7.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.0399999618530273,
+        4.86904821395874,
+        0.4684999883174896
+      ],
+      "inertia": {
+        "ixx": 0.4876995440483559,
+        "iyy": 0.6842500349361929,
+        "izz": 1.1015326676090422,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.0149998664855957,
+        0.8039999008178711,
+        0.24766665697097778
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical construction and hardware to drawer 0; same mass, CoM, and variance estimates for consistency across repeated parts.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical construction and hardware to drawer 0; same mass, CoM, and variance estimates for consistency across repeated parts.",
+      "surfaceMaterials": [
+        "KITCHEN | sage interior",
+        "KITCHEN | satin champagne nickel",
+        "KITCHEN | soft grey sage lacquer"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "front drawer 2",
+      "materials": [
+        "MDF Board",
+        "Zinc Alloy",
+        "MDF Lacquered"
+      ],
+      "massKg": 7.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.0399999618530273,
+        4.64967975616455,
+        0.7161666750907898
+      ],
+      "inertia": {
+        "ixx": 0.4876995609952293,
+        "iyy": 0.6842500518830663,
+        "izz": 1.1015326676090422,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.0149998664855957,
+        0.8039999008178711,
+        0.24766671657562256
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical construction and hardware to drawers 0-1; same mass, CoM, and variance estimates for consistency across repeated parts.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical construction and hardware to drawers 0-1; same mass, CoM, and variance estimates for consistency across repeated parts.",
+      "surfaceMaterials": [
+        "KITCHEN | sage interior",
+        "KITCHEN | satin champagne nickel",
+        "KITCHEN | soft grey sage lacquer"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "front_drawer_0",
+      "type": "prismatic",
+      "lower": 0,
+      "upper": 0.4,
+      "id": "0",
+      "effort": 45.0,
+      "velocity": 0.4,
+      "damping": 10.0,
+      "friction": 3.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_drawer_1",
+      "type": "prismatic",
+      "lower": 0,
+      "upper": 0.4,
+      "id": "1",
+      "effort": 45.0,
+      "velocity": 0.4,
+      "damping": 10.0,
+      "friction": 3.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_drawer_2",
+      "type": "prismatic",
+      "lower": 0,
+      "upper": 0.4,
+      "id": "2",
+      "effort": 45.0,
+      "velocity": 0.4,
+      "damping": 10.0,
+      "friction": 3.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

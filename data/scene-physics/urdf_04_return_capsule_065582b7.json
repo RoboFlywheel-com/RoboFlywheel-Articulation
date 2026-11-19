@@ -1,0 +1,127 @@
+{
+  "assetId": "urdf_04_return_capsule_065582b7",
+  "name": "Return capsule",
+  "totalMassKg": 4920.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "body",
+      "materials": [
+        "Painted steel capsule shell",
+        "Ablative heat shield coating",
+        "Smoked glass window",
+        "Weathered rubber seal",
+        "Bronze alloy fitting",
+        "Weathered rubber pad"
+      ],
+      "massKg": 4800.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -5.399999022483826,
+        28.000001907348633,
+        1.668345769867301
+      ],
+      "inertia": {
+        "ixx": 17572.292190801872,
+        "iyy": 17572.28884899757,
+        "izz": 22738.828951585994,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        4.866854906082153,
+        4.866855621337891,
+        4.019119683653116
+      ],
+      "sourceLink": null,
+      "massBasis": "Large ~4.9 m return capsule body with 7 material layers (ablative heat shield, structural shell, insulation, internal framing). Hollow construction with heavy heat shield at base lowers CoM. Variance below 1/12 reflects mass concentrated in outer shell and base rather than uniform fill.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Large ~4.9 m return capsule body with 7 material layers (ablative heat shield, structural shell, insulation, internal framing). Hollow construction with heavy heat shield at base lowers CoM. Variance below 1/12 reflects mass concentrated in outer shell and base rather than uniform fill.",
+      "surfaceMaterials": [
+        "REF_04_Return_capsule_capsule_00",
+        "REF_04_Return_capsule_capsule_01",
+        "REF_04_Return_capsule_capsule_02",
+        "REF_04_Return_capsule_capsule_03",
+        "REF_04_Return_capsule_capsule_04",
+        "REF_04_Return_capsule_capsule_05",
+        "REF_04_Return_capsule_capsule_06"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "hatch",
+      "materials": [
+        "Painted steel hatch panel",
+        "Brass hatch hardware",
+        "Painted aluminum hatch frame"
+      ],
+      "massKg": 120.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -5.581492900848389,
+        28.024222373962402,
+        4.299597053527832
+      ],
+      "inertia": {
+        "ixx": 37.45031318083657,
+        "iyy": 40.27877690529004,
+        "izz": 63.943195527128424,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.8648567199707031,
+        1.7841129302978516,
+        0.9784445762634277
+      ],
+      "sourceLink": null,
+      "massBasis": "Hatch assembly ~1.9\u00d71.8\u00d71.0 m with 3 materials (frame, panel, seal/latch hardware). Mostly thin-walled shell and reinforcing ribs; slightly below-center CoM due to latch hardware. Reduced z-variance reflects relatively flat panel geometry.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hatch assembly ~1.9\u00d71.8\u00d71.0 m with 3 materials (frame, panel, seal/latch hardware). Mostly thin-walled shell and reinforcing ribs; slightly below-center CoM due to latch hardware. Reduced z-variance reflects relatively flat panel geometry.",
+      "surfaceMaterials": [
+        "REF_04_Return_capsule_hatch_00",
+        "REF_04_Return_capsule_hatch_01",
+        "REF_04_Return_capsule_hatch_02"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "capsule_to_hatch",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 2.0,
+      "id": "0",
+      "effort": 300.0,
+      "velocity": 0.5,
+      "damping": 50.0,
+      "friction": 15.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 240,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

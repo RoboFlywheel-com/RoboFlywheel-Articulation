@@ -1,0 +1,289 @@
+{
+  "assetId": "scene7_car_rec_qwen37v_car002_v11_2_6c3a7e60",
+  "dimensions_m": [
+    5.1854248046875,
+    5.786937713623047,
+    1.4304101169109344
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Carbon Fiber Reinforced Polymer",
+      "surfaceMaterial": "PBR_black_trim_aero",
+      "parts": [
+        "body__deck_louver_5",
+        "body__skirt_fence_right",
+        "body__wing_pylon_left",
+        "body__deck_louver_1",
+        "body__diffuser_fin_3",
+        "body__intake_slat_right_0",
+        "body__wing_blade",
+        "body__wing_pylon_right",
+        "body__rear_diffuser",
+        "body__diffuser_fence_left",
+        "body__side_intake_left",
+        "body__diffuser_fin_4",
+        "body__deck_louver_2",
+        "body__wing_endplate_left",
+        "body__diffuser_fence_right",
+        "body__front_splitter",
+        "body__deck_louver_3",
+        "body__diffuser_fin_5",
+        "body__intake_slat_right_2",
+        "body__side_intake_right",
+        "body__wing_endplate_right",
+        "body__diffuser_fin_0",
+        "body__front_splitter_lip",
+        "body__intake_slat_left_0",
+        "body__skirt_fence_left",
+        "body__deck_louver_4",
+        "body__wing_gurney",
+        "body__diffuser_fin_1",
+        "body__deck_louver_0",
+        "body__diffuser_fin_2",
+        "body__intake_slat_left_2"
+      ],
+      "values": {
+        "density_kg_m3": 1600,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "1",
+      "material": "Polycarbonate Lens",
+      "surfaceMaterial": "PBR_lens_pale",
+      "parts": [
+        "body__driving_light_right",
+        "body__headlight_reflector_left",
+        "steering_wheel__sw_button_l",
+        "body__driving_light_left",
+        "body__headlight_reflector_right"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 2300000000,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "2",
+      "material": "Amber Polycarbonate",
+      "surfaceMaterial": "PBR_amber",
+      "parts": [
+        "body__front_indicator_left",
+        "body__front_indicator_right",
+        "steering_wheel__sw_button_r"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 2300000000,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "3",
+      "material": "Automotive Glass",
+      "surfaceMaterial": "PBR_glass_tint",
+      "parts": [
+        "body__headlight_right",
+        "door_right__door_glass",
+        "body__headlight_left",
+        "body__rear_window",
+        "body__windshield",
+        "door_left__door_glass"
+      ],
+      "values": {
+        "density_kg_m3": 2500,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.22,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.7
+      }
+    },
+    {
+      "id": "4",
+      "material": "ABS Plastic",
+      "surfaceMaterial": "PBR_black_trim",
+      "parts": [
+        "door_right__door_beltline",
+        "door_left__door_handle",
+        "body__headlight_bar_right",
+        "body__engine_deck",
+        "body__headlight_surround_left",
+        "body__steering_column",
+        "steering_wheel__sw_spoke_cross",
+        "body__front_bumper_strip",
+        "steering_wheel__sw_rim_top",
+        "body__exhaust_left",
+        "body__headlight_surround_right",
+        "body__tail_panel",
+        "door_right__door_handle",
+        "steering_wheel__sw_spoke_low",
+        "body__front_canard_left",
+        "body__exhaust_right",
+        "body__rocker_sill_left",
+        "body__front_canard_right",
+        "steering_wheel__sw_rim_bot",
+        "body__fender_vent_left",
+        "body__rocker_sill_right",
+        "door_left__door_beltline",
+        "steering_wheel__sw_hub",
+        "steering_wheel__sw_grip_right",
+        "steering_wheel__sw_grip_left",
+        "body__fender_vent_right",
+        "body__headlight_bar_left"
+      ],
+      "values": {
+        "density_kg_m3": 1050,
+        "youngs_modulus_pa": 2300000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "5",
+      "material": "Steel Alloy",
+      "surfaceMaterial": "PBR_axle_steel",
+      "parts": [
+        "body__rear_axle_bar",
+        "body__front_axle_bar"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "6",
+      "material": "Tire Rubber",
+      "surfaceMaterial": "PBR_rubber",
+      "parts": [
+        "wheel_rear_left__tire",
+        "wheel_front_right__tire",
+        "wheel_front_left__tire",
+        "wheel_rear_right__tire"
+      ],
+      "values": {
+        "density_kg_m3": 1100,
+        "youngs_modulus_pa": 10000000,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.7
+      }
+    },
+    {
+      "id": "7",
+      "material": "Interior Polyurethane Foam",
+      "surfaceMaterial": "PBR_interior_dark",
+      "parts": [
+        "body__seat_back_right",
+        "body__cabin_floor",
+        "steering_wheel__sw_display",
+        "body__seat_back_left"
+      ],
+      "values": {
+        "density_kg_m3": 1100,
+        "youngs_modulus_pa": 50000000,
+        "poissons_ratio": 0.4,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "8",
+      "material": "Aluminum Alloy",
+      "surfaceMaterial": "PBR_silver_alloy",
+      "parts": [
+        "wheel_rear_left__rim",
+        "wheel_front_right__rim",
+        "wheel_front_left__rim",
+        "wheel_rear_right__rim"
+      ],
+      "values": {
+        "density_kg_m3": 2700,
+        "youngs_modulus_pa": 70000000000,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "9",
+      "material": "Painted Polymer",
+      "surfaceMaterial": "PBR_sw_accent",
+      "parts": [
+        "steering_wheel__sw_top_marker"
+      ],
+      "values": {
+        "density_kg_m3": 1100,
+        "youngs_modulus_pa": 2500000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "10",
+      "material": "Painted Steel Body Panel",
+      "surfaceMaterial": "PBR_gloss_yellow",
+      "parts": [
+        "door_left__door_skin",
+        "body__intake_slat_right_1",
+        "door_left__mirror_head",
+        "door_right__door_skin",
+        "body__lower_body",
+        "door_left__mirror_stalk",
+        "body__greenhouse",
+        "body__intake_slat_left_1",
+        "door_right__mirror_head",
+        "door_right__mirror_stalk"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "11",
+      "material": "Red Polycarbonate Lens",
+      "surfaceMaterial": "PBR_tail_red",
+      "parts": [
+        "body__taillight_left",
+        "body__taillight_right"
+      ],
+      "values": {
+        "density_kg_m3": 1200,
+        "youngs_modulus_pa": 2300000000,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.6
+      }
+    }
+  ]
+}

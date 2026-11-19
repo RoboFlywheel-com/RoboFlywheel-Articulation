@@ -1,0 +1,466 @@
+{
+  "assetId": "urdf_02_mars_rover_04e9ed44",
+  "dimensions_m": [
+    3.9837045669555664,
+    3.9497859477996826,
+    2.4419994354248047
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "metal / aluminum bare",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.aluminum_bare.002",
+      "parts": [
+        "M2_body_node.001"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Cable pipe bundle",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | tech.cable_pipe_bundle.001",
+      "parts": [
+        "M2_body_node.013"
+      ],
+      "values": {
+        "density_kg_m3": 1400.0,
+        "youngs_modulus_pa": 3000000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "2",
+      "material": "metal / aluminum bare",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.aluminum_bare",
+      "parts": [
+        "M2_hatch_node",
+        "M2_sensor_node",
+        "M2_body_node",
+        "M2_antenna_node"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "3",
+      "material": "Opaque plastic housing",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | plastic.opaque_generic",
+      "parts": [
+        "M2_lamp_tilt_solar_opaque_019_532d348bb8324928"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 2500000000.0,
+        "poissons_ratio": 0.38,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "4",
+      "material": "metal / blackened gunmetal",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.002",
+      "parts": [
+        "M2_wheel_1.05_-1_node.004",
+        "M2_wheel_0.05_-1_node.004",
+        "M2_wheel_1.05_1_node.004",
+        "M2_wheel_-0.95_-1_node.004",
+        "M2_wheel_0.05_1_node.004",
+        "M2_wheel_-0.95_1_node.004"
+      ],
+      "values": {
+        "density_kg_m3": 8000.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "5",
+      "material": "metal / aluminum bare",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.aluminum_bare.001",
+      "parts": [
+        "M4_arm_M2_body_solar_opaque_002_b770e3f10ae96f90",
+        "M2_body_solar_opaque_002_b770e3f10ae96f90"
+      ],
+      "values": {
+        "density_kg_m3": 2700.0,
+        "youngs_modulus_pa": 69000000000.0,
+        "poissons_ratio": 0.33,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "6",
+      "material": "metal / stainless matte",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.003",
+      "parts": [
+        "M2_wing_1_node.010",
+        "M2_body_node.010",
+        "M2_wing_-1_node.010"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 193000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "7",
+      "material": "metal / stainless matte",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.002",
+      "parts": [
+        "M4_left_M2_body_solar_opaque_017_a0b79bdac7732fb1",
+        "M2_body_solar_opaque_017_a0b79bdac7732fb1",
+        "M4_arm_M2_body_solar_opaque_017_a0b79bdac7732fb1",
+        "M4_right_M2_body_solar_opaque_017_a0b79bdac7732fb1"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 193000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "8",
+      "material": "metal / paint coated",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated.002",
+      "parts": [
+        "M2_antenna_node.007",
+        "M2_lamp_tilt_node.007",
+        "M2_hatch_node.007",
+        "M2_body_node.007"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "9",
+      "material": "metal / paint coated",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated.004",
+      "parts": [
+        "M2_body_node.009"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "10",
+      "material": "metal / stainless matte",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte",
+      "parts": [
+        "M2_body_solar_opaque_015_7b5af9496cec3698"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 193000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "11",
+      "material": "metal / stainless matte",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.stainless_matte.001",
+      "parts": [
+        "M2_lamp_pan_solar_opaque_016_4a9ee45ee8e5f030",
+        "M2_body_solar_opaque_016_4a9ee45ee8e5f030",
+        "M2_lamp_tilt_solar_opaque_016_4a9ee45ee8e5f030"
+      ],
+      "values": {
+        "density_kg_m3": 7900.0,
+        "youngs_modulus_pa": 193000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.25
+      }
+    },
+    {
+      "id": "12",
+      "material": "rubber / directional grooved",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.directional_grooved",
+      "parts": [
+        "M2_wheel_1.05_-1_solar_opaque_020_668f35445e024883",
+        "M2_wheel_0.05_-1_solar_opaque_020_668f35445e024883",
+        "M2_wheel_-0.95_-1_solar_opaque_020_668f35445e024883",
+        "M2_wheel_1.05_1_solar_opaque_020_668f35445e024883",
+        "M2_wheel_0.05_1_solar_opaque_020_668f35445e024883",
+        "M2_body_solar_opaque_020_668f35445e024883",
+        "M2_wheel_-0.95_1_solar_opaque_020_668f35445e024883"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "13",
+      "material": "metal / blackened gunmetal",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.003",
+      "parts": [
+        "M4_arm_M2_body_solar_opaque_007_2c7eb3c8ca472159",
+        "M2_body_solar_opaque_007_2c7eb3c8ca472159"
+      ],
+      "values": {
+        "density_kg_m3": 8000.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "14",
+      "material": "metal / blackened gunmetal",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal",
+      "parts": [
+        "M2_body_node.002",
+        "M2_hatch_node.002",
+        "M2_antenna_node.002"
+      ],
+      "values": {
+        "density_kg_m3": 8000.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "15",
+      "material": "Circuit board substrate",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | tech.circuit_board",
+      "parts": [
+        "M2_body_node.014"
+      ],
+      "values": {
+        "density_kg_m3": 1900.0,
+        "youngs_modulus_pa": 22000000000.0,
+        "poissons_ratio": 0.28,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "16",
+      "material": "Solar cell panel",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | tech.solar_cell",
+      "parts": [
+        "M2_wing_1_node.015",
+        "M2_hatch_node.015",
+        "M2_wing_-1_node.015"
+      ],
+      "values": {
+        "density_kg_m3": 2330.0,
+        "youngs_modulus_pa": 130000000000.0,
+        "poissons_ratio": 0.22,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "17",
+      "material": "metal / blackened gunmetal",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.001",
+      "parts": [
+        "M4_right_M2_body_node.003",
+        "M2_lamp_tilt_node.003",
+        "M2_body_node.003",
+        "M4_arm_M2_body_node.003",
+        "M4_left_M2_body_node.003",
+        "M2_lamp_pan_node.003"
+      ],
+      "values": {
+        "density_kg_m3": 8000.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "18",
+      "material": "glass / smoked tinted",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | glass.smoked_tinted",
+      "parts": [
+        "M2_antenna_solar_opaque_000_cdd9630b462cbbb6",
+        "M2_body_solar_opaque_000_cdd9630b462cbbb6"
+      ],
+      "values": {
+        "density_kg_m3": 2500.0,
+        "youngs_modulus_pa": 70000000000.0,
+        "poissons_ratio": 0.23,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "19",
+      "material": "metal / paint coated",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated",
+      "parts": [
+        "M4_arm_M2_body_solar_opaque_010_edfca0e7d09e90b1",
+        "M2_body_solar_opaque_010_edfca0e7d09e90b1"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "20",
+      "material": "metal / blackened gunmetal",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.005",
+      "parts": [
+        "M2_hatch_node.006"
+      ],
+      "values": {
+        "density_kg_m3": 8000.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "21",
+      "material": "metal / paint coated",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated.001",
+      "parts": [
+        "M2_body_mesh"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "22",
+      "material": "Smooth rubber",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | rubber.smooth_plain",
+      "parts": [
+        "M2_body_node.011",
+        "M4_right_M2_body_node.011",
+        "M4_left_M2_body_node.011"
+      ],
+      "values": {
+        "density_kg_m3": 1200.0,
+        "youngs_modulus_pa": 5000000.0,
+        "poissons_ratio": 0.45,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "23",
+      "material": "metal / blackened gunmetal",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.blackened_gunmetal.004",
+      "parts": [
+        "M2_body_node.005",
+        "M4_arm_M2_body_node.005"
+      ],
+      "values": {
+        "density_kg_m3": 8000.0,
+        "youngs_modulus_pa": 100000000000.0,
+        "poissons_ratio": 0.34,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "24",
+      "material": "Cable pipe bundle",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | tech.cable_pipe_bundle",
+      "parts": [
+        "M2_body_node.012"
+      ],
+      "values": {
+        "density_kg_m3": 1400.0,
+        "youngs_modulus_pa": 3000000000.0,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.5,
+        "restitution_coefficient": 0.3
+      }
+    },
+    {
+      "id": "25",
+      "material": "metal / paint coated",
+      "surfaceMaterial": "SPACE_ORIGINAL_ROVER__V04_Rover | metal.paint_coated.003",
+      "parts": [
+        "M2_body_node.008"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

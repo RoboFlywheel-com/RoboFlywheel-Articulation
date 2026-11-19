@@ -1,0 +1,547 @@
+{
+  "assetId": "desk_right_front_placement_58bf4247",
+  "name": "Desk right front",
+  "totalMassKg": 81.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "2",
+      "name": "body",
+      "materials": [
+        "Light Oak Wood",
+        "Wood Edge Banding",
+        "Dark Laminate Board",
+        "Dark Gray Plastic",
+        "Medium Gray Plastic",
+        "Light Gray Plastic"
+      ],
+      "massKg": 52.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.9999999403953552,
+        2.9802322387695312e-08,
+        0.37564998865127563
+      ],
+      "inertia": {
+        "ixx": 4.788869540165833,
+        "iyy": 20.878437468862355,
+        "izz": 20.266633565426606,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.949299931526184,
+        0.6873999834060669,
+        0.7512999773025513
+      ],
+      "sourceLink": null,
+      "massBasis": "Main desk carcass of particle-board/MDF panels (top, sides, back, internal dividers, shelf). Hollow construction \u2248 13% fill of bounding volume; mass in flat panels shifts variance slightly above 1/12 along width and depth.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Main desk carcass of particle-board/MDF panels (top, sides, back, internal dividers, shelf). Hollow construction \u2248 13% fill of bounding volume; mass in flat panels shifts variance slightly above 1/12 along width and depth.",
+      "surfaceMaterials": [
+        "Material_0.006",
+        "Material_1.006",
+        "Material_2.006",
+        "Material_3.006",
+        "Material_4.005",
+        "Material_5.004"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "JOINT | Desk Right Front | drawer slide 0",
+      "materials": [
+        "Medium Gray Plastic",
+        "Light Gray Plastic",
+        "Charcoal Panel"
+      ],
+      "massKg": 4.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.249400019645691,
+        -0.10374072194099426,
+        0.1300300695002079
+      ],
+      "inertia": {
+        "ixx": 0.18885525811608572,
+        "iyy": 0.07636309589957099,
+        "izz": 0.2565641659967043,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.4000999927520752,
+        0.6750000715255737,
+        0.0980600044131279
+      ],
+      "sourceLink": null,
+      "massBasis": "Drawer box (thin plywood/MDF walls + bottom) on metal slide rails. Hollow box \u2248 35% fill; walls concentrate mass near surfaces raising variance above uniform.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Drawer box (thin plywood/MDF walls + bottom) on metal slide rails. Hollow box \u2248 35% fill; walls concentrate mass near surfaces raising variance above uniform.",
+      "surfaceMaterials": [
+        "Material_4.005",
+        "Material_5.004",
+        "Material_6.003"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "JOINT | Desk Right Front | drawer slide 1",
+      "materials": [
+        "Medium Gray Plastic",
+        "Light Gray Plastic",
+        "Charcoal Panel"
+      ],
+      "massKg": 4.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.249400019645691,
+        -0.08107897639274597,
+        0.24809008836746216
+      ],
+      "inertia": {
+        "ixx": 0.1888552587736293,
+        "iyy": 0.07636309655711458,
+        "izz": 0.2565641659967043,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.4000999927520752,
+        0.6750000715255737,
+        0.0980600118637085
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical drawer-and-slide unit to drawer 0; same hollow-box construction and metal rails.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical drawer-and-slide unit to drawer 0; same hollow-box construction and metal rails.",
+      "surfaceMaterials": [
+        "Material_4.005",
+        "Material_5.004",
+        "Material_6.003"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "JOINT | Desk Right Front | drawer slide 2",
+      "materials": [
+        "Medium Gray Plastic",
+        "Light Gray Plastic",
+        "Charcoal Panel"
+      ],
+      "massKg": 4.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.249400019645691,
+        -0.06169512867927551,
+        0.3661500960588455
+      ],
+      "inertia": {
+        "ixx": 0.1888552614038042,
+        "iyy": 0.07636309918728947,
+        "izz": 0.2565641659967043,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.4000999927520752,
+        0.6750000715255737,
+        0.09806004166603088
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical drawer-and-slide unit; consistent with drawers 0 and 1.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical drawer-and-slide unit; consistent with drawers 0 and 1.",
+      "surfaceMaterials": [
+        "Material_4.005",
+        "Material_5.004",
+        "Material_6.003"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "JOINT | Desk Right Front | drawer slide 3",
+      "materials": [
+        "Medium Gray Plastic",
+        "Light Gray Plastic",
+        "Charcoal Panel"
+      ],
+      "massKg": 4.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.249400019645691,
+        -0.04679444432258606,
+        0.48421013355255127
+      ],
+      "inertia": {
+        "ixx": 0.1888552587736293,
+        "iyy": 0.07636309655711458,
+        "izz": 0.2565641659967043,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.4000999927520752,
+        0.6750000715255737,
+        0.0980600118637085
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical drawer-and-slide unit; consistent with other drawer slides.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical drawer-and-slide unit; consistent with other drawer slides.",
+      "surfaceMaterials": [
+        "Material_4.005",
+        "Material_5.004",
+        "Material_6.003"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "JOINT | Desk Right Front | drawer slide 4",
+      "materials": [
+        "Medium Gray Plastic",
+        "Light Gray Plastic",
+        "Charcoal Panel"
+      ],
+      "massKg": 4.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        1.249400019645691,
+        -0.03730332851409912,
+        0.6022701263427734
+      ],
+      "inertia": {
+        "ixx": 0.1888552587736293,
+        "iyy": 0.07636309655711458,
+        "izz": 0.2565641659967043,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.4000999927520752,
+        0.6750000715255737,
+        0.0980600118637085
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical drawer-and-slide unit; consistent with other drawer slides.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical drawer-and-slide unit; consistent with other drawer slides.",
+      "surfaceMaterials": [
+        "Material_4.005",
+        "Material_5.004",
+        "Material_6.003"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "JOINT | Desk Right Front | keyboard tray slide",
+      "materials": [
+        "Dark Gray Plastic",
+        "Light Gray Plastic"
+      ],
+      "massKg": 2.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.0000000596046448,
+        -0.1928834542632103,
+        0.6543001234531403
+      ],
+      "inertia": {
+        "ixx": 0.018514781999654763,
+        "iyy": 0.08571080147514018,
+        "izz": 0.10385208270303359,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.6420000791549683,
+        0.2972000390291214,
+        0.030000030994415283
+      ],
+      "sourceLink": null,
+      "massBasis": "Flat keyboard tray panel (~18 mm MDF) with under-mount metal slide rails. Thin, nearly uniform planar part; variance \u2248 1/12 each axis.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Flat keyboard tray panel (~18 mm MDF) with under-mount metal slide rails. Thin, nearly uniform planar part; variance \u2248 1/12 each axis.",
+      "surfaceMaterials": [
+        "Material_3.006",
+        "Material_5.004"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "JOINT | Desk Right Front | bypass door slide 1",
+      "materials": [
+        "Dark Gray Plastic",
+        "Charcoal Panel"
+      ],
+      "massKg": 2.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.679624915122986,
+        -0.322549968957901,
+        0.3661500886082649
+      ],
+      "inertia": {
+        "ixx": 0.05995273902413417,
+        "iyy": 0.06668237773919317,
+        "izz": 0.007022124712927258,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19405007362365723,
+        0.028300046920776367,
+        0.572300061583519
+      ],
+      "sourceLink": null,
+      "massBasis": "Slightly thicker bypass door panel ~28 mm with slide hardware; same construction as door 0, uniform thin panel distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Slightly thicker bypass door panel ~28 mm with slide hardware; same construction as door 0, uniform thin panel distribution.",
+      "surfaceMaterials": [
+        "Material_3.006",
+        "Material_6.003"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "JOINT | Desk Right Front | bypass door slide 0",
+      "materials": [
+        "Dark Gray Plastic",
+        "Charcoal Panel"
+      ],
+      "massKg": 1.8,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        2.661574959754944,
+        -0.29349997639656067,
+        0.3661500886082649
+      ],
+      "inertia": {
+        "ixx": 0.048997224409050216,
+        "iyy": 0.05455830905933986,
+        "izz": 0.00569035815442638,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.19405007362365723,
+        0.02080005407333374,
+        0.572300061583519
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin MDF/wood bypass door panel ~21 mm thick with light slide hardware; nearly uniform solid panel, density ~650 kg/m\u00b3, fill \u2248 100% of thin bounding box.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin MDF/wood bypass door panel ~21 mm thick with light slide hardware; nearly uniform solid panel, density ~650 kg/m\u00b3, fill \u2248 100% of thin bounding box.",
+      "surfaceMaterials": [
+        "Material_3.006",
+        "Material_6.003"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "keyboard_tray_slide",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.17,
+      "id": "0",
+      "effort": 25.0,
+      "velocity": 0.3,
+      "damping": 6.0,
+      "friction": 3.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "drawer_slide_4",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.2,
+      "id": "1",
+      "effort": 40.0,
+      "velocity": 0.35,
+      "damping": 10.0,
+      "friction": 6.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "drawer_slide_3",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.2,
+      "id": "2",
+      "effort": 40.0,
+      "velocity": 0.35,
+      "damping": 10.0,
+      "friction": 6.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "drawer_slide_2",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.2,
+      "id": "3",
+      "effort": 40.0,
+      "velocity": 0.35,
+      "damping": 10.0,
+      "friction": 6.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "drawer_slide_1",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.2,
+      "id": "4",
+      "effort": 40.0,
+      "velocity": 0.35,
+      "damping": 10.0,
+      "friction": 6.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "drawer_slide_0",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.2,
+      "id": "5",
+      "effort": 40.0,
+      "velocity": 0.35,
+      "damping": 10.0,
+      "friction": 6.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "bypass_door_slide_1",
+      "type": "prismatic",
+      "lower": -0.16,
+      "upper": 0.0,
+      "id": "6",
+      "effort": 20.0,
+      "velocity": 0.3,
+      "damping": 5.0,
+      "friction": 3.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "bypass_door_slide_0",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.16,
+      "id": "7",
+      "effort": 20.0,
+      "velocity": 0.3,
+      "damping": 5.0,
+      "friction": 3.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

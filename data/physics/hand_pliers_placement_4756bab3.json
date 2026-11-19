@@ -1,0 +1,137 @@
+{
+  "assetId": "hand_pliers_placement_4756bab3",
+  "dimensions_m": [
+    0.07432985305786133,
+    0.2826713025569916,
+    0.1598576307296753
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Steel Rivet",
+      "surfaceMaterial": "Material_5.007",
+      "parts": [
+        "Hand_Pliers / pivot_carriage_rivet_head",
+        "Hand_Pliers / pivot_carriage_rivet_shaft",
+        "Hand_Pliers / pivot_carriage_rivet_boss"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "1",
+      "material": "Forged Steel Seam",
+      "surfaceMaterial": "Material_6.004",
+      "parts": [
+        "Hand_Pliers / pivot_carriage_head_seam",
+        "Hand_Pliers / pivot_carriage_boss_seam"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "2",
+      "material": "Carbon Steel Grooves",
+      "surfaceMaterial": "Material_4.011",
+      "parts": [
+        "Hand_Pliers / plier_half_0_groove_0",
+        "Hand_Pliers / plier_half_0_groove_4",
+        "Hand_Pliers / plier_half_0_groove_6",
+        "Hand_Pliers / plier_half_0_groove_3",
+        "Hand_Pliers / plier_half_0_groove_2",
+        "Hand_Pliers / plier_half_0_groove_1",
+        "Hand_Pliers / plier_half_0_groove_5"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "3",
+      "material": "Rubber Grip",
+      "surfaceMaterial": "Material_2.012",
+      "parts": [
+        "Hand_Pliers / plier_half_1_grip",
+        "Hand_Pliers / plier_half_0_grip"
+      ],
+      "values": {
+        "density_kg_m3": 1150,
+        "youngs_modulus_pa": 10000000,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.65
+      }
+    },
+    {
+      "id": "4",
+      "material": "Chrome-Vanadium Steel Shank",
+      "surfaceMaterial": "Material_1.012",
+      "parts": [
+        "Hand_Pliers / plier_half_1_shank",
+        "Hand_Pliers / plier_half_0_shank",
+        "Hand_Pliers / plier_half_1_hub",
+        "Hand_Pliers / plier_half_0_hub"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "5",
+      "material": "Rubber Grip Inlay",
+      "surfaceMaterial": "Material_3.012",
+      "parts": [
+        "Hand_Pliers / plier_half_0_grip_inlay",
+        "Hand_Pliers / plier_half_1_grip_inlay"
+      ],
+      "values": {
+        "density_kg_m3": 1150,
+        "youngs_modulus_pa": 10000000,
+        "poissons_ratio": 0.49,
+        "static_friction_coefficient": 0.9,
+        "dynamic_friction_coefficient": 0.7,
+        "restitution_coefficient": 0.65
+      }
+    },
+    {
+      "id": "6",
+      "material": "Polished Tool Steel Jaw",
+      "surfaceMaterial": "Material_0.012",
+      "parts": [
+        "Hand_Pliers / plier_half_1_jaw",
+        "Hand_Pliers / plier_half_0_jaw"
+      ],
+      "values": {
+        "density_kg_m3": 7850,
+        "youngs_modulus_pa": 200000000000,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.55,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

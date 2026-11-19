@@ -1,0 +1,98 @@
+{
+  "assetId": "wall_air_conditioner_placement_3b771f9e",
+  "dimensions_m": [
+    1.0396151542663574,
+    0.29903745651245117,
+    0.3834960460662842
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "ABS Plastic",
+      "surfaceMaterial": "Material_4.007",
+      "parts": [
+        "Wall_Air_Conditioner / front_panel_hinge_knuckle_0",
+        "Wall_Air_Conditioner / front_panel_front_panel_plate",
+        "Wall_Air_Conditioner / front_panel_hinge_knuckle_1",
+        "Wall_Air_Conditioner / louver_vane_0_vane_blade_0",
+        "Wall_Air_Conditioner / louver_vane_0_vane_pivot_pin_0_0",
+        "Wall_Air_Conditioner / louver_vane_0_vane_pivot_pin_0_1",
+        "Wall_Air_Conditioner / louver_vane_1_vane_blade_1",
+        "Wall_Air_Conditioner / louver_vane_1_vane_pivot_pin_1_0",
+        "Wall_Air_Conditioner / louver_vane_1_vane_pivot_pin_1_1"
+      ],
+      "values": {
+        "density_kg_m3": 1050,
+        "youngs_modulus_pa": 2300000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "1",
+      "material": "Polypropylene",
+      "surfaceMaterial": "Material_2.008",
+      "parts": [
+        "Wall_Air_Conditioner / housing_filter_frame"
+      ],
+      "values": {
+        "density_kg_m3": 900,
+        "youngs_modulus_pa": 1500000000,
+        "poissons_ratio": 0.4,
+        "static_friction_coefficient": 0.4,
+        "dynamic_friction_coefficient": 0.3,
+        "restitution_coefficient": 0.5
+      }
+    },
+    {
+      "id": "2",
+      "material": "Nylon Mesh",
+      "surfaceMaterial": "Material_3.008",
+      "parts": [
+        "Wall_Air_Conditioner / housing_filter_mesh"
+      ],
+      "values": {
+        "density_kg_m3": 1140,
+        "youngs_modulus_pa": 2700000000,
+        "poissons_ratio": 0.4,
+        "static_friction_coefficient": 0.5,
+        "dynamic_friction_coefficient": 0.4,
+        "restitution_coefficient": 0.35
+      }
+    },
+    {
+      "id": "3",
+      "material": "HIPS Plastic",
+      "surfaceMaterial": "Material_0.008",
+      "parts": [
+        "Wall_Air_Conditioner / housing_housing_shell"
+      ],
+      "values": {
+        "density_kg_m3": 1040,
+        "youngs_modulus_pa": 2100000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.4
+      }
+    },
+    {
+      "id": "4",
+      "material": "ABS Plastic Dark",
+      "surfaceMaterial": "Material_1.008",
+      "parts": [
+        "Wall_Air_Conditioner / housing_plenum_liner"
+      ],
+      "values": {
+        "density_kg_m3": 1050,
+        "youngs_modulus_pa": 2300000000,
+        "poissons_ratio": 0.35,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.4
+      }
+    }
+  ]
+}

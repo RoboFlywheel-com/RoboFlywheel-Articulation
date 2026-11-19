@@ -1,0 +1,440 @@
+{
+  "assetId": "asset_90_hero_toaster_6664610a",
+  "name": "Toaster",
+  "totalMassKg": 1.652,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "3",
+      "name": "body",
+      "materials": [
+        "Dark painted metal body",
+        "Painted plastic marking",
+        "Painted plastic panel",
+        "Brushed stainless steel rim",
+        "Polished stainless steel shell"
+      ],
+      "massKg": 1.18,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.049999833106995,
+        1.4526963233947754,
+        1.0010036826133728
+      ],
+      "inertia": {
+        "ixx": 0.02180151981890633,
+        "iyy": 0.038562433485483084,
+        "izz": 0.03737029946619332,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.4913671016693115,
+        0.28839111328125,
+        0.31530797481536865
+      ],
+      "sourceLink": null,
+      "massBasis": "Main toaster body: hollow double-wall plastic/metal shell with internal heating elements and crumb tray; mass concentrated in side walls and base, raising variance above uniform-box 1/12 and shifting CoM slightly below geometric center.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Main toaster body: hollow double-wall plastic/metal shell with internal heating elements and crumb tray; mass concentrated in side walls and base, raising variance above uniform-box 1/12 and shifting CoM slightly below geometric center.",
+      "surfaceMaterials": [
+        "90 | toaster_dark_pastel_cream.001",
+        "90 | toaster_mark_pastel_cream.001",
+        "90 | toaster_panel_pastel_cream.001",
+        "90 | toaster_rim_pastel_cream.001",
+        "V14_Toaster_shell_reveal"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "carriage lever",
+      "materials": [
+        "Brushed stainless steel",
+        "Painted plastic knob"
+      ],
+      "massKg": 0.24,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.0763972997665405,
+        1.4635556316375733,
+        1.077217936515808
+      ],
+      "inertia": {
+        "ixx": 0.0005680382002871738,
+        "iyy": 0.0041630630744558675,
+        "izz": 0.004718718263369038,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.45959019660949707,
+        0.18977832794189453,
+        0.023943424224853516
+      ],
+      "sourceLink": null,
+      "massBasis": "Carriage lever assembly: elongated metal rail with plastic knob; mass spread along long axis (vx\u22481/12), concentrated toward center in height (vy lower), very thin in depth so vz small.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Carriage lever assembly: elongated metal rail with plastic knob; mass spread along long axis (vx\u22481/12), concentrated toward center in height (vy lower), very thin in depth so vz small.",
+      "surfaceMaterials": [
+        "90 | toaster_carriage_pastel_cream.001",
+        "90 | toaster_knob_pastel_cream.001"
+      ]
+    },
+    {
+      "id": "0",
+      "name": "Bread slice 1",
+      "materials": [
+        "Bread"
+      ],
+      "massKg": 0.085,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.050058484077454,
+        1.418526291847229,
+        1.1957359313964844
+      ],
+      "inertia": {
+        "ixx": 0.00038460770945079593,
+        "iyy": 0.0006699730483756554,
+        "izz": 0.0003481837054561484,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.21318602561950684,
+        0.07019209861755371,
+        0.22510910034179688
+      ],
+      "sourceLink": null,
+      "massBasis": "Internal bread-slot guide mask; thin stamped steel sheet, nearly uniform density across its extent, slight concentration toward mounting edges.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Internal bread-slot guide mask; thin stamped steel sheet, nearly uniform density across its extent, slight concentration toward mounting edges.",
+      "surfaceMaterials": [
+        "DefaultMaterial.002"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "Bread slice 2",
+      "materials": [
+        "Bread"
+      ],
+      "massKg": 0.075,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.06040620803833,
+        1.5193683505058289,
+        1.1950094103813171
+      ],
+      "inertia": {
+        "ixx": 0.0003169179682772633,
+        "iyy": 0.0004876354361298887,
+        "izz": 0.00024194714043220564,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.18316650390625,
+        0.07957088947296143,
+        0.21386992931365967
+      ],
+      "sourceLink": null,
+      "massBasis": "Second internal guide mask, similar thin stamped metal construction as part 0, slightly smaller footprint.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Second internal guide mask, similar thin stamped metal construction as part 0, slightly smaller footprint.",
+      "surfaceMaterials": [
+        "DefaultMaterial.003"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "browning dial",
+      "materials": [
+        "Painted plastic button",
+        "Painted plastic control",
+        "Dark painted metal body"
+      ],
+      "massKg": 0.048,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.282158374786377,
+        1.4921084642410278,
+        0.9246717095375061
+      ],
+      "inertia": {
+        "ixx": 3.228719747809373e-05,
+        "iyy": 2.6468063334621545e-05,
+        "izz": 2.919424631871516e-05,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.05587196350097656,
+        0.0675206184387207,
+        0.06283140182495117
+      ],
+      "sourceLink": null,
+      "massBasis": "Browning dial: small plastic rotary knob with internal detent spring; roughly cylindrical mass distribution, near-uniform.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Browning dial: small plastic rotary knob with internal detent spring; roughly cylindrical mass distribution, near-uniform.",
+      "surfaceMaterials": [
+        "90 | toaster_button_pastel_cream.001",
+        "90 | toaster_control_pastel_cream.001",
+        "90 | toaster_dark_pastel_cream.001"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "bagel button",
+      "materials": [
+        "Painted plastic button",
+        "Dark painted metal body"
+      ],
+      "massKg": 0.008,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.262780666351318,
+        1.3941653966903687,
+        0.9346832275390625
+      ],
+      "inertia": {
+        "ixx": 5.721578058692102e-07,
+        "iyy": 1.3169548218138517e-06,
+        "izz": 1.4292006740251964e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.04121208190917969,
+        0.023417949676513672,
+        0.0195770263671875
+      ],
+      "sourceLink": null,
+      "massBasis": "Small injection-molded plastic bagel button; nearly uniform solid plastic, slight rearward bias from snap-fit stem.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small injection-molded plastic bagel button; nearly uniform solid plastic, slight rearward bias from snap-fit stem.",
+      "surfaceMaterials": [
+        "90 | toaster_button_pastel_cream.001",
+        "90 | toaster_dark_pastel_cream.001"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "cancel button",
+      "materials": [
+        "Painted plastic button",
+        "Dark painted metal body"
+      ],
+      "massKg": 0.008,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.262279987335205,
+        1.394215703010559,
+        1.0129907369613647
+      ],
+      "inertia": {
+        "ixx": 5.721578058692102e-07,
+        "iyy": 1.3169548218138517e-06,
+        "izz": 1.4292006740251964e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.04121208190917969,
+        0.023417949676513672,
+        0.0195770263671875
+      ],
+      "sourceLink": null,
+      "massBasis": "Cancel button, identical geometry and material to bagel button (part 2); consistent mass assignment.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Cancel button, identical geometry and material to bagel button (part 2); consistent mass assignment.",
+      "surfaceMaterials": [
+        "90 | toaster_button_pastel_cream.001",
+        "90 | toaster_dark_pastel_cream.001"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "frozen button",
+      "materials": [
+        "Painted plastic button",
+        "Dark painted metal body"
+      ],
+      "massKg": 0.008,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        4.2615461349487305,
+        1.394289255142212,
+        0.9738369822502136
+      ],
+      "inertia": {
+        "ixx": 5.721578058692102e-07,
+        "iyy": 1.3169548218138517e-06,
+        "izz": 1.4292006740251964e-06,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.04121208190917969,
+        0.023417949676513672,
+        0.0195770263671875
+      ],
+      "sourceLink": null,
+      "massBasis": "Frozen button, identical geometry and material to cancel/bagel buttons; consistent mass assignment.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Frozen button, identical geometry and material to cancel/bagel buttons; consistent mass assignment.",
+      "surfaceMaterials": [
+        "90 | toaster_button_pastel_cream.001",
+        "90 | toaster_dark_pastel_cream.001"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "body_to_carriage_lever",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.074025,
+      "id": "0",
+      "effort": 15.0,
+      "velocity": 0.5,
+      "damping": 5.0,
+      "friction": 2.0,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_browning_dial",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 5.14546,
+      "id": "1",
+      "effort": 0.3,
+      "velocity": 3.0,
+      "damping": 0.02,
+      "friction": 0.012,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_cancel_button",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.003,
+      "id": "2",
+      "effort": 5.0,
+      "velocity": 0.1,
+      "damping": 25.0,
+      "friction": 0.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_frozen_button",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.003,
+      "id": "3",
+      "effort": 5.0,
+      "velocity": 0.1,
+      "damping": 25.0,
+      "friction": 0.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "body_to_bagel_button",
+      "type": "prismatic",
+      "lower": 0.0,
+      "upper": 0.003,
+      "id": "4",
+      "effort": 5.0,
+      "velocity": 0.1,
+      "damping": 25.0,
+      "friction": 0.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": null,
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

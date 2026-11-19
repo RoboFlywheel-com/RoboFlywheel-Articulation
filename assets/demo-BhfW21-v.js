@@ -1,0 +1,1 @@
+import"./__vite-browser-external-B5Qt9EMX.js";const a=new URL("./index.html",location.href),e=new URLSearchParams(location.search).get("sample");e&&a.searchParams.set("sample",e);a.hash="dataset";location.replace(a.href);

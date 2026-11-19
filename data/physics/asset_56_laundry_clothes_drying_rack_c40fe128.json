@@ -1,0 +1,83 @@
+{
+  "assetId": "asset_56_laundry_clothes_drying_rack_c40fe128",
+  "dimensions_m": [
+    1.3410520553588867,
+    1.230888843536377,
+    1.1301968432962894
+  ],
+  "materials": [
+    {
+      "id": "0",
+      "material": "Painted Steel Tube",
+      "surfaceMaterial": "56 | rack_tube",
+      "parts": [
+        "leg_family__scissor_x_legs__frame_1",
+        "leg_family__scissor_x_legs__frame_0",
+        "main_frame",
+        "wing_form__parallel_bar_wing__tier0_front",
+        "wing_form__parallel_bar_wing__tier0_rear"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.45,
+        "dynamic_friction_coefficient": 0.35,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "1",
+      "material": "Black Molded Plastic",
+      "surfaceMaterial": "56 | black_plastic",
+      "parts": [
+        "leg_family__scissor_x_legs__frame_1",
+        "leg_family__scissor_x_legs__frame_0",
+        "main_frame",
+        "wing_form__parallel_bar_wing__tier0_front",
+        "wing_form__parallel_bar_wing__tier0_rear"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    },
+    {
+      "id": "2",
+      "material": "Galvanized Steel Wire",
+      "surfaceMaterial": "56 | hanger_wire",
+      "parts": [
+        "hanger_type__wire_triangle__hanger_0",
+        "hanger_type__wire_triangle__hanger_1"
+      ],
+      "values": {
+        "density_kg_m3": 7850.0,
+        "youngs_modulus_pa": 200000000000.0,
+        "poissons_ratio": 0.3,
+        "static_friction_coefficient": 0.6,
+        "dynamic_friction_coefficient": 0.45,
+        "restitution_coefficient": 0.6
+      }
+    },
+    {
+      "id": "3",
+      "material": "Black Molded Plastic Fitting",
+      "surfaceMaterial": "56 | dark_fitting",
+      "parts": [
+        "main_frame"
+      ],
+      "values": {
+        "density_kg_m3": 1050.0,
+        "youngs_modulus_pa": 2300000000.0,
+        "poissons_ratio": 0.37,
+        "static_friction_coefficient": 0.42,
+        "dynamic_friction_coefficient": 0.32,
+        "restitution_coefficient": 0.55
+      }
+    }
+  ]
+}

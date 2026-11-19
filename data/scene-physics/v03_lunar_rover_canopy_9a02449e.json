@@ -1,0 +1,607 @@
+{
+  "assetId": "v03_lunar_rover_canopy_9a02449e",
+  "name": "Lunar rover",
+  "totalMassKg": 197.4,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "V03 LAYOUT Lunar rover",
+      "materials": [
+        "Painted aluminum",
+        "Gold alloy",
+        "Graphite composite",
+        "Painted fiberglass",
+        "Painted steel",
+        "Aluminum alloy",
+        "Gold-coated Kapton"
+      ],
+      "massKg": 135.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -6.388911485671997,
+        15.252793312072754,
+        1.0182539355754852
+      ],
+      "inertia": {
+        "ixx": 108.17341284618817,
+        "iyy": 149.22752294344468,
+        "izz": 199.89436343725143,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        3.520577907562256,
+        2.899007797241211,
+        1.85345059633255
+      ],
+      "sourceLink": null,
+      "massBasis": "Hollow aluminium/steel frame with thin panels; mass concentrated in lower chassis rails and battery bay, hence CoM slightly below mid-height. Multi-material skin adds modest distributed mass.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Hollow aluminium/steel frame with thin panels; mass concentrated in lower chassis rails and battery bay, hence CoM slightly below mid-height. Multi-material skin adds modest distributed mass.",
+      "surfaceMaterials": [
+        "V03_Rover_coral",
+        "V03_Rover_gold",
+        "V03_Rover_graphite",
+        "V03_Rover_ivory",
+        "V03_Rover_sage",
+        "V03_Rover_silver",
+        "V03_Rover_warm_gold"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "MOTION2 Lunar front left wheel.001",
+      "materials": [
+        "Gold alloy",
+        "Rubber",
+        "Aluminum alloy"
+      ],
+      "massKg": 14.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -7.223898887634277,
+        14.044230937957764,
+        0.4146432876586914
+      ],
+      "inertia": {
+        "ixx": 1.4018242607352986,
+        "iyy": 2.2256290830134406,
+        "izz": 1.4451127979479297,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.1432323455810547,
+        0.5439310073852539,
+        1.1212085485458374
+      ],
+      "sourceLink": null,
+      "massBasis": "Rubber tire over metallic rim; mass concentrated in annular tire band. Symmetric about axle axis (y). Slightly higher y-variance due to hub and spoke mass.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rubber tire over metallic rim; mass concentrated in annular tire band. Symmetric about axle axis (y). Slightly higher y-variance due to hub and spoke mass.",
+      "surfaceMaterials": [
+        "V03_Rover_gold",
+        "V03_Rover_rubber",
+        "V03_Rover_silver"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "MOTION2 Lunar front right wheel.001",
+      "materials": [
+        "Gold alloy",
+        "Rubber",
+        "Aluminum alloy"
+      ],
+      "massKg": 14.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -7.74113655090332,
+        15.814801692962646,
+        0.3976488262414932
+      ],
+      "inertia": {
+        "ixx": 1.401815488073708,
+        "iyy": 2.225629025005663,
+        "izz": 1.4451040832941162,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.1432323455810547,
+        0.5439233779907227,
+        1.121208518743515
+      ],
+      "sourceLink": null,
+      "massBasis": "Identical construction to front-left wheel; rubber tire, gold/silver rim. Symmetric annular mass distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Identical construction to front-left wheel; rubber tire, gold/silver rim. Symmetric annular mass distribution.",
+      "surfaceMaterials": [
+        "V03_Rover_gold",
+        "V03_Rover_rubber",
+        "V03_Rover_silver"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "MOTION2 Lunar rear left wheel.001",
+      "materials": [
+        "Gold alloy",
+        "Rubber",
+        "Aluminum alloy"
+      ],
+      "massKg": 14.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -5.0373334884643555,
+        14.68291711807251,
+        0.40662892162799835
+      ],
+      "inertia": {
+        "ixx": 1.4018242027275216,
+        "iyy": 2.225629025005663,
+        "izz": 1.4451127979479297,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.1432323455810547,
+        0.5439310073852539,
+        1.121208518743515
+      ],
+      "sourceLink": null,
+      "massBasis": "Same wheel design as front pair; rubber tire, gold/silver rim. Symmetric annular distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Same wheel design as front pair; rubber tire, gold/silver rim. Symmetric annular distribution.",
+      "surfaceMaterials": [
+        "V03_Rover_gold",
+        "V03_Rover_rubber",
+        "V03_Rover_silver"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "MOTION2 Lunar rear right wheel.001",
+      "materials": [
+        "Gold alloy",
+        "Rubber",
+        "Aluminum alloy"
+      ],
+      "massKg": 14.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -5.5545690059661865,
+        16.453487396240234,
+        0.38963504135608673
+      ],
+      "inertia": {
+        "ixx": 1.401814398750576,
+        "iyy": 2.2256299713613714,
+        "izz": 1.4451039403266923,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.143232822418213,
+        0.5439224243164062,
+        1.121208518743515
+      ],
+      "sourceLink": null,
+      "massBasis": "Rear-right wheel identical to other three; consistent mass and inertia.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Rear-right wheel identical to other three; consistent mass and inertia.",
+      "surfaceMaterials": [
+        "V03_Rover_gold",
+        "V03_Rover_rubber",
+        "V03_Rover_silver"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "MOTION2 Lunar antenna",
+      "materials": [
+        "Painted fiberglass",
+        "Aluminum alloy"
+      ],
+      "massKg": 3.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -7.513471841812134,
+        14.91355562210083,
+        1.1932089281082154
+      ],
+      "inertia": {
+        "ixx": 0.7832384200339635,
+        "iyy": 0.7861117003581702,
+        "izz": 0.7818820434406912,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.3669180870056152,
+        1.3851861953735352,
+        1.3692786395549774
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin parabolic dish on lightweight silver mast; ivory reflector skin. Mass spread over shell surface, lower variance than solid box. CoM slightly above centre due to feed horn.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin parabolic dish on lightweight silver mast; ivory reflector skin. Mass spread over shell surface, lower variance than solid box. CoM slightly above centre due to feed horn.",
+      "surfaceMaterials": [
+        "V03_Rover_ivory",
+        "V03_Rover_silver"
+      ]
+    },
+    {
+      "id": "7",
+      "name": "MOTION2 Lunar visor",
+      "materials": [
+        "Painted aluminum",
+        "Graphite composite",
+        "Painted fiberglass"
+      ],
+      "massKg": 2.2,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -7.050302743911743,
+        15.066039085388184,
+        1.4716387128829955
+      ],
+      "inertia": {
+        "ixx": 0.2518390152318704,
+        "iyy": 0.09215284518956905,
+        "izz": 0.34143495799998547,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.752225399017334,
+        1.3553428649902344,
+        0.14406275749206543
+      ],
+      "sourceLink": null,
+      "massBasis": "Thin flat visor/canopy panel (0.14 m thick). Very low z-variance (thin-shell). Coral/graphite/ivory laminate; mass roughly uniform in-plane.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Thin flat visor/canopy panel (0.14 m thick). Very low z-variance (thin-shell). Coral/graphite/ivory laminate; mass roughly uniform in-plane.",
+      "surfaceMaterials": [
+        "V03_Rover_coral",
+        "V03_Rover_graphite",
+        "V03_Rover_ivory"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "MOTION2 Lunar hand controller",
+      "materials": [
+        "Aluminum alloy"
+      ],
+      "massKg": 0.7,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -6.65794038772583,
+        15.165206813812256,
+        0.6892989039421081
+      ],
+      "inertia": {
+        "ixx": 0.003303758654552802,
+        "iyy": 0.00240376027078355,
+        "izz": 0.001627124821824418,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.08321666717529297,
+        0.16292762756347656,
+        0.20119667053222656
+      ],
+      "sourceLink": null,
+      "massBasis": "Small solid-ish silver joystick/pivot assembly. CoM shifted toward base pivot. Nearly uniform small metal part.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small solid-ish silver joystick/pivot assembly. CoM shifted toward base pivot. Nearly uniform small metal part.",
+      "surfaceMaterials": [
+        "V03_Rover_silver"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "MOTION2_Lunar_front_right_wheel.001",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "0",
+      "effort": 80.0,
+      "velocity": 8.0,
+      "damping": 1.5,
+      "friction": 2.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Lunar_antenna",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "1",
+      "effort": 5.0,
+      "velocity": 1.5,
+      "damping": 0.4,
+      "friction": 0.3,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Lunar_hand_controller",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "2",
+      "effort": 3.0,
+      "velocity": 2.0,
+      "damping": 0.3,
+      "friction": 0.2,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Lunar_rear_left_wheel.001",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "3",
+      "effort": 80.0,
+      "velocity": 8.0,
+      "damping": 1.5,
+      "friction": 2.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Lunar_front_left_wheel.001",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "4",
+      "effort": 80.0,
+      "velocity": 8.0,
+      "damping": 1.5,
+      "friction": 2.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Lunar_rear_right_wheel.001",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "5",
+      "effort": 80.0,
+      "velocity": 8.0,
+      "damping": 1.5,
+      "friction": 2.5,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "MOTION2_Lunar_visor",
+      "type": "revolute",
+      "lower": null,
+      "upper": null,
+      "id": "6",
+      "effort": 2.0,
+      "velocity": 1.0,
+      "damping": 0.2,
+      "friction": 0.15,
+      "origins": {
+        "effort": "qwen_estimate",
+        "velocity": "qwen_estimate",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_left_wheel_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "7",
+      "effort": 80.0,
+      "velocity": 12.0,
+      "damping": 1.5,
+      "friction": 2.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "front_right_wheel_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "8",
+      "effort": 80.0,
+      "velocity": 12.0,
+      "damping": 1.5,
+      "friction": 2.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_left_wheel_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "9",
+      "effort": 80.0,
+      "velocity": 12.0,
+      "damping": 1.5,
+      "friction": 2.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "rear_right_wheel_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "10",
+      "effort": 80.0,
+      "velocity": 12.0,
+      "damping": 1.5,
+      "friction": 2.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "antenna_mast_swivel",
+      "type": "revolute",
+      "lower": -2.62,
+      "upper": 2.62,
+      "id": "11",
+      "effort": 10.0,
+      "velocity": 1.5,
+      "damping": 0.4,
+      "friction": 0.3,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "hand_controller_tilt",
+      "type": "revolute",
+      "lower": -0.35,
+      "upper": 0.35,
+      "id": "12",
+      "effort": 8.0,
+      "velocity": 2.0,
+      "damping": 0.3,
+      "friction": 0.2,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "canopy_to_sun_visor",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 0.9,
+      "id": "13",
+      "effort": 6.0,
+      "velocity": 1.0,
+      "damping": 0.15,
+      "friction": 0.1,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/space_blend_asset/rec_apollo-lunar-roving-vehicl...0260708_115447_579470_fe69bbe0/rec_apollo-lunar-roving-vehicle-lrv-as-seen-in-a-col_20260708_115447_579470_fe69bbe0/model.urdf",
+  "referenceFrame": 240,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}

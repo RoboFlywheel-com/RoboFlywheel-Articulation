@@ -1,0 +1,1208 @@
+{
+ "objects": [
+  {
+   "id": "cabinet_paper_showcase",
+   "name": "Side-hinged cabinet",
+   "tagline": "Doors, width, and finishes on a shared carcass.",
+   "generator": "cabinet",
+   "thumbnail": "media/editing/cabinet_paper_showcase.webp",
+   "baseGlb": "models/editing/cabinet_paper_showcase/base.glb",
+   "baseReadout": "base configuration",
+   "frame": {
+    "center": [
+     0.0,
+     -0.019000000000000017,
+     0.7
+    ],
+    "half_extents": [
+     0.8415000000000001,
+     0.27390000000000003,
+     0.77
+    ],
+    "radius": 1.1730487884141905
+   },
+   "axes": [
+    {
+     "group": "component",
+     "kind": "component",
+     "target": "door_kind",
+     "label": "Door module",
+     "variants": [
+      {
+       "id": "component-door_kind-flush_slab",
+       "label": "flush slab",
+       "button": "flush slab",
+       "readout": "base configuration",
+       "glb": "models/editing/cabinet_paper_showcase/component-door_kind-flush_slab.glb"
+      },
+      {
+       "id": "component-door_kind-raised_panel",
+       "label": "raised panel",
+       "button": "raised panel",
+       "readout": "door_kind: \"flush_slab\" \u2192 \"raised_panel\"",
+       "glb": "models/editing/cabinet_paper_showcase/component-door_kind-raised_panel.glb"
+      },
+      {
+       "id": "component-door_kind-framed_cane",
+       "label": "framed cane",
+       "button": "framed cane",
+       "readout": "door_kind: \"flush_slab\" \u2192 \"framed_cane\"",
+       "glb": "models/editing/cabinet_paper_showcase/component-door_kind-framed_cane.glb"
+      },
+      {
+       "id": "component-door_kind-glazed_curtain",
+       "label": "glazed curtain",
+       "button": "glazed curtain",
+       "readout": "door_kind: \"flush_slab\" \u2192 \"glazed_curtain\"",
+       "glb": "models/editing/cabinet_paper_showcase/component-door_kind-glazed_curtain.glb"
+      }
+     ]
+    },
+    {
+     "group": "count",
+     "kind": "count",
+     "target": "door_count",
+     "label": "Door count",
+     "variants": [
+      {
+       "id": "count-door_count-1",
+       "label": "1",
+       "button": "1",
+       "readout": "door_count: 2 \u2192 1",
+       "glb": "models/editing/cabinet_paper_showcase/count-door_count-1.glb"
+      },
+      {
+       "id": "count-door_count-2",
+       "label": "2",
+       "button": "2",
+       "readout": "base configuration",
+       "glb": "models/editing/cabinet_paper_showcase/count-door_count-2.glb"
+      },
+      {
+       "id": "count-door_count-3",
+       "label": "3",
+       "button": "3",
+       "readout": "door_count: 2 \u2192 3",
+       "glb": "models/editing/cabinet_paper_showcase/count-door_count-3.glb"
+      },
+      {
+       "id": "count-door_count-4",
+       "label": "4",
+       "button": "4",
+       "readout": "door_count: 2 \u2192 4",
+       "glb": "models/editing/cabinet_paper_showcase/count-door_count-4.glb"
+      }
+     ]
+    },
+    {
+     "group": "material",
+     "kind": "material",
+     "target": "carcass",
+     "label": "Carcass material",
+     "variants": [
+      {
+       "id": "material-carcass-walnut-veneer-carcass",
+       "label": "walnut veneer carcass",
+       "button": "walnut veneer carcass",
+       "readout": "carcass_material: default \u2192 \"walnut veneer carcass\"",
+       "glb": "models/editing/cabinet_paper_showcase/material-carcass-walnut-veneer-carcass.glb",
+       "swatch": [
+        0.29,
+        0.12,
+        0.055,
+        1.0
+       ]
+      },
+      {
+       "id": "material-carcass-natural-oak-carcass",
+       "label": "natural oak carcass",
+       "button": "natural oak carcass",
+       "readout": "carcass_material: default \u2192 \"natural oak carcass\"",
+       "glb": "models/editing/cabinet_paper_showcase/material-carcass-natural-oak-carcass.glb",
+       "swatch": [
+        0.58,
+        0.36,
+        0.16,
+        1.0
+       ]
+      },
+      {
+       "id": "material-carcass-warm-white-carcass",
+       "label": "warm white carcass",
+       "button": "warm white carcass",
+       "readout": "carcass_material: default \u2192 \"warm white carcass\"",
+       "glb": "models/editing/cabinet_paper_showcase/material-carcass-warm-white-carcass.glb",
+       "swatch": [
+        0.88,
+        0.88,
+        0.85,
+        1.0
+       ]
+      },
+      {
+       "id": "material-carcass-charcoal-black-carcass",
+       "label": "charcoal black carcass",
+       "button": "charcoal black carcass",
+       "readout": "carcass_material: default \u2192 \"charcoal black carcass\"",
+       "glb": "models/editing/cabinet_paper_showcase/material-carcass-charcoal-black-carcass.glb",
+       "swatch": [
+        0.08,
+        0.09,
+        0.1,
+        1.0
+       ]
+      }
+     ]
+    },
+    {
+     "group": "material_1",
+     "kind": "material",
+     "target": "door",
+     "label": "Door material",
+     "variants": [
+      {
+       "id": "material-door-walnut-veneer",
+       "label": "walnut veneer",
+       "button": "walnut veneer",
+       "readout": "door_material: default \u2192 \"walnut veneer\"",
+       "glb": "models/editing/cabinet_paper_showcase/material-door-walnut-veneer.glb",
+       "swatch": [
+        0.29,
+        0.12,
+        0.055,
+        1.0
+       ]
+      },
+      {
+       "id": "material-door-natural-oak",
+       "label": "natural oak",
+       "button": "natural oak",
+       "readout": "door_material: default \u2192 \"natural oak\"",
+       "glb": "models/editing/cabinet_paper_showcase/material-door-natural-oak.glb",
+       "swatch": [
+        0.58,
+        0.36,
+        0.16,
+        1.0
+       ]
+      },
+      {
+       "id": "material-door-brushed-aluminum",
+       "label": "brushed aluminum",
+       "button": "brushed aluminum",
+       "readout": "door_material: default \u2192 \"brushed aluminum\"",
+       "glb": "models/editing/cabinet_paper_showcase/material-door-brushed-aluminum.glb",
+       "swatch": [
+        0.63,
+        0.67,
+        0.71,
+        1.0
+       ]
+      },
+      {
+       "id": "material-door-red-enamel",
+       "label": "red enamel",
+       "button": "red enamel",
+       "readout": "door_material: default \u2192 \"red enamel\"",
+       "glb": "models/editing/cabinet_paper_showcase/material-door-red-enamel.glb",
+       "swatch": [
+        0.82,
+        0.15,
+        0.1,
+        1.0
+       ]
+      },
+      {
+       "id": "material-door-warm-white-lacquer",
+       "label": "warm white lacquer",
+       "button": "warm white lacquer",
+       "readout": "door_material: default \u2192 \"warm white lacquer\"",
+       "glb": "models/editing/cabinet_paper_showcase/material-door-warm-white-lacquer.glb",
+       "swatch": [
+        0.88,
+        0.88,
+        0.85,
+        1.0
+       ]
+      },
+      {
+       "id": "material-door-smoked-glass",
+       "label": "smoked glass",
+       "button": "smoked glass",
+       "readout": "door_material: default \u2192 \"smoked glass\"",
+       "glb": "models/editing/cabinet_paper_showcase/material-door-smoked-glass.glb",
+       "swatch": [
+        0.16,
+        0.24,
+        0.28,
+        0.48
+       ]
+      }
+     ]
+    },
+    {
+     "group": "size",
+     "kind": "size",
+     "target": "carcass_width_m",
+     "label": "Cabinet width (m)",
+     "variants": [
+      {
+       "id": "size-carcass_width_m-0.72",
+       "label": "0.72",
+       "button": "0.72",
+       "readout": "carcass_width_m: 1.0 \u2192 0.72",
+       "glb": "models/editing/cabinet_paper_showcase/size-carcass_width_m-0.72.glb"
+      },
+      {
+       "id": "size-carcass_width_m-0.78",
+       "label": "0.78",
+       "button": "0.78",
+       "readout": "carcass_width_m: 1.0 \u2192 0.78",
+       "glb": "models/editing/cabinet_paper_showcase/size-carcass_width_m-0.78.glb"
+      },
+      {
+       "id": "size-carcass_width_m-1.1",
+       "label": "1.1",
+       "button": "1.1",
+       "readout": "carcass_width_m: 1.0 \u2192 1.1",
+       "glb": "models/editing/cabinet_paper_showcase/size-carcass_width_m-1.1.glb"
+      },
+      {
+       "id": "size-carcass_width_m-1.26",
+       "label": "1.26",
+       "button": "1.26",
+       "readout": "carcass_width_m: 1.0 \u2192 1.26",
+       "glb": "models/editing/cabinet_paper_showcase/size-carcass_width_m-1.26.glb"
+      },
+      {
+       "id": "size-carcass_width_m-1.5",
+       "label": "1.5",
+       "button": "1.5",
+       "readout": "carcass_width_m: 1.0 \u2192 1.5",
+       "glb": "models/editing/cabinet_paper_showcase/size-carcass_width_m-1.5.glb"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fence",
+   "name": "Articulated cascade fence",
+   "tagline": "Panel modules, count, and materials on a folding chain.",
+   "generator": "fence",
+   "thumbnail": "media/editing/fence.webp",
+   "baseGlb": "models/editing/fence/base.glb",
+   "baseReadout": "base configuration",
+   "frame": {
+    "center": [
+     0.9811923922084049,
+     0.3564862125902948,
+     0.6403764999999999
+    ],
+    "half_extents": [
+     2.2519116314292456,
+     0.7522088338493242,
+     0.7024792500000001
+    ],
+    "radius": 2.475964705355844
+   },
+   "axes": [
+    {
+     "group": "component",
+     "kind": "component",
+     "target": "panel_style",
+     "label": "Panel infill module",
+     "variants": [
+      {
+       "id": "component-panel_style-picket_tubular",
+       "label": "picket tubular",
+       "button": "picket tubular",
+       "readout": "panel_style: \"mesh_infill\" \u2192 \"picket_tubular\"",
+       "glb": "models/editing/fence/component-panel_style-picket_tubular.glb"
+      },
+      {
+       "id": "component-panel_style-mesh_infill",
+       "label": "mesh infill",
+       "button": "mesh infill",
+       "readout": "base configuration",
+       "glb": "models/editing/fence/component-panel_style-mesh_infill.glb"
+      },
+      {
+       "id": "component-panel_style-solid_half_panel",
+       "label": "solid half panel",
+       "button": "solid half panel",
+       "readout": "panel_style: \"mesh_infill\" \u2192 \"solid_half_panel\"",
+       "glb": "models/editing/fence/component-panel_style-solid_half_panel.glb"
+      }
+     ]
+    },
+    {
+     "group": "count",
+     "kind": "count",
+     "target": "panel_count",
+     "label": "Panel count",
+     "variants": [
+      {
+       "id": "count-panel_count-2",
+       "label": "2",
+       "button": "2",
+       "readout": "base configuration",
+       "glb": "models/editing/fence/count-panel_count-2.glb"
+      },
+      {
+       "id": "count-panel_count-3",
+       "label": "3",
+       "button": "3",
+       "readout": "panel_count: 2 \u2192 3",
+       "glb": "models/editing/fence/count-panel_count-3.glb"
+      },
+      {
+       "id": "count-panel_count-4",
+       "label": "4",
+       "button": "4",
+       "readout": "panel_count: 2 \u2192 4",
+       "glb": "models/editing/fence/count-panel_count-4.glb"
+      },
+      {
+       "id": "count-panel_count-10",
+       "label": "10",
+       "button": "10",
+       "readout": "panel_count: 2 \u2192 10",
+       "glb": "models/editing/fence/count-panel_count-10.glb"
+      }
+     ]
+    },
+    {
+     "group": "material",
+     "kind": "material",
+     "target": "panel_infill",
+     "label": "Panel infill material",
+     "variants": [
+      {
+       "id": "material-panel_infill-brushed-silver-infill",
+       "label": "brushed silver infill",
+       "button": "brushed silver infill",
+       "readout": "panel_infill_material: default \u2192 \"brushed silver infill\"",
+       "glb": "models/editing/fence/material-panel_infill-brushed-silver-infill.glb",
+       "swatch": [
+        0.63,
+        0.67,
+        0.71,
+        1.0
+       ]
+      },
+      {
+       "id": "material-panel_infill-white-enamel-infill",
+       "label": "white enamel infill",
+       "button": "white enamel infill",
+       "readout": "panel_infill_material: default \u2192 \"white enamel infill\"",
+       "glb": "models/editing/fence/material-panel_infill-white-enamel-infill.glb",
+       "swatch": [
+        0.88,
+        0.88,
+        0.85,
+        1.0
+       ]
+      },
+      {
+       "id": "material-panel_infill-polished-brass-infill",
+       "label": "polished brass infill",
+       "button": "polished brass infill",
+       "readout": "panel_infill_material: default \u2192 \"polished brass infill\"",
+       "glb": "models/editing/fence/material-panel_infill-polished-brass-infill.glb",
+       "swatch": [
+        0.78,
+        0.56,
+        0.16,
+        1.0
+       ]
+      },
+      {
+       "id": "material-panel_infill-red-enamel-infill",
+       "label": "red enamel infill",
+       "button": "red enamel infill",
+       "readout": "panel_infill_material: default \u2192 \"red enamel infill\"",
+       "glb": "models/editing/fence/material-panel_infill-red-enamel-infill.glb",
+       "swatch": [
+        0.82,
+        0.15,
+        0.1,
+        1.0
+       ]
+      },
+      {
+       "id": "material-panel_infill-black-anodized-infill",
+       "label": "black anodized infill",
+       "button": "black anodized infill",
+       "readout": "panel_infill_material: default \u2192 \"black anodized infill\"",
+       "glb": "models/editing/fence/material-panel_infill-black-anodized-infill.glb",
+       "swatch": [
+        0.08,
+        0.09,
+        0.1,
+        1.0
+       ]
+      }
+     ]
+    },
+    {
+     "group": "material_1",
+     "kind": "material",
+     "target": "panels",
+     "label": "Whole-panel material",
+     "variants": [
+      {
+       "id": "material-panels-red-enamel-panels",
+       "label": "red enamel panels",
+       "button": "red enamel panels",
+       "readout": "panels_material: default \u2192 \"red enamel panels\"",
+       "glb": "models/editing/fence/material-panels-red-enamel-panels.glb",
+       "swatch": [
+        0.82,
+        0.15,
+        0.1,
+        1.0
+       ]
+      },
+      {
+       "id": "material-panels-warm-white-panels",
+       "label": "warm white panels",
+       "button": "warm white panels",
+       "readout": "panels_material: default \u2192 \"warm white panels\"",
+       "glb": "models/editing/fence/material-panels-warm-white-panels.glb",
+       "swatch": [
+        0.88,
+        0.88,
+        0.85,
+        1.0
+       ]
+      },
+      {
+       "id": "material-panels-black-anodized-panels",
+       "label": "black anodized panels",
+       "button": "black anodized panels",
+       "readout": "panels_material: default \u2192 \"black anodized panels\"",
+       "glb": "models/editing/fence/material-panels-black-anodized-panels.glb",
+       "swatch": [
+        0.08,
+        0.09,
+        0.1,
+        1.0
+       ]
+      },
+      {
+       "id": "material-panels-brushed-silver-panels",
+       "label": "brushed silver panels",
+       "button": "brushed silver panels",
+       "readout": "panels_material: default \u2192 \"brushed silver panels\"",
+       "glb": "models/editing/fence/material-panels-brushed-silver-panels.glb",
+       "swatch": [
+        0.63,
+        0.67,
+        0.71,
+        1.0
+       ]
+      }
+     ]
+    },
+    {
+     "group": "size",
+     "kind": "size",
+     "target": "panel_len_scale",
+     "label": "Panel length scale",
+     "variants": [
+      {
+       "id": "size-panel_len_scale-0.9",
+       "label": "0.9",
+       "button": "0.9",
+       "readout": "panel_len_scale: 1.0 \u2192 0.9",
+       "glb": "models/editing/fence/size-panel_len_scale-0.9.glb"
+      },
+      {
+       "id": "size-panel_len_scale-0.95",
+       "label": "0.95",
+       "button": "0.95",
+       "readout": "panel_len_scale: 1.0 \u2192 0.95",
+       "glb": "models/editing/fence/size-panel_len_scale-0.95.glb"
+      },
+      {
+       "id": "size-panel_len_scale-1.06",
+       "label": "1.06",
+       "button": "1.06",
+       "readout": "panel_len_scale: 1.0 \u2192 1.06",
+       "glb": "models/editing/fence/size-panel_len_scale-1.06.glb"
+      },
+      {
+       "id": "size-panel_len_scale-1.12",
+       "label": "1.12",
+       "button": "1.12",
+       "readout": "panel_len_scale: 1.0 \u2192 1.12",
+       "glb": "models/editing/fence/size-panel_len_scale-1.12.glb"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ferris_wheel",
+   "name": "Ferris wheel",
+   "tagline": "Gondola modules, count, and wheel radius.",
+   "generator": "ferris_wheel",
+   "thumbnail": "media/editing/ferris_wheel.webp",
+   "baseGlb": "models/editing/ferris_wheel/base.glb",
+   "baseReadout": "base configuration",
+   "frame": {
+    "center": [
+     0.0,
+     0.0,
+     1.5952051282051283
+    ],
+    "half_extents": [
+     1.1011282051282052,
+     1.4806000000000001,
+     1.7547256410256413
+    ],
+    "radius": 2.546315329923164
+   },
+   "axes": [
+    {
+     "group": "component",
+     "kind": "component",
+     "target": "gondola_style",
+     "label": "Gondola module",
+     "variants": [
+      {
+       "id": "component-gondola_style-box_cabin",
+       "label": "box cabin",
+       "button": "box cabin",
+       "readout": "base configuration",
+       "glb": "models/editing/ferris_wheel/component-gondola_style-box_cabin.glb"
+      },
+      {
+       "id": "component-gondola_style-open_basket",
+       "label": "open basket",
+       "button": "open basket",
+       "readout": "gondola_style: \"box_cabin\" \u2192 \"open_basket\"",
+       "glb": "models/editing/ferris_wheel/component-gondola_style-open_basket.glb"
+      },
+      {
+       "id": "component-gondola_style-glass_capsule",
+       "label": "glass capsule",
+       "button": "glass capsule",
+       "readout": "gondola_style: \"box_cabin\" \u2192 \"glass_capsule\"",
+       "glb": "models/editing/ferris_wheel/component-gondola_style-glass_capsule.glb"
+      },
+      {
+       "id": "component-gondola_style-bucket_seat",
+       "label": "bucket seat",
+       "button": "bucket seat",
+       "readout": "gondola_style: \"box_cabin\" \u2192 \"bucket_seat\"",
+       "glb": "models/editing/ferris_wheel/component-gondola_style-bucket_seat.glb"
+      },
+      {
+       "id": "component-gondola_style-rounded_pod",
+       "label": "rounded pod",
+       "button": "rounded pod",
+       "readout": "gondola_style: \"box_cabin\" \u2192 \"rounded_pod\"",
+       "glb": "models/editing/ferris_wheel/component-gondola_style-rounded_pod.glb"
+      }
+     ]
+    },
+    {
+     "group": "count",
+     "kind": "count",
+     "target": "num_gondolas",
+     "label": "Gondola count",
+     "variants": [
+      {
+       "id": "count-num_gondolas-8",
+       "label": "8",
+       "button": "8",
+       "readout": "num_gondolas: 12 \u2192 8",
+       "glb": "models/editing/ferris_wheel/count-num_gondolas-8.glb"
+      },
+      {
+       "id": "count-num_gondolas-12",
+       "label": "12",
+       "button": "12",
+       "readout": "base configuration",
+       "glb": "models/editing/ferris_wheel/count-num_gondolas-12.glb"
+      },
+      {
+       "id": "count-num_gondolas-16",
+       "label": "16",
+       "button": "16",
+       "readout": "num_gondolas: 12 \u2192 16",
+       "glb": "models/editing/ferris_wheel/count-num_gondolas-16.glb"
+      },
+      {
+       "id": "count-num_gondolas-20",
+       "label": "20",
+       "button": "20",
+       "readout": "num_gondolas: 12 \u2192 20",
+       "glb": "models/editing/ferris_wheel/count-num_gondolas-20.glb"
+      }
+     ]
+    },
+    {
+     "group": "material",
+     "kind": "material",
+     "target": "gondola_body",
+     "label": "Gondola body material",
+     "variants": [
+      {
+       "id": "material-gondola_body-walnut-gondola-body",
+       "label": "walnut gondola body",
+       "button": "walnut gondola body",
+       "readout": "gondola_body_material: default \u2192 \"walnut gondola body\"",
+       "glb": "models/editing/ferris_wheel/material-gondola_body-walnut-gondola-body.glb",
+       "swatch": [
+        0.29,
+        0.12,
+        0.055,
+        1.0
+       ]
+      },
+      {
+       "id": "material-gondola_body-brushed-silver-gondola-body",
+       "label": "brushed silver gondola body",
+       "button": "brushed silver gondola body",
+       "readout": "gondola_body_material: default \u2192 \"brushed silver gondola body\"",
+       "glb": "models/editing/ferris_wheel/material-gondola_body-brushed-silver-gondola-body.glb",
+       "swatch": [
+        0.63,
+        0.67,
+        0.71,
+        1.0
+       ]
+      },
+      {
+       "id": "material-gondola_body-warm-white-polymer-gondola-body",
+       "label": "warm white polymer gondola body",
+       "button": "warm white polymer gondola body",
+       "readout": "gondola_body_material: default \u2192 \"warm white polymer gondola body\"",
+       "glb": "models/editing/ferris_wheel/material-gondola_body-warm-white-polymer-gondola-body.glb",
+       "swatch": [
+        0.88,
+        0.86,
+        0.79,
+        1.0
+       ]
+      },
+      {
+       "id": "material-gondola_body-red-enamel-gondola-body",
+       "label": "red enamel gondola body",
+       "button": "red enamel gondola body",
+       "readout": "gondola_body_material: default \u2192 \"red enamel gondola body\"",
+       "glb": "models/editing/ferris_wheel/material-gondola_body-red-enamel-gondola-body.glb",
+       "swatch": [
+        0.82,
+        0.15,
+        0.1,
+        1.0
+       ]
+      },
+      {
+       "id": "material-gondola_body-deep-blue-gondola-body",
+       "label": "deep blue gondola body",
+       "button": "deep blue gondola body",
+       "readout": "gondola_body_material: default \u2192 \"deep blue gondola body\"",
+       "glb": "models/editing/ferris_wheel/material-gondola_body-deep-blue-gondola-body.glb",
+       "swatch": [
+        0.055,
+        0.11,
+        0.22,
+        1.0
+       ]
+      }
+     ]
+    },
+    {
+     "group": "size",
+     "kind": "size",
+     "target": "rim_radius",
+     "label": "Wheel radius (m)",
+     "variants": [
+      {
+       "id": "size-rim_radius-0.7",
+       "label": "0.7",
+       "button": "0.7",
+       "readout": "rim_radius: 0.98 \u2192 0.7",
+       "glb": "models/editing/ferris_wheel/size-rim_radius-0.7.glb"
+      },
+      {
+       "id": "size-rim_radius-1.12",
+       "label": "1.12",
+       "button": "1.12",
+       "readout": "rim_radius: 0.98 \u2192 1.12",
+       "glb": "models/editing/ferris_wheel/size-rim_radius-1.12.glb"
+      },
+      {
+       "id": "size-rim_radius-1.28",
+       "label": "1.28",
+       "button": "1.28",
+       "readout": "rim_radius: 0.98 \u2192 1.28",
+       "glb": "models/editing/ferris_wheel/size-rim_radius-1.28.glb"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "playground_chair_swing_carousel",
+   "name": "Chair-swing carousel",
+   "tagline": "Chair modules, count, and ring radius.",
+   "generator": "playground_chair_swing_carousel",
+   "thumbnail": "media/editing/playground_chair_swing_carousel.webp",
+   "baseGlb": "models/editing/playground_chair_swing_carousel/base.glb",
+   "baseReadout": "base configuration",
+   "frame": {
+    "center": [
+     0.0,
+     0.0,
+     0.7100000000000001
+    ],
+    "half_extents": [
+     2.0955000000000004,
+     1.9302562336302915,
+     0.7810000000000001
+    ],
+    "radius": 2.954144610114508
+   },
+   "axes": [
+    {
+     "group": "component",
+     "kind": "component",
+     "target": "seat_type_module",
+     "label": "Chair module",
+     "variants": [
+      {
+       "id": "component-seat_type_module-flat_platform_seat",
+       "label": "flat platform seat",
+       "button": "flat platform seat",
+       "readout": "base configuration",
+       "glb": "models/editing/playground_chair_swing_carousel/component-seat_type_module-flat_platform_seat.glb"
+      },
+      {
+       "id": "component-seat_type_module-slatted_bucket_rail",
+       "label": "slatted bucket rail",
+       "button": "slatted bucket rail",
+       "readout": "seat_type_module: \"flat_platform_seat\" \u2192 \"slatted_bucket_rail\"",
+       "glb": "models/editing/playground_chair_swing_carousel/component-seat_type_module-slatted_bucket_rail.glb"
+      },
+      {
+       "id": "component-seat_type_module-deep_bucket_seat",
+       "label": "deep bucket seat",
+       "button": "deep bucket seat",
+       "readout": "seat_type_module: \"flat_platform_seat\" \u2192 \"deep_bucket_seat\"",
+       "glb": "models/editing/playground_chair_swing_carousel/component-seat_type_module-deep_bucket_seat.glb"
+      }
+     ]
+    },
+    {
+     "group": "count",
+     "kind": "count",
+     "target": "seat_count",
+     "label": "Chair count",
+     "variants": [
+      {
+       "id": "count-seat_count-2",
+       "label": "2",
+       "button": "2",
+       "readout": "seat_count: 6 \u2192 2",
+       "glb": "models/editing/playground_chair_swing_carousel/count-seat_count-2.glb"
+      },
+      {
+       "id": "count-seat_count-4",
+       "label": "4",
+       "button": "4",
+       "readout": "seat_count: 6 \u2192 4",
+       "glb": "models/editing/playground_chair_swing_carousel/count-seat_count-4.glb"
+      },
+      {
+       "id": "count-seat_count-6",
+       "label": "6",
+       "button": "6",
+       "readout": "base configuration",
+       "glb": "models/editing/playground_chair_swing_carousel/count-seat_count-6.glb"
+      },
+      {
+       "id": "count-seat_count-8",
+       "label": "8",
+       "button": "8",
+       "readout": "seat_count: 6 \u2192 8",
+       "glb": "models/editing/playground_chair_swing_carousel/count-seat_count-8.glb"
+      }
+     ]
+    },
+    {
+     "group": "material",
+     "kind": "material",
+     "target": "seat_surfaces",
+     "label": "Chair surface material",
+     "variants": [
+      {
+       "id": "material-seat_surfaces-red-enamel-chair-surfaces",
+       "label": "red enamel chair surfaces",
+       "button": "red enamel chair surfaces",
+       "readout": "seat_surfaces_material: default \u2192 \"red enamel chair surfaces\"",
+       "glb": "models/editing/playground_chair_swing_carousel/material-seat_surfaces-red-enamel-chair-surfaces.glb",
+       "swatch": [
+        0.82,
+        0.15,
+        0.1,
+        1.0
+       ]
+      },
+      {
+       "id": "material-seat_surfaces-warm-white-polymer-chair-surfaces",
+       "label": "warm white polymer chair surfaces",
+       "button": "warm white polymer chair surfaces",
+       "readout": "seat_surfaces_material: default \u2192 \"warm white polymer chair surfaces\"",
+       "glb": "models/editing/playground_chair_swing_carousel/material-seat_surfaces-warm-white-polymer-chair-surfaces.glb",
+       "swatch": [
+        0.88,
+        0.86,
+        0.79,
+        1.0
+       ]
+      },
+      {
+       "id": "material-seat_surfaces-brushed-silver-chair-surfaces",
+       "label": "brushed silver chair surfaces",
+       "button": "brushed silver chair surfaces",
+       "readout": "seat_surfaces_material: default \u2192 \"brushed silver chair surfaces\"",
+       "glb": "models/editing/playground_chair_swing_carousel/material-seat_surfaces-brushed-silver-chair-surfaces.glb",
+       "swatch": [
+        0.63,
+        0.67,
+        0.71,
+        1.0
+       ]
+      },
+      {
+       "id": "material-seat_surfaces-oak-chair-surfaces",
+       "label": "oak chair surfaces",
+       "button": "oak chair surfaces",
+       "readout": "seat_surfaces_material: default \u2192 \"oak chair surfaces\"",
+       "glb": "models/editing/playground_chair_swing_carousel/material-seat_surfaces-oak-chair-surfaces.glb",
+       "swatch": [
+        0.58,
+        0.36,
+        0.16,
+        1.0
+       ]
+      },
+      {
+       "id": "material-seat_surfaces-black-anodized-chair-surfaces",
+       "label": "black anodized chair surfaces",
+       "button": "black anodized chair surfaces",
+       "readout": "seat_surfaces_material: default \u2192 \"black anodized chair surfaces\"",
+       "glb": "models/editing/playground_chair_swing_carousel/material-seat_surfaces-black-anodized-chair-surfaces.glb",
+       "swatch": [
+        0.08,
+        0.09,
+        0.1,
+        1.0
+       ]
+      }
+     ]
+    },
+    {
+     "group": "size",
+     "kind": "size",
+     "target": "seat_radius_scale",
+     "label": "Chair-ring radius scale",
+     "variants": [
+      {
+       "id": "size-seat_radius_scale-0.85",
+       "label": "0.85",
+       "button": "0.85",
+       "readout": "seat_radius_scale: 1.0 \u2192 0.85",
+       "glb": "models/editing/playground_chair_swing_carousel/size-seat_radius_scale-0.85.glb"
+      },
+      {
+       "id": "size-seat_radius_scale-1.0",
+       "label": "1.0",
+       "button": "1",
+       "readout": "base configuration",
+       "glb": "models/editing/playground_chair_swing_carousel/size-seat_radius_scale-1.0.glb"
+      },
+      {
+       "id": "size-seat_radius_scale-1.1",
+       "label": "1.1",
+       "button": "1.1",
+       "readout": "seat_radius_scale: 1.0 \u2192 1.1",
+       "glb": "models/editing/playground_chair_swing_carousel/size-seat_radius_scale-1.1.glb"
+      },
+      {
+       "id": "size-seat_radius_scale-1.2",
+       "label": "1.2",
+       "button": "1.2",
+       "readout": "seat_radius_scale: 1.0 \u2192 1.2",
+       "glb": "models/editing/playground_chair_swing_carousel/size-seat_radius_scale-1.2.glb"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "table_football",
+   "name": "Table football",
+   "tagline": "Support modules, rod count, and table length.",
+   "generator": "table_football",
+   "thumbnail": "media/editing/table_football.webp",
+   "baseGlb": "models/editing/table_football/base.glb",
+   "baseReadout": "base configuration",
+   "frame": {
+    "center": [
+     0.0,
+     -1.0000000000287557e-06,
+     0.47584815600335517
+    ],
+    "half_extents": [
+     0.7260000000000001,
+     0.7481617,
+     0.5375170283963092
+    ],
+    "radius": 1.1729221991090837
+   },
+   "axes": [
+    {
+     "group": "component",
+     "kind": "component",
+     "target": "leg_form",
+     "label": "Support module",
+     "variants": [
+      {
+       "id": "component-leg_form-tubular_legs_4",
+       "label": "tubular legs 4",
+       "button": "tubular legs 4",
+       "readout": "base configuration",
+       "glb": "models/editing/table_football/component-leg_form-tubular_legs_4.glb"
+      },
+      {
+       "id": "component-leg_form-splayed_legs_4",
+       "label": "splayed legs 4",
+       "button": "splayed legs 4",
+       "readout": "leg_form: \"tubular_legs_4\" \u2192 \"splayed_legs_4\"",
+       "glb": "models/editing/table_football/component-leg_form-splayed_legs_4.glb"
+      },
+      {
+       "id": "component-leg_form-side_panels_full_height",
+       "label": "side panels full height",
+       "button": "side panels full height",
+       "readout": "leg_form: \"tubular_legs_4\" \u2192 \"side_panels_full_height\"",
+       "glb": "models/editing/table_football/component-leg_form-side_panels_full_height.glb"
+      },
+      {
+       "id": "component-leg_form-cross_x_trestles",
+       "label": "cross x trestles",
+       "button": "cross x trestles",
+       "readout": "leg_form: \"tubular_legs_4\" \u2192 \"cross_x_trestles\"",
+       "glb": "models/editing/table_football/component-leg_form-cross_x_trestles.glb"
+      }
+     ]
+    },
+    {
+     "group": "count",
+     "kind": "count",
+     "target": "rod_count",
+     "label": "Player-rod count",
+     "variants": [
+      {
+       "id": "count-rod_count-6",
+       "label": "6",
+       "button": "6",
+       "readout": "rod_count: 8 \u2192 6",
+       "glb": "models/editing/table_football/count-rod_count-6.glb"
+      },
+      {
+       "id": "count-rod_count-8",
+       "label": "8",
+       "button": "8",
+       "readout": "base configuration",
+       "glb": "models/editing/table_football/count-rod_count-8.glb"
+      },
+      {
+       "id": "count-rod_count-10",
+       "label": "10",
+       "button": "10",
+       "readout": "rod_count: 8 \u2192 10",
+       "glb": "models/editing/table_football/count-rod_count-10.glb"
+      }
+     ]
+    },
+    {
+     "group": "material",
+     "kind": "material",
+     "target": "cabinet",
+     "label": "Table-cabinet material",
+     "variants": [
+      {
+       "id": "material-cabinet-walnut-table-cabinet",
+       "label": "walnut table cabinet",
+       "button": "walnut table cabinet",
+       "readout": "cabinet_material: default \u2192 \"walnut table cabinet\"",
+       "glb": "models/editing/table_football/material-cabinet-walnut-table-cabinet.glb",
+       "swatch": [
+        0.29,
+        0.12,
+        0.055,
+        1.0
+       ]
+      },
+      {
+       "id": "material-cabinet-black-anodized-table-cabinet",
+       "label": "black anodized table cabinet",
+       "button": "black anodized table cabinet",
+       "readout": "cabinet_material: default \u2192 \"black anodized table cabinet\"",
+       "glb": "models/editing/table_football/material-cabinet-black-anodized-table-cabinet.glb",
+       "swatch": [
+        0.08,
+        0.09,
+        0.1,
+        1.0
+       ]
+      },
+      {
+       "id": "material-cabinet-red-enamel-table-cabinet",
+       "label": "red enamel table cabinet",
+       "button": "red enamel table cabinet",
+       "readout": "cabinet_material: default \u2192 \"red enamel table cabinet\"",
+       "glb": "models/editing/table_football/material-cabinet-red-enamel-table-cabinet.glb",
+       "swatch": [
+        0.82,
+        0.15,
+        0.1,
+        1.0
+       ]
+      },
+      {
+       "id": "material-cabinet-warm-white-table-cabinet",
+       "label": "warm white table cabinet",
+       "button": "warm white table cabinet",
+       "readout": "cabinet_material: default \u2192 \"warm white table cabinet\"",
+       "glb": "models/editing/table_football/material-cabinet-warm-white-table-cabinet.glb",
+       "swatch": [
+        0.88,
+        0.88,
+        0.85,
+        1.0
+       ]
+      }
+     ]
+    },
+    {
+     "group": "material_1",
+     "kind": "material",
+     "target": "pitch",
+     "label": "Playing-pitch material",
+     "variants": [
+      {
+       "id": "material-pitch-walnut-playing-pitch",
+       "label": "walnut playing pitch",
+       "button": "walnut playing pitch",
+       "readout": "pitch_material: default \u2192 \"walnut playing pitch\"",
+       "glb": "models/editing/table_football/material-pitch-walnut-playing-pitch.glb",
+       "swatch": [
+        0.29,
+        0.12,
+        0.055,
+        1.0
+       ]
+      },
+      {
+       "id": "material-pitch-red-enamel-playing-pitch",
+       "label": "red enamel playing pitch",
+       "button": "red enamel playing pitch",
+       "readout": "pitch_material: default \u2192 \"red enamel playing pitch\"",
+       "glb": "models/editing/table_football/material-pitch-red-enamel-playing-pitch.glb",
+       "swatch": [
+        0.82,
+        0.15,
+        0.1,
+        1.0
+       ]
+      },
+      {
+       "id": "material-pitch-brushed-aluminum-playing-pitch",
+       "label": "brushed aluminum playing pitch",
+       "button": "brushed aluminum playing pitch",
+       "readout": "pitch_material: default \u2192 \"brushed aluminum playing pitch\"",
+       "glb": "models/editing/table_football/material-pitch-brushed-aluminum-playing-pitch.glb",
+       "swatch": [
+        0.63,
+        0.67,
+        0.71,
+        1.0
+       ]
+      },
+      {
+       "id": "material-pitch-deep-blue-playing-pitch",
+       "label": "deep blue playing pitch",
+       "button": "deep blue playing pitch",
+       "readout": "pitch_material: default \u2192 \"deep blue playing pitch\"",
+       "glb": "models/editing/table_football/material-pitch-deep-blue-playing-pitch.glb",
+       "swatch": [
+        0.055,
+        0.11,
+        0.22,
+        1.0
+       ]
+      },
+      {
+       "id": "material-pitch-warm-white-playing-pitch",
+       "label": "warm white playing pitch",
+       "button": "warm white playing pitch",
+       "readout": "pitch_material: default \u2192 \"warm white playing pitch\"",
+       "glb": "models/editing/table_football/material-pitch-warm-white-playing-pitch.glb",
+       "swatch": [
+        0.88,
+        0.86,
+        0.79,
+        1.0
+       ]
+      }
+     ]
+    },
+    {
+     "group": "size",
+     "kind": "size",
+     "target": "cabinet_length_scale",
+     "label": "Cabinet length scale",
+     "variants": [
+      {
+       "id": "size-cabinet_length_scale-0.92",
+       "label": "0.92",
+       "button": "0.92",
+       "readout": "cabinet_length_scale: 1.0 \u2192 0.92",
+       "glb": "models/editing/table_football/size-cabinet_length_scale-0.92.glb"
+      },
+      {
+       "id": "size-cabinet_length_scale-1.0",
+       "label": "1.0",
+       "button": "1",
+       "readout": "base configuration",
+       "glb": "models/editing/table_football/size-cabinet_length_scale-1.0.glb"
+      },
+      {
+       "id": "size-cabinet_length_scale-1.05",
+       "label": "1.05",
+       "button": "1.05",
+       "readout": "cabinet_length_scale: 1.0 \u2192 1.05",
+       "glb": "models/editing/table_football/size-cabinet_length_scale-1.05.glb"
+      },
+      {
+       "id": "size-cabinet_length_scale-1.1",
+       "label": "1.1",
+       "button": "1.1",
+       "readout": "cabinet_length_scale: 1.0 \u2192 1.1",
+       "glb": "models/editing/table_football/size-cabinet_length_scale-1.1.glb"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

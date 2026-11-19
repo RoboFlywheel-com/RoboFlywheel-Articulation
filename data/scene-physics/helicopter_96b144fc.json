@@ -1,0 +1,372 @@
+{
+  "assetId": "helicopter_96b144fc",
+  "name": "Helicopter",
+  "totalMassKg": 1933.0,
+  "instanceCount": 1,
+  "parts": [
+    {
+      "id": "0",
+      "name": "airframe",
+      "materials": [
+        "Red Painted Aluminum",
+        "Carbon Fiber Composite",
+        "White Painted Aluminum",
+        "Painted Aluminum Alloy",
+        "Tinted Acrylic Canopy Glass",
+        "Orange Painted Aluminum"
+      ],
+      "massKg": 1800.0,
+      "massOrigin": "source",
+      "centerOfMass": [
+        0,
+        0,
+        0
+      ],
+      "inertia": {
+        "ixx": 1098.9,
+        "iyy": 9199.81,
+        "izz": 9227.09,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyz": 0.0
+      },
+      "inertiaOrigin": "source",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        9.43381118774414,
+        7.674571990966797,
+        1.9138250350952148
+      ],
+      "sourceLink": "airframe",
+      "inertiaFrame": "Source inertial frame; center position and RPY in source link coordinates.",
+      "surfaceMaterials": [
+        "M_single_rotor_helicopter_001",
+        "M_single_rotor_helicopter_002",
+        "M_single_rotor_helicopter_003",
+        "M_single_rotor_helicopter_004",
+        "M_single_rotor_helicopter_005",
+        "M_single_rotor_helicopter_006"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "main rotor",
+      "materials": [
+        "Carbon Fiber Composite",
+        "Painted Aluminum Alloy",
+        "Orange Painted Aluminum",
+        "Dark Painted Steel"
+      ],
+      "massKg": 92.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -26.98740863800049,
+        51.98640441894531,
+        17.620823860168457
+      ],
+      "inertia": {
+        "ixx": 373.0983750672326,
+        "iyy": 357.3674685827697,
+        "izz": 729.3416352308424,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        8.17725944519043,
+        8.355575561523438,
+        0.40097999572753906
+      ],
+      "sourceLink": "main_rotor",
+      "massBasis": "Main rotor assembly (hub, swashplate linkages, 2-3 composite/metal blades) for ~1800 kg class helicopter. Blades are thin elongated airfoils radiating from a compact hub; planar variance well below uniform disk (~0.125 for a ring) because hub mass pulls distribution inward. Z-extent small; hub dominates, giving low z-variance. ~90-100 kg typical for this class.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Main rotor assembly (hub, swashplate linkages, 2-3 composite/metal blades) for ~1800 kg class helicopter. Blades are thin elongated airfoils radiating from a compact hub; planar variance well below uniform disk (~0.125 for a ring) because hub mass pulls distribution inward. Z-extent small; hub dominates, giving low z-variance. ~90-100 kg typical for this class.",
+      "surfaceMaterials": [
+        "M_single_rotor_helicopter_002",
+        "M_single_rotor_helicopter_004",
+        "M_single_rotor_helicopter_006",
+        "M_single_rotor_helicopter_007"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "crew door",
+      "materials": [
+        "Carbon Fiber Composite",
+        "White Painted Aluminum",
+        "Painted Aluminum Alloy",
+        "Tinted Acrylic Canopy Glass"
+      ],
+      "massKg": 18.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -26.904098434448244,
+        52.87894248962402,
+        16.31362771987915
+      ],
+      "inertia": {
+        "ixx": 2.6453367947215223,
+        "iyy": 1.8085343239251888,
+        "izz": 2.40725240163604,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.7783851623535156,
+        1.1035118103027344,
+        1.0455999374389648
+      ],
+      "sourceLink": "crew_door",
+      "massBasis": "Light-helicopter crew door: aluminium honeycomb skin over frame, ~2 mm equivalent shell with hinges and latch hardware. Mass concentrated in skin panels; z-extent includes frame depth, so variance in z is lower than a solid block. Slight x-bias toward hinge side.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Light-helicopter crew door: aluminium honeycomb skin over frame, ~2 mm equivalent shell with hinges and latch hardware. Mass concentrated in skin panels; z-extent includes frame depth, so variance in z is lower than a solid block. Slight x-bias toward hinge side.",
+      "surfaceMaterials": [
+        "M_single_rotor_helicopter_002",
+        "M_single_rotor_helicopter_003",
+        "M_single_rotor_helicopter_004",
+        "M_single_rotor_helicopter_005"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "tail rotor",
+      "materials": [
+        "Carbon Fiber Composite",
+        "Painted Aluminum Alloy",
+        "Dark Painted Steel"
+      ],
+      "massKg": 13.0,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -32.92787551879883,
+        47.69954299926758,
+        17.19177532196045
+      ],
+      "inertia": {
+        "ixx": 1.7219061080051465,
+        "iyy": 1.2145677948486409,
+        "izz": 2.8834002730844075,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        1.2341461181640625,
+        1.4742965698242188,
+        0.2062206268310547
+      ],
+      "sourceLink": "tail_rotor",
+      "massBasis": "Tail rotor: small 2-blade assembly with hub and pitch-change mechanism, ~1.2 m diameter. Blades are thin; hub and gearbox housing concentrate mass near center. Z very thin (blade chord + hub). Typical 12-16 kg for light helicopter tail rotor.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Tail rotor: small 2-blade assembly with hub and pitch-change mechanism, ~1.2 m diameter. Blades are thin; hub and gearbox housing concentrate mass near center. Z very thin (blade chord + hub). Typical 12-16 kg for light helicopter tail rotor.",
+      "surfaceMaterials": [
+        "M_single_rotor_helicopter_002",
+        "M_single_rotor_helicopter_004",
+        "M_single_rotor_helicopter_007"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "left service door",
+      "materials": [
+        "Carbon Fiber Composite",
+        "White Painted Aluminum",
+        "Painted Aluminum Alloy"
+      ],
+      "massKg": 5.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -28.057398796081543,
+        50.453189849853516,
+        16.031142711639404
+      ],
+      "inertia": {
+        "ixx": 0.14547696148582417,
+        "iyy": 0.4787594517774278,
+        "izz": 0.3717133720246784,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.8950595855712891,
+        0.211639404296875,
+        0.5726709365844727
+      ],
+      "sourceLink": "left_service_door",
+      "massBasis": "Small rectangular service access panel, thin aluminium sheet with quick-release fasteners. Nearly uniform thin-shell panel; y is the thin axis so variance slightly reduced. Mass \u2248 5-6 kg typical for light-helicopter cowling panel.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Small rectangular service access panel, thin aluminium sheet with quick-release fasteners. Nearly uniform thin-shell panel; y is the thin axis so variance slightly reduced. Mass \u2248 5-6 kg typical for light-helicopter cowling panel.",
+      "surfaceMaterials": [
+        "M_single_rotor_helicopter_002",
+        "M_single_rotor_helicopter_003",
+        "M_single_rotor_helicopter_004"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "right service door",
+      "materials": [
+        "Carbon Fiber Composite",
+        "White Painted Aluminum",
+        "Painted Aluminum Alloy"
+      ],
+      "massKg": 4.5,
+      "massOrigin": "qwen_estimate",
+      "centerOfMass": [
+        -28.802470207214355,
+        51.480295181274414,
+        16.031142711639404
+      ],
+      "inertia": {
+        "ixx": 0.38526267933212055,
+        "iyy": 0.18067218926130862,
+        "izz": 0.35932510758005076,
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+      "inertiaOrigin": "qwen_estimate",
+      "inertialRotation": [
+        0,
+        0,
+        0
+      ],
+      "dimensions_m": [
+        0.46358299255371094,
+        0.9079856872558594,
+        0.5726709365844727
+      ],
+      "sourceLink": "right_service_door",
+      "massBasis": "Right-side service access panel, slightly smaller than left counterpart. Same thin aluminium-sheet construction with latches. Proportional mass scaling from left panel by area ratio (~0.82). Uniform thin-shell distribution.",
+      "inertiaFrame": "Scene axes, at estimated center of mass; center position in scene coordinates (reference frame).",
+      "inertiaBasis": "Diagonal approximation from Qwen-estimated mass distribution: Right-side service access panel, slightly smaller than left counterpart. Same thin aluminium-sheet construction with latches. Proportional mass scaling from left panel by area ratio (~0.82). Uniform thin-shell distribution.",
+      "surfaceMaterials": [
+        "M_single_rotor_helicopter_002",
+        "M_single_rotor_helicopter_003",
+        "M_single_rotor_helicopter_004"
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "main_rotor_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "0",
+      "effort": 300.0,
+      "velocity": 35.0,
+      "damping": 85.0,
+      "friction": 12.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "tail_rotor_spin",
+      "type": "continuous",
+      "lower": null,
+      "upper": null,
+      "id": "1",
+      "effort": 90.0,
+      "velocity": 55.0,
+      "damping": 22.0,
+      "friction": 4.5,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "right_service_door_hinge",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.0,
+      "id": "2",
+      "effort": 10.0,
+      "velocity": 1.2,
+      "damping": 1.8,
+      "friction": 0.9,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "left_service_door_hinge",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.0,
+      "id": "3",
+      "effort": 10.0,
+      "velocity": 1.2,
+      "damping": 2.0,
+      "friction": 1.0,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    },
+    {
+      "name": "crew_door_hinge",
+      "type": "revolute",
+      "lower": 0.0,
+      "upper": 1.25,
+      "id": "4",
+      "effort": 10.0,
+      "velocity": 1.2,
+      "damping": 3.5,
+      "friction": 1.6,
+      "origins": {
+        "effort": "source",
+        "velocity": "source",
+        "damping": "qwen_estimate",
+        "friction": "qwen_estimate"
+      }
+    }
+  ],
+  "annotationModel": "qwen3.8-max",
+  "reasoningEffort": "medium",
+  "sourceUrdf": "story_board/outdoor_blend_asset/03_Outdoor_Sky/30_helicopter/single_rotor_helicopter/seed_0000/model.urdf",
+  "referenceFrame": 1,
+  "note": "Source parameters are retained when uniquely matched. Estimated masses and missing joint dynamics: Qwen3.8-Max (medium). Missing inertias: diagonal approximation from Qwen-estimated mass distribution within native part bounds; not measured."
+}
